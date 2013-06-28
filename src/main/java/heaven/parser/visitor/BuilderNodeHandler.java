@@ -4,6 +4,8 @@ import java.io.StringReader;
 import java.util.Stack;
 
 import heaven.parser.builder.DefaultTupleBuilder;
+import heaven.parser.builder.NodeBuilder;
+import heaven.parser.builder.SequenceBuilder;
 import heaven.parser.builder.TupleBuilder;
 import heaven.parser.resolver.DefaultTupleHandler;
 import org.yaml.snakeyaml.Yaml;
@@ -20,7 +22,7 @@ public class BuilderNodeHandler<T> implements NodeHandler
     private Class<T> documentClass;
     private T documentObject;
 
-    private Stack<TupleBuilder<?, ?>> builderContext = new Stack<TupleBuilder<?, ?>>();
+    private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
     private Stack<Object> objectContext = new Stack<Object>();
 
 
@@ -58,7 +60,7 @@ public class BuilderNodeHandler<T> implements NodeHandler
     @Override
     public void onMappingNodeStart(MappingNode mappingNode)
     {
-        TupleBuilder<?, ?> peek = builderContext.peek();
+        NodeBuilder<?> peek = builderContext.peek();
         Object parentObject = objectContext.peek();
         Object object = ((TupleBuilder<?, MappingNode>) peek).buildValue(parentObject, mappingNode);
         objectContext.push(object);
@@ -75,25 +77,23 @@ public class BuilderNodeHandler<T> implements NodeHandler
     @SuppressWarnings("unchecked")
     public void onSequenceStart(SequenceNode node, TupleType tupleType)
     {
-        //List<ValidationResult> result;
-        //TupleBuilder<?, ?> peek = builderContext.peek();
-        //
-        //switch (toupleType)
-        //{
-        //    case VALUE:
-        //        result = ((TupleBuilder<?, SequenceNode>) peek).buildValue(node);
-        //        break;
-        //    default:
-        //        result = ((TupleBuilder<SequenceNode, ?>) peek).buildKey(node);
-        //        break;
-        //}
-        //addErrorMessageIfRequired(node, result);
+        SequenceBuilder peek = (SequenceBuilder) builderContext.peek();
+        Object parentObject = objectContext.peek();
+        switch (tupleType)
+        {
+            case VALUE:
+                Object object = ((NodeBuilder) peek).buildValue(parentObject, node);
+                builderContext.push(peek.getItemBuilder());
+                objectContext.push(object);
+                break;
+        }
     }
 
     @Override
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
-
+        objectContext.pop();
+        builderContext.pop();
     }
 
     @Override
@@ -101,13 +101,13 @@ public class BuilderNodeHandler<T> implements NodeHandler
     public void onScalar(ScalarNode node, TupleType tupleType)
     {
 
-        TupleBuilder<?, ?> peek = builderContext.peek();
+        NodeBuilder<?> peek = builderContext.peek();
         Object parentObject = objectContext.peek();
 
         switch (tupleType)
         {
             case VALUE:
-                ((TupleBuilder<?, ScalarNode>) peek).buildValue(parentObject, node);
+                ((NodeBuilder<ScalarNode>) peek).buildValue(parentObject, node);
                 break;
 
             default:
@@ -151,7 +151,7 @@ public class BuilderNodeHandler<T> implements NodeHandler
     @Override
     public void onTupleEnd(NodeTuple nodeTuple)
     {
-        TupleBuilder<?, ?> rule = builderContext.pop();
+        builderContext.pop();
 
     }
 
@@ -159,10 +159,10 @@ public class BuilderNodeHandler<T> implements NodeHandler
     public void onTupleStart(NodeTuple nodeTuple)
     {
 
-        TupleBuilder<?, ?> tupleBuilder = builderContext.peek();
+        TupleBuilder<?, ?> tupleBuilder = (TupleBuilder<?, ?>) builderContext.peek();
         if (tupleBuilder != null)
         {
-            TupleBuilder<?, ?> builder = tupleBuilder.getBuiderForTuple(nodeTuple);
+            NodeBuilder<?> builder = tupleBuilder.getBuiderForTuple(nodeTuple);
             builderContext.push(builder);
         }
         else

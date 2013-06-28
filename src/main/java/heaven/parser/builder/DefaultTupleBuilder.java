@@ -9,6 +9,7 @@ import java.util.Map;
 
 import heaven.parser.annotation.Mapping;
 import heaven.parser.annotation.Scalar;
+import heaven.parser.annotation.Sequence;
 import heaven.parser.resolver.DefaultTupleHandler;
 import heaven.parser.resolver.EnumHandler;
 import heaven.parser.resolver.TupleHandler;
@@ -20,20 +21,20 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 public class DefaultTupleBuilder<K extends Node, V extends Node> implements TupleBuilder<K, V>
 {
 
-    protected Map<String, TupleBuilder<?, ?>> builders;
-    private TupleBuilder parent;
+    protected Map<String, NodeBuilder<?>> builders;
+    private NodeBuilder<?> parent;
     private TupleHandler handler;
 
     public DefaultTupleBuilder(TupleHandler tupleHandler)
     {
-        builders = new HashMap<String, TupleBuilder<?, ?>>();
+        builders = new HashMap<String, NodeBuilder<?>>();
         this.setHandler(tupleHandler);
     }
 
     @Override
-    public TupleBuilder getBuiderForTuple(NodeTuple tuple)
+    public NodeBuilder getBuiderForTuple(NodeTuple tuple)
     {
-        for (TupleBuilder tupleBuilder : builders.values())
+        for (NodeBuilder tupleBuilder : builders.values())
         {
             if (tupleBuilder.handles(tuple))
             {
@@ -61,13 +62,13 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     }
 
     @Override
-    public void setParentTupleBuilder(TupleBuilder tupleBuilder)
+    public void setParentNodeBuilder(NodeBuilder parentBuilder)
     {
-        parent = tupleBuilder;
+        parent = parentBuilder;
     }
 
     @Override
-    public void setNestedBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders)
+    public void setNestedBuilders(Map<String, NodeBuilder<?>> nestedBuilders)
     {
         builders = nestedBuilders;
     }
@@ -76,12 +77,13 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     public void addBuildersFor(Class<?> documentClass)
     {
         List<Field> declaredFields = ReflectionUtils.getInheritedFields(documentClass);
-        Map<String, TupleBuilder<?, ?>> innerBuilders = new HashMap<String, TupleBuilder<?, ?>>();
+        Map<String, NodeBuilder<?>> innerBuilders = new HashMap<String, NodeBuilder<?>>();
         for (Field declaredField : declaredFields)
         {
             Scalar scalar = declaredField.getAnnotation(Scalar.class);
             Mapping mapping = declaredField.getAnnotation(Mapping.class);
-            TupleBuilder tupleBuilder = null;
+            Sequence sequence = declaredField.getAnnotation(Sequence.class);
+            NodeBuilder tupleBuilder = null;
             TupleHandler tupleHandler = null;
             if (scalar != null)
             {
@@ -138,13 +140,45 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                     tupleHandler = createHandler(mapping.handler());
                 }
             }
+            else if (sequence != null)
+            {
+                if (sequence.builder() != TupleBuilder.class)
+                {
+                    tupleBuilder = createCustomBuilder(sequence.builder());
+                }
+                else
+                {
+                    if (List.class.isAssignableFrom(declaredField.getType()))
+                    {
+                        Type type = declaredField.getGenericType();
+                        if (type instanceof ParameterizedType)
+                        {
+                            ParameterizedType pType = (ParameterizedType) type;
+                            Type itemType = pType.getActualTypeArguments()[0];
+                            if (itemType instanceof Class<?>)
+                            {
+                                tupleBuilder = new SequenceTupleBuilder(declaredField.getName(), (Class<?>) itemType);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new RuntimeException("Only List can be sequence. Error on field " + declaredField.getName());
+                    }
+                }
+
+                if (sequence.handler() != TupleHandler.class)
+                {
+                    tupleHandler = createHandler(sequence.handler());
+                }
+            }
             if (tupleBuilder != null)
             {
                 if (tupleHandler != null)
                 {
                     tupleBuilder.setHandler(tupleHandler);
                 }
-                tupleBuilder.setParentTupleBuilder(this);
+                tupleBuilder.setParentNodeBuilder(this);
                 innerBuilders.put(declaredField.getName(), tupleBuilder);
             }
         }
@@ -193,7 +227,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         return handler != null ? handler.handles(tuple) : false;
     }
 
-    public TupleBuilder getParent()
+    public NodeBuilder getParent()
     {
         return parent;
     }

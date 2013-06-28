@@ -29,7 +29,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNod
     }
 
     @Override
-    public TupleBuilder getBuiderForTuple(NodeTuple tuple)
+    public NodeBuilder getBuiderForTuple(NodeTuple tuple)
     {
         if (builders.isEmpty())     //Do it lazzy so it support recursive structures
         {

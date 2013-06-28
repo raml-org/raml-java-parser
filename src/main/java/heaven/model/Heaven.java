@@ -52,6 +52,11 @@ public class Heaven
         this.documentation = documentation;
     }
 
+    public List<DocumentationItem> getDocumentation()
+    {
+        return documentation;
+    }
+
     public void setUriParameters(Map<String, UriParameter> uriParameters)
     {
         this.uriParameters = uriParameters;

@@ -40,5 +40,6 @@ public class MinimalConfigTestCase
         assertThat(action.getBody().size(), is(1));
         assertThat(action.getBody().get("application/json"), CoreMatchers.notNullValue());
 
+        assertThat(heaven.getDocumentation().size(), is(2));
     }
 }

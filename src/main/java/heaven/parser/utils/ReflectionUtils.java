@@ -24,7 +24,7 @@ public class ReflectionUtils
 
     public static void setProperty(Object parent, String fieldName, Object value)
     {
-        if (parent instanceof List && fieldName == null)
+        if (parent instanceof List)
         {
             ((List) parent).add(value);
         }

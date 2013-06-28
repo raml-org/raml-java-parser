@@ -3,6 +3,7 @@ package heaven.parser.builder;
 import java.lang.reflect.InvocationTargetException;
 
 import heaven.parser.resolver.DefaultScalarTupleHandler;
+import heaven.parser.utils.ReflectionUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -27,34 +28,20 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
     @Override
     public Object buildValue(Object parent, ScalarNode node)
     {
-        try
+
+        final String value = node.getValue();
+        Object converted;
+        if (type.isEnum())
         {
-            String value = node.getValue();
-            Object converted;
-            if (type.isEnum())
-            {
-                converted = Enum.valueOf((Class) type, value.toUpperCase());
-            }
-            else
-            {
-                converted = ConvertUtils.convert(value, type);
-            }
-            new PropertyUtilsBean().setProperty(parent, fieldName, converted);
+            converted = Enum.valueOf((Class) type, value.toUpperCase());
         }
-        catch (IllegalAccessException e)
+        else
         {
-            throw new RuntimeException(e);
+            converted = ConvertUtils.convert(value, type);
         }
-        catch (InvocationTargetException e)
-        {
-            throw new RuntimeException(e);
-        }
-        catch (NoSuchMethodException e)
-        {
-            throw new RuntimeException(e);
-        }
+        ReflectionUtils.setProperty(parent, fieldName, converted);
+
         return parent;
     }
-
 
 }
