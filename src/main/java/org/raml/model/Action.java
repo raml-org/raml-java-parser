@@ -48,7 +48,7 @@ public class Action implements Traitable
             {
                 if (!queryParameters.containsKey(queryKey))
                 {
-                    queryParameters.put(queryKey.toString(), new QueryParameter((Map<String, ?>) traitQueryParams.get(queryKey)));
+                    //queryParameters.put(queryKey.toString(), new QueryParameter((Map<String, ?>) traitQueryParams.get(queryKey)));
                 }
             }
         }

@@ -43,6 +43,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNod
         {
             Object newValue = pojoClass.newInstance();
             ReflectionUtils.setProperty(parent, fieldName, newValue);
+            processPojoAnnotations(newValue, fieldName, parent);
             return newValue;
         }
         catch (InstantiationException e)
@@ -53,10 +54,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNod
         {
             throw new RuntimeException(e);
         }
-
-
     }
-
 
     @Override
     public void buildKey(Object parent, ScalarNode node)

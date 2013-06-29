@@ -3,26 +3,28 @@
 documentation:
     - title: Home
       content: |
-            Welcome to the _Zencoder API_ Documentation. The _Zencoder API_
-            allows you to connect your application to our encoding service
-            and encode videos without going through the web  interface. You
-            may also benefit from one of our
-            [integration libraries](https://app.zencoder.com/docs/faq/basics/libraries)
-            for different languages.
-    - title: subpage
-      content: subpage content
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna...
+    - title: section
+      content: section content
 title: Sample API
 version: v1
 baseUri: https://{host}.sample.com/{path}
 uriParameters:
     host:
         name: Host
+        description: host name
         type: string
+        minLength: 5
+        maxLength: 10
     path:
         name: Path
         type: string
+/:
+    name: Root resource
+    head: !!null
 /media:
-    name: Media
+    name: Media collection
     head: !!null
     get:
         name: retrieve
@@ -41,3 +43,10 @@ uriParameters:
                          "type": "object"
                     }
                 example: '{ "input": "hola" }'
+    /{mediaId}:
+        name: Media item
+        head: !!null
+/tags:
+    head: !!null
+    /{tagId}:
+        head: !!null

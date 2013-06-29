@@ -1,19 +1,11 @@
 package org.raml.model.parameter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.raml.model.ParamType;
-import org.raml.model.validation.EnumerationValidation;
-import org.raml.model.validation.MaxLengthValidation;
-import org.raml.model.validation.MaximumIntegerValidation;
-import org.raml.model.validation.MaximumNumberValidation;
-import org.raml.model.validation.MinLengthValidation;
-import org.raml.model.validation.MinimumIntegerValidation;
-import org.raml.model.validation.MinimumNumberValidation;
-import org.raml.model.validation.PatternValidation;
 import org.raml.model.validation.Validation;
+import org.raml.model.validation.ValidationType;
 import org.raml.parser.annotation.Scalar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,106 +15,38 @@ public class AbstractParam
 
     @Scalar
     private String name;
+
     @Scalar
     private String description;
+
     @Scalar
     private ParamType type;
+
+    @Scalar
     private boolean required;
-    private List<Validation> validations = new ArrayList<Validation>();
-    private Object defaultValue;
-    private Object example;
+
+    //@Mapping(implicit = true)
+    //private Map<ValidationType, Validation> validations = new HashMap<ValidationType, Validation>();
+    //TODO hack till Mappings with interface types are supported
+    private List<String> enumeration;
+    @Scalar
+    private String pattern;
+    @Scalar
+    private Integer minLength;
+    @Scalar
+    private Integer maxLength;
+    @Scalar
+    private Integer minimum;
+    @Scalar
+    private Integer maximum;
+
+    @Scalar
+    private String defaultValue;
+
+    @Scalar
+    private String example;
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-
-    public AbstractParam(Map<String, ?> paramDescriptor)
-    {
-        this.name = (String) paramDescriptor.get("name");
-        this.description = (String) paramDescriptor.get("description");
-        if (paramDescriptor.containsKey("type"))
-        {
-            this.type = ParamType.valueOf(((String) paramDescriptor.get("type")).toUpperCase());
-        }
-        this.required = Boolean.valueOf(String.valueOf(paramDescriptor.get("required")));
-        if (paramDescriptor.containsKey("default"))
-        {
-            this.defaultValue = String.valueOf(paramDescriptor.get("default"));
-        }
-        if (paramDescriptor.containsKey("example"))
-        {
-            this.example = String.valueOf(paramDescriptor.get("example"));
-        }
-        populateValidations(paramDescriptor);
-    }
-
-    private void populateValidations(Map<String, ?> paramDescriptor)
-    {
-        if (paramDescriptor.containsKey("enum"))
-        {
-            //TODO handle multiple types
-            validations.add(new EnumerationValidation((List<String>) paramDescriptor.get("enum")));
-        }
-
-        if (paramDescriptor.containsKey("pattern"))
-        {
-            if (type != ParamType.STRING)
-            {
-                throw new IllegalArgumentException("Pattern validation can only be applied to type string, not " + type);
-            }
-            validations.add(new PatternValidation((String) paramDescriptor.get("pattern")));
-        }
-
-        if (paramDescriptor.containsKey("minLength"))
-        {
-            if (type != ParamType.STRING)
-            {
-                throw new IllegalArgumentException("MinLength validation can only be applied to type string, not " + type);
-            }
-            validations.add(new MinLengthValidation((Integer) paramDescriptor.get("minLength")));
-        }
-
-        if (paramDescriptor.containsKey("maxLength"))
-        {
-            if (type != ParamType.STRING)
-            {
-                throw new IllegalArgumentException("MaxLength validation can only be applied to type string, not " + type);
-            }
-            validations.add(new MaxLengthValidation((Integer) paramDescriptor.get("maxLength")));
-        }
-
-        if (paramDescriptor.containsKey("minimum"))
-        {
-            if (type == ParamType.INTEGER)
-            {
-                validations.add(new MinimumIntegerValidation(String.valueOf(paramDescriptor.get("minimum"))));
-            }
-            else if (type == ParamType.NUMBER)
-            {
-                validations.add(new MinimumNumberValidation(String.valueOf(paramDescriptor.get("minimum"))));
-            }
-            else
-            {
-                throw new IllegalArgumentException("Minimum validation not allowed for type : " + type);
-            }
-        }
-
-        if (paramDescriptor.containsKey("maximum"))
-        {
-            if (type == ParamType.INTEGER)
-            {
-                validations.add(new MaximumIntegerValidation(String.valueOf(paramDescriptor.get("maximum"))));
-            }
-            else if (type == ParamType.NUMBER)
-            {
-                validations.add(new MaximumNumberValidation(String.valueOf(paramDescriptor.get("maximum"))));
-            }
-            else
-            {
-                throw new IllegalArgumentException("Maximum validation not allowed for type : " + type);
-            }
-        }
-
-    }
 
 
     public void setName(String name)
@@ -165,34 +89,105 @@ public class AbstractParam
         return required;
     }
 
-    public List<Validation> getValidations()
-    {
-        return validations;
-    }
-
-    public Object getDefaultValue()
+    public String getDefaultValue()
     {
         return defaultValue;
     }
 
-    public Object getExample()
+    public String getExample()
     {
         return example;
     }
 
+    public List<String> getEnumeration()
+    {
+        return enumeration;
+    }
+
+    public void setEnumeration(List<String> enumeration)
+    {
+        this.enumeration = enumeration;
+    }
+
+    public String getPattern()
+    {
+        return pattern;
+    }
+
+    public void setPattern(String pattern)
+    {
+        this.pattern = pattern;
+    }
+
+    public Integer getMinLength()
+    {
+        return minLength;
+    }
+
+    public void setMinLength(Integer minLength)
+    {
+        this.minLength = minLength;
+    }
+
+    public Integer getMaxLength()
+    {
+        return maxLength;
+    }
+
+    public void setMaxLength(Integer maxLength)
+    {
+        this.maxLength = maxLength;
+    }
+
+    public Integer getMinimum()
+    {
+        return minimum;
+    }
+
+    public void setMinimum(Integer minimum)
+    {
+        this.minimum = minimum;
+    }
+
+    public Integer getMaximum()
+    {
+        return maximum;
+    }
+
+    public void setMaximum(Integer maximum)
+    {
+        this.maximum = maximum;
+    }
+
+    public void setDefaultValue(String defaultValue)
+    {
+        this.defaultValue = defaultValue;
+    }
+
+    public void setExample(String example)
+    {
+        this.example = example;
+    }
+
+    public Map<ValidationType, Validation> getValidations()
+    {
+        //TODO
+        return null;
+    }
+
     public boolean validate(String value)
     {
-        for (Validation validation : validations)
-        {
-            if (!validation.check(value))
-            {
-                if (logger.isInfoEnabled())
-                {
-                    logger.info(String.format("Validation %s failed for value %s", validation, value));
-                }
-                return false;
-            }
-        }
+        //for (Validation validation : validations.values())
+        //{
+        //    if (!validation.check(value))
+        //    {
+        //        if (logger.isInfoEnabled())
+        //        {
+        //            logger.info(String.format("Validation %s failed for value %s", validation, value));
+        //        }
+        //        return false;
+        //    }
+        //}
         return true;
     }
 }

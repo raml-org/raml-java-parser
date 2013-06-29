@@ -1,13 +1,17 @@
 package org.raml.parser.builder;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
+import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.DefaultTupleHandler;
@@ -133,7 +137,14 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                             if (keyType instanceof Class<?> && valueType instanceof Class<?>)
                             {
                                 Class<?> keyClass = (Class<?>) keyType;
-                                tupleBuilder = mapping.implicit() ? new ImplicitMapEntryBuilder(declaredField.getName(), keyClass, (Class) valueType) : new MapTupleBuilder(declaredField.getName(), keyClass, (Class) valueType);
+                                if (mapping.implicit())
+                                {
+                                    tupleBuilder = new ImplicitMapEntryBuilder(declaredField.getName(), keyClass, (Class) valueType);
+                                }
+                                else
+                                {
+                                    tupleBuilder = new MapTupleBuilder(declaredField.getName(), keyClass, (Class) valueType);
+                                }
                                 if (keyClass.isEnum())
                                 {
                                     tupleBuilder.setHandler(new EnumHandler(MappingNode.class, (Class<? extends Enum>) keyClass));
@@ -219,7 +230,6 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         TupleBuilder tupleBuilder;
         try
         {
-
             tupleBuilder = builder.newInstance();
         }
         catch (InstantiationException e)
@@ -242,5 +252,43 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     public NodeBuilder getParent()
     {
         return parent;
+    }
+
+    protected void processPojoAnnotations(Object pojo, Object keyFieldName, Object parent)
+    {
+        List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojo.getClass());
+        for (Field declaredField : declaredFields)
+        {
+            Key keyAnnotation = declaredField.getAnnotation(Key.class);
+            Parent parentAnnotation = declaredField.getAnnotation(Parent.class);
+            if (keyAnnotation != null)
+            {
+                ReflectionUtils.setProperty(pojo, declaredField.getName(), keyFieldName);
+            }
+            if (parentAnnotation != null)
+            {
+                Object value = parent;
+                if (parentAnnotation.property() != null)
+                {
+                    try
+                    {
+                        value = PropertyUtils.getProperty(parent, parentAnnotation.property());
+                    }
+                    catch (IllegalAccessException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
+                    catch (InvocationTargetException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
+                    catch (NoSuchMethodException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
+                }
+                ReflectionUtils.setProperty(pojo, declaredField.getName(), value);
+            }
+        }
     }
 }

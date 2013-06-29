@@ -39,7 +39,7 @@ public class MimeType
                 Map<String, ?> paramMap = (Map<String, ?>) mimeDescriptor.get("parameters");
                 for (String key : paramMap.keySet())
                 {
-                    formParameters.put(key, new FormParameter((Map<String, ?>) paramMap.get(key)));
+                    //formParameters.put(key, new FormParameter((Map<String, ?>) paramMap.get(key)));
                 }
             }
         }

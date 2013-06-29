@@ -8,6 +8,7 @@ import org.raml.parser.utils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Node>
@@ -26,7 +27,16 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
         this.fieldName = fieldName;
         this.keyClass = keyClass;
         this.valueClass = valueClass;
-        addBuildersFor(valueClass);
+    }
+
+    @Override
+    public NodeBuilder getBuiderForTuple(NodeTuple tuple)
+    {
+        if (builders.isEmpty())
+        {
+            addBuildersFor(valueClass);
+        }
+        return super.getBuiderForTuple(tuple);
     }
 
     @Override
@@ -38,7 +48,9 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
         {
             actualParent = (Map) new PropertyUtilsBean().getProperty(parent, fieldName);
             Object newValue = valueClass.newInstance();
-            actualParent.put(ConvertUtils.convertTo(keyValue, keyClass), newValue);
+            Object key = ConvertUtils.convertTo(keyValue, keyClass);
+            actualParent.put(key, newValue);
+            processPojoAnnotations(newValue, key, parent);
             return newValue;
         }
         catch (IllegalAccessException e)

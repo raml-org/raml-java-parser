@@ -1,103 +1,53 @@
 package org.raml.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.raml.model.parameter.UriParameter;
-import org.raml.parser.ParseException;
+import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
+import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
-import org.apache.commons.lang.ArrayUtils;
+import org.raml.parser.resolver.ResourceHandler;
 
 public class Resource
 {
 
     @Scalar
     private String name;
+
+    @Parent(property = "uri")
     private String parentUri;
+
+    @Key
     private String relativeUri;
+
+    @Mapping
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
-    private ResourceMap resources = new ResourceMap();
+
+    @Mapping(handler = ResourceHandler.class, implicit = true)
+    private Map<String, Resource> resources = new HashMap<String, Resource>();
+
     @Mapping(implicit = true)
     private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
+
     private List<?> uses = new ArrayList();
 
-    //TODO refactor to enum in action class
-    public static final String[] ACTION_NAMES = {"get", "post", "put", "delete", "head"};
-    private static final List<String> VALID_KEYS;
 
     public Resource()
     {
     }
 
-    static
+    public void setRelativeUri(String relativeUri)
     {
-        String[] keys = (String[]) ArrayUtils.addAll(ACTION_NAMES, new String[] {"name", "uriParameters", "use"});
-        VALID_KEYS = Arrays.asList(keys);
-    }
-
-    public Resource(String relativeUri, Map<String, ?> descriptor, String parentUri)
-    {
-        if (parentUri == null)
-        {
-            throw new IllegalArgumentException("parentUri cannot be null");
-        }
-        this.parentUri = parentUri;
-
-        if (relativeUri == null)
-        {
-            throw new IllegalArgumentException("relativeUri cannot be null");
-        }
         this.relativeUri = relativeUri;
-
-        name = (String) descriptor.get("name");
-        if (descriptor.containsKey("uses"))
-        {
-            uses = (List<?>) descriptor.get("use");
-        }
-        if (descriptor.containsKey("uriParameters"))
-        {
-            populateUriParameters((Map<String, ?>) descriptor.get("uriParameters"));
-        }
-
-        populateAction(descriptor);
-
-        resources.populate(descriptor, this.getUri());
-
-        List<String> invalidKeys = new ArrayList<String>();
-        for (String key : descriptor.keySet())
-        {
-            if (!key.startsWith("/") && !VALID_KEYS.contains(key))
-            {
-                invalidKeys.add(key);
-            }
-        }
-        if (!invalidKeys.isEmpty())
-        {
-            throw new ParseException("invalid top level keys: " + invalidKeys);
-        }
     }
 
-    private void populateUriParameters(Map<String, ?> descriptor)
+    public void setParentUri(String parentUri)
     {
-        for (String param : descriptor.keySet())
-        {
-            //TODO do proper parsing with 3rd party lib
-            if (!relativeUri.contains("{" + param + "}"))
-            {
-                throw new ParseException(String.format("Relative URI (%s) does not define \"%s\" parameter",
-                                                       relativeUri, param));
-            }
-            uriParameters.put(param, new UriParameter((Map<String, ?>) descriptor.get(param)));
-        }
-    }
-
-    private void populateAction(Map descriptor)
-    {
-
+        this.parentUri = parentUri;
     }
 
     public Map<ActionType, Action> getActions()
@@ -139,7 +89,7 @@ public class Resource
         return actions.get(name);
     }
 
-    public ResourceMap getResources()
+    public Map<String, Resource> getResources()
     {
         return resources;
     }
@@ -186,7 +136,7 @@ public class Resource
 
     public Resource getResource(String path)
     {
-        for (Resource resource : resources)
+        for (Resource resource : resources.values())
         {
             if (path.startsWith(resource.getRelativeUri()))
             {
