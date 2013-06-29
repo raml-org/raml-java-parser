@@ -1,0 +1,3 @@
+%TAG ! tag:raml.org,0.1:
+---
+validation: !regex '^[a-zA-Z0-9][-a-zA-Z0-9]*$'

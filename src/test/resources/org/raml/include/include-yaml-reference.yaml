@@ -1,0 +1,8 @@
+%TAG ! tag:raml.org,0.1:
+---
+#resources: !include org.raml/include/include-single-resource.yaml
+address1:
+    home: &home
+        street: evergreen
+        city: springfield
+address2: !include org.raml/include/include-reference-resource.yaml

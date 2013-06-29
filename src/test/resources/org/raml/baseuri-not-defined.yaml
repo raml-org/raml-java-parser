@@ -1,0 +1,7 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: Sample API
+version: v1
+#baseUri: https://api.sample.com/
+/media:
+    name: Media
