@@ -1,5 +1,8 @@
 package org.raml.parser.visitor;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.Stack;
 
@@ -16,75 +19,70 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public class BuilderNodeHandler<T> implements NodeHandler
+public class YamlDocumentBuilder<T> implements NodeHandler
 {
 
     private Class<T> documentClass;
     private T documentObject;
 
     private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
-    private Stack<Object> objectContext = new Stack<Object>();
+    private Stack<Object> documentContext = new Stack<Object>();
 
 
-    public BuilderNodeHandler(Class<T> documentClass)
+    public YamlDocumentBuilder(Class<T> documentClass)
     {
         this.documentClass = documentClass;
 
     }
 
-    public T build(String content)
+    public T build(Reader content)
     {
         Yaml yamlParser = new Yaml();
-
-        try
-        {
-            NodeVisitor nodeVisitor = new NodeVisitor(this);
-            for (Node data : yamlParser.composeAll(new StringReader(content)))
-            {
-                if (data instanceof MappingNode)
-                {
-                    nodeVisitor.visitDocument((MappingNode) data);
-                }
-
-            }
-
-        }
-        catch (YAMLException ex)
-        {
-            throw new RuntimeException(ex);
-        }
+        NodeVisitor nodeVisitor = new NodeVisitor(this);
+        MappingNode rootNode = (MappingNode) yamlParser.compose(content);
+        nodeVisitor.visitDocument(rootNode);
         return documentObject;
+    }
+
+    public T build(InputStream content)
+    {
+        return build(new InputStreamReader(content));
+    }
+
+    public T build(String content)
+    {
+        return build(new StringReader(content));
     }
 
 
     @Override
     public void onMappingNodeStart(MappingNode mappingNode)
     {
-        NodeBuilder<?> peek = builderContext.peek();
-        Object parentObject = objectContext.peek();
-        Object object = ((TupleBuilder<?, MappingNode>) peek).buildValue(parentObject, mappingNode);
-        objectContext.push(object);
+        NodeBuilder<?> currentBuilder = builderContext.peek();
+        Object parentObject = documentContext.peek();
+        Object object = ((TupleBuilder<?, MappingNode>) currentBuilder).buildValue(parentObject, mappingNode);
+        documentContext.push(object);
 
     }
 
     @Override
     public void onMappingNodeEnd(MappingNode mappingNode)
     {
-        objectContext.pop();
+        documentContext.pop();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void onSequenceStart(SequenceNode node, TupleType tupleType)
     {
-        SequenceBuilder peek = (SequenceBuilder) builderContext.peek();
-        Object parentObject = objectContext.peek();
+        SequenceBuilder currentBuilder = (SequenceBuilder) builderContext.peek();
+        Object parentObject = documentContext.peek();
         switch (tupleType)
         {
             case VALUE:
-                Object object = ((NodeBuilder) peek).buildValue(parentObject, node);
-                builderContext.push(peek.getItemBuilder());
-                objectContext.push(object);
+                Object object = ((NodeBuilder) currentBuilder).buildValue(parentObject, node);
+                builderContext.push(currentBuilder.getItemBuilder());
+                documentContext.push(object);
                 break;
         }
     }
@@ -92,7 +90,7 @@ public class BuilderNodeHandler<T> implements NodeHandler
     @Override
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
-        objectContext.pop();
+        documentContext.pop();
         builderContext.pop();
     }
 
@@ -101,17 +99,17 @@ public class BuilderNodeHandler<T> implements NodeHandler
     public void onScalar(ScalarNode node, TupleType tupleType)
     {
 
-        NodeBuilder<?> peek = builderContext.peek();
-        Object parentObject = objectContext.peek();
+        NodeBuilder<?> currentBuilder = builderContext.peek();
+        Object parentObject = documentContext.peek();
 
         switch (tupleType)
         {
             case VALUE:
-                ((NodeBuilder<ScalarNode>) peek).buildValue(parentObject, node);
+                ((NodeBuilder<ScalarNode>) currentBuilder).buildValue(parentObject, node);
                 break;
 
             default:
-                ((TupleBuilder<ScalarNode, ?>) peek).buildKey(parentObject, node);
+                ((TupleBuilder<ScalarNode, ?>) currentBuilder).buildKey(parentObject, node);
 
                 break;
         }
@@ -125,7 +123,7 @@ public class BuilderNodeHandler<T> implements NodeHandler
         try
         {
 
-            objectContext.push(documentClass.newInstance());
+            documentContext.push(documentClass.newInstance());
             builderContext.push(buildDocumentBuilder());
         }
         catch (Exception e)
@@ -145,7 +143,7 @@ public class BuilderNodeHandler<T> implements NodeHandler
     @Override
     public void onDocumentEnd(MappingNode node)
     {
-        documentObject = (T) objectContext.pop();
+        documentObject = (T) documentContext.pop();
     }
 
     @Override
@@ -159,10 +157,10 @@ public class BuilderNodeHandler<T> implements NodeHandler
     public void onTupleStart(NodeTuple nodeTuple)
     {
 
-        TupleBuilder<?, ?> tupleBuilder = (TupleBuilder<?, ?>) builderContext.peek();
-        if (tupleBuilder != null)
+        TupleBuilder<?, ?> currentBuilder = (TupleBuilder<?, ?>) builderContext.peek();
+        if (currentBuilder != null)
         {
-            NodeBuilder<?> builder = tupleBuilder.getBuiderForTuple(nodeTuple);
+            NodeBuilder<?> builder = currentBuilder.getBuiderForTuple(nodeTuple);
             builderContext.push(builder);
         }
         else

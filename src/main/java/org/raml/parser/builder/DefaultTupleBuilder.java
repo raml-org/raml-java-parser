@@ -14,6 +14,8 @@ import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -25,6 +27,8 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     private NodeBuilder<?> parent;
     private TupleHandler handler;
 
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
     public DefaultTupleBuilder(TupleHandler tupleHandler)
     {
         builders = new HashMap<String, NodeBuilder<?>>();
@@ -34,6 +38,10 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     @Override
     public NodeBuilder getBuiderForTuple(NodeTuple tuple)
     {
+        if (builders == null || builders.isEmpty())
+        {
+            return new DefaultTupleBuilder(new DefaultTupleHandler());
+        }
         for (NodeBuilder tupleBuilder : builders.values())
         {
             if (tupleBuilder.handles(tuple))
@@ -41,7 +49,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 return tupleBuilder;
             }
         }
-        return new DefaultTupleBuilder(new DefaultTupleHandler());
+        throw new RuntimeException("Builder not found for " + tuple);
     }
 
     @Override
@@ -76,6 +84,10 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
 
     public void addBuildersFor(Class<?> documentClass)
     {
+        if (logger.isDebugEnabled())
+        {
+            logger.debug("adding builders for " + documentClass);
+        }
         List<Field> declaredFields = ReflectionUtils.getInheritedFields(documentClass);
         Map<String, NodeBuilder<?>> innerBuilders = new HashMap<String, NodeBuilder<?>>();
         for (Field declaredField : declaredFields)
@@ -121,7 +133,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                             if (keyType instanceof Class<?> && valueType instanceof Class<?>)
                             {
                                 Class<?> keyClass = (Class<?>) keyType;
-                                tupleBuilder = mapping.implicit() ? new MapEntryBuilder(declaredField.getName(), keyClass, (Class) valueType) : new MapTupleBuilder(declaredField.getName(), keyClass, (Class) valueType);
+                                tupleBuilder = mapping.implicit() ? new ImplicitMapEntryBuilder(declaredField.getName(), keyClass, (Class) valueType) : new MapTupleBuilder(declaredField.getName(), keyClass, (Class) valueType);
                                 if (keyClass.isEnum())
                                 {
                                     tupleBuilder.setHandler(new EnumHandler(MappingNode.class, (Class<? extends Enum>) keyClass));

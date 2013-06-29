@@ -7,16 +7,10 @@ import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-/**
- * Created with IntelliJ IDEA.
- * User: santiagovacas
- * Date: 6/28/13
- * Time: 3:18 PM
- * To change this template use File | Settings | File Templates.
- */
-public class MapEntryBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode>
+public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 {
 
     private String fieldName;
@@ -26,9 +20,9 @@ public class MapEntryBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode
     private Class valueClass;
 
 
-    public MapEntryBuilder(String fieldName, Class<?> keyClass, Class<?> valueClass)
+    public ImplicitMapEntryBuilder(String fieldName, Class<?> keyClass, Class<?> valueClass)
     {
-        super(new DefaultScalarTupleHandler(MappingNode.class, fieldName));
+        super(new DefaultScalarTupleHandler(Node.class, fieldName));
         this.fieldName = fieldName;
         this.keyClass = keyClass;
         this.valueClass = valueClass;
@@ -36,7 +30,7 @@ public class MapEntryBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode
     }
 
     @Override
-    public Object buildValue(Object parent, MappingNode tuple)
+    public Object buildValue(Object parent, Node tuple)
     {
 
         Map actualParent;
