@@ -50,6 +50,11 @@ public class Resource
         this.parentUri = parentUri;
     }
 
+    public void setUriParameters(Map<String, UriParameter> uriParameters)
+    {
+        this.uriParameters = uriParameters;
+    }
+
     public Map<ActionType, Action> getActions()
     {
         return actions;

@@ -95,6 +95,11 @@ public class FullConfigTestCase
         assertThat(mediaItemResource.getRelativeUri(), is(mediaItemUri));
         assertThat(mediaItemResource.getName(), is("Media item"));
         assertThat(mediaItemResource.getActions().size(), is(1));
+        assertThat(mediaItemResource.getUriParameters().size(), is(1));
+        UriParameter mediaIdParam = mediaItemResource.getUriParameters().get("mediaId");
+        assertThat(mediaIdParam.getType(), is(ParamType.STRING));
+        assertThat(mediaIdParam.getMaxLength(), is(10));
+
 
     }
 }

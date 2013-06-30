@@ -1,12 +1,5 @@
 %TAG ! tag:raml.org,0.1:
 ---
-documentation:
-    - title: Home
-      content: |
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna...
-    - title: section
-      content: section content
 title: Sample API
 version: v1
 baseUri: https://{host}.sample.com:{port}/{path}
@@ -25,6 +18,13 @@ uriParameters:
     path:
         type: string
         enum: [one,two,three]
+documentation:
+    - title: Home
+      content: |
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna...
+    - title: section
+      content: section content
 /:
     name: Root resource
     head: !!null
@@ -50,6 +50,10 @@ uriParameters:
                 example: '{ "input": "hola" }'
     /{mediaId}:
         name: Media item
+        uriParameters:
+            mediaId:
+                type: string
+                maxLength: 10
         head: !!null
 /tags:
     head: !!null
