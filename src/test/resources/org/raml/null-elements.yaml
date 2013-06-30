@@ -1,0 +1,13 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: Leagues API
+version: v1
+baseUri: http://localhost/api
+/leagues:
+    name: Leagues
+    get:
+        responses:
+            200:
+                body:
+                    application/json: !!null
+                    text/xml: !!null
