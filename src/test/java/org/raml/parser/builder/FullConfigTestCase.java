@@ -39,22 +39,27 @@ public class FullConfigTestCase
         //basic attributes
         assertThat(raml.getTitle(), is("Sample API"));
         assertThat(raml.getVersion(), is("v1"));
-        String baseUri = "https://{host}.sample.com/{path}";
+        String baseUri = "https://{host}.sample.com:{port}/{path}";
         assertThat(raml.getBaseUri(), is(baseUri));
 
         //uri parameters
-        assertThat(raml.getUriParameters().size(), is(2));
+        assertThat(raml.getUriParameters().size(), is(3));
 
         UriParameter hostParam = raml.getUriParameters().get("host");
         assertThat(hostParam.getName(), is("Host"));
         assertThat(hostParam.getDescription(), is("host name"));
+        assertThat(hostParam.getType(), is(ParamType.STRING));
         assertThat(hostParam.getMinLength(), is(5));
         assertThat(hostParam.getMaxLength(), is(10));
         assertThat(hostParam.getPattern(), is("[a-z]*"));
 
+        UriParameter portParam = raml.getUriParameters().get("port");
+        assertThat(portParam.getType(), is(ParamType.INTEGER));
+        assertThat(portParam.getMinimum(), is(1025d));
+        assertThat(portParam.getMaximum(), is(65535d));
+
         assertThat(hostParam.getType(), is(ParamType.STRING));
         UriParameter pathParam = raml.getUriParameters().get("path");
-        assertThat(pathParam.getName(), is("Path"));
         assertThat(pathParam.getType(), is(ParamType.STRING));
         assertThat(pathParam.getEnumeration().size(), is(3));
         assertThat(pathParam.getEnumeration().get(0), is("one"));

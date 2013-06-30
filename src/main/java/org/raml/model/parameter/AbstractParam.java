@@ -39,9 +39,9 @@ public class AbstractParam
     @Scalar
     private Integer maxLength;
     @Scalar
-    private Integer minimum;
+    private Double minimum;
     @Scalar
-    private Integer maximum;
+    private Double maximum;
 
     @Scalar(alias = "default")
     private String defaultValue;
@@ -142,22 +142,22 @@ public class AbstractParam
         this.maxLength = maxLength;
     }
 
-    public Integer getMinimum()
+    public Double getMinimum()
     {
         return minimum;
     }
 
-    public void setMinimum(Integer minimum)
+    public void setMinimum(Double minimum)
     {
         this.minimum = minimum;
     }
 
-    public Integer getMaximum()
+    public Double getMaximum()
     {
         return maximum;
     }
 
-    public void setMaximum(Integer maximum)
+    public void setMaximum(Double maximum)
     {
         this.maximum = maximum;
     }

@@ -9,7 +9,7 @@ documentation:
       content: section content
 title: Sample API
 version: v1
-baseUri: https://{host}.sample.com/{path}
+baseUri: https://{host}.sample.com:{port}/{path}
 uriParameters:
     host:
         name: Host
@@ -18,8 +18,11 @@ uriParameters:
         minLength: 5
         maxLength: 10
         pattern: '[a-z]*'
+    port:
+        type: integer
+        minimum: 1025
+        maximum: 65535
     path:
-        name: Path
         type: string
         enum: [one,two,three]
 /:
