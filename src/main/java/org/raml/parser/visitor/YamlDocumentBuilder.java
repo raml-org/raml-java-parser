@@ -12,7 +12,6 @@ import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -105,10 +104,6 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         switch (tupleType)
         {
             case VALUE:
-                if ("tag:yaml.org,2002:null".equals(node.getTag().getValue())) {
-                    currentBuilder.buildValue(parentObject, null);
-                    break;
-                }
                 ((NodeBuilder<ScalarNode>) currentBuilder).buildValue(parentObject, node);
                 break;
 

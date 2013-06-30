@@ -3,10 +3,11 @@ package org.raml.parser.builder;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode>
+public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 {
 
     private Class<?> pojoClass;
@@ -37,7 +38,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNod
 
 
     @Override
-    public Object buildValue(Object parent, MappingNode tuple)
+    public Object buildValue(Object parent, Node tuple)
     {
         try
         {

@@ -114,7 +114,7 @@ public class FullConfigTestCase
         assertThat(pageQueryParam.getMinimum(), is(1d));
 
         //action body types
-        assertThat(action.getBody().size(), is(2));
+        assertThat(action.getBody().size(), is(3));
         String jsonMime = "application/json";
         MimeType jsonBody = action.getBody().get(jsonMime);
         assertThat(jsonBody.getType(), is(jsonMime));
@@ -139,8 +139,9 @@ public class FullConfigTestCase
         assertThat(response200.getBody().size(), is(1));
         assertThat(response200.getBody().get("application/json").getExample(), is("{ \"key\": \"value\" }"));
         Response response400 = action.getResponses().get("400");
-        assertThat(response400.getBody().size(), is(1));
+        assertThat(response400.getBody().size(), is(2));
         assertThat(response400.getBody().get("text/xml").getExample(), is("<root>none</root>"));
+        assertThat(response400.getBody().get("text/plain").getType(), is("text/plain"));
 
         //nested resource
         assertThat(mediaResource.getResources().size(), is(1));

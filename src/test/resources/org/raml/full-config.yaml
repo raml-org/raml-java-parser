@@ -49,6 +49,7 @@ documentation:
                 default: 1
                 minimum: 1
         body:
+            text/xml: !!null
             application/json:
                 schema: |
                     {
@@ -81,6 +82,7 @@ documentation:
                 body:
                     text/xml:
                         example: '<root>none</root>'
+                    text/plain: !!null
     /{mediaId}:
         name: Media item
         uriParameters:
