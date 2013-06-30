@@ -283,7 +283,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
             if (parentAnnotation != null)
             {
                 Object value = parent;
-                if (parentAnnotation.property() != null)
+                if (!parentAnnotation.property().isEmpty())
                 {
                     try
                     {

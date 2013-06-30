@@ -6,5 +6,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Parent
 {
-    String property();
+    String property() default "";
 }

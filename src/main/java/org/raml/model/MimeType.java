@@ -1,73 +1,36 @@
 package org.raml.model;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.raml.model.parameter.FormParameter;
+import org.raml.parser.annotation.Key;
+import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 
 public class MimeType
 {
 
-
+    @Key
     private String type;
+
     @Scalar
     private String schema;
+
     @Scalar
     private String example;
-    private Map<String, FormParameter> formParameters;
 
-    public MimeType()
-    {
-    }
+    @Mapping
+    private Map<String, FormParameter> parameters;
 
-    public MimeType(String type, Map<String, ?> mimeDescriptor)
-    {
-        this.type = type;
-        if (mimeDescriptor == null)
-        {
-            return;
-        }
-
-        //TODO validate not allowed fields
-        if ("multipart/form-data".equals(type) ||
-            "application/x-www-form-urlencoded".equals(type))
-        {
-            formParameters = new HashMap<String, FormParameter>();
-            if (mimeDescriptor.containsKey("parameters"))
-            {
-                Map<String, ?> paramMap = (Map<String, ?>) mimeDescriptor.get("parameters");
-                for (String key : paramMap.keySet())
-                {
-                    //formParameters.put(key, new FormParameter((Map<String, ?>) paramMap.get(key)));
-                }
-            }
-        }
-        else
-        {
-            schema = (String) mimeDescriptor.get("schema");
-            example = (String) mimeDescriptor.get("example");
-        }
-    }
 
     public String getType()
     {
         return type;
     }
 
-    public void setSchema(String schema)
+    public void setType(String type)
     {
-        this.schema = schema;
-    }
-
-    public void setExample(String example)
-    {
-        this.example = example;
-    }
-
-    public void setFormParameters(Map<String, FormParameter> formParameters)
-    {
-        this.formParameters = formParameters;
+        this.type = type;
     }
 
     public String getSchema()
@@ -75,15 +38,30 @@ public class MimeType
         return schema;
     }
 
+    public void setSchema(String schema)
+    {
+        this.schema = schema;
+    }
+
     public String getExample()
     {
         return example;
     }
 
-    public Map<String, FormParameter> getFormParameters()
+    public void setExample(String example)
+    {
+        this.example = example;
+    }
+
+    public Map<String, FormParameter> getParameters()
     {
         //TODO throw exception if invalid type?
-        return formParameters;
+        return parameters;
+    }
+
+    public void setParameters(Map<String, FormParameter> parameters)
+    {
+        this.parameters = parameters;
     }
 
     @Override

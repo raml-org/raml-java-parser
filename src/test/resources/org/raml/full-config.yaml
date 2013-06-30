@@ -32,7 +32,22 @@ documentation:
     name: Media collection
     head: !!null
     get:
-        name: retrieve
+        summary: retrieve
+        description: retrieve media
+        headers:
+            api-key:
+                name: Api key
+                description: Api key description
+                type: string
+                required: true
+                minLength: 10
+                maxLength: 10
+                example: 0123456789
+        queryParameters:
+            page:
+                type: integer
+                default: 1
+                minimum: 1
         body:
             application/json:
                 schema: |
@@ -48,6 +63,24 @@ documentation:
                          "type": "object"
                     }
                 example: '{ "input": "hola" }'
+            multipart/form-data:
+                parameters:
+                    form-1:
+                        name: form 1
+                        description: form 1 description
+                        type: number
+                        required: true
+                        minimum: 9.5
+                        maximum: 10.5
+        responses:
+            200:
+                body:
+                    application/json:
+                        example: '{ "key": "value" }'
+            400:
+                body:
+                    text/xml:
+                        example: '<root>none</root>'
     /{mediaId}:
         name: Media item
         uriParameters:
