@@ -105,6 +105,10 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         switch (tupleType)
         {
             case VALUE:
+                if ("tag:yaml.org,2002:null".equals(node.getTag().getValue())) {
+                    currentBuilder.buildValue(parentObject, null);
+                    break;
+                }
                 ((NodeBuilder<ScalarNode>) currentBuilder).buildValue(parentObject, node);
                 break;
 
