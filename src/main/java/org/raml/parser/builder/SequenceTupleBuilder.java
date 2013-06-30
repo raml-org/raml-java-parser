@@ -8,7 +8,6 @@ import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-
 public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode> implements SequenceBuilder
 {
 
@@ -35,6 +34,10 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
     @Override
     public NodeBuilder getItemBuilder()
     {
+        if (ReflectionUtils.isWrapperOrString(elementClass))
+        {
+            return new ScalarTupleBuilder(fieldName, elementClass);
+        }
         return new PojoTupleBuilder(elementClass);
     }
 

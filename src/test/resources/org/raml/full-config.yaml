@@ -17,9 +17,11 @@ uriParameters:
         type: string
         minLength: 5
         maxLength: 10
+        pattern: '[a-z]*'
     path:
         name: Path
         type: string
+        enum: [one,two,three]
 /:
     name: Root resource
     head: !!null

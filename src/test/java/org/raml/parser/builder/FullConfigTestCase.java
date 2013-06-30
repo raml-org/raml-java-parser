@@ -50,10 +50,16 @@ public class FullConfigTestCase
         assertThat(hostParam.getDescription(), is("host name"));
         assertThat(hostParam.getMinLength(), is(5));
         assertThat(hostParam.getMaxLength(), is(10));
+        assertThat(hostParam.getPattern(), is("[a-z]*"));
 
         assertThat(hostParam.getType(), is(ParamType.STRING));
-        assertThat(raml.getUriParameters().get("path").getName(), is("Path"));
-        assertThat(raml.getUriParameters().get("path").getType(), is(ParamType.STRING));
+        UriParameter pathParam = raml.getUriParameters().get("path");
+        assertThat(pathParam.getName(), is("Path"));
+        assertThat(pathParam.getType(), is(ParamType.STRING));
+        assertThat(pathParam.getEnumeration().size(), is(3));
+        assertThat(pathParam.getEnumeration().get(0), is("one"));
+        assertThat(pathParam.getEnumeration().get(1), is("two"));
+        assertThat(pathParam.getEnumeration().get(2), is("three"));
 
         //resources
         assertThat(raml.getResources().size(), is(3));

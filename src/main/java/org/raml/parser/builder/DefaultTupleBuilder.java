@@ -14,6 +14,7 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
@@ -23,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.SequenceNode;
 
 public class DefaultTupleBuilder<K extends Node, V extends Node> implements TupleBuilder<K, V>
 {
@@ -116,6 +119,10 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 {
                     tupleHandler = createHandler(scalar.handler());
                 }
+                else if (!scalar.alias().isEmpty())
+                {
+                    tupleHandler = new DefaultScalarTupleHandler(ScalarNode.class, scalar.alias());
+                }
 
             }
             else if (mapping != null)
@@ -162,6 +169,10 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 {
                     tupleHandler = createHandler(mapping.handler());
                 }
+                else if (!mapping.alias().isEmpty())
+                {
+                    tupleHandler = new DefaultScalarTupleHandler(MappingNode.class, mapping.alias());
+                }
             }
             else if (sequence != null)
             {
@@ -193,6 +204,10 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 if (sequence.handler() != TupleHandler.class)
                 {
                     tupleHandler = createHandler(sequence.handler());
+                }
+                else if (!sequence.alias().isEmpty())
+                {
+                    tupleHandler = new DefaultScalarTupleHandler(SequenceNode.class, sequence.alias());
                 }
             }
             if (tupleBuilder != null)

@@ -21,4 +21,6 @@ public @interface Mapping
 
     Class<? extends TupleHandler> handler() default TupleHandler.class;
 
+    String alias() default "";
+
 }

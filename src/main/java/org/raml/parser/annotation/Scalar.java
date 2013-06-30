@@ -18,4 +18,7 @@ public @interface Scalar
     Class<? extends  TupleBuilder> builder() default TupleBuilder.class;
 
     Class<? extends TupleHandler> handler() default TupleHandler.class;
+
+    String alias() default "";
+
 }

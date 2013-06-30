@@ -7,6 +7,7 @@ import org.raml.model.ParamType;
 import org.raml.model.validation.Validation;
 import org.raml.model.validation.ValidationType;
 import org.raml.parser.annotation.Scalar;
+import org.raml.parser.annotation.Sequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,8 @@ public class AbstractParam
     //@Mapping(implicit = true)
     //private Map<ValidationType, Validation> validations = new HashMap<ValidationType, Validation>();
     //TODO hack till Mappings with interface types are supported
+
+    @Sequence(alias = "enum")
     private List<String> enumeration;
     @Scalar
     private String pattern;
@@ -40,7 +43,7 @@ public class AbstractParam
     @Scalar
     private Integer maximum;
 
-    @Scalar
+    @Scalar(alias = "default")
     private String defaultValue;
 
     @Scalar
