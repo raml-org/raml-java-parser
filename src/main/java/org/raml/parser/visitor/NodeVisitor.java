@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -38,8 +39,9 @@ public class NodeVisitor
 
     private void doVisitMappingNode(MappingNode mappingNode)
     {
-        List<NodeTuple> touples = mappingNode.getValue();
-        for (NodeTuple nodeTuple : touples)
+        List<NodeTuple> tuples = mappingNode.getValue();
+        List<NodeTuple> updatedTuples = new ArrayList<NodeTuple>();
+        for (NodeTuple nodeTuple : tuples)
         {
             Node keyNode = nodeTuple.getKeyNode();
             Node valueNode = nodeTuple.getValueNode();
@@ -48,11 +50,13 @@ public class NodeVisitor
                 valueNode = resolveInclude((ScalarNode) valueNode);
                 nodeTuple = new NodeTuple(keyNode, valueNode);
             }
+            updatedTuples.add(nodeTuple);
             nodeHandler.onTupleStart(nodeTuple);
             visit(keyNode, TupleType.KEY);
             visit(valueNode, TupleType.VALUE);
             nodeHandler.onTupleEnd(nodeTuple);
         }
+        mappingNode.setValue(updatedTuples);
     }
 
     public void visitDocument(MappingNode node)
@@ -141,7 +145,7 @@ public class NodeVisitor
             }
             catch (IOException e)
             {
-                throw new RuntimeException(e);
+                //ignore
             }
         }
         return includeNode;

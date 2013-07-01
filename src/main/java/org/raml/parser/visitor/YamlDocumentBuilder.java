@@ -1,9 +1,12 @@
 package org.raml.parser.visitor;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Stack;
 
 import org.raml.parser.builder.DefaultTupleBuilder;
@@ -11,21 +14,27 @@ import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
 import org.raml.parser.resolver.DefaultTupleHandler;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.emitter.Emitter;
+import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
+import org.yaml.snakeyaml.resolver.Resolver;
+import org.yaml.snakeyaml.serializer.Serializer;
 
 public class YamlDocumentBuilder<T> implements NodeHandler
 {
 
     private Class<T> documentClass;
     private T documentObject;
-
     private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
     private Stack<Object> documentContext = new Stack<Object>();
+    private MappingNode rootNode;
 
 
     public YamlDocumentBuilder(Class<T> documentClass)
@@ -38,7 +47,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     {
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this);
-        MappingNode rootNode = (MappingNode) yamlParser.compose(content);
+        rootNode = (MappingNode) yamlParser.compose(content);
         nodeVisitor.visitDocument(rootNode);
         return documentObject;
     }
@@ -53,6 +62,10 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         return build(new StringReader(content));
     }
 
+    public MappingNode getRootNode()
+    {
+        return rootNode;
+    }
 
     @Override
     public void onMappingNodeStart(MappingNode mappingNode)
@@ -169,5 +182,33 @@ public class YamlDocumentBuilder<T> implements NodeHandler
 
     }
 
+    public static String dumpFromAst(Node rootNode)
+    {
+        Writer writer = new StringWriter();
+        dumpFromAst(rootNode, writer);
+        return writer.toString();
+    }
+
+    public static void dumpFromAst(Node rootNode, Writer output)
+    {
+        if (rootNode == null)
+        {
+            throw new IllegalArgumentException("rootNode is null");
+        }
+        DumperOptions dumperOptions = new DumperOptions();
+        Tag rootTag = dumperOptions.getExplicitRoot();
+        Serializer serializer = new Serializer(new Emitter(output, dumperOptions), new Resolver(),
+                                               dumperOptions, rootTag);
+        try
+        {
+            serializer.open();
+            serializer.serialize(rootNode);
+            serializer.close();
+        }
+        catch (IOException e)
+        {
+            throw new YAMLException(e);
+        }
+    }
 
 }

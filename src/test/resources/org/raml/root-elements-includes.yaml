@@ -1,0 +1,8 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: !include org/raml/include/include-non-yaml-single-line.txt
+version: v1
+baseUri: https://sample.com/api
+documentation: !include org/raml/include/include-documentation.yaml
+/media:
+    get: !!null
