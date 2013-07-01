@@ -99,6 +99,11 @@ public class Resource
         return actions.get(name);
     }
 
+    public Action getAction(String name)
+    {
+        return actions.get(ActionType.valueOf(name.toUpperCase()));
+    }
+
     public Map<String, Resource> getResources()
     {
         return resources;

@@ -93,7 +93,15 @@ public class Raml
 
     public String getUri()
     {
-        return getBaseUri();
+        try
+        {
+            URL url = new URL(baseUri);
+            return url.getPath();
+        }
+        catch (MalformedURLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public Map<String, Trait> getTraits()

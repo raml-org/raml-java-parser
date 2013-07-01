@@ -2,7 +2,7 @@
 ---
 title: Sample API
 version: v1
-baseUri: https://{host}.sample.com:{port}/{path}
+baseUri: https://{host}.sample.com/{path}
 uriParameters:
     host:
         name: Host

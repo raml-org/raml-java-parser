@@ -1,11 +1,8 @@
 package org.raml.model.parameter;
 
 import java.util.List;
-import java.util.Map;
 
 import org.raml.model.ParamType;
-import org.raml.model.validation.Validation;
-import org.raml.model.validation.ValidationType;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.slf4j.Logger;
@@ -25,10 +22,6 @@ public class AbstractParam
 
     @Scalar
     private boolean required;
-
-    //@Mapping(implicit = true)
-    //private Map<ValidationType, Validation> validations = new HashMap<ValidationType, Validation>();
-    //TODO hack till Mappings with interface types are supported
 
     @Sequence(alias = "enum")
     private List<String> enumeration;
@@ -172,25 +165,24 @@ public class AbstractParam
         this.example = example;
     }
 
-    public Map<ValidationType, Validation> getValidations()
-    {
-        //TODO
-        return null;
-    }
-
     public boolean validate(String value)
     {
-        //for (Validation validation : validations.values())
-        //{
-        //    if (!validation.check(value))
-        //    {
-        //        if (logger.isInfoEnabled())
-        //        {
-        //            logger.info(String.format("Validation %s failed for value %s", validation, value));
-        //        }
-        //        return false;
-        //    }
-        //}
+        //TODO refactor validations to enforce typing
+        switch (type)
+        {
+            case STRING:
+                if (pattern != null && !value.matches(pattern)) return false;
+                if (minLength != null && value.length() < minLength) return false;
+                if (maxLength != null && value.length() > maxLength) return false;
+                if (enumeration != null && !enumeration.contains(value)) return false;
+                break;
+            case INTEGER:
+            case NUMBER:
+                Double number = Double.valueOf(value);
+                if (minimum != null && number < minimum) return false;
+                if (maximum != null && number > maximum) return false;
+                break;
+        }
         return true;
     }
 }
