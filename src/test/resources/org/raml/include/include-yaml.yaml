@@ -1,3 +1,3 @@
 %TAG ! tag:raml.org,0.1:
 ---
-resources: !include org.raml/include/include-single-resource.yaml
+documentation: !include org/raml/include/include-documentation.yaml

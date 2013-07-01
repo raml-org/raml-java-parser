@@ -1,0 +1,5 @@
+%TAG ! tag:raml.org,0.1:
+---
+documentation:
+    - title: Home
+      content: !include https://raw.github.com/mulesoft/mule/mule-3.x/README.md
