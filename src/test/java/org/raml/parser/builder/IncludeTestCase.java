@@ -5,14 +5,12 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import java.io.InputStream;
-
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Raml;
-import org.raml.parser.visitor.YamlDocumentBuilder;
 
-public class IncludeTestCase
+public class IncludeTestCase extends AbstractBuilderTestCase
 {
 
     @Test
@@ -57,6 +55,7 @@ public class IncludeTestCase
     }
 
     @Test
+    @Ignore //use local http server
     public void testHttpScalarResource()
     {
         Raml raml = parseRaml("org/raml/include/include-http-non-yaml.yaml");
@@ -65,10 +64,4 @@ public class IncludeTestCase
         assertThat(raml.getDocumentation().get(0).getContent(), startsWith("Stop the point-to-point madness"));
     }
 
-    private Raml parseRaml(String resource)
-    {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resource);
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        return ramlSpecBuilder.build(inputStream);
-    }
 }

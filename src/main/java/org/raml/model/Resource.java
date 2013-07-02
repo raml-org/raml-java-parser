@@ -10,6 +10,7 @@ import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
+import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
 
 public class Resource
@@ -33,7 +34,8 @@ public class Resource
     @Mapping(implicit = true)
     private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
 
-    private List<?> uses = new ArrayList();
+    @Sequence
+    private List<String> use = new ArrayList<String>();
 
 
     public Resource()
@@ -89,11 +91,6 @@ public class Resource
         return parentUri + relativeUri;
     }
 
-    public List<?> getUses()
-    {
-        return uses;
-    }
-
     public Action getAction(ActionType name)
     {
         return actions.get(name);
@@ -117,6 +114,16 @@ public class Resource
     public Map<String, UriParameter> getUriParameters()
     {
         return uriParameters;
+    }
+
+    public List<String> getUse()
+    {
+        return use;
+    }
+
+    public void setUse(List<String> use)
+    {
+        this.use = use;
     }
 
     @Override

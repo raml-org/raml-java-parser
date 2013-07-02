@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Stack;
 
+import org.raml.model.Raml;
 import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
@@ -49,7 +50,16 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         NodeVisitor nodeVisitor = new NodeVisitor(this);
         rootNode = (MappingNode) yamlParser.compose(content);
         nodeVisitor.visitDocument(rootNode);
+        postBuildProcess(); //FIXME apply traits
         return documentObject;
+    }
+
+    private void postBuildProcess()
+    {
+        if (documentObject instanceof Raml)
+        {
+            ((Raml) documentObject).applyTraits();
+        }
     }
 
     public T build(InputStream content)

@@ -2,9 +2,14 @@ package org.raml.model;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
@@ -34,6 +39,7 @@ public class Raml
     @Sequence
     private List<DocumentationItem> documentation;
 
+    @Mapping
     private Map<String, Trait> traits = new HashMap<String, Trait>();
 
 
@@ -104,16 +110,6 @@ public class Raml
         }
     }
 
-    public Map<String, Trait> getTraits()
-    {
-        return traits;
-    }
-
-    public void addTrait(Trait trait)
-    {
-        traits.put(trait.getKey(), trait);
-    }
-
     public Map<String, Resource> getResources()
     {
         return resources;
@@ -122,6 +118,16 @@ public class Raml
     public Map<String, UriParameter> getUriParameters()
     {
         return uriParameters;
+    }
+
+    public Map<String, Trait> getTraits()
+    {
+        return traits;
+    }
+
+    public void setTraits(Map<String, Trait> traits)
+    {
+        this.traits = traits;
     }
 
     public Resource getResource(String path)
@@ -160,5 +166,38 @@ public class Raml
             }
         }
         return null;
+    }
+
+    public void applyTraits()
+    {
+        applyTraits(getResources().values());
+    }
+
+    public void applyTraits(Collection<Resource> resources)
+    {
+        for (Resource resource : resources)
+        {
+            Set<ActionType> finalActions = new HashSet<ActionType>();
+            finalActions.addAll(resource.getActions().keySet());
+            for (Trait trait : getTraits().values())
+            {
+                for (String tActionType : trait.getProvides().keySet())
+                {
+                    if (!tActionType.endsWith("?"))
+                    {
+                        finalActions.add(ActionType.valueOf(tActionType.toUpperCase()));
+                    }
+                }
+            }
+
+            List<String> reversed = new ArrayList<String>(resource.getUse());
+            Collections.reverse(reversed);
+            for (String traitKey : reversed)
+            {
+                Trait trait = getTraits().get(traitKey);
+                trait.applyToResource(resource, finalActions);
+            }
+            applyTraits(resource.getResources().values());
+        }
     }
 }

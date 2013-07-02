@@ -1,0 +1,21 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: sample API
+version: v1
+baseUri: https://api.sample.com/
+traits:
+    paged:
+        description: Paged
+        provides:
+            get:
+                queryParameters:
+                    count:
+                        type: integer
+                        required: false
+/media:
+    use: [paged]
+    get:
+        queryParameters:
+            filter:
+                type: string
+                required: true

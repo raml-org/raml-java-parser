@@ -1,66 +1,79 @@
 package org.raml.model;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
+import org.raml.parser.annotation.Key;
+import org.raml.parser.annotation.Mapping;
+import org.raml.parser.annotation.Scalar;
 
 public class Trait
 {
 
-    private String key;
+    @Key
     private String name;
-    private Map<String, ?> defaultParams;
-    private Map<?, ?> methodTemplate;
 
-    public Trait(String key, Map description)
-    {
-        this.key = key;
-        this.name = (String) description.get("name");
-        this.defaultParams = (Map<String, ?>) description.get("requires");
-        this.methodTemplate = (Map<?, ?>) description.get("provides");
-    }
+    @Scalar
+    private String description;
 
-    public String getKey()
-    {
-        return key;
-    }
+    @Mapping
+    private Map<String, TraitAction> provides = new HashMap<String, TraitAction>();
 
     public String getName()
     {
         return name;
     }
 
-    public void apply(Map<String, ?> params, Resource resource)
+    public void setName(String name)
     {
-
+        this.name = name;
     }
 
-    private Iterator generateParamCombinations(Map<String, ?> mergedParams)
+    public String getDescription()
     {
-        return new Iterator()
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public Map<String, TraitAction> getProvides()
+    {
+        return provides;
+    }
+
+    public void setProvides(Map<String, TraitAction> provides)
+    {
+        this.provides = provides;
+    }
+
+    public void applyToResource(Resource resource, Set<ActionType> finalActions)
+    {
+        for (TraitAction tAction : provides.values())
         {
-            @Override
-            public boolean hasNext()
+            String tActionTypeName = tAction.getType().toUpperCase();
+            if (tActionTypeName.endsWith("?"))
             {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
+                tActionTypeName = tActionTypeName.substring(0, tActionTypeName.length() - 1);
             }
-
-            @Override
-            public Object next()
+            ActionType actionType = ActionType.valueOf(tActionTypeName);
+            if (!finalActions.contains(actionType))
             {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
+                return;
             }
-
-            @Override
-            public void remove()
+            Action action = resource.getActions().get(actionType);
+            if (action == null)
             {
-                throw new UnsupportedOperationException();
+                resource.getActions().put(actionType, tAction.createAction(resource));
             }
-        };
+            else
+            {
+                tAction.updateAction(action);
+            }
+        }
     }
 
-    private Map<String, ?> mergeParams(Map<String, ?> useParams)
-    {
-        //TODO merge them
-        return defaultParams;
-    }
 }
