@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.BaseUriRule;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.RuleNodeHandler;
+import org.raml.parser.visitor.YamlDocumentValidator;
 
 public class BaseURIRuleTestCase
 {
@@ -22,7 +22,7 @@ public class BaseURIRuleTestCase
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
                             + "baseUri:";
-        RuleNodeHandler havenSpecValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
@@ -35,7 +35,7 @@ public class BaseURIRuleTestCase
     public void testBaseURIPresent()
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle";
-        RuleNodeHandler havenSpecValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
@@ -47,7 +47,7 @@ public class BaseURIRuleTestCase
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
                             + "baseUri: notavaliduri.com";
-        RuleNodeHandler havenSpecValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(), CoreMatchers.is(BaseUriRule.URI_NOT_VALID_MESSAGE));

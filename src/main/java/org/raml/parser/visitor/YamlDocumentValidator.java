@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.raml.parser.annotation.Scalar;
 import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.ITupleRule;
-import org.raml.parser.rule.SimpleRule;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.utils.RuleFactory;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -21,16 +20,16 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public class RuleNodeHandler implements NodeHandler
+public class YamlDocumentValidator implements NodeHandler
 {
 
-    private Class documentClass;
+    private Class<?> documentClass;
 
     private Stack<ITupleRule<?, ?>> ruleContext = new Stack<ITupleRule<?, ?>>();
 
     private List<ValidationResult> errorMessage = new ArrayList<ValidationResult>();
 
-    public RuleNodeHandler(Class documentClass)
+    public YamlDocumentValidator(Class<?> documentClass)
     {
         this.documentClass = documentClass;
 
@@ -180,42 +179,18 @@ public class RuleNodeHandler implements NodeHandler
 
     }
 
-    private DefaultTupleRule buildDocumentRule()
+    private DefaultTupleRule<Node, MappingNode> buildDocumentRule()
     {
-        DefaultTupleRule documentRule = new DefaultTupleRule<Node, MappingNode>();
+        DefaultTupleRule<Node, MappingNode> documentRule = new DefaultTupleRule<Node, MappingNode>();
         Field[] declaredFields = documentClass.getDeclaredFields();
         Map<String, ITupleRule<?, ?>> innerRules = new HashMap<String, ITupleRule<?, ?>>();
         for (Field declaredField : declaredFields)
         {
-            Scalar annotation = declaredField.getAnnotation(Scalar.class);
-            if (annotation != null)
-            {
-                ITupleRule iTupleRule;
-                if (annotation.rule() != ITupleRule.class)
-                {
-                    try
-                    {
-
-                        iTupleRule = annotation.rule().newInstance();
-
-                    }
-                    catch (InstantiationException e)
-                    {
-                        throw new RuntimeException(e);
-                    }
-                    catch (IllegalAccessException e)
-                    {
-                        throw new RuntimeException(e);
-                    }
-                }
-                else
-                {
-                    iTupleRule = new SimpleRule(declaredField.getName(), annotation.required());
-                }
+            ITupleRule<?, ?> iTupleRule = RuleFactory.INSTANCE.createRuleFor(declaredField);
+            if (iTupleRule != null) {
                 iTupleRule.setParentTupleRule(documentRule);
                 innerRules.put(declaredField.getName(), iTupleRule);
             }
-
         }
         documentRule.setNestedRules(innerRules);
         return documentRule;

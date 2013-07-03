@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.RuleNodeHandler;
+import org.raml.parser.visitor.YamlDocumentValidator;
 
 public class RAMLSpecValidationTestCase
 {
@@ -19,7 +19,7 @@ public class RAMLSpecValidationTestCase
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n"
                             + "title: Salesforce Chatter Communities REST API\n" + "version: v28.0\n"
                             + "baseUri: https://{communityDomain}.force.com/{communityPath}";
-        RuleNodeHandler ramlValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlValidator.validate(simpleTest);
         Assert.assertTrue("Errors must be empty", errors.isEmpty());
     }
@@ -30,7 +30,7 @@ public class RAMLSpecValidationTestCase
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n"
                             + "title: Salesforce Chatter Communities REST API\n"
                             + "baseUri: https://{communityDomain}.force.com/{version}";
-        RuleNodeHandler ramlValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),

@@ -24,7 +24,7 @@ public class EnumSimpleRule extends SimpleRule
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (!getValidTypes().contains(value))
         {
-            validationResults.add(ValidationResult.createErrorResult("Invalid " + getRuleName() + " " + value, node.getStartMark(), node.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult("Invalid " + getRuleName() + " value: " + value, node.getStartMark(), node.getEndMark()));
         }
         validationResults.addAll(super.validateValue(node));
         if (ValidationResult.areValids(validationResults))

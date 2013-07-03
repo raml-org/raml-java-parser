@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.SimpleRule;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.RuleNodeHandler;
+import org.raml.parser.visitor.YamlDocumentValidator;
 
 public class TitleRuleTestCase
 {
@@ -18,7 +18,7 @@ public class TitleRuleTestCase
     public void testTitleNotEmpty()
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title:";
-        RuleNodeHandler ramlValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
@@ -29,7 +29,7 @@ public class TitleRuleTestCase
     public void testTitlePresent()
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n";
-        RuleNodeHandler ramlValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
 
@@ -41,7 +41,7 @@ public class TitleRuleTestCase
     public void testTitleNotMoreThanOnce()
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title: bla \n" + "title: bla";
-        RuleNodeHandler ramlValidator = new RuleNodeHandler(Raml.class);
+        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),

@@ -30,7 +30,7 @@ public class Raml
     @Scalar(rule = org.raml.parser.rule.BaseUriRule.class)
     private String baseUri;
 
-    @Mapping()
+    @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
 
     @Mapping(handler = ResourceHandler.class, implicit = true)

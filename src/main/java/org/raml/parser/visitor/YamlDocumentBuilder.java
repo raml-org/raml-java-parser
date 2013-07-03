@@ -156,7 +156,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
 
     private TupleBuilder<?, ?> buildDocumentBuilder()
     {
-        DefaultTupleBuilder documentBuilder = new DefaultTupleBuilder<Node, MappingNode>(new DefaultTupleHandler());
+        DefaultTupleBuilder<Node, MappingNode> documentBuilder = new DefaultTupleBuilder<Node, MappingNode>(new DefaultTupleHandler());
         documentBuilder.addBuildersFor(documentClass);
         return documentBuilder;
     }
