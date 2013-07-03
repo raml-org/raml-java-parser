@@ -47,6 +47,11 @@ public class Resource
         this.relativeUri = relativeUri;
     }
 
+    public String getParentUri()
+    {
+        return parentUri;
+    }
+
     public void setParentUri(String parentUri)
     {
         this.parentUri = parentUri;
