@@ -65,7 +65,7 @@ documentation:
                     }
                 example: '{ "input": "hola" }'
             multipart/form-data:
-                parameters:
+                formParameters:
                     form-1:
                         name: form 1
                         description: form 1 description

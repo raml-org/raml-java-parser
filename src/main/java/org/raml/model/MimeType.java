@@ -20,7 +20,7 @@ public class MimeType
     private String example;
 
     @Mapping
-    private Map<String, FormParameter> parameters;
+    private Map<String, FormParameter> formParameters;
 
 
     public String getType()
@@ -53,15 +53,15 @@ public class MimeType
         this.example = example;
     }
 
-    public Map<String, FormParameter> getParameters()
+    public Map<String, FormParameter> getFormParameters()
     {
         //TODO throw exception if invalid type?
-        return parameters;
+        return formParameters;
     }
 
-    public void setParameters(Map<String, FormParameter> parameters)
+    public void setFormParameters(Map<String, FormParameter> formParameters)
     {
-        this.parameters = parameters;
+        this.formParameters = formParameters;
     }
 
     @Override

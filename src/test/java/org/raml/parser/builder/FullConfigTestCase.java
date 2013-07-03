@@ -126,8 +126,8 @@ public class FullConfigTestCase
         String formMime = "multipart/form-data";
         MimeType formBody = action.getBody().get(formMime);
         assertThat(formBody.getType(), is(formMime));
-        assertThat(formBody.getParameters().size(), is(1));
-        FormParameter form1Param = formBody.getParameters().get("form-1");
+        assertThat(formBody.getFormParameters().size(), is(1));
+        FormParameter form1Param = formBody.getFormParameters().get("form-1");
         assertThat(form1Param.getName(), is("form 1"));
         assertThat(form1Param.getDescription(), is("form 1 description"));
         assertThat(form1Param.getType(), is(ParamType.NUMBER));

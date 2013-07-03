@@ -11,7 +11,7 @@ import org.raml.parser.annotation.Scalar;
 public class Trait
 {
 
-    @Key
+    @Scalar
     private String name;
 
     @Scalar
