@@ -2,35 +2,25 @@ package org.raml.parser.builder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.raml.parser.annotation.Key;
-import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
-import org.raml.parser.annotation.Scalar;
-import org.raml.parser.annotation.Sequence;
-import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.resolver.DefaultTupleHandler;
-import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
-import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.SequenceNode;
 
 public class DefaultTupleBuilder<K extends Node, V extends Node> implements TupleBuilder<K, V>
 {
 
-    protected Map<String, NodeBuilder<?>> builders;
+    protected Map<String, TupleBuilder<?, ?>> builders;
     private NodeBuilder<?> parent;
     private TupleHandler handler;
 
@@ -38,7 +28,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
 
     public DefaultTupleBuilder(TupleHandler tupleHandler)
     {
-        builders = new HashMap<String, NodeBuilder<?>>();
+        builders = new HashMap<String, TupleBuilder<?, ?>>();
         this.setHandler(tupleHandler);
     }
 
@@ -49,7 +39,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         {
             return new DefaultTupleBuilder(new DefaultTupleHandler());
         }
-        for (NodeBuilder tupleBuilder : builders.values())
+        for (TupleBuilder tupleBuilder : builders.values())
         {
             if (tupleBuilder.handles(tuple))
             {
@@ -60,7 +50,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     }
 
     @Override
-    public Object buildValue(Object parent, V tuple)
+    public Object buildValue(Object parent, V node)
     {
         return parent;
     }
@@ -83,7 +73,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     }
 
     @Override
-    public void setNestedBuilders(Map<String, NodeBuilder<?>> nestedBuilders)
+    public void setNestedBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders)
     {
         builders = nestedBuilders;
     }
@@ -91,171 +81,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
 
     public void addBuildersFor(Class<?> documentClass)
     {
-        if (logger.isDebugEnabled())
-        {
-            logger.debug("adding builders for " + documentClass);
-        }
-        List<Field> declaredFields = ReflectionUtils.getInheritedFields(documentClass);
-        Map<String, NodeBuilder<?>> innerBuilders = new HashMap<String, NodeBuilder<?>>();
-        for (Field declaredField : declaredFields)
-        {
-            Scalar scalar = declaredField.getAnnotation(Scalar.class);
-            Mapping mapping = declaredField.getAnnotation(Mapping.class);
-            Sequence sequence = declaredField.getAnnotation(Sequence.class);
-            NodeBuilder tupleBuilder = null;
-            TupleHandler tupleHandler = null;
-            if (scalar != null)
-            {
-
-                if (scalar.builder() != TupleBuilder.class)
-                {
-                    tupleBuilder = createCustomBuilder(scalar.builder());
-                }
-                else
-                {
-                    tupleBuilder = new ScalarTupleBuilder(declaredField.getName(), declaredField.getType());
-                }
-                if (scalar.handler() != TupleHandler.class)
-                {
-                    tupleHandler = createHandler(scalar.handler());
-                }
-                else if (!scalar.alias().isEmpty())
-                {
-                    tupleHandler = new DefaultScalarTupleHandler(ScalarNode.class, scalar.alias());
-                }
-
-            }
-            else if (mapping != null)
-            {
-                if (mapping.builder() != TupleBuilder.class)
-                {
-                    tupleBuilder = createCustomBuilder(mapping.builder());
-                }
-                else
-                {
-                    if (Map.class.isAssignableFrom(declaredField.getType()))
-                    {
-                        Type type = declaredField.getGenericType();
-                        if (type instanceof ParameterizedType)
-                        {
-                            ParameterizedType pType = (ParameterizedType) type;
-                            Type keyType = pType.getActualTypeArguments()[0];
-                            Type valueType = pType.getActualTypeArguments()[1];
-                            if (keyType instanceof Class<?> && valueType instanceof Class<?>)
-                            {
-                                Class<?> keyClass = (Class<?>) keyType;
-                                if (mapping.implicit())
-                                {
-                                    tupleBuilder = new ImplicitMapEntryBuilder(declaredField.getName(), keyClass, (Class) valueType);
-                                }
-                                else
-                                {
-                                    tupleBuilder = new MapTupleBuilder(declaredField.getName(), keyClass, (Class) valueType);
-                                }
-                                if (keyClass.isEnum())
-                                {
-                                    tupleBuilder.setHandler(new EnumHandler(MappingNode.class, (Class<? extends Enum>) keyClass));
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        tupleBuilder = new PojoTupleBuilder(declaredField.getName(), declaredField.getDeclaringClass());
-                    }
-                }
-
-                if (mapping.handler() != TupleHandler.class)
-                {
-                    tupleHandler = createHandler(mapping.handler());
-                }
-                else if (!mapping.alias().isEmpty())
-                {
-                    tupleHandler = new DefaultScalarTupleHandler(MappingNode.class, mapping.alias());
-                }
-            }
-            else if (sequence != null)
-            {
-                if (sequence.builder() != TupleBuilder.class)
-                {
-                    tupleBuilder = createCustomBuilder(sequence.builder());
-                }
-                else
-                {
-                    if (List.class.isAssignableFrom(declaredField.getType()))
-                    {
-                        Type type = declaredField.getGenericType();
-                        if (type instanceof ParameterizedType)
-                        {
-                            ParameterizedType pType = (ParameterizedType) type;
-                            Type itemType = pType.getActualTypeArguments()[0];
-                            if (itemType instanceof Class<?>)
-                            {
-                                tupleBuilder = new SequenceTupleBuilder(declaredField.getName(), (Class<?>) itemType);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new RuntimeException("Only List can be sequence. Error on field " + declaredField.getName());
-                    }
-                }
-
-                if (sequence.handler() != TupleHandler.class)
-                {
-                    tupleHandler = createHandler(sequence.handler());
-                }
-                else if (!sequence.alias().isEmpty())
-                {
-                    tupleHandler = new DefaultScalarTupleHandler(SequenceNode.class, sequence.alias());
-                }
-            }
-            if (tupleBuilder != null)
-            {
-                if (tupleHandler != null)
-                {
-                    tupleBuilder.setHandler(tupleHandler);
-                }
-                tupleBuilder.setParentNodeBuilder(this);
-                innerBuilders.put(declaredField.getName(), tupleBuilder);
-            }
-        }
-        setNestedBuilders(innerBuilders);
-    }
-
-    private TupleHandler createHandler(Class<? extends TupleHandler> handler)
-    {
-        try
-        {
-            return handler.newInstance();
-        }
-        catch (InstantiationException e)
-        {
-            throw new RuntimeException(e);
-        }
-        catch (IllegalAccessException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private TupleBuilder createCustomBuilder(Class<? extends TupleBuilder> builder)
-    {
-        TupleBuilder tupleBuilder;
-        try
-        {
-            tupleBuilder = builder.newInstance();
-        }
-        catch (InstantiationException e)
-        {
-            throw new RuntimeException(e);
-        }
-        catch (IllegalAccessException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return tupleBuilder;
+        new TupleBuilderFactory().addBuildersTo(documentClass, this);
     }
 
     @Override

@@ -25,9 +25,9 @@ public class BaseURIRuleTestCase
         YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is("The baseUri element is not a valid URI"));
         Assert.assertThat(errors.get(1).getMessage(),
+            CoreMatchers.is("The baseUri element is not a valid URI"));
+        Assert.assertThat(errors.get(0).getMessage(),
             CoreMatchers.is(BaseUriRule.getRuleEmptyMessage("baseUri")));
     }
 

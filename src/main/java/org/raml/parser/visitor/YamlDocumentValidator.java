@@ -1,17 +1,16 @@
 package org.raml.parser.visitor;
 
 import java.io.StringReader;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 
+import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.rule.DefaultTupleRule;
-import org.raml.parser.rule.ITupleRule;
+import org.raml.parser.rule.NodeRule;
+import org.raml.parser.rule.SequenceRule;
+import org.raml.parser.rule.TupleRule;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.utils.RuleFactory;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -25,7 +24,7 @@ public class YamlDocumentValidator implements NodeHandler
 
     private Class<?> documentClass;
 
-    private Stack<ITupleRule<?, ?>> ruleContext = new Stack<ITupleRule<?, ?>>();
+    private Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
 
     private List<ValidationResult> errorMessage = new ArrayList<ValidationResult>();
 
@@ -79,16 +78,14 @@ public class YamlDocumentValidator implements NodeHandler
     @SuppressWarnings("unchecked")
     public void onSequenceStart(SequenceNode node, TupleType tupleType)
     {
-        List<ValidationResult> result;
-        ITupleRule<?, ?> peek = ruleContext.peek();
+        List<ValidationResult> result = new ArrayList<ValidationResult>();
+        SequenceRule peek = (SequenceRule) ruleContext.peek();
 
         switch (tupleType)
         {
             case VALUE:
-                result = ((ITupleRule<?, SequenceNode>) peek).validateValue(node);
-                break;
-            default:
-                result = ((ITupleRule<SequenceNode, ?>) peek).validateKey(node);
+                result = ((NodeRule<SequenceNode>) peek).validateValue(node);
+                ruleContext.push(peek.getItemRule());
                 break;
         }
         addErrorMessageIfRequired(node, result);
@@ -97,7 +94,12 @@ public class YamlDocumentValidator implements NodeHandler
     @Override
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
-
+        switch (tupleType)
+        {
+            case VALUE:
+                ruleContext.pop();
+                break;
+        }
     }
 
     @Override
@@ -105,16 +107,16 @@ public class YamlDocumentValidator implements NodeHandler
     public void onScalar(ScalarNode node, TupleType tupleType)
     {
         List<ValidationResult> result;
-        ITupleRule<?, ?> peek = ruleContext.peek();
+        NodeRule<?> peek = ruleContext.peek();
 
         switch (tupleType)
         {
             case VALUE:
-                result = ((ITupleRule<?, ScalarNode>) peek).validateValue(node);
+                result = ((NodeRule<ScalarNode>) peek).validateValue(node);
                 break;
 
             default:
-                result = ((ITupleRule<ScalarNode, ?>) peek).validateKey(node);
+                result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
                 break;
         }
         addErrorMessageIfRequired(node, result);
@@ -140,7 +142,7 @@ public class YamlDocumentValidator implements NodeHandler
     @Override
     public void onDocumentEnd(MappingNode node)
     {
-        ITupleRule<?, ?> pop = ruleContext.pop();
+        NodeRule<?> pop = ruleContext.pop();
 
         List<ValidationResult> onRuleEnd = pop.onRuleEnd();
         addErrorMessageIfRequired(node, onRuleEnd);
@@ -150,7 +152,7 @@ public class YamlDocumentValidator implements NodeHandler
     @Override
     public void onTupleEnd(NodeTuple nodeTuple)
     {
-        ITupleRule<?, ?> rule = ruleContext.pop();
+        NodeRule<?> rule = ruleContext.pop();
         if (rule != null)
         {
             List<ValidationResult> onRuleEnd = rule.onRuleEnd();
@@ -166,10 +168,10 @@ public class YamlDocumentValidator implements NodeHandler
     public void onTupleStart(NodeTuple nodeTuple)
     {
 
-        ITupleRule<?, ?> tupleRule = ruleContext.peek();
+        TupleRule<?, ?> tupleRule = (TupleRule<?, ?>) ruleContext.peek();
         if (tupleRule != null)
         {
-            ITupleRule<?, ?> rule = tupleRule.getRuleForTuple(nodeTuple);
+            TupleRule<?, ?> rule = tupleRule.getRuleForTuple(nodeTuple);
             ruleContext.push(rule);
         }
         else
@@ -181,18 +183,8 @@ public class YamlDocumentValidator implements NodeHandler
 
     private DefaultTupleRule<Node, MappingNode> buildDocumentRule()
     {
-        DefaultTupleRule<Node, MappingNode> documentRule = new DefaultTupleRule<Node, MappingNode>();
-        Field[] declaredFields = documentClass.getDeclaredFields();
-        Map<String, ITupleRule<?, ?>> innerRules = new HashMap<String, ITupleRule<?, ?>>();
-        for (Field declaredField : declaredFields)
-        {
-            ITupleRule<?, ?> iTupleRule = RuleFactory.INSTANCE.createRuleFor(declaredField);
-            if (iTupleRule != null) {
-                iTupleRule.setParentTupleRule(documentRule);
-                innerRules.put(declaredField.getName(), iTupleRule);
-            }
-        }
-        documentRule.setNestedRules(innerRules);
+        DefaultTupleRule<Node, MappingNode> documentRule = new DefaultTupleRule<Node, MappingNode>(null, new DefaultTupleHandler());
+        documentRule.addRulesFor(documentClass);
         return documentRule;
     }
 

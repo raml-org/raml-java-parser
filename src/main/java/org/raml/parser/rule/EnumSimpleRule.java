@@ -11,9 +11,9 @@ public class EnumSimpleRule extends SimpleRule
 
     private List<String> validTypes;
 
-    public EnumSimpleRule(String ruleName, boolean required, List<String> validTypes)
+    public EnumSimpleRule(String ruleName, List<String> validTypes)
     {
-        super(ruleName, required);
+        super(ruleName);
         this.setValidTypes(validTypes);
     }
 
@@ -24,7 +24,7 @@ public class EnumSimpleRule extends SimpleRule
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (!getValidTypes().contains(value))
         {
-            validationResults.add(ValidationResult.createErrorResult("Invalid " + getRuleName() + " value: " + value, node.getStartMark(), node.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult("Invalid " + getFieldName() + " value: " + value, node.getStartMark(), node.getEndMark()));
         }
         validationResults.addAll(super.validateValue(node));
         if (ValidationResult.areValids(validationResults))

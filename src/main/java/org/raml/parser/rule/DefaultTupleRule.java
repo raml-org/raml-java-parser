@@ -6,48 +6,96 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.parser.resolver.DefaultTupleHandler;
+import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 
-public class DefaultTupleRule<K extends Node, V extends Node> implements ITupleRule<K, V>
+public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRule<K, V>
 {
 
-    private Map<String, ? extends ITupleRule<?, ?>> rules;
-    private ITupleRule<?, ?> parent;
+    private static final String IS_MISSING = "is missing";
+    protected Map<String, TupleRule<?, ?>> rules;
+    private TupleRule<?, ?> parent;
+    private TupleHandler tupleHandler;
+    private boolean required;
+    private K key;
+    private String fieldName;
 
-    public DefaultTupleRule()
+    public DefaultTupleRule(String fieldName, TupleHandler handler)
     {
-        rules = new HashMap<String, ITupleRule<?, ?>>();
+        this.fieldName = fieldName;
+        rules = new HashMap<String, TupleRule<?, ?>>();
+        this.tupleHandler = handler;
     }
 
-    public void setNestedRules(Map<String, ? extends ITupleRule<?, ?>> rules)
+    public static String getMissingRuleMessage(String ruleName)
+    {
+        return ruleName + " " + IS_MISSING;
+    }
+
+    public boolean isRequired()
+    {
+        return required;
+    }
+
+    public void setRequired(boolean required)
+    {
+        this.required = required;
+    }
+
+    public String getFieldName()
+    {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName)
+    {
+        this.fieldName = fieldName;
+    }
+
+
+    @Override
+    public void setNestedRules(Map<String, TupleRule<?, ?>> rules)
     {
         this.rules = rules;
     }
 
     @Override
+    public void setHandler(TupleHandler tupleHandler)
+    {
+        this.tupleHandler = tupleHandler;
+    }
+
+    @Override
     public boolean handles(NodeTuple touple)
     {
-        return true;
+        return tupleHandler.handles(touple);
     }
 
     @Override
     public List<ValidationResult> validateKey(K key)
     {
-        return Arrays.asList(ValidationResult.okResult());
+        this.key = key;
+        return new ArrayList<ValidationResult>(Arrays.asList(ValidationResult.okResult()));
     }
 
     @Override
     public List<ValidationResult> validateValue(V key)
     {
-        return Arrays.asList(ValidationResult.okResult());
+        return new ArrayList<ValidationResult>(Arrays.asList(ValidationResult.okResult()));
     }
 
     @Override
     public List<ValidationResult> onRuleEnd()
     {
         List<ValidationResult> result = new ArrayList<ValidationResult>();
-        for (ITupleRule<?, ?> rule : rules.values())
+        if (isRequired() && !wasAlreadyDefined())
+        {
+            result.add(ValidationResult.createErrorResult(getMissingRuleMessage(fieldName)));
+        }
+
+        for (TupleRule<?, ?> rule : rules.values())
         {
             List<ValidationResult> onRuleEnd = rule.onRuleEnd();
             result.addAll(onRuleEnd);
@@ -55,33 +103,44 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements ITupleR
         return result;
     }
 
-    @Override
-    public ITupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
+    private boolean wasAlreadyDefined()
     {
-        for (ITupleRule<?, ?> rule : rules.values())
+        return key != null;
+    }
+
+    public void addRulesFor(Class pojoClass)
+    {
+        new TupleRuleFactory().addRulesTo(pojoClass, this);
+    }
+
+    @Override
+    public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
+    {
+        for (TupleRule<?, ?> rule : rules.values())
         {
             if (rule.handles(nodeTuple))
             {
                 return rule;
             }
         }
-        return new DefaultTupleRule<Node, Node>();
+        return new DefaultTupleRule<Node, Node>("", new DefaultTupleHandler());
     }
 
     @Override
-    public void setParentTupleRule(ITupleRule<?, ?> parent)
+    public void setParentTupleRule(TupleRule<?, ?> parent)
     {
 
         this.parent = parent;
     }
 
     @Override
-    public ITupleRule<?, ?> getRuleByFieldName(String fieldName)
+    public TupleRule<?, ?> getRuleByFieldName(String fieldName)
     {
         return rules.get(fieldName);
     }
 
-    public ITupleRule<?, ?> getParent()
+
+    public TupleRule<?, ?> getParent()
     {
         return parent;
     }

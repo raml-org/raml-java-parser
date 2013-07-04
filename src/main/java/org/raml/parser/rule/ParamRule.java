@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 /**
@@ -20,34 +20,30 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
  * minimumLength: 1
  * <p/>
  * A new ParamRule will be created for communityPath and communityDomain
- * 
+ *
  * @author seba
  */
 public class ParamRule extends DefaultTupleRule<ScalarNode, Node>
 {
 
-    private List<? extends ITupleRule<?, ?>> rules;
 
     public ParamRule()
     {
-        super();
-        EnumSimpleRule typeRule = new EnumSimpleRule("type", false, Arrays.asList("string", "number",
-            "integer", "date"));
-        EnumSimpleRule requiredFieldRule = new EnumSimpleRule("required", false, Arrays.asList("y", "yes",
-            "YES", "t", "true", "TRUE", "n", "no", "NO", "f", "false", "FALSE"));
-
-        rules = Arrays.asList(new SimpleRule("name", false), typeRule, new EnumModifierRule("minLength",
-            Arrays.asList("string"), typeRule), new EnumModifierRule("maxLength", Arrays.asList("string"),
-            typeRule), new EnumModifierRule("minimum", Arrays.asList("integer", "number"), typeRule),
-            new EnumModifierRule("maximum", Arrays.asList("integer", "number"), typeRule), requiredFieldRule,
-            new SimpleRule("default", false));
+        super(null, new DefaultScalarTupleHandler(MappingNode.class, null));
+        EnumSimpleRule typeRule = new EnumSimpleRule("type", Arrays.asList("string", "number", "integer", "date"));
+        rules.put("type", typeRule);
+        List<String> validTypes = Arrays.asList("y", "yes",
+                                                "YES", "t", "true", "TRUE", "n", "no", "NO", "f", "false", "FALSE");
+        EnumSimpleRule requiredFieldRule = new EnumSimpleRule("required", validTypes);
+        rules.put("required", requiredFieldRule);
+        rules.put("name", new SimpleRule("name"));
+        rules.put("minLength", new EnumModifierRule("minLength", Arrays.asList("string"), typeRule));
+        rules.put("maxLength", new EnumModifierRule("maxLength", Arrays.asList("string"), typeRule));
+        rules.put("minimum", new EnumModifierRule("minimum", Arrays.asList("integer", "number"), typeRule));
+        rules.put("maximum", new EnumModifierRule("maximum", Arrays.asList("integer", "number"), typeRule));
+        rules.put("default", new SimpleRule("default"));
     }
 
-    @Override
-    public boolean handles(NodeTuple touple)
-    {
-        return touple.getKeyNode() instanceof ScalarNode && touple.getValueNode() instanceof MappingNode;
-    }
 
     @Override
     public List<ValidationResult> onRuleEnd()
@@ -55,21 +51,5 @@ public class ParamRule extends DefaultTupleRule<ScalarNode, Node>
         return Collections.emptyList();
     }
 
-    @Override
-    public ITupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
-    {
-        Node keyNode = nodeTuple.getKeyNode();
-        if (keyNode instanceof ScalarNode)
-        {
-            for (ITupleRule<?, ?> complexRule : rules)
-            {
-                if (complexRule.handles(nodeTuple))
-                {
-                    return complexRule;
-                }
-            }
 
-        }
-        return new DefaultTupleRule<Node, Node>();
-    }
 }

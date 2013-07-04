@@ -1,8 +1,5 @@
 package org.raml.parser.builder;
 
-import java.util.Map;
-
-import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 
 /**
@@ -12,14 +9,22 @@ import org.yaml.snakeyaml.nodes.Node;
  * Time: 5:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface NodeBuilder<V extends Node> extends TupleHandler
+public interface NodeBuilder<V extends Node>
 {
 
-    Object buildValue(Object parent, V tuple);
+    /**
+     * Builds the java model for the given node and set it to the parent object
+     *
+     * @param parent The parent object
+     * @param node   The node to build the model from
+     * @return The model
+     */
+    Object buildValue(Object parent, V node);
 
+    /**
+     * Sets the parent builder
+     * @param parentBuilder
+     */
     void setParentNodeBuilder(NodeBuilder parentBuilder);
 
-    void setNestedBuilders(Map<String, NodeBuilder<?>> nestedBuilders);
-
-    void setHandler(TupleHandler handler);
 }

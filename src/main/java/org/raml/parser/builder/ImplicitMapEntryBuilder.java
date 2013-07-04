@@ -3,10 +3,9 @@ package org.raml.parser.builder;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ConvertUtils;
-import org.apache.commons.beanutils.PropertyUtilsBean;
-import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -40,7 +39,7 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
     }
 
     @Override
-    public Object buildValue(Object parent, Node tuple)
+    public Object buildValue(Object parent, Node node)
     {
 
         Map actualParent;

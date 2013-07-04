@@ -10,5 +10,10 @@ package org.raml.parser.builder;
 public interface SequenceBuilder
 {
 
+    /**
+     * Returns the builder for the items of this sequence
+     *
+     * @return
+     */
     NodeBuilder getItemBuilder();
 }

@@ -25,7 +25,7 @@ public class BaseUriRule extends SimpleRule
 
     public BaseUriRule()
     {
-        super("baseUri", true);
+        super("baseUri");
 
         parameters = new HashSet<String>();
         pattern = Pattern.compile(URI_PATTERN);
@@ -48,14 +48,14 @@ public class BaseUriRule extends SimpleRule
     {
         String value = node.getValue();
         Matcher matcher = pattern.matcher(value);
-        List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
+        List<ValidationResult> validationResults = new ArrayList<ValidationResult>(super.validateValue(node));
         while (matcher.find())
         {
             String paramValue = matcher.group(1);
             value = value.replace("{" + paramValue + "}", "temp");
             parameters.add(paramValue);
         }
-        if (getVersionRule().getKeyNode() == null && parameters.contains(getVersionRule().getRuleName()))
+        if (getVersionRule().getKeyNode() == null && parameters.contains(getVersionRule().getFieldName()))
         {
             validationResults.add(ValidationResult.createErrorResult(VERSION_NOT_PRESENT_MESSAGE, node.getStartMark(), node.getEndMark()));
         }

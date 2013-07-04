@@ -38,7 +38,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 
 
     @Override
-    public Object buildValue(Object parent, Node tuple)
+    public Object buildValue(Object parent, Node node)
     {
         try
         {

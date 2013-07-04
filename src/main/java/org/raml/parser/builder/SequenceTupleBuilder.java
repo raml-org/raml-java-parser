@@ -24,7 +24,7 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
     }
 
     @Override
-    public Object buildValue(Object parent, SequenceNode tuple)
+    public Object buildValue(Object parent, SequenceNode node)
     {
         List<?> list = new ArrayList();
         ReflectionUtils.setProperty(parent, fieldName, list);

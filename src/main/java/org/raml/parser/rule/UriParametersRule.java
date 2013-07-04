@@ -3,6 +3,8 @@ package org.raml.parser.rule;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.resolver.DefaultTupleHandler;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -19,7 +21,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public UriParametersRule()
     {
-        super();
+        super("uriParameters", new DefaultScalarTupleHandler(MappingNode.class, "uriParameters"));
 
         this.errors = new ArrayList<ValidationResult>();
         this.parameters = new ArrayList<String>();
@@ -31,16 +33,6 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return errors;
     }
 
-
-    @Override
-    public boolean handles(NodeTuple touple)
-    {
-        if (touple.getKeyNode() instanceof ScalarNode && touple.getValueNode() instanceof MappingNode)
-        {
-            return ((ScalarNode) touple.getKeyNode()).getValue().equals("uriParameters");
-        }
-        return false;
-    }
 
     @Override
     public List<ValidationResult> validateKey(ScalarNode key)
@@ -59,7 +51,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
     }
 
     @Override
-    public ITupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
+    public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
     {
         Node keyNode = nodeTuple.getKeyNode();
         if (keyNode instanceof ScalarNode)
@@ -83,7 +75,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         {
             errors.add(ValidationResult.createErrorResult("Invalid element", keyNode.getStartMark(), keyNode.getEndMark()));
         }
-        return new DefaultTupleRule<Node, Node>();
+        return new DefaultTupleRule<Node, Node>(null, new DefaultTupleHandler());
     }
 
     public boolean wasAlreadyDefined()

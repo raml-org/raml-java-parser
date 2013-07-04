@@ -34,7 +34,7 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode
     }
 
     @Override
-    public Object buildValue(Object parent, MappingNode tuple)
+    public Object buildValue(Object parent, MappingNode node)
     {
         final HashMap<String, Object> map = new HashMap<String, Object>();
         ReflectionUtils.setProperty(parent, keyValue, map);
