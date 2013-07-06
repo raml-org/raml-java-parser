@@ -48,7 +48,8 @@ public class FullConfigTestCase
         String baseUri = "https://{host}.sample.com/{path}";
         String basePath = "/{path}";
         assertThat(raml.getBaseUri(), is(baseUri));
-        assertThat(raml.getUri(), is(basePath));
+        assertThat(raml.getBasePath(), is(basePath));
+        assertThat(raml.getUri(), is(""));
 
         //uri parameters
         assertThat(raml.getUriParameters().size(), is(3));
@@ -80,13 +81,13 @@ public class FullConfigTestCase
         String rootUri = "/";
         Resource rootResource = raml.getResources().get(rootUri);
         assertThat(rootResource.getRelativeUri(), is(rootUri));
-        assertThat(rootResource.getUri(), is(basePath + rootUri));
+        assertThat(rootResource.getUri(), is(rootUri));
         assertThat(rootResource.getName(), is("Root resource"));
 
         String mediaUri = "/media";
         Resource mediaResource = raml.getResources().get(mediaUri);
         assertThat(mediaResource.getRelativeUri(), is(mediaUri));
-        assertThat(mediaResource.getUri(), is(basePath + mediaUri));
+        assertThat(mediaResource.getUri(), is(mediaUri));
         assertThat(mediaResource.getName(), is("Media collection"));
 
         //actions
@@ -150,6 +151,7 @@ public class FullConfigTestCase
         String mediaItemUri = "/{mediaId}";
         Resource mediaItemResource = mediaResource.getResource(mediaItemUri);
         assertThat(mediaItemResource.getRelativeUri(), is(mediaItemUri));
+        assertThat(mediaItemResource.getUri(), is(mediaUri + mediaItemUri));
         assertThat(mediaItemResource.getName(), is("Media item"));
         assertThat(mediaItemResource.getActions().size(), is(1));
         assertThat(mediaItemResource.getUriParameters().size(), is(1));

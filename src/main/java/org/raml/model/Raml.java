@@ -97,7 +97,7 @@ public class Raml
         this.baseUri = baseUri;
     }
 
-    public String getUri()
+    public String getBasePath()
     {
         try
         {
@@ -108,6 +108,11 @@ public class Raml
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getUri()
+    {
+        return "";
     }
 
     public Map<String, Resource> getResources()
