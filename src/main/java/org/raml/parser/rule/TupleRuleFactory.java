@@ -6,7 +6,6 @@ package org.raml.parser.rule;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,20 +160,7 @@ public class TupleRuleFactory extends AbastractFactory
         }
         else
         {
-            if (declaredField.getType().isEnum())
-            {
-                Object[] enumConstants = declaredField.getType().getEnumConstants();
-                List<String> values = new ArrayList<String>();
-                for (Object enumConstant : enumConstants)
-                {
-                    values.add(enumConstant.toString().toUpperCase());
-                }
-                tupleRule = new EnumSimpleRule(declaredField.getName(), values);
-            }
-            else
-            {
-                tupleRule = new SimpleRule(declaredField.getName());
-            }
+            tupleRule = new SimpleRule(declaredField.getName(), declaredField.getType());
         }
         return tupleRule;
     }

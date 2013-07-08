@@ -25,7 +25,7 @@ public class BaseUriRule extends SimpleRule
 
     public BaseUriRule()
     {
-        super("baseUri");
+        super("baseUri", String.class);
 
         parameters = new HashSet<String>();
         pattern = Pattern.compile(URI_PATTERN);

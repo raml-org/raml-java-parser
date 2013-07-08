@@ -1,14 +1,12 @@
 
+
 package org.raml.parser.rule;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.raml.parser.resolver.DefaultScalarTupleHandler;
-import org.yaml.snakeyaml.nodes.MappingNode;
-import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.raml.model.parameter.UriParameter;
 
 /**
  * This Rule handles each parameter
@@ -23,33 +21,32 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
  *
  * @author seba
  */
-public class ParamRule extends DefaultTupleRule<ScalarNode, Node>
+public class ParamRule extends PojoTupleRule
 {
 
 
-    public ParamRule()
+    public ParamRule(String fieldName)
     {
-        super(null, new DefaultScalarTupleHandler(MappingNode.class, null));
-        EnumSimpleRule typeRule = new EnumSimpleRule("type", Arrays.asList("string", "number", "integer", "date"));
-        rules.put("type", typeRule);
-        List<String> validTypes = Arrays.asList("y", "yes",
-                                                "YES", "t", "true", "TRUE", "n", "no", "NO", "f", "false", "FALSE");
-        EnumSimpleRule requiredFieldRule = new EnumSimpleRule("required", validTypes);
-        rules.put("required", requiredFieldRule);
-        rules.put("name", new SimpleRule("name"));
+        super(fieldName,UriParameter.class);        
+    }
+    
+    @Override
+    public void addRulesFor(Class<?> pojoClass)
+    {
+        super.addRulesFor(pojoClass);        
+        SimpleRule typeRule = (SimpleRule) getRuleByFieldName("type");        
+        SimpleRule requiredFieldRule = new SimpleRule("required", Boolean.class);
+        
+        rules.put("required", requiredFieldRule);                
         rules.put("minLength", new EnumModifierRule("minLength", Arrays.asList("string"), typeRule));
         rules.put("maxLength", new EnumModifierRule("maxLength", Arrays.asList("string"), typeRule));
         rules.put("minimum", new EnumModifierRule("minimum", Arrays.asList("integer", "number"), typeRule));
-        rules.put("maximum", new EnumModifierRule("maximum", Arrays.asList("integer", "number"), typeRule));
-        rules.put("default", new SimpleRule("default"));
+        rules.put("maximum", new EnumModifierRule("maximum", Arrays.asList("integer", "number"), typeRule));       
     }
-
 
     @Override
     public List<ValidationResult> onRuleEnd()
     {
         return Collections.emptyList();
     }
-
-
 }

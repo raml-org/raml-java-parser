@@ -18,8 +18,6 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
     public SequenceTupleRule(String fieldName, Class<?> elementClass)
     {
         super(fieldName, new DefaultScalarTupleHandler(SequenceNode.class, fieldName));
-
-
         this.elementClass = elementClass;
     }
 
@@ -29,7 +27,7 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
         //TODO add it to a list to invoke onRuleEnd on all the rules created
         if (ReflectionUtils.isWrapperOrString(elementClass))
         {
-            return new SimpleRule(getFieldName());
+            return new SimpleRule(getFieldName(), elementClass);
         }
         return new PojoTupleRule("", elementClass);
     }

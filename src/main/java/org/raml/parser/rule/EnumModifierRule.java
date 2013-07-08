@@ -9,12 +9,12 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class EnumModifierRule extends SimpleRule
 {
 
-    private EnumSimpleRule enumRule;
+    private SimpleRule enumRule;
     private List<String> enumTypes;
 
-    public EnumModifierRule(String ruleName, List<String> enumTypes, EnumSimpleRule enumRule)
+    public EnumModifierRule(String ruleName, List<String> enumTypes, SimpleRule enumRule)
     {
-        super(ruleName);
+        super(ruleName, Integer.class);
         this.enumTypes = enumTypes;
         this.enumRule = enumRule;
     }
@@ -41,7 +41,7 @@ public class EnumModifierRule extends SimpleRule
         return validationResults;
     }
 
-    private String generateMessageTypes(List<String> enumTypes2, EnumSimpleRule enumRule2)
+    private String generateMessageTypes(List<String> enumTypes2, SimpleRule enumRule2)
     {
         StringBuilder types = new StringBuilder();
         for (int i = 0; i < enumTypes.size() - 1; i++)

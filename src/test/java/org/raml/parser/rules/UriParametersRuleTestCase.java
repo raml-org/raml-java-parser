@@ -155,7 +155,7 @@ public class UriParametersRuleTestCase
         YamlDocumentValidator ramlSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlSpecValidator.validate(simpleTest);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(), CoreMatchers.is("Invalid required value: o"));
+        Assert.assertThat(errors.get(0).getMessage(), CoreMatchers.is("Type mismatch: required must be of type Boolean"));
     }
     
     @Test

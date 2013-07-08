@@ -54,17 +54,18 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
     public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
     {
         Node keyNode = nodeTuple.getKeyNode();
+        String paramName;
         if (keyNode instanceof ScalarNode)
-        {
-            String paramName = ((ScalarNode) keyNode).getValue();
+        {            
+            paramName = ((ScalarNode) keyNode).getValue();
             if (paramName.equals("version"))
             {
                 errors.add(ValidationResult.createErrorResult("'" + paramName + "'" + " can not be declared, it is a reserved URI parameter.", keyNode.getStartMark(), keyNode.getEndMark()));
             }
             else if (getUriRule().getParameters().contains(paramName))
             {
-                parameters.add(paramName);
-                return new ParamRule();
+                parameters.add(paramName);  
+                return new ParamRule(paramName);
             }
             else
             {
@@ -75,7 +76,8 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         {
             errors.add(ValidationResult.createErrorResult("Invalid element", keyNode.getStartMark(), keyNode.getEndMark()));
         }
-        return new DefaultTupleRule<Node, Node>(null, new DefaultTupleHandler());
+        
+        return new DefaultTupleRule<>(keyNode.toString(), new DefaultTupleHandler());
     }
 
     public boolean wasAlreadyDefined()
