@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -107,8 +106,12 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     {
         return key != null;
     }
+    
+    public K getKey(){
+        return key;
+    }
 
-    public void addRulesFor(Class pojoClass)
+    public void addRulesFor(Class<?> pojoClass)
     {
         new TupleRuleFactory().addRulesTo(pojoClass, this);
     }
@@ -123,7 +126,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
                 return rule;
             }
         }
-        return new DefaultTupleRule<Node, Node>("", new DefaultTupleHandler());
+        return new UnknownTupleRule<Node,Node>(nodeTuple.getKeyNode().toString());
     }
 
     @Override
