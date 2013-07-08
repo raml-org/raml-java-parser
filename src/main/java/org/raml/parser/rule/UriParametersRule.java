@@ -50,6 +50,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return validationResults;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
     {
@@ -77,7 +78,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
             errors.add(ValidationResult.createErrorResult("Invalid element", keyNode.getStartMark(), keyNode.getEndMark()));
         }
         
-        return new DefaultTupleRule<>(keyNode.toString(), new DefaultTupleHandler());
+        return new DefaultTupleRule(keyNode.toString(), new DefaultTupleHandler());
     }
 
     public boolean wasAlreadyDefined()
