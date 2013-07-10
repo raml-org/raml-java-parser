@@ -34,10 +34,8 @@ public class ParamRule extends PojoTupleRule
     public void addRulesFor(Class<?> pojoClass)
     {
         super.addRulesFor(pojoClass);        
-        SimpleRule typeRule = (SimpleRule) getRuleByFieldName("type");        
-        SimpleRule requiredFieldRule = new SimpleRule("required", Boolean.class);
-        
-        rules.put("required", requiredFieldRule);                
+        SimpleRule typeRule = (SimpleRule) getRuleByFieldName("type");
+
         rules.put("minLength", new EnumModifierRule("minLength", Arrays.asList("string"), typeRule));
         rules.put("maxLength", new EnumModifierRule("maxLength", Arrays.asList("string"), typeRule));
         rules.put("minimum", new EnumModifierRule("minimum", Arrays.asList("integer", "number"), typeRule));

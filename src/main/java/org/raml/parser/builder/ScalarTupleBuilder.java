@@ -1,8 +1,8 @@
 package org.raml.parser.builder;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.utils.ConvertUtils;
 import org.raml.parser.utils.ReflectionUtils;
-import org.apache.commons.beanutils.ConvertUtils;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 
@@ -27,15 +27,7 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
     {
 
         final String value = node.getValue();
-        Object converted;
-        if (type.isEnum())
-        {
-            converted = Enum.valueOf((Class) type, value.toUpperCase());
-        }
-        else
-        {
-            converted = ConvertUtils.convert(value, type);
-        }
+        final Object converted = ConvertUtils.convertTo(value, type);
         ReflectionUtils.setProperty(parent, fieldName, converted);
 
         return parent;

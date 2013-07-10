@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.Converter;
+import org.apache.commons.lang.ClassUtils;
 
 public class ConvertUtils
 {
@@ -42,9 +43,10 @@ public class ConvertUtils
         }
         else if (type.isInstance(value)) {
             return true;
-        } else if (type.equals(Boolean.class)) {
+        } else if (type.isPrimitive()) {
             try {
-                convertTo(value, type);
+                Class<?> wrapperClass = ClassUtils.primitiveToWrapper(type);
+                convertTo(value, wrapperClass);
                 return true;
             } catch (ClassCastException e) {
                 return false;

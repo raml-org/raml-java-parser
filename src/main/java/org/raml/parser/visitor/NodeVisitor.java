@@ -62,7 +62,9 @@ public class NodeVisitor
     public void visitDocument(MappingNode node)
     {
         nodeHandler.onDocumentStart(node);
-        doVisitMappingNode(node);
+        if(node instanceof MappingNode){
+            doVisitMappingNode(node);
+        }
         nodeHandler.onDocumentEnd(node);
     }
 
