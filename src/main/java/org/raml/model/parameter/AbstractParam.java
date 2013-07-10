@@ -38,7 +38,10 @@ public class AbstractParam
 
     @Scalar(alias = "default")
     private String defaultValue;
-
+    
+    @Sequence
+    private List<String> requires;
+    
     @Scalar
     private String example;
 
