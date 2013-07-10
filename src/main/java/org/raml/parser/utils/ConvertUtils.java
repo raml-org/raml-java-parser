@@ -24,7 +24,11 @@ public class ConvertUtils
         }
         else
         {
-            return type.cast(org.apache.commons.beanutils.ConvertUtils.convert(value, type));
+            Class<T> wrapperClass = type;
+            if (type.isPrimitive()) {
+                wrapperClass = ClassUtils.primitiveToWrapper(type);
+            }
+            return wrapperClass.cast(org.apache.commons.beanutils.ConvertUtils.convert(value, type));
         }
     }
 
