@@ -1,10 +1,13 @@
 package org.raml.parser.visitor;
 
+import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import org.raml.parser.loader.DefaultResourceLoader;
+import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.NodeRule;
@@ -23,15 +26,19 @@ public class YamlDocumentValidator implements NodeHandler
 {
 
     private Class<?> documentClass;
-
     private Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
-
     private List<ValidationResult> errorMessage = new ArrayList<ValidationResult>();
+    private ResourceLoader resourceLoader;
 
     public YamlDocumentValidator(Class<?> documentClass)
     {
-        this.documentClass = documentClass;
+        this(documentClass, new DefaultResourceLoader());
+    }
 
+    public YamlDocumentValidator(Class<?> documentClass, ResourceLoader resourceLoader)
+    {
+        this.documentClass = documentClass;
+        this.resourceLoader = resourceLoader;
     }
 
     public List<ValidationResult> validate(String content)
@@ -188,4 +195,9 @@ public class YamlDocumentValidator implements NodeHandler
         return documentRule;
     }
 
+    @Override
+    public InputStream fetchResource(String resourceName)
+    {
+        return resourceLoader.fetchResource(resourceName);
+    }
 }

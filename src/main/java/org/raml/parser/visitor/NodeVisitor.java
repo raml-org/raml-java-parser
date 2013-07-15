@@ -1,11 +1,8 @@
 package org.raml.parser.visitor;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +18,8 @@ import org.yaml.snakeyaml.nodes.Tag;
 
 public class NodeVisitor
 {
+
+    public static final String INCLUDE_TAG = "tag:raml.org,0.1:include";
 
     private NodeHandler nodeHandler;
 
@@ -45,7 +44,7 @@ public class NodeVisitor
         {
             Node keyNode = nodeTuple.getKeyNode();
             Node valueNode = nodeTuple.getValueNode();
-            if (valueNode.getTag().startsWith("tag:raml.org,0.1:include"))
+            if (valueNode.getTag().startsWith(INCLUDE_TAG))
             {
                 valueNode = resolveInclude((ScalarNode) valueNode);
                 nodeTuple = new NodeTuple(keyNode, valueNode);
@@ -107,15 +106,8 @@ public class NodeVisitor
         try
         {
             String resourceName = node.getValue();
-            try
-            {
-                URL url = new URL(resourceName);
-                inputStream = new BufferedInputStream(url.openStream());
-            }
-            catch (MalformedURLException e)
-            {
-                inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
-            }
+            inputStream = nodeHandler.fetchResource(resourceName);
+
 
             if (inputStream == null)
             {

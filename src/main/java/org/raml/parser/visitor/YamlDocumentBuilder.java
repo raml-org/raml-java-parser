@@ -14,6 +14,8 @@ import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
+import org.raml.parser.loader.DefaultResourceLoader;
+import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -36,12 +38,17 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
     private Stack<Object> documentContext = new Stack<Object>();
     private MappingNode rootNode;
-
+    private ResourceLoader resourceLoader;
 
     public YamlDocumentBuilder(Class<T> documentClass)
     {
-        this.documentClass = documentClass;
+        this(documentClass, new DefaultResourceLoader());
+    }
 
+    public YamlDocumentBuilder(Class<T> documentClass, ResourceLoader resourceLoader)
+    {
+        this.documentClass = documentClass;
+        this.resourceLoader = resourceLoader;
     }
 
     public T build(Reader content)
@@ -190,6 +197,12 @@ public class YamlDocumentBuilder<T> implements NodeHandler
             throw new IllegalStateException("Unexpected builderContext state");
         }
 
+    }
+
+    @Override
+    public InputStream fetchResource(String resourceName)
+    {
+        return resourceLoader.fetchResource(resourceName);
     }
 
     public static String dumpFromAst(Node rootNode)
