@@ -1,0 +1,28 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: GitHub API
+version: v3
+baseUri: https://api.github.com
+/user:
+ name: Authenticated User
+ /emails: { name: Emails }
+ /followers: { name: Followers }
+ /following: { name: Following }
+/users:
+ name: Users
+ /{userId}:
+   name: User
+   uriParameters:
+     userId:
+       name: User ID
+       type: integer
+   /followers: { name: Followers }
+   /following: { name: Following }
+   /keys:
+     name: Public Keys
+     /{keyId}:
+       name: Public Key
+       uriParameters:
+         keyId:
+           name: Public Key ID
+           type: integer

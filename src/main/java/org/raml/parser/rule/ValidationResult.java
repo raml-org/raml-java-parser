@@ -71,4 +71,12 @@ public class ValidationResult
     {
         return (validationResults.size() == 1 && validationResults.get(0).equals(ValidationResult.okResult()));
     }
+
+    @Override
+    public String toString()
+    {
+        return  " message='" + message + '\'' +
+                "" + endMark +
+               '}';
+    }
 }

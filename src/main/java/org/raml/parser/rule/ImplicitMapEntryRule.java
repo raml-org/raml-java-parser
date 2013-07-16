@@ -3,6 +3,8 @@
  */
 package org.raml.parser.rule;
 
+import java.util.List;
+
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
@@ -30,5 +32,13 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
             addRulesFor(valueType);
         }
         return super.getRuleForTuple(nodeTuple);
+    }
+
+    @Override
+    public List<ValidationResult> onRuleEnd()
+    {
+        List<ValidationResult> validationResults = super.onRuleEnd();
+        rules.clear();
+        return validationResults;
     }
 }
