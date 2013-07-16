@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeId;
@@ -43,6 +44,10 @@ public class NodeVisitor
         for (NodeTuple nodeTuple : tuples)
         {
             Node keyNode = nodeTuple.getKeyNode();
+            if (!(keyNode instanceof ScalarNode))
+            {
+                throw new YAMLException("Only scalar keys are allowed: " + keyNode.getStartMark());
+            }
             Node valueNode = nodeTuple.getValueNode();
             if (valueNode.getTag().startsWith(INCLUDE_TAG))
             {
