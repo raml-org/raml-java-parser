@@ -47,7 +47,7 @@ public class ConvertUtils
         }
         else if (type.isInstance(value)) {
             return true;
-        } else if (type.isPrimitive()) {
+        } else {
             try {
                 Class<?> wrapperClass = ClassUtils.primitiveToWrapper(type);
                 convertTo(value, wrapperClass);
@@ -58,7 +58,6 @@ public class ConvertUtils
                 return false;
             }
         }
-        return false;
     }
     
     private static void initializeConverters()
