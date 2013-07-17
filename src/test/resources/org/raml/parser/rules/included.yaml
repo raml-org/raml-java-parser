@@ -8,7 +8,7 @@ get:
                     schema: !include org/raml/parser/rules/element.json
 /{subelement}:
     get:
-        response:
+        responses:
             200:
                 body:
                     application/json:
@@ -17,7 +17,7 @@ get:
     post:
         body:
             application/x-www-form-urlencoded:
-                parameters:
+                formParameters:
                     name:
                         description: This is the name.
                         type: string

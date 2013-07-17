@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
@@ -14,7 +13,7 @@ import org.raml.parser.visitor.YamlDocumentValidator;
 public class IncludesTestCase
 {
 
-    @Test @Ignore
+    @Test
     public void include() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/includes.yaml"));
@@ -22,4 +21,5 @@ public class IncludesTestCase
         List<ValidationResult> errors = ramlValidator.validate(raml);
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
+
 }
