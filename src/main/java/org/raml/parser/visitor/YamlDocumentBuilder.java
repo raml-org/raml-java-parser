@@ -200,6 +200,16 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     }
 
     @Override
+    public void onSequenceElementStart(Node sequenceNode)
+    {
+    }
+
+    @Override
+    public void onSequenceElementEnd(Node sequenceNode)
+    {
+    }
+
+    @Override
     public InputStream fetchResource(String resourceName)
     {
         return resourceLoader.fetchResource(resourceName);

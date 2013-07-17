@@ -92,9 +92,11 @@ public class NodeVisitor
     {
         nodeHandler.onSequenceStart(node, tupleType);
         List<Node> value = node.getValue();
-        for (Node node2 : value)
+        for (Node sequenceNode : value)
         {
-            visit(node2, tupleType);
+            nodeHandler.onSequenceElementStart(sequenceNode);
+            visit(sequenceNode, tupleType);
+            nodeHandler.onSequenceElementEnd(sequenceNode);
         }
         nodeHandler.onSequenceEnd(node, tupleType);
     }

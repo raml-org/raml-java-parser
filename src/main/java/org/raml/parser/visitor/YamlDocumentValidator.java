@@ -92,7 +92,6 @@ public class YamlDocumentValidator implements NodeHandler
         {
             case VALUE:
                 result = ((NodeRule<SequenceNode>) peek).validateValue(node);
-                ruleContext.push(peek.getItemRule());
                 break;
         }
         addErrorMessageIfRequired(node, result);
@@ -101,12 +100,7 @@ public class YamlDocumentValidator implements NodeHandler
     @Override
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
-        switch (tupleType)
-        {
-            case VALUE:
-                ruleContext.pop();
-                break;
-        }
+
     }
 
     @Override
@@ -186,6 +180,21 @@ public class YamlDocumentValidator implements NodeHandler
             throw new IllegalStateException("Unexpected ruleContext state");
         }
 
+    }
+
+    @Override
+    public void onSequenceElementStart(Node sequenceNode)
+    {
+        SequenceRule peek = (SequenceRule) ruleContext.peek();
+        ruleContext.push(peek.getItemRule());
+    }
+
+    @Override
+    public void onSequenceElementEnd(Node sequenceNode)
+    {
+        NodeRule<?> rule = ruleContext.pop();
+        List<ValidationResult> validationResults = rule.onRuleEnd();
+        addErrorMessageIfRequired(sequenceNode,validationResults);
     }
 
     private DefaultTupleRule<Node, MappingNode> buildDocumentRule()

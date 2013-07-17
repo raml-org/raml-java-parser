@@ -2,6 +2,7 @@ package org.raml.parser.visitor;
 
 import org.raml.parser.loader.ResourceLoader;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
@@ -27,4 +28,7 @@ public interface NodeHandler extends ResourceLoader
 
     void onTupleStart(NodeTuple nodeTuple);
 
+    void onSequenceElementStart(Node sequenceNode);
+
+    void onSequenceElementEnd(Node sequenceNode);
 }
