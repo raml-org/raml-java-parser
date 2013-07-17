@@ -1,0 +1,14 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: Leagues API
+version: v1
+baseUri: http://localhost/api
+documentation:
+    - title: Employees
+      content: |
+        Welcome to the _Employees API_ Documentation. The _Employees API_
+        allows you to view a complete list of your employees. You may also
+        add or delete employees to keep the list up to date.
+    - title: Contact
+      content: |
+        If you need support, please contact asr@mulesoft.com.
