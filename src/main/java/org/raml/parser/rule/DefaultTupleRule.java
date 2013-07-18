@@ -67,10 +67,11 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     }
 
     @Override
-    public boolean handles(NodeTuple touple)
+    public TupleHandler getHandler()
     {
-        return tupleHandler.handles(touple);
+        return tupleHandler;
     }
+
 
     @Override
     public List<ValidationResult> validateKey(K key)
@@ -121,7 +122,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     {
         for (TupleRule<?, ?> rule : rules.values())
         {
-            if (rule.handles(nodeTuple))
+            if (rule.getHandler().handles(nodeTuple))
             {
                 return rule;
             }

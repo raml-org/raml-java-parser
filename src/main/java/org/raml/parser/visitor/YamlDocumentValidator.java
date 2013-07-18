@@ -1,6 +1,5 @@
 package org.raml.parser.visitor;
 
-import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class YamlDocumentValidator implements NodeHandler
 
         try
         {
-            NodeVisitor nodeVisitor = new NodeVisitor(this);
+            NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader);
             for (Node data : yamlParser.composeAll(new StringReader(content)))
             {
                 if (data instanceof MappingNode)
@@ -194,7 +193,7 @@ public class YamlDocumentValidator implements NodeHandler
     {
         NodeRule<?> rule = ruleContext.pop();
         List<ValidationResult> validationResults = rule.onRuleEnd();
-        addErrorMessageIfRequired(sequenceNode,validationResults);
+        addErrorMessageIfRequired(sequenceNode, validationResults);
     }
 
     private DefaultTupleRule<Node, MappingNode> buildDocumentRule()
@@ -204,9 +203,5 @@ public class YamlDocumentValidator implements NodeHandler
         return documentRule;
     }
 
-    @Override
-    public InputStream fetchResource(String resourceName)
-    {
-        return resourceLoader.fetchResource(resourceName);
-    }
+
 }

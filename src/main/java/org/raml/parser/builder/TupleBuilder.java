@@ -6,7 +6,7 @@ import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 
-public interface TupleBuilder<K extends Node, V extends Node> extends NodeBuilder<V> , TupleHandler
+public interface TupleBuilder<K extends Node, V extends Node> extends NodeBuilder<V>
 {
 
     /**
@@ -19,6 +19,8 @@ public interface TupleBuilder<K extends Node, V extends Node> extends NodeBuilde
     void buildKey(Object parent, K tuple);
 
     void setHandler(TupleHandler handler);
+
+    TupleHandler getHandler();
 
     void setNestedBuilders(Map<String, TupleBuilder<?,?>> nestedBuilders);
 

@@ -41,7 +41,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         }
         for (TupleBuilder tupleBuilder : builders.values())
         {
-            if (tupleBuilder.handles(tuple))
+            if (tupleBuilder.getHandler().handles(tuple))
             {
                 return tupleBuilder;
             }
@@ -58,6 +58,12 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     public void setHandler(TupleHandler handler)
     {
         this.handler = handler;
+    }
+
+    @Override
+    public TupleHandler getHandler()
+    {
+        return handler;
     }
 
     @Override
@@ -84,11 +90,6 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         new TupleBuilderFactory().addBuildersTo(documentClass, this);
     }
 
-    @Override
-    public final boolean handles(NodeTuple tuple)
-    {
-        return handler != null ? handler.handles(tuple) : false;
-    }
 
     public NodeBuilder getParent()
     {

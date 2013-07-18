@@ -7,7 +7,7 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public interface NodeHandler extends ResourceLoader
+public interface NodeHandler
 {
 
     void onMappingNodeStart(MappingNode mappingNode);

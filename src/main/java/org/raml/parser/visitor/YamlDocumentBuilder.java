@@ -54,7 +54,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     public T build(Reader content)
     {
         Yaml yamlParser = new Yaml();
-        NodeVisitor nodeVisitor = new NodeVisitor(this);
+        NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader);
         rootNode = (MappingNode) yamlParser.compose(content);
         nodeVisitor.visitDocument(rootNode);
         postBuildProcess(); //FIXME apply traits
@@ -209,11 +209,6 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     {
     }
 
-    @Override
-    public InputStream fetchResource(String resourceName)
-    {
-        return resourceLoader.fetchResource(resourceName);
-    }
 
     public static String dumpFromAst(Node rootNode)
     {

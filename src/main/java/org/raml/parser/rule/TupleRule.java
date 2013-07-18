@@ -7,7 +7,7 @@ import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 
-public interface TupleRule<K extends Node, V extends Node> extends TupleHandler, NodeRule<V>
+public interface TupleRule<K extends Node, V extends Node> extends  NodeRule<V>
 {
 
 
@@ -28,6 +28,8 @@ public interface TupleRule<K extends Node, V extends Node> extends TupleHandler,
     void setNestedRules(Map<String, TupleRule<?, ?>> innerBuilders);
 
     void setHandler(TupleHandler tupleHandler);
+
+    TupleHandler getHandler();
 
     void setRequired(boolean required);
 }
