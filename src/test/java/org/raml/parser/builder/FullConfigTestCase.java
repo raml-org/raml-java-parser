@@ -141,6 +141,7 @@ public class FullConfigTestCase
         Response response200 = action.getResponses().get("200");
         assertThat(response200.getBody().size(), is(1));
         assertThat(response200.getBody().get("application/json").getExample(), is("{ \"key\": \"value\" }"));
+        assertThat(response200.getHeaders().size(), is(2));
         Response response400 = action.getResponses().get("400");
         assertThat(response400.getBody().size(), is(2));
         assertThat(response400.getBody().get("text/xml").getExample(), is("<root>none</root>"));
