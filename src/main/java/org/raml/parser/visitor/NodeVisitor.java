@@ -121,9 +121,9 @@ public class NodeVisitor
 
             if (inputStream == null)
             {
-                throw new RuntimeException("resource not found: " + resourceName);
-            }
-            if (resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
+                nodeHandler.onIncludeResourceNotFound(node);
+                includeNode = new ScalarNode(Tag.STR, resourceName, node.getStartMark(), node.getEndMark(), node.getStyle());
+            }else if (resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
             {
                 Yaml yamlParser = new Yaml();
                 includeNode = yamlParser.compose(new InputStreamReader(inputStream));

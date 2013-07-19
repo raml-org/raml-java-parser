@@ -209,6 +209,12 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     {
     }
 
+    @Override
+    public void onIncludeResourceNotFound(ScalarNode node)
+    {
+        throw new RuntimeException("resource not found: " + node.getValue());
+    }
+
 
     public static String dumpFromAst(Node rootNode)
     {

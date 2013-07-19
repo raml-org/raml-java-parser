@@ -2,6 +2,7 @@ package org.raml.parser.visitor;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -195,6 +196,13 @@ public class YamlDocumentValidator implements NodeHandler
         List<ValidationResult> validationResults = rule.onRuleEnd();
         addErrorMessageIfRequired(sequenceNode, validationResults);
     }
+
+    @Override
+    public void onIncludeResourceNotFound(ScalarNode node)
+    {
+        addErrorMessageIfRequired(node, Arrays.asList(ValidationResult.createErrorResult("Include can not be resolved " + node.getValue(), node.getStartMark(), node.getEndMark())));
+    }
+
 
     private DefaultTupleRule<Node, MappingNode> buildDocumentRule()
     {
