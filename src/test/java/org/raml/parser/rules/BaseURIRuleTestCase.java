@@ -1,13 +1,12 @@
-/**
- * 
- */
-
 package org.raml.parser.rules;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.BaseUriRule;
@@ -24,22 +23,18 @@ public class BaseURIRuleTestCase
                             + "baseUri:";
         YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
-        Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(1).getMessage(),
-            CoreMatchers.is("The baseUri element is not a valid URI"));
-        Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is(BaseUriRule.getRuleEmptyMessage("baseUri")));
+        assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(1).getMessage(), is("The baseUri element is not a valid URI"));
+        assertThat(errors.get(0).getMessage(), is(BaseUriRule.getRuleEmptyMessage("baseUri")));
     }
 
     @Test
-    public void testBaseURIPresent()
+    public void testBaseURIOptional()
     {
         String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle";
         YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
-        Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is(BaseUriRule.getMissingRuleMessage("baseUri")));
+        assertTrue("Errors must be empty", errors.isEmpty());
     }
 
     @Test
@@ -49,7 +44,7 @@ public class BaseURIRuleTestCase
                             + "baseUri: notavaliduri.com";
         YamlDocumentValidator havenSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = havenSpecValidator.validate(simpleTest);
-        Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(), CoreMatchers.is(BaseUriRule.URI_NOT_VALID_MESSAGE));
+        assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(0).getMessage(), is(BaseUriRule.URI_NOT_VALID_MESSAGE));
     }
 }
