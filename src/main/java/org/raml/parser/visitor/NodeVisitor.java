@@ -69,7 +69,8 @@ public class NodeVisitor
     public void visitDocument(MappingNode node)
     {
         nodeHandler.onDocumentStart(node);
-        if(node instanceof MappingNode){
+        if (node instanceof MappingNode)
+        {
             doVisitMappingNode(node);
         }
         nodeHandler.onDocumentEnd(node);
@@ -123,7 +124,8 @@ public class NodeVisitor
             {
                 nodeHandler.onIncludeResourceNotFound(node);
                 includeNode = new ScalarNode(Tag.STR, resourceName, node.getStartMark(), node.getEndMark(), node.getStyle());
-            }else if (resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
+            }
+            else if (resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
             {
                 Yaml yamlParser = new Yaml();
                 includeNode = yamlParser.compose(new InputStreamReader(inputStream));
