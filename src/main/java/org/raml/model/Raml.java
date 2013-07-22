@@ -27,7 +27,7 @@ public class Raml
     @Scalar()
     private String version;
 
-    @Scalar(rule = org.raml.parser.rule.BaseUriRule.class, required = true)
+    @Scalar(rule = org.raml.parser.rule.BaseUriRule.class)
     private String baseUri;
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
