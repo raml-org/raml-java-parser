@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser</artifactId>
-    <version>0.1-RC1</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Raml parser</name>
     <description>Java implementation of the raml parser</description>
@@ -121,7 +121,7 @@
         <connection>scm:git:git://github.com:restful-api-modeling-lang/java-parser.git</connection>
         <developerConnection>scm:git:git@github.com:restful-api-modeling-lang/java-parser.git</developerConnection>
         <url>http://github.com/restful-api-modeling-lang/java-parser</url>
-        <tag>0.1-RC1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
