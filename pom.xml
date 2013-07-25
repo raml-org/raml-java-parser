@@ -126,12 +126,12 @@
 
     <distributionManagement>
         <repository>
-            <id>mulesoft-releases</id>
+            <id>mulesoft-master-releases</id>
             <name>MuleSoft Releases Repository</name>
             <url>https://repository-master.mulesoft.org/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>mulesoft-snapshots</id>
+            <id>mulesoft-master-snapshots</id>
             <name>MuleSoft Snapshots Repository</name>
             <url>https://repository-master.mulesoft.org/snapshots/</url>
         </snapshotRepository>
