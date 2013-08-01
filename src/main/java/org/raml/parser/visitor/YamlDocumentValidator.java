@@ -86,7 +86,7 @@ public class YamlDocumentValidator implements NodeHandler
     public void onSequenceStart(SequenceNode node, TupleType tupleType)
     {
         List<ValidationResult> result = new ArrayList<ValidationResult>();
-        SequenceRule peek = (SequenceRule) ruleContext.peek();
+        NodeRule peek = ruleContext.peek();
 
         switch (tupleType)
         {
@@ -185,8 +185,15 @@ public class YamlDocumentValidator implements NodeHandler
     @Override
     public void onSequenceElementStart(Node sequenceNode)
     {
-        SequenceRule peek = (SequenceRule) ruleContext.peek();
-        ruleContext.push(peek.getItemRule());
+        NodeRule peek = ruleContext.peek();
+        if (!(peek instanceof SequenceRule))
+        {
+            ruleContext.push(peek);
+        }
+        else
+        {
+            ruleContext.push(((SequenceRule) peek).getItemRule());
+        }
     }
 
     @Override

@@ -31,8 +31,8 @@ public class UnknownRuleTestCase
         YamlDocumentValidator ramlSpecValidator = new YamlDocumentValidator(Raml.class);
         List<ValidationResult> errors = ramlSpecValidator.validate(simpleTest);
         Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is("Unknown key noTitle"));
+            CoreMatchers.is("Unknown key: noTitle"));
         Assert.assertThat(errors.get(1).getMessage(),
-            CoreMatchers.is("Unknown key noBaseUri"));
+            CoreMatchers.is("Unknown key: noBaseUri"));
     }
 }

@@ -18,7 +18,7 @@ public class UnknownTupleRule<K extends Node, V extends Node> extends DefaultTup
     public List<ValidationResult> onRuleEnd()
     {       
         final List<ValidationResult> result = new ArrayList<ValidationResult>();
-        result.add(ValidationResult.createErrorResult("Unknown key "+getFieldName().replaceAll("(.*value=?)(\\w+)(.*)", "$2"),getKey().getStartMark() , getKey().getEndMark()));
+        result.add(ValidationResult.createErrorResult("Unknown key: "+getFieldName().replaceAll("(.*value=?)(\\w+)(.*)", "$2"),getKey().getStartMark() , getKey().getEndMark()));
         return result;
     }
     
