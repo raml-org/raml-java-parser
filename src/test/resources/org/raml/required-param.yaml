@@ -7,3 +7,8 @@ uriParameters:
    name: Community Domain
    type: string
    required: 'y'
+/resource:
+    get:
+        queryParameters:
+            param:
+                type: file
