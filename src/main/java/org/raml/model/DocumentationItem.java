@@ -4,9 +4,9 @@ import org.raml.parser.annotation.Scalar;
 
 public class DocumentationItem
 {
-    @Scalar
+    @Scalar(required = true)
     private String title;
-    @Scalar
+    @Scalar(required = true)
     private String content;
 
     public String getTitle()
