@@ -10,7 +10,7 @@ import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.YamlValidationService;
 
-public class RamlSpecValidationTestCase1
+public class RamlSpecValidationTestCase
 {
 
     @Test
