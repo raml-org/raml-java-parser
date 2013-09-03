@@ -1,7 +1,6 @@
 package org.raml.parser.rule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +18,20 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     private TupleHandler tupleHandler;
     private boolean required;
     private K key;
-    private String fieldName;
+    private String name;
+    private NodeRuleFactory nodeRuleFactory;
 
-    public DefaultTupleRule(String fieldName, TupleHandler handler)
+
+    public DefaultTupleRule(String name, TupleHandler handler, NodeRuleFactory nodeRuleFactory)
     {
-        this.fieldName = fieldName;
-        rules = new HashMap<String, TupleRule<?, ?>>();
+        this(name, handler);
+        this.setNodeRuleFactory(nodeRuleFactory);
+    }
+
+    public DefaultTupleRule(String name, TupleHandler handler)
+    {
+        this.name = name;
+        this.rules = new HashMap<String, TupleRule<?, ?>>();
         this.tupleHandler = handler;
     }
 
@@ -43,16 +50,11 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         this.required = required;
     }
 
-    public String getFieldName()
+    @Override
+    public void setNodeRuleFactory(NodeRuleFactory nodeRuleFactory)
     {
-        return fieldName;
+        this.nodeRuleFactory = nodeRuleFactory;
     }
-
-    public void setFieldName(String fieldName)
-    {
-        this.fieldName = fieldName;
-    }
-
 
     @Override
     public void setNestedRules(Map<String, TupleRule<?, ?>> rules)
@@ -77,13 +79,13 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     public List<ValidationResult> validateKey(K key)
     {
         this.key = key;
-        return new ArrayList<ValidationResult>(Arrays.asList(ValidationResult.okResult()));
+        return new ArrayList<ValidationResult>();
     }
 
     @Override
     public List<ValidationResult> validateValue(V key)
     {
-        return new ArrayList<ValidationResult>(Arrays.asList(ValidationResult.okResult()));
+        return new ArrayList<ValidationResult>();
     }
 
     @Override
@@ -92,7 +94,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         List<ValidationResult> result = new ArrayList<ValidationResult>();
         if (isRequired() && !wasAlreadyDefined())
         {
-            result.add(ValidationResult.createErrorResult(getMissingRuleMessage(fieldName)));
+            result.add(ValidationResult.createErrorResult(getMissingRuleMessage(name)));
         }
 
         for (TupleRule<?, ?> rule : rules.values())
@@ -107,14 +109,21 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     {
         return key != null;
     }
-    
-    public K getKey(){
+
+    @Override
+    public K getKey()
+    {
         return key;
     }
 
     public void addRulesFor(Class<?> pojoClass)
     {
-        new TupleRuleFactory().addRulesTo(pojoClass, this);
+        nodeRuleFactory.addRulesTo(pojoClass, this);
+    }
+
+    public NodeRuleFactory getNodeRuleFactory()
+    {
+        return nodeRuleFactory;
     }
 
     @Override
@@ -127,7 +136,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
                 return rule;
             }
         }
-        return new UnknownTupleRule<Node,Node>(nodeTuple.getKeyNode().toString());
+        return new UnknownTupleRule<Node, Node>(nodeTuple.getKeyNode().toString());
     }
 
     @Override
@@ -138,13 +147,19 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     }
 
     @Override
+    public String getName()
+    {
+        return name;
+    }
+
+    @Override
     public TupleRule<?, ?> getRuleByFieldName(String fieldName)
     {
         return rules.get(fieldName);
     }
 
-
-    public TupleRule<?, ?> getParent()
+    @Override
+    public TupleRule<?, ?> getParentTupleRule()
     {
         return parent;
     }

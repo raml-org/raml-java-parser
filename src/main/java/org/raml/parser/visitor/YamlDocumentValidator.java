@@ -1,71 +1,41 @@
 package org.raml.parser.visitor;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
-import org.raml.parser.loader.DefaultResourceLoader;
-import org.raml.parser.loader.ResourceLoader;
-import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.NodeRule;
+import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.SequenceRule;
 import org.raml.parser.rule.TupleRule;
 import org.raml.parser.rule.ValidationResult;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public class YamlDocumentValidator implements NodeHandler
+public class YamlDocumentValidator implements YamlValidator
 {
 
     private Class<?> documentClass;
     private Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
-    private List<ValidationResult> errorMessage = new ArrayList<ValidationResult>();
-    private ResourceLoader resourceLoader;
+    private Stack<String> includeContext = new Stack<String>();
+    private List<ValidationResult> messages = new ArrayList<ValidationResult>();
+    private NodeRuleFactory nodeRuleFactory;
+
 
     public YamlDocumentValidator(Class<?> documentClass)
     {
-        this(documentClass, new DefaultResourceLoader());
+        this(documentClass, new NodeRuleFactory());
     }
 
-    public YamlDocumentValidator(Class<?> documentClass, ResourceLoader resourceLoader)
+    public YamlDocumentValidator(Class<?> documentClass, NodeRuleFactory nodeRuleFactory)
     {
         this.documentClass = documentClass;
-        this.resourceLoader = resourceLoader;
-    }
-
-    public List<ValidationResult> validate(String content)
-    {
-        Yaml yamlParser = new Yaml();
-
-        try
-        {
-            NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader);
-            for (Node data : yamlParser.composeAll(new StringReader(content)))
-            {
-                if (data instanceof MappingNode)
-                {
-                    nodeVisitor.visitDocument((MappingNode) data);
-                }
-                else
-                {
-                    //   errorMessage.add(ValidationResult.createErrorResult(EMPTY_DOCUMENT_MESSAGE));
-                }
-            }
-
-        }
-        catch (YAMLException ex)
-        {
-            // errorMessage.add(ValidationResult.createErrorResult(ex.getMessage()));
-        }
-        return errorMessage;
+        this.nodeRuleFactory = nodeRuleFactory;
     }
 
 
@@ -94,7 +64,7 @@ public class YamlDocumentValidator implements NodeHandler
                 result = ((NodeRule<SequenceNode>) peek).validateValue(node);
                 break;
         }
-        addErrorMessageIfRequired(node, result);
+        addMessagesIfRequired(node, result);
     }
 
     @Override
@@ -120,17 +90,15 @@ public class YamlDocumentValidator implements NodeHandler
                 result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
                 break;
         }
-        addErrorMessageIfRequired(node, result);
+        addMessagesIfRequired(node, result);
     }
 
-    private void addErrorMessageIfRequired(Node node, List<ValidationResult> result)
+    private void addMessagesIfRequired(Node node, List<ValidationResult> result)
     {
         for (ValidationResult validationResult : result)
         {
-            if (!validationResult.isValid())
-            {
-                errorMessage.add(validationResult);
-            }
+            validationResult.setIncludeName(includeContext.empty() ? null : includeContext.peek());
+            messages.add(validationResult);
         }
     }
 
@@ -146,7 +114,7 @@ public class YamlDocumentValidator implements NodeHandler
         NodeRule<?> pop = ruleContext.pop();
 
         List<ValidationResult> onRuleEnd = pop.onRuleEnd();
-        addErrorMessageIfRequired(node, onRuleEnd);
+        addMessagesIfRequired(node, onRuleEnd);
 
     }
 
@@ -157,7 +125,7 @@ public class YamlDocumentValidator implements NodeHandler
         if (rule != null)
         {
             List<ValidationResult> onRuleEnd = rule.onRuleEnd();
-            addErrorMessageIfRequired(nodeTuple.getKeyNode(), onRuleEnd);
+            addMessagesIfRequired(nodeTuple.getKeyNode(), onRuleEnd);
         }
         else
         {
@@ -201,22 +169,42 @@ public class YamlDocumentValidator implements NodeHandler
     {
         NodeRule<?> rule = ruleContext.pop();
         List<ValidationResult> validationResults = rule.onRuleEnd();
-        addErrorMessageIfRequired(sequenceNode, validationResults);
+        addMessagesIfRequired(sequenceNode, validationResults);
+    }
+
+    @Override
+    public void onIncludeStart(String includeName)
+    {
+        includeContext.push(includeName);
+    }
+
+    @Override
+    public void onIncludeEnd(String includeName)
+    {
+        String include = includeContext.pop();
+        if (!include.equals(includeName))
+        {
+            throw new IllegalStateException(String.format("include zombie! (actual: %s, expected: %s)", include, includeName));
+        }
     }
 
     @Override
     public void onIncludeResourceNotFound(ScalarNode node)
     {
-        addErrorMessageIfRequired(node, Arrays.asList(ValidationResult.createErrorResult("Include can not be resolved " + node.getValue(), node.getStartMark(), node.getEndMark())));
+        addMessagesIfRequired(node, Arrays.asList(ValidationResult.createErrorResult("Include can not be resolved " + node.getValue(), node.getStartMark(), node.getEndMark())));
     }
 
 
     private DefaultTupleRule<Node, MappingNode> buildDocumentRule()
     {
-        DefaultTupleRule<Node, MappingNode> documentRule = new DefaultTupleRule<Node, MappingNode>(null, new DefaultTupleHandler());
-        documentRule.addRulesFor(documentClass);
-        return documentRule;
+
+        return nodeRuleFactory.createDocumentRule(documentClass);
     }
 
 
+    @Override
+    public List<ValidationResult> getMessages()
+    {
+        return messages;
+    }
 }

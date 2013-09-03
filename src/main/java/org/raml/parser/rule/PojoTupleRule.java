@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.raml.parser.rule;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
@@ -13,6 +10,12 @@ public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
 
     private Class<?> pojoClass;
+
+    public PojoTupleRule(String fieldName, Class<?> pojoClass, NodeRuleFactory nodeRuleFactory)
+    {
+        this(fieldName, pojoClass);
+        setNodeRuleFactory(nodeRuleFactory);
+    }
 
     public PojoTupleRule(String fieldName, Class<?> pojoClass)
     {

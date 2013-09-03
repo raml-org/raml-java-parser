@@ -27,14 +27,14 @@ public class EnumModifierRule extends SimpleRule
         String messageTypes = generateMessageTypes(enumTypes, enumRule);
         if (enumValueNode == null)
         {
-            validationResults.add(ValidationResult.createErrorResult(enumRule.getFieldName() + " must exist first, and it must be of type" + messageTypes, key.getStartMark(), key.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(enumRule.getName() + " must exist first, and it must be of type" + messageTypes, key.getStartMark(), key.getEndMark()));
         }
         if (enumValueNode != null && !enumTypes.contains(enumRule.getValueNode().getValue()))
         {
-            validationResults.add(ValidationResult.createErrorResult(enumRule.getFieldName() + " must be of type" + messageTypes, key.getStartMark(), key.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(enumRule.getName() + " must be of type" + messageTypes, key.getStartMark(), key.getEndMark()));
         }
         validationResults.addAll(super.validateKey(key));
-        if (ValidationResult.areValids(validationResults))
+        if (ValidationResult.areValid(validationResults))
         {
             setKeyNode(key);
         }
@@ -63,7 +63,7 @@ public class EnumModifierRule extends SimpleRule
         }
         catch (NumberFormatException nfe)
         {
-            validationResults.add(ValidationResult.createErrorResult(getFieldName() + " can only contain integer values greater than zero", node.getStartMark(), node.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getName() + " can only contain integer values greater than zero", node.getStartMark(), node.getEndMark()));
         }
         validationResults.addAll(super.validateValue(node));
         return validationResults;

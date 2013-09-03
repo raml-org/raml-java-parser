@@ -11,7 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.YamlDocumentValidator;
+import org.raml.parser.visitor.YamlValidationService;
 
 public class DocumentationTestCase
 {
@@ -20,8 +20,7 @@ public class DocumentationTestCase
     public void documentation() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation.yaml"));
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(raml);
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 
@@ -29,8 +28,7 @@ public class DocumentationTestCase
     public void missingContent() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation-nocontent.yaml"));
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(raml);
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         assertThat(1, is(errors.size()));
         assertThat(errors.get(0).getMessage(), containsString("content is missing"));
     }
@@ -39,8 +37,7 @@ public class DocumentationTestCase
     public void missingTitle() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation-notitle.yaml"));
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(raml);
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         assertThat(1, is(errors.size()));
         assertThat(errors.get(0).getMessage(), containsString("title is missing"));
     }

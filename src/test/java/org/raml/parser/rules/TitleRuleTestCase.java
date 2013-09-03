@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.SimpleRule;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.YamlDocumentValidator;
+import org.raml.parser.visitor.YamlValidationService;
 
 public class TitleRuleTestCase
 {
@@ -17,35 +17,31 @@ public class TitleRuleTestCase
     @Test
     public void testTitleNotEmpty()
     {
-        String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title:";
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(simpleTest);
+        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title:";
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is(SimpleRule.getRuleEmptyMessage("title")));
+                          CoreMatchers.is(SimpleRule.getRuleEmptyMessage("title")));
     }
 
     @Test
     public void testTitlePresent()
     {
-        String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n";
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(simpleTest);
+        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n";
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-
         Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is(SimpleRule.getMissingRuleMessage("title")));
+                          CoreMatchers.is(SimpleRule.getMissingRuleMessage("title")));
     }
 
     @Test
     public void testTitleNotMoreThanOnce()
     {
-        String simpleTest = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title: bla \n" + "title: bla";
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(simpleTest);
+        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title: bla \n" + "title: bla";
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
-            CoreMatchers.is(SimpleRule.getDuplicateRuleMessage("title")));
+                          CoreMatchers.is(SimpleRule.getDuplicateRuleMessage("title")));
     }
 
 }

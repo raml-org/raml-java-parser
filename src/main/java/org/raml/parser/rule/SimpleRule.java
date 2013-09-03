@@ -12,7 +12,6 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
 {
 
-
     private static final String EMPTY_MESSAGE = "can not be empty";
     private static final String DUPLICATE_MESSAGE = "Duplicate";
     private static final String TYPE_MISMATCH_MESSAGE = "Type mismatch: ";
@@ -39,7 +38,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
     
     public String getRuleTypeMisMatch(String fieldType)
     {
-        return TYPE_MISMATCH_MESSAGE + getFieldName() + " must be of type " + fieldType;
+        return TYPE_MISMATCH_MESSAGE + getName() + " must be of type " + fieldType;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         List<ValidationResult> validationResults = super.validateKey(key);
         if (wasAlreadyDefined())
         {
-            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage(getFieldName()), key.getStartMark(), key.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage(getName()), key.getStartMark(), key.getEndMark()));
         }
         setKeyNode(key);
 
@@ -62,13 +61,13 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (StringUtils.isEmpty(value))
         {
-            validationResults.add(ValidationResult.createErrorResult(getRuleEmptyMessage(getFieldName()), keyNode.getStartMark(), keyNode.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getRuleEmptyMessage(getName()), keyNode.getStartMark(), keyNode.getEndMark()));
         }
         if (!ConvertUtils.canBeConverted(value, getFieldClass())) {
             validationResults.add(ValidationResult.createErrorResult(getRuleTypeMisMatch(getFieldClass().getSimpleName()), node.getStartMark(), node.getEndMark()));
         }
         validationResults.addAll(super.validateValue(node));
-        if (ValidationResult.areValids(validationResults)) {
+        if (ValidationResult.areValid(validationResults)) {
             setValueNode(node);
         }
         return validationResults;

@@ -55,7 +55,7 @@ public class BaseUriRule extends SimpleRule
             value = value.replace("{" + paramValue + "}", "temp");
             parameters.add(paramValue);
         }
-        if (getVersionRule().getKeyNode() == null && parameters.contains(getVersionRule().getFieldName()))
+        if (getVersionRule().getKeyNode() == null && parameters.contains(getVersionRule().getName()))
         {
             validationResults.add(ValidationResult.createErrorResult(VERSION_NOT_PRESENT_MESSAGE, node.getStartMark(), node.getEndMark()));
         }
@@ -64,7 +64,7 @@ public class BaseUriRule extends SimpleRule
             validationResults.add(ValidationResult.createErrorResult(URI_NOT_VALID_MESSAGE, getKeyNode().getStartMark(), getKeyNode().getEndMark()));
         }
         validationResults.addAll(super.validateValue(node));
-        if (ValidationResult.areValids(validationResults))
+        if (ValidationResult.areValid(validationResults))
         {
             baseUri = node.getValue();
         }
@@ -86,7 +86,7 @@ public class BaseUriRule extends SimpleRule
 
     public SimpleRule getVersionRule()
     {
-        return (SimpleRule) getParent().getRuleByFieldName("version");
+        return (SimpleRule) getParentTupleRule().getRuleByFieldName("version");
     }
 
 

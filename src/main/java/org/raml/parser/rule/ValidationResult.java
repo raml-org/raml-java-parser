@@ -1,5 +1,6 @@
 package org.raml.parser.rule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.yaml.snakeyaml.error.Mark;
@@ -7,16 +8,20 @@ import org.yaml.snakeyaml.error.Mark;
 public class ValidationResult
 {
 
-    private static final ValidationResult VALIDATION_OK = new ValidationResult(
-            true, null, null, null);
-    private boolean valid;
+    public enum Level
+    {
+        ERROR, WARN, INFO
+    }
+
+    private Level level;
     private String message;
     private Mark startMark;
     private Mark endMark;
+    private String includeName;
 
-    private ValidationResult(boolean valid, String message, Mark startMark, Mark endMark)
+    private ValidationResult(Level level, String message, Mark startMark, Mark endMark)
     {
-        this.valid = valid;
+        this.level = level;
         this.message = message;
         this.setStartMark(startMark);
         this.setEndMark(endMark);
@@ -24,7 +29,7 @@ public class ValidationResult
 
     public boolean isValid()
     {
-        return valid;
+        return level != Level.ERROR;
     }
 
     public String getMessage()
@@ -32,19 +37,19 @@ public class ValidationResult
         return message;
     }
 
-    public static ValidationResult okResult()
-    {
-        return VALIDATION_OK;
-    }
-
     public static ValidationResult createErrorResult(String message, Mark startMark, Mark endMark)
     {
-        return new ValidationResult(false, message, startMark, endMark);
+        return new ValidationResult(Level.ERROR, message, startMark, endMark);
     }
 
     public static ValidationResult createErrorResult(String message)
     {
-        return new ValidationResult(false, message, null, null);
+        return new ValidationResult(Level.ERROR, message, null, null);
+    }
+
+    public static ValidationResult create(Level level, String message)
+    {
+        return new ValidationResult(level, message, null, null);
     }
 
     public Mark getStartMark()
@@ -67,16 +72,46 @@ public class ValidationResult
         this.endMark = endMark;
     }
 
-    public static boolean areValids(List<ValidationResult> validationResults)
+    public String getIncludeName()
     {
-        return (validationResults.size() == 1 && validationResults.get(0).equals(ValidationResult.okResult()));
+        return includeName;
+    }
+
+    public void setIncludeName(String includeName)
+    {
+        this.includeName = includeName;
+    }
+
+    public static boolean areValid(List<ValidationResult> validationResults)
+    {
+        for (ValidationResult result : validationResults)
+        {
+            if (!result.isValid())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<ValidationResult> getLevel(Level level, List<ValidationResult> results)
+    {
+        List<ValidationResult> filtered = new ArrayList<ValidationResult>();
+        for (ValidationResult result : results)
+        {
+            if (result.level == level)
+            {
+                filtered.add(result);
+            }
+        }
+        return filtered;
     }
 
     @Override
     public String toString()
     {
-        return  " message='" + message + '\'' +
-                "" + endMark +
+        return " message='" + message + '\'' +
+               "" + endMark +
                '}';
     }
 }

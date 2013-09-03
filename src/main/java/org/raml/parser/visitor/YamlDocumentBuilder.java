@@ -37,6 +37,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     private T documentObject;
     private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
     private Stack<Object> documentContext = new Stack<Object>();
+    private Stack<String> includeContext = new Stack<String>();
     private MappingNode rootNode;
     private ResourceLoader resourceLoader;
 
@@ -215,6 +216,21 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         throw new RuntimeException("resource not found: " + node.getValue());
     }
 
+    @Override
+    public void onIncludeStart(String includeName)
+    {
+        includeContext.push(includeName);
+    }
+
+    @Override
+    public void onIncludeEnd(String includeName)
+    {
+        String include = includeContext.pop();
+        if (!include.equals(includeName))
+        {
+            throw new IllegalStateException(String.format("include zombie! (actual: %s, expected: %s)", include, includeName));
+        }
+    }
 
     public static String dumpFromAst(Node rootNode)
     {

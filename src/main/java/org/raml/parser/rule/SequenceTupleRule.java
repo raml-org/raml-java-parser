@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.raml.parser.rule;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
@@ -11,9 +8,7 @@ import org.yaml.snakeyaml.nodes.SequenceNode;
 public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode> implements SequenceRule
 {
 
-
     private Class<?> elementClass;
-
 
     public SequenceTupleRule(String fieldName, Class<?> elementClass)
     {
@@ -27,8 +22,8 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
         //TODO add it to a list to invoke onRuleEnd on all the rules created
         if (ReflectionUtils.isWrapperOrString(elementClass))
         {
-            return new SimpleRule(getFieldName(), elementClass);
+            return new SimpleRule(getName(), elementClass);
         }
-        return new PojoTupleRule("", elementClass);
+        return new PojoTupleRule("", elementClass, getNodeRuleFactory());
     }
 }

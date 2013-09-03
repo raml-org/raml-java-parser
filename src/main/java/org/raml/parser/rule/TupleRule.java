@@ -7,21 +7,18 @@ import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 
-public interface TupleRule<K extends Node, V extends Node> extends  NodeRule<V>
+public interface TupleRule<K extends Node, V extends Node> extends NodeRule<V>
 {
 
-
-    /**
-     * Validates the rule of the touple
-     *
-     * @param key
-     * @return
-     */
     List<ValidationResult> validateKey(K key);
 
     TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple);
 
     void setParentTupleRule(TupleRule<?, ?> parent);
+
+    TupleRule<?, ?> getParentTupleRule();
+
+    String getName();
 
     TupleRule<?, ?> getRuleByFieldName(String fieldName);
 
@@ -32,4 +29,8 @@ public interface TupleRule<K extends Node, V extends Node> extends  NodeRule<V>
     TupleHandler getHandler();
 
     void setRequired(boolean required);
+
+    void setNodeRuleFactory(NodeRuleFactory nodeRuleFactory);
+
+    K getKey();
 }

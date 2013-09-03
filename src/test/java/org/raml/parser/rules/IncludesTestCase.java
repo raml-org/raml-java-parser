@@ -10,7 +10,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.YamlDocumentValidator;
+import org.raml.parser.visitor.YamlValidationService;
 
 public class IncludesTestCase
 {
@@ -19,8 +19,7 @@ public class IncludesTestCase
     public void include() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/includes.yaml"));
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(raml);
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 
@@ -28,10 +27,9 @@ public class IncludesTestCase
     public void includeNotFound() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/includes-bad.yaml"));
-        YamlDocumentValidator ramlValidator = new YamlDocumentValidator(Raml.class);
-        List<ValidationResult> errors = ramlValidator.validate(raml);
-        assertThat("Errors are not 1 "+errors,errors.size(), CoreMatchers.is(1));
-        assertThat(errors.get(0).getMessage(),CoreMatchers.is("Include can not be resolved org/raml/parser/rules/title2.txt"));
+        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        assertThat("Errors are not 1 " + errors, errors.size(), CoreMatchers.is(1));
+        assertThat(errors.get(0).getMessage(), CoreMatchers.is("Include can not be resolved org/raml/parser/rules/title2.txt"));
     }
 
 }

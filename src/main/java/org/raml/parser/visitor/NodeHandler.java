@@ -32,4 +32,8 @@ public interface NodeHandler
     void onSequenceElementEnd(Node sequenceNode);
 
     void onIncludeResourceNotFound(ScalarNode node);
+
+    void onIncludeStart(String includeName);
+
+    void onIncludeEnd(String includeName);
 }

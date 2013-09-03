@@ -6,6 +6,7 @@ package org.raml.parser.rule;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +15,37 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.builder.AbastractFactory;
+import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public class TupleRuleFactory extends AbastractFactory
+public class NodeRuleFactory extends AbastractFactory
 {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
+    private NodeRuleFactoryExtension[] extensions;
+
+
+    public NodeRuleFactory(NodeRuleFactoryExtension... extensions)
+    {
+        this.extensions = extensions;
+    }
+
+    public DefaultTupleRule<Node, MappingNode> createDocumentRule(Class<?> documentClass)
+    {
+        DefaultTupleRule<Node, MappingNode> documentRule = new DefaultTupleRule<Node, MappingNode>(null, new DefaultTupleHandler());
+        documentRule.setNodeRuleFactory(this);
+        documentRule.addRulesFor(documentClass);
+        return documentRule;
+    }
+
 
     public void addRulesTo(Class<?> pojoClass, TupleRule<?, ?> parent)
     {
@@ -71,6 +90,7 @@ public class TupleRuleFactory extends AbastractFactory
                 }
                 tupleRule.setRequired(required);
                 tupleRule.setParentTupleRule(parent);
+                tupleRule.setNodeRuleFactory(this);
                 innerBuilders.put(declaredField.getName(), tupleRule);
             }
         }
@@ -148,6 +168,20 @@ public class TupleRuleFactory extends AbastractFactory
                 tupleRule = new PojoTupleRule(declaredField.getName(), declaredField.getType());
             }
         }
+        List<TupleRule> contributionRules = new ArrayList<TupleRule>();
+        for (NodeRuleFactoryExtension extension : extensions)
+        {
+            if (extension.handles(declaredField, mapping))
+            {
+                TupleRule<?, ?> rule = extension.createRule(declaredField, mapping);
+                contributionRules.add(rule);
+            }
+        }
+        if (!contributionRules.isEmpty())
+        {
+            tupleRule = new ContributionTupleRule(tupleRule, contributionRules);
+        }
+
         return tupleRule;
     }
 

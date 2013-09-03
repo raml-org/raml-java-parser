@@ -13,7 +13,6 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 {
 
-
     private List<ValidationResult> errors;
     private List<String> parameters;
     private ScalarNode keyNode;
@@ -33,7 +32,6 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return errors;
     }
 
-
     @Override
     public List<ValidationResult> validateKey(ScalarNode key)
     {
@@ -43,7 +41,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
             validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage("uriParameters"), key.getStartMark(), key.getEndMark()));
         }
         validationResults.addAll(super.validateKey(key));
-        if (validationResults.size() == 1 && validationResults.get(0).equals(ValidationResult.okResult()))
+        if (ValidationResult.areValid(validationResults))
         {
             setKeyNode(key);
         }
@@ -57,7 +55,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         Node keyNode = nodeTuple.getKeyNode();
         String paramName;
         if (keyNode instanceof ScalarNode)
-        {            
+        {
             paramName = ((ScalarNode) keyNode).getValue();
             if (paramName.equals("version"))
             {
@@ -65,8 +63,8 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
             }
             else if (getUriRule().getParameters().contains(paramName))
             {
-                parameters.add(paramName);  
-                return new ParamRule(paramName);
+                parameters.add(paramName);
+                return new ParamRule(paramName, getNodeRuleFactory());
             }
             else
             {
@@ -77,8 +75,8 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         {
             errors.add(ValidationResult.createErrorResult("Invalid element", keyNode.getStartMark(), keyNode.getEndMark()));
         }
-        
-        return new DefaultTupleRule(keyNode.toString(), new DefaultTupleHandler());
+
+        return new DefaultTupleRule(keyNode.toString(), new DefaultTupleHandler(), getNodeRuleFactory());
     }
 
     public boolean wasAlreadyDefined()
@@ -98,8 +96,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public BaseUriRule getUriRule()
     {
-        return (BaseUriRule) getParent().getRuleByFieldName("baseUri");
+        return (BaseUriRule) getParentTupleRule().getRuleByFieldName("baseUri");
     }
-
 
 }

@@ -52,16 +52,26 @@ public class NodeVisitor
                 throw new YAMLException("Only scalar keys are allowed: " + keyNode.getStartMark());
             }
             Node valueNode = nodeTuple.getValueNode();
+            String includeName = null;
             if (valueNode.getTag().startsWith(INCLUDE_TAG))
             {
+                includeName = ((ScalarNode) valueNode).getValue();
                 valueNode = resolveInclude((ScalarNode) valueNode);
                 nodeTuple = new NodeTuple(keyNode, valueNode);
             }
             updatedTuples.add(nodeTuple);
+            if (includeName != null)
+            {
+                nodeHandler.onIncludeStart(includeName);
+            }
             nodeHandler.onTupleStart(nodeTuple);
             visit(keyNode, TupleType.KEY);
             visit(valueNode, TupleType.VALUE);
             nodeHandler.onTupleEnd(nodeTuple);
+            if (includeName != null)
+            {
+                nodeHandler.onIncludeEnd(includeName);
+            }
         }
         mappingNode.setValue(updatedTuples);
     }

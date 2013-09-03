@@ -25,15 +25,16 @@ public class ParamRule extends PojoTupleRule
 {
 
 
-    public ParamRule(String fieldName)
+    public ParamRule(String fieldName,NodeRuleFactory nodeRuleFactory)
     {
-        super(fieldName,UriParameter.class);        
+        super(fieldName,UriParameter.class);
+        setNodeRuleFactory(nodeRuleFactory);
     }
     
     @Override
     public void addRulesFor(Class<?> pojoClass)
     {
-        super.addRulesFor(pojoClass);        
+        super.addRulesFor(pojoClass);
         SimpleRule typeRule = (SimpleRule) getRuleByFieldName("type");
 
         rules.put("minLength", new EnumModifierRule("minLength", Arrays.asList("string"), typeRule));

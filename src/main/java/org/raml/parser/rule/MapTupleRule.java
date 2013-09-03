@@ -29,7 +29,7 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
     public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
     {
         //TODO add it to a list to invoke onRuleEnd on all the rules created
-        return new PojoTupleRule(fieldName, valueType);
+        return new PojoTupleRule(fieldName, valueType,getNodeRuleFactory());
     }
 
     @Override
