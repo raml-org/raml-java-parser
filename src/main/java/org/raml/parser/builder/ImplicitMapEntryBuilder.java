@@ -29,13 +29,13 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
     }
 
     @Override
-    public NodeBuilder getBuiderForTuple(NodeTuple tuple)
+    public NodeBuilder getBuilderForTuple(NodeTuple tuple)
     {
         if (builders.isEmpty())
         {
             addBuildersFor(valueClass);
         }
-        return super.getBuiderForTuple(tuple);
+        return super.getBuilderForTuple(tuple);
     }
 
     @Override

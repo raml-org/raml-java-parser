@@ -33,7 +33,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     }
 
     @Override
-    public NodeBuilder getBuiderForTuple(NodeTuple tuple)
+    public NodeBuilder getBuilderForTuple(NodeTuple tuple)
     {
         if (builders == null || builders.isEmpty())
         {

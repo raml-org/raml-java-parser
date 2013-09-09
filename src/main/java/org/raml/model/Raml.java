@@ -31,7 +31,7 @@ public class Raml
     private String baseUri;
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
-    private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
+    private Map<String, List<UriParameter>> uriParameters = new HashMap<String, List<UriParameter>>();
 
     @Mapping(handler = ResourceHandler.class, implicit = true)
     private Map<String, Resource> resources = new HashMap<String, Resource>();
@@ -57,7 +57,7 @@ public class Raml
         return documentation;
     }
 
-    public void setUriParameters(Map<String, UriParameter> uriParameters)
+    public void setUriParameters(Map<String, List<UriParameter>> uriParameters)
     {
         this.uriParameters = uriParameters;
     }
@@ -120,7 +120,7 @@ public class Raml
         return resources;
     }
 
-    public Map<String, UriParameter> getUriParameters()
+    public Map<String, List<UriParameter>> getUriParameters()
     {
         return uriParameters;
     }
