@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.CoreMatchers;
@@ -23,8 +24,28 @@ public class ParameterTestCase
     public void whenParameterIsYRequiredShouldBeTrue() throws IOException
     {
         Raml raml = loadRaml();
-        UriParameter uriParameter = raml.getUriParameters().get("param2");
+        UriParameter uriParameter = raml.getUriParameters().get("param2").get(0);
         assertThat(uriParameter.isRequired(), is(true));
+    }
+
+    @Test
+    public void whenParameterHasMultiTypeOrSingleTypeShouldBeAccepted() throws IOException
+    {
+        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parameter-multi-type.yaml"));
+        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
+        Raml raml = ramlSpecBuilder.build(simpleTest);
+
+        UriParameter uriParameter = raml.getUriParameters().get("acl").get(0);
+        Assert.assertThat(uriParameter.getType(), CoreMatchers.is(ParamType.STRING));
+
+        List<UriParameter> file = raml.getUriParameters().get("file");
+        Assert.assertThat(file.size(), CoreMatchers.is(2));
+
+        uriParameter = raml.getUriParameters().get("file").get(0);
+        Assert.assertThat(uriParameter.getType(), CoreMatchers.is(ParamType.STRING));
+
+        uriParameter = raml.getUriParameters().get("file").get(1);
+        Assert.assertThat(uriParameter.getType(), CoreMatchers.is(ParamType.FILE));
     }
 
     @Test

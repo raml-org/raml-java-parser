@@ -13,22 +13,20 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode>
 {
 
-    private Class<?> keyClass;
     private Class valueClass;
     private String keyValue;
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public MapTupleBuilder(String keyValue, Class<?> keyClass, Class<?> valueClass)
+    public MapTupleBuilder(String keyValue, Class<?> valueClass)
     {
         super(new DefaultScalarTupleHandler(MappingNode.class, keyValue));
         this.keyValue = keyValue;
-        this.keyClass = keyClass;
         this.valueClass = valueClass;
     }
 
     @Override
-    public TupleBuilder getBuiderForTuple(NodeTuple tuple)
+    public TupleBuilder getBuilderForTuple(NodeTuple tuple)
     {
         return new PojoTupleBuilder(valueClass);
     }
@@ -47,4 +45,13 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode
         keyValue = tuple.getValue();
     }
 
+    public Class getValueClass()
+    {
+        return valueClass;
+    }
+
+    public String getKeyValue()
+    {
+        return keyValue;
+    }
 }

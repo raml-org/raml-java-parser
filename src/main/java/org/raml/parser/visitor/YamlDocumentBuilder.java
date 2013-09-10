@@ -190,7 +190,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         TupleBuilder<?, ?> currentBuilder = (TupleBuilder<?, ?>) builderContext.peek();
         if (currentBuilder != null)
         {
-            NodeBuilder<?> builder = currentBuilder.getBuiderForTuple(nodeTuple);
+            NodeBuilder<?> builder = currentBuilder.getBuilderForTuple(nodeTuple);
             builderContext.push(builder);
         }
         else

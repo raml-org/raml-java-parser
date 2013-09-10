@@ -1,0 +1,14 @@
+%TAG ! tag:raml.org,0.1:
+---
+title: Amazon simple storage API
+version: 1
+baseUri: https://destinationBucket.s3.amazonaws.com/{file}/{acl}
+uriParameters:
+ acl:
+  description: Specifies an Amazon S3 access control list. If an invalid access control list is specified, an error is generated.
+  type: string
+ file:
+  - type: string
+    description: Text content. The text content must be the last field in the form.
+  - type: file
+    description: File to upload. The file must be the last field in the form.

@@ -54,26 +54,26 @@ public class FullConfigTestCase
         //uri parameters
         assertThat(raml.getUriParameters().size(), is(3));
 
-        UriParameter hostParam = raml.getUriParameters().get("host");
-        assertThat(hostParam.getName(), is("Host"));
-        assertThat(hostParam.getDescription(), is("host name"));
-        assertThat(hostParam.getType(), is(ParamType.STRING));
-        assertThat(hostParam.getMinLength(), is(5));
-        assertThat(hostParam.getMaxLength(), is(10));
-        assertThat(hostParam.getPattern(), is("[a-z]*"));
+        List<UriParameter> hostParam = raml.getUriParameters().get("host");
+        assertThat(hostParam.get(0).getName(), is("Host"));
+        assertThat(hostParam.get(0).getDescription(), is("host name"));
+        assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
+        assertThat(hostParam.get(0).getMinLength(), is(5));
+        assertThat(hostParam.get(0).getMaxLength(), is(10));
+        assertThat(hostParam.get(0).getPattern(), is("[a-z]*"));
 
-        UriParameter portParam = raml.getUriParameters().get("port");
-        assertThat(portParam.getType(), is(ParamType.INTEGER));
-        assertThat(portParam.getMinimum(), is(1025d));
-        assertThat(portParam.getMaximum(), is(65535d));
+        List<UriParameter> portParam = raml.getUriParameters().get("port");
+        assertThat(portParam.get(0).getType(), is(ParamType.INTEGER));
+        assertThat(portParam.get(0).getMinimum(), is(1025d));
+        assertThat(portParam.get(0).getMaximum(), is(65535d));
 
-        assertThat(hostParam.getType(), is(ParamType.STRING));
-        UriParameter pathParam = raml.getUriParameters().get("path");
-        assertThat(pathParam.getType(), is(ParamType.STRING));
-        assertThat(pathParam.getEnumeration().size(), is(3));
-        assertThat(pathParam.getEnumeration().get(0), is("one"));
-        assertThat(pathParam.getEnumeration().get(1), is("two"));
-        assertThat(pathParam.getEnumeration().get(2), is("three"));
+        assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
+        List<UriParameter> pathParam = raml.getUriParameters().get("path");
+        assertThat(pathParam.get(0).getType(), is(ParamType.STRING));
+        assertThat(pathParam.get(0).getEnumeration().size(), is(3));
+        assertThat(pathParam.get(0).getEnumeration().get(0), is("one"));
+        assertThat(pathParam.get(0).getEnumeration().get(1), is("two"));
+        assertThat(pathParam.get(0).getEnumeration().get(2), is("three"));
 
         //resources
         assertThat(raml.getResources().size(), is(3));

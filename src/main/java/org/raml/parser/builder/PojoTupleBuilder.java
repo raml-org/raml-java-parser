@@ -27,13 +27,13 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     }
 
     @Override
-    public NodeBuilder getBuiderForTuple(NodeTuple tuple)
+    public NodeBuilder getBuilderForTuple(NodeTuple tuple)
     {
         if (builders.isEmpty())     //Do it lazzy so it support recursive structures
         {
             addBuildersFor(pojoClass);
         }
-        return super.getBuiderForTuple(tuple);
+        return super.getBuilderForTuple(tuple);
     }
 
 
@@ -61,5 +61,15 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     public void buildKey(Object parent, ScalarNode node)
     {
         fieldName = node.getValue();
+    }
+
+    public String getFieldName()
+    {
+        return fieldName;
+    }
+
+    public Class<?> getPojoClass()
+    {
+        return pojoClass;
     }
 }

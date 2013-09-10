@@ -14,7 +14,7 @@ public interface TupleBuilder<K extends Node, V extends Node> extends NodeBuilde
      * @param tuple
      * @return
      */
-    NodeBuilder getBuiderForTuple(NodeTuple tuple);
+    NodeBuilder getBuilderForTuple(NodeTuple tuple);
 
     void buildKey(Object parent, K tuple);
 
