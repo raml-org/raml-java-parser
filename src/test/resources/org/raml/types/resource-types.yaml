@@ -1,0 +1,27 @@
+#%RAML 0.2
+---
+title: Example API
+version: v1
+resourceTypes:
+  - collection:
+      description: |
+        This resourceType should be used for any collection of items
+      summary: |
+        The collection of <<resourcePathName>>
+      get:
+        summary: |
+          Get all <<resourcePathName>>, optionally filtered
+      post:
+        summary: |
+          Create a new <<resourcePathName | !singularize>>
+    member:
+      description: |
+        This resourceType should be used for any collection member
+      summary: |
+        The member or a collection of <<resourcePathName>>
+      get:
+        summary: |
+          Get one <<resourcePathName>>
+/users:
+  type: collection
+

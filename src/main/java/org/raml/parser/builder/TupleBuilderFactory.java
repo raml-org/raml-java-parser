@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.raml.parser.builder;
 
 import java.lang.reflect.Field;
@@ -89,10 +86,7 @@ public class TupleBuilderFactory extends AbastractFactory
                 {
                     ParameterizedType pType = (ParameterizedType) type;
                     Type itemType = pType.getActualTypeArguments()[0];
-                    if (itemType instanceof Class<?>)
-                    {
-                        tupleBuilder = new SequenceTupleBuilder(declaredField.getName(), (Class<?>) itemType);
-                    }
+                    tupleBuilder = new SequenceTupleBuilder(declaredField.getName(), itemType);
                 }
             }
             else

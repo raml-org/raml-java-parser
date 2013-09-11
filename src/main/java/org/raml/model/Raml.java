@@ -39,6 +39,9 @@ public class Raml
     @Sequence
     private List<DocumentationItem> documentation;
 
+    @Sequence
+    private List<Map<String, ResourceType>> resourceTypes;
+
     @Mapping
     private Map<String, Trait> traits = new HashMap<String, Trait>();
 
@@ -123,6 +126,16 @@ public class Raml
     public Map<String, List<UriParameter>> getUriParameters()
     {
         return uriParameters;
+    }
+
+    public List<Map<String, ResourceType>> getResourceTypes()
+    {
+        return resourceTypes;
+    }
+
+    public void setResourceTypes(List<Map<String, ResourceType>> resourceTypes)
+    {
+        this.resourceTypes = resourceTypes;
     }
 
     public Map<String, Trait> getTraits()

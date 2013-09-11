@@ -1,7 +1,10 @@
 package org.raml.parser.builder;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
@@ -13,14 +16,13 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
 
 
     private String fieldName;
-    private Class<?> elementClass;
+    private Type itemType;
 
-    public SequenceTupleBuilder(String fieldName, Class<?> elementClass)
+    public SequenceTupleBuilder(String fieldName, Type itemType)
     {
         super(new DefaultScalarTupleHandler(SequenceNode.class, fieldName));
-        this.elementClass = elementClass;
+        this.itemType = itemType;
         this.fieldName = fieldName;
-
     }
 
     @Override
@@ -34,12 +36,27 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
     @Override
     public NodeBuilder getItemBuilder()
     {
-        if (ReflectionUtils.isWrapperOrString(elementClass))
+        if (itemType instanceof Class<?>)
         {
-            return new ScalarTupleBuilder(fieldName, elementClass);
+            if (ReflectionUtils.isWrapperOrString((Class<?>) itemType))
+            {
+                //sequence of scalars
+                return new ScalarTupleBuilder(fieldName, (Class<?>) itemType);
+            }
+            //sequence of pojos
+            return new PojoTupleBuilder((Class<?>) itemType);
         }
-        return new PojoTupleBuilder(elementClass);
-    }
 
+        if (itemType instanceof ParameterizedType)
+        {
+            ParameterizedType pItemType = (ParameterizedType) itemType;
+            if (Map.class.isAssignableFrom((Class<?>) pItemType.getRawType()))
+            {
+                //sequence of maps
+                return new MapTupleBuilder((Class<?>) pItemType.getActualTypeArguments()[1]);
+            }
+        }
+        throw new IllegalArgumentException("Sequence item type not supported: " + itemType);
+    }
 
 }

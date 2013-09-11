@@ -129,7 +129,15 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                         throw new RuntimeException(e);
                     }
                 }
-                ReflectionUtils.setProperty(pojo, declaredField.getName(), value);
+                try
+                {
+                    ReflectionUtils.setProperty(pojo, declaredField.getName(), value);
+                }
+                catch (IllegalArgumentException e)
+                {
+                    //FIXME ignore if parent cannot be set e.g: resource for action in resource types
+                    logger.warn(String.format("parent instance %s could not be set onto %s", declaredField.getName(), pojo.getClass()));
+                }
             }
         }
     }

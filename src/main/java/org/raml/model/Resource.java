@@ -34,6 +34,9 @@ public class Resource
     @Mapping(implicit = true)
     private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
 
+    @Scalar
+    private String type;
+
     @Sequence
     private List<String> use = new ArrayList<String>();
 
@@ -129,6 +132,16 @@ public class Resource
     public void setUse(List<String> use)
     {
         this.use = use;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
     }
 
     @Override
