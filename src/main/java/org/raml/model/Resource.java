@@ -35,7 +35,8 @@ public class Resource
     private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
 
     @Scalar
-    private String type;
+    //@Mapping()
+    private TemplateReference type;
 
     @Sequence
     private List<String> use = new ArrayList<String>();
@@ -134,12 +135,12 @@ public class Resource
         this.use = use;
     }
 
-    public String getType()
+    public TemplateReference getType()
     {
         return type;
     }
 
-    public void setType(String type)
+    public void setType(TemplateReference type)
     {
         this.type = type;
     }

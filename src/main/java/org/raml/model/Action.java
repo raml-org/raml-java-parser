@@ -142,7 +142,7 @@ public class Action implements Traitable
     {
         return "Action{" +
                "type='" + type + '\'' +
-               ", resource=" + resource.getUri() +
+               ", resource=" + resource != null ? resource.getUri() : "-" +
                '}';
     }
 }

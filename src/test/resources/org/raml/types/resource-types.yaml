@@ -20,8 +20,12 @@ resourceTypes:
       summary: |
         The member or a collection of <<resourcePathName>>
       get:
-        summary: |
-          Get one <<resourcePathName>>
+        summary: category value is <<category>> <<subCategory>>
 /users:
   type: collection
+#  /{userId}:
+#    type:
+#      member:
+#        category: gold
+#        subCategory: rusty
 
