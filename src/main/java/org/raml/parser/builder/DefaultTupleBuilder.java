@@ -99,7 +99,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         return parent;
     }
 
-    //FIXME rethink location
+    //TODO rethink location
     protected String unalias(Object pojo, String fieldName)
     {
         List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojo.getClass());
@@ -151,14 +151,14 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                         throw new RuntimeException(e);
                     }
                 }
-                try
+                if (declaredField.getType().isAssignableFrom(value.getClass()))
                 {
                     ReflectionUtils.setProperty(pojo, declaredField.getName(), value);
                 }
-                catch (IllegalArgumentException e)
+                else
                 {
-                    //FIXME ignore if parent cannot be set e.g: resource for action in resource types
-                    logger.warn(String.format("parent instance %s could not be set onto %s", declaredField.getName(), pojo.getClass()));
+                    logger.info(String.format("parent reference field '%s' could not be set with %s onto %s",
+                                              declaredField.getName(), value.getClass(), pojo.getClass()));
                 }
             }
         }

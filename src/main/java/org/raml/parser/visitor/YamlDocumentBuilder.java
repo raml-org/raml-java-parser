@@ -58,7 +58,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader);
         rootNode = (MappingNode) yamlParser.compose(content);
         nodeVisitor.visitDocument(rootNode);
-        postBuildProcess(); //FIXME apply traits
+        postBuildProcess();
         return documentObject;
     }
 

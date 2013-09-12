@@ -27,11 +27,11 @@ public class ResourceType
     @Sequence
     private List<String> parameters = new ArrayList<String>();
 
-    @Scalar //FIXME will be a mapping instead of scalar when using params
-    private String type;
+    @Scalar
+    private TemplateReference type;
 
-    @Sequence //FIXME will be a mapping instead of scalar when using params
-    private List<String> is = new ArrayList<String>();
+    @Sequence
+    private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
     public String getName()
     {
@@ -43,12 +43,12 @@ public class ResourceType
         this.name = name;
     }
 
-    public String getType()
+    public TemplateReference getType()
     {
         return type;
     }
 
-    public void setType(String type)
+    public void setType(TemplateReference type)
     {
         this.type = type;
     }
@@ -83,12 +83,12 @@ public class ResourceType
         this.parameters = parameters;
     }
 
-    public List<String> getIs()
+    public List<TemplateReference> getIs()
     {
         return is;
     }
 
-    public void setIs(List<String> is)
+    public void setIs(List<TemplateReference> is)
     {
         this.is = is;
     }
