@@ -16,7 +16,6 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
     public ScalarTupleBuilder(String field, Class<?> type)
     {
         super(new DefaultScalarTupleHandler(ScalarNode.class, field));
-        fieldName = field;
         this.type = type;
 
     }
@@ -28,9 +27,15 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
 
         final String value = node.getValue();
         final Object converted = ConvertUtils.convertTo(value, type);
-        ReflectionUtils.setProperty(parent, fieldName, converted);
+        String unalias = unalias(parent, fieldName);
+        ReflectionUtils.setProperty(parent, unalias, converted);
 
         return parent;
     }
 
+    @Override
+    public void buildKey(Object parent, ScalarNode tuple)
+    {
+        fieldName = tuple.getValue();
+    }
 }

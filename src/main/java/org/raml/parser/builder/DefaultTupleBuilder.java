@@ -8,7 +8,10 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.raml.parser.annotation.Key;
+import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
+import org.raml.parser.annotation.Scalar;
+import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
@@ -94,6 +97,25 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     public NodeBuilder getParent()
     {
         return parent;
+    }
+
+    //FIXME rethink location
+    protected String unalias(Object pojo, String fieldName)
+    {
+        List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojo.getClass());
+        for (Field declaredField : declaredFields)
+        {
+            Scalar scalar = declaredField.getAnnotation(Scalar.class);
+            Mapping mapping = declaredField.getAnnotation(Mapping.class);
+            Sequence sequence = declaredField.getAnnotation(Sequence.class);
+            if ((scalar != null && scalar.alias() != null && scalar.alias().equals(fieldName)) ||
+                (mapping != null && mapping.alias() != null && mapping.alias().equals(fieldName)) ||
+                (sequence != null && sequence.alias() != null && sequence.alias().equals(fieldName)))
+            {
+                return declaredField.getName();
+            }
+        }
+        return fieldName;
     }
 
     protected void processPojoAnnotations(Object pojo, Object keyFieldName, Object parent)

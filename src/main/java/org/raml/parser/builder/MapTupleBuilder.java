@@ -5,10 +5,11 @@ import java.util.HashMap;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode>
+public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 {
 
     private Class valueClass;
@@ -29,11 +30,18 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, MappingNode
     @Override
     public TupleBuilder getBuilderForTuple(NodeTuple tuple)
     {
-        return new PojoTupleBuilder(getValueClass());
+        if (ReflectionUtils.isPojo(getValueClass()))
+        {
+            return new PojoTupleBuilder(getValueClass());
+        }
+        else
+        {
+            return new ScalarTupleBuilder(null, getValueClass());
+        }
     }
 
     @Override
-    public Object buildValue(Object parent, MappingNode node)
+    public Object buildValue(Object parent, Node node)
     {
         final HashMap<String, Object> map = new HashMap<String, Object>();
         ReflectionUtils.setProperty(parent, getFieldName(), map);

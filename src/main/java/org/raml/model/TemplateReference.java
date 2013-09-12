@@ -1,23 +1,23 @@
 package org.raml.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
+import org.raml.parser.annotation.Value;
+import org.raml.parser.resolver.MatchAllHandler;
 
 public class TemplateReference
 {
 
-    @Key
+
     private String name;
-    @Mapping(implicit = true)
-    private Map<String, String> parameters;
 
-    public TemplateReference()
-    {
-    }
+    @Mapping(handler = MatchAllHandler.class)
+    private Map<String, String> parameters = new HashMap<String, String>();
 
-    public TemplateReference(String name)
+
+    public TemplateReference(@Value String name)
     {
         this.name = name;
     }

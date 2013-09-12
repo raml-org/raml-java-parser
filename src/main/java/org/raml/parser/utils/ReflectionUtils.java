@@ -69,4 +69,9 @@ public class ReflectionUtils
             }
         }
     }
+
+    public static boolean isPojo(Class<?> type)
+    {
+        return !(isWrapperOrString(type) || type.isEnum() || type.isPrimitive());
+    }
 }

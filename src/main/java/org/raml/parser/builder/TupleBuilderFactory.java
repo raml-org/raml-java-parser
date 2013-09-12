@@ -106,7 +106,14 @@ public class TupleBuilderFactory extends AbastractFactory
         }
         else
         {
-            tupleBuilder = new ScalarTupleBuilder(declaredField.getName(), declaredField.getType());
+            if (ReflectionUtils.isPojo(declaredField.getType()))
+            {
+                tupleBuilder = new PojoTupleBuilder(declaredField.getName(), declaredField.getType());
+            }
+            else
+            {
+                tupleBuilder = new ScalarTupleBuilder(declaredField.getName(), declaredField.getType());
+            }
         }
         return tupleBuilder;
     }
@@ -163,7 +170,7 @@ public class TupleBuilderFactory extends AbastractFactory
             }
             else
             {
-                tupleBuilder = new PojoTupleBuilder(declaredField.getName(), declaredField.getDeclaringClass());
+                tupleBuilder = new PojoTupleBuilder(declaredField.getName(), declaredField.getType());
             }
         }
         return tupleBuilder;

@@ -23,9 +23,9 @@ resourceTypes:
         summary: category value is <<category>> <<subCategory>>
 /users:
   type: collection
-#  /{userId}:
-#    type:
-#      member:
-#        category: gold
-#        subCategory: rusty
+  /{userId}:
+    type:
+      member:
+        category: gold
+        subCategory: rusty
 

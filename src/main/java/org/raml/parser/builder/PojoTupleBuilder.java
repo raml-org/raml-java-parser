@@ -1,6 +1,15 @@
 package org.raml.parser.builder;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.raml.parser.annotation.Key;
+import org.raml.parser.annotation.Value;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.utils.NodeUtils;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
@@ -42,7 +51,33 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     {
         try
         {
-            Object newValue = pojoClass.newInstance();
+            Object newValue;
+            Constructor<?>[] declaredConstructors = pojoClass.getDeclaredConstructors();
+            if (declaredConstructors.length > 0)
+            {
+                List<Object> arguments = new ArrayList<Object>();
+                Constructor<?> declaredConstructor = declaredConstructors[0];
+                Annotation[][] parameterAnnotations = declaredConstructor.getParameterAnnotations();
+                for (Annotation[] parameterAnnotation : parameterAnnotations)
+                {
+
+                    if (parameterAnnotation[0].annotationType().equals(Value.class))
+                    {
+                        arguments.add(NodeUtils.getNodeValue(node));
+                    }
+                    else if (parameterAnnotation[0].annotationType().equals(Key.class))
+                    {
+                        arguments.add(fieldName);
+                    }
+
+                }
+
+                newValue = declaredConstructor.newInstance(arguments.toArray(new Object[arguments.size()]));
+            }
+            else
+            {
+                newValue = pojoClass.newInstance();
+            }
             ReflectionUtils.setProperty(parent, fieldName, newValue);
             processPojoAnnotations(newValue, fieldName, parent);
             return newValue;
@@ -55,7 +90,12 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         {
             throw new RuntimeException(e);
         }
+        catch (InvocationTargetException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Override
     public void buildKey(Object parent, ScalarNode node)

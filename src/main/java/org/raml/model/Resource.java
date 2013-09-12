@@ -35,7 +35,6 @@ public class Resource
     private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
 
     @Scalar
-    //@Mapping()
     private TemplateReference type;
 
     @Sequence
@@ -176,7 +175,7 @@ public class Resource
     {
         return "Resource{" +
                "name='" + name + '\'' +
-               ", uri='" + getUri() + '\'' +
+               ", uri='" + parentUri != null ? getUri() : "-" + '\'' +
                '}';
     }
 
