@@ -24,9 +24,6 @@ public class ResourceType
     @Scalar
     private String summary;
 
-    @Sequence
-    private List<String> parameters = new ArrayList<String>();
-
     @Scalar
     private TemplateReference type;
 
@@ -71,16 +68,6 @@ public class ResourceType
     public void setDescription(String description)
     {
         this.description = description;
-    }
-
-    public List<String> getParameters()
-    {
-        return parameters;
-    }
-
-    public void setParameters(List<String> parameters)
-    {
-        this.parameters = parameters;
     }
 
     public List<TemplateReference> getIs()
