@@ -5,7 +5,7 @@ version: v0.2
 baseUri: https://localhost:9091/api/{version}/{company}
 uriParameters:
     company:
-        name: Company
+        displayName: Company
         type: string
         minLength: 0
         maxLength: 10
@@ -27,7 +27,7 @@ documentation:
         responses:
             200: !!null
     /{element}:
-        name: Employee
+        displayName: Employee
         get:
             summary: Get a particular employee.
             responses:

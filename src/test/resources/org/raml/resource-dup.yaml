@@ -4,20 +4,20 @@ title: Sample API
 version: v1
 baseUri: https://api.sample.com/
 /media:
-    name: Media
+    displayName: Media
     get: !!null
     /search:
-        name: Media Search
+        displayName: Media Search
         get: !!null
     /tags:
-        name: Tags
+        displayName: Tags
         get: !!null
         /search:
-            name: Tag Search
+            displayName: Tag Search
             get: !!null
         /mgmt:
-            name: Tag Management
+            displayName: Tag Management
             get: !!null
 /media/tags/search:
-    name: Tag Search Again
+    displayName: Tag Search Again
     get: !!null

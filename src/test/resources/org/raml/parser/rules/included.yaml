@@ -18,7 +18,7 @@ get:
         body:
             application/x-www-form-urlencoded:
                 formParameters:
-                    name:
+                    displayName:
                         description: This is the name.
                         type: string
                         required: yes

@@ -17,7 +17,7 @@ public class Resource
 {
 
     @Scalar
-    private String name;
+    private String displayName;
 
     @Parent(property = "uri")
     private String parentUri;
@@ -75,14 +75,14 @@ public class Resource
         this.actions = actions;
     }
 
-    public void setName(String name)
+    public void setDisplayName(String displayName)
     {
-        this.name = name;
+        this.displayName = displayName;
     }
 
-    public String getName()
+    public String getDisplayName()
     {
-        return name;
+        return displayName;
     }
 
     public String getRelativeUri()
@@ -174,7 +174,7 @@ public class Resource
     public String toString()
     {
         return "Resource{" +
-               "name='" + name + '\'' +
+               "displayName='" + displayName + '\'' +
                ", uri='" + parentUri != null ? getUri() : "-" + '\'' +
                '}';
     }

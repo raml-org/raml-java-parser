@@ -4,25 +4,25 @@ title: GitHub API
 version: v3
 baseUri: https://api.github.com
 /user:
- name: Authenticated User
- /emails: { name: Emails }
- /followers: { name: Followers }
- /following: { name: Following }
+ displayName: Authenticated User
+ /emails: { displayName: Emails }
+ /followers: { displayName: Followers }
+ /following: { displayName: Following }
 /users:
- name: Users
+ displayName: Users
  /{userId}:
-   name: User
+   displayName: User
    uriParameters:
      userId:
-       name: User ID
+       displayName: User ID
        type: integer
-   /followers: { name: Followers }
-   /following: { name: Following }
+   /followers: { displayName: Followers }
+   /following: { displayName: Following }
    /keys:
-     name: Public Keys
+     displayName: Public Keys
      /{keyId}:
-       name: Public Key
+       displayName: Public Key
        uriParameters:
          keyId:
-           name: Public Key ID
+           displayName: Public Key ID
            type: integer

@@ -12,7 +12,7 @@ public class AbstractParam
 {
 
     @Scalar
-    private String name;
+    private String displayName;
 
     @Scalar
     private String description;
@@ -48,9 +48,9 @@ public class AbstractParam
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 
-    public void setName(String name)
+    public void setDisplayName(String displayName)
     {
-        this.name = name;
+        this.displayName = displayName;
     }
 
     public void setDescription(String description)
@@ -68,9 +68,9 @@ public class AbstractParam
         this.required = required;
     }
 
-    public String getName()
+    public String getDisplayName()
     {
-        return name;
+        return displayName;
     }
 
     public String getDescription()

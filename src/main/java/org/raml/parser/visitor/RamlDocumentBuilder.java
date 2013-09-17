@@ -6,9 +6,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
@@ -80,14 +83,14 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
                     actionNode = setTupleValueToEmptyMappingNode(resourceTuple);
                 }
                 actionNodes.put(normalizeKey(key), actionNode);
-                    for (NodeTuple actionTuple : ((MappingNode) actionNode).getValue())
+                for (NodeTuple actionTuple : ((MappingNode) actionNode).getValue())
+                {
+                    String actionTupleKey = ((ScalarNode) actionTuple.getKeyNode()).getValue();
+                    if (actionTupleKey.equals(TRAIT_USE_KEY))
                     {
-                        String actionTupleKey = ((ScalarNode) actionTuple.getKeyNode()).getValue();
-                        if (actionTupleKey.equals(TRAIT_USE_KEY))
-                        {
-                            traitsReference.put(normalizeKey(key), (SequenceNode) actionTuple.getValueNode());
-                        }
+                        traitsReference.put(normalizeKey(key), (SequenceNode) actionTuple.getValueNode());
                     }
+                }
             }
 
         }
@@ -133,10 +136,8 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
             }
 
             //merge type, no traits (action level traits could be merged)
-            mergeResourceNodes(resourceNode, clone);
+            mergeNodes(resourceNode, clone, Resource.class);
         }
-
-
     }
 
     private Node setTupleValueToEmptyMappingNode(NodeTuple tuple)
@@ -164,12 +165,12 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
             {
                 for (Node actionNode : actionNodes.values())
                 {
-                    mergeActionNodes(actionNode, clone);
+                    mergeNodes(actionNode, clone, Action.class);
                 }
             }
             else
             {
-                mergeActionNodes(actionNodes.get(actionName), clone);
+                mergeNodes(actionNodes.get(actionName), clone, Action.class);
             }
         }
     }
@@ -295,90 +296,89 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         return ((ScalarNode) templateNameNode).getValue();
     }
 
-    private void mergeResourceNodes(MappingNode resourceNode, MappingNode templateNode)
-    {
-        Map<String, NodeTuple> resourceTupleMap = getTupleMap(resourceNode);
-        for (NodeTuple templateTuple : templateNode.getValue())
-        {
-            String templateKey = ((ScalarNode) templateTuple.getKeyNode()).getValue();
-            if (!Arrays.asList(new String[] {"description", "summary", "type", "is"}).contains(templateKey))
-            {
-                String resourceKey = getMatchingKey(resourceTupleMap, templateKey);
-                if (resourceKey == null)
-                {
-                    resourceNode.getValue().add(templateTuple);
-                }
-                else
-                {
-                    Node keyNode = resourceTupleMap.get(resourceKey).getKeyNode();
-                    if (isOptional(resourceKey) && !isOptional(templateKey))
-                    {
-                        keyNode = templateTuple.getKeyNode();
-                    }
-                    Node valueNode;
-                    Node resourceInnerNode = resourceTupleMap.get(resourceKey).getValueNode();
-                    Node templateInnerNode = templateTuple.getValueNode();
-                    if (isAction(resourceKey))
-                    {
-                        valueNode = mergeActionNodes(resourceInnerNode, templateInnerNode);
-                    }
-                    else
-                    {
-                        valueNode = mergeNodes(resourceInnerNode, templateInnerNode);
-                    }
-                    resourceNode.getValue().remove(resourceTupleMap.get(resourceKey));
-                    resourceNode.getValue().add(new NodeTuple(keyNode, valueNode));
-                }
-            }
-        }
-    }
-
-    private Node mergeActionNodes(Node actionNode, Node templateNode)
-    {
-        //TODO do something differnt for traits
-        return mergeNodes(actionNode, templateNode);
-    }
-
-    private Node mergeNodes(Node baseNode, Node templateNode)
-    {
-        if (baseNode.getNodeId() == mapping && templateNode.getNodeId() == mapping)
-        {
-            return mergeMappingNodes((MappingNode) baseNode, (MappingNode) templateNode);
-        }
-        if (templateNode.getNodeId() == mapping)
-        {
-            return templateNode;
-        }
-        return baseNode;
-    }
-
-    private MappingNode mergeMappingNodes(MappingNode baseNode, MappingNode templateNode)
+    private MappingNode mergeMappingNodes(MappingNode baseNode, MappingNode templateNode, Class<?> context)
     {
 
         Map<String, NodeTuple> baseTupleMap = getTupleMap(baseNode);
         for (NodeTuple templateTuple : templateNode.getValue())
         {
             String templateKey = ((ScalarNode) templateTuple.getKeyNode()).getValue();
-            String baseKey = getMatchingKey(baseTupleMap, templateKey);
-            if (baseKey == null)
+
+            if (!nonMergeableFields(context).contains(templateKey))
             {
-                baseNode.getValue().add(templateTuple);
-            }
-            else
-            {
-                Node keyNode = baseTupleMap.get(baseKey).getKeyNode();
-                if (isOptional(baseKey) && !isOptional(templateKey))
+                String baseKey = getMatchingKey(baseTupleMap, templateKey);
+                if (baseKey == null)
                 {
-                    keyNode = templateTuple.getKeyNode();
+                    //TODO may require cleaning of value node
+                    baseNode.getValue().add(templateTuple);
                 }
-                Node resourceInnerNode = baseTupleMap.get(baseKey).getValueNode();
-                Node templateInnerNode = templateTuple.getValueNode();
-                Node valueNode = mergeNodes(resourceInnerNode, templateInnerNode);
-                baseNode.getValue().remove(baseTupleMap.get(baseKey));
-                baseNode.getValue().add(new NodeTuple(keyNode, valueNode));
+                else
+                {
+                    Node keyNode = baseTupleMap.get(baseKey).getKeyNode();
+                    if (isOptional(baseKey) && !isOptional(templateKey))
+                    {
+                        keyNode = templateTuple.getKeyNode();
+                    }
+                    Node baseInnerNode = baseTupleMap.get(baseKey).getValueNode();
+                    Node templateInnerNode = templateTuple.getValueNode();
+                    Node valueNode = mergeNodes(baseInnerNode, templateInnerNode, pushMergeContext(context, baseKey));
+                    baseNode.getValue().remove(baseTupleMap.get(baseKey));
+                    baseNode.getValue().add(new NodeTuple(keyNode, valueNode));
+                }
             }
         }
         return baseNode;
+    }
+
+    private Class<?> pushMergeContext(Class<?> context, String key)
+    {
+        if (context.equals(Resource.class) && isAction(key))
+        {
+            return Action.class;
+        }
+        return Object.class;
+    }
+
+    private Node mergeNodes(Node baseNode, Node templateNode, Class<?> context)
+    {
+        if (baseNode.getNodeId() == mapping && templateNode.getNodeId() == mapping)
+        {
+            return mergeMappingNodes((MappingNode) baseNode, (MappingNode) templateNode, context);
+        }
+        if (templateNode.getNodeId() == mapping)
+        {
+            return cleanMergedTuples((MappingNode) templateNode, context);
+        }
+        return baseNode;
+    }
+
+    private MappingNode cleanMergedTuples(MappingNode templateNode, Class<?> context)
+    {
+
+        List<NodeTuple> tuples = new ArrayList(templateNode.getValue());
+        for (NodeTuple tuple : tuples)
+        {
+            String key = ((ScalarNode) tuple.getKeyNode()).getValue();
+            if (nonMergeableFields(context).contains(key))
+            {
+                templateNode.getValue().remove(tuple);
+            }
+        }
+        return templateNode;
+    }
+
+    private Set nonMergeableFields(Class<?> element)
+    {
+        String[] fields = {};
+        if (element.equals(Resource.class))
+        {
+            fields = new String[] {"description", "summary", "displayName", "type", "is"};
+        }
+        else if (element.equals(Action.class))
+        {
+            fields = new String[] {"description", "summary", "displayName", "is"};
+        }
+        return new HashSet(Arrays.asList(fields));
     }
 
     private boolean isAction(String key)

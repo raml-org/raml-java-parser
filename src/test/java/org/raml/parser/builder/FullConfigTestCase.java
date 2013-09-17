@@ -55,7 +55,7 @@ public class FullConfigTestCase
         assertThat(raml.getUriParameters().size(), is(3));
 
         List<UriParameter> hostParam = raml.getUriParameters().get("host");
-        assertThat(hostParam.get(0).getName(), is("Host"));
+        assertThat(hostParam.get(0).getDisplayName(), is("Host"));
         assertThat(hostParam.get(0).getDescription(), is("host name"));
         assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
         assertThat(hostParam.get(0).getMinLength(), is(5));
@@ -82,13 +82,13 @@ public class FullConfigTestCase
         Resource rootResource = raml.getResources().get(rootUri);
         assertThat(rootResource.getRelativeUri(), is(rootUri));
         assertThat(rootResource.getUri(), is(rootUri));
-        assertThat(rootResource.getName(), is("Root resource"));
+        assertThat(rootResource.getDisplayName(), is("Root resource"));
 
         String mediaUri = "/media";
         Resource mediaResource = raml.getResources().get(mediaUri);
         assertThat(mediaResource.getRelativeUri(), is(mediaUri));
         assertThat(mediaResource.getUri(), is(mediaUri));
-        assertThat(mediaResource.getName(), is("Media collection"));
+        assertThat(mediaResource.getDisplayName(), is("Media collection"));
 
         //actions
         assertThat(mediaResource.getActions().size(), is(2));
@@ -100,7 +100,7 @@ public class FullConfigTestCase
         //action headers
         assertThat(action.getHeaders().size(), is(1));
         Header apiKeyHeader = action.getHeaders().get("api-key");
-        assertThat(apiKeyHeader.getName(), is("Api key"));
+        assertThat(apiKeyHeader.getDisplayName(), is("Api key"));
         assertThat(apiKeyHeader.getDescription(), is("Api key description"));
         assertThat(apiKeyHeader.getType(), is(ParamType.STRING));
         assertThat(apiKeyHeader.isRequired(), is(true));
@@ -129,7 +129,7 @@ public class FullConfigTestCase
         assertThat(formBody.getType(), is(formMime));
         assertThat(formBody.getFormParameters().size(), is(1));
         FormParameter form1Param = formBody.getFormParameters().get("form-1");
-        assertThat(form1Param.getName(), is("form 1"));
+        assertThat(form1Param.getDisplayName(), is("form 1"));
         assertThat(form1Param.getDescription(), is("form 1 description"));
         assertThat(form1Param.getType(), is(ParamType.NUMBER));
         assertThat(form1Param.isRequired(), is(true));
@@ -153,7 +153,7 @@ public class FullConfigTestCase
         Resource mediaItemResource = mediaResource.getResource(mediaItemUri);
         assertThat(mediaItemResource.getRelativeUri(), is(mediaItemUri));
         assertThat(mediaItemResource.getUri(), is(mediaUri + mediaItemUri));
-        assertThat(mediaItemResource.getName(), is("Media item"));
+        assertThat(mediaItemResource.getDisplayName(), is("Media item"));
         assertThat(mediaItemResource.getActions().size(), is(1));
         assertThat(mediaItemResource.getUriParameters().size(), is(1));
         UriParameter mediaIdParam = mediaItemResource.getUriParameters().get("mediaId");

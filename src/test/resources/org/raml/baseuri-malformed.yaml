@@ -4,4 +4,4 @@ title: Sample API
 version: v1
 baseUri: https-colon-//api.sample.com/
 /media:
-    name: Media
+    displayName: Media

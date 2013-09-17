@@ -5,7 +5,7 @@ version: v1
 baseUri: https://api.sample.com/
 traits:
   paged:
-    name: Paged
+    displayName: Paged
     requires:
       method: [ get, post ]
       example: '1'

@@ -4,13 +4,13 @@ title: Sample API
 version: v1
 baseUri: https://api.sample.com/
 /media:
-    name: Media
+    displayName: Media
     put:
         summary: nice summary
         description: nice description
         headers:
             header-1:
-                name: header 1
+                displayName: header 1
                 description: header 1 description
                 type: string
                 required: false
@@ -21,7 +21,7 @@ baseUri: https://api.sample.com/
                 example: new york
         queryParameters:
             query-1:
-                name: query 1
+                displayName: query 1
                 description: query 1 description
                 type: integer
                 required: true
@@ -46,7 +46,7 @@ baseUri: https://api.sample.com/
             multipart/form-data:
                 formParameters:
                     form-1:
-                        name: form 1
+                        displayName: form 1
                         description: form 1 description
                         type: number
                         required: true

@@ -42,6 +42,9 @@ public class Raml
     @Sequence(builder = TraitBuilder.class)
     private List<String> traits;
 
+    @Mapping
+    private Map<String, String> schemas;
+
 
     public Raml()
     {
@@ -143,6 +146,16 @@ public class Raml
     public void setTraits(List<String> traits)
     {
         this.traits = traits;
+    }
+
+    public Map<String, String> getSchemas()
+    {
+        return schemas;
+    }
+
+    public void setSchemas(Map<String, String> schemas)
+    {
+        this.schemas = schemas;
     }
 
     public Resource getResource(String path)

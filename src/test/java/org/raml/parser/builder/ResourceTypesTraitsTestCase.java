@@ -44,14 +44,14 @@ public class ResourceTypesTraitsTestCase extends AbstractBuilderTestCase
         assertThat(override.getActions().size(), is(1));
         Map<String,QueryParameter> queryParameters = override.getAction(ActionType.GET).getQueryParameters();
         assertThat(queryParameters.size(), is(9));
-        assertThat(queryParameters.get("action").getName(), is("action"));
-        assertThat(queryParameters.get("traitOverA").getName(), is("traitOverA"));
-        assertThat(queryParameters.get("traitOverR").getName(), is("traitOverR"));
-        assertThat(queryParameters.get("typeOverR").getName(), is("typeOverR"));
-        assertThat(queryParameters.get("traitOverTypeA").getName(), is("traitOverTypeA"));
-        assertThat(queryParameters.get("traitOverTypeR").getName(), is("traitOverTypeR"));
-        assertThat(queryParameters.get("typeOverType").getName(), is("typeOverType"));
-        assertThat(queryParameters.get("traitOverParentTypeA").getName(), is("traitOverParentTypeA"));
-        assertThat(queryParameters.get("traitOverParentTypeR").getName(), is("traitOverParentTypeR"));
+        assertThat(queryParameters.get("action").getDisplayName(), is("action"));
+        assertThat(queryParameters.get("traitOverA").getDisplayName(), is("traitOverA"));
+        assertThat(queryParameters.get("traitOverR").getDisplayName(), is("traitOverR"));
+        assertThat(queryParameters.get("typeOverR").getDisplayName(), is("typeOverR"));
+        assertThat(queryParameters.get("traitOverTypeA").getDisplayName(), is("traitOverTypeA"));
+        assertThat(queryParameters.get("traitOverTypeR").getDisplayName(), is("traitOverTypeR"));
+        assertThat(queryParameters.get("typeOverType").getDisplayName(), is("typeOverType"));
+        assertThat(queryParameters.get("traitOverParentTypeA").getDisplayName(), is("traitOverParentTypeA"));
+        assertThat(queryParameters.get("traitOverParentTypeR").getDisplayName(), is("traitOverParentTypeR"));
     }
 }

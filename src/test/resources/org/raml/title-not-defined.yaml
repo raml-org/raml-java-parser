@@ -4,4 +4,4 @@
 version: v1
 baseUri: https://api.sample.com/
 /media:
-    name: Media
+    displayName: Media

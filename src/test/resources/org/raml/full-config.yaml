@@ -5,7 +5,7 @@ version: v1
 baseUri: https://{host}.sample.com/{path}
 uriParameters:
     host:
-        name: Host
+        displayName: Host
         description: host name
         type: string
         minLength: 5
@@ -26,17 +26,17 @@ documentation:
     - title: section
       content: section content
 /:
-    name: Root resource
+    displayName: Root resource
     head: !!null
 /media:
-    name: Media collection
+    displayName: Media collection
     head: !!null
     get:
         summary: retrieve
         description: retrieve media
         headers:
             api-key:
-                name: Api key
+                displayName: Api key
                 description: Api key description
                 type: string
                 required: true
@@ -67,7 +67,7 @@ documentation:
             multipart/form-data:
                 formParameters:
                     form-1:
-                        name: form 1
+                        displayName: form 1
                         description: form 1 description
                         type: number
                         required: true
@@ -90,7 +90,7 @@ documentation:
                         example: '<root>none</root>'
                     text/plain: !!null
     /{mediaId}:
-        name: Media item
+        displayName: Media item
         uriParameters:
             mediaId:
                 type: string

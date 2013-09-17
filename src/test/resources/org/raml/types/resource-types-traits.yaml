@@ -26,81 +26,81 @@ traits:
     - traitOverA:
         queryParameters:
             action:
-                name: traitOverA
+                displayName: traitOverA
             traitOverA:
-                name: traitOverA
+                displayName: traitOverA
       traitOverR:
         queryParameters:
             action:
-                name: traitOverR
+                displayName: traitOverR
             traitOverA:
-                name: traitOverR
+                displayName: traitOverR
             traitOverR:
-                name: traitOverR
+                displayName: traitOverR
       traitOverTypeA:
         queryParameters:
             action:
-                name: traitOverTypeA
+                displayName: traitOverTypeA
             traitOverA:
-                name: traitOverTypeA
+                displayName: traitOverTypeA
             traitOverR:
-                name: traitOverTypeA
+                displayName: traitOverTypeA
             typeOverR:
-                name: traitOverTypeA
+                displayName: traitOverTypeA
             traitOverTypeA:
-                name: traitOverTypeA
+                displayName: traitOverTypeA
       traitOverTypeR:
         queryParameters:
             action:
-                name: traitOverTypeR
+                displayName: traitOverTypeR
             traitOverA:
-                name: traitOverTypeR
+                displayName: traitOverTypeR
             traitOverR:
-                name: traitOverTypeR
+                displayName: traitOverTypeR
             typeOverR:
-                name: traitOverTypeR
+                displayName: traitOverTypeR
             traitOverTypeA:
-                name: traitOverTypeR
+                displayName: traitOverTypeR
             traitOverTypeR:
-                name: traitOverTypeR
+                displayName: traitOverTypeR
       traitOverParentTypeA:
         queryParameters:
             action:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             traitOverA:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             traitOverR:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             typeOverR:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             traitOverTypeA:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             traitOverTypeR:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             typeOverType:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
             traitOverParentTypeA:
-                name: traitOverParentTypeA
+                displayName: traitOverParentTypeA
       traitOverParentTypeR:
         queryParameters:
             action:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             traitOverA:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             traitOverR:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             typeOverR:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             traitOverTypeA:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             traitOverTypeR:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             typeOverType:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             traitOverParentTypeA:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
             traitOverParentTypeR:
-                name: traitOverParentTypeR
+                displayName: traitOverParentTypeR
 
 resourceTypes:
     - type0:
@@ -123,19 +123,19 @@ resourceTypes:
             is: [traitOverParentTypeA]
             queryParameters:
                 action:
-                    name: typeOverType
+                    displayName: typeOverType
                 traitOverA:
-                    name: typeOverType
+                    displayName: typeOverType
                 traitOverR:
-                    name: typeOverType
+                    displayName: typeOverType
                 typeOverR:
-                    name: typeOverType
+                    displayName: typeOverType
                 traitOverTypeA:
-                    name: typeOverType
+                    displayName: typeOverType
                 traitOverTypeR:
-                    name: typeOverType
+                    displayName: typeOverType
                 typeOverType:
-                    name: typeOverType
+                    displayName: typeOverType
       typeOverR:
         type: typeOverType
         is: [traitOverTypeR]
@@ -143,13 +143,13 @@ resourceTypes:
             is: [traitOverTypeA]
             queryParameters:
                 action:
-                    name: typeOverR
+                    displayName: typeOverR
                 traitOverA:
-                    name: typeOverR
+                    displayName: typeOverR
                 traitOverR:
-                    name: typeOverR
+                    displayName: typeOverR
                 typeOverR:
-                    name: typeOverR
+                    displayName: typeOverR
 /mixed:
     type: type1
     is: [traitR]
@@ -165,4 +165,4 @@ resourceTypes:
         is: [traitOverA]
         queryParameters:
             action:
-                name: action
+                displayName: action

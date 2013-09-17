@@ -4,7 +4,7 @@ title: ZEncoder API
 version: v2
 baseUri: https://app.zencoder.com/api/{version}
 /jobs:
- name: Jobs
+ displayName: Jobs
  post:
    summary: Create a Job
    description: |

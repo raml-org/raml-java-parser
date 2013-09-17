@@ -4,7 +4,7 @@ title: Salesforce Chatter Communities REST API
 baseUri: https://{param2}.force.com/param
 uriParameters:
  param2:
-   name: Community Domain
+   displayName: Community Domain
    type: string
    required: 'y'
 /resource:
