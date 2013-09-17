@@ -3,16 +3,15 @@ package org.raml.parser.builder;
 import java.io.InputStream;
 
 import org.raml.model.Raml;
-import org.raml.parser.visitor.YamlDocumentBuilder;
+import org.raml.parser.visitor.RamlDocumentBuilder;
 
 public class AbstractBuilderTestCase
 {
 
-    protected Raml parseRaml(String resource)
+    protected static Raml parseRaml(String resource)
     {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resource);
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        return ramlSpecBuilder.build(inputStream);
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+        return new RamlDocumentBuilder().build(inputStream);
     }
 
 }

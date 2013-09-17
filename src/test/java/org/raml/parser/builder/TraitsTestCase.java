@@ -23,7 +23,7 @@ public class TraitsTestCase extends AbstractBuilderTestCase
         Map<String,QueryParameter> queryParams = raml.getResources().get("/media").getAction(GET).getQueryParameters();
         assertThat(queryParams.size(), is(1));
         assertThat(queryParams.get("count").getType(), is(ParamType.INTEGER));
-        assertThat(raml.getResources().get("/media").getAction(POST).getQueryParameters().size(), is(1));
+        assertThat(raml.getResources().get("/media").getAction(POST).getQueryParameters().size(), is(2));
     }
 
     @Test

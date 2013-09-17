@@ -38,7 +38,7 @@ public class Resource
     private TemplateReference type;
 
     @Sequence
-    private List<String> use = new ArrayList<String>();
+    private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
 
     public Resource()
@@ -124,14 +124,14 @@ public class Resource
         return uriParameters;
     }
 
-    public List<String> getUse()
+    public List<TemplateReference> getIs()
     {
-        return use;
+        return is;
     }
 
-    public void setUse(List<String> use)
+    public void setIs(List<TemplateReference> is)
     {
-        this.use = use;
+        this.is = is;
     }
 
     public TemplateReference getType()

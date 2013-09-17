@@ -25,6 +25,11 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
         this.fieldName = fieldName;
     }
 
+    protected String getFieldName()
+    {
+        return fieldName;
+    }
+
     @Override
     public Object buildValue(Object parent, SequenceNode node)
     {

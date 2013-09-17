@@ -9,7 +9,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Stack;
 
-import org.raml.model.Raml;
 import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
@@ -57,17 +56,33 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader);
         rootNode = (MappingNode) yamlParser.compose(content);
+        preBuildProcess();
         nodeVisitor.visitDocument(rootNode);
         postBuildProcess();
         return documentObject;
     }
 
-    private void postBuildProcess()
+    protected T getDocumentObject()
     {
-        if (documentObject instanceof Raml)
-        {
-            ((Raml) documentObject).applyTraits();
-        }
+        return documentObject;
+    }
+
+    protected Stack<NodeBuilder<?>> getBuilderContext()
+    {
+        return builderContext;
+    }
+
+    protected Stack<Object> getDocumentContext()
+    {
+        return documentContext;
+    }
+
+    protected void preBuildProcess()
+    {
+    }
+
+    protected void postBuildProcess()
+    {
     }
 
     public T build(InputStream content)
@@ -152,8 +167,8 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     {
         try
         {
-
-            documentContext.push(documentClass.newInstance());
+            documentObject = documentClass.newInstance();
+            documentContext.push(documentObject);
             builderContext.push(buildDocumentBuilder());
         }
         catch (Exception e)
@@ -173,7 +188,10 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     @Override
     public void onDocumentEnd(MappingNode node)
     {
-        documentObject = (T) documentContext.pop();
+        if (documentObject != documentContext.pop())
+        {
+            throw new IllegalStateException("more zombies?!");
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package org.raml.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.raml.model.parameter.Header;
@@ -9,8 +11,9 @@ import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
+import org.raml.parser.annotation.Sequence;
 
-public class Action implements Traitable
+public class Action
 {
 
     @Key
@@ -37,6 +40,8 @@ public class Action implements Traitable
     @Parent
     private Resource resource;
 
+    @Sequence
+    private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
     public Action()
     {
@@ -122,19 +127,14 @@ public class Action implements Traitable
         this.resource = resource;
     }
 
-    public void applyTrait(Map<?, ?> actionTrait, Map<String, ?> params)
+    public List<TemplateReference> getIs()
     {
-        if (actionTrait.containsKey("queryParameters"))
-        {
-            Map traitQueryParams = (Map) actionTrait.get("queryParameters");
-            for (Object queryKey : traitQueryParams.keySet())
-            {
-                if (!queryParameters.containsKey(queryKey))
-                {
-                    //queryParameters.put(queryKey.toString(), new QueryParameter((Map<String, ?>) traitQueryParams.get(queryKey)));
-                }
-            }
-        }
+        return is;
+    }
+
+    public void setIs(List<TemplateReference> is)
+    {
+        this.is = is;
     }
 
     @Override

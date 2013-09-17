@@ -1,0 +1,168 @@
+#%RAML 0.2
+---
+title: Example API
+version: v1
+
+traits:
+    - traitT0R:
+        headers:
+            hTraitT0R: ~
+      traitT0A:
+        headers:
+            hTraitT0A: ~
+      traitT1R:
+        headers:
+            hTraitT1R: ~
+      traitT1A:
+        headers:
+            hTraitT1A: ~
+      traitR:
+        headers:
+            hTraitR: ~
+      traitA:
+        headers:
+            hTraitA: ~
+
+    - traitOverA:
+        queryParameters:
+            action:
+                name: traitOverA
+            traitOverA:
+                name: traitOverA
+      traitOverR:
+        queryParameters:
+            action:
+                name: traitOverR
+            traitOverA:
+                name: traitOverR
+            traitOverR:
+                name: traitOverR
+      traitOverTypeA:
+        queryParameters:
+            action:
+                name: traitOverTypeA
+            traitOverA:
+                name: traitOverTypeA
+            traitOverR:
+                name: traitOverTypeA
+            typeOverR:
+                name: traitOverTypeA
+            traitOverTypeA:
+                name: traitOverTypeA
+      traitOverTypeR:
+        queryParameters:
+            action:
+                name: traitOverTypeR
+            traitOverA:
+                name: traitOverTypeR
+            traitOverR:
+                name: traitOverTypeR
+            typeOverR:
+                name: traitOverTypeR
+            traitOverTypeA:
+                name: traitOverTypeR
+            traitOverTypeR:
+                name: traitOverTypeR
+      traitOverParentTypeA:
+        queryParameters:
+            action:
+                name: traitOverParentTypeA
+            traitOverA:
+                name: traitOverParentTypeA
+            traitOverR:
+                name: traitOverParentTypeA
+            typeOverR:
+                name: traitOverParentTypeA
+            traitOverTypeA:
+                name: traitOverParentTypeA
+            traitOverTypeR:
+                name: traitOverParentTypeA
+            typeOverType:
+                name: traitOverParentTypeA
+            traitOverParentTypeA:
+                name: traitOverParentTypeA
+      traitOverParentTypeR:
+        queryParameters:
+            action:
+                name: traitOverParentTypeR
+            traitOverA:
+                name: traitOverParentTypeR
+            traitOverR:
+                name: traitOverParentTypeR
+            typeOverR:
+                name: traitOverParentTypeR
+            traitOverTypeA:
+                name: traitOverParentTypeR
+            traitOverTypeR:
+                name: traitOverParentTypeR
+            typeOverType:
+                name: traitOverParentTypeR
+            traitOverParentTypeA:
+                name: traitOverParentTypeR
+            traitOverParentTypeR:
+                name: traitOverParentTypeR
+
+resourceTypes:
+    - type0:
+        is: [traitT0R]
+        get:
+            is: [traitT0A]
+            headers:
+                hType0: ~
+      type1:
+        type: type0
+        is: [traitT1R]
+        get:
+            is: [traitT1A]
+            headers:
+                hType1: ~
+
+    - typeOverType:
+        is: [traitOverParentTypeR]
+        get:
+            is: [traitOverParentTypeA]
+            queryParameters:
+                action:
+                    name: typeOverType
+                traitOverA:
+                    name: typeOverType
+                traitOverR:
+                    name: typeOverType
+                typeOverR:
+                    name: typeOverType
+                traitOverTypeA:
+                    name: typeOverType
+                traitOverTypeR:
+                    name: typeOverType
+                typeOverType:
+                    name: typeOverType
+      typeOverR:
+        type: typeOverType
+        is: [traitOverTypeR]
+        get:
+            is: [traitOverTypeA]
+            queryParameters:
+                action:
+                    name: typeOverR
+                traitOverA:
+                    name: typeOverR
+                traitOverR:
+                    name: typeOverR
+                typeOverR:
+                    name: typeOverR
+/mixed:
+    type: type1
+    is: [traitR]
+    get:
+        is: [traitA]
+        headers:
+            hAction: ~
+
+/override:
+    type: typeOverR
+    is: [traitOverR]
+    get:
+        is: [traitOverA]
+        queryParameters:
+            action:
+                name: action

@@ -3,29 +3,49 @@
 title: Example API
 version: v1
 resourceTypes:
-  - collection:
-      description: |
-        This resourceType should be used for any collection of items
-      summary: |
-        The collection of <<resourcePathName>>
-      get:
-        summary: |
-          Get all <<resourcePathName>>, optionally filtered
-      post:
-        summary: |
-          Create a new <<resourcePathName | !singularize>>
-    member:
-      description: |
-        This resourceType should be used for any collection member
-      summary: |
-        The member or a collection of <<resourcePathName>>
-      get:
-        summary: category value is <<category>> <<subCategory>>
-/users:
-  type: collection
-  /{userId}:
-    type:
-      member:
-        category: gold
-        subCategory: rusty
+    - simple:
+        get:
+            summary: some summary
+    - optional:
+        get?:
+            summary: get summary
+        put?:
+            summary: type put summary
+            body:
+                text/xml: ~
+        post:
+            summary: post summary
+            body:
+                text/xml: ~
+    - params:
+        <<method>>:
+            summary: <<summary>>
+    - inheritance:
+        type: simple
+        post:
+            body:
+                text/yaml: ~
 
+
+/simpleResource:
+    type: simple
+
+/optionalResource:
+    type: optional
+    put:
+        summary: resource put summary
+        body:
+            application/json: ~
+
+/paramsResource:
+    type:
+        params:
+            method: patch
+            summary: homemade summary
+
+/paramsResource2:
+    type:
+        params: {method: delete, summary: fine summary}
+
+/inheritanceResource:
+    type: inheritance

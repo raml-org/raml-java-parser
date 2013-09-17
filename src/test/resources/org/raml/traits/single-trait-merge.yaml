@@ -4,16 +4,14 @@ title: sample API
 version: v1
 baseUri: https://api.sample.com/
 traits:
-    paged:
+    - paged:
         description: Paged
-        provides:
-            get:
-                queryParameters:
-                    count:
-                        type: integer
-                        required: false
+        queryParameters:
+            count:
+                type: integer
+                required: false
 /media:
-    use: [paged]
+    is: [paged]
     get:
         queryParameters:
             filter:
