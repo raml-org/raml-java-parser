@@ -1,5 +1,6 @@
 package org.raml.parser.visitor;
 
+import static org.raml.parser.visitor.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 import java.lang.reflect.Field;
@@ -36,6 +37,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 
     private Map<String, MappingNode> resourceTypesMap = new HashMap<String, MappingNode>();
     private Map<String, MappingNode> traitsMap = new HashMap<String, MappingNode>();
+    private IncludeResolver includeResolver = new IncludeResolver();
 
     private enum TemplateType
     {
@@ -435,20 +437,44 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     @Override
     protected void preBuildProcess()
     {
-        //FIXME requires includes already resolved though includes may require params resolved
         buildTemplateMap(getRootNode());
     }
 
     private void buildTemplateMap(MappingNode rootNode)
     {
-        for (NodeTuple rootTuple : rootNode.getValue())
+        for (int i = 0; i < rootNode.getValue().size(); i++)
         {
+            NodeTuple rootTuple = rootNode.getValue().get(i);
+
             String key = ((ScalarNode) rootTuple.getKeyNode()).getValue();
             if (key.equals("resourceTypes") || key.equals("traits"))
             {
-                SequenceNode sequence = (SequenceNode) rootTuple.getValueNode();
-                for (Node template : sequence.getValue())
+                Node templateSequence = rootTuple.getValueNode();
+                if (templateSequence.getNodeId() == NodeId.scalar)
                 {
+                    if (!templateSequence.getTag().startsWith(INCLUDE_TAG))
+                    {
+                        throw new RuntimeException("Sequence or !include expected: " + templateSequence.getStartMark());
+                    }
+                    templateSequence = includeResolver.resolveInclude((ScalarNode) templateSequence, getResourceLoader(), this);
+                    rootNode.getValue().remove(i);
+                    rootNode.getValue().add(i, new NodeTuple(rootTuple.getKeyNode(), templateSequence));
+                }
+
+                SequenceNode sequence = (SequenceNode) templateSequence;
+                for (int j = 0; j < sequence.getValue().size(); j++)
+                {
+                    Node template = sequence.getValue().get(j);
+                    if (template.getNodeId() == NodeId.scalar)
+                    {
+                        if (!template.getTag().startsWith(INCLUDE_TAG))
+                        {
+                            throw new RuntimeException("Mapping or !include expected: " + templateSequence.getStartMark());
+                        }
+                        template = includeResolver.resolveInclude((ScalarNode) template, getResourceLoader(), this);
+                        sequence.getValue().remove(j);
+                        sequence.getValue().add(j, template);
+                    }
                     for (NodeTuple tuple : ((MappingNode) template).getValue())
                     {
                         String templateKey = ((ScalarNode) tuple.getKeyNode()).getValue();
@@ -472,6 +498,5 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     @Override
     protected void postBuildProcess()
     {
-        //getDocumentObject().applyTraits();
     }
 }

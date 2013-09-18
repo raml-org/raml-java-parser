@@ -77,6 +77,11 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         return documentContext;
     }
 
+    protected ResourceLoader getResourceLoader()
+    {
+        return resourceLoader;
+    }
+
     protected void preBuildProcess()
     {
     }

@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.raml.model.ActionType;
 import org.raml.model.Raml;
 
 public class IncludeTestCase extends AbstractBuilderTestCase
@@ -52,6 +53,29 @@ public class IncludeTestCase extends AbstractBuilderTestCase
         assertThat(raml.getDocumentation().get(0).getContent(), startsWith("Lorem ipsum"));
         assertThat(raml.getDocumentation().get(1).getTitle(), is("Section"));
         assertThat(raml.getDocumentation().get(1).getContent(), is("section content"));
+    }
+
+    @Test
+    public void includeWithResourceTypeParam()
+    {
+        Raml raml = parseRaml("org/raml/include/include-with-params.yaml");
+        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getSummary(), is("included title"));
+    }
+
+    @Test
+    public void includeResourceTypeSequence()
+    {
+        Raml raml = parseRaml("org/raml/include/include-resource-type-sequence.yaml");
+        assertThat(raml.getResources().get("/simple").getActions().size(), is(1));
+        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getSummary(), is("super"));
+    }
+
+    @Test
+    public void includeResourceType()
+    {
+        Raml raml = parseRaml("org/raml/include/include-resource-types.yaml");
+        assertThat(raml.getResources().get("/simple").getActions().size(), is(1));
+        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getSummary(), is("super"));
     }
 
     @Test
