@@ -56,6 +56,17 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     }
 
     @Test
+    public void testRaml()
+    {
+        Raml raml = parseRaml("org/raml/include/include-raml.raml");
+        assertThat(raml.getDocumentation().size(), is(2));
+        assertThat(raml.getDocumentation().get(0).getTitle(), is("Home"));
+        assertThat(raml.getDocumentation().get(0).getContent(), startsWith("Lorem ipsum"));
+        assertThat(raml.getDocumentation().get(1).getTitle(), is("Section"));
+        assertThat(raml.getDocumentation().get(1).getContent(), is("section content"));
+    }
+
+    @Test
     public void includeWithResourceTypeParam()
     {
         Raml raml = parseRaml("org/raml/include/include-with-params.yaml");
