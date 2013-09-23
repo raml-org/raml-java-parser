@@ -5,9 +5,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.raml.model.ActionType.GET;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Action;
 import org.raml.model.ActionType;
@@ -15,7 +18,9 @@ import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.parser.builder.AbstractBuilderTestCase;
+import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlDocumentBuilder;
+import org.raml.parser.visitor.RamlValidationService;
 import org.raml.parser.visitor.YamlDocumentBuilder;
 
 public class SalesEnablementTestCase extends AbstractBuilderTestCase
@@ -63,5 +68,14 @@ public class SalesEnablementTestCase extends AbstractBuilderTestCase
 
         assertThat(raml2.getResources().get("/presentations").getAction(GET).getQueryParameters().size(),
                    is(raml1.getResources().get("/presentations").getAction(GET).getQueryParameters().size()));
+    }
+
+    @Test
+    @Ignore
+    public void validation() throws Exception
+    {
+        String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(ramlSource));
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 }

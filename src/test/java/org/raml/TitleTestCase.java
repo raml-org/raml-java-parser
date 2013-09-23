@@ -7,10 +7,9 @@ import org.apache.commons.io.IOUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
-import org.raml.model.Raml;
 import org.raml.parser.rule.SimpleRule;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.YamlValidationService;
+import org.raml.parser.visitor.RamlValidationService;
 
 
 public class TitleTestCase
@@ -20,7 +19,7 @@ public class TitleTestCase
     public void whenTitleIsNotDefinedErrorShouldBeShown() throws IOException
     {
         String raml = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("org/raml/title-not-defined.yaml"), "UTF-8");
-        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(), CoreMatchers.is(SimpleRule.getMissingRuleMessage("title")));
     }

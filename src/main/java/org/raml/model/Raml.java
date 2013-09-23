@@ -10,8 +10,6 @@ import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
-import org.raml.parser.builder.ResourceTypeBuilder;
-import org.raml.parser.builder.TraitBuilder;
 import org.raml.parser.resolver.ResourceHandler;
 
 
@@ -36,10 +34,10 @@ public class Raml
     @Sequence
     private List<DocumentationItem> documentation;
 
-    @Sequence(builder = ResourceTypeBuilder.class)
+    @Sequence
     private List<Map<String, Template>> resourceTypes;
 
-    @Sequence(builder = TraitBuilder.class)
+    @Sequence
     private List<Map<String, Template>> traits;
 
     @Mapping

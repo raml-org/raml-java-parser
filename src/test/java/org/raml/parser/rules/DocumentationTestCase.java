@@ -9,9 +9,8 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.YamlValidationService;
+import org.raml.parser.visitor.RamlValidationService;
 
 public class DocumentationTestCase
 {
@@ -20,7 +19,7 @@ public class DocumentationTestCase
     public void documentation() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation.yaml"));
-        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 
@@ -28,7 +27,7 @@ public class DocumentationTestCase
     public void missingContent() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation-nocontent.yaml"));
-        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertThat(1, is(errors.size()));
         assertThat(errors.get(0).getMessage(), containsString("content is missing"));
     }
@@ -37,7 +36,7 @@ public class DocumentationTestCase
     public void missingTitle() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation-notitle.yaml"));
-        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertThat(1, is(errors.size()));
         assertThat(errors.get(0).getMessage(), containsString("title is missing"));
     }

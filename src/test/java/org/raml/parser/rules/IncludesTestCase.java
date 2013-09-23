@@ -8,9 +8,8 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.YamlValidationService;
+import org.raml.parser.visitor.RamlValidationService;
 
 public class IncludesTestCase
 {
@@ -19,7 +18,7 @@ public class IncludesTestCase
     public void include() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/includes.yaml"));
-        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 
@@ -27,7 +26,7 @@ public class IncludesTestCase
     public void includeNotFound() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/includes-bad.yaml"));
-        List<ValidationResult> errors = YamlValidationService.createDefault(Raml.class).validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertThat("Errors are not 1 " + errors, errors.size(), CoreMatchers.is(1));
         assertThat(errors.get(0).getMessage(), CoreMatchers.is("Include can not be resolved org/raml/parser/rules/title2.txt"));
     }

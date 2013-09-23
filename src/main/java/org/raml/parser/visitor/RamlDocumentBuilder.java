@@ -1,6 +1,5 @@
 package org.raml.parser.visitor;
 
-import static org.raml.parser.visitor.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 import java.lang.reflect.Field;
@@ -16,6 +15,8 @@ import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
+import org.raml.parser.loader.DefaultResourceLoader;
+import org.raml.parser.loader.ResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -35,9 +36,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     public static final String RESOURCE_TYPE_USE_KEY = "type";
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private Map<String, MappingNode> resourceTypesMap = new HashMap<String, MappingNode>();
-    private Map<String, MappingNode> traitsMap = new HashMap<String, MappingNode>();
-    private IncludeResolver includeResolver = new IncludeResolver();
+    private TemplateResolver templateResolver;
 
     private enum TemplateType
     {
@@ -46,7 +45,12 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 
     public RamlDocumentBuilder()
     {
-        super(Raml.class);
+        this(new DefaultResourceLoader());
+    }
+
+    public RamlDocumentBuilder(ResourceLoader resourceLoader)
+    {
+        super(Raml.class, resourceLoader);
     }
 
     @Override
@@ -184,12 +188,12 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         String label;
         if (type == TemplateType.RESOURCE_TYPE)
         {
-            templateMap = resourceTypesMap;
+            templateMap = getTemplateResolver().getResourceTypesMap();
             label = "resource type";
         }
         else
         {
-            templateMap = traitsMap;
+            templateMap = getTemplateResolver().getTraitsMap();
             label = "trait";
         }
 
@@ -434,65 +438,19 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         return tupleMap;
     }
 
+    public TemplateResolver getTemplateResolver()
+    {
+        if (templateResolver == null)
+        {
+            templateResolver = new TemplateResolver(getResourceLoader(), this);
+        }
+        return templateResolver;
+    }
+
     @Override
     protected void preBuildProcess()
     {
-        buildTemplateMap(getRootNode());
-    }
-
-    private void buildTemplateMap(MappingNode rootNode)
-    {
-        for (int i = 0; i < rootNode.getValue().size(); i++)
-        {
-            NodeTuple rootTuple = rootNode.getValue().get(i);
-
-            String key = ((ScalarNode) rootTuple.getKeyNode()).getValue();
-            if (key.equals("resourceTypes") || key.equals("traits"))
-            {
-                Node templateSequence = rootTuple.getValueNode();
-                if (templateSequence.getNodeId() == NodeId.scalar)
-                {
-                    if (!templateSequence.getTag().startsWith(INCLUDE_TAG))
-                    {
-                        throw new RuntimeException("Sequence or !include expected: " + templateSequence.getStartMark());
-                    }
-                    templateSequence = includeResolver.resolveInclude((ScalarNode) templateSequence, getResourceLoader(), this);
-                    rootNode.getValue().remove(i);
-                    rootNode.getValue().add(i, new NodeTuple(rootTuple.getKeyNode(), templateSequence));
-                }
-
-                SequenceNode sequence = (SequenceNode) templateSequence;
-                for (int j = 0; j < sequence.getValue().size(); j++)
-                {
-                    Node template = sequence.getValue().get(j);
-                    if (template.getNodeId() == NodeId.scalar)
-                    {
-                        if (!template.getTag().startsWith(INCLUDE_TAG))
-                        {
-                            throw new RuntimeException("Mapping or !include expected: " + templateSequence.getStartMark());
-                        }
-                        template = includeResolver.resolveInclude((ScalarNode) template, getResourceLoader(), this);
-                        sequence.getValue().remove(j);
-                        sequence.getValue().add(j, template);
-                    }
-                    for (NodeTuple tuple : ((MappingNode) template).getValue())
-                    {
-                        String templateKey = ((ScalarNode) tuple.getKeyNode()).getValue();
-                        MappingNode templateNode = (MappingNode) tuple.getValueNode();
-                        if (key.equals("resourceTypes"))
-                        {
-                            resourceTypesMap.put(templateKey, templateNode);
-                            logger.info("adding resource type: " + templateKey);
-                        }
-                        if (key.equals("traits"))
-                        {
-                            traitsMap.put(templateKey, templateNode);
-                            logger.info("adding trait: " + templateKey);
-                        }
-                    }
-                }
-            }
-        }
+        getTemplateResolver().init(getRootNode());
     }
 
     @Override
