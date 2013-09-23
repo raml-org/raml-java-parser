@@ -14,4 +14,9 @@ public class AbstractBuilderTestCase
         return new RamlDocumentBuilder().build(inputStream);
     }
 
+    protected static Raml parseRaml(String resource, RamlDocumentBuilder builder)
+    {
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+        return builder.build(inputStream);
+    }
 }

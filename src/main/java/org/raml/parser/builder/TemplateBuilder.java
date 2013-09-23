@@ -1,23 +1,50 @@
 package org.raml.parser.builder;
 
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.raml.model.Template;
 import org.raml.parser.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class TemplateBuilder extends SequenceTupleBuilder
 {
+
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     public TemplateBuilder(String fieldName)
     {
-        super(fieldName, String.class);
+        super(fieldName, new ParameterizedType()
+        {
+            @Override
+            public Type[] getActualTypeArguments()
+            {
+                return new Type[] {String.class, Template.class};
+            }
+
+            @Override
+            public Type getRawType()
+            {
+                return Map.class;
+            }
+
+            @Override
+            public Type getOwnerType()
+            {
+                return null;
+            }
+        });
     }
 
     @Override
@@ -31,10 +58,20 @@ public class TemplateBuilder extends SequenceTupleBuilder
             MappingNode mapping = (MappingNode) sequenceNode.getValue().remove(0);
             for (NodeTuple tuple : mapping.getValue())
             {
-                sequenceNode.getValue().add(tuple.getKeyNode());
+                sequenceNode.getValue().add(getFakeTemplateNode(tuple.getKeyNode()));
             }
         }
         return list;
+    }
+
+    private Node getFakeTemplateNode(Node keyNode)
+    {
+        List<NodeTuple> innerTuples = new ArrayList<NodeTuple>();
+        innerTuples.add(new NodeTuple(new ScalarNode(Tag.STR, "description", null, null, null), keyNode));
+        MappingNode innerNode = new MappingNode(Tag.MAP, innerTuples, false);
+        List<NodeTuple> outerTuples = new ArrayList<NodeTuple>();
+        outerTuples.add(new NodeTuple(keyNode, innerNode));
+        return new MappingNode(Tag.MAP, outerTuples, false);
     }
 
     @Override

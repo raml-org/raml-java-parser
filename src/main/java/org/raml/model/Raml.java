@@ -37,10 +37,10 @@ public class Raml
     private List<DocumentationItem> documentation;
 
     @Sequence(builder = ResourceTypeBuilder.class)
-    private List<String> resourceTypes;
+    private List<Map<String, Template>> resourceTypes;
 
     @Sequence(builder = TraitBuilder.class)
-    private List<String> traits;
+    private List<Map<String, Template>> traits;
 
     @Mapping
     private Map<String, String> schemas;
@@ -128,22 +128,22 @@ public class Raml
         return uriParameters;
     }
 
-    public List<String> getResourceTypes()
+    public List<Map<String, Template>> getResourceTypes()
     {
         return resourceTypes;
     }
 
-    public void setResourceTypes(List<String> resourceTypes)
+    public void setResourceTypes(List<Map<String, Template>> resourceTypes)
     {
         this.resourceTypes = resourceTypes;
     }
 
-    public List<String> getTraits()
+    public List<Map<String, Template>> getTraits()
     {
         return traits;
     }
 
-    public void setTraits(List<String> traits)
+    public void setTraits(List<Map<String, Template>> traits)
     {
         this.traits = traits;
     }

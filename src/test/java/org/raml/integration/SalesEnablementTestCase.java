@@ -3,6 +3,7 @@ package org.raml.integration;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.raml.model.ActionType.GET;
 
 import java.util.Map;
 
@@ -14,15 +15,19 @@ import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.parser.builder.AbstractBuilderTestCase;
+import org.raml.parser.visitor.RamlDocumentBuilder;
+import org.raml.parser.visitor.YamlDocumentBuilder;
 
 public class SalesEnablementTestCase extends AbstractBuilderTestCase
 {
+
     private static Raml raml;
+    private static final String ramlSource = "org/raml/integration/sales-enablement-api.yaml";
 
     @BeforeClass
     public static void init()
     {
-        raml = parseRaml("org/raml/integration/sales-enablement-api.yaml");
+        raml = parseRaml(ramlSource);
     }
 
     @Test
@@ -38,10 +43,25 @@ public class SalesEnablementTestCase extends AbstractBuilderTestCase
     {
         Resource simpleResource = raml.getResources().get("/presentations");
         assertThat(simpleResource.getActions().size(), is(2));
-        Map<String,QueryParameter> queryParameters = simpleResource.getAction(ActionType.GET).getQueryParameters();
+        Map<String, QueryParameter> queryParameters = simpleResource.getAction(GET).getQueryParameters();
         assertThat(queryParameters.size(), is(3));
         assertThat(queryParameters.get("region").getDisplayName(), is("region"));
         assertThat(queryParameters.get("start").getDisplayName(), is("start"));
         assertThat(queryParameters.get("pages").getDisplayName(), is("pages"));
+    }
+
+
+    @Test
+    public void emitter() throws Exception
+    {
+        RamlDocumentBuilder builder1 = new RamlDocumentBuilder();
+        Raml raml1 = parseRaml(ramlSource, builder1);
+        String emitted1 = YamlDocumentBuilder.dumpFromAst(builder1.getRootNode());
+
+        RamlDocumentBuilder builder2 = new RamlDocumentBuilder();
+        Raml raml2 = builder2.build(emitted1);
+
+        assertThat(raml2.getResources().get("/presentations").getAction(GET).getQueryParameters().size(),
+                   is(raml1.getResources().get("/presentations").getAction(GET).getQueryParameters().size()));
     }
 }

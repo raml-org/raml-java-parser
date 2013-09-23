@@ -1,25 +1,20 @@
 package org.raml.model;
 
-import java.util.List;
+import org.raml.parser.annotation.Scalar;
 
 public class Template
 {
 
-    private String template;
-    private List<TemplateToken> tokens;
+    @Scalar
+    private String description;
 
-    public Template(String template, List<TemplateToken> tokens)
+    public String getDescription()
     {
-        this.template = template;
-        this.tokens = tokens;
+        return description;
     }
 
-    @Override
-    public String toString()
+    public void setDescription(String description)
     {
-        return "Template{" +
-               "template='" + template + '\'' +
-               ", tokens=" + tokens +
-               '}';
+        this.description = description;
     }
 }
