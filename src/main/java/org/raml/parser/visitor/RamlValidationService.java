@@ -46,8 +46,8 @@ public class RamlValidationService extends YamlValidationService
         return new RamlValidationService(loader, new YamlDocumentValidator(Raml.class));
     }
 
-    public static RamlValidationService createDefault(Class<?> clazz, ResourceLoader loader, NodeRuleFactoryExtension... extensions)
+    public static RamlValidationService createDefault(ResourceLoader loader, NodeRuleFactoryExtension... extensions)
     {
-        return new RamlValidationService(loader, new YamlDocumentValidator(clazz, new NodeRuleFactory(extensions)));
+        return new RamlValidationService(loader, new YamlDocumentValidator(Raml.class, new NodeRuleFactory(extensions)));
     }
 }
