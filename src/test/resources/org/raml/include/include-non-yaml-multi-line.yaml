@@ -1,3 +1,3 @@
-%TAG ! tag:raml.org,0.1:
+#%RAML 0.2
 ---
 title: !include org/raml/include/include-non-yaml-multi-line.txt

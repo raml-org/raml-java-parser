@@ -11,7 +11,7 @@ import org.raml.model.parameter.UriParameter;
 /**
  * This Rule handles each parameter
  * <p/>
- * %TAG ! tag:raml.org,0.1: --- title: Salesforce Chatter Communities REST API
+ * #%RAML 0.2 --- title: Salesforce Chatter Communities REST API
  * version: v28.0 baseUri: https://{communityDomain}.force.com/{communityPath}
  * uriParameters: communityDomain: name: Community Domain type: string communityPath:
  * name: Community Path type: string pattern: ^[a-zA-Z0-9][-a-zA-Z0-9]*$

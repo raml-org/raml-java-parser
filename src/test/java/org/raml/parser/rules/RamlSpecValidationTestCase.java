@@ -15,7 +15,7 @@ public class RamlSpecValidationTestCase
     @Test
     public void testShouldNotFail()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n"
+        String raml = "#%RAML 0.2\n" + "---\n"
                       + "title: Salesforce Chatter Communities REST API\n" + "version: v28.0\n"
                       + "baseUri: https://{communityDomain}.force.com/{communityPath}";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
@@ -25,7 +25,7 @@ public class RamlSpecValidationTestCase
     @Test
     public void testVersionMustExistWhenIsDeclaredInBaseUri()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n"
+        String raml = "#%RAML 0.2\n" + "---\n"
                       + "title: Salesforce Chatter Communities REST API\n"
                       + "baseUri: https://{communityDomain}.force.com/{version}";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);

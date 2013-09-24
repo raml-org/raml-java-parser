@@ -14,7 +14,7 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class IncludeResolver
 {
 
-    public static final String INCLUDE_TAG = "tag:raml.org,0.1:include";
+    public static final String INCLUDE_TAG = "!include";
 
     public Node resolveInclude(ScalarNode node, ResourceLoader resourceLoader, NodeHandler nodeHandler)
     {

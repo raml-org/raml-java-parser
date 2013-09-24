@@ -18,7 +18,7 @@ public class BaseURIRuleTestCase
     @Test
     public void testBaseURINotEmpty()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
+        String raml = "#%RAML 0.2\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
                       + "baseUri:";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertFalse("Errors must not be empty", errors.isEmpty());
@@ -29,7 +29,7 @@ public class BaseURIRuleTestCase
     @Test
     public void testBaseURIOptional()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle";
+        String raml = "#%RAML 0.2\n" + "---\n" + "version: v28.0\n" + "title: apiTitle";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertTrue("Errors must be empty", errors.isEmpty());
     }
@@ -37,7 +37,7 @@ public class BaseURIRuleTestCase
     @Test
     public void testBaseURIisNotValid()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
+        String raml = "#%RAML 0.2\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
                       + "baseUri: notavaliduri.com";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertFalse("Errors must not be empty", errors.isEmpty());

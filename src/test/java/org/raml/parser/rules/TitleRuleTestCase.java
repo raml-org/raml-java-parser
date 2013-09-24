@@ -16,7 +16,7 @@ public class TitleRuleTestCase
     @Test
     public void testTitleNotEmpty()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title:";
+        String raml = "#%RAML 0.2\n" + "---\n" + "title:";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
@@ -26,7 +26,7 @@ public class TitleRuleTestCase
     @Test
     public void testTitlePresent()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "version: v28.0\n";
+        String raml = "#%RAML 0.2\n" + "---\n" + "version: v28.0\n";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
@@ -36,7 +36,7 @@ public class TitleRuleTestCase
     @Test
     public void testTitleNotMoreThanOnce()
     {
-        String raml = "%TAG ! tag:raml.org,0.1:\n" + "---\n" + "title: bla \n" + "title: bla";
+        String raml = "#%RAML 0.2\n" + "---\n" + "title: bla \n" + "title: bla";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(),
