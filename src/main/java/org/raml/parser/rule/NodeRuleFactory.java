@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.raml.parser.rule;
 
 import java.lang.reflect.Field;
@@ -19,8 +16,6 @@ import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -29,7 +24,6 @@ import org.yaml.snakeyaml.nodes.SequenceNode;
 public class NodeRuleFactory extends AbastractFactory
 {
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private NodeRuleFactoryExtension[] extensions;
 
 
@@ -49,10 +43,6 @@ public class NodeRuleFactory extends AbastractFactory
 
     public void addRulesTo(Class<?> pojoClass, TupleRule<?, ?> parent)
     {
-        if (logger.isDebugEnabled())
-        {
-            logger.debug("adding rules for " + pojoClass);
-        }
         final List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojoClass);
         final Map<String, TupleRule<?, ?>> innerBuilders = new HashMap<String, TupleRule<?, ?>>();
         for (Field declaredField : declaredFields)
@@ -113,10 +103,7 @@ public class NodeRuleFactory extends AbastractFactory
                 {
                     ParameterizedType pType = (ParameterizedType) type;
                     Type itemType = pType.getActualTypeArguments()[0];
-                    if (itemType instanceof Class<?>)
-                    {
-                        tupleRule = new SequenceTupleRule(declaredField.getName(), (Class<?>) itemType);
-                    }
+                    tupleRule = new SequenceTupleRule(declaredField.getName(), itemType);
                 }
             }
             else
@@ -194,7 +181,14 @@ public class NodeRuleFactory extends AbastractFactory
         }
         else
         {
-            tupleRule = new SimpleRule(declaredField.getName(), declaredField.getType());
+            if (ReflectionUtils.isPojo(declaredField.getType()))
+            {
+                tupleRule = new PojoTupleRule(declaredField.getName(), declaredField.getType());
+            }
+            else
+            {
+                tupleRule = new SimpleRule(declaredField.getName(), declaredField.getType());
+            }
         }
         return tupleRule;
     }

@@ -10,7 +10,6 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Action;
 import org.raml.model.ActionType;
@@ -71,7 +70,6 @@ public class SalesEnablementTestCase extends AbstractBuilderTestCase
     }
 
     @Test
-    @Ignore
     public void validation() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(ramlSource));

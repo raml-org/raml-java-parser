@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.raml.parser.rule;
 
 import java.util.List;
@@ -14,7 +11,6 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 {
 
-
     private final Class valueType;
     private String fieldName;
 
@@ -25,11 +21,18 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     }
 
+    public MapTupleRule(Class<?> valueType, NodeRuleFactory nodeRuleFactory)
+    {
+        this(null, valueType);
+        setNodeRuleFactory(nodeRuleFactory);
+    }
+
+
     @Override
     public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
     {
         //TODO add it to a list to invoke onRuleEnd on all the rules created
-        return new PojoTupleRule(fieldName, valueType,getNodeRuleFactory());
+        return new PojoTupleRule(fieldName, valueType, getNodeRuleFactory());
     }
 
     @Override

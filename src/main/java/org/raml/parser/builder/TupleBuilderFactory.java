@@ -14,8 +14,6 @@ import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
@@ -23,14 +21,8 @@ import org.yaml.snakeyaml.nodes.SequenceNode;
 public class TupleBuilderFactory extends AbastractFactory
 {
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-
     public void addBuildersTo(Class<?> pojoClass, TupleBuilder parent)
     {
-        if (logger.isDebugEnabled())
-        {
-            logger.debug("adding builders for " + pojoClass);
-        }
         final List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojoClass);
         final Map<String, TupleBuilder<?, ?>> innerBuilders = new HashMap<String, TupleBuilder<?, ?>>();
         for (Field declaredField : declaredFields)

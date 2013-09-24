@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.raml.parser.loader.ResourceLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeId;
@@ -21,7 +19,6 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class TemplateResolver
 {
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private IncludeResolver includeResolver = new IncludeResolver();
     private Map<String, MappingNode> resourceTypesMap = new HashMap<String, MappingNode>();
     private Map<String, MappingNode> traitsMap = new HashMap<String, MappingNode>();
@@ -91,12 +88,10 @@ public class TemplateResolver
                 if (templateType.equals("resourceTypes"))
                 {
                     resourceTypesMap.put(templateKey, templateNode);
-                    logger.info("adding resource type: " + templateKey);
                 }
                 if (templateType.equals("traits"))
                 {
                     traitsMap.put(templateKey, templateNode);
-                    logger.info("adding trait: " + templateKey);
                 }
                 prunedTmplates.add(getFakeTemplateNode(tuple.getKeyNode()));
             }
