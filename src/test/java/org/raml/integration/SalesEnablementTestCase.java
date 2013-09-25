@@ -37,7 +37,7 @@ public class SalesEnablementTestCase extends AbstractBuilderTestCase
     @Test
     public void schemas()
     {
-        Map<String, String> schemas = raml.getSchemas();
+        Map<String, String> schemas = raml.getConsolidatedSchemas();
         Action post = raml.getResources().get("/presentations").getAction(ActionType.POST);
         assertTrue(schemas.containsKey(post.getBody().get("application/json").getSchema()));
     }
@@ -49,7 +49,7 @@ public class SalesEnablementTestCase extends AbstractBuilderTestCase
         assertThat(simpleResource.getActions().size(), is(2));
         Map<String, QueryParameter> queryParameters = simpleResource.getAction(GET).getQueryParameters();
         assertThat(queryParameters.size(), is(3));
-        assertThat(queryParameters.get("region").getDisplayName(), is("region"));
+        assertThat(queryParameters.get("title").getDisplayName(), is("title"));
         assertThat(queryParameters.get("start").getDisplayName(), is("start"));
         assertThat(queryParameters.get("pages").getDisplayName(), is("pages"));
     }

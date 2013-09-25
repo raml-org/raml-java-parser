@@ -1,32 +1,35 @@
 #%RAML 0.2
 ---
-title: Sales Enablement API
+title: "Muse: Mule Sales Enablement API"
 version: v1
-baseUri: http://api.muse-demo.com
+baseUri: http://vast-coast-7974.herokuapp.com/muse
 schemas:
-  presentation: |
-    {  "$schema": "http://json-schema.org/draft-03/schema",
-       "type": "object",
-       "description": "A customer presentation",
-       "properties": {
-         "title":  { "type": "string" },
-         "description":  { "type": "string" },
-         "fileUrl":  { "type": "string" },
-         "region": { "type": "string" }
-       }
-       "required": [ "title", "artist" ]
-    }
-  customer: |
-    {  "$schema": "http://json-schema.org/draft-03/schema",
-       "type": "object",
-       "description": "A customer",
-       "properties": {
-         "name":  { "type": "string" },
-         "contact":  { "type": "string" },
-         "region": { "type": "string" }
-       }
-       "required": [ "title", "artist" ]
-    }
+  - presentation: |
+      {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "object",
+         "description": "A product presentation",
+         "properties": {
+           "id":  { "type": "string" },
+           "title":  { "type": "string" },
+           "description":  { "type": "string" },
+           "fileUrl":  { "type": "string" },
+           "productId":  { "type": "string" }
+         }
+         "required": [ "id", "title", "fileUrl", "productId" ]
+      }
+  - product: |
+      {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "object",
+         "description": "A Product",
+         "properties": {
+           "id":  { "type": "string" },
+           "name":  { "type": "string" },
+           "description":  { "type": "string" },
+           "imageUrl":  { "type": "string" },
+           "region": { "type": "string" }
+         }
+         "required": [ "id", "name", "region" ]
+      }
 resourceTypes:
   - base:
       get?:
@@ -38,7 +41,9 @@ resourceTypes:
       patch?:
         responses: *standardResponses
       post?:
-        responses: *standardResponses
+          responses:
+            201:
+              description: Created
       delete?:
         responses: *standardResponses
   - collection:
@@ -46,13 +51,9 @@ resourceTypes:
       get:
         is: [ paged ]
       post:
-        responses:
-          201:
-            description: Created
   - typedCollection:
-      type: base
+      type: collection
       get:
-        is: [ paged ]
         responses:
           200:
             body:
@@ -63,7 +64,7 @@ resourceTypes:
           application/json:
             schema: <<schema>>
         responses:
-          200:
+          201:
             body:
               application/json:
                 schema: <<schema>>
@@ -74,7 +75,7 @@ resourceTypes:
       patch:
       delete:
   - typedMember:
-      type: base
+      type: member
       get:
         responses:
           200:
@@ -99,7 +100,7 @@ resourceTypes:
             body:
               application/json:
                 schema: <<schema>>
-      delete: {}
+      delete:
 traits:
   - paged:
       displayName: paged
@@ -125,15 +126,15 @@ traits:
   is: [ secured ]
   get:
     queryParameters:
-      region:
+      title:
         type: string
-        displayName: region
-        description: Filter by region
+        displayName: title
+        description: Filter by title
   /{presentationId}:
     type: { typedMember: { schema: presentation } }
     is: [ secured ]
-/customers:
-  type: { typedCollection: { schema: customer } }
+/products:
+  type: { typedCollection: { schema: product } }
   is: [ secured ]
   get:
     queryParameters:
@@ -141,7 +142,7 @@ traits:
         type: string
         displayName: region
         description: Filter by region
-  /{customerId}:
-    type: { typedMember: { schema: customer } }
+  /{productId}:
+    type: { typedMember: { schema: product } }
     is: [ secured ]
     /presentations: *presentations

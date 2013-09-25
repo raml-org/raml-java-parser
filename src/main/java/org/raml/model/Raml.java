@@ -40,8 +40,8 @@ public class Raml
     @Sequence
     private List<Map<String, Template>> traits;
 
-    @Mapping
-    private Map<String, String> schemas;
+    @Sequence
+    private List<Map<String, String>> schemas;
 
 
     public Raml()
@@ -146,14 +146,24 @@ public class Raml
         this.traits = traits;
     }
 
-    public Map<String, String> getSchemas()
+    public List<Map<String, String>> getSchemas()
     {
         return schemas;
     }
 
-    public void setSchemas(Map<String, String> schemas)
+    public void setSchemas(List<Map<String, String>> schemas)
     {
         this.schemas = schemas;
+    }
+
+    public Map<String, String> getConsolidatedSchemas()
+    {
+        Map<String, String> consolidated = new HashMap<String, String>();
+        for (Map<String, String> map : getSchemas())
+        {
+            consolidated.putAll(map);
+        }
+        return consolidated;
     }
 
     public Resource getResource(String path)
@@ -193,5 +203,4 @@ public class Raml
         }
         return null;
     }
-
 }
