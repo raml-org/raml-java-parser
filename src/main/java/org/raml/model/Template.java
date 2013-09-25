@@ -6,15 +6,15 @@ public class Template
 {
 
     @Scalar
-    private String description;
+    private String displayName;
 
-    public String getDescription()
+    public String getDisplayName()
     {
-        return description;
+        return displayName;
     }
 
-    public void setDescription(String description)
+    public void setDisplayName(String displayName)
     {
-        this.description = description;
+        this.displayName = displayName;
     }
 }
