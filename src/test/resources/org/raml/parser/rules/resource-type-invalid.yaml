@@ -1,0 +1,15 @@
+#%RAML 0.2
+---
+title: resource API
+version: v1
+baseUri: http://api.com
+resourceTypes:
+    - collection:
+        type: base
+        post:
+            responses:
+                201:
+                    description: Created
+
+/presentations:
+    type: collection

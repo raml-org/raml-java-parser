@@ -1,53 +1,54 @@
 package org.raml.parser.visitor;
 
-import org.raml.model.Raml;
+import java.util.List;
+
+import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.NodeRuleFactoryExtension;
+import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.nodes.MappingNode;
 
 public class RamlValidationService extends YamlValidationService
 {
 
-    private TemplateResolver templateResolver;
+    private RamlDocumentValidator validator;
 
-    public RamlValidationService(YamlValidator... yamlValidators)
+    public RamlValidationService(RamlDocumentValidator ramlDocumentValidator)
     {
-        super(yamlValidators);
+        this(new DefaultResourceLoader(), ramlDocumentValidator);
     }
 
-    public RamlValidationService(ResourceLoader resourceLoader, YamlValidator... yamlValidators)
+    public RamlValidationService(ResourceLoader resourceLoader, RamlDocumentValidator ramlDocumentValidator)
     {
-        super(resourceLoader, yamlValidators);
-    }
-
-    public static RamlValidationService createDefault()
-    {
-        return new RamlValidationService(new YamlDocumentValidator(Raml.class));
+        super(resourceLoader, ramlDocumentValidator);
+        validator = ramlDocumentValidator;
+        validator.setResourceLoader(resourceLoader);
     }
 
     public TemplateResolver getTemplateResolver()
     {
-        if (templateResolver == null)
-        {
-            templateResolver = new TemplateResolver(getResourceLoader(), getNodeHandler());
-        }
-        return templateResolver;
+        return validator.getTemplateResolver();
     }
 
     @Override
-    protected void preValidation(MappingNode root)
+    protected List<ValidationResult> preValidation(MappingNode root)
     {
-        getTemplateResolver().init(root);
+        return getTemplateResolver().init(root);
+    }
+
+    public static RamlValidationService createDefault()
+    {
+        return new RamlValidationService(new RamlDocumentValidator());
     }
 
     public static RamlValidationService createDefault(ResourceLoader loader)
     {
-        return new RamlValidationService(loader, new YamlDocumentValidator(Raml.class));
+        return new RamlValidationService(loader, new RamlDocumentValidator());
     }
 
     public static RamlValidationService createDefault(ResourceLoader loader, NodeRuleFactoryExtension... extensions)
     {
-        return new RamlValidationService(loader, new YamlDocumentValidator(Raml.class, new NodeRuleFactory(extensions)));
+        return new RamlValidationService(loader, new RamlDocumentValidator(new NodeRuleFactory(extensions)));
     }
 }

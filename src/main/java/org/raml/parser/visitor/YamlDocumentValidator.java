@@ -27,17 +27,21 @@ public class YamlDocumentValidator implements YamlValidator
     private NodeRuleFactory nodeRuleFactory;
 
 
-    public YamlDocumentValidator(Class<?> documentClass)
+    protected YamlDocumentValidator(Class<?> documentClass)
     {
         this(documentClass, new NodeRuleFactory());
     }
 
-    public YamlDocumentValidator(Class<?> documentClass, NodeRuleFactory nodeRuleFactory)
+    protected YamlDocumentValidator(Class<?> documentClass, NodeRuleFactory nodeRuleFactory)
     {
         this.documentClass = documentClass;
         this.nodeRuleFactory = nodeRuleFactory;
     }
 
+    protected Stack<NodeRule<?>> getRuleContext()
+    {
+        return ruleContext;
+    }
 
     @Override
     public void onMappingNodeStart(MappingNode mappingNode)

@@ -21,27 +21,17 @@ public class YamlValidationService
     private ResourceLoader resourceLoader;
     private NodeHandler nodeHandler;
 
-    public YamlValidationService(YamlValidator... yamlValidators)
+    protected YamlValidationService(YamlValidator... yamlValidators)
     {
         this(new DefaultResourceLoader(), yamlValidators);
     }
 
-    public YamlValidationService(ResourceLoader resourceLoader, YamlValidator... yamlValidators)
+    protected YamlValidationService(ResourceLoader resourceLoader, YamlValidator... yamlValidators)
     {
         this.resourceLoader = resourceLoader;
         this.yamlValidators = yamlValidators;
         this.errorMessage = new ArrayList<ValidationResult>();
         this.nodeHandler = new CompositeHandler(yamlValidators);
-    }
-
-    protected ResourceLoader getResourceLoader()
-    {
-        return resourceLoader;
-    }
-
-    protected NodeHandler getNodeHandler()
-    {
-        return nodeHandler;
     }
 
     public List<ValidationResult> validate(String content)
@@ -75,9 +65,10 @@ public class YamlValidationService
         return errorMessage;
     }
 
-    protected void preValidation(MappingNode root)
+    protected List<ValidationResult> preValidation(MappingNode root)
     {
         //template method
+        return new ArrayList<ValidationResult>();
     }
 
 }
