@@ -67,6 +67,12 @@ public class TemplateResolver
     {
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
 
+        if (rootNode == null)
+        {
+            validationResults.add(ValidationResult.createErrorResult("Invalid Root Node"));
+            return validationResults;
+        }
+
         for (int i = 0; i < rootNode.getValue().size(); i++)
         {
             NodeTuple rootTuple = rootNode.getValue().get(i);

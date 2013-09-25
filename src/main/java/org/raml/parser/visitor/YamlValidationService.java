@@ -42,16 +42,11 @@ public class YamlValidationService
         {
             NodeVisitor nodeVisitor = new NodeVisitor(nodeHandler, resourceLoader);
             Node root = yamlParser.compose(new StringReader(content));
-            preValidation((MappingNode) root);
-            if (root.getNodeId() == NodeId.mapping)
+            errorMessage.addAll(preValidation((MappingNode) root));
+            if (errorMessage.isEmpty() && root.getNodeId() == NodeId.mapping)
             {
                 nodeVisitor.visitDocument((MappingNode) root);
             }
-            else
-            {
-                //   errorMessage.add(ValidationResult.createErrorResult(EMPTY_DOCUMENT_MESSAGE));
-            }
-
         }
         catch (YAMLException ex)
         {
