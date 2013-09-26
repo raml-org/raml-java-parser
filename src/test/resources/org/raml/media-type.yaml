@@ -1,0 +1,48 @@
+#%RAML 0.2
+---
+title: Example API
+version: v1
+mediaType: application/json
+
+traits:
+    - traitOne:
+        body:
+            schema: |
+              {  "$schema": "http://json-schema.org/draft-03/schema",
+                 "type": "object",
+                 "description": "A product presentation",
+                 "properties": {
+                   "id":  { "type": "string" },
+                   "title":  { "type": "string" },
+                 }
+              }
+
+resourceTypes:
+    - typeParent:
+        get:
+            responses:
+                200:
+                    description: success
+                    body:
+                        example: |
+                            {"hello": "world"}
+        post:
+            is: [traitOne]
+      typeChild:
+        type: typeParent
+        put:
+            is: [traitOne]
+
+/simple:
+    type: typeChild
+    delete:
+        responses:
+            204: ~
+
+/form:
+    post:
+        body:
+            formParameters:
+                key1:
+                    type: string
+

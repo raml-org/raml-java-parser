@@ -26,15 +26,12 @@ public class RamlValidationService extends YamlValidationService
         validator.setResourceLoader(resourceLoader);
     }
 
-    public TemplateResolver getTemplateResolver()
-    {
-        return validator.getTemplateResolver();
-    }
-
     @Override
     protected List<ValidationResult> preValidation(MappingNode root)
     {
-        return getTemplateResolver().init(root);
+        List<ValidationResult> validationResults = validator.getTemplateResolver().init(root);
+        validationResults.addAll(validator.getMediaTypeResolver().beforeDocumentStart(root));
+        return validationResults;
     }
 
     public static RamlValidationService createDefault()

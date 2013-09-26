@@ -14,6 +14,7 @@ public class RamlDocumentValidator extends YamlDocumentValidator
 {
 
     private TemplateResolver templateResolver;
+    private MediaTypeResolver mediaTypeResolver = new MediaTypeResolver();
     private ResourceLoader resourceLoader;
 
     public RamlDocumentValidator()
@@ -35,6 +36,11 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         return templateResolver;
     }
 
+    public MediaTypeResolver getMediaTypeResolver()
+    {
+        return mediaTypeResolver;
+    }
+
     @Override
     public void onMappingNodeStart(MappingNode mappingNode)
     {
@@ -44,6 +50,29 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         {
             List<ValidationResult> templateValidations = getTemplateResolver().resolve(mappingNode);
             getMessages().addAll(templateValidations);
+        }
+        else if(isBodyRule(rule))
+        {
+            List<ValidationResult> mediaTypeValidations = getMediaTypeResolver().resolve(mappingNode);
+            getMessages().addAll(mediaTypeValidations);
+        }
+    }
+
+    private boolean isBodyRule(NodeRule<?> rule)
+    {
+        try
+        {
+            Field valueType = rule.getClass().getDeclaredField("valueType");
+            valueType.setAccessible(true);
+            return ((Class) valueType.get(rule)).getName().equals("org.raml.model.MimeType");
+        }
+        catch (NoSuchFieldException e)
+        {
+            return false;
+        }
+        catch (IllegalAccessException e)
+        {
+            return false;
         }
     }
 
