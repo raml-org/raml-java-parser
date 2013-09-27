@@ -112,4 +112,9 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     {
         return pojoClass;
     }
+
+    public String toString()
+    {
+        return fieldName;
+    }
 }

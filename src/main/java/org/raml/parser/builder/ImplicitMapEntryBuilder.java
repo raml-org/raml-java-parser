@@ -76,4 +76,10 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
     {
         keyValue = tuple.getValue();
     }
+
+    @Override
+    public String toString()
+    {
+        return keyValue;
+    }
 }

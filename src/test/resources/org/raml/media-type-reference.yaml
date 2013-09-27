@@ -1,0 +1,19 @@
+#%RAML 0.2
+---
+title: Example API
+version: v1
+mediaType: application/json
+
+resourceTypes:
+    - typeChild:
+        put:
+            body:
+                example: something
+
+/simple: &simple
+    type: typeChild
+    put:
+        body:
+            schema: hola
+
+/copy: *simple

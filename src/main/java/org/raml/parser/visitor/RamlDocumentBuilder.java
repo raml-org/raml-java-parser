@@ -1,6 +1,7 @@
 package org.raml.parser.visitor;
 
 import java.lang.reflect.Field;
+import java.util.Stack;
 
 import org.raml.model.Raml;
 import org.raml.model.Resource;
@@ -37,6 +38,16 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         {
             getMediaTypeResolver().resolve(mappingNode);
         }
+    }
+
+    private String toString(Stack<NodeBuilder<?>> builderContext)
+    {
+        StringBuilder builder = new StringBuilder(">>> BuilderContext >>> ");
+        for (NodeBuilder nb : builderContext)
+        {
+            builder.append(nb).append(" ->- ");
+        }
+        return builder.toString();
     }
 
     private boolean isBodyBuilder(NodeBuilder builder)

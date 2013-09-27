@@ -58,4 +58,10 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     {
         return fieldName;
     }
+
+    @Override
+    public String toString()
+    {
+        return fieldName;
+    }
 }
