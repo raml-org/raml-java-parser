@@ -5,21 +5,21 @@ version: v1
 resourceTypes:
     - simple:
         get:
-            summary: some summary
+            description: some description
     - optional:
         get?:
-            summary: get summary
+            description: get description
         put?:
-            summary: type put summary
+            description: type put description
             body:
                 text/xml: ~
         post:
-            summary: post summary
+            description: post description
             body:
                 text/xml: ~
     - params:
         <<method>>:
-            summary: <<summary>>
+            description: <<description>>
     - inheritance:
         type: simple
         post:
@@ -33,7 +33,7 @@ resourceTypes:
 /optionalResource:
     type: optional
     put:
-        summary: resource put summary
+        description: resource put description
         body:
             application/json: ~
 
@@ -41,11 +41,11 @@ resourceTypes:
     type:
         params:
             method: patch
-            summary: homemade summary
+            description: homemade description
 
 /paramsResource2:
     type:
-        params: {method: delete, summary: fine summary}
+        params: {method: delete, description: fine description}
 
 /inheritanceResource:
     type: inheritance

@@ -23,13 +23,13 @@ documentation:
       content: more info...
 /collection:
     get:
-        summary: Get a list of employees.
+        description: Get a list of employees.
         responses:
             200: !!null
     /{element}:
         displayName: Employee
         get:
-            summary: Get a particular employee.
+            description: Get a particular employee.
             responses:
                 200:
                     body:

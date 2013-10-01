@@ -32,7 +32,6 @@ documentation:
     displayName: Media collection
     head: !!null
     get:
-        summary: retrieve
         description: retrieve media
         headers:
             api-key:

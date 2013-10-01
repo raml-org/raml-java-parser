@@ -70,7 +70,7 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     public void includeWithResourceTypeParam()
     {
         Raml raml = parseRaml("org/raml/include/include-with-params.yaml");
-        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getSummary(), is("included title"));
+        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getDescription(), is("included title"));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     {
         Raml raml = parseRaml("org/raml/include/include-resource-type-sequence.yaml");
         assertThat(raml.getResources().get("/simple").getActions().size(), is(1));
-        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getSummary(), is("super"));
+        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getDescription(), is("super"));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     {
         Raml raml = parseRaml("org/raml/include/include-resource-types.yaml");
         assertThat(raml.getResources().get("/simple").getActions().size(), is(1));
-        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getSummary(), is("super"));
+        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getDescription(), is("super"));
     }
 
     @Test

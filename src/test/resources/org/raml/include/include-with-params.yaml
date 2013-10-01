@@ -5,7 +5,7 @@ version: v1
 resourceTypes:
     - simple:
         get:
-            summary: !include org/raml/include/<<fileName>>
+            description: !include org/raml/include/<<fileName>>
 
 /simple:
     type:

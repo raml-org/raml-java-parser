@@ -26,7 +26,7 @@ public class ResourceTypesTestCase extends AbstractBuilderTestCase
 
         Resource simpleResource = raml.getResources().get("/simpleResource");
         assertThat(simpleResource.getActions().size(), is(1));
-        assertThat(simpleResource.getAction(ActionType.GET).getSummary(), is("some summary"));
+        assertThat(simpleResource.getAction(ActionType.GET).getDescription(), is("some description"));
     }
 
     @Test
@@ -34,11 +34,11 @@ public class ResourceTypesTestCase extends AbstractBuilderTestCase
     {
         Resource optionalResource = raml.getResources().get("/optionalResource");
         assertThat(optionalResource.getActions().size(), is(2));
-        assertThat(optionalResource.getAction(ActionType.PUT).getSummary(), is("resource put summary"));
+        assertThat(optionalResource.getAction(ActionType.PUT).getDescription(), is("resource put description"));
         assertThat(optionalResource.getAction(ActionType.PUT).getBody().size(), is(2));
         assertThat(optionalResource.getAction(ActionType.PUT).getBody().containsKey("application/json"), is(true));
         assertThat(optionalResource.getAction(ActionType.PUT).getBody().containsKey("text/xml"), is(true));
-        assertThat(optionalResource.getAction(ActionType.POST).getSummary(), is("post summary"));
+        assertThat(optionalResource.getAction(ActionType.POST).getDescription(), is("post description"));
         assertThat(optionalResource.getAction(ActionType.POST).getBody().size(), is(1));
     }
 
@@ -47,11 +47,11 @@ public class ResourceTypesTestCase extends AbstractBuilderTestCase
     {
         Resource paramsResource = raml.getResources().get("/paramsResource");
         assertThat(paramsResource.getActions().size(), is(1));
-        assertThat(paramsResource.getAction(ActionType.PATCH).getSummary(), is("homemade summary"));
+        assertThat(paramsResource.getAction(ActionType.PATCH).getDescription(), is("homemade description"));
 
         Resource paramsResource2 = raml.getResources().get("/paramsResource2");
         assertThat(paramsResource2.getActions().size(), is(1));
-        assertThat(paramsResource2.getAction(ActionType.DELETE).getSummary(), is("fine summary"));
+        assertThat(paramsResource2.getAction(ActionType.DELETE).getDescription(), is("fine description"));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ResourceTypesTestCase extends AbstractBuilderTestCase
     {
         Resource inheritanceResource = raml.getResources().get("/inheritanceResource");
         assertThat(inheritanceResource.getActions().size(), is(2));
-        assertThat(inheritanceResource.getAction(ActionType.GET).getSummary(), is("some summary"));
+        assertThat(inheritanceResource.getAction(ActionType.GET).getDescription(), is("some description"));
         assertThat(inheritanceResource.getAction(ActionType.POST).getBody().size(), is(1));
         assertThat(inheritanceResource.getAction(ActionType.POST).getBody().containsKey("text/yaml"), is(true));
     }

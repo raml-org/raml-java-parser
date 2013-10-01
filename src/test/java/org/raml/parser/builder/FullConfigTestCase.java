@@ -94,7 +94,6 @@ public class FullConfigTestCase
         assertThat(mediaResource.getActions().size(), is(2));
         Action action = mediaResource.getAction(ActionType.GET);
         assertThat(action.getType(), is(ActionType.GET));
-        assertThat(action.getSummary(), is("retrieve"));
         assertThat(action.getDescription(), is("retrieve media"));
 
         //action headers

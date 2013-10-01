@@ -1,4 +1,4 @@
 simple:
     get:
-        summary: super
+        description: super
 

@@ -6,7 +6,6 @@ baseUri: https://app.zencoder.com/api/{version}
 /jobs:
  displayName: Jobs
  post:
-   summary: Create a Job
    description: |
      The post body must include the _URL_ of the video to process. It may
      also include output settings for the job, including an output

@@ -20,9 +20,6 @@ public class Action
     private ActionType type;
 
     @Scalar
-    private String summary;
-
-    @Scalar
     private String description;
 
     @Mapping
@@ -55,16 +52,6 @@ public class Action
     public void setType(ActionType type)
     {
         this.type = type;
-    }
-
-    public String getSummary()
-    {
-        return summary;
-    }
-
-    public void setSummary(String summary)
-    {
-        this.summary = summary;
     }
 
     public String getDescription()
