@@ -2,6 +2,7 @@ package org.raml.model;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class Raml
     private List<Map<String, Template>> traits;
 
     @Sequence
-    private List<Map<String, String>> schemas;
+    private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
 
     public Raml()
