@@ -13,9 +13,9 @@ title: param types
                     - one
                     - two
                     - three
-                pattern: '[a-z]{3}'
+                pattern: '[a-z]{3,5}'
                 minLength: 3
-                maxLength: 4
+                maxLength: 5
                 example: two
                 repeat: false
                 required: false

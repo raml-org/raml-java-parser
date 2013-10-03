@@ -183,22 +183,6 @@ public class AbstractParam
 
     public boolean validate(String value)
     {
-        //TODO refactor validations to enforce typing
-        switch (type)
-        {
-            case STRING:
-                if (pattern != null && !value.matches(pattern)) return false;
-                if (minLength != null && value.length() < minLength) return false;
-                if (maxLength != null && value.length() > maxLength) return false;
-                if (enumeration != null && !enumeration.contains(value)) return false;
-                break;
-            case INTEGER:
-            case NUMBER:
-                Double number = Double.valueOf(value);
-                if (minimum != null && number < minimum) return false;
-                if (maximum != null && number > maximum) return false;
-                break;
-        }
-        return true;
+        return type.validate(this, value);
     }
 }
