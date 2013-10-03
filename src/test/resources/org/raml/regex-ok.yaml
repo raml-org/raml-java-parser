@@ -1,3 +1,0 @@
-#%RAML 0.2
----
-validation: !regex '^[a-zA-Z0-9][-a-zA-Z0-9]*$'

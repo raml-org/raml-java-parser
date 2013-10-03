@@ -31,7 +31,7 @@ public class ParameterTestCase
     @Test
     public void whenParameterHasMultiTypeOrSingleTypeShouldBeAccepted() throws IOException
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parameter-multi-type.yaml"));
+        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/params/parameter-multi-type.yaml"));
         YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
         Raml raml = ramlSpecBuilder.build(simpleTest);
 
@@ -58,7 +58,7 @@ public class ParameterTestCase
 
     private Raml loadRaml() throws IOException
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/required-param.yaml"));
+        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/params/required-param.yaml"));
         YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
         return ramlSpecBuilder.build(simpleTest);
     }

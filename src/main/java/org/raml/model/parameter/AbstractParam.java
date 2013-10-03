@@ -23,6 +23,9 @@ public class AbstractParam
     @Scalar
     private boolean required;
 
+    @Scalar
+    private boolean repeat;
+
     @Sequence(alias = "enum")
     private List<String> enumeration;
     @Scalar
@@ -86,6 +89,16 @@ public class AbstractParam
     public boolean isRequired()
     {
         return required;
+    }
+
+    public boolean isRepeat()
+    {
+        return repeat;
+    }
+
+    public void setRepeat(boolean repeat)
+    {
+        this.repeat = repeat;
     }
 
     public String getDefaultValue()
