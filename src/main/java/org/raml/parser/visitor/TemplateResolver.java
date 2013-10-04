@@ -273,17 +273,16 @@ public class TemplateResolver
         {
             for (Node ref : traits.getValue())
             {
-                MappingNode clone = cloneTemplate(ref, TemplateType.TRAIT);
                 if (actionName == null)
                 {
                     for (Node actionNode : actionNodes.values())
                     {
-                        mergeNodes(actionNode, clone, Action.class);
+                        mergeNodes(actionNode, cloneTemplate(ref, TemplateType.TRAIT), Action.class);
                     }
                 }
                 else
                 {
-                    mergeNodes(actionNodes.get(actionName), clone, Action.class);
+                    mergeNodes(actionNodes.get(actionName), cloneTemplate(ref, TemplateType.TRAIT), Action.class);
                 }
             }
         }
