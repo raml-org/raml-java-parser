@@ -40,6 +40,9 @@ public class Action
     @Sequence
     private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
+    @Sequence
+    private List<Protocol> protocols = new ArrayList<Protocol>();
+
     public Action()
     {
     }
@@ -122,6 +125,16 @@ public class Action
     public void setIs(List<TemplateReference> is)
     {
         this.is = is;
+    }
+
+    public List<Protocol> getProtocols()
+    {
+        return protocols;
+    }
+
+    public void setProtocols(List<Protocol> protocols)
+    {
+        this.protocols = protocols;
     }
 
     @Override

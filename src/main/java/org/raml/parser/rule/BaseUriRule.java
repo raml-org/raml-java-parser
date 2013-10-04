@@ -59,7 +59,8 @@ public class BaseUriRule extends SimpleRule
         {
             validationResults.add(ValidationResult.createErrorResult(VERSION_NOT_PRESENT_MESSAGE, node.getStartMark(), node.getEndMark()));
         }
-        if (!isValid(value))
+        //validate uri only when no parameters are defined
+        if (parameters.isEmpty() && !isValid(value))
         {
             validationResults.add(ValidationResult.createErrorResult(URI_NOT_VALID_MESSAGE, getKeyNode().getStartMark(), getKeyNode().getEndMark()));
         }

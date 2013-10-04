@@ -9,6 +9,7 @@ import java.util.List;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Value;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.utils.ConvertUtils;
 import org.raml.parser.utils.NodeUtils;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -52,11 +53,14 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         try
         {
             Object newValue;
-            Constructor<?>[] declaredConstructors = pojoClass.getDeclaredConstructors();
-            if (declaredConstructors.length > 0)
+            if (pojoClass.isEnum())
+            {
+                newValue = ConvertUtils.convertTo((String) NodeUtils.getNodeValue(node), pojoClass);
+            }
+            else if (pojoClass.getDeclaredConstructors().length > 0)
             {
                 List<Object> arguments = new ArrayList<Object>();
-                Constructor<?> declaredConstructor = declaredConstructors[0];
+                Constructor<?> declaredConstructor = pojoClass.getDeclaredConstructors()[0];
                 Annotation[][] parameterAnnotations = declaredConstructor.getParameterAnnotations();
                 for (Annotation[] parameterAnnotation : parameterAnnotations)
                 {

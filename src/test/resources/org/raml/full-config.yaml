@@ -2,7 +2,7 @@
 ---
 title: Sample API
 version: v1
-baseUri: https://{host}.sample.com/{path}
+baseUri: https://{host}.sample.com:{port}/{path}
 uriParameters:
     host:
         displayName: Host
@@ -25,10 +25,13 @@ documentation:
             eiusmod tempor incididunt ut labore et dolore magna...
     - title: section
       content: section content
+protocols: [HTTP, HTTPS]
+
 /:
     displayName: Root resource
     description: Root resource description
-    head: !!null
+    head:
+        protocols: [HTTP]
 /media:
     displayName: Media collection
     head: !!null

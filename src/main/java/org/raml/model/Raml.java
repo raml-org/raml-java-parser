@@ -47,6 +47,8 @@ public class Raml
     @Sequence
     private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
+    @Sequence
+    private List<Protocol> protocols = new ArrayList<Protocol>();
 
     public Raml()
     {
@@ -104,15 +106,15 @@ public class Raml
 
     public String getBasePath()
     {
-        try
+        //skip protocol separator "//"
+        int start = baseUri.indexOf("//") + 2;
+        if (start == -1)
         {
-            URL url = new URL(baseUri);
-            return url.getPath();
+            start = 0;
         }
-        catch (MalformedURLException e)
-        {
-            throw new RuntimeException(e);
-        }
+
+        start = baseUri.indexOf("/", start);
+        return baseUri.substring(start);
     }
 
     public String getUri()
@@ -168,6 +170,16 @@ public class Raml
     public void setSchemas(List<Map<String, String>> schemas)
     {
         this.schemas = schemas;
+    }
+
+    public List<Protocol> getProtocols()
+    {
+        return protocols;
+    }
+
+    public void setProtocols(List<Protocol> protocols)
+    {
+        this.protocols = protocols;
     }
 
     public Map<String, String> getConsolidatedSchemas()

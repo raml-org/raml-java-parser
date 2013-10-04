@@ -5,34 +5,42 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.raml.model.Protocol.HTTP;
+import static org.raml.model.Protocol.HTTPS;
 
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.raml.model.Action;
 import org.raml.model.ActionType;
-import org.raml.model.Response;
 import org.raml.model.DocumentationItem;
 import org.raml.model.MimeType;
 import org.raml.model.ParamType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
+import org.raml.model.Response;
 import org.raml.model.parameter.FormParameter;
 import org.raml.model.parameter.Header;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.model.parameter.UriParameter;
-import org.raml.parser.visitor.YamlDocumentBuilder;
+import org.raml.parser.rule.ValidationResult;
 
-public class FullConfigTestCase
+public class FullConfigTestCase extends AbstractBuilderTestCase
 {
 
+    private static String ramlSource = "org/raml/full-config.yaml";
+
     @Test
-    public void fullConfig() throws Exception
+    public void validate()
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/full-config.yaml"));
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        Raml raml = ramlSpecBuilder.build(simpleTest);
+        List<ValidationResult> validationResults = validateRaml(ramlSource);
+        assertThat(validationResults.size(), is(0));
+    }
+
+    @Test
+    public void fullConfig()
+    {
+        Raml raml = parseRaml(ramlSource);
 
         //documentation
         List<DocumentationItem> documentation = raml.getDocumentation();
@@ -45,11 +53,14 @@ public class FullConfigTestCase
         //basic attributes
         assertThat(raml.getTitle(), is("Sample API"));
         assertThat(raml.getVersion(), is("v1"));
-        String baseUri = "https://{host}.sample.com/{path}";
+        String baseUri = "https://{host}.sample.com:{port}/{path}";
         String basePath = "/{path}";
         assertThat(raml.getBaseUri(), is(baseUri));
         assertThat(raml.getBasePath(), is(basePath));
         assertThat(raml.getUri(), is(""));
+        assertThat(raml.getProtocols().size(), is(2));
+        assertThat(raml.getProtocols().get(0), is(HTTP));
+        assertThat(raml.getProtocols().get(1), is(HTTPS));
 
         //uri parameters
         assertThat(raml.getUriParameters().size(), is(3));
@@ -84,6 +95,8 @@ public class FullConfigTestCase
         assertThat(rootResource.getUri(), is(rootUri));
         assertThat(rootResource.getDisplayName(), is("Root resource"));
         assertThat(rootResource.getDescription(), is("Root resource description"));
+        assertThat(rootResource.getAction(ActionType.HEAD).getProtocols().size(), is(1));
+        assertThat(rootResource.getAction(ActionType.HEAD).getProtocols().get(0), is(HTTP));
 
         String mediaUri = "/media";
         Resource mediaResource = raml.getResources().get(mediaUri);
