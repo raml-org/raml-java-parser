@@ -177,11 +177,14 @@ public class TemplateResolver
                 String key = ((ScalarNode) resourceTuple.getKeyNode()).getValue();
                 if (key.equals(RESOURCE_TYPE_USE_KEY))
                 {
-                    typeReference = resourceTuple.getValueNode();
+                    typeReference = cloneNode(resourceTuple.getValueNode(), new HashMap<String, String>());
+                    removeParametersFromTemplateCall(resourceTuple);
                 }
                 else if (key.equals(TRAIT_USE_KEY))
                 {
-                    traitsReference.put(ALL_ACTIONS, (SequenceNode) resourceTuple.getValueNode());
+                    SequenceNode sequence = cloneSequenceNode((SequenceNode) resourceTuple.getValueNode(), new HashMap<String, String>());
+                    traitsReference.put(ALL_ACTIONS, sequence);
+                    removeParametersFromTraitsCall(resourceTuple);
                 }
                 else if (isAction(key))
                 {
@@ -196,7 +199,9 @@ public class TemplateResolver
                         String actionTupleKey = ((ScalarNode) actionTuple.getKeyNode()).getValue();
                         if (actionTupleKey.equals(TRAIT_USE_KEY))
                         {
-                            traitsReference.put(normalizeKey(key), (SequenceNode) actionTuple.getValueNode());
+                            SequenceNode sequence = cloneSequenceNode((SequenceNode) actionTuple.getValueNode(), new HashMap<String, String>());
+                            traitsReference.put(normalizeKey(key), sequence);
+                            removeParametersFromTraitsCall(actionTuple);
                         }
                     }
                 }
@@ -250,6 +255,38 @@ public class TemplateResolver
 
                 //merge type, no traits (action level traits could be merged)
                 mergeNodes(resourceNode, clone, Resource.class);
+            }
+        }
+
+        private void removeParametersFromTraitsCall(NodeTuple traitsNodeTuple)
+        {
+            if (traitsNodeTuple.getValueNode().getNodeId() == NodeId.sequence)
+            {
+                for (Node traitNode : ((SequenceNode) traitsNodeTuple.getValueNode()).getValue())
+                {
+                    if (traitNode.getNodeId() == NodeId.mapping)
+                    {
+                        removeParametersFromTemplateCall(((MappingNode) traitNode).getValue().get(0));
+                    }
+                }
+            }
+        }
+
+        private void removeParametersFromTemplateCall(NodeTuple typeNodeTuple)
+        {
+            if (typeNodeTuple.getValueNode().getNodeId() == NodeId.mapping)
+            {
+                NodeTuple typeParamTuple = ((MappingNode) typeNodeTuple.getValueNode()).getValue().get(0);
+                try
+                {
+                    Field value = typeNodeTuple.getClass().getDeclaredField("valueNode");
+                    value.setAccessible(true);
+                    value.set(typeNodeTuple, typeParamTuple.getKeyNode());
+                }
+                catch (Exception e)
+                {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
