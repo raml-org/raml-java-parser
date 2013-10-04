@@ -19,6 +19,9 @@ public class Resource
     @Scalar
     private String displayName;
 
+    @Scalar
+    private String description;
+
     @Parent(property = "uri")
     private String parentUri;
 
@@ -83,6 +86,16 @@ public class Resource
     public String getDisplayName()
     {
         return displayName;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 
     public String getRelativeUri()

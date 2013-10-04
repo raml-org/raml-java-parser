@@ -83,6 +83,7 @@ public class FullConfigTestCase
         assertThat(rootResource.getRelativeUri(), is(rootUri));
         assertThat(rootResource.getUri(), is(rootUri));
         assertThat(rootResource.getDisplayName(), is("Root resource"));
+        assertThat(rootResource.getDescription(), is("Root resource description"));
 
         String mediaUri = "/media";
         Resource mediaResource = raml.getResources().get(mediaUri);
