@@ -1,4 +1,4 @@
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: sample API
 version: v1

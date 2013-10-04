@@ -1,4 +1,4 @@
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: Salesforce Chatter Communities REST API
 baseUri: https://{param2}.force.com/param

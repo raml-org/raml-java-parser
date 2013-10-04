@@ -1,4 +1,4 @@
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: !include org/raml/parser/rules/title2.txt
 version: v0.2

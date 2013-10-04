@@ -1,4 +1,4 @@
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: "Muse: Mule Sales Enablement API"
 version: v1

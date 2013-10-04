@@ -14,7 +14,7 @@ public class UnknownRuleTestCase
     @Test
     public void unknownElementsMustFailed()
     {
-        String raml = "#%RAML 0.2\n" + "---\n"
+        String raml = "#%RAML 0.8\n" + "---\n"
                       + "title: Salesforce Chatter Communities REST API\n"
                       + "noTitle: Salesforce Chatter Communities REST API\n"
                       + "noBaseUri: Salesforce Chatter Communities REST API\n"

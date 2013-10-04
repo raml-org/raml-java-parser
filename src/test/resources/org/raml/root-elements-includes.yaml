@@ -1,4 +1,4 @@
-#%RAML 0.2
+#%RAML 0.8
 ---
 title: !include org/raml/include/include-non-yaml-single-line.txt
 version: v1
