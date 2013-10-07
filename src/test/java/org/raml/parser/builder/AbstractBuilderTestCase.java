@@ -1,5 +1,7 @@
 package org.raml.parser.builder;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -26,6 +28,11 @@ public class AbstractBuilderTestCase
     protected static List<ValidationResult> validateRaml(String resource)
     {
         return RamlValidationService.createDefault().validate(getString(resource));
+    }
+
+    protected static void validateRamlNoErrors(String resource)
+    {
+        assertTrue("Errors must be empty", validateRaml(resource).isEmpty());
     }
 
     private static String getString(String resource)

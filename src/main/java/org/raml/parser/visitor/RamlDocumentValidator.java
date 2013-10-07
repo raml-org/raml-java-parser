@@ -48,7 +48,7 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         NodeRule<?> rule = getRuleContext().peek();
         if (isResourceRule(rule))
         {
-            List<ValidationResult> templateValidations = getTemplateResolver().resolve(mappingNode);
+            List<ValidationResult> templateValidations = getTemplateResolver().resolve(mappingNode, "/fakeRelativeUri");
             getMessages().addAll(templateValidations);
         }
         else if(isBodyRule(rule))

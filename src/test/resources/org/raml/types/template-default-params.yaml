@@ -1,0 +1,20 @@
+#%RAML 0.8
+---
+title: Default parameters
+
+resourceTypes:
+    - collection:
+        description: >-
+            resourcePath <<resourcePath>>,
+            resourcePathName <<resourcePathName>>
+traits:
+    - paged:
+        description: >-
+            resourcePath <<resourcePath>>,
+            resourcePathName <<resourcePathName>>,
+            methodName <<methodName>>
+
+/simple:
+    type: collection
+    get:
+        is: [paged]

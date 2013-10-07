@@ -141,10 +141,10 @@ public class TemplateResolver
         return new MappingNode(Tag.MAP, outerTuples, false);
     }
 
-    public List<ValidationResult> resolve(MappingNode resourceNode)
+    public List<ValidationResult> resolve(MappingNode resourceNode, String relativeUri)
     {
         List<ValidationResult> templateValidations = new ArrayList<ValidationResult>();
-        return new ResourceTemplateMerger(templateValidations, resourceNode).merge();
+        return new ResourceTemplateMerger(templateValidations, resourceNode, relativeUri).merge();
     }
 
     private class ResourceTemplateMerger
@@ -152,11 +152,14 @@ public class TemplateResolver
 
         private List<ValidationResult> templateValidations;
         private MappingNode resourceNode;
+        private String relativeUri;
+        private String currentAction;
 
-        public ResourceTemplateMerger(List<ValidationResult> templateValidations, MappingNode resourceNode)
+        public ResourceTemplateMerger(List<ValidationResult> templateValidations, MappingNode resourceNode, String relativeUri)
         {
             this.templateValidations = templateValidations;
             this.resourceNode = resourceNode;
+            this.relativeUri = relativeUri;
         }
 
         public List<ValidationResult> merge()
@@ -312,13 +315,15 @@ public class TemplateResolver
             {
                 if (actionName == null)
                 {
-                    for (Node actionNode : actionNodes.values())
+                    for (String actionKey : actionNodes.keySet())
                     {
-                        mergeNodes(actionNode, cloneTemplate(ref, TemplateType.TRAIT), Action.class);
+                        currentAction = actionKey;
+                        mergeNodes(actionNodes.get(actionKey), cloneTemplate(ref, TemplateType.TRAIT), Action.class);
                     }
                 }
                 else
                 {
+                    currentAction = actionName;
                     mergeNodes(actionNodes.get(actionName), cloneTemplate(ref, TemplateType.TRAIT), Action.class);
                 }
             }
@@ -328,6 +333,11 @@ public class TemplateResolver
         {
             String templateName = getTemplateName(reference);
             Map<String, MappingNode> templateMap;
+
+            Map<String, String> defaultParameters = new HashMap<String, String>();
+            defaultParameters.put("resourcePath", relativeUri);
+            defaultParameters.put("resourcePathName", relativeUri.substring(1));
+
             String label;
             if (type == TemplateType.RESOURCE_TYPE)
             {
@@ -338,6 +348,7 @@ public class TemplateResolver
             {
                 templateMap = getTraitsMap();
                 label = "trait";
+                defaultParameters.put("methodName", currentAction);
             }
 
             MappingNode templateNode = templateMap.get(templateName);
@@ -346,8 +357,7 @@ public class TemplateResolver
                 addError(label + " not defined: " + templateName);
                 return null;
             }
-            Map<String, String> parameters = getTemplateParameters(reference);
-            return cloneMappingNode(templateNode, parameters);
+            return cloneMappingNode(templateNode, getTemplateParameters(reference, defaultParameters));
         }
 
         private void addError(String message)
@@ -355,10 +365,8 @@ public class TemplateResolver
             templateValidations.add(ValidationResult.createErrorResult(message));
         }
 
-        private Map<String, String> getTemplateParameters(Node node)
+        private Map<String, String> getTemplateParameters(Node node, Map<String, String> parameters)
         {
-            //TODO no default params for now...
-            Map<String, String> parameters = new HashMap<String, String>();
             if (node.getNodeId() == NodeId.mapping)
             {
                 List<NodeTuple> tuples = ((MappingNode) node).getValue();
@@ -527,11 +535,11 @@ public class TemplateResolver
             String[] fields = {};
             if (element.equals(Resource.class))
             {
-                fields = new String[] {"description", "summary", "displayName", "type", "is"};
+                fields = new String[] {"usage", "summary", "displayName", "type", "is"};
             }
             else if (element.equals(Action.class))
             {
-                fields = new String[] {"description", "summary", "displayName", "is"};
+                fields = new String[] {"usage", "summary", "displayName", "is"};
             }
             return new HashSet(Arrays.asList(fields));
         }

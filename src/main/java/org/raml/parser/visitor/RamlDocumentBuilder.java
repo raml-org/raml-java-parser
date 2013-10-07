@@ -32,7 +32,8 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         super.onMappingNodeStart(mappingNode);
         if (getDocumentContext().peek() instanceof Resource)
         {
-            getTemplateResolver().resolve(mappingNode);
+            String relativeUri = ((Resource) getDocumentContext().peek()).getRelativeUri();
+            getTemplateResolver().resolve(mappingNode, relativeUri);
         }
         else if (isBodyBuilder(getBuilderContext().peek()))
         {
