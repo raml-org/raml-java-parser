@@ -11,12 +11,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.Resource;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.utils.Inflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -41,6 +44,7 @@ public class TemplateResolver
     private Map<String, MappingNode> traitsMap = new HashMap<String, MappingNode>();
     private ResourceLoader resourceLoader;
     private NodeHandler nodeNandler;
+    private Set<MappingNode> resolvedNodes = new HashSet<MappingNode>();
 
     private enum TemplateType
     {
@@ -144,6 +148,14 @@ public class TemplateResolver
     public List<ValidationResult> resolve(MappingNode resourceNode, String relativeUri)
     {
         List<ValidationResult> templateValidations = new ArrayList<ValidationResult>();
+
+        //avoid processing resources already processed (yaml references)
+        if (resolvedNodes.contains(resourceNode))
+        {
+            return templateValidations;
+        }
+        resolvedNodes.add(resourceNode);
+
         return new ResourceTemplateMerger(templateValidations, resourceNode, relativeUri).merge();
     }
 
@@ -451,12 +463,43 @@ public class TemplateResolver
 
         private ScalarNode cloneScalarNode(ScalarNode node, Map<String, String> parameters)
         {
+            Pattern pattern = Pattern.compile("<<[^>]+>>");
             String value = node.getValue();
-            for (String key : parameters.keySet())
+            Matcher matcher = pattern.matcher(value);
+            StringBuffer sb = new StringBuffer();
+            while (matcher.find())
             {
-                value = value.replaceAll("<<" + key + ">>", parameters.get(key));
+                matcher.appendReplacement(sb, "");
+                sb.append(resolveParameter(matcher.group(), parameters));
             }
-            return new ScalarNode(node.getTag(), value, node.getStartMark(), node.getEndMark(), node.getStyle());
+            matcher.appendTail(sb);
+            return new ScalarNode(node.getTag(), sb.toString(), node.getStartMark(), node.getEndMark(), node.getStyle());
+        }
+
+        private String resolveParameter(String match, Map<String, String> parameters)
+        {
+            String result = "";
+            String[] tokens = match.substring(2, match.length() - 2).split("\\|");
+            for (String token : tokens)
+            {
+                if (parameters.containsKey(token.trim()))
+                {
+                    result = parameters.get(token.trim());
+                }
+                else if ("!singularize".equals(token.trim()))
+                {
+                    result = Inflector.singularize(result);
+                }
+                else if ("!pluralize".equals(token.trim()))
+                {
+                    result = Inflector.pluralize(result);
+                }
+                else
+                {
+                    addError("Invalid parameter definition: " + match);
+                }
+            }
+            return result;
         }
 
         private MappingNode mergeMappingNodes(MappingNode baseNode, MappingNode templateNode, Class<?> context)

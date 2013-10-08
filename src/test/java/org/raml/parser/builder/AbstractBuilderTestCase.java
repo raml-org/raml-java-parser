@@ -32,7 +32,8 @@ public class AbstractBuilderTestCase
 
     protected static void validateRamlNoErrors(String resource)
     {
-        assertTrue("Errors must be empty", validateRaml(resource).isEmpty());
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertTrue("Errors must be empty", validationResults.isEmpty());
     }
 
     private static String getString(String resource)
