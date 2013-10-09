@@ -14,8 +14,12 @@ resourceTypes:
             regular <<resourcePathName>>,
             singular <<resourcePathName | !singularize>>,
             plural <<resourcePathName | !singularize | !pluralize>>
+    - includeType:
+        description: !include org/raml/types/<<resourcePathName>>-description.txt
 
 /users:
     type: collection
 /tags:
     type: {base: {p1: octopus, p2: feet, p3: dress, p4: stresses}}
+/include:
+    type: includeType

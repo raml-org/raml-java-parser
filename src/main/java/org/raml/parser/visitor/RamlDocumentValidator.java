@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.raml.model.Raml;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class RamlDocumentValidator extends YamlDocumentValidator
 {
@@ -48,14 +51,20 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         NodeRule<?> rule = getRuleContext().peek();
         if (isResourceRule(rule))
         {
-            List<ValidationResult> templateValidations = getTemplateResolver().resolve(mappingNode, "/fakeRelativeUri");
+            List<ValidationResult> templateValidations = getTemplateResolver().resolve(mappingNode, getResourceUri(rule));
             getMessages().addAll(templateValidations);
         }
-        else if(isBodyRule(rule))
+        else if (isBodyRule(rule))
         {
             List<ValidationResult> mediaTypeValidations = getMediaTypeResolver().resolve(mappingNode);
             getMessages().addAll(mediaTypeValidations);
         }
+    }
+
+    private String getResourceUri(NodeRule<?> resourceRule)
+    {
+        Node keyNode = ((DefaultTupleRule) resourceRule).getKey();
+        return ((ScalarNode) keyNode).getValue();
     }
 
     private boolean isBodyRule(NodeRule<?> rule)

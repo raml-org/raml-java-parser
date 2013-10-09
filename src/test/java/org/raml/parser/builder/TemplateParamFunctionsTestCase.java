@@ -37,6 +37,12 @@ public class TemplateParamFunctionsTestCase extends AbstractBuilderTestCase
     }
 
     @Test
+    public void includeWithDefaultParam()
+    {
+        assertThat(raml.getResources().get("/include").getDescription(), is("included description"));
+    }
+
+    @Test
     public void validate()
     {
         validateRamlNoErrors(ramlSource);
