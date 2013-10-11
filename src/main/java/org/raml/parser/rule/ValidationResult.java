@@ -111,7 +111,7 @@ public class ValidationResult
     public String toString()
     {
         return " message='" + message + '\'' +
-               "" + endMark +
+               "" + startMark +
                '}';
     }
 }

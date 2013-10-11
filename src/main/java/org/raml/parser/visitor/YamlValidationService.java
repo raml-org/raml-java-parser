@@ -8,6 +8,7 @@ import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.MarkedYAMLException;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
@@ -48,9 +49,13 @@ public class YamlValidationService
                 nodeVisitor.visitDocument((MappingNode) root);
             }
         }
+        catch (MarkedYAMLException mye)
+        {
+            errorMessage.add(ValidationResult.createErrorResult(mye.getProblem(), mye.getProblemMark(), null));
+        }
         catch (YAMLException ex)
         {
-            // errorMessage.add(ValidationResult.createErrorResult(ex.getMessage()));
+            errorMessage.add(ValidationResult.createErrorResult(ex.getMessage()));
         }
 
         for (YamlValidator yamlValidator : yamlValidators)

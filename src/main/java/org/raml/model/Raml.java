@@ -50,6 +50,12 @@ public class Raml
     @Sequence
     private List<Protocol> protocols = new ArrayList<Protocol>();
 
+    @Sequence
+    private List<Map<String, SecurityScheme>> securitySchemes = new ArrayList<Map<String, SecurityScheme>>();
+
+    @Sequence
+    private List<String> securedBy = new ArrayList<String>();
+
     public Raml()
     {
     }
@@ -180,6 +186,26 @@ public class Raml
     public void setProtocols(List<Protocol> protocols)
     {
         this.protocols = protocols;
+    }
+
+    public List<Map<String, SecurityScheme>> getSecuritySchemes()
+    {
+        return securitySchemes;
+    }
+
+    public void setSecuritySchemes(List<Map<String, SecurityScheme>> securitySchemes)
+    {
+        this.securitySchemes = securitySchemes;
+    }
+
+    public List<String> getSecuredBy()
+    {
+        return securedBy;
+    }
+
+    public void setSecuredBy(List<String> securedBy)
+    {
+        this.securedBy = securedBy;
     }
 
     public Map<String, String> getConsolidatedSchemas()

@@ -43,6 +43,8 @@ public class Resource
     @Sequence
     private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
+    @Sequence
+    private List<String> securedBy = new ArrayList<String>();
 
     public Resource()
     {
@@ -155,6 +157,16 @@ public class Resource
     public void setType(TemplateReference type)
     {
         this.type = type;
+    }
+
+    public List<String> getSecuredBy()
+    {
+        return securedBy;
+    }
+
+    public void setSecuredBy(List<String> securedBy)
+    {
+        this.securedBy = securedBy;
     }
 
     @Override

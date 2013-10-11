@@ -43,6 +43,9 @@ public class Action
     @Sequence
     private List<Protocol> protocols = new ArrayList<Protocol>();
 
+    @Sequence
+    private List<String> securedBy = new ArrayList<String>();
+
     public Action()
     {
     }
@@ -135,6 +138,16 @@ public class Action
     public void setProtocols(List<Protocol> protocols)
     {
         this.protocols = protocols;
+    }
+
+    public List<String> getSecuredBy()
+    {
+        return securedBy;
+    }
+
+    public void setSecuredBy(List<String> securedBy)
+    {
+        this.securedBy = securedBy;
     }
 
     @Override
