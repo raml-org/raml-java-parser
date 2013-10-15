@@ -3,7 +3,7 @@
 title: Sample API
 version: v1
 baseUri: https://{host}.sample.com:{port}/{path}
-uriParameters:
+baseUriParameters:
     host:
         displayName: Host
         description: host name
@@ -34,7 +34,13 @@ protocols: [HTTP, HTTPS]
         protocols: [HTTP]
 /media:
     displayName: Media collection
-    head: !!null
+    baseUriParameters:
+        host:
+            enum: [ api1 ]
+    head:
+        baseUriParameters:
+            host:
+                enum: [ api2 ]
     get:
         description: retrieve media
         headers:

@@ -20,7 +20,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public UriParametersRule()
     {
-        super("uriParameters", new DefaultScalarTupleHandler(MappingNode.class, "uriParameters"));
+        super("baseUriParameters", new DefaultScalarTupleHandler(MappingNode.class, "baseUriParameters"));
 
         this.errors = new ArrayList<ValidationResult>();
         this.parameters = new ArrayList<String>();
@@ -96,7 +96,12 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public BaseUriRule getUriRule()
     {
-        return (BaseUriRule) getParentTupleRule().getRuleByFieldName("baseUri");
+        TupleRule<?, ?> parentTupleRule = getParentTupleRule();
+        while (parentTupleRule.getParentTupleRule() != null)
+        {
+            parentTupleRule = parentTupleRule.getParentTupleRule();
+        }
+        return (BaseUriRule) parentTupleRule.getRuleByFieldName("baseUri");
     }
 
 }

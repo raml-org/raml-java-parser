@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.raml.model.parameter.Header;
 import org.raml.model.parameter.QueryParameter;
+import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
@@ -45,6 +46,9 @@ public class Action
 
     @Sequence
     private List<String> securedBy = new ArrayList<String>();
+
+    @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
+    private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
 
     public Action()
     {
@@ -148,6 +152,16 @@ public class Action
     public void setSecuredBy(List<String> securedBy)
     {
         this.securedBy = securedBy;
+    }
+
+    public Map<String, List<UriParameter>> getBaseUriParameters()
+    {
+        return baseUriParameters;
+    }
+
+    public void setBaseUriParameters(Map<String, List<UriParameter>> baseUriParameters)
+    {
+        this.baseUriParameters = baseUriParameters;
     }
 
     @Override

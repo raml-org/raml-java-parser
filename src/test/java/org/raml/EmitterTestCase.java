@@ -56,7 +56,7 @@ public class EmitterTestCase
         assertThat(source.getTitle(), is(target.getTitle()));
         assertThat(source.getVersion(), is(target.getVersion()));
         assertThat(source.getBaseUri(), is(target.getBaseUri()));
-        assertThat(source.getUriParameters().size(), is(target.getUriParameters().size()));
+        assertThat(source.getBaseUriParameters().size(), is(target.getBaseUriParameters().size()));
         assertThat(source.getDocumentation().size(), is(target.getDocumentation().size()));
         assertThat(source.getResources().size(), is(target.getResources().size()));
     }

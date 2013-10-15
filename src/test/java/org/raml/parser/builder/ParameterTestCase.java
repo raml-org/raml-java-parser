@@ -24,7 +24,7 @@ public class ParameterTestCase
     public void whenParameterIsYRequiredShouldBeTrue() throws IOException
     {
         Raml raml = loadRaml();
-        UriParameter uriParameter = raml.getUriParameters().get("param2").get(0);
+        UriParameter uriParameter = raml.getBaseUriParameters().get("param2").get(0);
         assertThat(uriParameter.isRequired(), is(true));
     }
 
@@ -35,16 +35,16 @@ public class ParameterTestCase
         YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
         Raml raml = ramlSpecBuilder.build(simpleTest);
 
-        UriParameter uriParameter = raml.getUriParameters().get("acl").get(0);
+        UriParameter uriParameter = raml.getBaseUriParameters().get("acl").get(0);
         Assert.assertThat(uriParameter.getType(), CoreMatchers.is(ParamType.STRING));
 
-        List<UriParameter> file = raml.getUriParameters().get("file");
+        List<UriParameter> file = raml.getBaseUriParameters().get("file");
         Assert.assertThat(file.size(), CoreMatchers.is(2));
 
-        uriParameter = raml.getUriParameters().get("file").get(0);
+        uriParameter = raml.getBaseUriParameters().get("file").get(0);
         Assert.assertThat(uriParameter.getType(), CoreMatchers.is(ParamType.STRING));
 
-        uriParameter = raml.getUriParameters().get("file").get(1);
+        uriParameter = raml.getBaseUriParameters().get("file").get(1);
         Assert.assertThat(uriParameter.getType(), CoreMatchers.is(ParamType.FILE));
     }
 

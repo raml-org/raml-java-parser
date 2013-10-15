@@ -3,7 +3,7 @@
 title: Amazon simple storage API
 version: 1
 baseUri: https://destinationBucket.s3.amazonaws.com/{file}/{acl}
-uriParameters:
+baseUriParameters:
  acl:
   description: Specifies an Amazon S3 access control list. If an invalid access control list is specified, an error is generated.
   type: string

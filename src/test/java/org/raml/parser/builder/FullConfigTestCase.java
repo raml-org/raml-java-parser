@@ -63,9 +63,9 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         assertThat(raml.getProtocols().get(1), is(HTTPS));
 
         //uri parameters
-        assertThat(raml.getUriParameters().size(), is(3));
+        assertThat(raml.getBaseUriParameters().size(), is(3));
 
-        List<UriParameter> hostParam = raml.getUriParameters().get("host");
+        List<UriParameter> hostParam = raml.getBaseUriParameters().get("host");
         assertThat(hostParam.get(0).getDisplayName(), is("Host"));
         assertThat(hostParam.get(0).getDescription(), is("host name"));
         assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
@@ -73,13 +73,13 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         assertThat(hostParam.get(0).getMaxLength(), is(10));
         assertThat(hostParam.get(0).getPattern(), is("[a-z]*"));
 
-        List<UriParameter> portParam = raml.getUriParameters().get("port");
+        List<UriParameter> portParam = raml.getBaseUriParameters().get("port");
         assertThat(portParam.get(0).getType(), is(ParamType.INTEGER));
         assertThat(portParam.get(0).getMinimum(), is(1025d));
         assertThat(portParam.get(0).getMaximum(), is(65535d));
 
         assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
-        List<UriParameter> pathParam = raml.getUriParameters().get("path");
+        List<UriParameter> pathParam = raml.getBaseUriParameters().get("path");
         assertThat(pathParam.get(0).getType(), is(ParamType.STRING));
         assertThat(pathParam.get(0).getEnumeration().size(), is(3));
         assertThat(pathParam.get(0).getEnumeration().get(0), is("one"));

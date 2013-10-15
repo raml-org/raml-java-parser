@@ -46,6 +46,9 @@ public class Resource
     @Sequence
     private List<String> securedBy = new ArrayList<String>();
 
+    @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
+    private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
+
     public Resource()
     {
     }
@@ -167,6 +170,16 @@ public class Resource
     public void setSecuredBy(List<String> securedBy)
     {
         this.securedBy = securedBy;
+    }
+
+    public Map<String, List<UriParameter>> getBaseUriParameters()
+    {
+        return baseUriParameters;
+    }
+
+    public void setBaseUriParameters(Map<String, List<UriParameter>> baseUriParameters)
+    {
+        this.baseUriParameters = baseUriParameters;
     }
 
     @Override
