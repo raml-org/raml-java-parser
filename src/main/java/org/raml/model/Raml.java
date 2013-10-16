@@ -30,7 +30,7 @@ public class Raml
     private String mediaType;
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
-    private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
+    private Map<String, UriParameter> baseUriParameters = new HashMap<String, UriParameter>();
 
     @Mapping(handler = ResourceHandler.class, implicit = true)
     private Map<String, Resource> resources = new HashMap<String, Resource>();
@@ -70,7 +70,7 @@ public class Raml
         return documentation;
     }
 
-    public void setBaseUriParameters(Map<String, List<UriParameter>> uriParameters)
+    public void setBaseUriParameters(Map<String, UriParameter> uriParameters)
     {
         this.baseUriParameters = uriParameters;
     }
@@ -143,7 +143,7 @@ public class Raml
         return resources;
     }
 
-    public Map<String, List<UriParameter>> getBaseUriParameters()
+    public Map<String, UriParameter> getBaseUriParameters()
     {
         return baseUriParameters;
     }

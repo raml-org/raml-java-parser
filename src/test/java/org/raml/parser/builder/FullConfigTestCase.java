@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.raml.model.ParamType.INTEGER;
+import static org.raml.model.ParamType.NUMBER;
+import static org.raml.model.ParamType.STRING;
 import static org.raml.model.Protocol.HTTP;
 import static org.raml.model.Protocol.HTTPS;
 
@@ -15,7 +18,6 @@ import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.DocumentationItem;
 import org.raml.model.MimeType;
-import org.raml.model.ParamType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.model.Response;
@@ -65,26 +67,26 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         //uri parameters
         assertThat(raml.getBaseUriParameters().size(), is(3));
 
-        List<UriParameter> hostParam = raml.getBaseUriParameters().get("host");
-        assertThat(hostParam.get(0).getDisplayName(), is("Host"));
-        assertThat(hostParam.get(0).getDescription(), is("host name"));
-        assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
-        assertThat(hostParam.get(0).getMinLength(), is(5));
-        assertThat(hostParam.get(0).getMaxLength(), is(10));
-        assertThat(hostParam.get(0).getPattern(), is("[a-z]*"));
+        UriParameter hostParam = raml.getBaseUriParameters().get("host");
+        assertThat(hostParam.getDisplayName(), is("Host"));
+        assertThat(hostParam.getDescription(), is("host name"));
+        assertThat(hostParam.getType(), is(STRING));
+        assertThat(hostParam.getMinLength(), is(5));
+        assertThat(hostParam.getMaxLength(), is(10));
+        assertThat(hostParam.getPattern(), is("[a-z]*"));
 
-        List<UriParameter> portParam = raml.getBaseUriParameters().get("port");
-        assertThat(portParam.get(0).getType(), is(ParamType.INTEGER));
-        assertThat(portParam.get(0).getMinimum(), is(1025d));
-        assertThat(portParam.get(0).getMaximum(), is(65535d));
+        UriParameter portParam = raml.getBaseUriParameters().get("port");
+        assertThat(portParam.getType(), is(INTEGER));
+        assertThat(portParam.getMinimum(), is(1025d));
+        assertThat(portParam.getMaximum(), is(65535d));
 
-        assertThat(hostParam.get(0).getType(), is(ParamType.STRING));
-        List<UriParameter> pathParam = raml.getBaseUriParameters().get("path");
-        assertThat(pathParam.get(0).getType(), is(ParamType.STRING));
-        assertThat(pathParam.get(0).getEnumeration().size(), is(3));
-        assertThat(pathParam.get(0).getEnumeration().get(0), is("one"));
-        assertThat(pathParam.get(0).getEnumeration().get(1), is("two"));
-        assertThat(pathParam.get(0).getEnumeration().get(2), is("three"));
+        assertThat(hostParam.getType(), is(STRING));
+        UriParameter pathParam = raml.getBaseUriParameters().get("path");
+        assertThat(pathParam.getType(), is(STRING));
+        assertThat(pathParam.getEnumeration().size(), is(3));
+        assertThat(pathParam.getEnumeration().get(0), is("one"));
+        assertThat(pathParam.getEnumeration().get(1), is("two"));
+        assertThat(pathParam.getEnumeration().get(2), is("three"));
 
         //resources
         assertThat(raml.getResources().size(), is(3));
@@ -115,7 +117,7 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         Header apiKeyHeader = action.getHeaders().get("api-key");
         assertThat(apiKeyHeader.getDisplayName(), is("Api key"));
         assertThat(apiKeyHeader.getDescription(), is("Api key description"));
-        assertThat(apiKeyHeader.getType(), is(ParamType.STRING));
+        assertThat(apiKeyHeader.getType(), is(STRING));
         assertThat(apiKeyHeader.isRequired(), is(true));
         assertThat(apiKeyHeader.getMinLength(), is(10));
         assertThat(apiKeyHeader.getMaxLength(), is(10));
@@ -124,7 +126,7 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         //action query parameters
         assertThat(action.getQueryParameters().size(), is(1));
         QueryParameter pageQueryParam = action.getQueryParameters().get("page");
-        assertThat(pageQueryParam.getType(), is(ParamType.INTEGER));
+        assertThat(pageQueryParam.getType(), is(INTEGER));
         assertThat(pageQueryParam.isRequired(), is(false));
         assertThat(pageQueryParam.getDefaultValue(), is("1"));
         assertThat(pageQueryParam.getMinimum(), is(1d));
@@ -141,13 +143,15 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         MimeType formBody = action.getBody().get(formMime);
         assertThat(formBody.getType(), is(formMime));
         assertThat(formBody.getFormParameters().size(), is(1));
-        FormParameter form1Param = formBody.getFormParameters().get("form-1");
-        assertThat(form1Param.getDisplayName(), is("form 1"));
-        assertThat(form1Param.getDescription(), is("form 1 description"));
-        assertThat(form1Param.getType(), is(ParamType.NUMBER));
-        assertThat(form1Param.isRequired(), is(true));
-        assertThat(form1Param.getMinimum(), closeTo(9.5, 0.01));
-        assertThat(form1Param.getMaximum(), closeTo(10.5, 0.01));
+        List<FormParameter> form1Param = formBody.getFormParameters().get("form-1");
+        assertThat(form1Param.get(0).getDisplayName(), is("form 1"));
+        assertThat(form1Param.get(0).getDescription(), is("form 1 description"));
+        assertThat(form1Param.get(0).getType(), is(NUMBER));
+        assertThat(form1Param.get(0).isRequired(), is(true));
+        assertThat(form1Param.get(0).getMinimum(), closeTo(9.5, 0.01));
+        assertThat(form1Param.get(0).getMaximum(), closeTo(10.5, 0.01));
+        assertThat(form1Param.get(1).getType(), is(STRING));
+        assertThat(form1Param.get(1).getEnumeration().size(), is(3));
 
         //action responses
         assertThat(action.getResponses().size(), is(2));
@@ -170,7 +174,7 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         assertThat(mediaItemResource.getActions().size(), is(1));
         assertThat(mediaItemResource.getUriParameters().size(), is(1));
         UriParameter mediaIdParam = mediaItemResource.getUriParameters().get("mediaId");
-        assertThat(mediaIdParam.getType(), is(ParamType.STRING));
+        assertThat(mediaIdParam.getType(), is(STRING));
         assertThat(mediaIdParam.getMaxLength(), is(10));
 
     }

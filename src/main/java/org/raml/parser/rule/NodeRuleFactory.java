@@ -132,21 +132,39 @@ public class NodeRuleFactory extends AbastractFactory
                     ParameterizedType pType = (ParameterizedType) type;
                     Type keyType = pType.getActualTypeArguments()[0];
                     Type valueType = pType.getActualTypeArguments()[1];
-                    if (keyType instanceof Class<?> && valueType instanceof Class<?>)
+                    if (keyType instanceof Class<?>)
                     {
                         Class<?> keyClass = (Class<?>) keyType;
-                        if (mapping.implicit())
+                        if (valueType instanceof Class<?>)
                         {
-                            tupleRule = new ImplicitMapEntryRule(declaredField.getName(), (Class) valueType);
+
+                            if (mapping.implicit())
+                            {
+                                tupleRule = new ImplicitMapEntryRule(declaredField.getName(), (Class) valueType);
+                            }
+                            else
+                            {
+                                tupleRule = new MapTupleRule(declaredField.getName(), (Class) valueType);
+                            }
+                            if (keyClass.isEnum())
+                            {
+                                tupleRule.setHandler(new EnumHandler(MappingNode.class, (Class<? extends Enum>) keyClass));
+                            }
+
                         }
-                        else
+                        else if (valueType instanceof ParameterizedType)
                         {
-                            tupleRule = new MapTupleRule(declaredField.getName(), (Class) valueType);
+                            Type rawType = ((ParameterizedType) valueType).getRawType();
+                            if (rawType instanceof Class && List.class.isAssignableFrom((Class<?>) rawType))
+                            {
+                                Type listType = ((ParameterizedType) valueType).getActualTypeArguments()[0];
+                                if (listType instanceof Class)
+                                {
+                                    tupleRule = new MapWithListValueTupleRule(declaredField.getName(), (Class<?>) listType, this);
+                                }
+                            }
                         }
-                        if (keyClass.isEnum())
-                        {
-                            tupleRule.setHandler(new EnumHandler(MappingNode.class, (Class<? extends Enum>) keyClass));
-                        }
+
                     }
                 }
             }

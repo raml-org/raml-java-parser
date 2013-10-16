@@ -2,7 +2,6 @@ package org.raml.parser.builder;
 
 import java.util.ArrayList;
 
-import org.raml.model.parameter.UriParameter;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -13,7 +12,7 @@ public class MapWithListValueTupleBuilder extends MapTupleBuilder
 {
 
 
-    public MapWithListValueTupleBuilder(String fieldName, Class<UriParameter> valueClass)
+    public MapWithListValueTupleBuilder(String fieldName, Class<?> valueClass)
     {
         super(fieldName, valueClass);
     }
@@ -33,7 +32,7 @@ public class MapWithListValueTupleBuilder extends MapTupleBuilder
         }
     }
 
-    //Hack class to make non sequence mapping node act as sequence
+    //make non sequence mapping node act as sequence
     private static class ListOfPojoTupleBuilder extends PojoTupleBuilder
     {
 

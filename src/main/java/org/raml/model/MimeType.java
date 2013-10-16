@@ -1,5 +1,6 @@
 package org.raml.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.raml.model.parameter.FormParameter;
@@ -20,7 +21,7 @@ public class MimeType
     private String example;
 
     @Mapping
-    private Map<String, FormParameter> formParameters;
+    private Map<String, List<FormParameter>> formParameters;
 
 
     public String getType()
@@ -53,13 +54,13 @@ public class MimeType
         this.example = example;
     }
 
-    public Map<String, FormParameter> getFormParameters()
+    public Map<String, List<FormParameter>> getFormParameters()
     {
         //TODO throw exception if invalid type?
         return formParameters;
     }
 
-    public void setFormParameters(Map<String, FormParameter> formParameters)
+    public void setFormParameters(Map<String, List<FormParameter>> formParameters)
     {
         this.formParameters = formParameters;
     }

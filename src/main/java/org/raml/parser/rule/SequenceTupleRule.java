@@ -16,8 +16,14 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
 
     public SequenceTupleRule(String fieldName, Type itemType)
     {
-        super(fieldName, new DefaultScalarTupleHandler(SequenceNode.class, fieldName));
+        this(fieldName, itemType, null);
+    }
+
+    public SequenceTupleRule(String fieldName, Type itemType, NodeRuleFactory nodeRuleFactory)
+    {
+        super(fieldName, new DefaultScalarTupleHandler(SequenceNode.class, fieldName), nodeRuleFactory);
         this.itemType = itemType;
+
     }
 
     @Override

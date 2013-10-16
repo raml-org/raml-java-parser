@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
@@ -149,7 +148,7 @@ public class TupleBuilderFactory extends AbastractFactory
                                 Type listType = ((ParameterizedType) valueType).getActualTypeArguments()[0];
                                 if (listType instanceof Class)
                                 {
-                                    tupleBuilder = new MapWithListValueTupleBuilder(declaredField.getName(), (Class<UriParameter>) listType);
+                                    tupleBuilder = new MapWithListValueTupleBuilder(declaredField.getName(), (Class<?>) listType);
                                 }
                             }
                         }

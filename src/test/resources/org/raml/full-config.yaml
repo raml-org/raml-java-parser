@@ -76,12 +76,14 @@ protocols: [HTTP, HTTPS]
             multipart/form-data:
                 formParameters:
                     form-1:
-                        displayName: form 1
-                        description: form 1 description
-                        type: number
-                        required: true
-                        minimum: 9.5
-                        maximum: 10.5
+                        - displayName: form 1
+                          description: form 1 description
+                          type: number
+                          required: true
+                          minimum: 9.5
+                          maximum: 10.5
+                        - type: string
+                          enum: [one, two, three]
         responses:
             200:
                 headers:
