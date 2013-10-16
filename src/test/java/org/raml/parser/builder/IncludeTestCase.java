@@ -4,11 +4,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static org.raml.model.ActionType.GET;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.raml.model.ActionType;
 import org.raml.model.Raml;
 
 public class IncludeTestCase extends AbstractBuilderTestCase
@@ -70,7 +70,7 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     public void includeWithResourceTypeParam()
     {
         Raml raml = parseRaml("org/raml/include/include-with-params.yaml");
-        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getDescription(), is("included title"));
+        assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("included title"));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     {
         Raml raml = parseRaml("org/raml/include/include-resource-type-sequence.yaml");
         assertThat(raml.getResources().get("/simple").getActions().size(), is(1));
-        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getDescription(), is("super"));
+        assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("super"));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class IncludeTestCase extends AbstractBuilderTestCase
     {
         Raml raml = parseRaml("org/raml/include/include-resource-types.yaml");
         assertThat(raml.getResources().get("/simple").getActions().size(), is(1));
-        assertThat(raml.getResources().get("/simple").getAction(ActionType.GET).getDescription(), is("super"));
+        assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("super"));
     }
 
     @Test
@@ -99,4 +99,10 @@ public class IncludeTestCase extends AbstractBuilderTestCase
         assertThat(raml.getDocumentation().get(0).getContent(), startsWith("Stop the point-to-point madness"));
     }
 
+    @Test
+    public void includeAction()
+    {
+        Raml raml = parseRaml("org/raml/include/include-action.yaml");
+        assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("get something"));
+    }
 }

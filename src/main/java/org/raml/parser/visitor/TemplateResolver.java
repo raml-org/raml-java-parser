@@ -187,8 +187,9 @@ public class TemplateResolver
             Map<String, SequenceNode> traitsReference = new HashMap<String, SequenceNode>();
             HashMap<String, Node> actionNodes = new HashMap<String, Node>(globalActionNodes);
 
-            for (NodeTuple resourceTuple : resourceNode.getValue())
+            for (int i = 0; i < resourceNode.getValue().size(); i++)
             {
+                NodeTuple resourceTuple = resourceNode.getValue().get(i);
                 String key = ((ScalarNode) resourceTuple.getKeyNode()).getValue();
                 if (key.equals(RESOURCE_TYPE_USE_KEY))
                 {
@@ -204,10 +205,17 @@ public class TemplateResolver
                 else if (isAction(key))
                 {
                     Node actionNode = resourceTuple.getValueNode();
-                    if (actionNode.getNodeId() != mapping)
+                    if (actionNode.getTag().equals(Tag.NULL))
                     {
                         actionNode = setTupleValueToEmptyMappingNode(resourceTuple);
                     }
+                    else if (actionNode.getTag().startsWith(INCLUDE_TAG))
+                    {
+                        actionNode = includeResolver.resolveInclude((ScalarNode) actionNode, resourceLoader, nodeNandler);
+                        resourceNode.getValue().remove(i);
+                        resourceNode.getValue().add(i, new NodeTuple(resourceTuple.getKeyNode(), actionNode));
+                    }
+
                     actionNodes.put(normalizeKey(key), actionNode);
                     for (NodeTuple actionTuple : ((MappingNode) actionNode).getValue())
                     {
