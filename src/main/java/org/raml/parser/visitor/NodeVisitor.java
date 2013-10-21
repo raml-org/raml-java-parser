@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.parser.loader.ResourceLoader;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
@@ -35,8 +36,20 @@ public class NodeVisitor
         nodeHandler.onMappingNodeEnd(mappingNode);
     }
 
+    private class MappingNodeMerger extends SafeConstructor
+    {
+        void merge(MappingNode mappingNode)
+        {
+            flattenMapping(mappingNode);
+        }
+    }
+
     private void doVisitMappingNode(MappingNode mappingNode)
     {
+        if (mappingNode.isMerged())
+        {
+            new MappingNodeMerger().merge(mappingNode);
+        }
         List<NodeTuple> tuples = mappingNode.getValue();
         List<NodeTuple> updatedTuples = new ArrayList<NodeTuple>();
         for (NodeTuple nodeTuple : tuples)

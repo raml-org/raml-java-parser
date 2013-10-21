@@ -100,6 +100,9 @@ protocols: [HTTP, HTTPS]
                     text/xml:
                         example: '<root>none</root>'
                     text/plain: !!null
+            <<:
+                404:
+                    description: not found
     /{mediaId}:
         displayName: Media item
         uriParameters:

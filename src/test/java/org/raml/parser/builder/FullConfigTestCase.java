@@ -154,7 +154,7 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         assertThat(form1Param.get(1).getEnumeration().size(), is(3));
 
         //action responses
-        assertThat(action.getResponses().size(), is(2));
+        assertThat(action.getResponses().size(), is(3));
         Response response200 = action.getResponses().get("200");
         assertThat(response200.getBody().size(), is(1));
         assertThat(response200.getBody().get("application/json").getExample(), is("{ \"key\": \"value\" }"));
@@ -163,6 +163,8 @@ public class FullConfigTestCase extends AbstractBuilderTestCase
         assertThat(response400.getBody().size(), is(2));
         assertThat(response400.getBody().get("text/xml").getExample(), is("<root>none</root>"));
         assertThat(response400.getBody().get("text/plain").getType(), is("text/plain"));
+        Response response404 = action.getResponses().get("404");
+        assertThat(response404.getDescription(), is("not found"));
 
         //nested resource
         assertThat(mediaResource.getResources().size(), is(1));
