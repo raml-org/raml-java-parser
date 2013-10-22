@@ -12,7 +12,7 @@ import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 import org.raml.parser.visitor.RamlValidationService;
 
-public class AbstractBuilderTestCase
+public class AbstractRamlTestCase
 {
 
     protected static Raml parseRaml(String resource)

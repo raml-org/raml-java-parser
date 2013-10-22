@@ -9,7 +9,7 @@ import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
 
-public class ResourceTypesTestCase extends AbstractBuilderTestCase
+public class ResourceTypesTestCase extends AbstractRamlTestCase
 {
 
     private static Raml raml;

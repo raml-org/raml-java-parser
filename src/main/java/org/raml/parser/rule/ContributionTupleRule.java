@@ -55,6 +55,12 @@ public class ContributionTupleRule implements TupleRule<Node, Node>
     }
 
     @Override
+    public TupleRule<?, ?> getRootTupleRule()
+    {
+        return rule.getRootTupleRule();
+    }
+
+    @Override
     public String getName()
     {
         return rule.getName();

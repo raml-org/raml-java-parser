@@ -11,7 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Raml;
 
-public class IncludeTestCase extends AbstractBuilderTestCase
+public class IncludeTestCase extends AbstractRamlTestCase
 {
 
     @Test

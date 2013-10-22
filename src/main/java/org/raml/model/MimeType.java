@@ -14,7 +14,7 @@ public class MimeType
     @Key
     private String type;
 
-    @Scalar
+    @Scalar(rule = org.raml.parser.rule.SchemaRule.class)
     private String schema;
 
     @Scalar

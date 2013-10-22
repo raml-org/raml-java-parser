@@ -16,13 +16,13 @@ import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.model.parameter.QueryParameter;
-import org.raml.parser.builder.AbstractBuilderTestCase;
+import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 import org.raml.parser.visitor.RamlValidationService;
 import org.raml.parser.visitor.YamlDocumentBuilder;
 
-public class SalesEnablementTestCase extends AbstractBuilderTestCase
+public class SalesEnablementTestCase extends AbstractRamlTestCase
 {
 
     private static Raml raml;

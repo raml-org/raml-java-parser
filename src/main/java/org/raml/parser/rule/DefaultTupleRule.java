@@ -163,4 +163,19 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     {
         return parent;
     }
+
+    @Override
+    public TupleRule<?, ?> getRootTupleRule()
+    {
+        TupleRule<?, ?> parentTupleRule = getParentTupleRule();
+        if (parentTupleRule == null)
+        {
+            return null;
+        }
+        while (parentTupleRule.getParentTupleRule() != null)
+        {
+            parentTupleRule = parentTupleRule.getParentTupleRule();
+        }
+        return parentTupleRule;
+    }
 }

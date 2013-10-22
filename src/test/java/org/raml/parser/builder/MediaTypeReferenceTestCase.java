@@ -10,7 +10,7 @@ import org.raml.model.Raml;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 import org.raml.parser.visitor.YamlDocumentBuilder;
 
-public class MediaTypeReferenceTestCase extends AbstractBuilderTestCase
+public class MediaTypeReferenceTestCase extends AbstractRamlTestCase
 {
 
     private static final String ramlSource = "org/raml/media-type-reference.yaml";

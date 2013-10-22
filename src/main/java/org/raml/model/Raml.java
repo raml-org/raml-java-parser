@@ -44,7 +44,7 @@ public class Raml
     @Sequence
     private List<Map<String, Template>> traits;
 
-    @Sequence
+    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
     private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
     @Sequence

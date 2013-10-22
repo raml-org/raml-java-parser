@@ -18,6 +18,8 @@ public interface TupleRule<K extends Node, V extends Node> extends NodeRule<V>
 
     TupleRule<?, ?> getParentTupleRule();
 
+    TupleRule<?, ?> getRootTupleRule();
+
     String getName();
 
     TupleRule<?, ?> getRuleByFieldName(String fieldName);

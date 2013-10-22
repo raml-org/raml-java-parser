@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.raml.model.Raml;
 
-public class TemplateParamFunctionsTestCase extends AbstractBuilderTestCase
+public class TemplateParamFunctionsTestCase extends AbstractRamlTestCase
 {
 
     private static final String ramlSource = "org/raml/types/template-param-functions.yaml";

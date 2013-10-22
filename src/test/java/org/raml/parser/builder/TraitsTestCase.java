@@ -13,7 +13,7 @@ import org.raml.model.ParamType;
 import org.raml.model.Raml;
 import org.raml.model.parameter.QueryParameter;
 
-public class TraitsTestCase extends AbstractBuilderTestCase
+public class TraitsTestCase extends AbstractRamlTestCase
 {
 
     @Test

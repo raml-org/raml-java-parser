@@ -1,0 +1,23 @@
+#%RAML 0.8
+title: sample
+schemas:
+    - league: |
+        {
+            "title": "League Schema",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+
+/resource:
+    put:
+        body:
+            application/json:
+                schema: league

@@ -27,7 +27,7 @@ import org.raml.model.parameter.QueryParameter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.rule.ValidationResult;
 
-public class FullConfigTestCase extends AbstractBuilderTestCase
+public class FullConfigTestCase extends AbstractRamlTestCase
 {
 
     private static String ramlSource = "org/raml/full-config.yaml";

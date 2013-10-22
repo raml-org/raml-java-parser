@@ -67,9 +67,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
             validationResults.add(ValidationResult.createErrorResult(getRuleTypeMisMatch(getFieldClass().getSimpleName()), node.getStartMark(), node.getEndMark()));
         }
         validationResults.addAll(super.validateValue(node));
-        if (ValidationResult.areValid(validationResults)) {
-            setValueNode(node);
-        }
+        setValueNode(node);
         return validationResults;
     }
 

@@ -15,7 +15,7 @@ import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.model.parameter.QueryParameter;
 
-public class ResourceTypesTraitsTestCase extends AbstractBuilderTestCase
+public class ResourceTypesTraitsTestCase extends AbstractRamlTestCase
 {
 
     private static Raml raml;

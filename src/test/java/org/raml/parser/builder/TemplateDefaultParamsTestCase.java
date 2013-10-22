@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.raml.model.Raml;
 
-public class TemplateDefaultParamsTestCase extends AbstractBuilderTestCase
+public class TemplateDefaultParamsTestCase extends AbstractRamlTestCase
 {
 
     private static final String ramlSource = "org/raml/types/template-default-params.yaml";

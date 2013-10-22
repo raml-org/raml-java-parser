@@ -13,7 +13,7 @@ traits:
                  "description": "A product presentation",
                  "properties": {
                    "id":  { "type": "string" },
-                   "title":  { "type": "string" },
+                   "title":  { "type": "string" }
                  }
               }
 

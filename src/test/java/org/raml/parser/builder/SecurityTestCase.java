@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
 
-public class SecurityTestCase extends AbstractBuilderTestCase
+public class SecurityTestCase extends AbstractRamlTestCase
 {
 
     private static final String ramlSource = "org/raml/security.yaml";

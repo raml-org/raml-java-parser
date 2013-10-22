@@ -19,7 +19,7 @@ import org.raml.parser.visitor.RamlDocumentBuilder;
 import org.raml.parser.visitor.RamlValidationService;
 import org.raml.parser.visitor.YamlDocumentBuilder;
 
-public class DefaultMediaTypeTestCase extends AbstractBuilderTestCase
+public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
 {
 
     private static final String ramlSource = "org/raml/media-type.yaml";

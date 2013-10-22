@@ -18,7 +18,7 @@ import org.raml.model.Raml;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.parser.rule.ValidationResult;
 
-public class ParameterTypesTestCase extends AbstractBuilderTestCase
+public class ParameterTypesTestCase extends AbstractRamlTestCase
 {
 
     private static final String ramlSource = "org/raml/params/param-types.yaml";

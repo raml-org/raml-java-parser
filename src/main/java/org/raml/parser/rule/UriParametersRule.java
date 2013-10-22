@@ -96,12 +96,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public BaseUriRule getUriRule()
     {
-        TupleRule<?, ?> parentTupleRule = getParentTupleRule();
-        while (parentTupleRule.getParentTupleRule() != null)
-        {
-            parentTupleRule = parentTupleRule.getParentTupleRule();
-        }
-        return (BaseUriRule) parentTupleRule.getRuleByFieldName("baseUri");
+        return (BaseUriRule) getRootTupleRule().getRuleByFieldName("baseUri");
     }
 
 }

@@ -14,7 +14,7 @@ schemas:
            "description":  { "type": "string" },
            "fileUrl":  { "type": "string" },
            "productId":  { "type": "string" }
-         }
+         },
          "required": [ "id", "title", "fileUrl", "productId" ]
       }
   - product: |
@@ -27,7 +27,7 @@ schemas:
            "description":  { "type": "string" },
            "imageUrl":  { "type": "string" },
            "region": { "type": "string" }
-         }
+         },
          "required": [ "id", "name", "region" ]
       }
 resourceTypes:
