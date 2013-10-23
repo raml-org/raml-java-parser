@@ -1,5 +1,7 @@
 package org.raml.parser.rule;
 
+import static org.raml.parser.visitor.IncludeResolver.IncludeScalarNode;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
@@ -37,7 +39,8 @@ public class SchemaRule extends SimpleRule
             }
             catch (IOException e)
             {
-                validationResults.add(ValidationResult.createErrorResult("invalid JSON schema: " + e.getMessage(), node.getStartMark(), node.getEndMark()));
+                String prefix = "invalid JSON schema" + getSourceErrorDetail(node);
+                validationResults.add(ValidationResult.createErrorResult(prefix + e.getMessage(), node.getStartMark(), node.getEndMark()));
             }
         }
         else if (mimeType.contains("xml"))
@@ -50,10 +53,25 @@ public class SchemaRule extends SimpleRule
             }
             catch (SAXException e)
             {
-                validationResults.add(ValidationResult.createErrorResult("invalid XML schema: " + e.getMessage(), node.getStartMark(), node.getEndMark()));
+                String prefix = "invalid XML schema" + getSourceErrorDetail(node);
+                validationResults.add(ValidationResult.createErrorResult(prefix + e.getMessage(), node.getStartMark(), node.getEndMark()));
             }
         }
         return validationResults;
+    }
+
+    private String getSourceErrorDetail(ScalarNode node)
+    {
+        String msg = "";
+        if (node instanceof IncludeScalarNode)
+        {
+            msg = " (" + ((IncludeScalarNode) node).getIncludeName() + ")";
+        }
+        else if (node.getValue().matches("\\w.*"))
+        {
+            msg = " (" + node.getValue() + ")";
+        }
+        return msg + ": ";
     }
 
     private String getGlobalSchemaIfDefined(String key)

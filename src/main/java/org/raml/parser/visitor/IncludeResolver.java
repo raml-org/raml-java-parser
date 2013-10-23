@@ -39,7 +39,7 @@ public class IncludeResolver
             else //scalar value
             {
                 String newValue = IOUtils.toString(inputStream);
-                includeNode = new ScalarNode(Tag.STR, newValue, node.getStartMark(), node.getEndMark(), node.getStyle());
+                includeNode = new IncludeScalarNode(resourceName, newValue, node);
             }
         }
         catch (IOException e)
@@ -61,5 +61,21 @@ public class IncludeResolver
             }
         }
         return includeNode;
+    }
+
+    public static class IncludeScalarNode extends ScalarNode
+    {
+        private String includeName;
+
+        public IncludeScalarNode(String includeName, String value, ScalarNode node)
+        {
+            super(Tag.STR, value, node.getStartMark(), node.getEndMark(), node.getStyle());
+            this.includeName = includeName;
+        }
+
+        public String getIncludeName()
+        {
+            return includeName;
+        }
     }
 }

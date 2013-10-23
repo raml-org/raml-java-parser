@@ -1,0 +1,27 @@
+#%RAML 0.8
+title: sample
+schemas:
+    - put-league: |
+        {
+            "title": "League Schema",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+
+resourceTypes:
+    - collection:
+        put:
+            body:
+                application/json:
+                    schema: put-<<resourcePathName>>
+
+/league:
+    type: collection

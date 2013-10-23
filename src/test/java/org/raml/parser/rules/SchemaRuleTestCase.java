@@ -26,6 +26,12 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void validJsonSchemaGlobalTemplate()
+    {
+       validateRamlNoErrors("org/raml/schema/valid-json-global-template.yaml");
+    }
+
+    @Test
     public void invalidJsonSchema()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-json.yaml");
@@ -39,6 +45,22 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
         List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-json-global.yaml");
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), containsString("invalid JSON schema"));
+    }
+
+    @Test
+    public void invalidJsonSchemaInclude()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-json-include.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), containsString("invalid JSON schema (org/raml/schema/invalid.json)"));
+    }
+
+    @Test
+    public void invalidJsonSchemaGlobalTemplate()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-json-global-template.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), containsString("invalid JSON schema (put-leagues)"));
     }
 
     @Test

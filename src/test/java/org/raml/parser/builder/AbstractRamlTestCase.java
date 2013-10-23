@@ -11,9 +11,13 @@ import org.raml.model.Raml;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 import org.raml.parser.visitor.RamlValidationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AbstractRamlTestCase
 {
+
+    protected static final Logger logger = LoggerFactory.getLogger(AbstractRamlTestCase.class);
 
     protected static Raml parseRaml(String resource)
     {
@@ -33,6 +37,15 @@ public class AbstractRamlTestCase
     protected static void validateRamlNoErrors(String resource)
     {
         List<ValidationResult> validationResults = validateRaml(resource);
+        if (!validationResults.isEmpty())
+        {
+            StringBuilder msg = new StringBuilder("Unexpected errors:\n ");
+            for (ValidationResult vr : validationResults)
+            {
+                msg.append("\t\t").append(vr.toString()).append("\n");
+            }
+            logger.error(msg.toString());
+        }
         assertTrue("Errors must be empty", validationResults.isEmpty());
     }
 
