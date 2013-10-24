@@ -1,7 +1,5 @@
 package org.raml.parser.visitor;
 
-import static org.raml.parser.visitor.IncludeResolver.INCLUDE_TAG;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +12,21 @@ import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class NodeVisitor
 {
 
     private NodeHandler nodeHandler;
     private ResourceLoader resourceLoader;
-    private IncludeResolver includeResolver = new IncludeResolver();
+    private TagResolver[] tagResolvers;
 
-    public NodeVisitor(NodeHandler nodeHandler, ResourceLoader resourceLoader)
+    public NodeVisitor(NodeHandler nodeHandler, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
         super();
         this.nodeHandler = nodeHandler;
         this.resourceLoader = resourceLoader;
+        this.tagResolvers = tagResolvers;
     }
 
     private void visitMappingNode(MappingNode mappingNode, TupleType tupleType)
@@ -60,28 +60,42 @@ public class NodeVisitor
                 throw new YAMLException("Only scalar keys are allowed: " + keyNode.getStartMark());
             }
             Node valueNode = nodeTuple.getValueNode();
-            String includeName = null;
-            if (valueNode.getTag().startsWith(INCLUDE_TAG))
+            Node originalValueNode = valueNode;
+            Tag tag = valueNode.getTag();
+            TagResolver tagResolver = getTagResolver(tag);
+            if (tagResolver != null)
             {
-                includeName = ((ScalarNode) valueNode).getValue();
-                valueNode = includeResolver.resolveInclude((ScalarNode) valueNode, resourceLoader, nodeHandler);
+                valueNode = tagResolver.resolve(valueNode, resourceLoader, nodeHandler);
                 nodeTuple = new NodeTuple(keyNode, valueNode);
             }
             updatedTuples.add(nodeTuple);
-            if (includeName != null)
+            if (tagResolver != null)
             {
-                nodeHandler.onIncludeStart(includeName);
+                nodeHandler.onCustomTagStart(tag, originalValueNode, nodeTuple);
             }
             nodeHandler.onTupleStart(nodeTuple);
             visit(keyNode, TupleType.KEY);
             visit(valueNode, TupleType.VALUE);
             nodeHandler.onTupleEnd(nodeTuple);
-            if (includeName != null)
+            if (tagResolver != null)
             {
-                nodeHandler.onIncludeEnd(includeName);
+                nodeHandler.onCustomTagEnd(tag, originalValueNode, nodeTuple);
             }
+
         }
         mappingNode.setValue(updatedTuples);
+    }
+
+    private TagResolver getTagResolver(Tag tag)
+    {
+        for (TagResolver resolver : tagResolvers)
+        {
+            if (resolver.handles(tag))
+            {
+                return resolver;
+            }
+        }
+        return null;
     }
 
     public void visitDocument(MappingNode node)

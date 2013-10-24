@@ -23,7 +23,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 
     public RamlDocumentBuilder(ResourceLoader resourceLoader)
     {
-        super(Raml.class, resourceLoader);
+        super(Raml.class, resourceLoader, new IncludeResolver());
     }
 
     @Override

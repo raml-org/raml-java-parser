@@ -3,23 +3,22 @@ package org.raml;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Raml;
+import org.raml.parser.builder.AbstractRamlTestCase;
+import org.raml.parser.visitor.RamlDocumentBuilder;
 import org.raml.parser.visitor.YamlDocumentBuilder;
 import org.yaml.snakeyaml.Yaml;
 
-public class EmitterTestCase
+public class EmitterTestCase extends AbstractRamlTestCase
 {
 
     @Test
     @Ignore //broken due to implicit maps
-    public void emitFullConfigFromRaml() throws Exception
+    public void emitFullConfigFromRaml()
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/full-config.yaml"));
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        Raml raml = ramlSpecBuilder.build(simpleTest);
+        Raml raml = parseRaml("org/raml/full-config.yaml");
 
         Yaml yaml = new Yaml();
         String dumpFromRaml = yaml.dump(raml);
@@ -27,30 +26,26 @@ public class EmitterTestCase
     }
 
     @Test
-    public void emitFullConfigFromAst() throws Exception
+    public void emitFullConfigFromAst()
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/full-config.yaml"));
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        Raml raml = ramlSpecBuilder.build(simpleTest);
-
-        String dumpFromAst = YamlDocumentBuilder.dumpFromAst(ramlSpecBuilder.getRootNode());
+        RamlDocumentBuilder builder = new RamlDocumentBuilder();
+        Raml raml = parseRaml("org/raml/full-config.yaml", builder);
+        String dumpFromAst = YamlDocumentBuilder.dumpFromAst(builder.getRootNode());
         verifyDump(raml, dumpFromAst);
     }
 
     @Test
-    public void emitConfigWithIncludesFromAst() throws Exception
+    public void emitConfigWithIncludesFromAst()
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/root-elements-includes.yaml"));
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        Raml raml = ramlSpecBuilder.build(simpleTest);
-
-        String dumpFromAst = YamlDocumentBuilder.dumpFromAst(ramlSpecBuilder.getRootNode());
+        RamlDocumentBuilder builder = new RamlDocumentBuilder();
+        Raml raml = parseRaml("org/raml/root-elements-includes.yaml", builder);
+        String dumpFromAst = YamlDocumentBuilder.dumpFromAst(builder.getRootNode());
         verifyDump(raml, dumpFromAst);
     }
 
     private void verifyDump(Raml source, String dump)
     {
-        YamlDocumentBuilder<Raml> verifier = new YamlDocumentBuilder<Raml>(Raml.class);
+        RamlDocumentBuilder verifier = new RamlDocumentBuilder();
         Raml target = verifier.build(dump);
 
         assertThat(source.getTitle(), is(target.getTitle()));

@@ -11,25 +11,33 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.Tag;
 
-public class IncludeResolver
+public class IncludeResolver implements TagResolver
 {
 
-    public static final String INCLUDE_TAG = "!include";
+    public static final Tag INCLUDE_TAG = new Tag("!include");
 
-    public Node resolveInclude(ScalarNode node, ResourceLoader resourceLoader, NodeHandler nodeHandler)
+    @Override
+    public boolean handles(Tag tag)
+    {
+        return INCLUDE_TAG.equals(tag);
+    }
+
+    @Override
+    public Node resolve(Node node, ResourceLoader resourceLoader, NodeHandler nodeHandler)
     {
         Node includeNode;
         InputStream inputStream = null;
         try
         {
-            String resourceName = node.getValue();
+            ScalarNode scalarNode = (ScalarNode) node;
+            String resourceName = scalarNode.getValue();
             inputStream = resourceLoader.fetchResource(resourceName);
 
 
             if (inputStream == null)
             {
-                nodeHandler.onIncludeResourceNotFound(node);
-                includeNode = new ScalarNode(Tag.STR, resourceName, node.getStartMark(), node.getEndMark(), node.getStyle());
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include can not be resolved " + resourceName);
+                includeNode = new ScalarNode(Tag.STR, resourceName, node.getStartMark(), node.getEndMark(), scalarNode.getStyle());
             }
             else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
             {
@@ -39,7 +47,7 @@ public class IncludeResolver
             else //scalar value
             {
                 String newValue = IOUtils.toString(inputStream);
-                includeNode = new IncludeScalarNode(resourceName, newValue, node);
+                includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
             }
         }
         catch (IOException e)

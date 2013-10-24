@@ -13,7 +13,6 @@ import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
-import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.yaml.snakeyaml.DumperOptions;
@@ -36,25 +35,21 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     private T documentObject;
     private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
     private Stack<Object> documentContext = new Stack<Object>();
-    private Stack<String> includeContext = new Stack<String>();
     private MappingNode rootNode;
     private ResourceLoader resourceLoader;
+    private TagResolver[] tagResolvers;
 
-    public YamlDocumentBuilder(Class<T> documentClass)
-    {
-        this(documentClass, new DefaultResourceLoader());
-    }
-
-    public YamlDocumentBuilder(Class<T> documentClass, ResourceLoader resourceLoader)
+    public YamlDocumentBuilder(Class<T> documentClass, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
         this.documentClass = documentClass;
         this.resourceLoader = resourceLoader;
+        this.tagResolvers = tagResolvers;
     }
 
     public T build(Reader content)
     {
         Yaml yamlParser = new Yaml();
-        NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader);
+        NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader, tagResolvers);
         rootNode = (MappingNode) yamlParser.compose(content);
         preBuildProcess();
         nodeVisitor.visitDocument(rootNode);
@@ -234,24 +229,21 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     }
 
     @Override
-    public void onIncludeResourceNotFound(ScalarNode node)
+    public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        throw new RuntimeException("resource not found: " + node.getValue());
     }
 
     @Override
-    public void onIncludeStart(String includeName)
+    public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        includeContext.push(includeName);
     }
 
     @Override
-    public void onIncludeEnd(String includeName)
+    public void onCustomTagError(Tag tag, Node node, String message)
     {
-        String include = includeContext.pop();
-        if (!include.equals(includeName))
+        if (IncludeResolver.INCLUDE_TAG.equals(tag))
         {
-            throw new IllegalStateException(String.format("include zombie! (actual: %s, expected: %s)", include, includeName));
+            throw new RuntimeException("resource not found: " + ((ScalarNode) node).getValue());
         }
     }
 

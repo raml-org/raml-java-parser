@@ -5,6 +5,7 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public interface NodeHandler
 {
@@ -31,9 +32,9 @@ public interface NodeHandler
 
     void onSequenceElementEnd(Node sequenceNode);
 
-    void onIncludeResourceNotFound(ScalarNode node);
+    void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple);
 
-    void onIncludeStart(String includeName);
+    void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple);
 
-    void onIncludeEnd(String includeName);
+    void onCustomTagError(Tag tag, Node node, String message);
 }

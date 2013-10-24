@@ -14,14 +14,9 @@ public class RamlValidationService extends YamlValidationService
 
     private RamlDocumentValidator validator;
 
-    public RamlValidationService(RamlDocumentValidator ramlDocumentValidator)
+    public RamlValidationService(ResourceLoader resourceLoader, RamlDocumentValidator ramlDocumentValidator, TagResolver... tagResolvers)
     {
-        this(new DefaultResourceLoader(), ramlDocumentValidator);
-    }
-
-    public RamlValidationService(ResourceLoader resourceLoader, RamlDocumentValidator ramlDocumentValidator)
-    {
-        super(resourceLoader, ramlDocumentValidator);
+        super(resourceLoader, tagResolvers, ramlDocumentValidator);
         validator = ramlDocumentValidator;
         validator.setResourceLoader(resourceLoader);
     }
@@ -36,16 +31,11 @@ public class RamlValidationService extends YamlValidationService
 
     public static RamlValidationService createDefault()
     {
-        return new RamlValidationService(new RamlDocumentValidator());
-    }
-
-    public static RamlValidationService createDefault(ResourceLoader loader)
-    {
-        return new RamlValidationService(loader, new RamlDocumentValidator());
+        return createDefault(new DefaultResourceLoader());
     }
 
     public static RamlValidationService createDefault(ResourceLoader loader, NodeRuleFactoryExtension... extensions)
     {
-        return new RamlValidationService(loader, new RamlDocumentValidator(new NodeRuleFactory(extensions)));
+        return new RamlValidationService(loader, new RamlDocumentValidator(new NodeRuleFactory(extensions)), new IncludeResolver());
     }
 }

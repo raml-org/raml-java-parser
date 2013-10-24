@@ -4,7 +4,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.Yaml;
@@ -21,18 +20,15 @@ public class YamlValidationService
     private YamlValidator[] yamlValidators;
     private ResourceLoader resourceLoader;
     private NodeHandler nodeHandler;
+    private TagResolver[] tagResolvers;
 
-    protected YamlValidationService(YamlValidator... yamlValidators)
-    {
-        this(new DefaultResourceLoader(), yamlValidators);
-    }
-
-    protected YamlValidationService(ResourceLoader resourceLoader, YamlValidator... yamlValidators)
+    protected YamlValidationService(ResourceLoader resourceLoader, TagResolver[] tagResolvers, YamlValidator... yamlValidators)
     {
         this.resourceLoader = resourceLoader;
         this.yamlValidators = yamlValidators;
         this.errorMessage = new ArrayList<ValidationResult>();
         this.nodeHandler = new CompositeHandler(yamlValidators);
+        this.tagResolvers = tagResolvers;
     }
 
     public List<ValidationResult> validate(String content)
@@ -41,7 +37,7 @@ public class YamlValidationService
 
         try
         {
-            NodeVisitor nodeVisitor = new NodeVisitor(nodeHandler, resourceLoader);
+            NodeVisitor nodeVisitor = new NodeVisitor(nodeHandler, resourceLoader, tagResolvers);
             Node root = yamlParser.compose(new StringReader(content));
             errorMessage.addAll(preValidation((MappingNode) root));
             if (errorMessage.isEmpty() && root.getNodeId() == NodeId.mapping)

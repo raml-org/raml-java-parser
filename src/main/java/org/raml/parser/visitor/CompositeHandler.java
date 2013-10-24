@@ -5,6 +5,7 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class CompositeHandler implements NodeHandler
 {
@@ -116,29 +117,28 @@ public class CompositeHandler implements NodeHandler
     }
 
     @Override
-    public void onIncludeResourceNotFound(ScalarNode node)
+    public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
         for (NodeHandler nh : nodeHandlers)
         {
-            nh.onIncludeResourceNotFound(node);
+            nh.onCustomTagStart(tag, originalValueNode, nodeTuple);
         }
     }
 
     @Override
-    public void onIncludeStart(String includeName)
+    public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
         for (NodeHandler nh : nodeHandlers)
         {
-            nh.onIncludeStart(includeName);
-        }
-    }
+            nh.onCustomTagEnd(tag, originalValueNode, nodeTuple);
+        }    }
 
     @Override
-    public void onIncludeEnd(String includeName)
+    public void onCustomTagError(Tag tag, Node node, String message)
     {
         for (NodeHandler nh : nodeHandlers)
         {
-            nh.onIncludeEnd(includeName);
+            nh.onCustomTagError(tag, node, message);
         }
     }
 

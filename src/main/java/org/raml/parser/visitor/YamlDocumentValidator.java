@@ -1,5 +1,7 @@
 package org.raml.parser.visitor;
 
+import static org.raml.parser.visitor.IncludeResolver.INCLUDE_TAG;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class YamlDocumentValidator implements YamlValidator
 {
@@ -177,25 +180,32 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onIncludeStart(String includeName)
+    public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        includeContext.push(includeName);
-    }
-
-    @Override
-    public void onIncludeEnd(String includeName)
-    {
-        String include = includeContext.pop();
-        if (!include.equals(includeName))
+        if (INCLUDE_TAG.equals(tag))
         {
-            throw new IllegalStateException(String.format("include zombie! (actual: %s, expected: %s)", include, includeName));
+            includeContext.push(((ScalarNode) originalValueNode).getValue());
         }
     }
 
     @Override
-    public void onIncludeResourceNotFound(ScalarNode node)
+    public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        addMessagesIfRequired(node, Arrays.asList(ValidationResult.createErrorResult("Include can not be resolved " + node.getValue(), node.getStartMark(), node.getEndMark())));
+        if (INCLUDE_TAG.equals(tag))
+        {
+            String actualInclude = includeContext.pop();
+            String expectedInclude = ((ScalarNode) originalValueNode).getValue();
+            if (!actualInclude.equals(expectedInclude))
+            {
+                throw new IllegalStateException(String.format("actualInclude zombie! (actual: %s, expected: %s)", actualInclude, expectedInclude));
+            }
+        }
+    }
+
+    @Override
+    public void onCustomTagError(Tag tag, Node node, String message)
+    {
+        addMessagesIfRequired(node, Arrays.asList(ValidationResult.createErrorResult(message, node.getStartMark(), node.getEndMark())));
     }
 
 

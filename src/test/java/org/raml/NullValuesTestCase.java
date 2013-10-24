@@ -2,26 +2,23 @@ package org.raml;
 
 import static junit.framework.Assert.assertNotNull;
 
-import org.apache.commons.io.IOUtils;
+import java.util.Map;
+
 import org.junit.Test;
 import org.raml.model.ActionType;
+import org.raml.model.MimeType;
 import org.raml.model.Raml;
-import org.raml.parser.visitor.YamlDocumentBuilder;
+import org.raml.parser.builder.AbstractRamlTestCase;
 
-public class NullValuesTestCase
+public class NullValuesTestCase extends AbstractRamlTestCase
 {
 
     @Test
     public void nullValues() throws Exception
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(
-                "org/raml/null-elements.yaml"));
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        Raml raml = ramlSpecBuilder.build(simpleTest);
-        assertNotNull(raml.getResources().get("/leagues").getAction(ActionType.GET).getResponses().get("200").getBody()
-                              .get("text/xml"));
-        assertNotNull(raml.getResources().get("/leagues").getAction(ActionType.GET).getResponses().get("200").getBody()
-                              .get("application/json"));
-
+        Raml raml = parseRaml("org/raml/null-elements.yaml");
+        Map<String, MimeType> body = raml.getResources().get("/leagues").getAction(ActionType.GET).getResponses().get("200").getBody();
+        assertNotNull(body.get("text/xml"));
+        assertNotNull(body.get("application/json"));
     }
 }

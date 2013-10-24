@@ -3,23 +3,19 @@ package org.raml.parser.builder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Test;
 import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
-import org.raml.parser.visitor.YamlDocumentBuilder;
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
 
-public class MinimalConfigTestCase
+public class MinimalConfigTestCase extends AbstractRamlTestCase
 {
 
     @Test
-    public void basicConfig() throws Exception
+    public void basicConfig()
     {
-        String simpleTest = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/root-elements.yaml"));
-        YamlDocumentBuilder<Raml> ramlSpecBuilder = new YamlDocumentBuilder<Raml>(Raml.class);
-        Raml raml = ramlSpecBuilder.build(simpleTest);
+        Raml raml = parseRaml("org/raml/root-elements.yaml");
 
         assertThat(raml.getTitle(), is("Sample API"));
         assertThat(raml.getVersion(), is("v1"));

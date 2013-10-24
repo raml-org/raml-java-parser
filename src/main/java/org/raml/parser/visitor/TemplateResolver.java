@@ -87,11 +87,11 @@ public class TemplateResolver
                 Node templateSequence = rootTuple.getValueNode();
                 if (templateSequence.getNodeId() == NodeId.scalar)
                 {
-                    if (!templateSequence.getTag().startsWith(INCLUDE_TAG))
+                    if (!templateSequence.getTag().equals(INCLUDE_TAG))
                     {
                         validationResults.add(ValidationResult.createErrorResult("Sequence or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
                     }
-                    templateSequence = includeResolver.resolveInclude((ScalarNode) templateSequence, resourceLoader, nodeNandler);
+                    templateSequence = includeResolver.resolve(templateSequence, resourceLoader, nodeNandler);
                     rootNode.getValue().remove(i);
                     rootNode.getValue().add(i, new NodeTuple(rootTuple.getKeyNode(), templateSequence));
                 }
@@ -110,11 +110,11 @@ public class TemplateResolver
             Node template = templateSequence.getValue().get(j);
             if (template.getNodeId() == NodeId.scalar)
             {
-                if (!template.getTag().startsWith(INCLUDE_TAG))
+                if (!template.getTag().equals(INCLUDE_TAG))
                 {
                     validationResults.add(ValidationResult.createErrorResult("Mapping or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
                 }
-                template = includeResolver.resolveInclude((ScalarNode) template, resourceLoader, nodeNandler);
+                template = includeResolver.resolve(template, resourceLoader, nodeNandler);
             }
             for (NodeTuple tuple : ((MappingNode) template).getValue())
             {
@@ -209,9 +209,9 @@ public class TemplateResolver
                     {
                         actionNode = setTupleValueToEmptyMappingNode(resourceTuple);
                     }
-                    else if (actionNode.getTag().startsWith(INCLUDE_TAG))
+                    else if (actionNode.getTag().equals(INCLUDE_TAG))
                     {
-                        actionNode = includeResolver.resolveInclude((ScalarNode) actionNode, resourceLoader, nodeNandler);
+                        actionNode = includeResolver.resolve(actionNode, resourceLoader, nodeNandler);
                         resourceNode.getValue().remove(i);
                         resourceNode.getValue().add(i, new NodeTuple(resourceTuple.getKeyNode(), actionNode));
                     }
