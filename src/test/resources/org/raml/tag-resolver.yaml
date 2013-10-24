@@ -4,4 +4,7 @@ title: !custom Sample API
 version: v1
 baseUri: https://api.sample.com/
 /media:
-    displayName: Media
+    put:
+        body:
+            application/json:
+                schema: !custom to-be-processed-into-valid-schema

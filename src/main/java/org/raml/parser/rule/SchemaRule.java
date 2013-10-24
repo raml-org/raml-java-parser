@@ -14,6 +14,7 @@ import javax.xml.validation.SchemaFactory;
 import org.eel.kitchen.jsonschema.util.JsonLoader;
 import org.xml.sax.SAXException;
 import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class SchemaRule extends SimpleRule
 {
@@ -30,7 +31,7 @@ public class SchemaRule extends SimpleRule
         List<ValidationResult> validationResults = super.validateValue(node);
 
         String mimeType = ((ScalarNode) getParentTupleRule().getKey()).getValue();
-        if (mimeType.contains("json"))
+        if (mimeType.contains("json") && Tag.STR.equals(node.getTag()))
         {
             try
             {
@@ -43,7 +44,7 @@ public class SchemaRule extends SimpleRule
                 validationResults.add(ValidationResult.createErrorResult(prefix + e.getMessage(), node.getStartMark(), node.getEndMark()));
             }
         }
-        else if (mimeType.contains("xml"))
+        else if (mimeType.contains("xml") && Tag.STR.equals(node.getTag()))
         {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             try
