@@ -21,9 +21,18 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         this(new DefaultResourceLoader());
     }
 
-    public RamlDocumentBuilder(ResourceLoader resourceLoader)
+    public RamlDocumentBuilder(ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
-        super(Raml.class, resourceLoader, new IncludeResolver());
+        super(Raml.class, resourceLoader, defaultResolver(tagResolvers));
+    }
+
+    private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
+    {
+        if (tagResolvers.length == 0)
+        {
+            tagResolvers = new TagResolver[] {new IncludeResolver()};
+        }
+        return tagResolvers;
     }
 
     @Override
