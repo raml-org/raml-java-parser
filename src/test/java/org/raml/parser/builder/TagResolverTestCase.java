@@ -1,6 +1,7 @@
 package org.raml.parser.builder;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.PUT;
 
@@ -27,6 +28,13 @@ public class TagResolverTestCase extends AbstractRamlTestCase
         Raml raml = parseRaml(RAML, builder);
         assertThat(raml.getTitle(), is("custom tag resolved"));
         assertThat(raml.getResources().get("/media").getAction(PUT).getBody().get("application/json").getSchema(), is("custom tag resolved"));
+    }
+
+    @Test
+    public void include()
+    {
+        Raml raml = parseRaml(RAML);
+        assertThat(raml.getResources().get("/file").getAction(PUT).getBody().get("application/json").getSchema(), containsString("file-json"));
     }
 
     @Test

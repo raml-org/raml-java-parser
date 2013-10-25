@@ -28,11 +28,14 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 
     private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
     {
-        if (tagResolvers.length == 0)
+        TagResolver[] resolvers = new TagResolver[tagResolvers.length + 1];
+        resolvers[0] = new IncludeResolver();
+        int i = 1;
+        for (TagResolver resolver : tagResolvers)
         {
-            tagResolvers = new TagResolver[] {new IncludeResolver()};
+            resolvers[i++] = resolver;
         }
-        return tagResolvers;
+        return resolvers;
     }
 
     @Override

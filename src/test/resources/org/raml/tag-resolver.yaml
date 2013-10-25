@@ -3,8 +3,18 @@
 title: !custom Sample API
 version: v1
 baseUri: https://api.sample.com/
+
+schemas:
+    - file-json: !include org/raml/parser/rules/element.json
+
 /media:
     put:
         body:
             application/json:
                 schema: !custom to-be-processed-into-valid-schema
+
+/file:
+    put:
+        body:
+            application/json:
+                schema: file-json
