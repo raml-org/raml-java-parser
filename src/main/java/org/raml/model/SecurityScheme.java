@@ -1,6 +1,7 @@
 package org.raml.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.raml.parser.annotation.Mapping;
@@ -19,7 +20,7 @@ public class SecurityScheme
     private SecuritySchemeDescriptor describedBy;
 
     @Mapping
-    private Map<String, String> settings = new HashMap<String, String>();
+    private Map<String, List<String>> settings = new HashMap<String, List<String>>();
 
     public String getDescription()
     {
@@ -51,12 +52,12 @@ public class SecurityScheme
         this.describedBy = describedBy;
     }
 
-    public Map<String, String> getSettings()
+    public Map<String, List<String>> getSettings()
     {
         return settings;
     }
 
-    public void setSettings(Map<String, String> settings)
+    public void setSettings(Map<String, List<String>> settings)
     {
         this.settings = settings;
     }

@@ -33,7 +33,8 @@ securitySchemes:
         settings:
           authorizationUrl: https://www.dropbox.com/1/oauth2/authorize
           accessTokenUrl: https://api.dropbox.com/1/oauth2/token
-          authorizationGrants: 'code, token'
+          authorizationGrants: [code, token]
+          scopes: [ 'https://www.google.com/m8/feeds' ]
     - oauth_1_0:
         description: |
             OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
