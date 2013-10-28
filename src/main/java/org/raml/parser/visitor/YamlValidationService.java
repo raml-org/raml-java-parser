@@ -17,17 +17,15 @@ public class YamlValidationService
 {
 
     private List<ValidationResult> errorMessage;
-    private YamlValidator[] yamlValidators;
+    private YamlValidator yamlValidator;
     private ResourceLoader resourceLoader;
-    private NodeHandler nodeHandler;
     private TagResolver[] tagResolvers;
 
-    protected YamlValidationService(ResourceLoader resourceLoader, TagResolver[] tagResolvers, YamlValidator... yamlValidators)
+    protected YamlValidationService(ResourceLoader resourceLoader, YamlValidator yamlValidator, TagResolver[] tagResolvers)
     {
         this.resourceLoader = resourceLoader;
-        this.yamlValidators = yamlValidators;
+        this.yamlValidator = yamlValidator;
         this.errorMessage = new ArrayList<ValidationResult>();
-        this.nodeHandler = new CompositeHandler(yamlValidators);
         this.tagResolvers = tagResolvers;
     }
 
@@ -37,7 +35,7 @@ public class YamlValidationService
 
         try
         {
-            NodeVisitor nodeVisitor = new NodeVisitor(nodeHandler, resourceLoader, tagResolvers);
+            NodeVisitor nodeVisitor = new NodeVisitor(yamlValidator, resourceLoader, tagResolvers);
             Node root = yamlParser.compose(new StringReader(content));
             errorMessage.addAll(preValidation((MappingNode) root));
             if (errorMessage.isEmpty() && root.getNodeId() == NodeId.mapping)
@@ -54,10 +52,7 @@ public class YamlValidationService
             errorMessage.add(ValidationResult.createErrorResult(ex.getMessage()));
         }
 
-        for (YamlValidator yamlValidator : yamlValidators)
-        {
-            errorMessage.addAll(yamlValidator.getMessages());
-        }
+        errorMessage.addAll(yamlValidator.getMessages());
         return errorMessage;
     }
 

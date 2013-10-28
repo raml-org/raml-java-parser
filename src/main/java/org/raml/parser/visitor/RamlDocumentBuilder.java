@@ -29,12 +29,8 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
     {
         TagResolver[] resolvers = new TagResolver[tagResolvers.length + 1];
+        System.arraycopy(tagResolvers, 0, resolvers, 1, tagResolvers.length);
         resolvers[0] = new IncludeResolver();
-        int i = 1;
-        for (TagResolver resolver : tagResolvers)
-        {
-            resolvers[i++] = resolver;
-        }
         return resolvers;
     }
 
