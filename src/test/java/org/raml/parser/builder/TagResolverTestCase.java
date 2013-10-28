@@ -11,7 +11,7 @@ import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.visitor.NodeHandler;
 import org.raml.parser.visitor.RamlDocumentBuilder;
-import org.raml.parser.visitor.TagResolver;
+import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.Tag;

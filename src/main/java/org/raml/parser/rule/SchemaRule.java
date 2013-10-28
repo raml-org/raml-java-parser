@@ -1,6 +1,6 @@
 package org.raml.parser.rule;
 
-import static org.raml.parser.visitor.IncludeResolver.IncludeScalarNode;
+import static org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
 
 import java.io.IOException;
 import java.io.StringReader;

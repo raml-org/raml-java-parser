@@ -2,11 +2,16 @@ package org.raml.parser.visitor;
 
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.NodeRuleFactory;
-import org.raml.parser.rule.NodeRuleFactoryExtension;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.IncludeResolver;
+import org.raml.parser.tagresolver.JacksonTagResolver;
+import org.raml.parser.tagresolver.JaxbTagResolver;
+import org.raml.parser.tagresolver.PojoValidatorTagResolver;
+import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.nodes.MappingNode;
 
 public class RamlValidationService extends YamlValidationService
@@ -23,10 +28,11 @@ public class RamlValidationService extends YamlValidationService
 
     private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
     {
-        TagResolver[] resolvers = new TagResolver[tagResolvers.length + 1];
-        System.arraycopy(tagResolvers, 0, resolvers, 1, tagResolvers.length);
-        resolvers[0] = new IncludeResolver();
-        return resolvers;
+        TagResolver[] defaultResolvers = new TagResolver[] {
+                new IncludeResolver(),
+                new PojoValidatorTagResolver()
+        };
+        return (TagResolver[]) ArrayUtils.addAll(defaultResolvers, tagResolvers);
     }
 
     @Override
@@ -42,9 +48,9 @@ public class RamlValidationService extends YamlValidationService
         return createDefault(new DefaultResourceLoader());
     }
 
-    public static RamlValidationService createDefault(ResourceLoader loader, NodeRuleFactoryExtension... extensions)
+    public static RamlValidationService createDefault(ResourceLoader loader, TagResolver... tagResolvers)
     {
-        return createDefault(loader, new NodeRuleFactory(extensions));
+        return createDefault(loader, new NodeRuleFactory(), tagResolvers);
     }
 
     public static RamlValidationService createDefault(ResourceLoader loader, NodeRuleFactory nodeRuleFactory, TagResolver... tagResolvers)

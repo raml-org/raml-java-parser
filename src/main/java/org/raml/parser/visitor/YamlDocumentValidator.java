@@ -1,6 +1,6 @@
 package org.raml.parser.visitor;
 
-import static org.raml.parser.visitor.IncludeResolver.INCLUDE_TAG;
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;

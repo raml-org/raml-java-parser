@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -101,7 +102,7 @@ public class NodeVisitor
     public void visitDocument(MappingNode node)
     {
         nodeHandler.onDocumentStart(node);
-        if (node instanceof MappingNode)
+        if (node != null)
         {
             doVisitMappingNode(node);
         }

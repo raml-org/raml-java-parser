@@ -3,11 +3,16 @@ package org.raml.parser.visitor;
 import java.lang.reflect.Field;
 import java.util.Stack;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.tagresolver.IncludeResolver;
+import org.raml.parser.tagresolver.JacksonTagResolver;
+import org.raml.parser.tagresolver.JaxbTagResolver;
+import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.nodes.MappingNode;
 
 public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
@@ -28,10 +33,12 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 
     private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
     {
-        TagResolver[] resolvers = new TagResolver[tagResolvers.length + 1];
-        System.arraycopy(tagResolvers, 0, resolvers, 1, tagResolvers.length);
-        resolvers[0] = new IncludeResolver();
-        return resolvers;
+        TagResolver[] defaultResolvers = new TagResolver[] {
+                new IncludeResolver(),
+                new JacksonTagResolver(),
+                new JaxbTagResolver()
+        };
+        return (TagResolver[]) ArrayUtils.addAll(defaultResolvers, tagResolvers);
     }
 
     @Override

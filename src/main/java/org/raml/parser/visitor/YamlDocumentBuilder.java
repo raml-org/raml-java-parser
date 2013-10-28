@@ -15,6 +15,8 @@ import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
+import org.raml.parser.tagresolver.IncludeResolver;
+import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.emitter.Emitter;

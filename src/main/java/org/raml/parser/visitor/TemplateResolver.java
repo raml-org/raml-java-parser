@@ -1,6 +1,6 @@
 package org.raml.parser.visitor;
 
-import static org.raml.parser.visitor.IncludeResolver.INCLUDE_TAG;
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 import java.lang.reflect.Field;
@@ -19,6 +19,7 @@ import org.raml.model.ActionType;
 import org.raml.model.Resource;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.utils.Inflector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
