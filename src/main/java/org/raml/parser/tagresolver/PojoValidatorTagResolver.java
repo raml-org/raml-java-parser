@@ -30,6 +30,11 @@ public class PojoValidatorTagResolver implements TagResolver
         {
             Thread.currentThread().getContextClassLoader().loadClass(className);
         }
+        //error thrown when class name differ in case
+        catch (NoClassDefFoundError e)
+        {
+            nodeHandler.onCustomTagError(node.getTag(), node, "Class not found " + className);
+        }
         catch (ClassNotFoundException e)
         {
             nodeHandler.onCustomTagError(node.getTag(), node, "Class not found " + className);
