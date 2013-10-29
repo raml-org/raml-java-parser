@@ -16,6 +16,11 @@ resourceTypes:
             plural <<resourcePathName | !singularize | !pluralize>>
     - includeType:
         description: !include org/raml/types/<<resourcePathName>>-description.txt
+    - camelize:
+        description: >-
+            single <<single | !camelize >>,
+            double <<double | !camelize >>,
+            treble <<treble | !camelize >>
 
 /users:
     type: collection
@@ -23,3 +28,5 @@ resourceTypes:
     type: {base: {p1: octopus, p2: feet, p3: dress, p4: stresses}}
 /include:
     type: includeType
+/camelize:
+    type: {camelize: {single: user, double: user-name, treble: user-name-type}}

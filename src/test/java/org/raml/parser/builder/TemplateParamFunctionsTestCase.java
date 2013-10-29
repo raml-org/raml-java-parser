@@ -43,6 +43,12 @@ public class TemplateParamFunctionsTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void camelize()
+    {
+        assertThat(raml.getResources().get("/camelize").getDescription(), is("single User, double UserName, treble UserNameType"));
+    }
+
+    @Test
     public void validate()
     {
         validateRamlNoErrors(ramlSource);

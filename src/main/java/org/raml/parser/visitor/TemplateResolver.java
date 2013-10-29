@@ -4,6 +4,7 @@ import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -491,17 +492,22 @@ public class TemplateResolver
             String[] tokens = match.substring(2, match.length() - 2).split("\\|");
             for (String token : tokens)
             {
-                if (parameters.containsKey(token.trim()))
+                token = token.trim();
+                if (parameters.containsKey(token))
                 {
-                    result = parameters.get(token.trim());
+                    result = parameters.get(token);
                 }
-                else if ("!singularize".equals(token.trim()))
+                else if (token.startsWith("!"))
                 {
-                    result = Inflector.singularize(result);
-                }
-                else if ("!pluralize".equals(token.trim()))
-                {
-                    result = Inflector.pluralize(result);
+                    try
+                    {
+                        Method method = Inflector.class.getMethod(token.substring(1), String.class);
+                        result = (String) method.invoke(null, result);
+                    }
+                    catch (Exception e)
+                    {
+                        addError("Invalid parameter function: " + token);
+                    }
                 }
                 else
                 {

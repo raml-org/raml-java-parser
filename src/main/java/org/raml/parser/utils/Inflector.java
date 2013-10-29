@@ -91,17 +91,17 @@ public class Inflector
         uncountables = Arrays.asList("equipment", "information", "rice", "money", "species", "series", "fish", "sheep");
     }
 
-    public static void addPlural(String rule, String replacement)
+    private static void addPlural(String rule, String replacement)
     {
         plurals.add(0, new String[] {rule, replacement});
     }
 
-    public static void addSingular(String rule, String replacement)
+    private static void addSingular(String rule, String replacement)
     {
         singulars.add(0, new String[] {rule, replacement});
     }
 
-    public static void addIrregular(String rule, String replacement)
+    private static void addIrregular(String rule, String replacement)
     {
         irregulars.add(new String[] {rule, replacement});
     }
@@ -115,7 +115,7 @@ public class Inflector
      * @param replacement
      * @return Replaces a found pattern in a word and returns a transformed word. Null is pattern does not match.
      */
-    public static String gsub(String word, String rule, String replacement)
+    private static String gsub(String word, String rule, String replacement)
     {
         Pattern pattern = Pattern.compile(rule, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(word);
@@ -187,12 +187,12 @@ public class Inflector
      * @param camelCase any CamelCase phrase.
      * @return pluralized version of underscored CamelCase.
      */
-    public static String tableize(String camelCase)
+    private static String tableize(String camelCase)
     {
         return pluralize(underscore(camelCase));
     }
 
-    public static String underscore(String camel)
+    private static String underscore(String camel)
     {
 
         List<Integer> upper = new ArrayList<Integer>();
@@ -221,28 +221,28 @@ public class Inflector
 
 
     /**
-     * Generates a camel case version of a phrase from underscore.
+     * Generates a camel case version of a phrase from dash.
      *
-     * @param underscore underscore version of a word to converted to camel case.
-     * @return camel case version of underscore.
+     * @param dash dash version of a word to converted to camel case.
+     * @return camel case version of dash.
      */
-    public static String camelize(String underscore)
+    public static String camelize(String dash)
     {
-        return camelize(underscore, true);
+        return camelize(dash, true);
     }
 
 
     /**
-     * Generates a camel case version of a phrase from underscore.
+     * Generates a camel case version of a phrase from dash.
      *
-     * @param underscore          underscore version of a word to converted to camel case.
+     * @param dash          dash version of a word to converted to camel case.
      * @param capitalizeFirstChar set to true if first character needs to be capitalized, false if not.
-     * @return camel case version of underscore.
+     * @return camel case version of dash.
      */
-    public static String camelize(String underscore, boolean capitalizeFirstChar)
+    private static String camelize(String dash, boolean capitalizeFirstChar)
     {
         String result = "";
-        StringTokenizer st = new StringTokenizer(underscore, "_");
+        StringTokenizer st = new StringTokenizer(dash, "-");
         while (st.hasMoreTokens())
         {
             result += capitalize(st.nextToken());
@@ -262,12 +262,12 @@ public class Inflector
     }
 
 
-    public static String shortName(String className)
+    private static String shortName(String className)
     {
         return className.substring(className.lastIndexOf('.') + 1);
     }
 
-    public static String getIdName(String tableName)
+    private static String getIdName(String tableName)
     {
         String idName = Inflector.singularize(tableName) + "_id";
         return idName.toLowerCase();
@@ -283,7 +283,7 @@ public class Inflector
      * @param target this is a potential "join" table name.
      * @return a name of "another" table from a join table name.
      */
-    public static String getOtherName(String source, String target)
+    private static String getOtherName(String source, String target)
     {
 
         String other;
