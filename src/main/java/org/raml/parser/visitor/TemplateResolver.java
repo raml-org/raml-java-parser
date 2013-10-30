@@ -2,6 +2,8 @@ package org.raml.parser.visitor;
 
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
+import static org.yaml.snakeyaml.nodes.NodeId.scalar;
+import static org.yaml.snakeyaml.nodes.NodeId.sequence;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -26,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
@@ -87,17 +88,22 @@ public class TemplateResolver
             if (key.equals("resourceTypes") || key.equals("traits"))
             {
                 Node templateSequence = rootTuple.getValueNode();
-                if (templateSequence.getNodeId() == NodeId.scalar)
+                if (templateSequence.getNodeId() == scalar)
                 {
                     if (!templateSequence.getTag().equals(INCLUDE_TAG))
                     {
                         validationResults.add(ValidationResult.createErrorResult("Sequence or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                        break;
                     }
                     templateSequence = includeResolver.resolve(templateSequence, resourceLoader, nodeNandler);
                     rootNode.getValue().remove(i);
                     rootNode.getValue().add(i, new NodeTuple(rootTuple.getKeyNode(), templateSequence));
                 }
-
+                if (templateSequence.getNodeId() != sequence)
+                {
+                    validationResults.add(ValidationResult.createErrorResult("Sequence expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                    break;
+                }
                 loopTemplateSequence((SequenceNode) templateSequence, key, validationResults);
             }
         }
@@ -110,7 +116,7 @@ public class TemplateResolver
         for (int j = 0; j < templateSequence.getValue().size(); j++)
         {
             Node template = templateSequence.getValue().get(j);
-            if (template.getNodeId() == NodeId.scalar)
+            if (template.getNodeId() == scalar)
             {
                 if (!template.getTag().equals(INCLUDE_TAG))
                 {
@@ -285,11 +291,11 @@ public class TemplateResolver
 
         private void removeParametersFromTraitsCall(NodeTuple traitsNodeTuple)
         {
-            if (traitsNodeTuple.getValueNode().getNodeId() == NodeId.sequence)
+            if (traitsNodeTuple.getValueNode().getNodeId() == sequence)
             {
                 for (Node traitNode : ((SequenceNode) traitsNodeTuple.getValueNode()).getValue())
                 {
-                    if (traitNode.getNodeId() == NodeId.mapping)
+                    if (traitNode.getNodeId() == mapping)
                     {
                         removeParametersFromTemplateCall(((MappingNode) traitNode).getValue().get(0));
                     }
@@ -299,7 +305,7 @@ public class TemplateResolver
 
         private void removeParametersFromTemplateCall(NodeTuple typeNodeTuple)
         {
-            if (typeNodeTuple.getValueNode().getNodeId() == NodeId.mapping)
+            if (typeNodeTuple.getValueNode().getNodeId() == mapping)
             {
                 NodeTuple typeParamTuple = ((MappingNode) typeNodeTuple.getValueNode()).getValue().get(0);
                 try
@@ -389,7 +395,7 @@ public class TemplateResolver
 
         private Map<String, String> getTemplateParameters(Node node, Map<String, String> parameters)
         {
-            if (node.getNodeId() == NodeId.mapping)
+            if (node.getNodeId() == mapping)
             {
                 List<NodeTuple> tuples = ((MappingNode) node).getValue();
                 Node params = tuples.get(0).getValueNode();
@@ -445,15 +451,15 @@ public class TemplateResolver
 
         private Node cloneNode(Node valueNode, Map<String, String> parameters)
         {
-            if (valueNode.getNodeId() == NodeId.mapping)
+            if (valueNode.getNodeId() == mapping)
             {
                 return cloneMappingNode((MappingNode) valueNode, parameters);
             }
-            else if (valueNode.getNodeId() == NodeId.sequence)
+            else if (valueNode.getNodeId() == sequence)
             {
                 return cloneSequenceNode((SequenceNode) valueNode, parameters);
             }
-            else if (valueNode.getNodeId() == NodeId.scalar)
+            else if (valueNode.getNodeId() == scalar)
             {
                 return cloneScalarNode((ScalarNode) valueNode, parameters);
             }
