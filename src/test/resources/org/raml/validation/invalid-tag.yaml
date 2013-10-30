@@ -1,0 +1,4 @@
+#%RAML 0.8
+title: test
+schemas:
+    - weird: !import even-more-weird

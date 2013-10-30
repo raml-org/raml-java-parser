@@ -10,7 +10,7 @@ schemas:
 /media:
     put:
         body:
-            application/json:
+            application/raml:
                 schema: !custom to-be-processed-into-valid-schema
 
 /file:

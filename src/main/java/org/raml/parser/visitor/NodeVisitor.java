@@ -1,5 +1,7 @@
 package org.raml.parser.visitor;
 
+import static org.raml.parser.utils.NodeUtils.isStandardTag;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class NodeVisitor
 
     private class MappingNodeMerger extends SafeConstructor
     {
+
         void merge(MappingNode mappingNode)
         {
             flattenMapping(mappingNode);
@@ -68,6 +71,10 @@ public class NodeVisitor
             {
                 valueNode = tagResolver.resolve(valueNode, resourceLoader, nodeHandler);
                 nodeTuple = new NodeTuple(keyNode, valueNode);
+            }
+            else if (!isStandardTag(tag))
+            {
+                nodeHandler.onCustomTagError(tag, valueNode, "Unknown tag " + tag);
             }
             updatedTuples.add(nodeTuple);
             if (tagResolver != null)

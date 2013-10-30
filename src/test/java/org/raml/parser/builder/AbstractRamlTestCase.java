@@ -31,7 +31,7 @@ public class AbstractRamlTestCase
 
     protected static List<ValidationResult> validateRaml(String resource)
     {
-        return RamlValidationService.createDefault().validate(getString(resource));
+        return RamlValidationService.createDefault().validate(getResourceAsString(resource));
     }
 
     protected static void validateRamlNoErrors(String resource)
@@ -49,7 +49,7 @@ public class AbstractRamlTestCase
         assertTrue("Errors must be empty", validationResults.isEmpty());
     }
 
-    private static String getString(String resource)
+    public static String getResourceAsString(String resource)
     {
         try
         {

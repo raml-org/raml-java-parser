@@ -19,4 +19,13 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("Sequence expected"));
     }
+
+    @Test
+    public void invalidCustomTag()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/invalid-tag.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Unknown tag !import"));
+    }
+
 }
