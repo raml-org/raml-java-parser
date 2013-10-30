@@ -1,5 +1,7 @@
 package org.raml.parser.visitor;
 
+import static java.lang.System.currentTimeMillis;
+
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,8 @@ import java.util.List;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.TagResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 import org.yaml.snakeyaml.error.YAMLException;
@@ -16,6 +20,7 @@ import org.yaml.snakeyaml.nodes.NodeId;
 
 public class YamlValidationService
 {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<ValidationResult> errorMessage;
     private YamlValidator yamlValidator;
@@ -32,6 +37,8 @@ public class YamlValidationService
 
     public List<ValidationResult> validate(String content)
     {
+        long startTime = currentTimeMillis();
+
         Yaml yamlParser = new Yaml();
 
         try
@@ -54,6 +61,12 @@ public class YamlValidationService
         }
 
         errorMessage.addAll(yamlValidator.getMessages());
+
+        if (logger.isDebugEnabled())
+        {
+            logger.debug("validation time: " + (currentTimeMillis() - startTime) + "ms.");
+        }
+
         return errorMessage;
     }
 

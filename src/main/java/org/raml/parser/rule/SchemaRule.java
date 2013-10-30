@@ -1,6 +1,7 @@
 package org.raml.parser.rule;
 
 import static org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
+import static org.yaml.snakeyaml.nodes.Tag.STR;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -31,12 +32,15 @@ public class SchemaRule extends SimpleRule
         List<ValidationResult> validationResults = super.validateValue(node);
 
         String mimeType = ((ScalarNode) getParentTupleRule().getKey()).getValue();
-        if (mimeType.contains("json") && Tag.STR.equals(node.getTag()))
+        if (mimeType.contains("json") && STR.equals(node.getTag()))
         {
             try
             {
                 value = getGlobalSchemaIfDefined(value);
-                JsonLoader.fromString(value);
+                if (value != null)
+                {
+                    JsonLoader.fromString(value);
+                }
             }
             catch (IOException e)
             {
@@ -44,13 +48,16 @@ public class SchemaRule extends SimpleRule
                 validationResults.add(ValidationResult.createErrorResult(prefix + e.getMessage(), node.getStartMark(), node.getEndMark()));
             }
         }
-        else if (mimeType.contains("xml") && Tag.STR.equals(node.getTag()))
+        else if (mimeType.contains("xml") && STR.equals(node.getTag()))
         {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             try
             {
                 value = getGlobalSchemaIfDefined(value);
-                factory.newSchema(new StreamSource(new StringReader(value)));
+                if (value != null)
+                {
+                    factory.newSchema(new StreamSource(new StringReader(value)));
+                }
             }
             catch (SAXException e)
             {
@@ -77,8 +84,19 @@ public class SchemaRule extends SimpleRule
 
     private String getGlobalSchemaIfDefined(String key)
     {
-        String globalSchema = getGlobalSchemas().get(key);
+        GlobalSchemasRule schemasRule = (GlobalSchemasRule) getRootTupleRule().getRuleByFieldName("schemas");
+        Tag tag = schemasRule.getTags().get(key);
+        if (isCustomTag(tag))
+        {
+            return null;
+        }
+        String globalSchema = schemasRule.getSchemas().get(key);
         return globalSchema != null ? globalSchema : key;
+    }
+
+    private boolean isCustomTag(Tag tag)
+    {
+        return tag != null && !STR.equals(tag);
     }
 
     private Map<String, String> getGlobalSchemas()

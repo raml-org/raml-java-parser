@@ -1,9 +1,30 @@
 #%RAML 0.8
 title: pojo validator
+
+schemas:
+    - userjson: !jackson org.raml.tagresolver.User
+    - userxml: !jaxb org.raml.tagresolver.User
+
+traits:
+    - annotated:
+        body:
+            application/json:
+                schema: !jackson org.raml.tagresolver.User
+            text/xml:
+                schema: !jaxb org.raml.tagresolver.User
+
 /resource:
     post:
         body:
             application/json:
                 schema: !jackson org.raml.tagresolver.User
-            application/xml:
+            text/xml:
                 schema: !jaxb org.raml.tagresolver.User
+    put:
+        is: [ annotated ]
+    patch:
+        body:
+            application/json:
+                schema: userjson
+            text/xml:
+                schema: userxml

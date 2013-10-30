@@ -8,8 +8,6 @@ import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.IncludeResolver;
-import org.raml.parser.tagresolver.JacksonTagResolver;
-import org.raml.parser.tagresolver.JaxbTagResolver;
 import org.raml.parser.tagresolver.PojoValidatorTagResolver;
 import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.nodes.MappingNode;
