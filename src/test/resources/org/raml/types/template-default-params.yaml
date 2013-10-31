@@ -2,11 +2,18 @@
 ---
 title: Default parameters
 
+schemas:
+    - simple: "{}"
+
 resourceTypes:
     - collection:
         description: >-
             resourcePath <<resourcePath>>,
             resourcePathName <<resourcePathName>>
+        post:
+            body:
+                application/json:
+                    schema: <<resourcePathName>>
 traits:
     - paged:
         description: >-
@@ -18,3 +25,7 @@ traits:
     type: collection
     get:
         is: [paged]
+    /{simpleId}:
+        type: collection
+        get:
+            is: [paged]

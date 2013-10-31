@@ -21,6 +21,7 @@ import java.util.List;
 import org.raml.model.Raml;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.DefaultTupleRule;
+import org.raml.parser.rule.ImplicitMapEntryRule;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.ValidationResult;
@@ -66,7 +67,8 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         NodeRule<?> rule = getRuleContext().peek();
         if (isResourceRule(rule))
         {
-            List<ValidationResult> templateValidations = getTemplateResolver().resolve(mappingNode, getResourceUri(rule));
+            List<ValidationResult> templateValidations = getTemplateResolver().resolve(
+                    mappingNode, getResourceUri(rule), getFullUri(rule));
             getMessages().addAll(templateValidations);
         }
         else if (isBodyRule(rule))
@@ -80,6 +82,18 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     {
         Node keyNode = ((DefaultTupleRule) resourceRule).getKey();
         return ((ScalarNode) keyNode).getValue();
+    }
+
+    private String getFullUri(NodeRule<?> resourceRule)
+    {
+        String fullUri = "";
+        while (resourceRule instanceof ImplicitMapEntryRule)
+        {
+            Node keyNode = ((DefaultTupleRule) resourceRule).getKey();
+            fullUri = ((ScalarNode) keyNode).getValue() + fullUri;
+            resourceRule = ((DefaultTupleRule) resourceRule).getParentTupleRule();
+        }
+        return fullUri;
     }
 
     private boolean isBodyRule(NodeRule<?> rule)

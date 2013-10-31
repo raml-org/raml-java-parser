@@ -50,6 +50,20 @@ public class TemplateDefaultParamsTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void resourceTypeDefaultParamsWithUriParam()
+    {
+        assertThat(raml.getResources().get("/simple").getResources().get("/{simpleId}").getDescription(),
+                   is("resourcePath /{simpleId}, resourcePathName simple"));
+    }
+
+    @Test
+    public void traitDefaultParamsWithUriParam()
+    {
+        assertThat(raml.getResources().get("/simple").getResources().get("/{simpleId}").getAction(GET).getDescription(),
+                   is("resourcePath /{simpleId}, resourcePathName simple, methodName get"));
+    }
+
+    @Test
     public void validate()
     {
         validateRamlNoErrors(ramlSource);

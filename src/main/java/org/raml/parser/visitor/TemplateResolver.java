@@ -168,7 +168,7 @@ public class TemplateResolver
         return new MappingNode(Tag.MAP, outerTuples, false);
     }
 
-    public List<ValidationResult> resolve(MappingNode resourceNode, String relativeUri)
+    public List<ValidationResult> resolve(MappingNode resourceNode, String relativeUri, String fullUri)
     {
         List<ValidationResult> templateValidations = new ArrayList<ValidationResult>();
 
@@ -179,7 +179,7 @@ public class TemplateResolver
         }
         resolvedNodes.add(resourceNode);
 
-        return new ResourceTemplateMerger(templateValidations, resourceNode, relativeUri).merge();
+        return new ResourceTemplateMerger(templateValidations, resourceNode, relativeUri, fullUri).merge();
     }
 
     private class ResourceTemplateMerger
@@ -188,13 +188,15 @@ public class TemplateResolver
         private List<ValidationResult> templateValidations;
         private MappingNode resourceNode;
         private String relativeUri;
+        private String fullUri;
         private String currentAction;
 
-        public ResourceTemplateMerger(List<ValidationResult> templateValidations, MappingNode resourceNode, String relativeUri)
+        public ResourceTemplateMerger(List<ValidationResult> templateValidations, MappingNode resourceNode, String relativeUri, String fullUri)
         {
             this.templateValidations = templateValidations;
             this.resourceNode = resourceNode;
             this.relativeUri = relativeUri;
+            this.fullUri = fullUri;
         }
 
         public List<ValidationResult> merge()
@@ -379,7 +381,7 @@ public class TemplateResolver
 
             Map<String, String> defaultParameters = new HashMap<String, String>();
             defaultParameters.put("resourcePath", relativeUri);
-            defaultParameters.put("resourcePathName", relativeUri.substring(1));
+            defaultParameters.put("resourcePathName", getResourcePathName(fullUri));
 
             String label;
             if (type == TemplateType.RESOURCE_TYPE)
@@ -401,6 +403,19 @@ public class TemplateResolver
                 return null;
             }
             return cloneMappingNode(templateNode, getTemplateParameters(reference, defaultParameters));
+        }
+
+        private String getResourcePathName(String fullUri)
+        {
+            String[] paths = fullUri.split("/");
+            for (int i = paths.length - 1; i >= 0; i--)
+            {
+                if (!paths[i].contains("{") && paths[i].length() > 0)
+                {
+                    return paths[i];
+                }
+            }
+            return "";
         }
 
         private void addError(String message)
