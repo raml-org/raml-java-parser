@@ -43,4 +43,13 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getMessage(), is("Unknown tag !import"));
     }
 
+
+    @Test
+    public void missingTemplate()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/missing-template.yaml");
+        assertThat(validationResults.size(), is(2));
+        assertThat(validationResults.get(0).getMessage(), is("trait not defined: paged"));
+        assertThat(validationResults.get(1).getMessage(), is("resource type not defined: collection"));
+    }
 }

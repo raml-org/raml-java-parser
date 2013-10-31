@@ -1,0 +1,7 @@
+#%RAML 0.8
+title: test
+
+/simple:
+    type: collection
+    get:
+        is: [paged]

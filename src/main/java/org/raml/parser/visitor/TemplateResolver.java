@@ -363,13 +363,21 @@ public class TemplateResolver
                     for (String actionKey : actionNodes.keySet())
                     {
                         currentAction = actionKey;
-                        mergeNodes(actionNodes.get(actionKey), cloneTemplate(ref, TemplateType.TRAIT), Action.class);
+                        MappingNode templateNode = cloneTemplate(ref, TemplateType.TRAIT);
+                        if (templateNode != null)
+                        {
+                            mergeNodes(actionNodes.get(actionKey), templateNode, Action.class);
+                        }
                     }
                 }
                 else
                 {
                     currentAction = actionName;
-                    mergeNodes(actionNodes.get(actionName), cloneTemplate(ref, TemplateType.TRAIT), Action.class);
+                    MappingNode templateNode = cloneTemplate(ref, TemplateType.TRAIT);
+                    if (templateNode != null)
+                    {
+                        mergeNodes(actionNodes.get(actionName), templateNode, Action.class);
+                    }
                 }
             }
         }
