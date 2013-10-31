@@ -18,22 +18,21 @@
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
-                <version>1.8.0</version>
+                <version>1.9.0</version>
                 <configuration>
                     <header>LICENSE_HEADER.txt</header>
                     <excludes>
+                        <exclude>**/org/raml/parser/utils/Inflector.java</exclude>
                         <exclude>target/**</exclude>
                         <exclude>**/.gitignore</exclude>
                         <exclude>.idea/**</exclude>
-                        <exclude>**/*.xsd</exclude>
-                        <exclude>**/spring.schemas</exclude>
-                        <exclude>**/spring.handlers</exclude>
+                        <exclude>**/*.yaml</exclude>
+                        <exclude>**/*.raml</exclude>
+                        <exclude>**/*.txt</exclude>
+                        <exclude>**/*.json</exclude>
                         <exclude>**/*.xml</exclude>
                         <exclude>**/*.properties</exclude>
                         <exclude>**/*.md</exclude>
-                        <exclude>**/*.css</exclude>
-                        <exclude>**/*.js</exclude>
-                        <exclude>**/*.html</exclude>
                         <exclude>**/build-number.txt</exclude>
                     </excludes>
                     <mapping>
@@ -41,7 +40,6 @@
                     </mapping>
                     <strictCheck>true</strictCheck>
                 </configuration>
-                <!--
                 <executions>
                     <execution>
                         <goals>
@@ -49,7 +47,6 @@
                         </goals>
                     </execution>
                 </executions>
-                -->
             </plugin>
         </plugins>
         <pluginManagement>
