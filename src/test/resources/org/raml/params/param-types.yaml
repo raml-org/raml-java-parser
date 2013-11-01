@@ -61,5 +61,8 @@ title: param types
                 required: false
                 default: false
 
+            default-enum:
+                enum: [one, two]
+
 
 

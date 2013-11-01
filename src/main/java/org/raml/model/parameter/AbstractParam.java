@@ -15,6 +15,8 @@
  */
 package org.raml.model.parameter;
 
+import static org.raml.model.ParamType.STRING;
+
 import java.util.List;
 
 import org.raml.model.ParamType;
@@ -198,6 +200,10 @@ public class AbstractParam
 
     public boolean validate(String value)
     {
+        if (type == null)
+        {
+            type = STRING;
+        }
         return type.validate(this, value);
     }
 }

@@ -145,6 +145,15 @@ public class ParameterTypesTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void defaultEnum()
+    {
+        QueryParameter defaultEnum = getParameter("default-enum");
+        assertThat(defaultEnum.validate("one"), is(true));
+        assertThat(defaultEnum.validate("two"), is(true));
+        assertThat(defaultEnum.validate("three"), is(false));
+    }
+
+    @Test
     public void validate()
     {
         List<ValidationResult> errors = validateRaml(ramlSource);
