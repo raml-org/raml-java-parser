@@ -136,9 +136,9 @@
     </dependencies>
 
     <scm>
-        <connection>scm:git:git://github.com:restful-api-modeling-lang/java-parser.git</connection>
-        <developerConnection>scm:git:git@github.com:restful-api-modeling-lang/java-parser.git</developerConnection>
-        <url>http://github.com/restful-api-modeling-lang/java-parser</url>
+        <connection>scm:git:git://github.com:raml-org/raml-java-parser.git</connection>
+        <developerConnection>scm:git:git@github.com:raml-org/raml-java-parser.git</developerConnection>
+        <url>http://github.com/raml-org/raml-java-parser</url>
         <tag>0.8</tag>
     </scm>
 
