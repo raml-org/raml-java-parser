@@ -1,0 +1,14 @@
+#%RAML 0.8
+[title]: wot
+resourceTypes:
+    - base:
+        get: ~
+      {broken1}:
+    - [broken2]:
+        put: ~
+{traits}:
+    - paged:
+        queryParameters: ~
+
+/resource:
+    type: base

@@ -16,6 +16,7 @@
 package org.raml.parser.visitor;
 
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
+import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,6 @@ import java.util.Set;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.Tag;
@@ -55,11 +55,15 @@ public class MediaTypeResolver
 
         for (NodeTuple tuple : rootNode.getValue())
         {
+            if (tuple.getKeyNode().getNodeId() != scalar)
+            {
+                continue;
+            }
             String key = ((ScalarNode) tuple.getKeyNode()).getValue();
             if (key.equals("mediaType"))
             {
                 Node valueNode = tuple.getValueNode();
-                if (valueNode.getNodeId() != NodeId.scalar)
+                if (valueNode.getNodeId() != scalar)
                 {
                     validationResults.add(createErrorResult("Invalid mediaType", valueNode.getStartMark(), valueNode.getEndMark()));
                     break;

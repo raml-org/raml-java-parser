@@ -99,7 +99,13 @@ public class TemplateResolver
         {
             NodeTuple rootTuple = rootNode.getValue().get(i);
 
-            String key = ((ScalarNode) rootTuple.getKeyNode()).getValue();
+            Node keyNode = rootTuple.getKeyNode();
+            if (keyNode.getNodeId() != scalar)
+            {
+                validationResults.add(ValidationResult.createErrorResult("Scalar key expected", keyNode.getStartMark(), keyNode.getEndMark()));
+                continue;
+            }
+            String key = ((ScalarNode) keyNode).getValue();
             if (key.equals("resourceTypes") || key.equals("traits"))
             {
                 Node templateSequence = rootTuple.getValueNode();
@@ -141,15 +147,25 @@ public class TemplateResolver
             }
             for (NodeTuple tuple : ((MappingNode) template).getValue())
             {
+                if (tuple.getKeyNode().getNodeId() != scalar)
+                {
+                    validationResults.add(ValidationResult.createErrorResult("Scalar key expected", tuple.getKeyNode().getStartMark(), tuple.getKeyNode().getEndMark()));
+                    continue;
+                }
                 String templateKey = ((ScalarNode) tuple.getKeyNode()).getValue();
-                MappingNode templateNode = (MappingNode) tuple.getValueNode();
+                Node templateValue = tuple.getValueNode();
+                if (templateValue.getNodeId() != mapping)
+                {
+                    validationResults.add(ValidationResult.createErrorResult("Mapping expected", templateValue.getStartMark(), templateValue.getEndMark()));
+                    continue;
+                }
                 if (templateType.equals("resourceTypes"))
                 {
-                    resourceTypesMap.put(templateKey, templateNode);
+                    resourceTypesMap.put(templateKey, (MappingNode) templateValue);
                 }
                 if (templateType.equals("traits"))
                 {
-                    traitsMap.put(templateKey, templateNode);
+                    traitsMap.put(templateKey, (MappingNode) templateValue);
                 }
                 prunedTmplates.add(getFakeTemplateNode(tuple.getKeyNode()));
             }
@@ -201,12 +217,14 @@ public class TemplateResolver
 
         public List<ValidationResult> merge()
         {
-            mergeTemplatesIfNeeded(resourceNode, new HashMap<String, Node>());
-            removeOptionalNodes(resourceNode);
+            if (mergeTemplatesIfNeeded(resourceNode, new HashMap<String, Node>()))
+            {
+                removeOptionalNodes(resourceNode, true);
+            }
             return templateValidations;
         }
 
-        private void mergeTemplatesIfNeeded(MappingNode resourceNode, Map<String, Node> globalActionNodes)
+        private boolean mergeTemplatesIfNeeded(MappingNode resourceNode, Map<String, Node> globalActionNodes)
         {
             Node typeReference = null;
             Map<String, SequenceNode> traitsReference = new HashMap<String, SequenceNode>();
@@ -280,7 +298,7 @@ public class TemplateResolver
                 if (clone == null)
                 {
                     //template not found
-                    return;
+                    return false;
                 }
 
                 //update global action map
@@ -304,6 +322,8 @@ public class TemplateResolver
                 //merge type, no traits (action level traits could be merged)
                 mergeNodes(resourceNode, clone, Resource.class);
             }
+
+            return !traitsReference.isEmpty() || typeReference != null;
         }
 
         private void removeParametersFromTraitsCall(NodeTuple traitsNodeTuple)
@@ -431,6 +451,11 @@ public class TemplateResolver
             templateValidations.add(ValidationResult.createErrorResult(message));
         }
 
+        private void addError(String message, Node node)
+        {
+            templateValidations.add(ValidationResult.createErrorResult(message, node.getStartMark(), node.getEndMark()));
+        }
+
         private Map<String, String> getTemplateParameters(Node node, Map<String, String> parameters)
         {
             if (node.getNodeId() == mapping)
@@ -457,11 +482,16 @@ public class TemplateResolver
             return ((ScalarNode) templateNameNode).getValue();
         }
 
-        private void removeOptionalNodes(MappingNode node)
+        private void removeOptionalNodes(MappingNode node, boolean isResourceNode)
         {
             for (NodeTuple tuple : new ArrayList<NodeTuple>(node.getValue()))
             {
-                if (isOptional(((ScalarNode) tuple.getKeyNode()).getValue()))
+                String keyValue = ((ScalarNode) tuple.getKeyNode()).getValue();
+                if (isResourceNode && keyValue.startsWith("/"))
+                {
+                    continue;
+                }
+                if (isOptional(keyValue))
                 {
                     node.getValue().remove(tuple);
                 }
@@ -469,7 +499,7 @@ public class TemplateResolver
                 {
                     if (tuple.getValueNode().getNodeId() == mapping)
                     {
-                        removeOptionalNodes((MappingNode) tuple.getValueNode());
+                        removeOptionalNodes((MappingNode) tuple.getValueNode(), false);
                     }
                 }
             }
@@ -480,6 +510,11 @@ public class TemplateResolver
             List<NodeTuple> tuples = new ArrayList<NodeTuple>();
             for (NodeTuple tuple : node.getValue())
             {
+                if (tuple.getKeyNode().getNodeId() != scalar)
+                {
+                    addError("Scalar key expected", tuple.getKeyNode());
+                    break;
+                }
                 Node key = cloneScalarNode((ScalarNode) tuple.getKeyNode(), parameters);
                 Node value = cloneNode(tuple.getValueNode(), parameters);
                 tuples.add(new NodeTuple(key, value));

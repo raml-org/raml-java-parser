@@ -52,4 +52,24 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getMessage(), is("trait not defined: paged"));
         assertThat(validationResults.get(1).getMessage(), is("resource type not defined: collection"));
     }
+
+    @Test
+    public void mapExpected()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/map-expected.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Mapping expected"));
+    }
+
+    @Test
+    public void nonScalarKeys()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/non-scalar-keys.yaml");
+        assertThat(validationResults.size(), is(4));
+        assertThat(validationResults.get(0).getMessage(), is("Scalar key expected"));
+        assertThat(validationResults.get(1).getMessage(), is("Scalar key expected"));
+        assertThat(validationResults.get(2).getMessage(), is("Scalar key expected"));
+        assertThat(validationResults.get(3).getMessage(), is("Scalar key expected"));
+    }
+
 }
