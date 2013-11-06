@@ -13,9 +13,6 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-/**
- *
- */
 package org.raml.parser.builder;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
@@ -26,7 +23,7 @@ public class AbastractFactory
 {
 
     protected TupleHandler createHandler(Class<? extends TupleHandler> handler, String alias,
-                                       Class<? extends Node> nodeClass)
+                                         Class<? extends Node> nodeClass)
     {
         TupleHandler tupleHandler = null;
         if (handler != TupleHandler.class)
@@ -35,7 +32,7 @@ public class AbastractFactory
         }
         else if (!alias.isEmpty())
         {
-            tupleHandler = new DefaultScalarTupleHandler(nodeClass, alias);
+            tupleHandler = new DefaultScalarTupleHandler(alias);
         }
         return tupleHandler;
     }

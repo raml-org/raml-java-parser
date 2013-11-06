@@ -35,7 +35,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public UriParametersRule()
     {
-        super("baseUriParameters", new DefaultScalarTupleHandler(MappingNode.class, "baseUriParameters"));
+        super("baseUriParameters", new DefaultScalarTupleHandler("baseUriParameters"));
 
         this.errors = new ArrayList<ValidationResult>();
         this.parameters = new ArrayList<String>();

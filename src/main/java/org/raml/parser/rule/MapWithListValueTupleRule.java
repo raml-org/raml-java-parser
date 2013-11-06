@@ -18,8 +18,8 @@ package org.raml.parser.rule;
 import java.util.List;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.MappingNode;
-import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -33,7 +33,7 @@ public class MapWithListValueTupleRule extends DefaultTupleRule<ScalarNode, Mapp
 
     public MapWithListValueTupleRule(String fieldName, Class<?> valueType, NodeRuleFactory nodeRuleFactory)
     {
-        super(fieldName, new DefaultScalarTupleHandler(Node.class, fieldName), nodeRuleFactory);
+        super(fieldName, new DefaultScalarTupleHandler(fieldName), nodeRuleFactory);
         this.valueType = valueType;
     }
 
@@ -48,7 +48,11 @@ public class MapWithListValueTupleRule extends DefaultTupleRule<ScalarNode, Mapp
         else
         {
             //TODO add it to a list to invoke onRuleEnd on all the rules created
-            return new PojoTupleRule(fieldName, valueType, getNodeRuleFactory());
+            if (ReflectionUtils.isPojo(valueType))
+            {
+                return new PojoTupleRule(fieldName, valueType, getNodeRuleFactory());
+            }
+            return new SimpleRule(fieldName, valueType);
         }
     }
 

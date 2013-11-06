@@ -13,16 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-/**
- *
- */
 package org.raml.parser.rule;
 
 import java.util.List;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.yaml.snakeyaml.nodes.MappingNode;
-import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
@@ -34,7 +30,7 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
 
     public ImplicitMapEntryRule(String fieldName, Class valueType)
     {
-        super(fieldName, new DefaultScalarTupleHandler(Node.class, fieldName));
+        super(fieldName, new DefaultScalarTupleHandler(fieldName));
         this.valueType = valueType;
 
     }
@@ -55,5 +51,11 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
         List<ValidationResult> validationResults = super.onRuleEnd();
         rules.clear();
         return validationResults;
+    }
+
+    @Override
+    public Class<?>[] getValueType()
+    {
+        return new Class[] {MappingNode.class};
     }
 }

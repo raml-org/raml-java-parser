@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.yaml.snakeyaml.error.Mark;
+import org.yaml.snakeyaml.nodes.Node;
 
 public class ValidationResult
 {
@@ -57,9 +58,14 @@ public class ValidationResult
         return new ValidationResult(Level.ERROR, message, startMark, endMark);
     }
 
+    public static ValidationResult createErrorResult(String message, Node node)
+    {
+        return createErrorResult(message, node.getStartMark(), node.getEndMark());
+    }
+
     public static ValidationResult createErrorResult(String message)
     {
-        return new ValidationResult(Level.ERROR, message, null, null);
+        return createErrorResult(message, null, null);
     }
 
     public static ValidationResult create(Level level, String message)

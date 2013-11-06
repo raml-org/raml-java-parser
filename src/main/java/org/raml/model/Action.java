@@ -53,7 +53,7 @@ public class Action
     @Parent
     private Resource resource;
 
-    @Sequence
+    @Sequence(rule = org.raml.parser.rule.TemplateReferenceSequenceRule.class)
     private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
     @Sequence
@@ -184,7 +184,6 @@ public class Action
     {
         return "Action{" +
                "type='" + type + '\'' +
-               ", resource=" + resource != null ? resource.getUri() : "-" +
-               '}';
+               ", resource=" + resource != null ? resource.getUri() : "-" + '}';
     }
 }

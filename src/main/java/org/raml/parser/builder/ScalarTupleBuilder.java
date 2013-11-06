@@ -30,7 +30,7 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
 
     public ScalarTupleBuilder(String field, Class<?> type)
     {
-        super(new DefaultScalarTupleHandler(ScalarNode.class, field));
+        super(new DefaultScalarTupleHandler(field));
         this.type = type;
 
     }

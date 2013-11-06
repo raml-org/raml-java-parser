@@ -35,7 +35,7 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
 
     public SequenceTupleBuilder(String fieldName, Type itemType)
     {
-        super(new DefaultScalarTupleHandler(SequenceNode.class, fieldName));
+        super(new DefaultScalarTupleHandler(fieldName));
         this.itemType = itemType;
         this.fieldName = fieldName;
     }

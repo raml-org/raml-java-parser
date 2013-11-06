@@ -23,8 +23,9 @@ import java.util.Map;
 import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.Tag;
 
-public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRule<K, V>
+public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRule<K, Node>
 {
 
     private static final String IS_MISSING = "is missing";
@@ -98,9 +99,40 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     }
 
     @Override
-    public List<ValidationResult> validateValue(V key)
+    public final List<ValidationResult> validateValue(Node value)
+    {
+        ArrayList<ValidationResult> validationResults = new ArrayList<ValidationResult>();
+        if (!Tag.NULL.equals(value.getTag()) && !isValidValueNodeType(value.getClass()))
+        {
+            validationResults.add(ValidationResult.createErrorResult("Invalid value type", value));
+        }
+        else
+        {
+            validationResults.addAll(doValidateValue((V) value));
+        }
+        return validationResults;
+    }
+
+    public List<ValidationResult> doValidateValue(V value)
     {
         return new ArrayList<ValidationResult>();
+    }
+
+    protected boolean isValidValueNodeType(Class valueNodeClass)
+    {
+        for (Class<?> clazz : getValueType())
+        {
+            if (clazz.isAssignableFrom(valueNodeClass))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Class<?>[] getValueType()
+    {
+        return new Class[] {Node.class};
     }
 
     @Override

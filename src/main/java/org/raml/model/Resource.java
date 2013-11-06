@@ -27,6 +27,7 @@ import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
+import org.raml.parser.rule.TemplateReferenceRule;
 
 public class Resource
 {
@@ -52,10 +53,10 @@ public class Resource
     @Mapping(implicit = true)
     private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
 
-    @Scalar
+    @Scalar(rule = TemplateReferenceRule.class)
     private TemplateReference type;
 
-    @Sequence
+    @Sequence(rule = org.raml.parser.rule.TemplateReferenceSequenceRule.class)
     private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
     @Sequence

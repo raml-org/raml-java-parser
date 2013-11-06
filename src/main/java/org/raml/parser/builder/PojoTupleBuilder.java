@@ -27,7 +27,6 @@ import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ConvertUtils;
 import org.raml.parser.utils.NodeUtils;
 import org.raml.parser.utils.ReflectionUtils;
-import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -40,7 +39,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 
     public PojoTupleBuilder(String fieldName, Class<?> pojoClass)
     {
-        super(new DefaultScalarTupleHandler(MappingNode.class, fieldName));
+        super(new DefaultScalarTupleHandler(fieldName));
         this.fieldName = fieldName;
         this.pojoClass = pojoClass;
 

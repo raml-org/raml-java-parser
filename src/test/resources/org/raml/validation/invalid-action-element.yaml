@@ -1,0 +1,6 @@
+#%RAML 0.8
+title: test
+
+/simple:
+    get:
+        parameter

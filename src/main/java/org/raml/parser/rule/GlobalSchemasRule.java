@@ -51,6 +51,7 @@ public class GlobalSchemasRule extends SequenceTupleRule
         @Override
         public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
         {
+            //TODO check key node type
             String schemaKey = ((ScalarNode) nodeTuple.getKeyNode()).getValue();
             ScalarNode valueNode = (ScalarNode) nodeTuple.getValueNode();
             schemas.put(schemaKey, valueNode.getValue());

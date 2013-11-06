@@ -72,4 +72,11 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(3).getMessage(), is("Scalar key expected"));
     }
 
+    @Test
+    public void invalidActionElement()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/invalid-action-element.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Invalid value type"));
+    }
 }

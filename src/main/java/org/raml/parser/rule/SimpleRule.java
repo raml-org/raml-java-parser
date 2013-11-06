@@ -37,7 +37,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
 
     public SimpleRule(String fieldName, Class<?> fieldClass)
     {
-        super(fieldName, new DefaultScalarTupleHandler(ScalarNode.class, fieldName));
+        super(fieldName, new DefaultScalarTupleHandler(fieldName));
         this.setFieldClass(fieldClass);
     }
 
@@ -50,7 +50,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
     {
         return DUPLICATE_MESSAGE + " " + ruleName;
     }
-    
+
     public String getRuleTypeMisMatch(String fieldType)
     {
         return TYPE_MISMATCH_MESSAGE + getName() + " must be of type " + fieldType;
@@ -70,7 +70,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
     }
 
     @Override
-    public List<ValidationResult> validateValue(ScalarNode node)
+    public List<ValidationResult> doValidateValue(ScalarNode node)
     {
         String value = node.getValue();
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
@@ -78,12 +78,18 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         {
             validationResults.add(ValidationResult.createErrorResult(getRuleEmptyMessage(getName()), keyNode.getStartMark(), keyNode.getEndMark()));
         }
-        if (!ConvertUtils.canBeConverted(value, getFieldClass())) {
+        if (!ConvertUtils.canBeConverted(value, getFieldClass()))
+        {
             validationResults.add(ValidationResult.createErrorResult(getRuleTypeMisMatch(getFieldClass().getSimpleName()), node.getStartMark(), node.getEndMark()));
         }
-        validationResults.addAll(super.validateValue(node));
         setValueNode(node);
         return validationResults;
+    }
+
+    @Override
+    public Class<?>[] getValueType()
+    {
+        return new Class[] {ScalarNode.class};
     }
 
     public boolean wasAlreadyDefined()

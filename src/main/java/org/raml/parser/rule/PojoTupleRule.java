@@ -34,7 +34,7 @@ public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     public PojoTupleRule(String fieldName, Class<?> pojoClass)
     {
-        super(fieldName, new DefaultScalarTupleHandler(MappingNode.class, fieldName));
+        super(fieldName, new DefaultScalarTupleHandler(fieldName));
         this.pojoClass = pojoClass;
     }
 
@@ -46,5 +46,11 @@ public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
             addRulesFor(pojoClass);
         }
         return super.getRuleForTuple(nodeTuple);
+    }
+
+    @Override
+    public Class<?>[] getValueType()
+    {
+        return new Class[] {MappingNode.class};
     }
 }

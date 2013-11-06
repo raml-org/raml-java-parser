@@ -41,10 +41,10 @@ public class SchemaRule extends SimpleRule
     }
 
     @Override
-    public List<ValidationResult> validateValue(ScalarNode node)
+    public List<ValidationResult> doValidateValue(ScalarNode node)
     {
         String value = node.getValue();
-        List<ValidationResult> validationResults = super.validateValue(node);
+        List<ValidationResult> validationResults = super.doValidateValue(node);
 
         String mimeType = ((ScalarNode) getParentTupleRule().getKey()).getValue();
         if (mimeType.contains("json") && STR.equals(node.getTag()))
@@ -114,9 +114,4 @@ public class SchemaRule extends SimpleRule
         return tag != null && !STR.equals(tag);
     }
 
-    private Map<String, String> getGlobalSchemas()
-    {
-        GlobalSchemasRule schemasRule = (GlobalSchemasRule) getRootTupleRule().getRuleByFieldName("schemas");
-        return schemasRule.getSchemas();
-    }
 }

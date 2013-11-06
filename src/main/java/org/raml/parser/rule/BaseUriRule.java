@@ -59,11 +59,11 @@ public class BaseUriRule extends SimpleRule
 
 
     @Override
-    public List<ValidationResult> validateValue(ScalarNode node)
+    public List<ValidationResult> doValidateValue(ScalarNode node)
     {
         String value = node.getValue();
         Matcher matcher = pattern.matcher(value);
-        List<ValidationResult> validationResults = new ArrayList<ValidationResult>(super.validateValue(node));
+        List<ValidationResult> validationResults = new ArrayList<ValidationResult>(super.doValidateValue(node));
         while (matcher.find())
         {
             String paramValue = matcher.group(1);
@@ -79,7 +79,6 @@ public class BaseUriRule extends SimpleRule
         {
             validationResults.add(ValidationResult.createErrorResult(URI_NOT_VALID_MESSAGE, getKeyNode().getStartMark(), getKeyNode().getEndMark()));
         }
-        validationResults.addAll(super.validateValue(node));
         if (ValidationResult.areValid(validationResults))
         {
             baseUri = node.getValue();

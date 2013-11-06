@@ -13,29 +13,23 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.parser.resolver;
+package org.raml.parser.rule;
 
-import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.raml.model.TemplateReference;
+import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class DefaultScalarTupleHandler implements TupleHandler
+public class TemplateReferenceRule extends PojoTupleRule
 {
 
-
-    private String fieldName;
-
-    public DefaultScalarTupleHandler(String fieldName)
+    public TemplateReferenceRule()
     {
-        this.fieldName = fieldName;
+        super("type", TemplateReference.class);
     }
 
     @Override
-    public boolean handles(NodeTuple tuple)
+    public Class<?>[] getValueType()
     {
-        if (tuple.getKeyNode() instanceof ScalarNode)
-        {
-            return fieldName == null || fieldName.equals(((ScalarNode) tuple.getKeyNode()).getValue());
-        }
-        return false;
+        return new Class[] {ScalarNode.class, MappingNode.class};
     }
 }

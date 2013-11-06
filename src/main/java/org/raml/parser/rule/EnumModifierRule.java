@@ -39,7 +39,7 @@ public class EnumModifierRule extends SimpleRule
     {
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         ScalarNode enumValueNode = enumRule.getValueNode();
-        String messageTypes = generateMessageTypes(enumTypes, enumRule);
+        String messageTypes = generateMessageTypes();
         if (enumValueNode == null)
         {
             validationResults.add(ValidationResult.createErrorResult(enumRule.getName() + " must exist first, and it must be of type" + messageTypes, key.getStartMark(), key.getEndMark()));
@@ -56,7 +56,7 @@ public class EnumModifierRule extends SimpleRule
         return validationResults;
     }
 
-    private String generateMessageTypes(List<String> enumTypes2, SimpleRule enumRule2)
+    private String generateMessageTypes()
     {
         StringBuilder types = new StringBuilder();
         for (int i = 0; i < enumTypes.size() - 1; i++)
@@ -68,9 +68,9 @@ public class EnumModifierRule extends SimpleRule
     }
 
     @Override
-    public List<ValidationResult> validateValue(ScalarNode node)
+    public List<ValidationResult> doValidateValue(ScalarNode value)
     {
-        String valueNode = node.getValue();
+        String valueNode = value.getValue();
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         try
         {
@@ -78,9 +78,10 @@ public class EnumModifierRule extends SimpleRule
         }
         catch (NumberFormatException nfe)
         {
-            validationResults.add(ValidationResult.createErrorResult(getName() + " can only contain integer values greater than zero", node.getStartMark(), node.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getName() + " can only contain integer values greater than zero", value.getStartMark(), value.getEndMark()));
         }
-        validationResults.addAll(super.validateValue(node));
+        validationResults.addAll(super.doValidateValue(value));
         return validationResults;
     }
+
 }

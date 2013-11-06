@@ -37,7 +37,7 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
 
     public ImplicitMapEntryBuilder(String fieldName, Class<?> keyClass, Class<?> valueClass)
     {
-        super(new DefaultScalarTupleHandler(Node.class, fieldName));
+        super(new DefaultScalarTupleHandler(fieldName));
         this.fieldName = fieldName;
         this.keyClass = keyClass;
         this.valueClass = valueClass;

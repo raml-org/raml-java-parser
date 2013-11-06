@@ -258,7 +258,10 @@ public class TemplateResolver
                         resourceNode.getValue().remove(i);
                         resourceNode.getValue().add(i, new NodeTuple(resourceTuple.getKeyNode(), actionNode));
                     }
-
+                    if (actionNode.getNodeId() != mapping)
+                    {
+                        break;
+                    }
                     actionNodes.put(normalizeKey(key), actionNode);
                     for (NodeTuple actionTuple : ((MappingNode) actionNode).getValue())
                     {

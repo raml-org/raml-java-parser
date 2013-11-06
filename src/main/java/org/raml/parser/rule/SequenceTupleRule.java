@@ -36,7 +36,7 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
 
     public SequenceTupleRule(String fieldName, Type itemType, NodeRuleFactory nodeRuleFactory)
     {
-        super(fieldName, new DefaultScalarTupleHandler(SequenceNode.class, fieldName), nodeRuleFactory);
+        super(fieldName, new DefaultScalarTupleHandler(fieldName), nodeRuleFactory);
         this.itemType = itemType;
 
     }
@@ -47,7 +47,7 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
         if (itemType instanceof Class<?>)
         {
             //TODO add it to a list to invoke onRuleEnd on all the rules created
-            if (ReflectionUtils.isWrapperOrString((Class) itemType))
+            if (!ReflectionUtils.isPojo((Class) itemType))
             {
                 return new SimpleRule(getName(), (Class<?>) itemType);
             }
