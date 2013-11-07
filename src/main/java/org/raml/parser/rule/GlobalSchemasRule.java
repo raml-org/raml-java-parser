@@ -15,6 +15,8 @@
  */
 package org.raml.parser.rule;
 
+import static org.yaml.snakeyaml.nodes.NodeId.scalar;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,8 +38,7 @@ public class GlobalSchemasRule extends SequenceTupleRule
     @Override
     public NodeRule<?> getItemRule()
     {
-        MapTupleRule mapTupleRule = new GlobalSchemaTupleRule(String.class, getNodeRuleFactory());
-        return mapTupleRule;
+        return new GlobalSchemaTupleRule(String.class, getNodeRuleFactory());
     }
 
     private class GlobalSchemaTupleRule extends MapTupleRule
@@ -51,11 +52,13 @@ public class GlobalSchemasRule extends SequenceTupleRule
         @Override
         public TupleRule<?, ?> getRuleForTuple(NodeTuple nodeTuple)
         {
-            //TODO check key node type
-            String schemaKey = ((ScalarNode) nodeTuple.getKeyNode()).getValue();
-            ScalarNode valueNode = (ScalarNode) nodeTuple.getValueNode();
-            schemas.put(schemaKey, valueNode.getValue());
-            tags.put(schemaKey, valueNode.getTag());
+            if (nodeTuple.getKeyNode().getNodeId() == scalar && nodeTuple.getValueNode().getNodeId() == scalar)
+            {
+                String schemaKey = ((ScalarNode) nodeTuple.getKeyNode()).getValue();
+                ScalarNode valueNode = (ScalarNode) nodeTuple.getValueNode();
+                schemas.put(schemaKey, valueNode.getValue());
+                tags.put(schemaKey, valueNode.getTag());
+            }
             return super.getRuleForTuple(nodeTuple);
         }
     }

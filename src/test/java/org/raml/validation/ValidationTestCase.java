@@ -79,4 +79,12 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("Invalid value type"));
     }
+
+    @Test
+    public void nonScalarGlobalSchema()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/invalid-global-schema.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Invalid value type"));
+    }
 }
