@@ -184,6 +184,6 @@ public class Action
     {
         return "Action{" +
                "type='" + type + '\'' +
-               ", resource=" + resource != null ? resource.getUri() : "-" + '}';
+               ", resource=" + (resource != null ? resource.getUri() : "-") + '}';
     }
 }

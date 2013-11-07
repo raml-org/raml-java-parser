@@ -16,6 +16,7 @@
 package org.raml.parser.visitor;
 
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
+import static org.raml.parser.visitor.TupleType.VALUE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,11 +81,9 @@ public class YamlDocumentValidator implements YamlValidator
         List<ValidationResult> result = new ArrayList<ValidationResult>();
         NodeRule peek = ruleContext.peek();
 
-        switch (tupleType)
+        if (tupleType == VALUE)
         {
-            case VALUE:
-                result = ((NodeRule<SequenceNode>) peek).validateValue(node);
-                break;
+            result = ((NodeRule<SequenceNode>) peek).validateValue(node);
         }
         addMessagesIfRequired(node, result);
     }
@@ -102,15 +101,13 @@ public class YamlDocumentValidator implements YamlValidator
         List<ValidationResult> result;
         NodeRule<?> peek = ruleContext.peek();
 
-        switch (tupleType)
+        if (tupleType == VALUE)
         {
-            case VALUE:
-                result = ((NodeRule<ScalarNode>) peek).validateValue(node);
-                break;
-
-            default:
-                result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
-                break;
+            result = ((NodeRule<ScalarNode>) peek).validateValue(node);
+        }
+        else
+        {
+            result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
         }
         addMessagesIfRequired(node, result);
     }

@@ -111,9 +111,6 @@ public class Inflector
     /**
      * Replaces a found pattern in a word and returns a transformed word.
      *
-     * @param word
-     * @param rule
-     * @param replacement
      * @return Replaces a found pattern in a word and returns a transformed word. Null is pattern does not match.
      */
     private static String gsub(String word, String rule, String replacement)
@@ -242,13 +239,13 @@ public class Inflector
      */
     private static String camelize(String dash, boolean capitalizeFirstChar)
     {
-        String result = "";
+        StringBuilder result = new StringBuilder("");
         StringTokenizer st = new StringTokenizer(dash, "-");
         while (st.hasMoreTokens())
         {
-            result += capitalize(st.nextToken());
+            result.append(capitalize(st.nextToken()));
         }
-        return capitalizeFirstChar ? result : result.substring(0, 1).toLowerCase() + result.substring(1);
+        return capitalizeFirstChar ? result.toString() : result.substring(0, 1).toLowerCase() + result.substring(1);
     }
 
     /**

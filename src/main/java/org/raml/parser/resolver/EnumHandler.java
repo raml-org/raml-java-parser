@@ -38,7 +38,7 @@ public class EnumHandler implements TupleHandler
             String enumValue = ((ScalarNode) tuple.getKeyNode()).getValue();
             try
             {
-                Enum anEnum = Enum.valueOf(enumClass, enumValue.toUpperCase());
+                Enum.valueOf(enumClass, enumValue.toUpperCase());
             }
             catch (IllegalArgumentException e)
             {

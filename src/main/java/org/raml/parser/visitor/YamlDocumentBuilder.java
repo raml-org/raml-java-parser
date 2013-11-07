@@ -15,6 +15,8 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.visitor.TupleType.VALUE;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -139,13 +141,11 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     {
         SequenceBuilder currentBuilder = (SequenceBuilder) builderContext.peek();
         Object parentObject = documentContext.peek();
-        switch (tupleType)
+        if (tupleType == VALUE)
         {
-            case VALUE:
-                Object object = ((NodeBuilder) currentBuilder).buildValue(parentObject, node);
-                builderContext.push(currentBuilder.getItemBuilder());
-                documentContext.push(object);
-                break;
+            Object object = ((NodeBuilder) currentBuilder).buildValue(parentObject, node);
+            builderContext.push(currentBuilder.getItemBuilder());
+            documentContext.push(object);
         }
     }
 
@@ -164,16 +164,13 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         NodeBuilder<?> currentBuilder = builderContext.peek();
         Object parentObject = documentContext.peek();
 
-        switch (tupleType)
+        if (tupleType == VALUE)
         {
-            case VALUE:
-                ((NodeBuilder<ScalarNode>) currentBuilder).buildValue(parentObject, node);
-                break;
-
-            default:
-                ((TupleBuilder<ScalarNode, ?>) currentBuilder).buildKey(parentObject, node);
-
-                break;
+            ((NodeBuilder<ScalarNode>) currentBuilder).buildValue(parentObject, node);
+        }
+        else
+        {
+            ((TupleBuilder<ScalarNode, ?>) currentBuilder).buildKey(parentObject, node);
         }
 
     }

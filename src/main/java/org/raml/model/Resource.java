@@ -227,10 +227,8 @@ public class Resource
     @Override
     public String toString()
     {
-        return "Resource{" +
-               "displayName='" + displayName + '\'' +
-               ", uri='" + parentUri != null ? getUri() : "-" + '\'' +
-               '}';
+        return "Resource{displayName='" + displayName + '\'' +
+               ", uri='" + (parentUri != null ? getUri() : "-" + '\'') + '}';
     }
 
     public Resource getResource(String path)

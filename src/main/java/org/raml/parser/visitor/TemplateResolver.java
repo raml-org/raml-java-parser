@@ -280,11 +280,12 @@ public class TemplateResolver
             if (!traitsReference.isEmpty())
             {
                 //merge action level tratis
-                for (String actionName : traitsReference.keySet())
+                for (Map.Entry<String, SequenceNode> actionEntry : traitsReference.entrySet())
                 {
+                    String actionName = actionEntry.getKey();
                     if (!actionName.equals(ALL_ACTIONS))
                     {
-                        applyTraitsToActions(traitsReference.get(actionName), actionNodes, actionName);
+                        applyTraitsToActions(actionEntry.getValue(), actionNodes, actionName);
                     }
                 }
 
@@ -305,11 +306,11 @@ public class TemplateResolver
                 }
 
                 //update global action map
-                for (String key : actionNodes.keySet())
+                for (Map.Entry<String, Node> entry : actionNodes.entrySet())
                 {
-                    if (!globalActionNodes.containsKey(key))
+                    if (!globalActionNodes.containsKey(entry.getKey()))
                     {
-                        globalActionNodes.put(key, actionNodes.get(key));
+                        globalActionNodes.put(entry.getKey(), entry.getValue());
                     }
                 }
 
@@ -383,13 +384,13 @@ public class TemplateResolver
             {
                 if (actionName == null)
                 {
-                    for (String actionKey : actionNodes.keySet())
+                    for (Map.Entry<String, Node> actionEntry : actionNodes.entrySet())
                     {
-                        currentAction = actionKey;
+                        currentAction = actionEntry.getKey();
                         MappingNode templateNode = cloneTemplate(ref, TemplateType.TRAIT);
                         if (templateNode != null)
                         {
-                            mergeNodes(actionNodes.get(actionKey), templateNode, Action.class);
+                            mergeNodes(actionEntry.getValue(), templateNode, Action.class);
                         }
                     }
                 }

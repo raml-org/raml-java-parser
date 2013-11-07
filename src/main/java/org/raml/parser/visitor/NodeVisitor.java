@@ -54,7 +54,7 @@ public class NodeVisitor
         nodeHandler.onMappingNodeEnd(mappingNode);
     }
 
-    private class MappingNodeMerger extends SafeConstructor
+    private static class MappingNodeMerger extends SafeConstructor
     {
 
         void merge(MappingNode mappingNode)
