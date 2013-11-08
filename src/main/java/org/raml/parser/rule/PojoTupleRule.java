@@ -15,6 +15,8 @@
  */
 package org.raml.parser.rule;
 
+import java.util.List;
+
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -52,5 +54,16 @@ public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
     public Class<?>[] getValueType()
     {
         return new Class[] {MappingNode.class};
+    }
+
+    @Override
+    public List<ValidationResult> validateKey(ScalarNode key)
+    {
+        List<ValidationResult> validationResults = super.validateKey(key);
+        if (getParentTupleRule() instanceof MapTupleRule)
+        {
+            ((MapTupleRule)getParentTupleRule()).checkDuplicate(key, validationResults);
+        }
+        return validationResults;
     }
 }

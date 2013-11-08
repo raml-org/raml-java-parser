@@ -87,4 +87,14 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("Invalid value type"));
     }
+
+    @Test
+    public void duplicateMapEntry()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/duplicate-map-entries.yaml");
+        assertThat(validationResults.size(), is(3));
+        assertThat(validationResults.get(0).getMessage(), is("Duplicate headers"));
+        assertThat(validationResults.get(1).getMessage(), is("Duplicate actions"));
+        assertThat(validationResults.get(2).getMessage(), is("Duplicate resources"));
+    }
 }

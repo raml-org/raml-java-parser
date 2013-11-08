@@ -1,0 +1,10 @@
+#%RAML 0.8
+title: test
+/hello:
+    get:
+    put:
+        headers:
+            one: ~
+            one: ~
+    get:
+/hello:

@@ -15,6 +15,8 @@
  */
 package org.raml.parser.rule;
 
+import static org.raml.parser.rule.SimpleRule.getDuplicateRuleMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,16 +31,13 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
 {
 
     private List<ValidationResult> errors;
-    private List<String> parameters;
     private ScalarNode keyNode;
-    private static final String DUPLICATE_MESSAGE = "Duplicate";
 
     public UriParametersRule()
     {
         super("baseUriParameters", new DefaultScalarTupleHandler("baseUriParameters"));
 
         this.errors = new ArrayList<ValidationResult>();
-        this.parameters = new ArrayList<String>();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (wasAlreadyDefined())
         {
-            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage("uriParameters"), key.getStartMark(), key.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage("uriParameters"), key));
         }
         validationResults.addAll(super.validateKey(key));
         if (ValidationResult.areValid(validationResults))
@@ -74,21 +73,20 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
             paramName = ((ScalarNode) keyNode).getValue();
             if (paramName.equals("version"))
             {
-                errors.add(ValidationResult.createErrorResult("'" + paramName + "'" + " can not be declared, it is a reserved URI parameter.", keyNode.getStartMark(), keyNode.getEndMark()));
+                errors.add(ValidationResult.createErrorResult("'" + paramName + "'" + " can not be declared, it is a reserved URI parameter.", keyNode));
             }
             else if (getUriRule().getParameters().contains(paramName))
             {
-                parameters.add(paramName);
                 return new ParamRule(paramName, getNodeRuleFactory());
             }
             else
             {
-                errors.add(ValidationResult.createErrorResult("Parameter '" + paramName + "' not declared in baseUri", keyNode.getStartMark(), keyNode.getEndMark()));
+                errors.add(ValidationResult.createErrorResult("Parameter '" + paramName + "' not declared in baseUri", keyNode));
             }
         }
         else
         {
-            errors.add(ValidationResult.createErrorResult("Invalid element", keyNode.getStartMark(), keyNode.getEndMark()));
+            errors.add(ValidationResult.createErrorResult("Invalid element", keyNode));
         }
 
         return new DefaultTupleRule(keyNode.toString(), new DefaultTupleHandler(), getNodeRuleFactory());
@@ -102,11 +100,6 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
     public void setKeyNode(ScalarNode rulePresent)
     {
         this.keyNode = rulePresent;
-    }
-
-    public static String getDuplicateRuleMessage(String ruleName)
-    {
-        return DUPLICATE_MESSAGE + " " + ruleName;
     }
 
     public BaseUriRule getUriRule()

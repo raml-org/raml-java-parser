@@ -15,7 +15,11 @@
  */
 package org.raml.parser.rule;
 
+import static org.raml.parser.rule.SimpleRule.getDuplicateRuleMessage;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
@@ -28,6 +32,7 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 
     private final Class valueType;
     private String fieldName;
+    private final Set<String> keys = new HashSet<String>();
 
     public MapTupleRule(String fieldName, Class valueType)
     {
@@ -56,8 +61,6 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
             tupleRule = new SimpleRule(fieldName, valueType);
         }
 
-        //TODO add it to a list to invoke onRuleEnd on all the rules created
-
         tupleRule.setParentTupleRule(this);
         return tupleRule;
     }
@@ -67,5 +70,17 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
     {
         fieldName = key.getValue();
         return super.validateKey(key);
+    }
+
+    public void checkDuplicate(ScalarNode key, List<ValidationResult> validationResults)
+    {
+        if (keys.contains(key.getValue()))
+        {
+            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage(getName()), key));
+        }
+        else
+        {
+            keys.add(key.getValue());
+        }
     }
 }
