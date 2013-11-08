@@ -15,6 +15,8 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
+import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
 
 import java.io.IOException;
@@ -120,8 +122,12 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode)
+    public void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
+        if (tupleType == KEY)
+        {
+            throw new YAMLException(NON_SCALAR_KEY_MESSAGE + ": " + mappingNode.getStartMark());
+        }
         NodeBuilder<?> currentBuilder = builderContext.peek();
         Object parentObject = documentContext.peek();
         Object object = ((TupleBuilder<?, MappingNode>) currentBuilder).buildValue(parentObject, mappingNode);
@@ -130,8 +136,12 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     }
 
     @Override
-    public void onMappingNodeEnd(MappingNode mappingNode)
+    public void onMappingNodeEnd(MappingNode mappingNode, TupleType tupleType)
     {
+        if (tupleType == KEY)
+        {
+            throw new YAMLException(NON_SCALAR_KEY_MESSAGE + ": " + mappingNode.getStartMark());
+        }
         documentContext.pop();
     }
 
@@ -139,19 +149,24 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     @SuppressWarnings("unchecked")
     public void onSequenceStart(SequenceNode node, TupleType tupleType)
     {
+        if (tupleType == KEY)
+        {
+            throw new YAMLException(NON_SCALAR_KEY_MESSAGE + ": " + node.getStartMark());
+        }
         SequenceBuilder currentBuilder = (SequenceBuilder) builderContext.peek();
         Object parentObject = documentContext.peek();
-        if (tupleType == VALUE)
-        {
-            Object object = ((NodeBuilder) currentBuilder).buildValue(parentObject, node);
-            builderContext.push(currentBuilder.getItemBuilder());
-            documentContext.push(object);
-        }
+        Object object = ((NodeBuilder) currentBuilder).buildValue(parentObject, node);
+        builderContext.push(currentBuilder.getItemBuilder());
+        documentContext.push(object);
     }
 
     @Override
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
+        if (tupleType == KEY)
+        {
+            throw new YAMLException(NON_SCALAR_KEY_MESSAGE + ": " + node.getStartMark());
+        }
         documentContext.pop();
         builderContext.pop();
     }

@@ -17,6 +17,7 @@ package org.raml.validation;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 
 import java.util.List;
 
@@ -65,11 +66,12 @@ public class ValidationTestCase extends AbstractRamlTestCase
     public void nonScalarKeys()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/validation/non-scalar-keys.yaml");
-        assertThat(validationResults.size(), is(4));
-        assertThat(validationResults.get(0).getMessage(), is("Scalar key expected"));
-        assertThat(validationResults.get(1).getMessage(), is("Scalar key expected"));
-        assertThat(validationResults.get(2).getMessage(), is("Scalar key expected"));
-        assertThat(validationResults.get(3).getMessage(), is("Scalar key expected"));
+        int expectedErrors = 6;
+        assertThat(validationResults.size(), is(expectedErrors));
+        for (int i = 0; i < expectedErrors; i++)
+        {
+            assertThat(validationResults.get(i).getMessage(), is(NON_SCALAR_KEY_MESSAGE));
+        }
     }
 
     @Test

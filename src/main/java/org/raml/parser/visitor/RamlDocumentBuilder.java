@@ -57,9 +57,9 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode)
+    public void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
-        super.onMappingNodeStart(mappingNode);
+        super.onMappingNodeStart(mappingNode, tupleType);
         if (getDocumentContext().peek() instanceof Resource)
         {
             Resource resource = (Resource) getDocumentContext().peek();

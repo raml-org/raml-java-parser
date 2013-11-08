@@ -25,9 +25,9 @@ import org.yaml.snakeyaml.nodes.Tag;
 public interface NodeHandler
 {
 
-    void onMappingNodeStart(MappingNode mappingNode);
+    void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType);
 
-    void onMappingNodeEnd(MappingNode mappingNode);
+    void onMappingNodeEnd(MappingNode mappingNode, TupleType tupleType);
 
     void onSequenceStart(SequenceNode node, TupleType tupleType);
 

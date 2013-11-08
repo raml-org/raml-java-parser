@@ -15,11 +15,15 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
+import static org.raml.parser.rule.ValidationResult.createErrorResult;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
+import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -63,29 +67,32 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode)
+    public void onMappingNodeStart(MappingNode node, TupleType tupleType)
     {
-
+        if (tupleType == KEY)
+        {
+            addMessage(node, createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
+        }
     }
 
     @Override
-    public void onMappingNodeEnd(MappingNode mappingNode)
+    public void onMappingNodeEnd(MappingNode node, TupleType tupleType)
     {
-
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void onSequenceStart(SequenceNode node, TupleType tupleType)
     {
-        List<ValidationResult> result = new ArrayList<ValidationResult>();
-        NodeRule peek = ruleContext.peek();
-
-        if (tupleType == VALUE)
+        if (tupleType == KEY)
         {
-            result = ((NodeRule<SequenceNode>) peek).validateValue(node);
+            addMessage(node, createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
         }
-        addMessagesIfRequired(node, result);
+        else
+        {
+            NodeRule<SequenceNode> peek = (NodeRule<SequenceNode>) ruleContext.peek();
+            addMessages(node, peek.validateValue(node));
+        }
     }
 
     @Override
@@ -109,16 +116,21 @@ public class YamlDocumentValidator implements YamlValidator
         {
             result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
         }
-        addMessagesIfRequired(node, result);
+        addMessages(node, result);
     }
 
-    private void addMessagesIfRequired(Node node, List<ValidationResult> result)
+    private void addMessages(Node node, List<ValidationResult> result)
     {
         for (ValidationResult validationResult : result)
         {
             validationResult.setIncludeName(includeContext.empty() ? null : includeContext.peek());
             messages.add(validationResult);
         }
+    }
+
+    private void addMessage(Node node, ValidationResult errorResult)
+    {
+        addMessages(node, Collections.<ValidationResult>singletonList(errorResult));
     }
 
     @Override
@@ -133,7 +145,7 @@ public class YamlDocumentValidator implements YamlValidator
         NodeRule<?> pop = ruleContext.pop();
 
         List<ValidationResult> onRuleEnd = pop.onRuleEnd();
-        addMessagesIfRequired(node, onRuleEnd);
+        addMessages(node, onRuleEnd);
 
     }
 
@@ -144,7 +156,7 @@ public class YamlDocumentValidator implements YamlValidator
         if (rule != null)
         {
             List<ValidationResult> onRuleEnd = rule.onRuleEnd();
-            addMessagesIfRequired(nodeTuple.getKeyNode(), onRuleEnd);
+            addMessages(nodeTuple.getKeyNode(), onRuleEnd);
         }
         else
         {
@@ -188,7 +200,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         NodeRule<?> rule = ruleContext.pop();
         List<ValidationResult> validationResults = rule.onRuleEnd();
-        addMessagesIfRequired(sequenceNode, validationResults);
+        addMessages(sequenceNode, validationResults);
     }
 
     @Override
@@ -217,7 +229,7 @@ public class YamlDocumentValidator implements YamlValidator
     @Override
     public void onCustomTagError(Tag tag, Node node, String message)
     {
-        addMessagesIfRequired(node, Arrays.asList(ValidationResult.createErrorResult(message, node.getStartMark(), node.getEndMark())));
+        addMessages(node, Arrays.asList(createErrorResult(message, node.getStartMark(), node.getEndMark())));
     }
 
 

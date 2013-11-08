@@ -16,12 +16,16 @@
 
 package org.raml.parser.rules;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.raml.parser.rule.ValidationMessage.getDuplicateRuleMessage;
+import static org.raml.parser.rule.ValidationMessage.getMissingRuleMessage;
+import static org.raml.parser.rule.ValidationMessage.getRuleEmptyMessage;
+
 import java.util.List;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
-import org.raml.parser.rule.SimpleRule;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlValidationService;
 
@@ -33,9 +37,8 @@ public class TitleRuleTestCase
     {
         String raml = "#%RAML 0.8\n" + "---\n" + "title:";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
-        Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(),
-                          CoreMatchers.is(SimpleRule.getRuleEmptyMessage("title")));
+        assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(0).getMessage(), is(getRuleEmptyMessage("title")));
     }
 
     @Test
@@ -43,9 +46,8 @@ public class TitleRuleTestCase
     {
         String raml = "#%RAML 0.8\n" + "---\n" + "version: v28.0\n";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
-        Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(),
-                          CoreMatchers.is(SimpleRule.getMissingRuleMessage("title")));
+        assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(0).getMessage(), is(getMissingRuleMessage("title")));
     }
 
     @Test
@@ -53,9 +55,8 @@ public class TitleRuleTestCase
     {
         String raml = "#%RAML 0.8\n" + "---\n" + "title: bla \n" + "title: bla";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
-        Assert.assertFalse("Errors must not be empty", errors.isEmpty());
-        Assert.assertThat(errors.get(0).getMessage(),
-                          CoreMatchers.is(SimpleRule.getDuplicateRuleMessage("title")));
+        assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(0).getMessage(), is(getDuplicateRuleMessage("title")));
     }
 
 }

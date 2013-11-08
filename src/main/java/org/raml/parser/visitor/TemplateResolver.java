@@ -15,6 +15,8 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
+import static org.raml.parser.rule.ValidationResult.createErrorResult;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 import static org.yaml.snakeyaml.nodes.NodeId.scalar;
@@ -91,7 +93,7 @@ public class TemplateResolver
 
         if (rootNode == null)
         {
-            validationResults.add(ValidationResult.createErrorResult("Invalid Root Node"));
+            validationResults.add(createErrorResult("Invalid Root Node"));
             return validationResults;
         }
 
@@ -102,8 +104,7 @@ public class TemplateResolver
             Node keyNode = rootTuple.getKeyNode();
             if (keyNode.getNodeId() != scalar)
             {
-                validationResults.add(ValidationResult.createErrorResult("Scalar key expected", keyNode.getStartMark(), keyNode.getEndMark()));
-                continue;
+                continue; //invalid key
             }
             String key = ((ScalarNode) keyNode).getValue();
             if (key.equals("resourceTypes") || key.equals("traits"))
@@ -113,16 +114,18 @@ public class TemplateResolver
                 {
                     if (!templateSequence.getTag().equals(INCLUDE_TAG))
                     {
-                        validationResults.add(ValidationResult.createErrorResult("Sequence or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                        validationResults.add(createErrorResult("Sequence or !include expected", templateSequence));
                         break;
                     }
                     templateSequence = includeResolver.resolve(templateSequence, resourceLoader, nodeNandler);
                     rootNode.getValue().remove(i);
-                    rootNode.getValue().add(i, new NodeTuple(rootTuple.getKeyNode(), templateSequence));
+                    rootNode.getValue().add(i, new NodeTuple(keyNode, templateSequence));
                 }
                 if (templateSequence.getNodeId() != sequence)
                 {
-                    validationResults.add(ValidationResult.createErrorResult("Sequence expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                    validationResults.add(createErrorResult("Sequence expected", templateSequence));
+                    rootNode.getValue().remove(i);
+                    rootNode.getValue().add(i, new NodeTuple(keyNode, new SequenceNode(Tag.SEQ, new ArrayList<Node>(), false)));
                     break;
                 }
                 loopTemplateSequence((SequenceNode) templateSequence, key, validationResults);
@@ -133,7 +136,7 @@ public class TemplateResolver
 
     private void loopTemplateSequence(SequenceNode templateSequence, String templateType, List<ValidationResult> validationResults)
     {
-        List<Node> prunedTmplates = new ArrayList<Node>();
+        List<Node> prunedTemplates = new ArrayList<Node>();
         for (int j = 0; j < templateSequence.getValue().size(); j++)
         {
             Node template = templateSequence.getValue().get(j);
@@ -141,7 +144,7 @@ public class TemplateResolver
             {
                 if (!template.getTag().equals(INCLUDE_TAG))
                 {
-                    validationResults.add(ValidationResult.createErrorResult("Mapping or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                    validationResults.add(createErrorResult("Mapping or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
                 }
                 template = includeResolver.resolve(template, resourceLoader, nodeNandler);
             }
@@ -149,14 +152,14 @@ public class TemplateResolver
             {
                 if (tuple.getKeyNode().getNodeId() != scalar)
                 {
-                    validationResults.add(ValidationResult.createErrorResult("Scalar key expected", tuple.getKeyNode().getStartMark(), tuple.getKeyNode().getEndMark()));
+                    validationResults.add(createErrorResult(NON_SCALAR_KEY_MESSAGE, tuple.getKeyNode()));
                     continue;
                 }
                 String templateKey = ((ScalarNode) tuple.getKeyNode()).getValue();
                 Node templateValue = tuple.getValueNode();
                 if (templateValue.getNodeId() != mapping)
                 {
-                    validationResults.add(ValidationResult.createErrorResult("Mapping expected", templateValue.getStartMark(), templateValue.getEndMark()));
+                    validationResults.add(createErrorResult("Mapping expected", templateValue.getStartMark(), templateValue.getEndMark()));
                     continue;
                 }
                 if (templateType.equals("resourceTypes"))
@@ -167,11 +170,11 @@ public class TemplateResolver
                 {
                     traitsMap.put(templateKey, (MappingNode) templateValue);
                 }
-                prunedTmplates.add(getFakeTemplateNode(tuple.getKeyNode()));
+                prunedTemplates.add(getFakeTemplateNode(tuple.getKeyNode()));
             }
         }
         templateSequence.getValue().clear();
-        templateSequence.getValue().addAll(prunedTmplates);
+        templateSequence.getValue().addAll(prunedTemplates);
     }
 
     private Node getFakeTemplateNode(Node keyNode)
@@ -233,6 +236,10 @@ public class TemplateResolver
             for (int i = 0; i < resourceNode.getValue().size(); i++)
             {
                 NodeTuple resourceTuple = resourceNode.getValue().get(i);
+                if (resourceTuple.getKeyNode().getNodeId() != scalar)
+                {
+                    break; //invalid key
+                }
                 String key = ((ScalarNode) resourceTuple.getKeyNode()).getValue();
                 if (key.equals(RESOURCE_TYPE_USE_KEY))
                 {
@@ -452,12 +459,12 @@ public class TemplateResolver
 
         private void addError(String message)
         {
-            templateValidations.add(ValidationResult.createErrorResult(message));
+            templateValidations.add(createErrorResult(message));
         }
 
         private void addError(String message, Node node)
         {
-            templateValidations.add(ValidationResult.createErrorResult(message, node.getStartMark(), node.getEndMark()));
+            templateValidations.add(createErrorResult(message, node.getStartMark(), node.getEndMark()));
         }
 
         private Map<String, String> getTemplateParameters(Node node, Map<String, String> parameters)
@@ -516,7 +523,7 @@ public class TemplateResolver
             {
                 if (tuple.getKeyNode().getNodeId() != scalar)
                 {
-                    addError("Scalar key expected", tuple.getKeyNode());
+                    addError(NON_SCALAR_KEY_MESSAGE, tuple.getKeyNode());
                     break;
                 }
                 Node key = cloneScalarNode((ScalarNode) tuple.getKeyNode(), parameters);

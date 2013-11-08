@@ -15,6 +15,10 @@
  */
 package org.raml.parser.rule;
 
+import static org.raml.parser.rule.ValidationMessage.getDuplicateRuleMessage;
+import static org.raml.parser.rule.ValidationMessage.getRuleEmptyMessage;
+import static org.raml.parser.rule.ValidationMessage.getRuleTypeMisMatch;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +31,6 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
 {
 
-    private static final String EMPTY_MESSAGE = "can not be empty";
-    private static final String DUPLICATE_MESSAGE = "Duplicate";
-    private static final String TYPE_MISMATCH_MESSAGE = "Type mismatch: ";
-
     private ScalarNode keyNode;
     private ScalarNode valueNode;
     private Class<?> fieldClass;
@@ -41,28 +41,13 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         this.setFieldClass(fieldClass);
     }
 
-    public static String getRuleEmptyMessage(String ruleName)
-    {
-        return ruleName + " " + EMPTY_MESSAGE;
-    }
-
-    public static String getDuplicateRuleMessage(String ruleName)
-    {
-        return DUPLICATE_MESSAGE + " " + ruleName;
-    }
-
-    public String getRuleTypeMisMatch(String fieldType)
-    {
-        return TYPE_MISMATCH_MESSAGE + getName() + " must be of type " + fieldType;
-    }
-
     @Override
     public List<ValidationResult> validateKey(ScalarNode key)
     {
         List<ValidationResult> validationResults = super.validateKey(key);
         if (wasAlreadyDefined())
         {
-            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage(getName()), key.getStartMark(), key.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage(getName()), key));
         }
         setKeyNode(key);
 
@@ -76,11 +61,11 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (StringUtils.isEmpty(value))
         {
-            validationResults.add(ValidationResult.createErrorResult(getRuleEmptyMessage(getName()), keyNode.getStartMark(), keyNode.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getRuleEmptyMessage(getName()), keyNode));
         }
         if (!ConvertUtils.canBeConverted(value, getFieldClass()))
         {
-            validationResults.add(ValidationResult.createErrorResult(getRuleTypeMisMatch(getFieldClass().getSimpleName()), node.getStartMark(), node.getEndMark()));
+            validationResults.add(ValidationResult.createErrorResult(getRuleTypeMisMatch(getName(), getFieldClass().getSimpleName()), node));
         }
         setValueNode(node);
         return validationResults;

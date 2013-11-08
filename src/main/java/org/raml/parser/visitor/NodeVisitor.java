@@ -16,6 +16,8 @@
 package org.raml.parser.visitor;
 
 import static org.raml.parser.utils.NodeUtils.isStandardTag;
+import static org.raml.parser.visitor.TupleType.KEY;
+import static org.raml.parser.visitor.TupleType.VALUE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,6 @@ import java.util.List;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
-import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeId;
@@ -49,9 +50,12 @@ public class NodeVisitor
 
     private void visitMappingNode(MappingNode mappingNode, TupleType tupleType)
     {
-        nodeHandler.onMappingNodeStart(mappingNode);
-        doVisitMappingNode(mappingNode);
-        nodeHandler.onMappingNodeEnd(mappingNode);
+        nodeHandler.onMappingNodeStart(mappingNode, tupleType);
+        if (tupleType == VALUE)
+        {
+            doVisitMappingNode(mappingNode);
+        }
+        nodeHandler.onMappingNodeEnd(mappingNode, tupleType);
     }
 
     private static class MappingNodeMerger extends SafeConstructor
@@ -74,10 +78,6 @@ public class NodeVisitor
         for (NodeTuple nodeTuple : tuples)
         {
             Node keyNode = nodeTuple.getKeyNode();
-            if (!(keyNode instanceof ScalarNode))
-            {
-                throw new YAMLException("Only scalar keys are allowed: " + keyNode.getStartMark());
-            }
             Node valueNode = nodeTuple.getValueNode();
             Node originalValueNode = valueNode;
             Tag tag = valueNode.getTag();
@@ -97,8 +97,8 @@ public class NodeVisitor
                 nodeHandler.onCustomTagStart(tag, originalValueNode, nodeTuple);
             }
             nodeHandler.onTupleStart(nodeTuple);
-            visit(keyNode, TupleType.KEY);
-            visit(valueNode, TupleType.VALUE);
+            visit(keyNode, KEY);
+            visit(valueNode, VALUE);
             nodeHandler.onTupleEnd(nodeTuple);
             if (tagResolver != null)
             {
@@ -150,12 +150,15 @@ public class NodeVisitor
     private void visitSequence(SequenceNode node, TupleType tupleType)
     {
         nodeHandler.onSequenceStart(node, tupleType);
-        List<Node> value = node.getValue();
-        for (Node sequenceNode : value)
+        if (tupleType == VALUE)
         {
-            nodeHandler.onSequenceElementStart(sequenceNode);
-            visit(sequenceNode, tupleType);
-            nodeHandler.onSequenceElementEnd(sequenceNode);
+            List<Node> value = node.getValue();
+            for (Node sequenceNode : value)
+            {
+                nodeHandler.onSequenceElementStart(sequenceNode);
+                visit(sequenceNode, tupleType);
+                nodeHandler.onSequenceElementEnd(sequenceNode);
+            }
         }
         nodeHandler.onSequenceEnd(node, tupleType);
     }

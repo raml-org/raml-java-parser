@@ -19,11 +19,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.raml.parser.rule.ValidationMessage.getRuleEmptyMessage;
 
 import java.util.List;
 
 import org.junit.Test;
 import org.raml.parser.rule.BaseUriRule;
+import org.raml.parser.rule.ValidationMessage;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlValidationService;
 
@@ -37,8 +39,8 @@ public class BaseURIRuleTestCase
                       + "baseUri:";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(0).getMessage(), is(getRuleEmptyMessage("baseUri")));
         assertThat(errors.get(1).getMessage(), is("The baseUri element is not a valid URI"));
-        assertThat(errors.get(0).getMessage(), is(BaseUriRule.getRuleEmptyMessage("baseUri")));
     }
 
     @Test

@@ -28,7 +28,6 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRule<K, Node>
 {
 
-    private static final String IS_MISSING = "is missing";
     protected Map<String, TupleRule<?, ?>> rules;
     private TupleRule<?, ?> parent;
     private TupleHandler tupleHandler;
@@ -49,11 +48,6 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         this.name = name;
         this.rules = new HashMap<String, TupleRule<?, ?>>();
         this.tupleHandler = handler;
-    }
-
-    public static String getMissingRuleMessage(String ruleName)
-    {
-        return ruleName + " " + IS_MISSING;
     }
 
     public boolean isRequired()
@@ -141,7 +135,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         List<ValidationResult> result = new ArrayList<ValidationResult>();
         if (isRequired() && !wasAlreadyDefined())
         {
-            result.add(ValidationResult.createErrorResult(getMissingRuleMessage(name)));
+            result.add(ValidationResult.createErrorResult(ValidationMessage.getMissingRuleMessage(name)));
         }
 
         for (TupleRule<?, ?> rule : rules.values())

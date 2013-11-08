@@ -15,6 +15,8 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.visitor.TupleType.KEY;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -61,9 +63,13 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode)
+    public void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
-        super.onMappingNodeStart(mappingNode);
+        super.onMappingNodeStart(mappingNode, tupleType);
+        if (tupleType == KEY)
+        {
+            return;
+        }
         NodeRule<?> rule = getRuleContext().peek();
         if (isResourceRule(rule))
         {

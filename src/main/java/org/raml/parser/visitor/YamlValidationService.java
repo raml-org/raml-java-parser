@@ -60,9 +60,9 @@ public class YamlValidationService
         {
             NodeVisitor nodeVisitor = new NodeVisitor(yamlValidator, resourceLoader, tagResolvers);
             Node root = yamlParser.compose(new StringReader(content));
-            errorMessage.addAll(preValidation((MappingNode) root));
-            if (errorMessage.isEmpty() && root.getNodeId() == NodeId.mapping)
+            if (root.getNodeId() == NodeId.mapping)
             {
+                errorMessage.addAll(preValidation((MappingNode) root));
                 nodeVisitor.visitDocument((MappingNode) root);
             }
         }

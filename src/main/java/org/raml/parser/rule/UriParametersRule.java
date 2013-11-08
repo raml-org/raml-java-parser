@@ -15,7 +15,7 @@
  */
 package org.raml.parser.rule;
 
-import static org.raml.parser.rule.SimpleRule.getDuplicateRuleMessage;
+import static org.raml.parser.rule.ValidationMessage.getDuplicateRuleMessage;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,7 +15,8 @@
  */
 package org.raml.parser.rule;
 
-import static org.raml.parser.rule.SimpleRule.getDuplicateRuleMessage;
+import static org.raml.parser.rule.ValidationMessage.getDuplicateRuleMessage;
+import static org.raml.parser.rule.ValidationResult.createErrorResult;
 
 import java.util.HashSet;
 import java.util.List;
@@ -69,7 +70,7 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
         List<ValidationResult> validationResults = super.validateKey(key);
         if (keys.contains(key.getValue()))
         {
-            validationResults.add(ValidationResult.createErrorResult(getDuplicateRuleMessage(getName()), key));
+            validationResults.add(createErrorResult(getDuplicateRuleMessage(getName()), key));
         }
         else
         {
