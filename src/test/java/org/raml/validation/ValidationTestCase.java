@@ -99,4 +99,12 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(1).getMessage(), is("Duplicate actions"));
         assertThat(validationResults.get(2).getMessage(), is("Duplicate resources"));
     }
+
+    @Test
+    public void emptyRaml()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/empty.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Invalid RAML"));
+    }
 }

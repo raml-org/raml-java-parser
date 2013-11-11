@@ -16,6 +16,8 @@
 package org.raml.parser.visitor;
 
 import static java.lang.System.currentTimeMillis;
+import static org.raml.parser.rule.ValidationResult.createErrorResult;
+import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -31,10 +33,10 @@ import org.yaml.snakeyaml.error.MarkedYAMLException;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeId;
 
 public class YamlValidationService
 {
+
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<ValidationResult> errorMessage;
@@ -60,19 +62,23 @@ public class YamlValidationService
         {
             NodeVisitor nodeVisitor = new NodeVisitor(yamlValidator, resourceLoader, tagResolvers);
             Node root = yamlParser.compose(new StringReader(content));
-            if (root.getNodeId() == NodeId.mapping)
+            if (root != null && root.getNodeId() == mapping)
             {
                 errorMessage.addAll(preValidation((MappingNode) root));
                 nodeVisitor.visitDocument((MappingNode) root);
             }
+            else
+            {
+                errorMessage.add(createErrorResult("Invalid RAML"));
+            }
         }
         catch (MarkedYAMLException mye)
         {
-            errorMessage.add(ValidationResult.createErrorResult(mye.getProblem(), mye.getProblemMark(), null));
+            errorMessage.add(createErrorResult(mye.getProblem(), mye.getProblemMark(), null));
         }
         catch (YAMLException ex)
         {
-            errorMessage.add(ValidationResult.createErrorResult(ex.getMessage()));
+            errorMessage.add(createErrorResult(ex.getMessage()));
         }
 
         errorMessage.addAll(yamlValidator.getMessages());
