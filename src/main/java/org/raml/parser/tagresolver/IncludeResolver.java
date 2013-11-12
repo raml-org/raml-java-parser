@@ -15,6 +15,8 @@
  */
 package org.raml.parser.tagresolver;
 
+import static org.yaml.snakeyaml.nodes.NodeId.scalar;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,15 +47,19 @@ public class IncludeResolver implements TagResolver
         InputStream inputStream = null;
         try
         {
+            if (node.getNodeId() != scalar)
+            {
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be non-scalar");
+                return mockInclude(node);
+            }
             ScalarNode scalarNode = (ScalarNode) node;
             String resourceName = scalarNode.getValue();
             inputStream = resourceLoader.fetchResource(resourceName);
 
-
             if (inputStream == null)
             {
-                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include can not be resolved " + resourceName);
-                includeNode = new ScalarNode(Tag.STR, resourceName, node.getStartMark(), node.getEndMark(), scalarNode.getStyle());
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be resolved " + resourceName);
+                return mockInclude(node);
             }
             else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
             {
@@ -65,6 +71,7 @@ public class IncludeResolver implements TagResolver
                 String newValue = IOUtils.toString(inputStream);
                 includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
             }
+            return includeNode;
         }
         catch (IOException e)
         {
@@ -84,7 +91,11 @@ public class IncludeResolver implements TagResolver
                 //ignore
             }
         }
-        return includeNode;
+    }
+
+    private Node mockInclude(Node node)
+    {
+        return new ScalarNode(Tag.STR, "invalid", node.getStartMark(), node.getEndMark(), null);
     }
 
     public static class IncludeScalarNode extends ScalarNode

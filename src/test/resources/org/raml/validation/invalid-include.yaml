@@ -1,0 +1,4 @@
+#%RAML 0.8
+title: test
+schemas:
+    - weird: !include [ non, scalar]

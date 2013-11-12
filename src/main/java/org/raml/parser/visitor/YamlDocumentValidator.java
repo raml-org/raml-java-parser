@@ -20,6 +20,7 @@ import static org.raml.parser.rule.ValidationResult.createErrorResult;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
+import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -206,7 +207,7 @@ public class YamlDocumentValidator implements YamlValidator
     @Override
     public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        if (INCLUDE_TAG.equals(tag))
+        if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
         {
             includeContext.push(((ScalarNode) originalValueNode).getValue());
         }
@@ -215,7 +216,7 @@ public class YamlDocumentValidator implements YamlValidator
     @Override
     public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        if (INCLUDE_TAG.equals(tag))
+        if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
         {
             String actualInclude = includeContext.pop();
             String expectedInclude = ((ScalarNode) originalValueNode).getValue();

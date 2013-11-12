@@ -44,6 +44,13 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getMessage(), is("Unknown tag !import"));
     }
 
+    @Test
+    public void invalidIncludeTag()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/invalid-include.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Include cannot be non-scalar"));
+    }
 
     @Test
     public void missingTemplate()

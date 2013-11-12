@@ -39,7 +39,7 @@ public class IncludeRulesTestCase extends AbstractRamlTestCase
     {
         List<ValidationResult> errors = validateRaml("org/raml/parser/rules/includes-bad.yaml");
         assertThat("Errors are not 1 " + errors, errors.size(), CoreMatchers.is(1));
-        assertThat(errors.get(0).getMessage(), CoreMatchers.is("Include can not be resolved org/raml/parser/rules/title2.txt"));
+        assertThat(errors.get(0).getMessage(), CoreMatchers.is("Include cannot be resolved org/raml/parser/rules/title2.txt"));
     }
 
     @Test
