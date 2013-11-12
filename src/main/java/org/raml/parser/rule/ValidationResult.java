@@ -15,9 +15,12 @@
  */
 package org.raml.parser.rule;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
+import org.raml.parser.visitor.IncludeInfo;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.nodes.Node;
 
@@ -33,14 +36,14 @@ public class ValidationResult
     private String message;
     private Mark startMark;
     private Mark endMark;
-    private String includeName;
+    private Deque<IncludeInfo> includeContext;
 
     private ValidationResult(Level level, String message, Mark startMark, Mark endMark)
     {
         this.level = level;
         this.message = message;
-        this.setStartMark(startMark);
-        this.setEndMark(endMark);
+        this.startMark = startMark;
+        this.endMark = endMark;
     }
 
     public boolean isValid()
@@ -78,29 +81,28 @@ public class ValidationResult
         return startMark;
     }
 
-    public void setStartMark(Mark startMark)
-    {
-        this.startMark = startMark;
-    }
-
     public Mark getEndMark()
     {
         return endMark;
     }
 
-    public void setEndMark(Mark endMark)
-    {
-        this.endMark = endMark;
-    }
-
     public String getIncludeName()
     {
-        return includeName;
+        if (includeContext.isEmpty())
+        {
+            return null;
+        }
+        return includeContext.peek().getIncludeName();
     }
 
-    public void setIncludeName(String includeName)
+    public Deque<IncludeInfo> getIncludeContext()
     {
-        this.includeName = includeName;
+        return includeContext;
+    }
+
+    public void setIncludeContext(Deque<IncludeInfo> includeContext)
+    {
+        this.includeContext = new ArrayDeque<IncludeInfo>(includeContext);
     }
 
     public static boolean areValid(List<ValidationResult> validationResults)
@@ -131,8 +133,10 @@ public class ValidationResult
     @Override
     public String toString()
     {
-        return " message='" + message + '\'' +
-               "" + startMark +
+        return "ValidationResult{" +
+               "level=" + level +
+               ", message='" + message + '\'' +
                '}';
     }
+
 }

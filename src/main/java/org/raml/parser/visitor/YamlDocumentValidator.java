@@ -22,9 +22,11 @@ import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
 import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -46,7 +48,7 @@ public class YamlDocumentValidator implements YamlValidator
 
     private Class<?> documentClass;
     private Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
-    private Stack<String> includeContext = new Stack<String>();
+    private Deque<IncludeInfo> includeContext = new ArrayDeque<IncludeInfo>();
     private List<ValidationResult> messages = new ArrayList<ValidationResult>();
     private NodeRuleFactory nodeRuleFactory;
 
@@ -124,7 +126,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         for (ValidationResult validationResult : result)
         {
-            validationResult.setIncludeName(includeContext.empty() ? null : includeContext.peek());
+            validationResult.setIncludeContext(includeContext);
             messages.add(validationResult);
         }
     }
@@ -209,7 +211,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
         {
-            includeContext.push(((ScalarNode) originalValueNode).getValue());
+            includeContext.push(new IncludeInfo((ScalarNode) originalValueNode));
         }
     }
 
@@ -218,7 +220,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
         {
-            String actualInclude = includeContext.pop();
+            String actualInclude = includeContext.pop().getIncludeName();
             String expectedInclude = ((ScalarNode) originalValueNode).getValue();
             if (!actualInclude.equals(expectedInclude))
             {
