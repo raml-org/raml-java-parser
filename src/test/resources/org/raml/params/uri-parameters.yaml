@@ -1,0 +1,6 @@
+#%RAML 0.8
+title: test uri parameters
+
+/nameless-children:
+    /:
+        /:

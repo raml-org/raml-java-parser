@@ -126,10 +126,6 @@ public class Resource
 
     public String getUri()
     {
-        if (parentUri.endsWith("/"))
-        {
-            return parentUri + relativeUri.substring(1);
-        }
         return parentUri + relativeUri;
     }
 
