@@ -36,13 +36,22 @@ public class UriParametersTestCase extends AbstractRamlTestCase
     }
 
     @Test
-    public void build()
+    public void namelessResources()
     {
         Raml raml = parseRaml(RAML);
-        Map<String,Resource> namelessChildren = raml.getResources().get("/nameless-children").getResources();
+        Map<String, Resource> namelessChildren = raml.getResource("/nameless-children").getResources();
         assertThat(namelessChildren.get("/").getRelativeUri(), is("/"));
         assertThat(namelessChildren.get("/").getUri(), is("/nameless-children/"));
         assertThat(namelessChildren.get("/").getResources().get("/").getRelativeUri(), is("/"));
         assertThat(namelessChildren.get("/").getResources().get("/").getUri(), is("/nameless-children//"));
     }
+
+    @Test
+    public void resourceLikeBaseUriPath()
+    {
+        Raml raml = parseRaml(RAML);
+        Resource resource = raml.getResource("/apis");
+        assertThat(resource.getRelativeUri(), is("/apis"));
+    }
+
 }

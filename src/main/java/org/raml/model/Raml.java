@@ -15,8 +15,6 @@
  */
 package org.raml.model;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -235,25 +233,6 @@ public class Raml
 
     public Resource getResource(String path)
     {
-        if (path.startsWith(baseUri))
-        {
-            path = path.substring(baseUri.length());
-        }
-
-        String baseUriPath;
-        try
-        {
-            baseUriPath = new URL(baseUri).getPath();
-        }
-        catch (MalformedURLException e)
-        {
-            throw new RuntimeException(e); //cannot happen
-        }
-        if (path.startsWith(baseUriPath))
-        {
-            path = path.substring(baseUriPath.length());
-        }
-
         for (Resource resource : resources.values())
         {
             if (path.startsWith(resource.getRelativeUri()))
