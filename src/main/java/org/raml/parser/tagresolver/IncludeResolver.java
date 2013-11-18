@@ -71,6 +71,11 @@ public class IncludeResolver implements TagResolver
                 String newValue = IOUtils.toString(inputStream);
                 includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
             }
+            if (includeNode == null)
+            {
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
+                return mockInclude(node);
+            }
             return includeNode;
         }
         catch (IOException e)

@@ -1,0 +1,5 @@
+#%RAML 0.8
+---
+title: empty include
+version: v0.2
+/collection: !include org/raml/parser/rules/empty.yaml
