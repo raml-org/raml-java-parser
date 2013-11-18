@@ -17,6 +17,7 @@ package org.raml.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,17 +40,17 @@ public class Raml
     @Scalar(rule = org.raml.parser.rule.BaseUriRule.class)
     private String baseUri;
 
-    @Scalar()
-    private String mediaType;
+    @Sequence
+    private List<Protocol> protocols = new ArrayList<Protocol>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
     private Map<String, UriParameter> baseUriParameters = new HashMap<String, UriParameter>();
 
-    @Mapping(handler = ResourceHandler.class, implicit = true)
-    private Map<String, Resource> resources = new HashMap<String, Resource>();
+    @Scalar()
+    private String mediaType;
 
-    @Sequence
-    private List<DocumentationItem> documentation;
+    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
+    private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
     @Sequence
     private List<Map<String, Template>> resourceTypes;
@@ -57,17 +58,17 @@ public class Raml
     @Sequence
     private List<Map<String, Template>> traits;
 
-    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
-    private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
-
-    @Sequence
-    private List<Protocol> protocols = new ArrayList<Protocol>();
-
     @Sequence
     private List<Map<String, SecurityScheme>> securitySchemes = new ArrayList<Map<String, SecurityScheme>>();
 
     @Sequence
     private List<String> securedBy = new ArrayList<String>();
+
+    @Mapping(handler = ResourceHandler.class, implicit = true)
+    private Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
+
+    @Sequence
+    private List<DocumentationItem> documentation;
 
     public Raml()
     {

@@ -16,6 +16,7 @@
 package org.raml.parser.builder;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
@@ -57,7 +58,7 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     @Override
     public Object buildValue(Object parent, Node node)
     {
-        final HashMap<String, Object> map = new HashMap<String, Object>();
+        final HashMap<String, Object> map = new LinkedHashMap<String, Object>();
         ReflectionUtils.setProperty(parent, getFieldName(), map);
         return map;
     }

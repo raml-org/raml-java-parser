@@ -21,6 +21,7 @@ public class DocumentationItem
 {
     @Scalar(required = true)
     private String title;
+
     @Scalar(required = true)
     private String content;
 

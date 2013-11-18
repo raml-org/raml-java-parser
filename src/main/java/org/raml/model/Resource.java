@@ -17,6 +17,7 @@ package org.raml.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,12 +48,6 @@ public class Resource
     @Mapping
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
 
-    @Mapping(handler = ResourceHandler.class, implicit = true)
-    private Map<String, Resource> resources = new HashMap<String, Resource>();
-
-    @Mapping(implicit = true)
-    private Map<ActionType, Action> actions = new HashMap<ActionType, Action>();
-
     @Scalar(rule = TemplateReferenceRule.class)
     private TemplateReference type;
 
@@ -64,6 +59,12 @@ public class Resource
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
     private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
+
+    @Mapping(implicit = true)
+    private Map<ActionType, Action> actions = new LinkedHashMap<ActionType, Action>();
+
+    @Mapping(handler = ResourceHandler.class, implicit = true)
+    private Map<String, Resource> resources = new HashMap<String, Resource>();
 
     public Resource()
     {
