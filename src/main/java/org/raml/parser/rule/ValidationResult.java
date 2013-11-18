@@ -36,7 +36,7 @@ public class ValidationResult
     private String message;
     private Mark startMark;
     private Mark endMark;
-    private Deque<IncludeInfo> includeContext;
+    private Deque<IncludeInfo> includeContext = new ArrayDeque<IncludeInfo>();
 
     private ValidationResult(Level level, String message, Mark startMark, Mark endMark)
     {
