@@ -33,16 +33,24 @@ public class IncludeResolver implements TagResolver
 {
 
     public static final Tag INCLUDE_TAG = new Tag("!include");
+    public static final String SEPARATOR = "_";
+    public static final String INCLUDE_APPLIED_TAG = "!include-applied" + SEPARATOR;
 
     @Override
     public boolean handles(Tag tag)
     {
-        return INCLUDE_TAG.equals(tag);
+        return INCLUDE_TAG.equals(tag) || tag.startsWith(INCLUDE_APPLIED_TAG);
     }
 
     @Override
     public Node resolve(Node node, ResourceLoader resourceLoader, NodeHandler nodeHandler)
     {
+        if (node.getTag().startsWith(INCLUDE_APPLIED_TAG))
+        {
+            //already resolved
+            return node;
+        }
+
         Node includeNode;
         InputStream inputStream = null;
         try
@@ -76,6 +84,10 @@ public class IncludeResolver implements TagResolver
                 nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
                 return mockInclude(node);
             }
+            //retag node with included resource info
+            String markInfo = node.getStartMark().getLine() + SEPARATOR + node.getStartMark().getColumn()
+                              + SEPARATOR + node.getEndMark().getColumn();
+            includeNode.setTag(new Tag(INCLUDE_APPLIED_TAG + resourceName + SEPARATOR + markInfo));
             return includeNode;
         }
         catch (IOException e)

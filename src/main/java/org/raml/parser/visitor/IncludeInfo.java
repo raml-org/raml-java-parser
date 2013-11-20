@@ -15,21 +15,32 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.tagresolver.IncludeResolver.SEPARATOR;
+
+import org.raml.parser.tagresolver.IncludeResolver;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class IncludeInfo
 {
 
-    private Mark startMark;
-    private Mark endMark;
+    private int line;
+    private int startIndex;
+    private int endIndex;
     private String includeName;
+
+    public IncludeInfo(int line, int startIndex, int endIndex, String includeName)
+    {
+        this.line = line;
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        this.includeName = includeName;
+    }
 
     public IncludeInfo(Mark startMark, Mark endMark, String includeName)
     {
-        this.startMark = startMark;
-        this.endMark = endMark;
-        this.includeName = includeName;
+        this(startMark.getLine(), startMark.getColumn(), endMark.getColumn(), includeName);
     }
 
     public IncludeInfo(ScalarNode node)
@@ -37,14 +48,36 @@ public class IncludeInfo
         this(node.getStartMark(), node.getEndMark(), node.getValue());
     }
 
-    public Mark getStartMark()
+    public IncludeInfo(Tag tag)
     {
-        return startMark;
+        StringBuilder encodedInclude = new StringBuilder(tag.getValue());
+        endIndex = popTrailingNumber(encodedInclude);
+        startIndex = popTrailingNumber(encodedInclude);
+        line = popTrailingNumber(encodedInclude);
+        includeName = encodedInclude.substring(IncludeResolver.INCLUDE_APPLIED_TAG.length());
     }
 
-    public Mark getEndMark()
+    private int popTrailingNumber(StringBuilder encodedInclude)
     {
-        return endMark;
+        int idx = encodedInclude.lastIndexOf(SEPARATOR);
+        int result = Integer.parseInt(encodedInclude.substring(idx + 1));
+        encodedInclude.delete(idx, encodedInclude.length());
+        return result;
+    }
+
+    public int getLine()
+    {
+        return line;
+    }
+
+    public int getStartIndex()
+    {
+        return startIndex;
+    }
+
+    public int getEndIndex()
+    {
+        return endIndex;
     }
 
     public String getIncludeName()

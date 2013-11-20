@@ -17,6 +17,7 @@ package org.raml.parser.visitor;
 
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
@@ -213,19 +214,19 @@ public class YamlDocumentValidator implements YamlValidator
         {
             includeContext.push(new IncludeInfo((ScalarNode) originalValueNode));
         }
+        else if (tag.startsWith(INCLUDE_APPLIED_TAG))
+        {
+            includeContext.push(new IncludeInfo(tag));
+        }
     }
 
     @Override
     public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
     {
-        if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
+        if ((INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar) ||
+            tag.startsWith(INCLUDE_APPLIED_TAG))
         {
-            String actualInclude = includeContext.pop().getIncludeName();
-            String expectedInclude = ((ScalarNode) originalValueNode).getValue();
-            if (!actualInclude.equals(expectedInclude))
-            {
-                throw new IllegalStateException(String.format("actualInclude zombie! (actual: %s, expected: %s)", actualInclude, expectedInclude));
-            }
+            includeContext.pop();
         }
     }
 

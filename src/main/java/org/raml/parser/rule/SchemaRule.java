@@ -15,6 +15,7 @@
  */
 package org.raml.parser.rule;
 
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
 import static org.yaml.snakeyaml.nodes.Tag.STR;
 
@@ -28,6 +29,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 
 import org.eel.kitchen.jsonschema.util.JsonLoader;
+import org.raml.parser.tagresolver.IncludeResolver;
 import org.xml.sax.SAXException;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.Tag;
@@ -47,7 +49,7 @@ public class SchemaRule extends SimpleRule
         List<ValidationResult> validationResults = super.doValidateValue(node);
 
         String mimeType = ((ScalarNode) getParentTupleRule().getKey()).getValue();
-        if (mimeType.contains("json") && STR.equals(node.getTag()))
+        if (mimeType.contains("json") && (STR.equals(node.getTag()) || node.getTag().startsWith(INCLUDE_APPLIED_TAG)))
         {
             try
             {
@@ -63,7 +65,7 @@ public class SchemaRule extends SimpleRule
                 validationResults.add(ValidationResult.createErrorResult(prefix + e.getMessage(), node.getStartMark(), node.getEndMark()));
             }
         }
-        else if (mimeType.contains("xml") && STR.equals(node.getTag()))
+        else if (mimeType.contains("xml") && (STR.equals(node.getTag()) || node.getTag().startsWith(INCLUDE_APPLIED_TAG)))
         {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             try

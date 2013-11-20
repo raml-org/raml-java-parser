@@ -16,9 +16,11 @@
 package org.raml.parser.rules;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
+import java.util.Deque;
 import java.util.List;
 
 import org.junit.Test;
@@ -46,17 +48,47 @@ public class IncludeRulesTestCase extends AbstractRamlTestCase
     @Test
     public void includeWithError()
     {
+        String includedResource1 = "org/raml/parser/rules/included-with-error.yaml";
+        String includedResource2 = "org/raml/parser/rules/included-with-error-2.yaml";
+
         List<ValidationResult> errors = validateRaml("org/raml/parser/rules/includes-yaml-with-error.yaml");
-        assertThat("Errors are not 1 " + errors, errors.size(), is(1));
-        assertThat(errors.get(0).getMessage(), containsString("Unknown key: invalid"));
+        assertThat(errors.size(), is(3));
 
-        String includedResource = "org/raml/parser/rules/included-with-error.yaml";
-        assertThat(errors.get(0).getIncludeName(), is(includedResource));
+        assertThat(errors.get(0).getMessage(), containsString("Unknown key: invalidKeyRoot"));
+        assertThat(errors.get(0).getIncludeName(), nullValue());
+        assertThat(errors.get(0).getStartMark().getLine() + 1, is(6));
+        assertThat(errors.get(0).getEndMark().getLine() + 1, is(6));
 
-        IncludeInfo includeInfo = errors.get(0).getIncludeContext().peek();
-        assertThat(includeInfo.getStartMark().getLine() + 1, is(6));
-        assertThat(includeInfo.getEndMark().getLine() + 1, is(6));
-        assertThat(includeInfo.getIncludeName(), is(includedResource));
+        assertThat(errors.get(1).getMessage(), containsString("Unknown key: invalidKey1"));
+        assertThat(errors.get(1).getIncludeName(), is(includedResource1));
+        assertThat(errors.get(1).getStartMark().getLine() + 1, is(2));
+        assertThat(errors.get(1).getEndMark().getLine() + 1, is(2));
+        Deque<IncludeInfo> includeContext = errors.get(1).getIncludeContext();
+        assertThat(includeContext.size(), is(1));
+        IncludeInfo includeInfo = includeContext.pop();
+        assertThat(includeInfo.getLine() + 1, is(7));
+        assertThat(includeInfo.getStartIndex() + 1, is(14));
+        assertThat(includeInfo.getEndIndex() + 1, is(69));
+        assertThat(includeInfo.getIncludeName(), is(includedResource1));
+        assertThat(includeContext.isEmpty(), is(true));
+
+        assertThat(errors.get(2).getMessage(), containsString("Unknown key: invalidKey2"));
+        assertThat(errors.get(2).getIncludeName(), is(includedResource2));
+        assertThat(errors.get(2).getStartMark().getLine() + 1, is(3));
+        assertThat(errors.get(2).getEndMark().getLine() + 1, is(3));
+        includeContext = errors.get(2).getIncludeContext();
+        assertThat(includeContext.size(), is(2));
+        includeInfo = includeContext.pop();
+        assertThat(includeInfo.getLine() + 1, is(3));
+        assertThat(includeInfo.getStartIndex() + 1, is(6));
+        assertThat(includeInfo.getEndIndex() + 1, is(63));
+        assertThat(includeInfo.getIncludeName(), is(includedResource2));
+        includeInfo = includeContext.pop();
+        assertThat(includeInfo.getLine() + 1, is(7));
+        assertThat(includeInfo.getStartIndex() + 1, is(14));
+        assertThat(includeInfo.getEndIndex() + 1, is(69));
+        assertThat(includeInfo.getIncludeName(), is(includedResource1));
+        assertThat(includeContext.isEmpty(), is(true));
     }
 
     @Test

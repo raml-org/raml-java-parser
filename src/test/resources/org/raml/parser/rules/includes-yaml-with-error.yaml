@@ -3,5 +3,6 @@
 title: super
 version: v0.2
 baseUri: https://localhost:9091/api
+invalidKeyRoot: ~
 /collection: !include org/raml/parser/rules/included-with-error.yaml
 
