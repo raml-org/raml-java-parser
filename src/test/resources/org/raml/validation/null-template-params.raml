@@ -1,0 +1,25 @@
+#%RAML 0.8
+title: Template params API
+version: v1
+resourceTypes:
+  - collection:
+      get:
+        description: Get all <<resourcePathName>>
+        responses:
+          200:
+            body:
+              application/json:
+  - instance:
+      get:
+        description: Get specific <<resourcePathName>>
+        responses:
+          200:
+            body:
+              application/json:
+
+/users:
+  type: { collection:}
+  displayName: Users
+  /{userId}:
+    type: { instance: }
+

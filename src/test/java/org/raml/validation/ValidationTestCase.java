@@ -136,4 +136,14 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(raml.getTitle(), is("GitHub API"));
     }
 
+    @Test
+    public void nullTemplateParameters()
+    {
+        String resource = "org/raml/validation/null-template-params.raml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(0));
+        Raml raml = parseRaml(resource);
+        assertThat(raml.getTitle(), is("Template params API"));
+    }
+
 }

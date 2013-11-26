@@ -438,7 +438,7 @@ public class TemplateResolver
             MappingNode templateNode = templateMap.get(templateName);
             if (templateNode == null)
             {
-                addError(label + " not defined: " + templateName);
+                addError(label + " not defined: " + templateName, reference);
                 return null;
             }
             return cloneMappingNode(templateNode, getTemplateParameters(reference, defaultParameters));
@@ -457,14 +457,9 @@ public class TemplateResolver
             return "";
         }
 
-        private void addError(String message)
-        {
-            templateValidations.add(createErrorResult(message));
-        }
-
         private void addError(String message, Node node)
         {
-            templateValidations.add(createErrorResult(message, node.getStartMark(), node.getEndMark()));
+            templateValidations.add(createErrorResult(message, node));
         }
 
         private Map<String, String> getTemplateParameters(Node node, Map<String, String> parameters)
@@ -473,6 +468,15 @@ public class TemplateResolver
             {
                 List<NodeTuple> tuples = ((MappingNode) node).getValue();
                 Node params = tuples.get(0).getValueNode();
+                if (params.getTag() == Tag.NULL)
+                {
+                    return parameters;
+                }
+                if (params.getNodeId() != mapping)
+                {
+                    addError("Mapping node expected", params);
+                    return parameters;
+                }
                 for (NodeTuple paramTuple : ((MappingNode) params).getValue())
                 {
                     String paramKey = ((ScalarNode) paramTuple.getKeyNode()).getValue();
@@ -547,7 +551,7 @@ public class TemplateResolver
             {
                 return cloneScalarNode((ScalarNode) valueNode, parameters);
             }
-            addError("unsupported node type: " + valueNode.getNodeId());
+            addError("unsupported node type: " + valueNode.getNodeId(), valueNode);
             return null;
         }
 
@@ -570,13 +574,13 @@ public class TemplateResolver
             while (matcher.find())
             {
                 matcher.appendReplacement(sb, "");
-                sb.append(resolveParameter(matcher.group(), parameters));
+                sb.append(resolveParameter(matcher.group(), parameters, node));
             }
             matcher.appendTail(sb);
             return new ScalarNode(node.getTag(), sb.toString(), node.getStartMark(), node.getEndMark(), node.getStyle());
         }
 
-        private String resolveParameter(String match, Map<String, String> parameters)
+        private String resolveParameter(String match, Map<String, String> parameters, ScalarNode node)
         {
             String result = "";
             String[] tokens = match.substring(2, match.length() - 2).split("\\|");
@@ -596,12 +600,12 @@ public class TemplateResolver
                     }
                     catch (Exception e)
                     {
-                        addError("Invalid parameter function: " + token);
+                        addError("Invalid parameter function: " + token, node);
                     }
                 }
                 else
                 {
-                    addError("Invalid parameter definition: " + match);
+                    addError("Invalid parameter definition: " + match, node);
                 }
             }
             return result;
@@ -620,7 +624,6 @@ public class TemplateResolver
                     String baseKey = getMatchingKey(baseTupleMap, templateKey);
                     if (baseKey == null)
                     {
-                        //TODO may require cleaning of value node
                         baseNode.getValue().add(templateTuple);
                     }
                     else
