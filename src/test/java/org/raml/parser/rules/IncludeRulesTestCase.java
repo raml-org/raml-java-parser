@@ -56,37 +56,40 @@ public class IncludeRulesTestCase extends AbstractRamlTestCase
 
         assertThat(errors.get(0).getMessage(), containsString("Unknown key: invalidKeyRoot"));
         assertThat(errors.get(0).getIncludeName(), nullValue());
-        assertThat(errors.get(0).getStartMark().getLine() + 1, is(6));
-        assertThat(errors.get(0).getEndMark().getLine() + 1, is(6));
+        assertThat(errors.get(0).getLine() + 1, is(6));
+        assertThat(errors.get(0).getStartColumn() + 1, is(1));
+        assertThat(errors.get(0).getEndColumn() + 1, is(15));
 
         assertThat(errors.get(1).getMessage(), containsString("Unknown key: invalidKey1"));
         assertThat(errors.get(1).getIncludeName(), is(includedResource1));
-        assertThat(errors.get(1).getStartMark().getLine() + 1, is(2));
-        assertThat(errors.get(1).getEndMark().getLine() + 1, is(2));
+        assertThat(errors.get(1).getLine() + 1, is(2));
+        assertThat(errors.get(1).getStartColumn() + 1, is(1));
+        assertThat(errors.get(1).getEndColumn() + 1, is(12));
         Deque<IncludeInfo> includeContext = errors.get(1).getIncludeContext();
         assertThat(includeContext.size(), is(1));
         IncludeInfo includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(7));
-        assertThat(includeInfo.getStartIndex() + 1, is(14));
-        assertThat(includeInfo.getEndIndex() + 1, is(69));
+        assertThat(includeInfo.getStartColumn() + 1, is(14));
+        assertThat(includeInfo.getEndColumn() + 1, is(69));
         assertThat(includeInfo.getIncludeName(), is(includedResource1));
         assertThat(includeContext.isEmpty(), is(true));
 
         assertThat(errors.get(2).getMessage(), containsString("Unknown key: invalidKey2"));
         assertThat(errors.get(2).getIncludeName(), is(includedResource2));
-        assertThat(errors.get(2).getStartMark().getLine() + 1, is(3));
-        assertThat(errors.get(2).getEndMark().getLine() + 1, is(3));
+        assertThat(errors.get(2).getLine() + 1, is(3));
+        assertThat(errors.get(2).getStartColumn() + 1, is(1));
+        assertThat(errors.get(2).getEndColumn() + 1, is(12));
         includeContext = errors.get(2).getIncludeContext();
         assertThat(includeContext.size(), is(2));
         includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(3));
-        assertThat(includeInfo.getStartIndex() + 1, is(6));
-        assertThat(includeInfo.getEndIndex() + 1, is(63));
+        assertThat(includeInfo.getStartColumn() + 1, is(6));
+        assertThat(includeInfo.getEndColumn() + 1, is(63));
         assertThat(includeInfo.getIncludeName(), is(includedResource2));
         includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(7));
-        assertThat(includeInfo.getStartIndex() + 1, is(14));
-        assertThat(includeInfo.getEndIndex() + 1, is(69));
+        assertThat(includeInfo.getStartColumn() + 1, is(14));
+        assertThat(includeInfo.getEndColumn() + 1, is(69));
         assertThat(includeInfo.getIncludeName(), is(includedResource1));
         assertThat(includeContext.isEmpty(), is(true));
     }

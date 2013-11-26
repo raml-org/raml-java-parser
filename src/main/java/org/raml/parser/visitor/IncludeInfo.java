@@ -26,15 +26,15 @@ public class IncludeInfo
 {
 
     private int line;
-    private int startIndex;
-    private int endIndex;
+    private int startColumn;
+    private int endColumn;
     private String includeName;
 
-    public IncludeInfo(int line, int startIndex, int endIndex, String includeName)
+    public IncludeInfo(int line, int startColumn, int endColumn, String includeName)
     {
         this.line = line;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
+        this.startColumn = startColumn;
+        this.endColumn = endColumn;
         this.includeName = includeName;
     }
 
@@ -51,8 +51,8 @@ public class IncludeInfo
     public IncludeInfo(Tag tag)
     {
         StringBuilder encodedInclude = new StringBuilder(tag.getValue());
-        endIndex = popTrailingNumber(encodedInclude);
-        startIndex = popTrailingNumber(encodedInclude);
+        endColumn = popTrailingNumber(encodedInclude);
+        startColumn = popTrailingNumber(encodedInclude);
         line = popTrailingNumber(encodedInclude);
         includeName = encodedInclude.substring(IncludeResolver.INCLUDE_APPLIED_TAG.length());
     }
@@ -70,14 +70,14 @@ public class IncludeInfo
         return line;
     }
 
-    public int getStartIndex()
+    public int getStartColumn()
     {
-        return startIndex;
+        return startColumn;
     }
 
-    public int getEndIndex()
+    public int getEndColumn()
     {
-        return endIndex;
+        return endColumn;
     }
 
     public String getIncludeName()

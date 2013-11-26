@@ -31,6 +31,7 @@
                         <exclude>**/*.txt</exclude>
                         <exclude>**/*.json</exclude>
                         <exclude>**/*.xml</exclude>
+                        <exclude>**/*.xsd</exclude>
                         <exclude>**/*.properties</exclude>
                         <exclude>**/*.md</exclude>
                         <exclude>**/build-number.txt</exclude>

@@ -8,7 +8,7 @@ title: sample
                     {
                         "title": "League Schema",
                         "type": "object",
-                        "properties: {
+                        "properties", {
                             "id": {
                                 "type": "string"
                             },

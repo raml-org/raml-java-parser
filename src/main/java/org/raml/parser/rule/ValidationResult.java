@@ -27,6 +27,8 @@ import org.yaml.snakeyaml.nodes.Node;
 public class ValidationResult
 {
 
+    public static int UNKNOWN = -1;
+
     public enum Level
     {
         ERROR, WARN, INFO
@@ -34,21 +36,23 @@ public class ValidationResult
 
     private Level level;
     private String message;
-    private Mark startMark;
-    private Mark endMark;
+    private int line;
+    private int startColumn;
+    private int endColumn;
     private Deque<IncludeInfo> includeContext = new ArrayDeque<IncludeInfo>();
 
-    private ValidationResult(Level level, String message, Mark startMark, Mark endMark)
+    private ValidationResult(Level level, String message, int line, int startColumn, int endColumn)
     {
         this.level = level;
         this.message = message;
-        this.startMark = startMark;
-        this.endMark = endMark;
+        this.line = line;
+        this.startColumn = startColumn;
+        this.endColumn = endColumn;
     }
 
-    public boolean isValid()
+    public Level getLevel()
     {
-        return level != Level.ERROR;
+        return level;
     }
 
     public String getMessage()
@@ -56,34 +60,24 @@ public class ValidationResult
         return message;
     }
 
-    public static ValidationResult createErrorResult(String message, Mark startMark, Mark endMark)
+    public int getLine()
     {
-        return new ValidationResult(Level.ERROR, message, startMark, endMark);
+        return line;
     }
 
-    public static ValidationResult createErrorResult(String message, Node node)
+    public int getStartColumn()
     {
-        return createErrorResult(message, node.getStartMark(), node.getEndMark());
+        return startColumn;
     }
 
-    public static ValidationResult createErrorResult(String message)
+    public int getEndColumn()
     {
-        return createErrorResult(message, null, null);
+        return endColumn;
     }
 
-    public static ValidationResult create(Level level, String message)
+    public boolean isValid()
     {
-        return new ValidationResult(level, message, null, null);
-    }
-
-    public Mark getStartMark()
-    {
-        return startMark;
-    }
-
-    public Mark getEndMark()
-    {
-        return endMark;
+        return level != Level.ERROR;
     }
 
     public String getIncludeName()
@@ -139,4 +133,28 @@ public class ValidationResult
                '}';
     }
 
+    public static ValidationResult createErrorResult(String message, int line, int startIndex, int endIndex)
+    {
+        return new ValidationResult(Level.ERROR, message, line, startIndex, endIndex);
+    }
+
+    public static ValidationResult createErrorResult(String message, Mark startMark, Mark endMark)
+    {
+        return createErrorResult(message, startMark.getLine(), startMark.getColumn(), endMark.getColumn());
+    }
+
+    public static ValidationResult createErrorResult(String message, Node node)
+    {
+        return createErrorResult(message, node.getStartMark(), node.getEndMark());
+    }
+
+    public static ValidationResult createErrorResult(String message)
+    {
+        return createErrorResult(message, UNKNOWN, UNKNOWN, UNKNOWN);
+    }
+
+    public static ValidationResult create(Level level, String message)
+    {
+        return new ValidationResult(level, message, UNKNOWN, UNKNOWN, UNKNOWN);
+    }
 }

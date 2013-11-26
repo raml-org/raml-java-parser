@@ -1,0 +1,7 @@
+#%RAML 0.8
+title: sample
+/resource:
+    put:
+        body:
+            application/xml:
+                schema: !include org/raml/schema/invalid.xsd

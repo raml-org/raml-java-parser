@@ -22,13 +22,11 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.Tag;
 
 public class GlobalSchemasRule extends SequenceTupleRule
 {
 
-    private Map<String, String> schemas = new HashMap<String, String>();
-    private Map<String, Tag> tags = new HashMap<String, Tag>();
+    private Map<String, ScalarNode> schemas = new HashMap<String, ScalarNode>();
 
     public GlobalSchemasRule()
     {
@@ -56,20 +54,15 @@ public class GlobalSchemasRule extends SequenceTupleRule
             {
                 String schemaKey = ((ScalarNode) nodeTuple.getKeyNode()).getValue();
                 ScalarNode valueNode = (ScalarNode) nodeTuple.getValueNode();
-                schemas.put(schemaKey, valueNode.getValue());
-                tags.put(schemaKey, valueNode.getTag());
+                schemas.put(schemaKey, valueNode);
             }
             return super.getRuleForTuple(nodeTuple);
         }
     }
 
-    public Map<String, String> getSchemas()
+    public ScalarNode getSchema(String key)
     {
-        return schemas;
+        return schemas.get(key);
     }
 
-    public Map<String, Tag> getTags()
-    {
-        return tags;
-    }
 }

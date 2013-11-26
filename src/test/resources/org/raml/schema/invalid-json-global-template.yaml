@@ -1,11 +1,11 @@
 #%RAML 0.8
 title: sample
 schemas:
-    - put-league: |
+    - put-leagues: |
         {
             "title": "League Schema",
             "type": "object",
-            "properties": {
+            "properties", {
                 "id": {
                     "type": "string"
                 },
