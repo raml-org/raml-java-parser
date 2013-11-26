@@ -26,6 +26,7 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
+import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 
 public class Raml
@@ -61,8 +62,8 @@ public class Raml
     @Sequence
     private List<Map<String, SecurityScheme>> securitySchemes = new ArrayList<Map<String, SecurityScheme>>();
 
-    @Sequence
-    private List<String> securedBy = new ArrayList<String>();
+    @Sequence(rule = SecurityReferenceSequenceRule.class)
+    private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Mapping(handler = ResourceHandler.class, implicit = true)
     private Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
@@ -212,12 +213,12 @@ public class Raml
         this.securitySchemes = securitySchemes;
     }
 
-    public List<String> getSecuredBy()
+    public List<SecurityReference> getSecuredBy()
     {
         return securedBy;
     }
 
-    public void setSecuredBy(List<String> securedBy)
+    public void setSecuredBy(List<SecurityReference> securedBy)
     {
         this.securedBy = securedBy;
     }

@@ -17,7 +17,6 @@ package org.raml.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +28,7 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 public class Action
 {
@@ -60,8 +60,8 @@ public class Action
     @Sequence
     private List<Protocol> protocols = new ArrayList<Protocol>();
 
-    @Sequence
-    private List<String> securedBy = new ArrayList<String>();
+    @Sequence(rule = SecurityReferenceSequenceRule.class)
+    private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
     private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
@@ -160,12 +160,12 @@ public class Action
         this.protocols = protocols;
     }
 
-    public List<String> getSecuredBy()
+    public List<SecurityReference> getSecuredBy()
     {
         return securedBy;
     }
 
-    public void setSecuredBy(List<String> securedBy)
+    public void setSecuredBy(List<SecurityReference> securedBy)
     {
         this.securedBy = securedBy;
     }

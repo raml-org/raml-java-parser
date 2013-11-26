@@ -28,6 +28,7 @@ import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
+import org.raml.parser.rule.SecurityReferenceSequenceRule;
 import org.raml.parser.rule.TemplateReferenceRule;
 
 public class Resource
@@ -54,8 +55,8 @@ public class Resource
     @Sequence(rule = org.raml.parser.rule.TemplateReferenceSequenceRule.class)
     private List<TemplateReference> is = new ArrayList<TemplateReference>();
 
-    @Sequence
-    private List<String> securedBy = new ArrayList<String>();
+    @Sequence(rule = SecurityReferenceSequenceRule.class)
+    private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
     private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
@@ -175,12 +176,12 @@ public class Resource
         this.type = type;
     }
 
-    public List<String> getSecuredBy()
+    public List<SecurityReference> getSecuredBy()
     {
         return securedBy;
     }
 
-    public void setSecuredBy(List<String> securedBy)
+    public void setSecuredBy(List<SecurityReference> securedBy)
     {
         this.securedBy = securedBy;
     }

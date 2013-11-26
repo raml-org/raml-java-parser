@@ -146,4 +146,14 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(raml.getTitle(), is("Template params API"));
     }
 
+    @Test
+    public void instagram()
+    {
+        String resource = "org/raml/validation/instagram-api.raml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(0));
+        Raml raml = parseRaml(resource);
+        assertThat(raml.getTitle(), is("Instagram API"));
+    }
+
 }
