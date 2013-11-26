@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -63,6 +64,10 @@ public class ReflectionUtils
         if (parent instanceof List)
         {
             ((List) parent).add(value);
+        }
+        else if (parent instanceof Map)
+        {
+            ((Map) parent).put(fieldName, value);
         }
         else
         {

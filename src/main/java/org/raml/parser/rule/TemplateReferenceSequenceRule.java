@@ -28,6 +28,6 @@ public class TemplateReferenceSequenceRule extends SequenceTupleRule
     @Override
     public NodeRule<?> getItemRule()
     {
-        return new TemplateReferenceRule();
+        return new TemplateReferenceRule(getNodeRuleFactory());
     }
 }

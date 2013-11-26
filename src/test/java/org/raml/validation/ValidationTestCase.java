@@ -22,6 +22,7 @@ import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 import java.util.List;
 
 import org.junit.Test;
+import org.raml.model.Raml;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
 
@@ -114,4 +115,25 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("Invalid RAML"));
     }
+
+    @Test
+    public void typesWithParams()
+    {
+        String resource = "org/raml/validation/se-types-params.yaml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(0));
+        Raml raml = parseRaml(resource);
+        assertThat(raml.getTitle(), is("Example API"));
+    }
+
+    @Test
+    public void github()
+    {
+        String resource = "org/raml/validation/github-api-v3.raml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(0));
+        Raml raml = parseRaml(resource);
+        assertThat(raml.getTitle(), is("GitHub API"));
+    }
+
 }

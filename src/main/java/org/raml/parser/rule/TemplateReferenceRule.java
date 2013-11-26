@@ -24,7 +24,12 @@ public class TemplateReferenceRule extends PojoTupleRule
 
     public TemplateReferenceRule()
     {
-        super("type", TemplateReference.class);
+        this(null);
+    }
+
+    public TemplateReferenceRule(NodeRuleFactory nodeRuleFactory)
+    {
+        super("type", TemplateReference.class, nodeRuleFactory);
     }
 
     @Override
