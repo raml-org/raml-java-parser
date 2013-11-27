@@ -26,13 +26,60 @@ documentation:
     - title: section
       content: section content
 protocols: [HTTP, HTTPS]
+schemas:
+    - league-json: |
+        {
+            "title": "League Schema",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+    - league-xml: |
+        <?xml version="1.0" encoding="ISO-8859-1" ?>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         elementFormDefault="qualified" xmlns="http://mulesoft.com/schemas/soccer"
+         targetNamespace="http://mulesoft.com/schemas/soccer">
+        <xs:element name="league">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        </xs:schema>
+
+resourceTypes:
+    - basic:
+        displayName: basic type
+    - complex:
+        displayName: <<value>> type
+traits:
+    - simple:
+        displayName: simple trait
+    - knotty:
+        displayName: <<value>> trait
 
 /:
+    type: basic
     displayName: Root resource
     description: Root resource description
     head:
+        is:
+            - simple
+            - knotty:
+                value: mingled
         protocols: [HTTP]
 /media:
+    type:
+        complex:
+            value: complicated
     displayName: Media collection
     baseUriParameters:
         host:

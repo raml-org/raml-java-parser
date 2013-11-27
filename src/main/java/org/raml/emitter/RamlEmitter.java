@@ -16,23 +16,28 @@
 package org.raml.emitter;
 
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.raml.parser.utils.ReflectionUtils.isPojo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.model.Raml;
+import org.raml.model.TemplateReference;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.utils.ReflectionUtils;
 
-public class YamlEmitter
+public class RamlEmitter
 {
 
+    public static final String VERSION = "#%RAML 0.8\n";
     private static final String INDENTATION = "    ";
     private static final String YAML_SEQ = "- ";
     private static final String YAML_SEQ_START = "[";
@@ -40,11 +45,11 @@ public class YamlEmitter
     private static final String YAML_SEQ_SEP = ", ";
     private static final String YAML_MAP_SEP = ": ";
 
-    public String dump(Object pojo)
+    public String dump(Raml raml)
     {
-        StringBuilder dump = new StringBuilder();
+        StringBuilder dump = new StringBuilder(VERSION);
         int depth = 0;
-        dumpPojo(dump, depth, pojo);
+        dumpPojo(dump, depth, raml);
         return dump.toString();
     }
 
@@ -61,15 +66,15 @@ public class YamlEmitter
 
             if (scalar != null)
             {
-                dumpScalar(dump, depth, declaredField, pojo);
+                dumpScalarField(dump, depth, declaredField, pojo);
             }
             else if (mapping != null)
             {
-                dumpMapping(dump, depth, declaredField, mapping.implicit(), pojo);
+                dumpMappingField(dump, depth, declaredField, mapping.implicit(), pojo);
             }
             else if (sequence != null)
             {
-                dumpSequence(dump, depth, declaredField, pojo);
+                dumpSequenceField(dump, depth, declaredField, pojo);
             }
         }
     }
@@ -86,7 +91,7 @@ public class YamlEmitter
         }
     }
 
-    private void dumpSequence(StringBuilder dump, int depth, Field field, Object pojo)
+    private void dumpSequenceField(StringBuilder dump, int depth, Field field, Object pojo)
     {
         if (!List.class.isAssignableFrom(field.getType()))
         {
@@ -111,12 +116,22 @@ public class YamlEmitter
 
     private void dumpSequenceItems(StringBuilder dump, int depth, List seq, Type itemType)
     {
-        if (!(itemType instanceof Class<?>))
+        if (itemType instanceof ParameterizedType)
         {
-            //TODO
-            throw new RuntimeException("who uses this?");
+            generateSequenceOfMaps(dump, depth + 1, seq, (ParameterizedType) itemType);
         }
-        else if (ReflectionUtils.isPojo((Class<?>) itemType))
+
+        //custom handling for TemplateReference
+        else if (TemplateReference.class.isAssignableFrom((Class<?>) itemType))
+        {
+            List<String> references = new ArrayList<String>();
+            for (Object ref : seq)
+            {
+                references.add(((TemplateReference) ref).getName());
+            }
+            generateInlineSequence(dump, references);
+        }
+        else if (isPojo((Class<?>) itemType))
         {
             dump.append("\n");
             for (Object item : seq)
@@ -127,21 +142,44 @@ public class YamlEmitter
         }
         else
         {
-            dump.append(YAML_SEQ_START);
-            for (int i = 0; i < seq.size(); i++)
-            {
-                Object item = seq.get(i);
-                dump.append(sanitizeScalarValue(depth, item));
-                if (i < seq.size() - 1)
-                {
-                    dump.append(YAML_SEQ_SEP);
-                }
-            }
-            dump.append(YAML_SEQ_END).append("\n");
+            generateInlineSequence(dump, seq);
         }
     }
 
-    private void dumpMapping(StringBuilder dump, int depth, Field field, boolean implicit, Object pojo)
+    private void generateSequenceOfMaps(StringBuilder dump, int depth, List seq, ParameterizedType itemType)
+    {
+        Type rawType = itemType.getRawType();
+        if (rawType instanceof Class && Map.class.isAssignableFrom((Class<?>) rawType))
+        {
+            Type valueType = itemType.getActualTypeArguments()[1];
+            if (valueType instanceof Class)
+            {
+                dump.append("\n");
+                for (Object item : seq)
+                {
+                    dump.append(indent(depth)).append(YAML_SEQ).append("\n");
+                    dumpMap(dump, depth + 1, valueType, (Map) item);
+                }
+            }
+        }
+    }
+
+    private void generateInlineSequence(StringBuilder dump, List seq)
+    {
+        dump.append(YAML_SEQ_START);
+        for (int i = 0; i < seq.size(); i++)
+        {
+            Object item = seq.get(i);
+            dump.append(sanitizeScalarValue(0, item));
+            if (i < seq.size() - 1)
+            {
+                dump.append(YAML_SEQ_SEP);
+            }
+        }
+        dump.append(YAML_SEQ_END).append("\n");
+    }
+
+    private void dumpMappingField(StringBuilder dump, int depth, Field field, boolean implicit, Object pojo)
     {
         if (!Map.class.isAssignableFrom(field.getType()))
         {
@@ -149,61 +187,59 @@ public class YamlEmitter
         }
 
         Map value = (Map) getFieldValue(field, pojo);
+
         if (value == null || value.isEmpty())
         {
             return;
         }
 
-        Type type = field.getGenericType();
-        ParameterizedType pType = (ParameterizedType) type;
-        Type valueType = pType.getActualTypeArguments()[1];
-
-        if (valueType instanceof Class<?>)
+        if (!implicit)
         {
-            if (implicit)
-            {
-                for (Map.Entry entry : (Set<Map.Entry>) value.entrySet())
-                {
-                    dump.append(indent(depth)).append(sanitizeScalarValue(depth, entry.getKey()));
-                    dump.append(YAML_MAP_SEP).append("\n");
-                    dumpPojo(dump, depth + 1, entry.getValue());
-                }
-            }
-            else
-            {
-                dump.append(indent(depth)).append(alias(field)).append(YAML_MAP_SEP).append("\n");
-                for (Map.Entry entry : (Set<Map.Entry>) value.entrySet())
-                {
-                    dump.append(indent(depth + 1)).append(entry.getKey()).append(YAML_MAP_SEP).append("\n");
-                    dumpPojo(dump, depth + 2, entry.getValue());
-                }
-            }
+            dump.append(indent(depth)).append(alias(field)).append(YAML_MAP_SEP).append("\n");
+            depth++;
         }
-        else if (valueType instanceof ParameterizedType)
+
+        ParameterizedType pType = (ParameterizedType) field.getGenericType();
+        Type valueType = pType.getActualTypeArguments()[1];
+        dumpMap(dump, depth, valueType, value);
+    }
+
+    private void dumpMap(StringBuilder dump, int depth, Type valueType, Map value)
+    {
+        Type listType = null;
+        if (valueType instanceof ParameterizedType)
         {
             Type rawType = ((ParameterizedType) valueType).getRawType();
             if (rawType instanceof Class && List.class.isAssignableFrom((Class<?>) rawType))
             {
-                Type listType = ((ParameterizedType) valueType).getActualTypeArguments()[0];
-                if (listType instanceof Class)
-                {
-                    dump.append(indent(depth)).append(alias(field)).append(YAML_MAP_SEP).append("\n");
-                    for (Map.Entry entry : (Set<Map.Entry>) value.entrySet())
-                    {
-                        dump.append(indent(depth + 1)).append(entry.getKey()).append(YAML_MAP_SEP);
-                        dumpSequenceItems(dump, depth + 2, (List) entry.getValue(), listType);
-                    }
-                }
+                listType = ((ParameterizedType) valueType).getActualTypeArguments()[0];
             }
         }
-        else
+
+        //body
+        for (Map.Entry entry : (Set<Map.Entry>) value.entrySet())
         {
-            throw new RuntimeException("unexpected value type: " + valueType);
+            dump.append(indent(depth)).append(sanitizeScalarValue(depth, entry.getKey()));
+            dump.append(YAML_MAP_SEP);
+
+            if (listType != null)
+            {
+                dumpSequenceItems(dump, depth + 1, (List) entry.getValue(), listType);
+            }
+            else if (isPojo((Class<?>) valueType))
+            {
+                dump.append("\n");
+                dumpPojo(dump, depth + 1, entry.getValue());
+            }
+            else //scalar
+            {
+                dump.append(sanitizeScalarValue(depth + 1, entry.getValue())).append("\n");
+            }
         }
 
     }
 
-    private void dumpScalar(StringBuilder dump, int depth, Field field, Object pojo)
+    private void dumpScalarField(StringBuilder dump, int depth, Field field, Object pojo)
     {
         try
         {
@@ -213,7 +249,16 @@ public class YamlEmitter
                 return;
             }
             dump.append(indent(depth)).append(alias(field)).append(YAML_MAP_SEP);
-            dump.append(sanitizeScalarValue(depth, value)).append("\n");
+
+            //custom handling for TemplateReference
+            if (TemplateReference.class.isAssignableFrom(field.getType()))
+            {
+                dump.append(((TemplateReference) value).getName()).append("\n");
+            }
+            else
+            {
+                dump.append(sanitizeScalarValue(depth, value)).append("\n");
+            }
         }
         catch (IllegalAccessException e)
         {

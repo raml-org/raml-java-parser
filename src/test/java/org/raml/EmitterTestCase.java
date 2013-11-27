@@ -18,14 +18,16 @@ package org.raml;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.GET;
+import static org.raml.model.ActionType.HEAD;
 
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import org.raml.emitter.YamlEmitter;
+import org.raml.emitter.RamlEmitter;
 import org.raml.model.DocumentationItem;
 import org.raml.model.Raml;
+import org.raml.model.TemplateReference;
 import org.raml.model.parameter.FormParameter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.AbstractRamlTestCase;
@@ -40,7 +42,7 @@ public class EmitterTestCase extends AbstractRamlTestCase
     {
         Raml raml = parseRaml("org/raml/full-config.yaml");
 
-        YamlEmitter emitter = new YamlEmitter();
+        RamlEmitter emitter = new RamlEmitter();
         String dumpFromRaml = emitter.dump(raml);
         verifyFullDump(raml, dumpFromRaml);
     }
@@ -114,6 +116,14 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(tgtDoc.get(0).getTitle(), is(srcDoc.get(0).getTitle()));
         assertThat(tgtDoc.get(0).getContent(), is(srcDoc.get(0).getContent()));
 
+        //*********** GLOBAL SCHEMAS ***********
+
+        List<Map<String, String>> srcSchemas = source.getSchemas();
+        List<Map<String, String>> tgtSchemas = target.getSchemas();
+        assertThat(tgtSchemas.size(), is(srcSchemas.size()));
+        assertThat(tgtSchemas.get(0).get("league-json"), is(srcSchemas.get(0).get("league-json")));
+        assertThat(tgtSchemas.get(1).get("league-xml"), is(srcSchemas.get(1).get("league-xml")));
+
         //*********** FORM PARAMETERS ***********
 
         Map<String, List<FormParameter>> srcFormParams = source.getResource("/media").getAction(GET).getBody().get("multipart/form-data").getFormParameters();
@@ -121,6 +131,32 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(srcFormParams.size(), is(tgtFormParams.size()));
         assertThat(srcFormParams.get("form-1").size(), is(tgtFormParams.get("form-1").size()));
         assertThat(srcFormParams.get("form-1").get(0).getDisplayName(), is(tgtFormParams.get("form-1").get(0).getDisplayName()));
+
+        //*********** RESOURCE TYPES ************
+
+        assertThat(target.getResourceTypes().size(), is(source.getResourceTypes().size()));
+        assertThat(target.getResourceTypes().get(0).get("basic").getDisplayName(),
+                   is(source.getResourceTypes().get(0).get("basic").getDisplayName()));
+        assertThat(target.getResourceTypes().get(1).get("complex").getDisplayName(),
+                   is(source.getResourceTypes().get(1).get("complex").getDisplayName()));
+
+        assertThat(target.getResource("/").getType().getName(), is(source.getResource("/").getType().getName()));
+        assertThat(target.getResource("/media").getType().getName(), is(source.getResource("/media").getType().getName()));
+
+        //*********** TRAITS ************
+
+        assertThat(target.getTraits().size(), is(source.getTraits().size()));
+        assertThat(target.getTraits().get(0).get("simple").getDisplayName(),
+                   is(source.getTraits().get(0).get("simple").getDisplayName()));
+        assertThat(target.getTraits().get(1).get("knotty").getDisplayName(),
+                   is(source.getTraits().get(1).get("knotty").getDisplayName()));
+
+        List<TemplateReference> tgtIs = target.getResource("/").getAction(HEAD).getIs();
+        List<TemplateReference> srcIs = source.getResource("/").getAction(HEAD).getIs();
+        assertThat(tgtIs.size(), is(srcIs.size()));
+        assertThat(tgtIs.get(0).getName(), is(srcIs.get(0).getName()));
+        assertThat(tgtIs.get(1).getName(), is(srcIs.get(1).getName()));
+
     }
 
 }
