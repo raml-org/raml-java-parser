@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.raml.emitter.RamlEmitter;
 import org.raml.model.DocumentationItem;
 import org.raml.model.Raml;
-import org.raml.model.TemplateReference;
 import org.raml.model.parameter.FormParameter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.AbstractRamlTestCase;
@@ -140,8 +139,8 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(target.getResourceTypes().get(1).get("complex").getDisplayName(),
                    is(source.getResourceTypes().get(1).get("complex").getDisplayName()));
 
-        assertThat(target.getResource("/").getType().getName(), is(source.getResource("/").getType().getName()));
-        assertThat(target.getResource("/media").getType().getName(), is(source.getResource("/media").getType().getName()));
+        assertThat(target.getResource("/").getType(), is(source.getResource("/").getType()));
+        assertThat(target.getResource("/media").getType(), is(source.getResource("/media").getType()));
 
         //*********** TRAITS ************
 
@@ -151,11 +150,7 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(target.getTraits().get(1).get("knotty").getDisplayName(),
                    is(source.getTraits().get(1).get("knotty").getDisplayName()));
 
-        List<TemplateReference> tgtIs = target.getResource("/").getAction(HEAD).getIs();
-        List<TemplateReference> srcIs = source.getResource("/").getAction(HEAD).getIs();
-        assertThat(tgtIs.size(), is(srcIs.size()));
-        assertThat(tgtIs.get(0).getName(), is(srcIs.get(0).getName()));
-        assertThat(tgtIs.get(1).getName(), is(srcIs.get(1).getName()));
+        assertThat(target.getResource("/").getAction(HEAD).getIs(), is(source.getResource("/").getAction(HEAD).getIs()));
 
     }
 

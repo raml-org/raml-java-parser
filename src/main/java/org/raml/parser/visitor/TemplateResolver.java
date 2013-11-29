@@ -341,11 +341,18 @@ public class TemplateResolver
         {
             if (traitsNodeTuple.getValueNode().getNodeId() == sequence)
             {
-                for (Node traitNode : ((SequenceNode) traitsNodeTuple.getValueNode()).getValue())
+                List<Node> traitList = ((SequenceNode) traitsNodeTuple.getValueNode()).getValue();
+                for (int i = 0; i < traitList.size(); i++)
                 {
+                    Node traitNode = traitList.get(i);
                     if (traitNode.getNodeId() == mapping)
                     {
-                        removeParametersFromTemplateCall(((MappingNode) traitNode).getValue().get(0));
+                        Node keyNode = ((MappingNode) traitNode).getValue().get(0).getKeyNode();
+                        if (keyNode.getNodeId() == scalar)
+                        {
+                            traitList.remove(i);
+                            traitList.add(i, keyNode);
+                        }
                     }
                 }
             }

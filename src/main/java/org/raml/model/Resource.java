@@ -29,7 +29,6 @@ import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
-import org.raml.parser.rule.TemplateReferenceRule;
 
 public class Resource
 {
@@ -49,11 +48,11 @@ public class Resource
     @Mapping
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
 
-    @Scalar(rule = TemplateReferenceRule.class)
-    private TemplateReference type;
+    @Scalar
+    private String type;
 
-    @Sequence(rule = org.raml.parser.rule.TemplateReferenceSequenceRule.class)
-    private List<TemplateReference> is = new ArrayList<TemplateReference>();
+    @Sequence
+    private List<String> is = new ArrayList<String>();
 
     @Sequence(rule = SecurityReferenceSequenceRule.class)
     private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
@@ -156,22 +155,22 @@ public class Resource
         return uriParameters;
     }
 
-    public List<TemplateReference> getIs()
+    public List<String> getIs()
     {
         return is;
     }
 
-    public void setIs(List<TemplateReference> is)
+    public void setIs(List<String> is)
     {
         this.is = is;
     }
 
-    public TemplateReference getType()
+    public String getType()
     {
         return type;
     }
 
-    public void setType(TemplateReference type)
+    public void setType(String type)
     {
         this.type = type;
     }

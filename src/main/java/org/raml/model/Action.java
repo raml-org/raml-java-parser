@@ -54,8 +54,8 @@ public class Action
     @Parent
     private Resource resource;
 
-    @Sequence(rule = org.raml.parser.rule.TemplateReferenceSequenceRule.class)
-    private List<TemplateReference> is = new ArrayList<TemplateReference>();
+    @Sequence
+    private List<String> is = new ArrayList<String>();
 
     @Sequence
     private List<Protocol> protocols = new ArrayList<Protocol>();
@@ -140,12 +140,12 @@ public class Action
         this.resource = resource;
     }
 
-    public List<TemplateReference> getIs()
+    public List<String> getIs()
     {
         return is;
     }
 
-    public void setIs(List<TemplateReference> is)
+    public void setIs(List<String> is)
     {
         this.is = is;
     }

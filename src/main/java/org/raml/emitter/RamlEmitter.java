@@ -21,14 +21,12 @@ import static org.raml.parser.utils.ReflectionUtils.isPojo;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.model.Raml;
-import org.raml.model.TemplateReference;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
@@ -119,17 +117,6 @@ public class RamlEmitter
         if (itemType instanceof ParameterizedType)
         {
             generateSequenceOfMaps(dump, depth + 1, seq, (ParameterizedType) itemType);
-        }
-
-        //custom handling for TemplateReference
-        else if (TemplateReference.class.isAssignableFrom((Class<?>) itemType))
-        {
-            List<String> references = new ArrayList<String>();
-            for (Object ref : seq)
-            {
-                references.add(((TemplateReference) ref).getName());
-            }
-            generateInlineSequence(dump, references);
         }
         else if (isPojo((Class<?>) itemType))
         {
@@ -249,16 +236,7 @@ public class RamlEmitter
                 return;
             }
             dump.append(indent(depth)).append(alias(field)).append(YAML_MAP_SEP);
-
-            //custom handling for TemplateReference
-            if (TemplateReference.class.isAssignableFrom(field.getType()))
-            {
-                dump.append(((TemplateReference) value).getName()).append("\n");
-            }
-            else
-            {
-                dump.append(sanitizeScalarValue(depth, value)).append("\n");
-            }
+            dump.append(sanitizeScalarValue(depth, value)).append("\n");
         }
         catch (IllegalAccessException e)
         {
