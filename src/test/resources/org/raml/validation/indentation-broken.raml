@@ -1,0 +1,15 @@
+#%RAML 0.8
+title: Nat Factory
+/invoices:
+  displayName: Invoices
+  get:
+    description: Get a list of all invoices.
+  post:
+    description: Add a new client.
+    responses:
+      201:
+        description: Client successfully created.
+   /{invoiceId}:
+    displayName: Invoice
+    get:
+      description: Get an invoice by Code.

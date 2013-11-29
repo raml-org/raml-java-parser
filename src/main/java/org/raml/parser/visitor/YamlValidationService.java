@@ -19,6 +19,9 @@ import static java.lang.System.currentTimeMillis;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,25 @@ public class YamlValidationService
         this.tagResolvers = tagResolvers;
     }
 
+    public List<ValidationResult> validate(MappingNode root)
+    {
+        NodeVisitor nodeVisitor = new NodeVisitor(yamlValidator, resourceLoader, tagResolvers);
+        errorMessage.addAll(preValidation(root));
+        nodeVisitor.visitDocument(root);
+        return errorMessage;
+    }
+
+    public List<ValidationResult> validate(InputStream content)
+    {
+        return validate(new InputStreamReader(content));
+    }
+
     public List<ValidationResult> validate(String content)
+    {
+        return validate(new StringReader(content));
+    }
+
+    public List<ValidationResult> validate(Reader content)
     {
         long startTime = currentTimeMillis();
 
@@ -60,12 +81,10 @@ public class YamlValidationService
 
         try
         {
-            NodeVisitor nodeVisitor = new NodeVisitor(yamlValidator, resourceLoader, tagResolvers);
-            Node root = yamlParser.compose(new StringReader(content));
+            Node root = yamlParser.compose(content);
             if (root != null && root.getNodeId() == mapping)
             {
-                errorMessage.addAll(preValidation((MappingNode) root));
-                nodeVisitor.visitDocument((MappingNode) root);
+                validate((MappingNode) root);
             }
             else
             {
@@ -74,7 +93,7 @@ public class YamlValidationService
         }
         catch (MarkedYAMLException mye)
         {
-            errorMessage.add(createErrorResult(mye.getProblem(), mye.getProblemMark(), null));
+            errorMessage.add(createErrorResult(mye.getProblem(), mye.getProblemMark(), mye.getProblemMark()));
         }
         catch (YAMLException ex)
         {
