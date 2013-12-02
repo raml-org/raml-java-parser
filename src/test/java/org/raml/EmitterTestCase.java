@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.raml.emitter.RamlEmitter;
 import org.raml.model.DocumentationItem;
 import org.raml.model.Raml;
+import org.raml.model.SecurityScheme;
 import org.raml.model.parameter.FormParameter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.AbstractRamlTestCase;
@@ -40,7 +41,6 @@ public class EmitterTestCase extends AbstractRamlTestCase
     public void emitFullConfigFromRaml()
     {
         Raml raml = parseRaml("org/raml/full-config.yaml");
-
         RamlEmitter emitter = new RamlEmitter();
         String dumpFromRaml = emitter.dump(raml);
         verifyFullDump(raml, dumpFromRaml);
@@ -151,6 +151,35 @@ public class EmitterTestCase extends AbstractRamlTestCase
                    is(source.getTraits().get(1).get("knotty").getDisplayName()));
 
         assertThat(target.getResource("/").getAction(HEAD).getIs(), is(source.getResource("/").getAction(HEAD).getIs()));
+
+        //*********** SECURITY SCHEMES ************
+
+        assertThat(target.getSecuritySchemes().size(), is(source.getSecuritySchemes().size()));
+        SecurityScheme tOauth2 = target.getSecuritySchemes().get(0).get("oauth_2_0");
+        SecurityScheme sOauth2 = source.getSecuritySchemes().get(0).get("oauth_2_0");
+        assertThat(tOauth2.getDescription(), is(sOauth2.getDescription()));
+        assertThat(tOauth2.getDescribedBy().getHeaders().size(), is(sOauth2.getDescribedBy().getHeaders().size()));
+        assertThat(tOauth2.getDescribedBy().getHeaders().get("Authorization").getDescription(),
+                   is(sOauth2.getDescribedBy().getHeaders().get("Authorization").getDescription()));
+        assertThat(tOauth2.getDescribedBy().getQueryParameters().size(), is(sOauth2.getDescribedBy().getQueryParameters().size()));
+        assertThat(tOauth2.getDescribedBy().getQueryParameters().get("access_token").getDescription(),
+                   is(sOauth2.getDescribedBy().getQueryParameters().get("access_token").getDescription()));
+        assertThat(tOauth2.getDescribedBy().getResponses().size(), is(sOauth2.getDescribedBy().getResponses().size()));
+        assertThat(tOauth2.getDescribedBy().getResponses().get("401").getDescription(),
+                   is(sOauth2.getDescribedBy().getResponses().get("401").getDescription()));
+        assertThat(tOauth2.getSettings().size(), is(sOauth2.getSettings().size()));
+        assertThat(tOauth2.getSettings().get("authorizationUrl").size(), is(sOauth2.getSettings().get("authorizationUrl").size()));
+        assertThat(sOauth2.getSettings().get("authorizationUrl").get(0), is("https://www.dropbox.com/1/oauth2/authorize"));
+        assertThat(tOauth2.getSettings().get("authorizationUrl").get(0), is(sOauth2.getSettings().get("authorizationUrl").get(0)));
+
+        assertThat(target.getResource("/").getSecuredBy().size(), is(source.getResource("/").getSecuredBy().size()));
+        assertThat(target.getResource("/").getSecuredBy().get(0).getName(), is(source.getResource("/").getSecuredBy().get(0).getName()));
+        assertThat(target.getResource("/").getSecuredBy().get(0).getParameters().size(),
+                   is(source.getResource("/").getSecuredBy().get(0).getParameters().size()));
+        assertThat(target.getResource("/").getSecuredBy().get(0).getParameters().get("scopes").get(0),
+                   is(source.getResource("/").getSecuredBy().get(0).getParameters().get("scopes").get(0)));
+        assertThat(target.getResource("/").getSecuredBy().get(1).getName(), is(source.getResource("/").getSecuredBy().get(1).getName()));
+        assertThat(target.getResource("/").getSecuredBy().get(2).getName(), is(source.getResource("/").getSecuredBy().get(2).getName()));
 
     }
 

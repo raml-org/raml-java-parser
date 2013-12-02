@@ -92,6 +92,11 @@ public class ReflectionUtils
 
     public static boolean isPojo(Class<?> type)
     {
-        return !(isWrapperOrString(type) || type.isEnum() || type.isPrimitive());
+        return !(isWrapperOrString(type) || isEnum(type) || type.isPrimitive());
+    }
+
+    public static boolean isEnum(Class<?> type)
+    {
+        return type.isEnum() || (type.getSuperclass() != null && type.getSuperclass().isEnum());
     }
 }

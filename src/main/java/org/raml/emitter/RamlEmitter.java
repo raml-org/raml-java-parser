@@ -16,6 +16,7 @@
 package org.raml.emitter;
 
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.raml.parser.utils.ReflectionUtils.isEnum;
 import static org.raml.parser.utils.ReflectionUtils.isPojo;
 
 import java.lang.reflect.Field;
@@ -27,6 +28,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.model.Raml;
+import org.raml.model.SecurityReference;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
@@ -117,8 +119,13 @@ public class RamlEmitter
         if (itemType instanceof ParameterizedType)
         {
             generateSequenceOfMaps(dump, depth + 1, seq, (ParameterizedType) itemType);
+            return;
         }
-        else if (isPojo((Class<?>) itemType))
+        if (customSequenceHandled(dump, depth, seq, itemType))
+        {
+            return;
+        }
+        if (isPojo((Class<?>) itemType))
         {
             dump.append("\n");
             for (Object item : seq)
@@ -131,6 +138,30 @@ public class RamlEmitter
         {
             generateInlineSequence(dump, seq);
         }
+    }
+
+    private boolean customSequenceHandled(StringBuilder dump, int depth, List seq, Type itemType)
+    {
+        if (! (itemType instanceof Class<?>) || ! SecurityReference.class.isAssignableFrom((Class<?>) itemType))
+        {
+            return false;
+        }
+        dump.append("\n");
+        for (Object item : seq)
+        {
+            dump.append(indent(depth + 1)).append(YAML_SEQ).append("\n");
+            dump.append(indent(depth + 2)).append(((SecurityReference) item).getName());
+            if (((SecurityReference) item).getParameters().size() > 0)
+            {
+                dump.append(YAML_MAP_SEP).append("\n");
+                dumpMap(dump, depth + 3, String.class, ((SecurityReference) item).getParameters());
+            }
+            else
+            {
+                dump.append("\n");
+            }
+        }
+        return true;
     }
 
     private void generateSequenceOfMaps(StringBuilder dump, int depth, List seq, ParameterizedType itemType)
@@ -236,7 +267,15 @@ public class RamlEmitter
                 return;
             }
             dump.append(indent(depth)).append(alias(field)).append(YAML_MAP_SEP);
-            dump.append(sanitizeScalarValue(depth, value)).append("\n");
+            if (isPojo(value.getClass()))
+            {
+                dump.append("\n");
+                dumpPojo(dump, depth + 1, value);
+            }
+            else
+            {
+                dump.append(sanitizeScalarValue(depth, value)).append("\n");
+            }
         }
         catch (IllegalAccessException e)
         {
@@ -270,7 +309,7 @@ public class RamlEmitter
         Class<?> type = value.getClass();
         String result;
 
-        if (type.isEnum() || (type.getSuperclass() != null && type.getSuperclass().isEnum()))
+        if (isEnum(type))
         {
             result = String.valueOf(value).toLowerCase();
         }

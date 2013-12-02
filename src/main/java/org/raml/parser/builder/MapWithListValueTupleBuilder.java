@@ -15,6 +15,9 @@
  */
 package org.raml.parser.builder;
 
+import static org.raml.parser.utils.NodeUtils.getNodeValue;
+import static org.raml.parser.utils.ReflectionUtils.isPojo;
+
 import java.util.ArrayList;
 
 import org.raml.parser.utils.ReflectionUtils;
@@ -61,7 +64,15 @@ public class MapWithListValueTupleBuilder extends MapTupleBuilder
         {
             try
             {
-                Object newValue = getPojoClass().newInstance();
+                Object newValue;
+                if (isPojo(getPojoClass()))
+                {
+                    newValue = getPojoClass().newInstance();
+                }
+                else
+                {
+                    newValue = getNodeValue(node);
+                }
                 ArrayList<Object> objects = new ArrayList<Object>();
                 objects.add(newValue);
                 ReflectionUtils.setProperty(parent, getFieldName(), objects);

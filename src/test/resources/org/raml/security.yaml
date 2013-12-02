@@ -49,4 +49,4 @@ securedBy: [oauth_2_0]
 /users:
     securedBy: [null]
     get:
-        securedBy: [oauth_2_0, oauth_1_0]
+        securedBy: [oauth_2_0: { scopes: [ comments ] }, oauth_1_0]
