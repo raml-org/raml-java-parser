@@ -29,6 +29,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.raml.model.Raml;
 import org.raml.model.SecurityReference;
+import org.raml.model.parameter.AbstractParam;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
@@ -121,7 +122,7 @@ public class RamlEmitter
             generateSequenceOfMaps(dump, depth + 1, seq, (ParameterizedType) itemType);
             return;
         }
-        if (customSequenceHandled(dump, depth, seq, itemType))
+        if (customSequenceHandled(dump, depth + 1, seq, itemType))
         {
             return;
         }
@@ -142,26 +143,44 @@ public class RamlEmitter
 
     private boolean customSequenceHandled(StringBuilder dump, int depth, List seq, Type itemType)
     {
-        if (! (itemType instanceof Class<?>) || ! SecurityReference.class.isAssignableFrom((Class<?>) itemType))
+        if ((itemType instanceof Class<?>) && SecurityReference.class.isAssignableFrom((Class<?>) itemType))
+        {
+            handleSecurityReference(dump, depth, seq);
+        }
+        else if ((itemType instanceof Class<?>) && AbstractParam.class.isAssignableFrom((Class<?>) itemType) && seq.size() == 1)
+        {
+            handleSingleParameterAsNoSeq(dump, depth, seq);
+        }
+        else
         {
             return false;
         }
+        return true;
+    }
+
+    private void handleSingleParameterAsNoSeq(StringBuilder dump, int depth, List seq)
+    {
+        dump.append("\n");
+        dumpPojo(dump, depth, seq.get(0));
+    }
+
+    private void handleSecurityReference(StringBuilder dump, int depth, List seq)
+    {
         dump.append("\n");
         for (Object item : seq)
         {
-            dump.append(indent(depth + 1)).append(YAML_SEQ).append("\n");
-            dump.append(indent(depth + 2)).append(((SecurityReference) item).getName());
+            dump.append(indent(depth)).append(YAML_SEQ).append("\n");
+            dump.append(indent(depth + 1)).append(((SecurityReference) item).getName());
             if (((SecurityReference) item).getParameters().size() > 0)
             {
                 dump.append(YAML_MAP_SEP).append("\n");
-                dumpMap(dump, depth + 3, String.class, ((SecurityReference) item).getParameters());
+                dumpMap(dump, depth + 2, String.class, ((SecurityReference) item).getParameters());
             }
             else
             {
                 dump.append("\n");
             }
         }
-        return true;
     }
 
     private void generateSequenceOfMaps(StringBuilder dump, int depth, List seq, ParameterizedType itemType)
@@ -242,7 +261,7 @@ public class RamlEmitter
 
             if (listType != null)
             {
-                dumpSequenceItems(dump, depth + 1, (List) entry.getValue(), listType);
+                dumpSequenceItems(dump, depth, (List) entry.getValue(), listType);
             }
             else if (isPojo((Class<?>) valueType))
             {

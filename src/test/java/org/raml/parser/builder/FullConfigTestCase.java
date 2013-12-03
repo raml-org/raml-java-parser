@@ -157,7 +157,7 @@ public class FullConfigTestCase extends AbstractRamlTestCase
         String formMime = "multipart/form-data";
         MimeType formBody = action.getBody().get(formMime);
         assertThat(formBody.getType(), is(formMime));
-        assertThat(formBody.getFormParameters().size(), is(1));
+        assertThat(formBody.getFormParameters().size(), is(2));
         List<FormParameter> form1Param = formBody.getFormParameters().get("form-1");
         assertThat(form1Param.get(0).getDisplayName(), is("form 1"));
         assertThat(form1Param.get(0).getDescription(), is("form 1 description"));

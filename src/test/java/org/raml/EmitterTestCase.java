@@ -130,6 +130,8 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(srcFormParams.size(), is(tgtFormParams.size()));
         assertThat(srcFormParams.get("form-1").size(), is(tgtFormParams.get("form-1").size()));
         assertThat(srcFormParams.get("form-1").get(0).getDisplayName(), is(tgtFormParams.get("form-1").get(0).getDisplayName()));
+        assertThat(srcFormParams.get("form-2").size(), is(tgtFormParams.get("form-2").size()));
+        assertThat(srcFormParams.get("form-2").get(0).getDisplayName(), is(tgtFormParams.get("form-2").get(0).getDisplayName()));
 
         //*********** RESOURCE TYPES ************
 

@@ -175,6 +175,9 @@ traits:
                           maximum: 10.5
                         - type: string
                           enum: [one, two, three]
+                    form-2:
+                        type: boolean
+                        required: true
         responses:
             200:
                 headers:
