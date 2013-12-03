@@ -183,6 +183,11 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(target.getResource("/").getSecuredBy().get(1).getName(), is(source.getResource("/").getSecuredBy().get(1).getName()));
         assertThat(target.getResource("/").getSecuredBy().get(2).getName(), is(source.getResource("/").getSecuredBy().get(2).getName()));
 
+        //*********** PROTOCOLS ************
+
+        assertThat(target.getProtocols().size(), is(source.getProtocols().size()));
+        assertThat(target.getProtocols().get(0), is(source.getProtocols().get(0)));
+        assertThat(target.getProtocols().get(1), is(source.getProtocols().get(1)));
     }
 
 }

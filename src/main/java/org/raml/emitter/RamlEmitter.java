@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.model.Protocol;
 import org.raml.model.Raml;
 import org.raml.model.SecurityReference;
 import org.raml.model.parameter.AbstractParam;
@@ -326,8 +327,11 @@ public class RamlEmitter
     private String sanitizeScalarValue(int depth, Object value)
     {
         Class<?> type = value.getClass();
-        String result;
-
+        String result = handleCustomScalar(value);
+        if (result != null)
+        {
+            return result;
+        }
         if (isEnum(type))
         {
             result = String.valueOf(value).toLowerCase();
@@ -349,6 +353,15 @@ public class RamlEmitter
             result = String.valueOf(value);
         }
         return result;
+    }
+
+    private String handleCustomScalar(Object value)
+    {
+        if (value instanceof Protocol)
+        {
+            return String.valueOf(value);
+        }
+        return null;
     }
 
     private String inlineFormat(int depth, String text)
