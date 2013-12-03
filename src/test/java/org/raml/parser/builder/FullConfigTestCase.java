@@ -27,12 +27,14 @@ import static org.raml.model.Protocol.HTTP;
 import static org.raml.model.Protocol.HTTPS;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.DocumentationItem;
 import org.raml.model.MimeType;
+import org.raml.model.ParamType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
 import org.raml.model.Response;
@@ -81,6 +83,11 @@ public class FullConfigTestCase extends AbstractRamlTestCase
 
         //uri parameters
         assertThat(raml.getBaseUriParameters().size(), is(3));
+        Map<String, UriParameter> tagUriParameters = raml.getResource("/tags/{tagId}").getUriParameters();
+        assertThat(tagUriParameters.size(), is(1));
+        assertThat(tagUriParameters.get("tagId").getDisplayName(), is("tagId"));
+        assertThat(tagUriParameters.get("tagId").isRequired(), is(true));
+        assertThat(tagUriParameters.get("tagId").getType(), is(ParamType.STRING));
 
         UriParameter hostParam = raml.getBaseUriParameters().get("host");
         assertThat(hostParam.getDisplayName(), is("Host"));
@@ -195,4 +202,5 @@ public class FullConfigTestCase extends AbstractRamlTestCase
         assertThat(mediaIdParam.getMaxLength(), is(10));
 
     }
+
 }

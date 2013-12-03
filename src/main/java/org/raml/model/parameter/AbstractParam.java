@@ -64,6 +64,17 @@ public class AbstractParam
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    public AbstractParam()
+    {
+        this.type = STRING;
+    }
+
+    public AbstractParam(String displayName, ParamType type, boolean required)
+    {
+        this.displayName = displayName;
+        this.type = type;
+        this.required = required;
+    }
 
     public void setDisplayName(String displayName)
     {

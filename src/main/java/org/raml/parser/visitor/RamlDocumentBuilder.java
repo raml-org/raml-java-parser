@@ -15,12 +15,17 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.rule.BaseUriRule.URI_PATTERN;
+
 import java.lang.reflect.Field;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
+import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
@@ -69,6 +74,17 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         {
             getMediaTypeResolver().resolve(mappingNode);
         }
+    }
+
+    @Override
+    public void onMappingNodeEnd(MappingNode mappingNode, TupleType tupleType)
+    {
+        if (getDocumentContext().peek() instanceof Resource)
+        {
+            Resource resource = (Resource) getDocumentContext().peek();
+            populateDefaultUriParameters(resource);
+        }
+        super.onMappingNodeEnd(mappingNode, tupleType);
     }
 
     private String toString(Stack<NodeBuilder<?>> builderContext)
@@ -128,4 +144,19 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     protected void postBuildProcess()
     {
     }
+
+    private void populateDefaultUriParameters(Resource resource)
+    {
+        Pattern pattern = Pattern.compile(URI_PATTERN);
+        Matcher matcher = pattern.matcher(resource.getRelativeUri());
+        while (matcher.find())
+        {
+            String paramName = matcher.group(1);
+            if (!resource.getUriParameters().containsKey(paramName))
+            {
+                resource.getUriParameters().put(paramName, new UriParameter(paramName));
+            }
+        }
+    }
+
 }

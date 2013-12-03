@@ -32,7 +32,7 @@ public class BaseUriRule extends SimpleRule
     public static final String URI_NOT_VALID_MESSAGE = "The baseUri element is not a valid URI";
     public static final String VERSION_NOT_PRESENT_MESSAGE = "version parameter must exist in the API definition";
 
-    private static final String URI_PATTERN = "[.*]?\\{(\\w+)?\\}[.*]*";
+    public static final String URI_PATTERN = "[.*]?\\{(\\w+)?\\}[.*]*";
     private String baseUri;
     private Set<String> parameters;
     private Pattern pattern;
