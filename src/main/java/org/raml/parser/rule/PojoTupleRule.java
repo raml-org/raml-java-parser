@@ -15,6 +15,7 @@
  */
 package org.raml.parser.rule;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
@@ -24,7 +25,6 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 {
-
 
     private Class<?> pojoClass;
 
@@ -51,9 +51,15 @@ public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
     }
 
     @Override
-    public Class<?>[] getValueType()
+    public Class<?>[] getValueNodeType()
     {
         return new Class[] {MappingNode.class};
+    }
+
+    @Override
+    public void setValueType(Type valueType)
+    {
+        pojoClass = (Class<?>) valueType;
     }
 
     @Override

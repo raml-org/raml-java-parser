@@ -22,6 +22,7 @@ import java.util.List;
 import org.raml.model.ParamType;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.rule.SequenceTupleNullsAllowedRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,7 @@ public class AbstractParam
     @Scalar
     private boolean repeat;
 
-    @Sequence(alias = "enum")
+    @Sequence(alias = "enum", rule = SequenceTupleNullsAllowedRule.class)
     private List<String> enumeration;
     @Scalar
     private String pattern;

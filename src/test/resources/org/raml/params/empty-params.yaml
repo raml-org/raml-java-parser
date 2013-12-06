@@ -1,0 +1,10 @@
+#%RAML 0.8
+title: empty parameters
+/car:
+    put:
+        headers:
+            enable-turbo:
+                enum:
+                    -
+                    - 1
+                    - true

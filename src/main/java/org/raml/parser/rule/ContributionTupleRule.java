@@ -15,6 +15,7 @@
  */
 package org.raml.parser.rule;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -125,6 +126,18 @@ public class ContributionTupleRule implements TupleRule<Node, Node>
     public Node getKey()
     {
         return rule.getKey();
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        //ignore
+    }
+
+    @Override
+    public void setValueType(Type valueType)
+    {
+        //ignore
     }
 
     @Override

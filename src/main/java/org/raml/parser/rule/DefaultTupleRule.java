@@ -15,6 +15,7 @@
  */
 package org.raml.parser.rule;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRule<K, Node>
 {
 
-    protected Map<String, TupleRule<?, ?>> rules;
+    protected Map<String, TupleRule<?, ?>> rules = new HashMap<String, TupleRule<?, ?>>();
     private TupleRule<?, ?> parent;
     private TupleHandler tupleHandler;
     private boolean required;
@@ -36,6 +37,10 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     private String name;
     private NodeRuleFactory nodeRuleFactory;
 
+
+    public DefaultTupleRule()
+    {
+    }
 
     public DefaultTupleRule(String name, TupleHandler handler, NodeRuleFactory nodeRuleFactory)
     {
@@ -46,7 +51,6 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     public DefaultTupleRule(String name, TupleHandler handler)
     {
         this.name = name;
-        this.rules = new HashMap<String, TupleRule<?, ?>>();
         this.tupleHandler = handler;
     }
 
@@ -84,7 +88,6 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         return tupleHandler;
     }
 
-
     @Override
     public List<ValidationResult> validateKey(K key)
     {
@@ -114,7 +117,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
 
     protected boolean isValidValueNodeType(Class valueNodeClass)
     {
-        for (Class<?> clazz : getValueType())
+        for (Class<?> clazz : getValueNodeType())
         {
             if (clazz.isAssignableFrom(valueNodeClass))
             {
@@ -124,7 +127,7 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         return false;
     }
 
-    public Class<?>[] getValueType()
+    public Class<?>[] getValueNodeType()
     {
         return new Class[] {Node.class};
     }
@@ -155,6 +158,18 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
     public K getKey()
     {
         return key;
+    }
+
+    @Override
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    @Override
+    public void setValueType(Type valueType)
+    {
+        //ignore
     }
 
     public void addRulesFor(Class<?> pojoClass)

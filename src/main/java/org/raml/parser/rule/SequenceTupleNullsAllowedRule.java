@@ -15,26 +15,12 @@
  */
 package org.raml.parser.rule;
 
-import org.raml.model.SecurityReference;
-import org.yaml.snakeyaml.nodes.MappingNode;
-import org.yaml.snakeyaml.nodes.ScalarNode;
-
-public class SecurityReferenceRule extends PojoTupleRule
+public class SequenceTupleNullsAllowedRule extends SequenceTupleRule
 {
 
-    public SecurityReferenceRule()
-    {
-        this(null);
-    }
-
-    public SecurityReferenceRule(NodeRuleFactory nodeRuleFactory)
-    {
-        super("securedBy", SecurityReference.class, nodeRuleFactory);
-    }
-
     @Override
-    public Class<?>[] getValueNodeType()
+    protected DefaultTupleRule getScalarRule()
     {
-        return new Class[] {ScalarNode.class, MappingNode.class};
+        return new SimpleNullAllowedRule(getName(), (Class<?>) getItemType());
     }
 }

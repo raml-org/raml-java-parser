@@ -17,6 +17,7 @@ package org.raml.parser.rule;
 
 import static org.raml.parser.rule.ValidationMessage.getDuplicateRuleMessage;
 
+import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,7 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
 {
 
-    private final Class valueType;
+    private Class valueType;
     private String fieldName;
     private final Set<String> keys = new HashSet<String>();
 
@@ -58,11 +59,32 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
         }
         else
         {
-            tupleRule = new SimpleRule(fieldName, valueType);
+            tupleRule = getScalarRule();
         }
 
         tupleRule.setParentTupleRule(this);
         return tupleRule;
+    }
+
+    protected DefaultTupleRule getScalarRule()
+    {
+        return new SimpleRule(getFieldName(), getValueType());
+    }
+
+    protected Class getValueType()
+    {
+        return valueType;
+    }
+
+    public String getFieldName()
+    {
+        return fieldName;
+    }
+
+    @Override
+    public void setValueType(Type valueType)
+    {
+        this.valueType = (Class) valueType;
     }
 
     @Override

@@ -105,28 +105,28 @@ public class NodeRuleFactory extends AbastractFactory
     private TupleRule<?, ?> createSequenceRule(Field declaredField, Sequence sequence)
     {
         TupleRule<?, ?> tupleRule = null;
-        if (sequence.rule() != TupleRule.class)
+        if (List.class.isAssignableFrom(declaredField.getType()))
         {
-            tupleRule = createInstanceOf(sequence.rule());
-        }
-        else
-        {
-            if (List.class.isAssignableFrom(declaredField.getType()))
+            Type type = declaredField.getGenericType();
+            if (type instanceof ParameterizedType)
             {
-                Type type = declaredField.getGenericType();
-                if (type instanceof ParameterizedType)
+                ParameterizedType pType = (ParameterizedType) type;
+                Type itemType = pType.getActualTypeArguments()[0];
+                if (sequence.rule() != TupleRule.class)
                 {
-                    ParameterizedType pType = (ParameterizedType) type;
-                    Type itemType = pType.getActualTypeArguments()[0];
+                    tupleRule = createInstanceOfTupleRule(sequence.rule(), declaredField.getName(), itemType);
+                }
+                else
+                {
                     tupleRule = new SequenceTupleRule(declaredField.getName(), itemType);
                 }
             }
-            else
-            {
-                throw new RuntimeException("Only List can be sequence. Error on field " + declaredField.getName());
-            }
-
         }
+        else
+        {
+            throw new RuntimeException("Only List can be sequence. Error on field " + declaredField.getName());
+        }
+
         return tupleRule;
     }
 
@@ -210,7 +210,7 @@ public class NodeRuleFactory extends AbastractFactory
         TupleRule<?, ?> tupleRule;
         if (scalar.rule() != TupleRule.class)
         {
-            tupleRule = createInstanceOf(scalar.rule());
+            tupleRule = createInstanceOfTupleRule(scalar.rule(), declaredField.getName(), declaredField.getType());
         }
         else
         {
@@ -223,6 +223,15 @@ public class NodeRuleFactory extends AbastractFactory
                 tupleRule = new SimpleRule(declaredField.getName(), declaredField.getType());
             }
         }
+        return tupleRule;
+    }
+
+    private TupleRule<?, ?> createInstanceOfTupleRule(Class<? extends TupleRule> rule, String fieldName, Type valueType)
+    {
+        TupleRule tupleRule = createInstanceOf(rule);
+        tupleRule.setName(fieldName);
+        tupleRule.setValueType(valueType);
+        tupleRule.setNodeRuleFactory(this);
         return tupleRule;
     }
 }

@@ -18,6 +18,7 @@ package org.raml.parser.rule;
 import static org.raml.parser.rule.ValidationMessage.getDuplicateRuleMessage;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
 
+import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,7 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNode>
 {
 
-    private final Class valueType;
+    private Class valueType;
     private final Set<String> keys = new HashSet<String>();
 
     public ImplicitMapEntryRule(String fieldName, Class valueType)
@@ -59,9 +60,15 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
     }
 
     @Override
-    public Class<?>[] getValueType()
+    public Class<?>[] getValueNodeType()
     {
         return new Class[] {MappingNode.class};
+    }
+
+    @Override
+    public void setValueType(Type valueType)
+    {
+        this.valueType = (Class) valueType;
     }
 
     @Override

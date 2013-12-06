@@ -15,6 +15,7 @@
  */
 package org.raml.parser.rule;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,8 @@ public interface TupleRule<K extends Node, V extends Node> extends NodeRule<V>
 
     String getName();
 
+    void setName(String name);
+
     TupleRule<?, ?> getRuleByFieldName(String fieldName);
 
     void setNestedRules(Map<String, TupleRule<?, ?>> innerBuilders);
@@ -50,4 +53,6 @@ public interface TupleRule<K extends Node, V extends Node> extends NodeRule<V>
     void setNodeRuleFactory(NodeRuleFactory nodeRuleFactory);
 
     K getKey();
+
+    void setValueType(Type valueType);
 }

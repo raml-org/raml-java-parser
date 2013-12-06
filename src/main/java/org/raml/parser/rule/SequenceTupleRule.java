@@ -29,6 +29,10 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
 
     private Type itemType;
 
+    public SequenceTupleRule()
+    {
+    }
+
     public SequenceTupleRule(String fieldName, Type itemType)
     {
         this(fieldName, itemType, null);
@@ -49,7 +53,7 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
             //TODO add it to a list to invoke onRuleEnd on all the rules created
             if (!ReflectionUtils.isPojo((Class) itemType))
             {
-                return new SimpleRule(getName(), (Class<?>) itemType);
+                return getScalarRule();
             }
             return new PojoTupleRule("", (Class<?>) itemType, getNodeRuleFactory());
         }
@@ -64,5 +68,21 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
             }
         }
         throw new IllegalArgumentException("Sequence item type not supported: " + itemType);
+    }
+
+    protected DefaultTupleRule getScalarRule()
+    {
+        return new SimpleRule(getName(), (Class<?>) itemType);
+    }
+
+    @Override
+    public void setValueType(Type valueType)
+    {
+        itemType = valueType;
+    }
+
+    protected Type getItemType()
+    {
+        return itemType;
     }
 }
