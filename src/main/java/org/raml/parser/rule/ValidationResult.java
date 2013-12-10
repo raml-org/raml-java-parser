@@ -99,6 +99,11 @@ public class ValidationResult
         this.includeContext = new ArrayDeque<IncludeInfo>(includeContext);
     }
 
+    public void addIncludeContext(Deque<IncludeInfo> includeContext)
+    {
+        this.includeContext.addAll(includeContext);
+    }
+
     public static boolean areValid(List<ValidationResult> validationResults)
     {
         for (ValidationResult result : validationResults)

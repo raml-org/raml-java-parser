@@ -33,6 +33,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 
 import org.eel.kitchen.jsonschema.util.JsonLoader;
+import org.raml.parser.visitor.IncludeInfo;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -52,6 +53,7 @@ public class SchemaRule extends SimpleRule
         String value = node.getValue();
         List<ValidationResult> validationResults = super.doValidateValue(node);
 
+        IncludeInfo globaSchemaIncludeInfo = null;
         ScalarNode schemaNode = getGlobalSchemaNode(value);
         if (schemaNode == null)
         {
@@ -60,6 +62,10 @@ public class SchemaRule extends SimpleRule
         else
         {
             value = schemaNode.getValue();
+            if (schemaNode.getTag().startsWith(INCLUDE_APPLIED_TAG))
+            {
+                globaSchemaIncludeInfo = new IncludeInfo(schemaNode.getTag());
+            }
         }
         if (value == null || isCustomTag(schemaNode.getTag()))
         {
@@ -77,12 +83,12 @@ public class SchemaRule extends SimpleRule
             {
                 String msg = "invalid JSON schema" + getSourceErrorDetail(node) + jpe.getOriginalMessage();
                 JsonLocation loc = jpe.getLocation();
-                validationResults.add(createErrorResult(msg, getLineOffset(schemaNode) + loc.getLineNr(), UNKNOWN, UNKNOWN));
+                validationResults.add(getErrorResult(msg, getLineOffset(schemaNode) + loc.getLineNr(), globaSchemaIncludeInfo));
             }
             catch (IOException e)
             {
                 String prefix = "invalid JSON schema" + getSourceErrorDetail(node);
-                validationResults.add(createErrorResult(prefix + e.getMessage()));
+                validationResults.add(getErrorResult(prefix + e.getMessage(), UNKNOWN, globaSchemaIncludeInfo));
             }
         }
         else if (mimeType.contains("xml"))
@@ -95,15 +101,25 @@ public class SchemaRule extends SimpleRule
             catch (SAXParseException e)
             {
                 String msg = "invalid XML schema" + getSourceErrorDetail(node) + e.getMessage();
-                validationResults.add(createErrorResult(msg, getLineOffset(schemaNode) + e.getLineNumber(), UNKNOWN, UNKNOWN));
+                validationResults.add(getErrorResult(msg, getLineOffset(schemaNode) + e.getLineNumber(), globaSchemaIncludeInfo));
             }
             catch (SAXException e)
             {
                 String msg = "invalid XML schema" + getSourceErrorDetail(node);
-                validationResults.add(createErrorResult(msg, getLineOffset(schemaNode), UNKNOWN, UNKNOWN));
+                validationResults.add(getErrorResult(msg, getLineOffset(schemaNode), globaSchemaIncludeInfo));
             }
         }
         return validationResults;
+    }
+
+    private ValidationResult getErrorResult(String msg, int line, IncludeInfo globaSchemaIncludeInfo)
+    {
+        ValidationResult errorResult = createErrorResult(msg, line, UNKNOWN, UNKNOWN);
+        if (globaSchemaIncludeInfo != null)
+        {
+            errorResult.getIncludeContext().push(globaSchemaIncludeInfo);
+        }
+        return errorResult;
     }
 
     private int getLineOffset(ScalarNode schemaNode)

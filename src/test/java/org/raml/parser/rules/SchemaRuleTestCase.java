@@ -96,6 +96,26 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void invalidJsonSchemaGlobalInclude()
+    {
+        String resource = "org/raml/schema/invalid.json";
+        String globalSchema = "league";
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-json-global-include.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), containsString("invalid JSON schema (" + globalSchema + ")"));
+        assertThat(validationResults.get(0).getLine() + 1, is(4));
+        assertThat(validationResults.get(0).getStartColumn(), is(UNKNOWN));
+        assertThat(validationResults.get(0).getEndColumn(), is(UNKNOWN));
+        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(1));
+        IncludeInfo includeInfo = includeContext.pop();
+        assertThat(includeInfo.getLine() + 1, is(4));
+        assertThat(includeInfo.getStartColumn() + 1, is(15));
+        assertThat(includeInfo.getEndColumn() + 1, is(52));
+        assertThat(includeInfo.getIncludeName(), is(resource));
+    }
+
+    @Test
     public void validXmlSchema()
     {
         validateRamlNoErrors("org/raml/schema/valid-xml.yaml");

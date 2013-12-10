@@ -75,7 +75,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         if (tupleType == KEY)
         {
-            addMessage(node, createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
+            addMessage(createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
         }
     }
 
@@ -90,12 +90,12 @@ public class YamlDocumentValidator implements YamlValidator
     {
         if (tupleType == KEY)
         {
-            addMessage(node, createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
+            addMessage(createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
         }
         else
         {
             NodeRule<SequenceNode> peek = (NodeRule<SequenceNode>) ruleContext.peek();
-            addMessages(node, peek.validateValue(node));
+            addMessages(peek.validateValue(node));
         }
     }
 
@@ -120,21 +120,21 @@ public class YamlDocumentValidator implements YamlValidator
         {
             result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
         }
-        addMessages(node, result);
+        addMessages(result);
     }
 
-    private void addMessages(Node node, List<ValidationResult> result)
+    private void addMessages(List<ValidationResult> result)
     {
         for (ValidationResult validationResult : result)
         {
-            validationResult.setIncludeContext(includeContext);
+            validationResult.addIncludeContext(includeContext);
             messages.add(validationResult);
         }
     }
 
-    private void addMessage(Node node, ValidationResult errorResult)
+    private void addMessage(ValidationResult errorResult)
     {
-        addMessages(node, Collections.<ValidationResult>singletonList(errorResult));
+        addMessages(Collections.<ValidationResult>singletonList(errorResult));
     }
 
     @Override
@@ -149,7 +149,7 @@ public class YamlDocumentValidator implements YamlValidator
         NodeRule<?> pop = ruleContext.pop();
 
         List<ValidationResult> onRuleEnd = pop.onRuleEnd();
-        addMessages(node, onRuleEnd);
+        addMessages(onRuleEnd);
 
     }
 
@@ -160,7 +160,7 @@ public class YamlDocumentValidator implements YamlValidator
         if (rule != null)
         {
             List<ValidationResult> onRuleEnd = rule.onRuleEnd();
-            addMessages(nodeTuple.getKeyNode(), onRuleEnd);
+            addMessages(onRuleEnd);
         }
         else
         {
@@ -204,7 +204,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         NodeRule<?> rule = ruleContext.pop();
         List<ValidationResult> validationResults = rule.onRuleEnd();
-        addMessages(sequenceNode, validationResults);
+        addMessages(validationResults);
     }
 
     @Override
@@ -233,7 +233,7 @@ public class YamlDocumentValidator implements YamlValidator
     @Override
     public void onCustomTagError(Tag tag, Node node, String message)
     {
-        addMessages(node, Arrays.asList(createErrorResult(message, node.getStartMark(), node.getEndMark())));
+        addMessages(Arrays.asList(createErrorResult(message, node.getStartMark(), node.getEndMark())));
     }
 
 
