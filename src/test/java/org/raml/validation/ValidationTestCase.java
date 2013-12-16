@@ -17,14 +17,17 @@ package org.raml.validation;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 
+import java.util.Deque;
 import java.util.List;
 
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.visitor.IncludeInfo;
 
 public class ValidationTestCase extends AbstractRamlTestCase
 {
@@ -164,6 +167,37 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("expected <block end>, but found BlockMappingStart"));
         assertThat(validationResults.get(0).getLine() + 1, is(12));
+    }
+
+    @Test
+    public void circularReference()
+    {
+        String resource = "org/raml/validation/circular-reference.yaml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Circular reference detected"));
+        assertThat(validationResults.get(0).getLine() + 1, is(3));
+    }
+
+    @Test
+    public void circularInclude()
+    {
+        String resource = "org/raml/validation/circular-include.yaml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Circular reference detected"));
+        assertThat(validationResults.get(0).getLine() + 1, is(1));
+        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(3));
+        IncludeInfo includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("circular1.raml"));
+        assertThat(includeInfo.getLine() + 1, is(2));
+        includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("circular2.raml"));
+        assertThat(includeInfo.getLine() + 1, is(2));
+        includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("circular1.raml"));
+        assertThat(includeInfo.getLine() + 1, is(3));
     }
 
 }

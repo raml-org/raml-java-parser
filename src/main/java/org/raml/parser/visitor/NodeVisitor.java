@@ -19,10 +19,13 @@ import static org.raml.parser.utils.NodeUtils.isStandardTag;
 import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -36,9 +39,12 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class NodeVisitor
 {
 
+    public static final Tag LOOP_TAG = new Tag("!loop");
     private NodeHandler nodeHandler;
     private ResourceLoader resourceLoader;
     private TagResolver[] tagResolvers;
+    private Deque<String> loopDetector = new ArrayDeque<String>();
+    private Deque<String> includeStack = new ArrayDeque<String>();
 
     public NodeVisitor(NodeHandler nodeHandler, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
@@ -46,16 +52,46 @@ public class NodeVisitor
         this.nodeHandler = nodeHandler;
         this.resourceLoader = resourceLoader;
         this.tagResolvers = tagResolvers;
+        this.includeStack.push("root");
     }
 
     private void visitMappingNode(MappingNode mappingNode, TupleType tupleType)
     {
+        if (checkLoop(mappingNode))
+        {
+            nodeHandler.onCustomTagError(LOOP_TAG, mappingNode, "Circular reference detected");
+            return;
+        }
         nodeHandler.onMappingNodeStart(mappingNode, tupleType);
         if (tupleType == VALUE)
         {
             doVisitMappingNode(mappingNode);
         }
         nodeHandler.onMappingNodeEnd(mappingNode, tupleType);
+        if (mappingNode.getStartMark() != null)
+        {
+            loopDetector.pop();
+        }
+    }
+
+    /**
+     * @return true if two mapping nodes in the same file
+     * have the same start mark index
+     */
+    private boolean checkLoop(Node node)
+    {
+        if (node.getStartMark() == null)
+        {
+            return false;
+        }
+
+        String index = includeStack.peek() + node.getStartMark().getIndex();
+        if (loopDetector.contains(index))
+        {
+            return true;
+        }
+        loopDetector.push(index);
+        return false;
     }
 
     private static class MappingNodeMerger extends SafeConstructor
@@ -92,21 +128,53 @@ public class NodeVisitor
                 nodeHandler.onCustomTagError(tag, valueNode, "Unknown tag " + tag);
             }
             updatedTuples.add(nodeTuple);
+            nodeHandler.onTupleStart(nodeTuple);
+            visit(keyNode, KEY);
             if (tagResolver != null)
             {
                 nodeHandler.onCustomTagStart(tag, originalValueNode, nodeTuple);
+                pushIncludeIfNeeded(tag, originalValueNode);
             }
-            nodeHandler.onTupleStart(nodeTuple);
-            visit(keyNode, KEY);
             visit(valueNode, VALUE);
-            nodeHandler.onTupleEnd(nodeTuple);
             if (tagResolver != null)
             {
                 nodeHandler.onCustomTagEnd(tag, originalValueNode, nodeTuple);
+                popIncludeIfNeeded(tag);
             }
+            nodeHandler.onTupleEnd(nodeTuple);
 
         }
         mappingNode.setValue(updatedTuples);
+    }
+
+    private void popIncludeIfNeeded(Tag tag)
+    {
+        if (IncludeResolver.INCLUDE_TAG.equals(tag) || tag.startsWith(IncludeResolver.INCLUDE_APPLIED_TAG))
+        {
+            includeStack.pop();
+        }
+    }
+
+    private void pushIncludeIfNeeded(Tag tag, Node node)
+    {
+        String includeName = null;
+        if (IncludeResolver.INCLUDE_TAG.equals(tag))
+        {
+            if (node.getNodeId() != NodeId.scalar)
+            {
+                //invalid include
+                return;
+            }
+            includeName = ((ScalarNode) node).getValue();
+        }
+        else if (tag.startsWith(IncludeResolver.INCLUDE_APPLIED_TAG))
+        {
+            includeName =  new IncludeInfo(tag).getIncludeName();
+        }
+        if (includeName != null)
+        {
+            includeStack.push(includeName);
+        }
     }
 
     private TagResolver getTagResolver(Tag tag)
