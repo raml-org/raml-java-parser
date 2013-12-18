@@ -15,10 +15,15 @@
  */
 package org.raml.parser.resolver;
 
+import java.util.List;
+
+import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 
 public interface TupleHandler
 {
 
     boolean handles(NodeTuple tuple);
+
+    List<Suggestion> getSuggestions();
 }

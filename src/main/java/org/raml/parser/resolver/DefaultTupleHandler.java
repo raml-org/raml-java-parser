@@ -15,6 +15,10 @@
  */
 package org.raml.parser.resolver;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 
 public class DefaultTupleHandler implements  TupleHandler
@@ -24,5 +28,11 @@ public class DefaultTupleHandler implements  TupleHandler
     public boolean handles(NodeTuple tuple)
     {
         return false;
+    }
+
+    @Override
+    public List<Suggestion> getSuggestions()
+    {
+        return Collections.emptyList();
     }
 }

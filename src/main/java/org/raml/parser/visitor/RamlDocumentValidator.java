@@ -63,12 +63,12 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
+    public boolean onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
         super.onMappingNodeStart(mappingNode, tupleType);
         if (tupleType == KEY)
         {
-            return;
+            return true;
         }
         NodeRule<?> rule = getRuleContext().peek();
         if (isResourceRule(rule))
@@ -82,6 +82,7 @@ public class RamlDocumentValidator extends YamlDocumentValidator
             List<ValidationResult> mediaTypeValidations = getMediaTypeResolver().resolve(mappingNode);
             getMessages().addAll(mediaTypeValidations);
         }
+        return true;
     }
 
     private String getResourceUri(NodeRule<?> resourceRule)

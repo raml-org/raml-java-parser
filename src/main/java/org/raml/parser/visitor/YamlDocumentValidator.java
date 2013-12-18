@@ -71,12 +71,13 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode node, TupleType tupleType)
+    public boolean onMappingNodeStart(MappingNode node, TupleType tupleType)
     {
         if (tupleType == KEY)
         {
             addMessage(createErrorResult(NON_SCALAR_KEY_MESSAGE, node));
         }
+        return true;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class YamlDocumentValidator implements YamlValidator
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onSequenceStart(SequenceNode node, TupleType tupleType)
+    public boolean onSequenceStart(SequenceNode node, TupleType tupleType)
     {
         if (tupleType == KEY)
         {
@@ -97,6 +98,7 @@ public class YamlDocumentValidator implements YamlValidator
             NodeRule<SequenceNode> peek = (NodeRule<SequenceNode>) ruleContext.peek();
             addMessages(peek.validateValue(node));
         }
+        return true;
     }
 
     @Override
@@ -138,9 +140,10 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onDocumentStart(MappingNode node)
+    public boolean onDocumentStart(MappingNode node)
     {
         ruleContext.push(buildDocumentRule());
+        return true;
     }
 
     @Override

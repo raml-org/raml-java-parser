@@ -25,17 +25,38 @@ import org.yaml.snakeyaml.nodes.Tag;
 public interface NodeHandler
 {
 
-    void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType);
+    /**
+     * This method is call when a mapping node 'event' is reached
+     *
+     * @param mappingNode The mapping node
+     * @param tupleType   If is part of Key or A Value in the container Node.
+     * @return should keep on visiting it's children
+     */
+    boolean onMappingNodeStart(MappingNode mappingNode, TupleType tupleType);
 
     void onMappingNodeEnd(MappingNode mappingNode, TupleType tupleType);
 
-    void onSequenceStart(SequenceNode node, TupleType tupleType);
+    /**
+     * This method is call when a sequence node 'event' is reached
+     *
+     * @param sequenceNode The sequenceNode node
+     * @param tupleType    If is part of Key or A Value in the container Node.
+     * @return should keep on visiting it's elements
+     * @see NodeHandler#onSequenceElementEnd(org.yaml.snakeyaml.nodes.Node)
+     */
+    boolean onSequenceStart(SequenceNode sequenceNode, TupleType tupleType);
 
     void onSequenceEnd(SequenceNode node, TupleType tupleType);
 
     void onScalar(ScalarNode node, TupleType tupleType);
 
-    void onDocumentStart(MappingNode node);
+    /**
+     * This method is call when a document node 'event' is reached
+     *
+     * @param documentNode The documentNode node
+     * @return should keep on visiting it's children
+     */
+    boolean onDocumentStart(MappingNode documentNode);
 
     void onDocumentEnd(MappingNode node);
 

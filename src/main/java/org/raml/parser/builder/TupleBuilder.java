@@ -15,6 +15,7 @@
  */
 package org.raml.parser.builder;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.raml.parser.resolver.TupleHandler;
@@ -25,18 +26,36 @@ public interface TupleBuilder<K extends Node, V extends Node> extends NodeBuilde
 {
 
     /**
-     * Returns the
-     * @param tuple
-     * @return
+     * Returns the node child builder that can handle the specified NodeTuple.
+     *
+     * @param tuple The tuple to whom builder will handle
+     * @return The node builder
      */
     NodeBuilder getBuilderForTuple(NodeTuple tuple);
 
+    /**
+     * Build the parent object with the given key
+     * @param parent The object to be modifed
+     * @param tuple The node of the key
+     */
     void buildKey(Object parent, K tuple);
+
+    /**
+     * The handler that specifies whether or not this build can handle a given NodeTuple
+     * @return The Handler
+     */
+    TupleHandler getHandler();
+
+
+    /**
+     * The builders for the children NodeTuples
+     *
+     * @return The collection of TupleBuilder
+     */
+    Collection<TupleBuilder<?, ?>> getChildrenTupleBuilders();
 
     void setHandler(TupleHandler handler);
 
-    TupleHandler getHandler();
-
-    void setNestedBuilders(Map<String, TupleBuilder<?,?>> nestedBuilders);
+    void setChildrenTupleBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders);
 
 }

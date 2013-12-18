@@ -62,7 +62,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
+    public boolean onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
         super.onMappingNodeStart(mappingNode, tupleType);
         if (getDocumentContext().peek() instanceof Resource)
@@ -74,6 +74,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         {
             getMediaTypeResolver().resolve(mappingNode);
         }
+        return true;
     }
 
     @Override

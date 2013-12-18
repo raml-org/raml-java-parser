@@ -17,6 +17,7 @@ package org.raml.parser.builder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,11 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         throw new RuntimeException("Builder not found for " + tuple);
     }
 
+    public Collection<TupleBuilder<?, ?>> getChildrenTupleBuilders()
+    {
+        return builders.values();
+    }
+
     @Override
     public Object buildValue(Object parent, V node)
     {
@@ -97,7 +103,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     }
 
     @Override
-    public void setNestedBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders)
+    public void setChildrenTupleBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders)
     {
         builders = nestedBuilders;
     }

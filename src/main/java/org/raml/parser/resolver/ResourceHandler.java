@@ -15,6 +15,11 @@
  */
 package org.raml.parser.resolver;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.raml.parser.completion.DefaultSuggestion;
+import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
@@ -33,5 +38,11 @@ public class ResourceHandler implements TupleHandler
         {
             return false;
         }
+    }
+
+    @Override
+    public List<Suggestion> getSuggestions()
+    {
+        return Arrays.<Suggestion>asList(new DefaultSuggestion("/ResourceName"));
     }
 }

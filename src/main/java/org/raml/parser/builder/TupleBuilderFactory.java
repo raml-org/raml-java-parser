@@ -73,7 +73,7 @@ public class TupleBuilderFactory extends AbastractFactory
                 innerBuilders.put(declaredField.getName(), tupleBuilder);
             }
         }
-        parent.setNestedBuilders(innerBuilders);
+        parent.setChildrenTupleBuilders(innerBuilders);
     }
 
     private TupleBuilder<?, ?> createSequenceBuilder(Field declaredField, Sequence sequence)
