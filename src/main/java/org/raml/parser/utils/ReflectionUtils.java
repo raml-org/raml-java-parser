@@ -17,6 +17,8 @@ package org.raml.parser.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,6 +43,8 @@ public class ReflectionUtils
         WRAPPERS_PLUS_STRING.add(Long.class);
         WRAPPERS_PLUS_STRING.add(Float.class);
         WRAPPERS_PLUS_STRING.add(Double.class);
+        WRAPPERS_PLUS_STRING.add(BigInteger.class);
+        WRAPPERS_PLUS_STRING.add(BigDecimal.class);
         WRAPPERS_PLUS_STRING.add(String.class);
     }
 
@@ -59,6 +63,7 @@ public class ReflectionUtils
         return fields;
     }
 
+    @SuppressWarnings("unchecked")
     public static void setProperty(Object parent, String fieldName, Object value)
     {
         if (parent instanceof List)

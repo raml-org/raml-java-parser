@@ -17,6 +17,7 @@ package org.raml.model.parameter;
 
 import static org.raml.model.ParamType.STRING;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.raml.model.ParamType;
@@ -53,13 +54,13 @@ public class AbstractParam
     @Scalar
     private Integer maxLength;
     @Scalar
-    private Double minimum;
+    private BigDecimal minimum;
     @Scalar
-    private Double maximum;
+    private BigDecimal maximum;
 
     @Scalar(alias = "default")
     private String defaultValue;
-    
+
     @Scalar
     private String example;
 
@@ -177,22 +178,22 @@ public class AbstractParam
         this.maxLength = maxLength;
     }
 
-    public Double getMinimum()
+    public BigDecimal getMinimum()
     {
         return minimum;
     }
 
-    public void setMinimum(Double minimum)
+    public void setMinimum(BigDecimal minimum)
     {
         this.minimum = minimum;
     }
 
-    public Double getMaximum()
+    public BigDecimal getMaximum()
     {
         return maximum;
     }
 
-    public void setMaximum(Double maximum)
+    public void setMaximum(BigDecimal maximum)
     {
         this.maximum = maximum;
     }

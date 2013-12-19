@@ -15,6 +15,8 @@
  */
 package org.raml.model;
 
+import java.math.BigDecimal;
+
 import org.raml.model.parameter.AbstractParam;
 
 public enum ParamType
@@ -48,20 +50,20 @@ public enum ParamType
                 @Override
                 public boolean validate(AbstractParam param, String value)
                 {
-                    Double number;
+                    BigDecimal number;
                     try
                     {
-                        number = Double.parseDouble(value);
+                        number = new BigDecimal(value);
                     }
                     catch (NumberFormatException nfe)
                     {
                         return false;
                     }
-                    if (param.getMinimum() != null && number < param.getMinimum())
+                    if (param.getMinimum() != null && number.compareTo(param.getMinimum()) < 0)
                     {
                         return false;
                     }
-                    if (param.getMaximum() != null && number > param.getMaximum())
+                    if (param.getMaximum() != null && number.compareTo(param.getMaximum()) > 0)
                     {
                         return false;
                     }
@@ -82,15 +84,16 @@ public enum ParamType
                     {
                         return false;
                     }
-                    if (param.getMinimum() != null && number < param.getMinimum())
+                    if (param.getMinimum() != null && BigDecimal.valueOf(number).compareTo(param.getMinimum()) < 0)
                     {
                         return false;
                     }
-                    if (param.getMaximum() != null && number > param.getMaximum())
+                    if (param.getMaximum() != null && BigDecimal.valueOf(number).compareTo(param.getMaximum()) > 0)
                     {
                         return false;
                     }
-                    return true;                }
+                    return true;
+                }
             },
     DATE, //TODO add date validation
     FILE,

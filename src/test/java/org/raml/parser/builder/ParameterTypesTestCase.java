@@ -24,6 +24,7 @@ import static org.raml.model.ParamType.INTEGER;
 import static org.raml.model.ParamType.NUMBER;
 import static org.raml.model.ParamType.STRING;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Assert;
@@ -77,8 +78,8 @@ public class ParameterTypesTestCase extends AbstractRamlTestCase
         assertThat(ageParam.getDisplayName(), is("age name"));
         assertThat(ageParam.getDescription(), is("age description"));
         assertThat(ageParam.getType(), is(INTEGER));
-        assertThat(ageParam.getMinimum(), is(0.0));
-        assertThat(ageParam.getMaximum(), is(190.0));
+        assertThat(ageParam.getMinimum(), is(new BigDecimal(0)));
+        assertThat(ageParam.getMaximum(), is(new BigDecimal(190)));
         assertThat(ageParam.getExample(), is("2"));
         assertThat(ageParam.isRepeat(), is(false));
         assertThat(ageParam.isRequired(), is(false));
@@ -97,8 +98,8 @@ public class ParameterTypesTestCase extends AbstractRamlTestCase
         assertThat(priceParam.getDisplayName(), is("price name"));
         assertThat(priceParam.getDescription(), is("price description"));
         assertThat(priceParam.getType(), is(NUMBER));
-        assertThat(priceParam.getMinimum(), is(0.10));
-        assertThat(priceParam.getMaximum(), is(99.90));
+        assertThat(priceParam.getMinimum(), is(new BigDecimal("0.10")));
+        assertThat(priceParam.getMaximum(), is(new BigDecimal("99.90")));
         assertThat(priceParam.getExample(), is("17.30"));
         assertThat(priceParam.isRepeat(), is(false));
         assertThat(priceParam.isRequired(), is(false));

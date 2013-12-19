@@ -16,7 +16,6 @@
 package org.raml.parser.builder;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
@@ -26,6 +25,7 @@ import static org.raml.model.ParamType.STRING;
 import static org.raml.model.Protocol.HTTP;
 import static org.raml.model.Protocol.HTTPS;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -99,8 +99,8 @@ public class FullConfigTestCase extends AbstractRamlTestCase
 
         UriParameter portParam = raml.getBaseUriParameters().get("port");
         assertThat(portParam.getType(), is(INTEGER));
-        assertThat(portParam.getMinimum(), is(1025d));
-        assertThat(portParam.getMaximum(), is(65535d));
+        assertThat(portParam.getMinimum(), is(new BigDecimal(1025)));
+        assertThat(portParam.getMaximum(), is(new BigDecimal(65535)));
 
         assertThat(hostParam.getType(), is(STRING));
         UriParameter pathParam = raml.getBaseUriParameters().get("path");
@@ -151,7 +151,7 @@ public class FullConfigTestCase extends AbstractRamlTestCase
         assertThat(pageQueryParam.getType(), is(INTEGER));
         assertThat(pageQueryParam.isRequired(), is(false));
         assertThat(pageQueryParam.getDefaultValue(), is("1"));
-        assertThat(pageQueryParam.getMinimum(), is(1d));
+        assertThat(pageQueryParam.getMinimum(), is(new BigDecimal(1)));
 
         //action body types
         assertThat(action.getBody().size(), is(3));
@@ -170,8 +170,8 @@ public class FullConfigTestCase extends AbstractRamlTestCase
         assertThat(form1Param.get(0).getDescription(), is("form 1 description"));
         assertThat(form1Param.get(0).getType(), is(NUMBER));
         assertThat(form1Param.get(0).isRequired(), is(true));
-        assertThat(form1Param.get(0).getMinimum(), closeTo(9.5, 0.01));
-        assertThat(form1Param.get(0).getMaximum(), closeTo(10.5, 0.01));
+        assertThat(form1Param.get(0).getMinimum(), is(new BigDecimal("9.5")));
+        assertThat(form1Param.get(0).getMaximum(), is(new BigDecimal("10.5")));
         assertThat(form1Param.get(1).getType(), is(STRING));
         assertThat(form1Param.get(1).getEnumeration().size(), is(3));
 
