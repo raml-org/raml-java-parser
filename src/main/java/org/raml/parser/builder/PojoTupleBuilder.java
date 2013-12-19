@@ -53,7 +53,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     @Override
     public NodeBuilder getBuilderForTuple(NodeTuple tuple)
     {
-        if (builders.isEmpty())     //Do it lazzy so it support recursive structures
+        if (getBuilders().isEmpty())     //Do it lazzy so it support recursive structures
         {
             addBuildersFor(pojoClass);
         }

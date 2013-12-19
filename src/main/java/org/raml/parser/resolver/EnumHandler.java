@@ -64,7 +64,7 @@ public class EnumHandler implements TupleHandler
         {
             if (declaredField.isEnumConstant())
             {
-                result.add(new DefaultSuggestion(declaredField.getName()));
+                result.add(new DefaultSuggestion(declaredField.getName().toLowerCase()));
             }
         }
 

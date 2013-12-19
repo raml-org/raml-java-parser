@@ -34,7 +34,7 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 import org.yaml.snakeyaml.nodes.Tag;
 
-public class YamlDocumentSuggestive<T> implements NodeHandler
+public class YamlDocumentSuggester implements NodeHandler
 {
 
 
@@ -42,7 +42,7 @@ public class YamlDocumentSuggestive<T> implements NodeHandler
     private int offset;
     private Stack<Node> nodes;
 
-    public YamlDocumentSuggestive(YamlDocumentBuilder builder)
+    public YamlDocumentSuggester(YamlDocumentBuilder builder)
     {
 
         this.builder = builder;
@@ -51,7 +51,9 @@ public class YamlDocumentSuggestive<T> implements NodeHandler
 
     public List<Suggestion> suggest(String header, String context)
     {
+
         final List<Suggestion> result = new ArrayList<Suggestion>();
+
         this.offset = header.length();
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this, new DefaultResourceLoader());
@@ -61,9 +63,11 @@ public class YamlDocumentSuggestive<T> implements NodeHandler
         int contextColumn = calculateContextColumn(context);
 
         NodeBuilder<?> parent = null;
+        Node parentNode;
         while (!nodes.isEmpty())
         {
-            Node parentNode = nodes.pop();
+
+            parentNode = nodes.pop();
             int column = parentNode.getStartMark().getColumn();
 
             parent = (NodeBuilder) this.builder.getBuilderContext().pop();
@@ -73,18 +77,43 @@ public class YamlDocumentSuggestive<T> implements NodeHandler
                 break;
             }
         }
+        if (!isContextInValue(context))
+        {
+            addKeySuggestions(context, result, parent);
+        }
+        else
+        {
+            //todo add value suggestions
+        }
 
+        return result;
+    }
+
+    private void addKeySuggestions(String context, List<Suggestion> result, NodeBuilder<?> parent)
+    {
         if (parent instanceof TupleBuilder)
         {
             Collection<TupleBuilder<?, ?>> childrenTupleBuilders = ((TupleBuilder<?, ?>) parent).getChildrenTupleBuilders();
             for (TupleBuilder<?, ?> childTupleBuilder : childrenTupleBuilders)
             {
-                //TODO need to filter for the suggestions that we already used?
-                result.addAll(childTupleBuilder.getHandler().getSuggestions());
+                List<Suggestion> suggestions = childTupleBuilder.getHandler().getSuggestions();
+                String contextTrimmed = context.trim();
+                for (Suggestion suggestion : suggestions)
+                {
+                    if (suggestion.getText().startsWith(contextTrimmed))
+                    {
+                        result.add(suggestion);
+                    }
+                }
+
             }
 
         }
-        return result;
+    }
+
+    private boolean isContextInValue(String context)
+    {
+        return context.contains(":");
     }
 
     private int calculateContextColumn(String context)
@@ -100,18 +129,13 @@ public class YamlDocumentSuggestive<T> implements NodeHandler
     @Override
     public boolean onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
-
         return builder.onMappingNodeStart(mappingNode, tupleType);
     }
 
     @Override
     public void onMappingNodeEnd(MappingNode mappingNode, TupleType tupleType)
     {
-        if (validateOffset(mappingNode))
-        {
-
-            builder.onMappingNodeEnd(mappingNode, tupleType);
-        }
+        builder.onMappingNodeEnd(mappingNode, tupleType);
     }
 
     @Override
@@ -125,11 +149,9 @@ public class YamlDocumentSuggestive<T> implements NodeHandler
     @Override
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
-        if (validateOffset(node))
-        {
-            nodes.pop();
-            builder.onSequenceEnd(node, tupleType);
-        }
+
+        nodes.pop();
+        builder.onSequenceEnd(node, tupleType);
     }
 
     @Override

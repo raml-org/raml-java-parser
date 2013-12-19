@@ -382,7 +382,9 @@ public class TemplateResolver
             {
                 Field value = tuple.getClass().getDeclaredField("valueNode");
                 value.setAccessible(true);
-                MappingNode mappingNode = new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), false);
+                Node valueNode = tuple.getValueNode();
+                MappingNode mappingNode = new MappingNode(Tag.MAP, false, new ArrayList<NodeTuple>(),
+                                                          valueNode.getStartMark(), valueNode.getEndMark(), false);
                 value.set(tuple, mappingNode);
                 return mappingNode;
             }
@@ -676,7 +678,7 @@ public class TemplateResolver
         private MappingNode cleanMergedTuples(MappingNode templateNode, Class<?> context)
         {
 
-            List<NodeTuple> tuples = new ArrayList(templateNode.getValue());
+            List<NodeTuple> tuples = new ArrayList<NodeTuple>(templateNode.getValue());
             for (NodeTuple tuple : tuples)
             {
                 String key = ((ScalarNode) tuple.getKeyNode()).getValue();
@@ -699,7 +701,7 @@ public class TemplateResolver
             {
                 fields = new String[] {"usage", "summary", "displayName", "is"};
             }
-            return new HashSet(Arrays.asList(fields));
+            return new HashSet<String>(Arrays.asList(fields));
         }
 
         private boolean isAction(String key)
