@@ -16,15 +16,23 @@
 package org.raml.parser.builder;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.raml.model.ActionType.GET;
+import static org.raml.model.ActionType.POST;
+import static org.raml.model.ActionType.PUT;
+import static org.raml.model.ParamType.BOOLEAN;
+import static org.raml.model.ParamType.INTEGER;
+
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Raml;
+import org.raml.parser.rule.ValidationResult;
 
 public class IncludeTestCase extends AbstractRamlTestCase
 {
@@ -119,5 +127,26 @@ public class IncludeTestCase extends AbstractRamlTestCase
     {
         Raml raml = parseRaml("org/raml/include/include-action.yaml");
         assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("get something"));
+    }
+
+    @Test
+    public void includeSequence()
+    {
+        String ramlSource = "org/raml/include/include-sequence.yaml";
+        List<ValidationResult> validationResults = validateRaml(ramlSource);
+        assertThat(validationResults.size(), is(0));
+        Raml raml = parseRaml(ramlSource);
+
+        assertThat(raml.getResources().get("/main").getAction(POST).getBody().get("application/json").getSchema(), is("main"));
+        assertThat(raml.getSchemas().get(0).get("main"), containsString("employeeId"));
+
+        assertThat(raml.getResource("/main").getAction(GET).getQueryParameters().size(), is(2));
+        assertThat(raml.getResource("/main").getAction(GET).getQueryParameters().get("offset").getType(), is(INTEGER));
+        assertThat(raml.getResource("/main").getAction(GET).getQueryParameters().get("limit").getType(), is(INTEGER));
+        assertThat(raml.getResource("/main").getAction(GET).getHeaders().get("security").getType(), is(BOOLEAN));
+
+        assertThat(raml.getResource("/main").getAction(PUT).getResponses().containsKey("204"), is(true));
+        assertThat(raml.getResource("/main").getAction(PUT).getBody().containsKey("text/xml"), is(true));
+
     }
 }

@@ -258,12 +258,12 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     }
 
     @Override
-    public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
+    public void onCustomTagStart(Tag tag, Node originalValueNode, Node node)
     {
     }
 
     @Override
-    public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
+    public void onCustomTagEnd(Tag tag, Node originalValueNode, Node node)
     {
     }
 

@@ -47,9 +47,9 @@ public interface NodeHandler
 
     void onSequenceElementEnd(Node sequenceNode);
 
-    void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple);
+    void onCustomTagStart(Tag tag, Node originalValueNode, Node node);
 
-    void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple);
+    void onCustomTagEnd(Tag tag, Node originalValueNode, Node node);
 
     void onCustomTagError(Tag tag, Node node, String message);
 }

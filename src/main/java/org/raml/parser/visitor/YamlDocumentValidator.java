@@ -208,7 +208,7 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
+    public void onCustomTagStart(Tag tag, Node originalValueNode, Node node)
     {
         if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
         {
@@ -221,7 +221,7 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
+    public void onCustomTagEnd(Tag tag, Node originalValueNode, Node node)
     {
         if ((INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar) ||
             tag.startsWith(INCLUDE_APPLIED_TAG))

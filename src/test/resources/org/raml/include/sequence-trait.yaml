@@ -1,0 +1,13 @@
+paged:
+    queryParameters:
+        offset:
+            type: integer
+            default: 0
+        limit:
+            type: integer
+            default: 10
+secured:
+    headers:
+        security:
+            type: boolean
+            required: true

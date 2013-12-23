@@ -1,0 +1,11 @@
+parent:
+    put?:
+        responses:
+            204:
+                body:
+                    text/plain: ~
+putter:
+    type: parent
+    put:
+        body:
+            text/xml: ~

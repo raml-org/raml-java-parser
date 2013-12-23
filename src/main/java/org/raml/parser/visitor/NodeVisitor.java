@@ -114,37 +114,53 @@ public class NodeVisitor
         for (NodeTuple nodeTuple : tuples)
         {
             Node keyNode = nodeTuple.getKeyNode();
-            Node valueNode = nodeTuple.getValueNode();
-            Node originalValueNode = valueNode;
-            Tag tag = valueNode.getTag();
-            TagResolver tagResolver = getTagResolver(tag);
-            if (tagResolver != null)
+            Node originalValueNode = nodeTuple.getValueNode();
+
+            Tag tag = originalValueNode.getTag();
+            Node resolvedNode = resolveTag(tag, originalValueNode);
+            if (originalValueNode != resolvedNode)
             {
-                valueNode = tagResolver.resolve(valueNode, resourceLoader, nodeHandler);
-                nodeTuple = new NodeTuple(keyNode, valueNode);
-            }
-            else if (!isStandardTag(tag))
-            {
-                nodeHandler.onCustomTagError(tag, valueNode, "Unknown tag " + tag);
+                nodeTuple = new NodeTuple(keyNode, resolvedNode);
             }
             updatedTuples.add(nodeTuple);
             nodeHandler.onTupleStart(nodeTuple);
             visit(keyNode, KEY);
-            if (tagResolver != null)
-            {
-                nodeHandler.onCustomTagStart(tag, originalValueNode, nodeTuple);
-                pushIncludeIfNeeded(tag, originalValueNode);
-            }
-            visit(valueNode, VALUE);
-            if (tagResolver != null)
-            {
-                nodeHandler.onCustomTagEnd(tag, originalValueNode, nodeTuple);
-                popIncludeIfNeeded(tag);
-            }
+            visitResolvedNode(originalValueNode, resolvedNode);
             nodeHandler.onTupleEnd(nodeTuple);
 
         }
         mappingNode.setValue(updatedTuples);
+    }
+
+    private Node resolveTag(Tag tag, Node valueNode)
+    {
+        TagResolver tagResolver = getTagResolver(tag);
+        if (tagResolver != null)
+        {
+            valueNode = tagResolver.resolve(valueNode, resourceLoader, nodeHandler);
+        }
+        else if (!isStandardTag(tag))
+        {
+            nodeHandler.onCustomTagError(tag, valueNode, "Unknown tag " + tag);
+        }
+        return valueNode;
+    }
+
+    private void visitResolvedNode(Node originalValueNode, Node resolvedNode)
+    {
+        Tag tag = originalValueNode.getTag();
+        boolean tagResolved = !isStandardTag(tag);
+        if (tagResolved)
+        {
+            nodeHandler.onCustomTagStart(tag, originalValueNode, resolvedNode);
+            pushIncludeIfNeeded(tag, originalValueNode);
+        }
+        visit(resolvedNode, VALUE);
+        if (tagResolved)
+        {
+            nodeHandler.onCustomTagEnd(tag, originalValueNode, resolvedNode);
+            popIncludeIfNeeded(tag);
+        }
     }
 
     private void popIncludeIfNeeded(Tag tag)
@@ -221,11 +237,18 @@ public class NodeVisitor
         if (tupleType == VALUE)
         {
             List<Node> value = node.getValue();
-            for (Node sequenceNode : value)
+            for (int i=0; i<value.size(); i++)
             {
-                nodeHandler.onSequenceElementStart(sequenceNode);
-                visit(sequenceNode, tupleType);
-                nodeHandler.onSequenceElementEnd(sequenceNode);
+                Node originalNode = value.get(i);
+                Node resolvedNode = resolveTag(originalNode.getTag(), originalNode);
+                if (originalNode != resolvedNode)
+                {
+                    node.getValue().remove(i);
+                    node.getValue().add(i, resolvedNode);
+                }
+                nodeHandler.onSequenceElementStart(resolvedNode);
+                visitResolvedNode(originalNode, resolvedNode);
+                nodeHandler.onSequenceElementEnd(resolvedNode);
             }
         }
         nodeHandler.onSequenceEnd(node, tupleType);
