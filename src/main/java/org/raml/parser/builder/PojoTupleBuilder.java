@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Value;
@@ -28,7 +29,6 @@ import org.raml.parser.utils.ConvertUtils;
 import org.raml.parser.utils.NodeUtils;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
@@ -51,15 +51,14 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     }
 
     @Override
-    public NodeBuilder getBuilderForTuple(NodeTuple tuple)
+    protected Map<String, TupleBuilder<?, ?>> getBuilders()
     {
-        if (getBuilders().isEmpty())     //Do it lazzy so it support recursive structures
+        if (super.getBuilders().isEmpty())
         {
             addBuildersFor(pojoClass);
         }
-        return super.getBuilderForTuple(tuple);
+        return super.getBuilders();
     }
-
 
     @Override
     public Object buildValue(Object parent, Node node)

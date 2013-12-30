@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.raml.model.Raml;
 import org.raml.parser.completion.DefaultSuggestion;
 import org.raml.parser.completion.Suggestion;
 import org.raml.parser.visitor.RamlDocumentBuilder;
@@ -40,16 +39,18 @@ public class SimpleCompletionTest
                                         "/media:\n" +
                                         " displayName: Media\n" +
                                         " get:\n" +
-                                        " put:";
+                                        " put:\n" +
+                                        "  headers:\n" +
+                                        "   hi:";
     public static final String HEADER_FOUR_SPACE = "#%RAML 0.8\n" +
-                                        "---\n" +
-                                        "title: Sample API\n" +
-                                        "version: v1\n" +
-                                        "baseUri: https://api.sample.com/\n" +
-                                        "/media:\n" +
-                                        "    displayName: Media\n" +
-                                        "    get:\n" +
-                                        "    put:";
+                                                   "---\n" +
+                                                   "title: Sample API\n" +
+                                                   "version: v1\n" +
+                                                   "baseUri: https://api.sample.com/\n" +
+                                                   "/media:\n" +
+                                                   "    displayName: Media\n" +
+                                                   "    get:\n" +
+                                                   "    put:";
 
     @Test
     public void simpleRamlSuggestion()
@@ -74,14 +75,14 @@ public class SimpleCompletionTest
     }
 
     @Test
-     public void simpleResourceWithDeleteContext()
-     {
-         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
-         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, " del");
-         assertThat(suggest, notNullValue());
-         assertThat(suggest.size(), is(1));
-         assertThat(suggest.contains(new DefaultSuggestion("delete")), is(true));
-     }
+    public void simpleResourceWithDeleteContext()
+    {
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, " del");
+        assertThat(suggest, notNullValue());
+        assertThat(suggest.size(), is(1));
+        assertThat(suggest.contains(new DefaultSuggestion("delete")), is(true));
+    }
 
     @Test
     public void simpleRamlWithAction()
@@ -93,6 +94,18 @@ public class SimpleCompletionTest
         assertThat(suggest.isEmpty(), is(false));
         Assert.assertTrue(suggest.contains(new DefaultSuggestion("headers")));
         Assert.assertTrue(suggest.contains(new DefaultSuggestion("queryParameters")));
+    }
+
+    @Test
+    public void simpleRamlWithParam()
+    {
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "    ");
+        assertThat(suggest, notNullValue());
+        assertThat(suggest.isEmpty(), is(false));
+        Assert.assertTrue(suggest.contains(new DefaultSuggestion("required")));
+        Assert.assertTrue(suggest.contains(new DefaultSuggestion("default")));
     }
 
     @Test
