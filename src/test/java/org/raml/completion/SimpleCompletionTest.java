@@ -51,7 +51,10 @@ public class SimpleCompletionTest
                                                    "    displayName: Media\n" +
                                                    "    get:\n" +
                                                    "    put:";
-
+    public static final String HEADER_BROKEN = "#%RAML 0.8\n" +
+                                               "---\n" +
+                                               "tilte: Sample API\n" +
+                                               "versionn: one";
     @Test
     public void simpleRamlSuggestion()
     {
@@ -87,7 +90,6 @@ public class SimpleCompletionTest
     @Test
     public void simpleRamlWithAction()
     {
-
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "  ");
         assertThat(suggest, notNullValue());
@@ -99,7 +101,6 @@ public class SimpleCompletionTest
     @Test
     public void simpleRamlWithParam()
     {
-
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "    ");
         assertThat(suggest, notNullValue());
@@ -111,12 +112,21 @@ public class SimpleCompletionTest
     @Test
     public void simpleRamlWithNonAlignedPosition()
     {
-
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER_FOUR_SPACE, "  ");
         assertThat(suggest, notNullValue());
         assertThat(suggest.isEmpty(), is(false));
         Assert.assertTrue(suggest.contains(new DefaultSuggestion("delete")));
+    }
+
+    @Test
+    public void simpleRamlBroken()
+    {
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER_BROKEN, "");
+        assertThat(suggest, notNullValue());
+        assertThat(suggest.isEmpty(), is(false));
+        Assert.assertTrue(suggest.contains(new DefaultSuggestion("version")));
     }
 
 

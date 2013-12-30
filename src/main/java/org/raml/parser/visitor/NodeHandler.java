@@ -62,7 +62,7 @@ public interface NodeHandler
 
     void onTupleEnd(NodeTuple nodeTuple);
 
-    void onTupleStart(NodeTuple nodeTuple);
+    boolean onTupleStart(NodeTuple nodeTuple);
 
     void onSequenceElementStart(Node sequenceNode);
 

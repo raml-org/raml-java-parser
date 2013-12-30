@@ -128,7 +128,11 @@ public class NodeVisitor
                 nodeHandler.onCustomTagError(tag, valueNode, "Unknown tag " + tag);
             }
             updatedTuples.add(nodeTuple);
-            nodeHandler.onTupleStart(nodeTuple);
+            boolean processTuple = nodeHandler.onTupleStart(nodeTuple);
+            if (!processTuple)
+            {
+                continue;
+            }
             visit(keyNode, KEY);
             if (tagResolver != null)
             {

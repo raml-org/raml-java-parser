@@ -172,9 +172,8 @@ public class YamlDocumentValidator implements YamlValidator
     }
 
     @Override
-    public void onTupleStart(NodeTuple nodeTuple)
+    public boolean onTupleStart(NodeTuple nodeTuple)
     {
-
         TupleRule<?, ?> tupleRule = (TupleRule<?, ?>) ruleContext.peek();
         if (tupleRule != null)
         {
@@ -185,7 +184,7 @@ public class YamlDocumentValidator implements YamlValidator
         {
             throw new IllegalStateException("Unexpected ruleContext state");
         }
-
+        return true;
     }
 
     @Override

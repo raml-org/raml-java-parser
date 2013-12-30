@@ -191,10 +191,18 @@ public class YamlDocumentSuggester implements NodeHandler
     }
 
     @Override
-    public void onTupleStart(NodeTuple nodeTuple)
+    public boolean onTupleStart(NodeTuple nodeTuple)
     {
-        nodes.push(nodeTuple.getKeyNode());
-        builder.onTupleStart(nodeTuple);
+        try
+        {
+            builder.onTupleStart(nodeTuple);
+            nodes.push(nodeTuple.getKeyNode());
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+        return true;
     }
 
     @Override

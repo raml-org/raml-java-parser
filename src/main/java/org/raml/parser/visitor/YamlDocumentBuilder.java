@@ -233,9 +233,8 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     }
 
     @Override
-    public void onTupleStart(NodeTuple nodeTuple)
+    public boolean onTupleStart(NodeTuple nodeTuple)
     {
-
         TupleBuilder<?, ?> currentBuilder = (TupleBuilder<?, ?>) builderContext.peek();
         if (currentBuilder != null)
         {
@@ -246,7 +245,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         {
             throw new IllegalStateException("Unexpected builderContext state");
         }
-
+        return true;
     }
 
     @Override
