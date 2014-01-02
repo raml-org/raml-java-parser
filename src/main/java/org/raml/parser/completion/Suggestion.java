@@ -15,8 +15,22 @@
  */
 package org.raml.parser.completion;
 
-public interface Suggestion
+public interface Suggestion extends Comparable<Suggestion>
 {
 
-    String getText();
+    /**
+     * @return the label displayed as the suggestion
+     */
+    String getLabel();
+
+    /**
+     * @return short description of the suggestion
+     */
+    String getDescription();
+
+    /**
+     * @return actual value added by the editor
+     */
+    String getValue();
+
 }

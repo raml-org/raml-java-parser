@@ -18,6 +18,7 @@ package org.raml.parser.visitor;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -86,6 +87,7 @@ public class YamlDocumentSuggester implements NodeHandler
             //todo add value suggestions
         }
 
+        Collections.sort(result);
         return result;
     }
 
@@ -100,7 +102,7 @@ public class YamlDocumentSuggester implements NodeHandler
                 String contextTrimmed = context.trim();
                 for (Suggestion suggestion : suggestions)
                 {
-                    if (suggestion.getText().startsWith(contextTrimmed))
+                    if (suggestion.getLabel().startsWith(contextTrimmed))
                     {
                         result.add(suggestion);
                     }

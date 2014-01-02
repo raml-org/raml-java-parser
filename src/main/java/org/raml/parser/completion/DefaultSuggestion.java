@@ -18,24 +18,41 @@ package org.raml.parser.completion;
 public class DefaultSuggestion implements Suggestion
 {
 
-    private String text;
+    private String label;
 
-    public DefaultSuggestion(String text)
+    public DefaultSuggestion(String label)
     {
-        this.text = text;
+        if (label == null)
+        {
+            throw new IllegalArgumentException("label cannot be null");
+        }
+        this.label = label;
     }
 
     @Override
-    public String getText()
+    public String getLabel()
     {
-        return text;
+        //key auto-complete only
+        return label + ": ";
+    }
+
+    @Override
+    public String getDescription()
+    {
+        return "no description";
+    }
+
+    @Override
+    public String getValue()
+    {
+        return getLabel();
     }
 
     @Override
     public String toString()
     {
         return "DefaultSuggestion{" +
-               "text='" + text + '\'' +
+               "label='" + label + '\'' +
                '}';
     }
 
@@ -53,7 +70,7 @@ public class DefaultSuggestion implements Suggestion
 
         DefaultSuggestion that = (DefaultSuggestion) o;
 
-        if (text != null ? !text.equals(that.text) : that.text != null)
+        if (label != null ? !label.equals(that.label) : that.label != null)
         {
             return false;
         }
@@ -64,6 +81,12 @@ public class DefaultSuggestion implements Suggestion
     @Override
     public int hashCode()
     {
-        return text != null ? text.hashCode() : 0;
+        return label != null ? label.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(Suggestion that)
+    {
+        return this.getLabel().compareTo(that.getLabel());
     }
 }
