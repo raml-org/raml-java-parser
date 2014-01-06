@@ -39,7 +39,7 @@ import org.raml.parser.utils.ReflectionUtils;
 public class RamlEmitter
 {
 
-    public static final String VERSION = "#%RAML 0.8\n";
+    public static final String VERSION = "#%RAML 0.8";
     private static final String INDENTATION = "    ";
     private static final String YAML_SEQ = "- ";
     private static final String YAML_SEQ_START = "[";
@@ -50,6 +50,7 @@ public class RamlEmitter
     public String dump(Raml raml)
     {
         StringBuilder dump = new StringBuilder(VERSION);
+        dump.append("\n");
         int depth = 0;
         dumpPojo(dump, depth, raml);
         return dump.toString();

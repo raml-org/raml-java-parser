@@ -32,8 +32,7 @@ public class DefaultSuggestion implements Suggestion
     @Override
     public String getLabel()
     {
-        //key auto-complete only
-        return label + ": ";
+        return label;
     }
 
     @Override

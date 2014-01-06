@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.raml.parser.completion.DefaultSuggestion;
+import org.raml.parser.completion.KeySuggestion;
 import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -64,7 +64,7 @@ public class EnumHandler implements TupleHandler
         {
             if (declaredField.isEnumConstant())
             {
-                result.add(new DefaultSuggestion(declaredField.getName().toLowerCase()));
+                result.add(new KeySuggestion(declaredField.getName().toLowerCase()));
             }
         }
 

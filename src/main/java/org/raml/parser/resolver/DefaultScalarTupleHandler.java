@@ -18,7 +18,7 @@ package org.raml.parser.resolver;
 import java.util.Arrays;
 import java.util.List;
 
-import org.raml.parser.completion.DefaultSuggestion;
+import org.raml.parser.completion.KeySuggestion;
 import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -47,6 +47,6 @@ public class DefaultScalarTupleHandler implements TupleHandler
     @Override
     public List<Suggestion> getSuggestions()
     {
-        return Arrays.<Suggestion>asList(new DefaultSuggestion(fieldName));
+        return Arrays.<Suggestion>asList(new KeySuggestion(fieldName));
     }
 }

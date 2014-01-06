@@ -18,13 +18,15 @@ package org.raml.parser.resolver;
 import java.util.Arrays;
 import java.util.List;
 
-import org.raml.parser.completion.DefaultSuggestion;
+import org.raml.parser.completion.KeySuggestion;
 import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class ResourceHandler implements TupleHandler
 {
+
+    public static String RESOURCE_KEY = "/ResourceName";
 
     @Override
     public boolean handles(NodeTuple tuple)
@@ -43,6 +45,7 @@ public class ResourceHandler implements TupleHandler
     @Override
     public List<Suggestion> getSuggestions()
     {
-        return Arrays.<Suggestion>asList(new DefaultSuggestion("/ResourceName"));
+        return Arrays.<Suggestion>asList(new KeySuggestion(RESOURCE_KEY));
     }
+
 }

@@ -23,13 +23,17 @@ import java.util.List;
 import java.util.Stack;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.emitter.RamlEmitter;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.TupleBuilder;
+import org.raml.parser.completion.DefaultSuggestion;
+import org.raml.parser.completion.NodeContext;
 import org.raml.parser.completion.Suggestion;
 import org.raml.parser.loader.DefaultResourceLoader;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
@@ -41,35 +45,48 @@ public class YamlDocumentSuggester implements NodeHandler
 
     private YamlDocumentBuilder builder;
     private int offset;
-    private Stack<Node> nodes;
+    private Stack<NodeContext> nodes;
 
     public YamlDocumentSuggester(YamlDocumentBuilder builder)
     {
 
         this.builder = builder;
-        this.nodes = new Stack<Node>();
+        this.nodes = new Stack<NodeContext>();
     }
 
-    public List<Suggestion> suggest(String header, String context)
+    public List<Suggestion> suggest(String topSection, String context)
+    {
+        return suggest(topSection, context, null);
+    }
+
+    public List<Suggestion> suggest(String topSection, String context, String bottomSection)
     {
 
         final List<Suggestion> result = new ArrayList<Suggestion>();
 
-        this.offset = header.length();
+        topSection = topSection.trim();
+        this.offset = topSection.length();
+        if (offset == 0)
+        {
+            result.add(new DefaultSuggestion(RamlEmitter.VERSION));
+            return result;
+        }
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this, new DefaultResourceLoader());
-        MappingNode rootNode = (MappingNode) yamlParser.compose(new StringReader(header));
+        MappingNode rootNode = (MappingNode) yamlParser.compose(new StringReader(topSection));
+
+
         nodeVisitor.visitDocument(rootNode);
 
         int contextColumn = calculateContextColumn(context);
 
         NodeBuilder<?> parent = null;
-        Node parentNode;
+        NodeContext parentNode = null;
         while (!nodes.isEmpty())
         {
 
-            parentNode = nodes.pop();
-            int column = parentNode.getStartMark().getColumn();
+            parentNode = popNode();
+            int column = parentNode.getColumn();
 
             parent = (NodeBuilder) this.builder.getBuilderContext().pop();
 
@@ -80,7 +97,7 @@ public class YamlDocumentSuggester implements NodeHandler
         }
         if (!isContextInValue(context))
         {
-            addKeySuggestions(context, result, parent);
+            addKeySuggestions(context, result, parent, parentNode.getKeys());
         }
         else
         {
@@ -91,7 +108,7 @@ public class YamlDocumentSuggester implements NodeHandler
         return result;
     }
 
-    private void addKeySuggestions(String context, List<Suggestion> result, NodeBuilder<?> parent)
+    private void addKeySuggestions(String context, List<Suggestion> result, NodeBuilder<?> parent, List<String> existingKeys)
     {
         if (parent instanceof TupleBuilder)
         {
@@ -102,14 +119,12 @@ public class YamlDocumentSuggester implements NodeHandler
                 String contextTrimmed = context.trim();
                 for (Suggestion suggestion : suggestions)
                 {
-                    if (suggestion.getLabel().startsWith(contextTrimmed))
+                    if (suggestion.getLabel().startsWith(contextTrimmed) && !existingKeys.contains(suggestion.getLabel()))
                     {
                         result.add(suggestion);
                     }
                 }
-
             }
-
         }
     }
 
@@ -128,6 +143,18 @@ public class YamlDocumentSuggester implements NodeHandler
         return column;
     }
 
+    private void pushNode(Node node, MappingNode mappingNode)
+    {
+        //System.out.format("pushing %s node = %s\n", node.getNodeId(), NodeUtils.getNodeValue(node));
+        nodes.push(new NodeContext(node.getStartMark().getColumn(), mappingNode));
+    }
+
+    private NodeContext popNode()
+    {
+        //System.out.println("popping node");
+        return nodes.pop();
+    }
+
     @Override
     public boolean onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
@@ -144,7 +171,7 @@ public class YamlDocumentSuggester implements NodeHandler
     @SuppressWarnings("unchecked")
     public boolean onSequenceStart(SequenceNode node, TupleType tupleType)
     {
-        nodes.push(node);
+        pushNode(node, null);
         return builder.onSequenceStart(node, tupleType);
     }
 
@@ -152,7 +179,7 @@ public class YamlDocumentSuggester implements NodeHandler
     public void onSequenceEnd(SequenceNode node, TupleType tupleType)
     {
 
-        nodes.pop();
+        popNode();
         builder.onSequenceEnd(node, tupleType);
     }
 
@@ -166,7 +193,7 @@ public class YamlDocumentSuggester implements NodeHandler
     @Override
     public boolean onDocumentStart(MappingNode node)
     {
-        nodes.push(node);
+        pushNode(node, node);
         return builder.onDocumentStart(node);
     }
 
@@ -182,7 +209,7 @@ public class YamlDocumentSuggester implements NodeHandler
         Node valueNode = nodeTuple.getValueNode();
         if (validateOffset(valueNode))
         {
-            nodes.pop();
+            popNode();
             builder.onTupleEnd(nodeTuple);
         }
     }
@@ -198,9 +225,10 @@ public class YamlDocumentSuggester implements NodeHandler
         try
         {
             builder.onTupleStart(nodeTuple);
-            nodes.push(nodeTuple.getKeyNode());
+            MappingNode mapping = nodeTuple.getValueNode().getNodeId() == NodeId.mapping ? (MappingNode) nodeTuple.getValueNode() : null;
+            pushNode(nodeTuple.getKeyNode(), mapping);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             return false;
         }
