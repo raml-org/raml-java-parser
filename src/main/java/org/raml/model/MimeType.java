@@ -32,12 +32,21 @@ public class MimeType
     @Scalar(rule = org.raml.parser.rule.SchemaRule.class)
     private String schema;
 
-    @Scalar
+    @Scalar(includeField="exampleOrigin")
     private String example;
 
     @Mapping
     private Map<String, List<FormParameter>> formParameters;
 
+    private String exampleOrigin;
+
+    public String getExampleOrigin() {
+		return exampleOrigin;
+	}
+
+	public void setExampleOrigin(String exampleOrigin) {
+		this.exampleOrigin = exampleOrigin;
+	}
 
     public String getType()
     {

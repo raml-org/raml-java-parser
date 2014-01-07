@@ -21,6 +21,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.emitter.ResourceTypeEmitter;
+import org.raml.emitter.SchemasEmitter;
+import org.raml.emitter.TraitEmitter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
@@ -51,12 +54,15 @@ public class Raml
     private String mediaType;
 
     @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
+    @org.raml.emitter.Dumper(SchemasEmitter.class)
 	protected List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
     @Sequence
+    @org.raml.emitter.Dumper(ResourceTypeEmitter.class)
     private List<Map<String, Template>> resourceTypes;
 
     @Sequence
+    @org.raml.emitter.Dumper(TraitEmitter.class)
     private List<Map<String, Template>> traits;
 
     @Sequence
