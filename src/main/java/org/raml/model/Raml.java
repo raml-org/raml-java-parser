@@ -51,7 +51,7 @@ public class Raml
     private String mediaType;
 
     @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
-    private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
+	protected List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
     @Sequence
     private List<Map<String, Template>> resourceTypes;
@@ -187,6 +187,7 @@ public class Raml
     {
         return schemas;
     }
+    
 
     public void setSchemas(List<Map<String, String>> schemas)
     {
@@ -201,7 +202,7 @@ public class Raml
     public void setProtocols(List<Protocol> protocols)
     {
         this.protocols = protocols;
-    }
+    }	
 
     public List<Map<String, SecurityScheme>> getSecuritySchemes()
     {

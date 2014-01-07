@@ -24,6 +24,8 @@ public class DocumentationItem
 
     @Scalar(required = true)
     private String content;
+    
+    private String origin;
 
     public String getTitle()
     {
@@ -44,4 +46,12 @@ public class DocumentationItem
     {
         this.content = content;
     }
+
+    /**
+     * 
+     * @return name of the file where item is stored (null if in the same file)
+     */
+	public String getOrigin() {
+		return origin;
+	}
 }

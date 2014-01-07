@@ -36,4 +36,5 @@ public @interface Scalar
 
     String alias() default "";
 
+    String includeField() default "";
 }
