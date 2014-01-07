@@ -81,7 +81,7 @@ public class YamlDocumentSuggester implements NodeHandler
         int contextColumn = calculateContextColumn(context);
 
         NodeBuilder<?> parent = null;
-        NodeContext parentNode = null;
+        NodeContext parentNode = nodes.peek();
         while (!nodes.isEmpty())
         {
 
@@ -146,7 +146,12 @@ public class YamlDocumentSuggester implements NodeHandler
     private void pushNode(Node node, MappingNode mappingNode)
     {
         //System.out.format("pushing %s node = %s\n", node.getNodeId(), NodeUtils.getNodeValue(node));
-        nodes.push(new NodeContext(node.getStartMark().getColumn(), mappingNode));
+        pushNode(node.getStartMark().getColumn(), mappingNode);
+    }
+
+    private void pushNode(int column, MappingNode mappingNode)
+    {
+        nodes.push(new NodeContext(column, mappingNode));
     }
 
     private NodeContext popNode()
@@ -187,13 +192,27 @@ public class YamlDocumentSuggester implements NodeHandler
     @SuppressWarnings("unchecked")
     public void onScalar(ScalarNode node, TupleType tupleType)
     {
-        builder.onScalar(node, tupleType);
+        try
+        {
+            builder.onScalar(node, tupleType);
+        }
+        catch (Exception e)
+        {
+            //ignore
+        }
     }
 
     @Override
     public boolean onDocumentStart(MappingNode node)
     {
-        pushNode(node, node);
+        if (node == null)
+        {
+            pushNode(0, null);
+        }
+        else
+        {
+            pushNode(node, node);
+        }
         return builder.onDocumentStart(node);
     }
 

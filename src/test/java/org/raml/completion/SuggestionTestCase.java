@@ -23,7 +23,6 @@ import static org.raml.emitter.RamlEmitter.VERSION;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.parser.completion.DefaultSuggestion;
 import org.raml.parser.completion.KeySuggestion;
@@ -33,6 +32,10 @@ import org.raml.parser.visitor.YamlDocumentSuggester;
 
 public class SuggestionTestCase
 {
+
+    public static final int ROOT_SUGGEST_COUNT = 13;
+    public static final int RESOURCE_SUGGEST_COUNT = 16;
+    public static final int ACTION_SUGGEST_COUNT = 9;
 
     public static final String HEADER = "#%RAML 0.8\n" +
                                         "---\n" +
@@ -57,7 +60,7 @@ public class SuggestionTestCase
                                                    "    put:";
 
     @Test
-    public void emptyRamlSuggestion()
+    public void emptyRaml()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest("", "");
@@ -66,12 +69,26 @@ public class SuggestionTestCase
     }
 
     @Test
-    @Ignore
-    public void headerOnlyRamlSuggestion()
+    public void versionHeaderOnly()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(VERSION, "");
-        assertThat(suggest.size(), is(10));
+        assertThat(suggest.size(), is(ROOT_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("title")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("version")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("get")), is(false));
+    }
+
+    @Test
+    public void documentSequence()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: hola\n" +
+                            "documentation:";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "");
+        assertThat(suggest.size(), is(ROOT_SUGGEST_COUNT - 2));
         assertThat(suggest.contains(new KeySuggestion("version")), is(true));
     }
 
@@ -81,10 +98,11 @@ public class SuggestionTestCase
         String topSection = "#%RAML 0.8\n" +
                             "title: one\n" +
                             "/ResourceName: ";
+
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, " ");
         assertThat(suggest.isEmpty(), is(false));
-        assertThat(suggest.size(), is(16));
+        assertThat(suggest.size(), is(RESOURCE_SUGGEST_COUNT));
         assertThat(suggest.contains(new KeySuggestion("is")), is(true));
         assertThat(suggest.contains(new KeySuggestion("get")), is(true));
         assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
@@ -97,7 +115,6 @@ public class SuggestionTestCase
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "");
         assertThat(suggest.isEmpty(), is(false));
         assertThat(suggest.contains(new KeySuggestion("schemas")), is(true));
-
     }
 
     @Test
@@ -139,10 +156,9 @@ public class SuggestionTestCase
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "  ");
         assertThat(suggest, notNullValue());
-        assertThat(suggest.isEmpty(), is(false));
+        assertThat(suggest.size(), is(ACTION_SUGGEST_COUNT - 1));
         assertThat(suggest.contains(new KeySuggestion("headers")), is(false));
         assertThat(suggest.contains(new KeySuggestion("queryParameters")), is(true));
-
     }
 
     @Test
@@ -179,6 +195,5 @@ public class SuggestionTestCase
         assertThat(suggest.isEmpty(), is(false));
         Assert.assertTrue(suggest.contains(new KeySuggestion("version")));
     }
-
 
 }
