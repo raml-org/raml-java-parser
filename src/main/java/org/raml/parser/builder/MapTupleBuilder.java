@@ -51,7 +51,7 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         }
         else
         {
-            return new ScalarTupleBuilder(null, getValueClass());
+            return new ScalarTupleBuilder(null, getValueClass(),null);
         }
     }
 

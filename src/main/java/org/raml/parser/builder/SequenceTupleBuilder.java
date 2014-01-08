@@ -61,7 +61,7 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
             if (ReflectionUtils.isWrapperOrString((Class<?>) itemType))
             {
                 //sequence of scalars
-                return new ScalarTupleBuilder(fieldName, (Class<?>) itemType);
+                return new ScalarTupleBuilder(fieldName, (Class<?>) itemType, null);
             }
             //sequence of pojos
             return new PojoTupleBuilder((Class<?>) itemType);

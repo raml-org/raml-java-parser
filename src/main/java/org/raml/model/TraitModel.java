@@ -6,6 +6,17 @@ public class TraitModel extends Action{
 
 	@Scalar
 	String displayName;
+	
+	@Scalar
+	String usage;
+
+	public String getUsage() {
+		return usage;
+	}
+
+	public void setUsage(String usage) {
+		this.usage = usage;
+	}
 
 	public String getDisplayName() {
 		return displayName;

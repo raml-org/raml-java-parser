@@ -216,7 +216,7 @@ public class Resource
     @Override
     public int hashCode()
     {
-        int result = parentUri.hashCode();
+        int result = parentUri!=null?parentUri.hashCode():0;
         result = 31 * result + relativeUri.hashCode();
         return result;
     }

@@ -145,6 +145,12 @@ public class ValidationResult
 
     public static ValidationResult createErrorResult(String message, Mark startMark, Mark endMark)
     {
+    	if (startMark==null){
+    		startMark=new Mark("", -1, -1, -1, "", 1);
+    	}
+    	if (endMark==null){
+    		endMark=new Mark("", -1, -1, -1, "", 1);
+    	}
         return createErrorResult(message, startMark.getLine(), startMark.getColumn(), endMark.getColumn());
     }
 

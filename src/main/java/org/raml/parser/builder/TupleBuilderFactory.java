@@ -118,7 +118,7 @@ public class TupleBuilderFactory extends AbastractFactory
             }
             else
             {
-                tupleBuilder = new ScalarTupleBuilder(declaredField.getName(), declaredField.getType());
+                tupleBuilder = new ScalarTupleBuilder(declaredField.getName(), declaredField.getType(),scalar.includeField());
             }
         }
         return tupleBuilder;

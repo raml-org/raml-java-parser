@@ -15,7 +15,11 @@
  */
 package org.raml.parser.builder;
 
+import java.lang.reflect.Field;
+
+import org.raml.parser.annotation.Scalar;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
 import org.raml.parser.utils.ConvertUtils;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -26,13 +30,13 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
 
     private String fieldName;
     private Class<?> type;
+    private String includeField;
 
-
-    public ScalarTupleBuilder(String field, Class<?> type)
+    public ScalarTupleBuilder(String field, Class<?> type,String includeField)
     {
         super(new DefaultScalarTupleHandler(field));
         this.type = type;
-
+        this.includeField=includeField;
     }
 
 
@@ -44,7 +48,13 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
         final Object converted = ConvertUtils.convertTo(value, type);
         String unalias = unalias(parent, fieldName);
         ReflectionUtils.setProperty(parent, unalias, converted);
-
+        if (includeField!=null&&includeField.length()>0){
+        	if (node instanceof IncludeScalarNode)
+        	{
+        		IncludeScalarNode sc=(IncludeScalarNode) node;
+        		ReflectionUtils.setProperty(parent, includeField, sc.getIncludeName());
+        	}
+        }
         return parent;
     }
 

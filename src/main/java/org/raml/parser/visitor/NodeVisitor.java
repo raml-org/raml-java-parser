@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import org.apache.commons.beanutils.ConversionException;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.TagResolver;
@@ -256,7 +257,11 @@ public class NodeVisitor
 
     private void visitScalar(ScalarNode node, TupleType tupleType)
     {
+    	try{
         nodeHandler.onScalar(node, tupleType);
+    	}catch (ConversionException e) {
+    		
+		}
     }
 
 
