@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.raml.model.Raml;
+import org.raml.model.Raml2;
 import org.raml.model.Resource;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.NodeBuilder;
@@ -51,7 +52,12 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
         super(Raml.class, resourceLoader, defaultResolver(tagResolvers));
     }
 
-    private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
+    public RamlDocumentBuilder(Class<? extends Raml> class1,
+			ResourceLoader resourceLoader, TagResolver[] tagResolvers) {
+    	super((Class)class1,resourceLoader,tagResolvers);
+	}
+
+	private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
     {
         TagResolver[] defaultResolvers = new TagResolver[] {
                 new IncludeResolver(),

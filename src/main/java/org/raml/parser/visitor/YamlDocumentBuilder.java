@@ -77,6 +77,16 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         postBuildProcess();
         return documentObject;
     }
+    
+    public T build(MappingNode content)
+    {
+        NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader, tagResolvers);
+        rootNode =content;
+        preBuildProcess();
+        nodeVisitor.visitDocument(rootNode);
+        postBuildProcess();
+        return documentObject;
+    }
 
     protected T getDocumentObject()
     {
