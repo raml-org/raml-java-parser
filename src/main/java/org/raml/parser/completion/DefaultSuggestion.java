@@ -19,14 +19,21 @@ public class DefaultSuggestion implements Suggestion
 {
 
     private String label;
+    private int indentation;
 
     public DefaultSuggestion(String label)
+    {
+        this(label, -1);
+    }
+
+    public DefaultSuggestion(String label, int indentation)
     {
         if (label == null)
         {
             throw new IllegalArgumentException("label cannot be null");
         }
         this.label = label;
+        this.indentation = indentation;
     }
 
     @Override
@@ -45,6 +52,17 @@ public class DefaultSuggestion implements Suggestion
     public String getValue()
     {
         return getLabel();
+    }
+
+    @Override
+    public int getIndentation()
+    {
+        return indentation;
+    }
+
+    public void setIndentation(int indentation)
+    {
+        this.indentation = indentation;
     }
 
     @Override

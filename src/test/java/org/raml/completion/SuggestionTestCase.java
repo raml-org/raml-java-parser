@@ -22,7 +22,6 @@ import static org.raml.emitter.RamlEmitter.VERSION;
 
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.raml.parser.completion.DefaultSuggestion;
 import org.raml.parser.completion.KeySuggestion;
@@ -66,6 +65,7 @@ public class SuggestionTestCase
         List<Suggestion> suggest = yamlDocumentSuggester.suggest("", "");
         assertThat(suggest.size(), is(1));
         assertThat(suggest.contains(new DefaultSuggestion(VERSION)), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
     @Test
@@ -77,6 +77,7 @@ public class SuggestionTestCase
         assertThat(suggest.contains(new KeySuggestion("title")), is(true));
         assertThat(suggest.contains(new KeySuggestion("version")), is(true));
         assertThat(suggest.contains(new KeySuggestion("get")), is(false));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
     @Test
@@ -90,6 +91,7 @@ public class SuggestionTestCase
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "");
         assertThat(suggest.size(), is(ROOT_SUGGEST_COUNT - 2));
         assertThat(suggest.contains(new KeySuggestion("version")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
     @Test
@@ -106,19 +108,21 @@ public class SuggestionTestCase
         assertThat(suggest.contains(new KeySuggestion("is")), is(true));
         assertThat(suggest.contains(new KeySuggestion("get")), is(true));
         assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
     @Test
-    public void simpleRamlSuggestion()
+    public void topLevel()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "");
         assertThat(suggest.isEmpty(), is(false));
         assertThat(suggest.contains(new KeySuggestion("schemas")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
     @Test
-    public void simpleRamlNoDupsSuggestion()
+    public void noDuplicates()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "");
@@ -126,10 +130,11 @@ public class SuggestionTestCase
         assertThat(suggest.isEmpty(), is(false));
         assertThat(suggest.contains(new KeySuggestion("schemas")), is(true));
         assertThat(suggest.contains(new KeySuggestion("title")), is(false));
+        assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
     @Test
-    public void simpleResource()
+    public void resource()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, " ");
@@ -138,20 +143,22 @@ public class SuggestionTestCase
         assertThat(suggest.contains(new KeySuggestion("is")), is(true));
         assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
         assertThat(suggest.contains(new KeySuggestion("get")), is(false));
+        assertThat(suggest.get(0).getIndentation(), is(1));
     }
 
     @Test
-    public void simpleResourceWithDeleteContext()
+    public void resourceWithDeleteContext()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, " del");
         assertThat(suggest, notNullValue());
         assertThat(suggest.size(), is(1));
         assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(1));
     }
 
     @Test
-    public void simpleRamlWithAction()
+    public void action()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "  ");
@@ -159,27 +166,30 @@ public class SuggestionTestCase
         assertThat(suggest.size(), is(ACTION_SUGGEST_COUNT - 1));
         assertThat(suggest.contains(new KeySuggestion("headers")), is(false));
         assertThat(suggest.contains(new KeySuggestion("queryParameters")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(2));
     }
 
     @Test
-    public void simpleRamlWithParam()
+    public void actionHeaderParam()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, "    ");
         assertThat(suggest, notNullValue());
         assertThat(suggest.isEmpty(), is(false));
-        Assert.assertTrue(suggest.contains(new KeySuggestion("required")));
-        Assert.assertTrue(suggest.contains(new KeySuggestion("default")));
+        assertThat(suggest.contains(new KeySuggestion("required")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("default")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
     @Test
-    public void simpleRamlWithNonAlignedPosition()
+    public void nonAlignedPosition()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER_FOUR_SPACE, "  ");
         assertThat(suggest, notNullValue());
-        assertThat(suggest.isEmpty(), is(false));
-        Assert.assertTrue(suggest.contains(new KeySuggestion("delete")));
+        assertThat(suggest.size(), is(RESOURCE_SUGGEST_COUNT - 3));
+        assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(4));
     }
 
     @Test
@@ -193,7 +203,8 @@ public class SuggestionTestCase
         List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "");
         assertThat(suggest, notNullValue());
         assertThat(suggest.isEmpty(), is(false));
-        Assert.assertTrue(suggest.contains(new KeySuggestion("version")));
+        assertThat(suggest.contains(new KeySuggestion("version")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
 }

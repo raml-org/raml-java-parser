@@ -33,4 +33,16 @@ public interface Suggestion extends Comparable<Suggestion>
      */
     String getValue();
 
+    /**
+     * @return right indentation in spaces
+     */
+    int getIndentation();
+
+    /**
+     * sets the right indentation for the suggestion
+     *
+     * @param indentation
+     */
+    void setIndentation(int indentation);
+
 }

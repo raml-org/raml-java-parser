@@ -68,7 +68,7 @@ public class YamlDocumentSuggester implements NodeHandler
         this.offset = topSection.length();
         if (offset == 0)
         {
-            result.add(new DefaultSuggestion(RamlEmitter.VERSION));
+            result.add(new DefaultSuggestion(RamlEmitter.VERSION, 0));
             return result;
         }
         Yaml yamlParser = new Yaml();
@@ -80,24 +80,20 @@ public class YamlDocumentSuggester implements NodeHandler
 
         int contextColumn = calculateContextColumn(context);
 
-        NodeBuilder<?> parent = null;
-        NodeContext parentNode = nodes.peek();
+        NodeBuilder<?> parentNodeBuilder = null;
+        NodeContext nodeContext = nodes.peek();
         while (!nodes.isEmpty())
         {
-
-            parentNode = popNode();
-            int column = parentNode.getColumn();
-
-            parent = (NodeBuilder) this.builder.getBuilderContext().pop();
-
-            if (column < contextColumn)
+            nodeContext = popNode();
+            parentNodeBuilder = (NodeBuilder) this.builder.getBuilderContext().pop();
+            if (nodeContext.getParentIndentation() < contextColumn)
             {
                 break;
             }
         }
         if (!isContextInValue(context))
         {
-            addKeySuggestions(context, result, parent, parentNode.getKeys());
+            addKeySuggestions(context, result, parentNodeBuilder, nodeContext);
         }
         else
         {
@@ -108,10 +104,11 @@ public class YamlDocumentSuggester implements NodeHandler
         return result;
     }
 
-    private void addKeySuggestions(String context, List<Suggestion> result, NodeBuilder<?> parent, List<String> existingKeys)
+    private void addKeySuggestions(String context, List<Suggestion> result, NodeBuilder<?> parent, NodeContext nodeContext)
     {
         if (parent instanceof TupleBuilder)
         {
+            List<String> existingKeys = nodeContext.getKeys();
             Collection<TupleBuilder<?, ?>> childrenTupleBuilders = ((TupleBuilder<?, ?>) parent).getChildrenTupleBuilders();
             for (TupleBuilder<?, ?> childTupleBuilder : childrenTupleBuilders)
             {
@@ -121,6 +118,7 @@ public class YamlDocumentSuggester implements NodeHandler
                 {
                     if (suggestion.getLabel().startsWith(contextTrimmed) && !existingKeys.contains(suggestion.getLabel()))
                     {
+                        suggestion.setIndentation(nodeContext.getSiblingsIndentation());
                         result.add(suggestion);
                     }
                 }

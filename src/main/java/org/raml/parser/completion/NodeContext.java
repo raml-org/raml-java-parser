@@ -27,18 +27,25 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class NodeContext
 {
 
-    private int column;
+    private int parentIndentation;
+    private int siblingsIndentation;
     private MappingNode mappingNode;
 
-    public NodeContext(int column, MappingNode mappingNode)
+    public NodeContext(int parentIndentation, MappingNode mappingNode)
     {
-        this.column = column;
+        this.parentIndentation = parentIndentation;
+        this.siblingsIndentation = -1;
         this.mappingNode = mappingNode;
     }
 
-    public int getColumn()
+    public int getParentIndentation()
     {
-        return column;
+        return parentIndentation;
+    }
+
+    public int getSiblingsIndentation()
+    {
+        return siblingsIndentation;
     }
 
     public List<String> getKeys()
@@ -55,6 +62,10 @@ public class NodeContext
                     {
                         keys.add(value);
                     }
+                }
+                if (siblingsIndentation == -1)
+                {
+                    siblingsIndentation = tuple.getKeyNode().getStartMark().getColumn();
                 }
             }
         }
