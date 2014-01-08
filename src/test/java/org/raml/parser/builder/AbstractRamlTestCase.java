@@ -76,7 +76,7 @@ public class AbstractRamlTestCase
         }
     }
 
-    private static InputStream getInputStream(String resource)
+    protected static InputStream getInputStream(String resource)
     {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
     }

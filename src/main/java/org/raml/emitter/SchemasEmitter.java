@@ -1,8 +1,8 @@
 package org.raml.emitter;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
-import org.raml.model.Raml;
 import org.raml.model.Raml2;
 
 public class SchemasEmitter implements IRAMLFieldDumper {
@@ -13,15 +13,20 @@ public class SchemasEmitter implements IRAMLFieldDumper {
 		Raml2 rp=(Raml2) pojo;
 		
 		if (emitter.isSeparated){
+			Map<String, String> schemaMap = rp.getSchemaMap();
+			if (schemaMap.isEmpty()){
+				return;
+			}
 			dump.append("schemas:\n");
-			for (String q : rp.getSchemaMap().keySet()) {
+			
+			for (String q : schemaMap.keySet()) {
 				dump.append(emitter.indent(depth + 1));
 				dump.append("- ");
 				dump.append(q);
 				dump.append(": ");
 				dump.append("!include");
 				dump.append(' ');
-				String str = rp.getSchemaMap().get(q);
+				String str = schemaMap.get(q);
 				dump.append(str);				
 				dump.append("\n");
 				if (emitter.writer != null) {

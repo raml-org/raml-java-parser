@@ -5,17 +5,21 @@ import java.util.Map;
 
 import org.raml.model.Raml2;
 import org.raml.model.Resource;
+import org.raml.model.ResourceType;
 
 public class ResourceTypeEmitter implements IRAMLFieldDumper {
 
 	@Override
 	public void dumpField(StringBuilder dump, int depth, Field declaredField,
 			Object pojo, RamlEmitterV2 emitter) {
-		dump.append("resourceTypes:\n");
 		Raml2 v = (Raml2) pojo;
-
-		Map<String, Resource> resourceTypeMap = v.getResourceTypesModel();
+		Map<String, ResourceType> resourceTypeMap = v.getResourceTypesModel();
+		if (resourceTypeMap.isEmpty()){
+			return;
+		}
+		dump.append("resourceTypes:\n");
 		if (emitter.isSeparated) {
+			
 			for (String q : resourceTypeMap.keySet()) {
 				dump.append(emitter.indent(depth + 1));
 				dump.append("- ");

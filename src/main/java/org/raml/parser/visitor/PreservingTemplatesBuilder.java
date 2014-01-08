@@ -5,10 +5,12 @@ import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.raml.model.Action;
 import org.raml.model.Raml2;
 import org.raml.model.Resource;
+import org.raml.model.ResourceType;
+import org.raml.model.TraitModel;
 import org.raml.parser.builder.NodeBuilder;
+import org.raml.parser.loader.ClassPathResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.TagResolver;
@@ -61,6 +63,11 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
 	}
 
 	protected TagResolver[] rs;
+	
+	public PreservingTemplatesBuilder() {
+		super(Raml2.class, new ClassPathResourceLoader(), new TagResolver[]{});
+		this.rs = new TagResolver[0];
+	}
 
 	public PreservingTemplatesBuilder(ResourceLoader resourceLoader,
 			TagResolver[] tagResolvers) {
@@ -68,11 +75,12 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
 		this.rs = tagResolvers;
 	}
 
-	public LinkedHashMap<String, Resource> resourceTypes = new LinkedHashMap<String, Resource>();
-	public LinkedHashMap<String, Action> traits = new LinkedHashMap<String, Action>();
+	
 
 	@Override
 	public Raml2 build(Reader content) {
+		LinkedHashMap<String, ResourceType> resourceTypes = new LinkedHashMap<String, ResourceType>();
+		LinkedHashMap<String, TraitModel> traits = new LinkedHashMap<String, TraitModel>();
 		Raml2 build = (Raml2) super.build(content);
 		Map<String, MappingNode> resourceTypesMap = getTemplateResolver()
 				.getResourceTypesMap();
@@ -80,10 +88,10 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
 		for (String s : resourceTypesMap.keySet()) {
 			try{
 			MappingNode z = resourceTypesMap.get(s);
-			IncludedResourceOrTraitBuilder<Resource> includedResourceOrTraitBuilder = new IncludedResourceOrTraitBuilder<Resource>(
-					Resource.class, getResourceLoader(),
+			IncludedResourceOrTraitBuilder<ResourceType> includedResourceOrTraitBuilder = new IncludedResourceOrTraitBuilder<ResourceType>(
+					ResourceType.class, getResourceLoader(),
 					new TagResolver[] { new IncludeResolver() });
-			Resource partialType = includedResourceOrTraitBuilder.build(z);
+			ResourceType partialType = includedResourceOrTraitBuilder.build(z);
 			partialType.setRelativeUri(s);
 			resourceTypes.put(s, partialType);
 			}catch (Exception e) {
@@ -93,11 +101,11 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
 		resourceTypesMap = getTemplateResolver().getTraitsMap();
 		for (String s : resourceTypesMap.keySet()) {
 			MappingNode z = resourceTypesMap.get(s);
-			IncludedResourceOrTraitBuilder<Action> includedResourceOrTraitBuilder = new IncludedResourceOrTraitBuilder<Action>(
-					Action.class, getResourceLoader(),
+			IncludedResourceOrTraitBuilder<TraitModel> includedResourceOrTraitBuilder = new IncludedResourceOrTraitBuilder<TraitModel>(
+					TraitModel.class, getResourceLoader(),
 					new TagResolver[] { new IncludeResolver() });
 			
-			Action partialType = includedResourceOrTraitBuilder.build(z);
+			TraitModel partialType = includedResourceOrTraitBuilder.build(z);
 
 			traits.put(s, partialType);
 		}

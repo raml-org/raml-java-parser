@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.raml.model.Action;
 import org.raml.model.Raml2;
+import org.raml.model.TraitModel;
 
 public class TraitEmitter implements IRAMLFieldDumper{
 
@@ -12,8 +13,12 @@ public class TraitEmitter implements IRAMLFieldDumper{
 	public void dumpField(StringBuilder dump, int depth, Field declaredField,
 			Object pojo, RamlEmitterV2 emitter) {
 		Raml2 v=(Raml2) pojo;
+		Map<String, TraitModel> resourceTypeMap = v.getTraitsModel();
+		if (resourceTypeMap.isEmpty()){
+			return;
+		}
 		dump.append("traits:\n");
-		Map<String, Action> resourceTypeMap = v.getTraitsModel();
+		
 		if (emitter.isSeparated) {
 			for (String q : resourceTypeMap.keySet()) {
 				dump.append(emitter.indent(depth + 1));

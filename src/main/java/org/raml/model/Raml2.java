@@ -9,14 +9,14 @@ import org.raml.model.parameter.QueryParameter;
 import org.raml.model.parameter.UriParameter;
 
 /**
- * Extension to raml model which is capable to store  
- * @author kor
+ * Extension to RAML model which keeps information about traits and resource types  
+ * @author pavel
  *
  */
 public class Raml2 extends Raml {
 
-	private Map<String, Resource> resourceTypesModel = new LinkedHashMap<String, Resource>();
-	private Map<String, Action> traitsModel = new LinkedHashMap<String, Action>();
+	private Map<String, ResourceType> resourceTypesModel = new LinkedHashMap<String, ResourceType>();
+	private Map<String, TraitModel> traitsModel = new LinkedHashMap<String, TraitModel>();
 	private Map<String, String> schemaMap=new LinkedHashMap<String, String>();
 
     public Map<String, String> getSchemaMap() {
@@ -32,19 +32,19 @@ public class Raml2 extends Raml {
     	return null;
     }
 	
-	public Map<String, Resource> getResourceTypesModel() {
+	public Map<String, ResourceType> getResourceTypesModel() {
 		return resourceTypesModel;
 	}
 
-	public void setResourceTypesModel(Map<String, Resource> resourceTypesModel) {
+	public void setResourceTypesModel(Map<String, ResourceType> resourceTypesModel) {
 		this.resourceTypesModel = resourceTypesModel;
 	}
 
-	public Map<String, Action> getTraitsModel() {
+	public Map<String, TraitModel> getTraitsModel() {
 		return traitsModel;
 	}
 
-	public void setTraitsModel(Map<String, Action> traitsModel) {
+	public void setTraitsModel(Map<String, TraitModel> traitsModel) {
 		this.traitsModel = traitsModel;
 	}
 

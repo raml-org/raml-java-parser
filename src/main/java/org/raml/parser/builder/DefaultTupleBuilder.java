@@ -27,7 +27,9 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.annotation.TransformHandler;
 import org.raml.parser.resolver.DefaultTupleHandler;
+import org.raml.parser.resolver.ITransformHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.slf4j.Logger;
@@ -142,6 +144,15 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
             Parent parentAnnotation = declaredField.getAnnotation(Parent.class);
             if (keyAnnotation != null)
             {
+            	TransformHandler annotation = declaredField.getAnnotation(TransformHandler.class);
+				if (annotation!=null){
+					try{
+					ITransformHandler newInstance = annotation.value().newInstance();
+					keyFieldName=newInstance.handle(keyFieldName, pojo);
+					}catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+            	}
                 ReflectionUtils.setProperty(pojo, declaredField.getName(), keyFieldName);
             }
             if (parentAnnotation != null)

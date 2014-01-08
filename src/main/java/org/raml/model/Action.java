@@ -28,15 +28,21 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.annotation.TransformHandler;
+import org.raml.parser.builder.QuestionedActionTypeHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 public class Action
 {
 
     @Key
+    @TransformHandler(QuestionedActionTypeHandler.class)
     private ActionType type;
+    
+    protected boolean isQuestioned;
 
-    @Scalar
+
+	@Scalar
     private String description;
 
     @Mapping
@@ -187,4 +193,13 @@ public class Action
                "type='" + type + '\'' +
                ", resource=" + (resource != null ? resource.getUri() : "-") + '}';
     }
+    
+    public boolean isQuestioned() {
+		return isQuestioned;
+	}
+
+	public void setQuestioned(boolean isQuestioned) {
+		this.isQuestioned = isQuestioned;
+	}
+
 }
