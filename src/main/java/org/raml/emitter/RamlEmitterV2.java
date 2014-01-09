@@ -329,12 +329,13 @@ public class RamlEmitterV2 {
 			if (listType != null) {
 				if (isSettings) {
 					boolean inlineSeq = false;
-					if (entry.getKey().toString().equals("authorizationUri")) {
+					String string = entry.getKey().toString();
+					if (string.equals("authorizationUri")||string.equals("requestTokenUri")||string.equals("tokenCredentialsUri")) {
 						inlineSeq = true;
-					} else if (entry.getKey().toString()
+					} else if (string
 							.equals("accessTokenUri")) {
 						inlineSeq = true;
-					}
+					}					
 					dumpSequenceItems(dump, depth, (List) entry.getValue(),
 							listType, inlineSeq);
 				} else {
