@@ -1,0 +1,10 @@
+#%RAML 0.8
+title: sample
+schemas:
+    - !include org/raml/schema/invalid-sequence-include.yaml
+
+/resource:
+    put:
+        body:
+            application/json:
+                schema: league
