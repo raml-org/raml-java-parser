@@ -35,4 +35,6 @@ public @interface Sequence
     Class<? extends TupleHandler> handler() default TupleHandler.class;
 
     String alias() default "";
+    
+    Class<? extends ExtraHandler>extraHandler() default ExtraHandler.class;
 }

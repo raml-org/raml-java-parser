@@ -59,7 +59,7 @@ public class TemplateBuilder extends SequenceTupleBuilder
             {
                 return null;
             }
-        });
+        }, null);
     }
 
     @Override

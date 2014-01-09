@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.parser.annotation.ExtraHandler;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.Node;
@@ -32,12 +33,20 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
 
     private String fieldName;
     private Type itemType;
+	private ExtraHandler additionalHandler;
 
-    public SequenceTupleBuilder(String fieldName, Type itemType)
+    public SequenceTupleBuilder(String fieldName, Type itemType, Class<? extends ExtraHandler> extraHandler)
     {
         super(new DefaultScalarTupleHandler(fieldName));
         this.itemType = itemType;
         this.fieldName = fieldName;
+        if (extraHandler!=null&&extraHandler!=ExtraHandler.class){
+        	try{
+        	this.additionalHandler=extraHandler.newInstance();
+        	}catch (Exception e) {
+        		throw new RuntimeException(e);
+			}
+        }
     }
 
     protected String getFieldName()
@@ -49,6 +58,9 @@ public class SequenceTupleBuilder extends DefaultTupleBuilder<Node, SequenceNode
     public Object buildValue(Object parent, SequenceNode node)
     {
         List<?> list = new ArrayList();
+        if (additionalHandler!=null){
+        	additionalHandler.handle(parent, node);
+        }
         ReflectionUtils.setProperty(parent, fieldName, list);
         return list;
     }

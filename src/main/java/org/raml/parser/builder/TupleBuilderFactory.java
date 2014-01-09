@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.parser.annotation.ExtraHandler;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
@@ -92,7 +93,8 @@ public class TupleBuilderFactory extends AbastractFactory
                 {
                     ParameterizedType pType = (ParameterizedType) type;
                     Type itemType = pType.getActualTypeArguments()[0];
-                    tupleBuilder = new SequenceTupleBuilder(declaredField.getName(), itemType);
+                    Class<? extends ExtraHandler> extraHandler = sequence.extraHandler();
+                    tupleBuilder = new SequenceTupleBuilder(declaredField.getName(), itemType,extraHandler);
                 }
             }
             else

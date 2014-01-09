@@ -29,6 +29,7 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
+import org.raml.parser.rule.GlobalSchemasHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 
@@ -53,7 +54,7 @@ public class Raml
     @Scalar()
     private String mediaType;
 
-    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
+    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class,extraHandler=GlobalSchemasHandler.class)
     @org.raml.emitter.Dumper(SchemasEmitter.class)
 	protected List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 

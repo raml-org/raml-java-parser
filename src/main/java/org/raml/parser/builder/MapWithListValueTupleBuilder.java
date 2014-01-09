@@ -42,7 +42,7 @@ public class MapWithListValueTupleBuilder extends MapTupleBuilder
         if (tuple.getValueNode() instanceof SequenceNode)
         {
 
-            return new SequenceTupleBuilder(fieldName, getValueClass());
+            return new SequenceTupleBuilder(fieldName, getValueClass(), null);
         }
         else
         {
