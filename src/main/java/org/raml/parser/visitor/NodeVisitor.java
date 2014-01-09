@@ -258,7 +258,9 @@ public class NodeVisitor
     private void visitScalar(ScalarNode node, TupleType tupleType)
     {
     	try{
-        nodeHandler.onScalar(node, tupleType);
+    		if (node.getValue()!=null&&node.getValue().length()>0){
+    			nodeHandler.onScalar(node, tupleType);
+    		}
     	}catch (ConversionException e) {
     		
 		}
