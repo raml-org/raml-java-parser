@@ -148,6 +148,25 @@ public class TemplateResolver
                 }
                 template = includeResolver.resolve(template, resourceLoader, nodeNandler);
             }
+            if (template.getNodeId() == mapping)
+            {
+            	MappingNode map=(MappingNode) template;
+            	List<NodeTuple> value = map.getValue();
+            	ArrayList<NodeTuple>tn=new ArrayList<NodeTuple>();
+            	for (NodeTuple t:value){
+            		if( t.getValueNode() instanceof ScalarNode){
+            			ScalarNode vn = (ScalarNode) t.getValueNode();
+            			 if (!vn.getTag().equals(INCLUDE_TAG))
+                         {
+                             validationResults.add(createErrorResult("Mapping or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                         }
+                        Node resolvedNode = includeResolver.resolve(vn, resourceLoader, nodeNandler);
+                        tn.add(new NodeTuple(t.getKeyNode(), resolvedNode));
+            		}
+            	}
+            	value.clear();
+            	value.addAll(tn);
+            }
             for (NodeTuple tuple : ((MappingNode) template).getValue())
             {
                 if (tuple.getKeyNode().getNodeId() != scalar)
@@ -160,6 +179,7 @@ public class TemplateResolver
                 if (templateValue.getNodeId() != mapping)
                 {
                     validationResults.add(createErrorResult("Mapping expected", templateValue.getStartMark(), templateValue.getEndMark()));
+                    
                     continue;
                 }
                 if (templateType.equals("resourceTypes"))
