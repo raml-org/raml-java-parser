@@ -33,5 +33,5 @@ List<ValidationResult> results = RamlValidationService.createDefault().validate(
 The parser returns a Raml object and can be invoked using a String, an InputStream or a Reader:
 
 ```java
-Raml = new RamlDocumentBuilder().build(ramlBuffer);
+Raml raml = new RamlDocumentBuilder().build(ramlBuffer);
 ```
