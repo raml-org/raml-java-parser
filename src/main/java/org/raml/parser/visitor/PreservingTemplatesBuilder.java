@@ -15,8 +15,23 @@ import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
+	
+	@Override
+	public void onCustomTagError(Tag tag, Node node, String message) {
+		if (IncludeResolver.INCLUDE_TAG.equals(tag))
+        {
+			if ( message.startsWith("Include file is empty")){
+				return;
+			}
+            throw new RuntimeException("resource not found: " + ((ScalarNode) node).getValue());
+        }		
+	}
+	
 	private final class IncludedResourceOrTraitBuilder<T> extends
 			YamlDocumentBuilder<T> {
 		private IncludedResourceOrTraitBuilder(Class<T> documentClass,

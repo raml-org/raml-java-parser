@@ -176,8 +176,15 @@ public class TemplateResolver
                 }
                 String templateKey = ((ScalarNode) tuple.getKeyNode()).getValue();
                 Node templateValue = tuple.getValueNode();
+                if (templateValue.getNodeId()==scalar){
+                	ScalarNode ns=(ScalarNode) templateValue;
+                	if (ns.getValue().equals("invalid")){
+                		templateValue=new MappingNode(Tag.MAP, new ArrayList(), null);
+                	}
+                }
                 if (templateValue.getNodeId() != mapping)
                 {
+                	
                     validationResults.add(createErrorResult("Mapping expected", templateValue.getStartMark(), templateValue.getEndMark()));
                     
                     continue;
