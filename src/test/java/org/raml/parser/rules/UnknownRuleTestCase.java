@@ -31,14 +31,14 @@ public class UnknownRuleTestCase
     {
         String raml = "#%RAML 0.8\n" + "---\n"
                       + "title: Salesforce Chatter Communities REST API\n"
-                      + "noTitle: Salesforce Chatter Communities REST API\n"
+                      + "no-Title: Salesforce Chatter Communities REST API\n"
                       + "noBaseUri: Salesforce Chatter Communities REST API\n"
                       + "baseUri: https://{param2}.force.com/param\n" + "uriParameters:\n"
                       + " param2:\n" + "   name: Community Domain\n" + "   type: string\n"
                       + "   required: 'y'";
         List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
         Assert.assertThat(errors.get(0).getMessage(),
-                          CoreMatchers.is("Unknown key: noTitle"));
+                          CoreMatchers.is("Unknown key: no-Title"));
         Assert.assertThat(errors.get(1).getMessage(),
                           CoreMatchers.is("Unknown key: noBaseUri"));
     }
