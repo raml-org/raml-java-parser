@@ -35,6 +35,7 @@ public class SuggestionTestCase
     public static final int ROOT_SUGGEST_COUNT = 13;
     public static final int RESOURCE_SUGGEST_COUNT = 16;
     public static final int ACTION_SUGGEST_COUNT = 9;
+    private static final int BODY_SUGGEST_COUNT = 4;
 
     public static final String HEADER = "#%RAML 0.8\n" +
                                         "---\n" +
@@ -136,25 +137,33 @@ public class SuggestionTestCase
     @Test
     public void resource()
     {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/ResourceName:";
+
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
-        List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, " ");
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, " ");
         assertThat(suggest, notNullValue());
         assertThat(suggest.isEmpty(), is(false));
         assertThat(suggest.contains(new KeySuggestion("is")), is(true));
         assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
-        assertThat(suggest.contains(new KeySuggestion("get")), is(false));
-        assertThat(suggest.get(0).getIndentation(), is(1));
+        assertThat(suggest.contains(new KeySuggestion("get")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
     @Test
     public void resourceWithDeleteContext()
     {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/ResourceName:";
+
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
-        List<Suggestion> suggest = yamlDocumentSuggester.suggest(HEADER, " del");
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, " del");
         assertThat(suggest, notNullValue());
         assertThat(suggest.size(), is(1));
         assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
-        assertThat(suggest.get(0).getIndentation(), is(1));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
     @Test
@@ -178,6 +187,26 @@ public class SuggestionTestCase
         assertThat(suggest.isEmpty(), is(false));
         assertThat(suggest.contains(new KeySuggestion("required")), is(true));
         assertThat(suggest.contains(new KeySuggestion("default")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
+    @Test
+    public void actionBody()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/ResourceName:\n" +
+                            "  put:\n" +
+                            "    body:";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "      ");
+        assertThat(suggest.isEmpty(), is(false));
+        assertThat(suggest.size(), is(BODY_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("application/json")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("application/xml")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("application/x-www-form-urlencoded")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("multipart/form-data")), is(true));
         assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 

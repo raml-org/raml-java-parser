@@ -17,11 +17,12 @@ package org.raml.parser.builder;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
@@ -29,6 +30,7 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 
     private Class valueClass;
     private String fieldName;
+    private TupleHandler innerTupleHandler;
 
     public MapTupleBuilder(Class<?> valueClass)
     {
@@ -42,17 +44,34 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         this.valueClass = valueClass;
     }
 
-    @Override
-    public TupleBuilder getBuilderForTuple(NodeTuple tuple)
+    private void addBuilders()
     {
+        TupleBuilder tupleBuilder;
         if (ReflectionUtils.isPojo(getValueClass()))
         {
-            return new PojoTupleBuilder(getValueClass());
+            tupleBuilder = new PojoTupleBuilder(getValueClass());
         }
         else
         {
-            return new ScalarTupleBuilder(null, getValueClass());
+            tupleBuilder = new ScalarTupleBuilder(null, getValueClass());
         }
+        if (innerTupleHandler != null)
+        {
+            tupleBuilder.setHandler(innerTupleHandler);
+        }
+        Map<String, TupleBuilder<?,?>> builderMap = new HashMap<String, TupleBuilder<?, ?>>();
+        builderMap.put(fieldName, tupleBuilder);
+        this.setChildrenTupleBuilders(builderMap);
+    }
+
+    @Override
+    protected Map<String, TupleBuilder<?, ?>> getBuilders()
+    {
+        if (super.getBuilders().isEmpty())
+        {
+            addBuilders();
+        }
+        return super.getBuilders();
     }
 
     @Override
@@ -72,6 +91,11 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     public String getFieldName()
     {
         return fieldName;
+    }
+
+    public void setInnerTupleHandler(TupleHandler innerTupleHandler)
+    {
+        this.innerTupleHandler = innerTupleHandler;
     }
 
     @Override

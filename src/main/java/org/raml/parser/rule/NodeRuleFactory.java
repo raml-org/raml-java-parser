@@ -79,6 +79,10 @@ public class NodeRuleFactory extends AbastractFactory
                 tupleRule = createMappingRule(declaredField, mapping);
                 tupleHandler = createHandler(mapping.handler(), mapping.alias(), MappingNode.class);
                 required = mapping.required();
+                if (tupleRule instanceof MapTupleRule)
+                {
+                    ((MapTupleRule) tupleRule).setInnerTupleHandler(createHandler(mapping.innerHandler(), "", null));
+                }
             }
             else if (sequence != null)
             {

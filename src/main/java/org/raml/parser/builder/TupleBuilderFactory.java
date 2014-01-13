@@ -56,6 +56,10 @@ public class TupleBuilderFactory extends AbastractFactory
             {
                 tupleBuilder = createMappingBuilder(declaredField, mapping);
                 tupleHandler = createHandler(mapping.handler(), mapping.alias(), MappingNode.class);
+                if (tupleBuilder instanceof MapTupleBuilder)
+                {
+                    ((MapTupleBuilder) tupleBuilder).setInnerTupleHandler(createHandler(mapping.innerHandler(), "", null));
+                }
             }
             else if (sequence != null)
             {

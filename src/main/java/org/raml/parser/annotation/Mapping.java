@@ -36,6 +36,8 @@ public @interface Mapping
 
     Class<? extends TupleHandler> handler() default TupleHandler.class;
 
+    Class<? extends TupleHandler> innerHandler() default TupleHandler.class;
+
     String alias() default "";
 
 }
