@@ -39,8 +39,8 @@ public class MimeType
     private Map<String, List<FormParameter>> formParameters;
 
     private String exampleOrigin;
-
-    public String getExampleOrigin() {
+    
+	public String getExampleOrigin() {
 		return exampleOrigin;
 	}
 

@@ -545,6 +545,10 @@ public class RamlEmitterV2 {
 		if (currentField.getName().equals("schemas")){
 			return text;
 		}
+		
+		if (currentField.getName().contains("relative")){
+			return text;
+		}
 		if (text.contains("\"")){
 			
 			return '\''+text+'\'';

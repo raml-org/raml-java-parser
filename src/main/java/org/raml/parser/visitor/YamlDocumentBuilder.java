@@ -31,6 +31,7 @@ import java.util.Stack;
 import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
+import org.raml.parser.builder.SequenceTupleBuilder;
 import org.raml.parser.builder.TupleBuilder;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
@@ -191,6 +192,11 @@ public class YamlDocumentBuilder<T> implements NodeHandler
 
         if (tupleType == VALUE)
         {
+        	if (currentBuilder instanceof SequenceTupleBuilder){
+        		if (node.getValue().length()==0){
+        			return;
+        		}
+        	}
             ((NodeBuilder<ScalarNode>) currentBuilder).buildValue(parentObject, node);
         }
         else

@@ -62,8 +62,13 @@ public class Raml2 extends Raml {
 			path+="-schema.xsd";
 		}
 		e.put(name, content);
-		schemas.add(e);
 		getSchemaMap().put(name, "/schemas/"+path);
+		for (Map<String,String>s:schemas){
+			if (s.keySet().contains(name)){
+				return;
+			}
+		}
+		schemas.add(e);		
 	}
 	
 

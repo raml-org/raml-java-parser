@@ -209,7 +209,11 @@ public class Resource
 
         Resource resource = (Resource) o;
 
-        return parentUri.equals(resource.parentUri) && relativeUri.equals(resource.relativeUri);
+        String parentUri2 = parentUri;
+        if (parentUri2==null){
+        	parentUri2="";
+        }
+		return parentUri2.equals(resource.parentUri) && relativeUri.equals(resource.relativeUri);
 
     }
 

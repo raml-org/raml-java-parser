@@ -262,6 +262,10 @@ public class TemplateResolver
 
             for (int i = 0; i < resourceNode.getValue().size(); i++)
             {
+            	//FIXME
+            	if (true){
+            		break;
+            	}
                 NodeTuple resourceTuple = resourceNode.getValue().get(i);
                 if (resourceTuple.getKeyNode().getNodeId() != scalar)
                 {
@@ -423,6 +427,9 @@ public class TemplateResolver
         {
             for (Node ref : traits.getValue())
             {
+            	if (true){
+            		//break;//FIXME
+            	}
                 if (actionName == null)
                 {
                     for (Map.Entry<String, Node> actionEntry : actionNodes.entrySet())
