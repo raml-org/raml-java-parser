@@ -23,6 +23,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +36,7 @@ import org.raml.model.Protocol;
 import org.raml.model.Raml;
 import org.raml.model.SecurityReference;
 import org.raml.model.parameter.AbstractParam;
+import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
@@ -72,6 +75,7 @@ public class RamlEmitterV2 {
 	}
 
 	public void dumpPojo(StringBuilder dump, int depth, Object pojo) {
+		
 		final List<Field> declaredFields = ReflectionUtils
 				.getInheritedFields(pojo.getClass());
 		pojo.getClass();
@@ -281,15 +285,30 @@ public class RamlEmitterV2 {
 		dump.append(YAML_SEQ_END).append("\n");
 	}
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void dumpMappingField(StringBuilder dump, int depth, Field field,
 			boolean implicit, Object pojo, boolean inlineLists) {
 		if (!Map.class.isAssignableFrom(field.getType())) {
 			throw new RuntimeException("invalid type");
 		}
-
+		
 		Map value = (Map) getFieldValue(field, pojo);
-
+		MapFilter annotation = field.getAnnotation(MapFilter.class);
+		if (annotation!=null){
+			try{
+			IFilter newInstance = annotation.value().newInstance();
+			LinkedHashMap q=new LinkedHashMap();
+			for (Object a:value.keySet()){
+				Object object = value.get(a);
+				if (newInstance.accept(object)){
+					q.put(a, object);
+				}
+			}
+			value=q;
+			}catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 		if (value == null || value.isEmpty()) {
 			return;
 		}
@@ -305,7 +324,7 @@ public class RamlEmitterV2 {
 		}
 
 		ParameterizedType pType = (ParameterizedType) field.getGenericType();
-		Type valueType = pType.getActualTypeArguments()[1];
+		Type valueType = pType.getActualTypeArguments()[1];		
 		dumpMap(dump, depth, valueType, value, isSettings, false);
 	}
 

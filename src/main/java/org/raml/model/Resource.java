@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.emitter.MapFilter;
+import org.raml.emitter.UrlParameterFilter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
@@ -46,6 +48,7 @@ public class Resource
     private String relativeUri;
 
     @Mapping
+    @MapFilter(UrlParameterFilter.class)
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
 
     @Scalar
