@@ -19,7 +19,7 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 		if (resourceTypeMap.isEmpty()){
 			return;
 		}
-		dump.append("securitySchemes:\n");
+		dump.append("securitySchemas:\n");
 		if (emitter.isSeparated) {
 			for (Map<String,SecurityScheme> q : resourceTypeMap) {
 				dump.append(emitter.indent(depth + 1));
@@ -29,7 +29,7 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 				dump.append(": ");
 				dump.append("!include");
 				dump.append(' ');
-				dump.append("securitySchemes/");
+				dump.append("securitySchemas/");
 				dump.append(name);
 				dump.append(".raml");
 				dump.append("\n");
