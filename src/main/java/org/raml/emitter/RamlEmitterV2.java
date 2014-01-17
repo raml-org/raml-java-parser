@@ -174,7 +174,7 @@ public class RamlEmitterV2 {
 				dumpPojo(dump, depth + 2, item);
 			}
 		} else {
-			if (seq.size()>2) {
+			if (seq.size()>2&&!currentField.getName().equals("is")) {
 				dump.append("\n");
 				for (Object item : seq) {
 					dump.append(indent(depth + 1)).append(YAML_SEQ).append(sanitizeScalarValue(0, item)).append("\n");					
@@ -269,7 +269,11 @@ public class RamlEmitterV2 {
 		dump.append(YAML_SEQ_START);
 		for (int i = 0; i < seq.size(); i++) {
 			Object item = seq.get(i);
+			if(i==0){
+				dump.append(' ');
+			}
 			dump.append(sanitizeScalarValue(0, item));
+			dump.append(' ');
 			if (i < seq.size() - 1) {
 				dump.append(YAML_SEQ_SEP);
 			}
