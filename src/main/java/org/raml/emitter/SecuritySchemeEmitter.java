@@ -19,7 +19,7 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 		if (resourceTypeMap.isEmpty()){
 			return;
 		}
-		dump.append("securitySchemas:\n");
+		dump.append("securitySchemes:\n");
 		if (emitter.isSeparated) {
 			for (Map<String,SecurityScheme> q : resourceTypeMap) {
 				dump.append(emitter.indent(depth + 1));
