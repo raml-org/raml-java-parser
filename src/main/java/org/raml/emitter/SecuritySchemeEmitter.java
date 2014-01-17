@@ -29,14 +29,14 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 				dump.append(": ");
 				dump.append("!include");
 				dump.append(' ');
-				dump.append("securitySchemas/");
+				dump.append("securitySchemes/");
 				dump.append(name);
 				dump.append(".raml");
 				dump.append("\n");
 				StringBuilder content = new StringBuilder();
 				emitter.dumpPojo(content, 0, q.values().iterator().next());
 				if (emitter.writer != null) {
-					emitter.writer.write("securitySchemas/"+name+".raml",content.toString());
+					emitter.writer.write("securitySchemes/"+name+".raml",content.toString());
 				}
 			}
 		} else {
