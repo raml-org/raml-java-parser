@@ -30,6 +30,7 @@ import java.util.Stack;
 
 import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
+import org.raml.parser.builder.ScalarTupleBuilder;
 import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.SequenceTupleBuilder;
 import org.raml.parser.builder.TupleBuilder;
@@ -141,9 +142,16 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         }
         NodeBuilder<?> currentBuilder = builderContext.peek();
         Object parentObject = documentContext.peek();
-        Object object = ((TupleBuilder<?, MappingNode>) currentBuilder).buildValue(parentObject, mappingNode);
-        documentContext.push(object);
-
+        if (!(currentBuilder instanceof ScalarTupleBuilder)){
+        	Object object = ((TupleBuilder<?, MappingNode>) currentBuilder).buildValue(parentObject, mappingNode);
+        	documentContext.push(object);
+        }
+        else{ 
+        	documentContext.push(null);
+        }
+        
+        
+        
     }
 
     @Override

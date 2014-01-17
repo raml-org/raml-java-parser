@@ -262,7 +262,7 @@ public class TemplateResolver
 
             for (int i = 0; i < resourceNode.getValue().size(); i++)
             {
-            	//FIXME
+//            	//FIXME
             	if (true){
             		break;
             	}
