@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.raml.emitter.ResourceTypeEmitter;
 import org.raml.emitter.SchemasEmitter;
+import org.raml.emitter.SecuritySchemeEmitter;
 import org.raml.emitter.TraitEmitter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
@@ -53,6 +54,10 @@ public class Raml
 
     @Scalar()
     private String mediaType;
+    
+    @Sequence
+    @org.raml.emitter.Dumper(SecuritySchemeEmitter.class)
+    private List<Map<String, SecurityScheme>> securitySchemes = new ArrayList<Map<String, SecurityScheme>>();
 
     @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class,extraHandler=GlobalSchemasHandler.class)
     @org.raml.emitter.Dumper(SchemasEmitter.class)
@@ -66,8 +71,7 @@ public class Raml
     @org.raml.emitter.Dumper(TraitEmitter.class)
     private List<Map<String, Template>> traits;
 
-    @Sequence
-    private List<Map<String, SecurityScheme>> securitySchemes = new ArrayList<Map<String, SecurityScheme>>();
+   
 
     @Sequence(rule = SecurityReferenceSequenceRule.class)
     private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
