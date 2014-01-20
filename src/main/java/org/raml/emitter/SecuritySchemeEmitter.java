@@ -4,10 +4,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-import org.raml.model.Action;
 import org.raml.model.Raml2;
 import org.raml.model.SecurityScheme;
-import org.raml.model.TraitModel;
 
 public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 
@@ -19,8 +17,9 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 		if (resourceTypeMap.isEmpty()){
 			return;
 		}
-		dump.append("securitySchemes:\n");
+		
 		if (emitter.isSeparated) {
+			dump.append("securitySchemes:\n");
 			for (Map<String,SecurityScheme> q : resourceTypeMap) {
 				dump.append(emitter.indent(depth + 1));
 				dump.append("- ");
@@ -29,19 +28,19 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 				dump.append(": ");
 				dump.append("!include");
 				dump.append(' ');
-				dump.append("securitySchemas/");
+				dump.append("securitySchemes/");
 				dump.append(name);
 				dump.append(".raml");
 				dump.append("\n");
 				StringBuilder content = new StringBuilder();
 				emitter.dumpPojo(content, 0, q.values().iterator().next());
 				if (emitter.writer != null) {
-					emitter.writer.write("securitySchemas/"+name+".raml",content.toString());
+					emitter.writer.write("securitySchemes/"+name+".raml",content.toString());
 				}
 			}
 		} else {
-			dump.append(emitter.indent(depth+1));		
-			emitter.dumpSequenceField(dump, depth+1, declaredField, pojo);
+			dump.append(emitter.indent(depth));		
+			emitter.dumpSequenceField(dump, depth, declaredField, pojo);
 		}		
 	}
 
