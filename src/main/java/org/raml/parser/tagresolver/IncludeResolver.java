@@ -76,7 +76,7 @@ public class IncludeResolver implements TagResolver
             }
             else //scalar value
             {
-                String newValue = IOUtils.toString(inputStream);
+                String newValue = IOUtils.toString(inputStream, "UTF-8");
                 includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
             }
             if (includeNode == null)
