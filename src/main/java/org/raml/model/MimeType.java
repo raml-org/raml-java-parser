@@ -29,7 +29,7 @@ public class MimeType
     @Key
     private String type;
 
-    @Scalar(rule = org.raml.parser.rule.SchemaRule.class)
+    @Scalar(rule = org.raml.parser.rule.SchemaRule.class,includeField="schemaOrigin")
     private String schema;
 
     @Scalar(includeField="exampleOrigin")
@@ -40,6 +40,16 @@ public class MimeType
 
     private String exampleOrigin;
     
+    private String schemaOrigin;
+    
+	public String getSchemaOrigin() {
+		return schemaOrigin;
+	}
+
+	public void setSchemaOrigin(String schemaOrigin) {
+		this.schemaOrigin = schemaOrigin;
+	}
+
 	public String getExampleOrigin() {
 		return exampleOrigin;
 	}

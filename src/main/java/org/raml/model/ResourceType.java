@@ -20,6 +20,8 @@ public class ResourceType extends Resource{
 		this.questionedActions = questionedActions;
 	}
 	
+	
+	
 	@Scalar
 	String usage;
 
