@@ -67,7 +67,7 @@ public class Resource
     private Map<ActionType, Action> actions = new LinkedHashMap<ActionType, Action>();
 
     @Mapping(handler = ResourceHandler.class, implicit = true)
-    private Map<String, Resource> resources = new HashMap<String, Resource>();
+    private Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
 
     public Resource()
     {

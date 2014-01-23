@@ -17,6 +17,7 @@ package org.raml.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,16 +47,16 @@ public class Action
     private String description;
 
     @Mapping
-    private Map<String, Header> headers = new HashMap<String, Header>();
+    private Map<String, Header> headers = new LinkedHashMap<String, Header>();
 
     @Mapping
-    private Map<String, QueryParameter> queryParameters = new HashMap<String, QueryParameter>();
+    private Map<String, QueryParameter> queryParameters = new LinkedHashMap<String, QueryParameter>();
 
     @Mapping
-    private Map<String, MimeType> body = new HashMap<String, MimeType>();
+    private Map<String, MimeType> body = new LinkedHashMap<String, MimeType>();
 
     @Mapping
-    private Map<String, Response> responses = new HashMap<String, Response>();
+    private Map<String, Response> responses = new LinkedHashMap<String, Response>();
 
     @Parent
     private Resource resource;
