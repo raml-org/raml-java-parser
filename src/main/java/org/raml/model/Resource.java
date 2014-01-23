@@ -201,31 +201,14 @@ public class Resource
     @Override
     public boolean equals(Object o)
     {
-        if (this == o)
-        {
-            return true;
-        }
-        if (!(o instanceof Resource))
-        {
-            return false;
-        }
-
-        Resource resource = (Resource) o;
-
-        String parentUri2 = parentUri;
-        if (parentUri2==null){
-        	parentUri2="";
-        }
-		return parentUri2.equals(resource.parentUri) && relativeUri.equals(resource.relativeUri);
+       return super.equals(o);
 
     }
 
     @Override
     public int hashCode()
     {
-        int result = parentUri!=null?parentUri.hashCode():0;
-        result = 31 * result + relativeUri.hashCode();
-        return result;
+        return super.hashCode();
     }
 
     @Override
