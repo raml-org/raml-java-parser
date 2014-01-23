@@ -28,7 +28,7 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNode>
+public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNode> implements TypedTupleRule
 {
 
     private Class valueType;
@@ -69,6 +69,12 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
     public void setValueType(Type valueType)
     {
         this.valueType = (Class) valueType;
+    }
+
+    @Override
+    public Class<?> getValueType()
+    {
+        return valueType;
     }
 
     @Override

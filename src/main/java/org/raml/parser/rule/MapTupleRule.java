@@ -30,7 +30,7 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
+public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode> implements TypedTupleRule
 {
 
     private Class valueType;
@@ -77,7 +77,7 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return new SimpleRule(getFieldName(), getValueType());
     }
 
-    protected Class getValueType()
+    public Class getValueType()
     {
         return valueType;
     }
