@@ -153,7 +153,7 @@ public class TemplateResolver
             	MappingNode map=(MappingNode) template;
             	List<NodeTuple> value = map.getValue();
             	ArrayList<NodeTuple>tn=new ArrayList<NodeTuple>();
-            	for (NodeTuple t:value){
+            	for (NodeTuple t:new ArrayList<NodeTuple>(value)){
             		if( t.getValueNode() instanceof ScalarNode){
             			ScalarNode vn = (ScalarNode) t.getValueNode();
             			 if (!vn.getTag().equals(INCLUDE_TAG))
@@ -161,11 +161,11 @@ public class TemplateResolver
                              validationResults.add(createErrorResult("Mapping or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
                          }
                         Node resolvedNode = includeResolver.resolve(vn, resourceLoader, nodeNandler);
-                        tn.add(new NodeTuple(t.getKeyNode(), resolvedNode));
+                        NodeTuple e = new NodeTuple(t.getKeyNode(), resolvedNode);
+				        int indexOf = value.indexOf(t);
+                        value.set(indexOf, e);
             		}
-            	}
-            	value.clear();
-            	value.addAll(tn);
+            	}	
             }
             for (NodeTuple tuple : ((MappingNode) template).getValue())
             {
