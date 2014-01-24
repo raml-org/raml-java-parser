@@ -143,7 +143,6 @@ public class YamlDocumentSuggester implements NodeHandler
 
     private void pushNode(Node node, MappingNode mappingNode)
     {
-        //System.out.format("pushing %s node = %s\n", node.getNodeId(), NodeUtils.getNodeValue(node));
         pushNode(node.getStartMark().getColumn(), mappingNode);
     }
 
@@ -154,7 +153,6 @@ public class YamlDocumentSuggester implements NodeHandler
 
     private NodeContext popNode()
     {
-        //System.out.println("popping node");
         return nodes.pop();
     }
 

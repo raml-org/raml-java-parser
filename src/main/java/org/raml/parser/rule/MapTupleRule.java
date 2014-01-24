@@ -99,6 +99,17 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode> impl
     }
 
     @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(MapTupleRule.class);
+        MapTupleRule copy = new MapTupleRule(getName(), valueType);
+        copy.setHandler(getHandler());
+        copy.setInnerTupleHandler(innerTupleHandler);
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        return copy;
+    }
+
+    @Override
     public List<ValidationResult> validateKey(ScalarNode key)
     {
         fieldName = key.getValue();

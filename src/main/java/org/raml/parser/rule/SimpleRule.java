@@ -82,6 +82,17 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         return keyNode != null;
     }
 
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(SimpleRule.class);
+        SimpleRule copy = new SimpleRule(getName(), fieldClass);
+        copy.setHandler(getHandler());
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        copy.setRequired(isRequired());
+        return copy;
+    }
+
     public void setKeyNode(ScalarNode rulePresent)
     {
         this.keyNode = rulePresent;

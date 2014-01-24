@@ -72,6 +72,16 @@ public class ImplicitMapEntryRule extends DefaultTupleRule<ScalarNode, MappingNo
     }
 
     @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(ImplicitMapEntryRule.class);
+        ImplicitMapEntryRule copy = new ImplicitMapEntryRule(getName(), getValueType());
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        return copy;
+    }
+
+    @Override
     public Class<?> getValueType()
     {
         return valueType;

@@ -57,6 +57,7 @@ public class TemplateResolver
     public static final String ALL_ACTIONS = "*";
     public static final String TRAIT_USE_KEY = "is";
     public static final String RESOURCE_TYPE_USE_KEY = "type";
+    public static final Pattern TEMPLATE_PARAMETER_PATTERN = Pattern.compile("<<[^>]+>>");
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private IncludeResolver includeResolver = new IncludeResolver();
@@ -576,9 +577,8 @@ public class TemplateResolver
 
         private ScalarNode cloneScalarNode(ScalarNode node, Map<String, String> parameters)
         {
-            Pattern pattern = Pattern.compile("<<[^>]+>>");
             String value = node.getValue();
-            Matcher matcher = pattern.matcher(value);
+            Matcher matcher = TEMPLATE_PARAMETER_PATTERN.matcher(value);
             StringBuffer sb = new StringBuffer();
             while (matcher.find())
             {

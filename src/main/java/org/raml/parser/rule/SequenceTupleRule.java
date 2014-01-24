@@ -81,6 +81,16 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
         itemType = valueType;
     }
 
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(SequenceTupleRule.class);
+        SequenceTupleRule copy = new SequenceTupleRule(getName(), itemType, getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        copy.setRequired(isRequired());
+        return copy;
+    }
+
     protected Type getItemType()
     {
         return itemType;

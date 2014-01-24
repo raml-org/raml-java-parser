@@ -172,6 +172,23 @@ public class DefaultTupleRule<K extends Node, V extends Node> implements TupleRu
         //ignore
     }
 
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(DefaultTupleRule.class);
+        DefaultTupleRule copy = new DefaultTupleRule(name, tupleHandler, nodeRuleFactory);
+        copy.setRequired(required);
+        return copy;
+    }
+
+    protected void checkClassToCopy(Class<?> clazz)
+    {
+        if (! this.getClass().equals(clazz))
+        {
+            throw new RuntimeException(this.getClass() + " must implement deepCopy");
+        }
+    }
+
     public void addRulesFor(Class<?> pojoClass)
     {
         nodeRuleFactory.addRulesTo(pojoClass, this);

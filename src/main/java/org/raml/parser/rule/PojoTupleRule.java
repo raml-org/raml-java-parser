@@ -72,4 +72,14 @@ public class PojoTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
         }
         return validationResults;
     }
+
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(PojoTupleRule.class);
+        PojoTupleRule copy = new PojoTupleRule(getName(), pojoClass, getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        copy.setRequired(isRequired());
+        return copy;
+    }
 }
