@@ -16,13 +16,22 @@
 package org.raml.parser.builder;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import org.raml.model.Resource;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
 import org.raml.parser.utils.ConvertUtils;
 import org.raml.parser.utils.ReflectionUtils;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 
 public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNode>
@@ -39,6 +48,11 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
         this.includeField=includeField;
     }
 
+    @Override
+    public TupleHandler getHandler() {
+    	return super.getHandler();
+    }
+    
 
     @Override
     public Object buildValue(Object parent, ScalarNode node)
@@ -53,6 +67,14 @@ public class ScalarTupleBuilder extends DefaultTupleBuilder<ScalarNode, ScalarNo
         	{
         		IncludeScalarNode sc=(IncludeScalarNode) node;
         		ReflectionUtils.setProperty(parent, includeField, sc.getIncludeName());
+        	}
+        }
+        if (fieldName!=null&&fieldName.equals("type")){
+        	if (parent instanceof Resource){
+        	List<Node> nm=new ArrayList<Node>();
+        	nm.add(node);
+			//FIXME;
+        	new TypeExtraHandler().handle(parent,new SequenceNode(Tag.BOOL, nm, null));
         	}
         }
         return parent;

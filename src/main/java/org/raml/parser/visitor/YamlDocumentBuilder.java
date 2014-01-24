@@ -26,14 +26,17 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Collections;
 import java.util.Stack;
 
+import org.raml.model.Resource;
 import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.ScalarTupleBuilder;
 import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.SequenceTupleBuilder;
 import org.raml.parser.builder.TupleBuilder;
+import org.raml.parser.builder.TypeExtraHandler;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.tagresolver.IncludeResolver;
@@ -257,7 +260,14 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     @Override
     public void onTupleStart(NodeTuple nodeTuple)
     {
-
+    	if (nodeTuple.getKeyNode() instanceof ScalarNode){
+    		if (documentContext.peek() instanceof Resource){
+    			String c=((ScalarNode) nodeTuple.getKeyNode()).getValue();
+    			if (c.equals("type")){
+    				new TypeExtraHandler().handle(documentContext.peek(),new SequenceNode(Tag.BOOL, Collections.singletonList(nodeTuple.getValueNode()), true));
+    			}
+    		}
+    	}
         TupleBuilder<?, ?> currentBuilder = (TupleBuilder<?, ?>) builderContext.peek();
         if (currentBuilder != null)
         {

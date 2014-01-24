@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.emitter.Dumper;
+import org.raml.emitter.TraitsDumper;
 import org.raml.model.parameter.Header;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.model.parameter.UriParameter;
@@ -31,6 +33,7 @@ import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.annotation.TransformHandler;
 import org.raml.parser.builder.QuestionedActionTypeHandler;
+import org.raml.parser.builder.TraitsExtraHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 public class Action
@@ -39,6 +42,10 @@ public class Action
     @Key
     @TransformHandler(QuestionedActionTypeHandler.class)
     private ActionType type;
+    
+    @Sequence(extraHandler=TraitsExtraHandler.class)
+    @Dumper(TraitsDumper.class)
+    private List<String> is = new ArrayList<String>();
     
     protected boolean isQuestioned;
 
@@ -61,8 +68,17 @@ public class Action
     @Parent
     private Resource resource;
 
-    @Sequence
-    private List<String> is = new ArrayList<String>();
+    
+
+	private List<TemplateUse> isModel=new ArrayList<TemplateUse>();
+    
+    public List<TemplateUse> getIsModel() {
+		return isModel;
+	}
+
+	public void setIsModel(List<TemplateUse> isModel) {
+		this.isModel = isModel;
+	}
 
     @Sequence
     private List<Protocol> protocols = new ArrayList<Protocol>();

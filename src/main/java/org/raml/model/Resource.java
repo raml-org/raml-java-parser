@@ -21,7 +21,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.emitter.Dumper;
 import org.raml.emitter.MapFilter;
+import org.raml.emitter.TraitsDumper;
+import org.raml.emitter.TypeDumper;
 import org.raml.emitter.UrlParameterFilter;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Key;
@@ -29,6 +32,8 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.builder.TemplatesExtraHandler;
+import org.raml.parser.builder.TraitsExtraHandler;
 import org.raml.parser.resolver.ResourceHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
@@ -52,12 +57,26 @@ public class Resource
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
 
     @Scalar
+    @Dumper(TypeDumper.class)
     private String type;
 
-    @Sequence
+    @Sequence(extraHandler=TraitsExtraHandler.class)
+    @Dumper(TraitsDumper.class)
     private List<String> is = new ArrayList<String>();
+    
+    private List<TemplateUse>isModel=new ArrayList<TemplateUse>();
+    
+    private List<TemplateUse>typeModel=new ArrayList<TemplateUse>();
 
-    @Sequence(rule = SecurityReferenceSequenceRule.class)
+    public List<TemplateUse> getIsModel() {
+		return isModel;
+	}
+
+	public void setIsModel(List<TemplateUse> isModel) {
+		this.isModel = isModel;
+	}
+
+	@Sequence(rule = SecurityReferenceSequenceRule.class)
     private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
@@ -170,13 +189,35 @@ public class Resource
 
     public String getType()
     {
-        return type;
+    	return type;
+    }
+    public TemplateUse getTypeModelT(){
+    	if (typeModel.isEmpty()){
+    		return null;
+    	}
+        return typeModel.iterator().next();
+    }
+    
+    public List<TemplateUse> getTypeModel() {
+		return typeModel;
+	}
+
+	public void setTypeModel(List<TemplateUse> typeModel) {
+		this.typeModel = typeModel;
+	}
+
+	public void setType(String type){
+    	this.type=type;
     }
 
-    public void setType(String type)
+    public void setTypeModelT(TemplateUse type)
     {
-        this.type = type;
+    	typeModel.clear();
+    	if (type!=null){
+    		typeModel.add(type);
+    	}
     }
+    
 
     public List<SecurityReference> getSecuredBy()
     {
