@@ -35,7 +35,7 @@ public class UnknownTupleRule<K extends Node, V extends Node> extends DefaultTup
         final List<ValidationResult> result = new ArrayList<ValidationResult>();
         if (getKey() != null)
         {
-            result.add(ValidationResult.createErrorResult("Unknown key: "+ getName().replaceAll("(.*value=?)(\\w+)(.*)", "$2"),getKey().getStartMark() , getKey().getEndMark()));
+            result.add(ValidationResult.createErrorResult("Unknown key: "+ getName().replaceAll("(.*value=?)([^)]+)(.*)", "$2"),getKey().getStartMark() , getKey().getEndMark()));
         }
         else
         {

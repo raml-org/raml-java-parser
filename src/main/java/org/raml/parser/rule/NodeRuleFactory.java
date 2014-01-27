@@ -40,6 +40,7 @@ public class NodeRuleFactory extends AbastractFactory
 {
 
     private NodeRuleFactoryExtension[] extensions;
+    private Map<Class<?>, Map<String, TupleRule<?, ?>>> pojoRulesCache = new HashMap<Class<?>, Map<String, TupleRule<?, ?>>>();
 
 
     public NodeRuleFactory(NodeRuleFactoryExtension... extensions)
@@ -57,6 +58,36 @@ public class NodeRuleFactory extends AbastractFactory
 
 
     public void addRulesTo(Class<?> pojoClass, TupleRule<?, ?> parent)
+    {
+        Map<String, TupleRule<?, ?>> innerBuilders = pojoRulesCache.get(pojoClass);
+        if (innerBuilders != null)
+        {
+            innerBuilders = copyRules(innerBuilders);
+        }
+        else
+        {
+            innerBuilders = processPojoAnnotations(pojoClass);
+            pojoRulesCache.put(pojoClass, new HashMap<String, TupleRule<?, ?>>(innerBuilders));
+        }
+        for (TupleRule tupleRule : innerBuilders.values())
+        {
+            tupleRule.setParentTupleRule(parent);
+        }
+        parent.setNestedRules(innerBuilders);
+    }
+
+    private Map<String, TupleRule<?, ?>> copyRules(Map<String, TupleRule<?, ?>> sourceRules)
+    {
+        final Map<String, TupleRule<?, ?>> copy = new HashMap<String, TupleRule<?, ?>>();
+        for (Map.Entry<String, TupleRule<?, ?>> entry : sourceRules.entrySet())
+        {
+            copy.put(entry.getKey(), entry.getValue().deepCopy());
+        }
+        return copy;
+    }
+
+
+    private Map<String, TupleRule<?, ?>> processPojoAnnotations(Class<?> pojoClass)
     {
         final List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojoClass);
         final Map<String, TupleRule<?, ?>> innerBuilders = new HashMap<String, TupleRule<?, ?>>();
@@ -79,6 +110,10 @@ public class NodeRuleFactory extends AbastractFactory
                 tupleRule = createMappingRule(declaredField, mapping);
                 tupleHandler = createHandler(mapping.handler(), mapping.alias(), MappingNode.class);
                 required = mapping.required();
+                if (tupleRule instanceof MapTupleRule)
+                {
+                    ((MapTupleRule) tupleRule).setInnerTupleHandler(createHandler(mapping.innerHandler(), "", null));
+                }
             }
             else if (sequence != null)
             {
@@ -94,12 +129,11 @@ public class NodeRuleFactory extends AbastractFactory
                     tupleRule.setHandler(tupleHandler);
                 }
                 tupleRule.setRequired(required);
-                tupleRule.setParentTupleRule(parent);
                 tupleRule.setNodeRuleFactory(this);
                 innerBuilders.put(declaredField.getName(), tupleRule);
             }
         }
-        parent.setNestedRules(innerBuilders);
+        return innerBuilders;
     }
 
     private TupleRule<?, ?> createSequenceRule(Field declaredField, Sequence sequence)

@@ -22,7 +22,6 @@ import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ConvertUtils;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Node>
@@ -43,14 +42,15 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
         this.valueClass = valueClass;
     }
 
+
     @Override
-    public NodeBuilder getBuilderForTuple(NodeTuple tuple)
+    protected Map<String, TupleBuilder<?, ?>> getBuilders()
     {
-        if (builders.isEmpty())
+        if (super.getBuilders().isEmpty())
         {
             addBuildersFor(valueClass);
         }
-        return super.getBuilderForTuple(tuple);
+        return super.getBuilders();
     }
 
     @Override

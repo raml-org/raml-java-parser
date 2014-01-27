@@ -23,17 +23,20 @@ import java.util.List;
 import java.util.Set;
 
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
+import org.raml.parser.resolver.TupleHandler;
 import org.raml.parser.utils.ReflectionUtils;
 import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
+public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode> implements TypedTupleRule
 {
 
     private Class valueType;
     private String fieldName;
     private final Set<String> keys = new HashSet<String>();
+    private TupleHandler innerTupleHandler;
 
     public MapTupleRule(String fieldName, Class valueType)
     {
@@ -61,7 +64,10 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
         {
             tupleRule = getScalarRule();
         }
-
+        if (innerTupleHandler != null && !innerTupleHandler.handles(nodeTuple))
+        {
+            return new UnknownTupleRule<Node, Node>(nodeTuple.getKeyNode().toString());
+        }
         tupleRule.setParentTupleRule(this);
         return tupleRule;
     }
@@ -71,7 +77,7 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return new SimpleRule(getFieldName(), getValueType());
     }
 
-    protected Class getValueType()
+    public Class getValueType()
     {
         return valueType;
     }
@@ -81,10 +87,26 @@ public class MapTupleRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return fieldName;
     }
 
+    public void setInnerTupleHandler(TupleHandler innerTupleHandler)
+    {
+        this.innerTupleHandler = innerTupleHandler;
+    }
+
     @Override
     public void setValueType(Type valueType)
     {
         this.valueType = (Class) valueType;
+    }
+
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(MapTupleRule.class);
+        MapTupleRule copy = new MapTupleRule(getName(), valueType);
+        copy.setHandler(getHandler());
+        copy.setInnerTupleHandler(innerTupleHandler);
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        return copy;
     }
 
     @Override

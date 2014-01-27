@@ -30,4 +30,14 @@ public class SecurityReferenceSequenceRule extends SequenceTupleRule
     {
         return new SecurityReferenceRule(getNodeRuleFactory());
     }
+
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(SecurityReferenceSequenceRule.class);
+        SecurityReferenceSequenceRule copy = new SecurityReferenceSequenceRule();
+        copy.setHandler(getHandler());
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        return copy;
+    }
 }

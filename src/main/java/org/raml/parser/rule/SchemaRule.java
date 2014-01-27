@@ -153,4 +153,13 @@ public class SchemaRule extends SimpleRule
         return tag != null && !STR.equals(tag) && !tag.startsWith(INCLUDE_APPLIED_TAG);
     }
 
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(SchemaRule.class);
+        SchemaRule copy = new SchemaRule();
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        return copy;
+    }
 }

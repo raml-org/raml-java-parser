@@ -15,6 +15,12 @@
  */
 package org.raml.parser.resolver;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.raml.parser.completion.KeySuggestion;
+import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -47,5 +53,21 @@ public class EnumHandler implements TupleHandler
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Suggestion> getSuggestions()
+    {
+        List<Suggestion> result = new ArrayList<Suggestion>();
+        Field[] declaredFields = enumClass.getDeclaredFields();
+        for (Field declaredField : declaredFields)
+        {
+            if (declaredField.isEnumConstant())
+            {
+                result.add(new KeySuggestion(declaredField.getName().toLowerCase()));
+            }
+        }
+
+        return result;
     }
 }

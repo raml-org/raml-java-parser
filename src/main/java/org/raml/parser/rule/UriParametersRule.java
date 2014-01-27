@@ -97,6 +97,17 @@ public class UriParametersRule extends DefaultTupleRule<ScalarNode, MappingNode>
         return keyNode != null;
     }
 
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(UriParametersRule.class);
+        UriParametersRule copy = new UriParametersRule();
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        copy.setRequired(isRequired());
+        return copy;
+    }
+
     public void setKeyNode(ScalarNode rulePresent)
     {
         this.keyNode = rulePresent;

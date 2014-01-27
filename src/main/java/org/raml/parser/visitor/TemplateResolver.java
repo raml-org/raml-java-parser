@@ -57,6 +57,7 @@ public class TemplateResolver
     public static final String ALL_ACTIONS = "*";
     public static final String TRAIT_USE_KEY = "is";
     public static final String RESOURCE_TYPE_USE_KEY = "type";
+    public static final Pattern TEMPLATE_PARAMETER_PATTERN = Pattern.compile("<<[^>]+>>");
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private IncludeResolver includeResolver = new IncludeResolver();
@@ -382,7 +383,9 @@ public class TemplateResolver
             {
                 Field value = tuple.getClass().getDeclaredField("valueNode");
                 value.setAccessible(true);
-                MappingNode mappingNode = new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), false);
+                Node valueNode = tuple.getValueNode();
+                MappingNode mappingNode = new MappingNode(Tag.MAP, false, new ArrayList<NodeTuple>(),
+                                                          valueNode.getStartMark(), valueNode.getEndMark(), false);
                 value.set(tuple, mappingNode);
                 return mappingNode;
             }
@@ -574,9 +577,8 @@ public class TemplateResolver
 
         private ScalarNode cloneScalarNode(ScalarNode node, Map<String, String> parameters)
         {
-            Pattern pattern = Pattern.compile("<<[^>]+>>");
             String value = node.getValue();
-            Matcher matcher = pattern.matcher(value);
+            Matcher matcher = TEMPLATE_PARAMETER_PATTERN.matcher(value);
             StringBuffer sb = new StringBuffer();
             while (matcher.find())
             {
@@ -676,7 +678,7 @@ public class TemplateResolver
         private MappingNode cleanMergedTuples(MappingNode templateNode, Class<?> context)
         {
 
-            List<NodeTuple> tuples = new ArrayList(templateNode.getValue());
+            List<NodeTuple> tuples = new ArrayList<NodeTuple>(templateNode.getValue());
             for (NodeTuple tuple : tuples)
             {
                 String key = ((ScalarNode) tuple.getKeyNode()).getValue();
@@ -699,7 +701,7 @@ public class TemplateResolver
             {
                 fields = new String[] {"usage", "summary", "displayName", "is"};
             }
-            return new HashSet(Arrays.asList(fields));
+            return new HashSet<String>(Arrays.asList(fields));
         }
 
         private boolean isAction(String key)

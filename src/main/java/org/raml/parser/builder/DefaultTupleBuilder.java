@@ -17,6 +17,7 @@ package org.raml.parser.builder;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 public class DefaultTupleBuilder<K extends Node, V extends Node> implements TupleBuilder<K, V>
 {
 
-    protected Map<String, TupleBuilder<?, ?>> builders;
+    private Map<String, TupleBuilder<?, ?>> builders;
     private NodeBuilder<?> parent;
     private TupleHandler handler;
 
@@ -53,11 +54,11 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     @Override
     public NodeBuilder getBuilderForTuple(NodeTuple tuple)
     {
-        if (builders == null || builders.isEmpty())
+        if (getBuilders() == null || getBuilders().isEmpty())
         {
             return new DefaultTupleBuilder(new DefaultTupleHandler());
         }
-        for (TupleBuilder tupleBuilder : builders.values())
+        for (TupleBuilder tupleBuilder : getBuilders().values())
         {
             if (tupleBuilder.getHandler().handles(tuple))
             {
@@ -66,6 +67,17 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         }
         throw new RuntimeException("Builder not found for " + tuple);
     }
+
+    protected Map<String, TupleBuilder<?, ?>> getBuilders()
+    {
+        return builders;
+    }
+
+    public Collection<TupleBuilder<?, ?>> getChildrenTupleBuilders()
+    {
+        return getBuilders().values();
+    }
+
 
     @Override
     public Object buildValue(Object parent, V node)
@@ -97,7 +109,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     }
 
     @Override
-    public void setNestedBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders)
+    public void setChildrenTupleBuilders(Map<String, TupleBuilder<?, ?>> nestedBuilders)
     {
         builders = nestedBuilders;
     }
@@ -178,4 +190,6 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
             }
         }
     }
+
+
 }

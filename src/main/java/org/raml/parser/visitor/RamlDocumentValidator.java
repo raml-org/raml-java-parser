@@ -17,7 +17,6 @@ package org.raml.parser.visitor;
 
 import static org.raml.parser.visitor.TupleType.KEY;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import org.raml.model.Raml;
@@ -26,6 +25,7 @@ import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.ImplicitMapEntryRule;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
+import org.raml.parser.rule.TypedTupleRule;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
@@ -63,12 +63,12 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     }
 
     @Override
-    public void onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
+    public boolean onMappingNodeStart(MappingNode mappingNode, TupleType tupleType)
     {
         super.onMappingNodeStart(mappingNode, tupleType);
         if (tupleType == KEY)
         {
-            return;
+            return true;
         }
         NodeRule<?> rule = getRuleContext().peek();
         if (isResourceRule(rule))
@@ -82,6 +82,7 @@ public class RamlDocumentValidator extends YamlDocumentValidator
             List<ValidationResult> mediaTypeValidations = getMediaTypeResolver().resolve(mappingNode);
             getMessages().addAll(mediaTypeValidations);
         }
+        return true;
     }
 
     private String getResourceUri(NodeRule<?> resourceRule)
@@ -104,38 +105,14 @@ public class RamlDocumentValidator extends YamlDocumentValidator
 
     private boolean isBodyRule(NodeRule<?> rule)
     {
-        try
-        {
-            Field valueType = rule.getClass().getDeclaredField("valueType");
-            valueType.setAccessible(true);
-            return ((Class) valueType.get(rule)).getName().equals("org.raml.model.MimeType");
-        }
-        catch (NoSuchFieldException e)
-        {
-            return false;
-        }
-        catch (IllegalAccessException e)
-        {
-            return false;
-        }
+        return rule instanceof TypedTupleRule &&
+               ((TypedTupleRule) rule).getValueType().getName().equals("org.raml.model.MimeType");
     }
 
     private boolean isResourceRule(NodeRule<?> rule)
     {
-        try
-        {
-            Field valueType = rule.getClass().getDeclaredField("valueType");
-            valueType.setAccessible(true);
-            return ((Class) valueType.get(rule)).getName().equals("org.raml.model.Resource");
-        }
-        catch (NoSuchFieldException e)
-        {
-            return false;
-        }
-        catch (IllegalAccessException e)
-        {
-            return false;
-        }
+        return rule instanceof TypedTupleRule &&
+               ((TypedTupleRule) rule).getValueType().getName().equals("org.raml.model.Resource");
     }
 
     public void setResourceLoader(ResourceLoader resourceLoader)

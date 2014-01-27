@@ -23,10 +23,8 @@ import org.raml.parser.completion.Suggestion;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class ResourceHandler implements TupleHandler
+public class MimeTypeHandler implements TupleHandler
 {
-
-    public static String RESOURCE_KEY = "/ResourceName";
 
     @Override
     public boolean handles(NodeTuple tuple)
@@ -34,7 +32,7 @@ public class ResourceHandler implements TupleHandler
         if (tuple.getKeyNode() instanceof ScalarNode)
         {
             ScalarNode keyNode = (ScalarNode) tuple.getKeyNode();
-            return keyNode.getValue().startsWith("/");
+            return keyNode.getValue().contains("/");
         }
         else
         {
@@ -45,7 +43,13 @@ public class ResourceHandler implements TupleHandler
     @Override
     public List<Suggestion> getSuggestions()
     {
-        return Arrays.<Suggestion>asList(new KeySuggestion(RESOURCE_KEY));
+        KeySuggestion[] suggestions = {
+            new KeySuggestion("application/json"),
+            new KeySuggestion("application/xml"),
+            new KeySuggestion("application/x-www-form-urlencoded"),
+            new KeySuggestion("multipart/form-data")
+        };
+        return Arrays.<Suggestion>asList(suggestions);
     }
 
 }

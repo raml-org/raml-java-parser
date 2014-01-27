@@ -13,33 +13,20 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.model.validation;
+package org.raml.parser.completion;
 
-public class MinimumIntegerValidation implements Validation
+public class KeySuggestion extends DefaultSuggestion
 {
 
-    private Integer minimum;
-
-    public MinimumIntegerValidation(String minimum)
+    public KeySuggestion(String label)
     {
-        this.minimum = parse(minimum);
-    }
-
-    public Integer parse(String value)
-    {
-        try
-        {
-            return Integer.parseInt(value);
-        }
-        catch (NumberFormatException e)
-        {
-            throw new IllegalArgumentException("Cannot parse number: " + value);
-        }
+        super(label);
     }
 
     @Override
-    public boolean check(String input)
+    public String getValue()
     {
-        return minimum.compareTo(parse(input)) <= 0;
+        return getLabel() + ": ";
     }
+
 }

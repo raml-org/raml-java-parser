@@ -62,8 +62,8 @@ public class NodeVisitor
             nodeHandler.onCustomTagError(LOOP_TAG, mappingNode, "Circular reference detected");
             return;
         }
-        nodeHandler.onMappingNodeStart(mappingNode, tupleType);
-        if (tupleType == VALUE)
+        boolean keepOnVisiting = nodeHandler.onMappingNodeStart(mappingNode, tupleType);
+        if (tupleType == VALUE && keepOnVisiting)
         {
             doVisitMappingNode(mappingNode);
         }
@@ -123,7 +123,11 @@ public class NodeVisitor
                 nodeTuple = new NodeTuple(keyNode, resolvedNode);
             }
             updatedTuples.add(nodeTuple);
-            nodeHandler.onTupleStart(nodeTuple);
+            boolean processTuple = nodeHandler.onTupleStart(nodeTuple);
+            if (!processTuple)
+            {
+                continue;
+            }
             visit(keyNode, KEY);
             visitResolvedNode(originalValueNode, resolvedNode);
             nodeHandler.onTupleEnd(nodeTuple);
@@ -207,8 +211,8 @@ public class NodeVisitor
 
     public void visitDocument(MappingNode node)
     {
-        nodeHandler.onDocumentStart(node);
-        if (node != null)
+        boolean keepOnVisitingDocument = nodeHandler.onDocumentStart(node);
+        if (node != null && keepOnVisitingDocument)
         {
             doVisitMappingNode(node);
         }
@@ -233,8 +237,8 @@ public class NodeVisitor
 
     private void visitSequence(SequenceNode node, TupleType tupleType)
     {
-        nodeHandler.onSequenceStart(node, tupleType);
-        if (tupleType == VALUE)
+        boolean keepVisitingElements = nodeHandler.onSequenceStart(node, tupleType);
+        if (tupleType == VALUE && keepVisitingElements)
         {
             List<Node> value = node.getValue();
             for (int i=0; i<value.size(); i++)

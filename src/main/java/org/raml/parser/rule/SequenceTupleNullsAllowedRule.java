@@ -23,4 +23,16 @@ public class SequenceTupleNullsAllowedRule extends SequenceTupleRule
     {
         return new SimpleNullAllowedRule(getName(), (Class<?>) getItemType());
     }
+
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(SequenceTupleNullsAllowedRule.class);
+        SequenceTupleNullsAllowedRule copy = new SequenceTupleNullsAllowedRule();
+        copy.setName(getName());
+        copy.setValueType(getItemType());
+        copy.setNodeRuleFactory(getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        return copy;
+    }
 }

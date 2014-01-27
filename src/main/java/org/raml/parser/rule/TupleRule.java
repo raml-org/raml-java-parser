@@ -55,4 +55,6 @@ public interface TupleRule<K extends Node, V extends Node> extends NodeRule<V>
     K getKey();
 
     void setValueType(Type valueType);
+
+    TupleRule<?,?> deepCopy();
 }

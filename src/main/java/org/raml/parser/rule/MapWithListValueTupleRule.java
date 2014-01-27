@@ -62,4 +62,13 @@ public class MapWithListValueTupleRule extends DefaultTupleRule<ScalarNode, Mapp
         fieldName = key.getValue();
         return super.validateKey(key);
     }
+
+    @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        checkClassToCopy(MapWithListValueTupleRule.class);
+        MapWithListValueTupleRule copy = new MapWithListValueTupleRule(getName(), valueType, getNodeRuleFactory());
+        copy.setHandler(getHandler());
+        return copy;
+    }
 }

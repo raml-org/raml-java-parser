@@ -141,6 +141,17 @@ public class ContributionTupleRule implements TupleRule<Node, Node>
     }
 
     @Override
+    public TupleRule<?, ?> deepCopy()
+    {
+        List<TupleRule> contributionRulesCopy = new ArrayList<TupleRule>();
+        for (TupleRule sourceRule : contributionRules)
+        {
+            contributionRulesCopy.add(sourceRule.deepCopy());
+        }
+        return new ContributionTupleRule(rule.deepCopy(), contributionRulesCopy);
+    }
+
+    @Override
     public List<ValidationResult> validateValue(Node value)
     {
         List<ValidationResult> result = new ArrayList<ValidationResult>();

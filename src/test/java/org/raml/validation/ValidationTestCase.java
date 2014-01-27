@@ -200,4 +200,12 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(includeInfo.getLine() + 1, is(3));
     }
 
+    @Test
+    public void badMediaTypeName()
+    {
+        String resource = "org/raml/validation/bad-media-type.yaml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Unknown key: nonslash"));
+    }
 }
