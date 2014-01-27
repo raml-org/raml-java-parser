@@ -263,15 +263,15 @@ public class YamlDocumentSuggester implements NodeHandler
     }
 
     @Override
-    public void onCustomTagStart(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
+    public void onCustomTagStart(Tag tag, Node originalValueNode, Node node)
     {
-        builder.onCustomTagStart(tag, originalValueNode, nodeTuple);
+        builder.onCustomTagStart(tag, originalValueNode, node);
     }
 
     @Override
-    public void onCustomTagEnd(Tag tag, Node originalValueNode, NodeTuple nodeTuple)
+    public void onCustomTagEnd(Tag tag, Node originalValueNode, Node node)
     {
-        builder.onCustomTagEnd(tag, originalValueNode, nodeTuple);
+        builder.onCustomTagEnd(tag, originalValueNode, node);
     }
 
     @Override
