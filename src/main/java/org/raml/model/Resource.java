@@ -44,6 +44,14 @@ public class Resource
     private String displayName;
 
     @Scalar
+    @Dumper(TypeDumper.class)
+    private String type;
+
+    @Sequence(extraHandler=TraitsExtraHandler.class)
+    @Dumper(TraitsDumper.class)
+    private List<String> is = new ArrayList<String>();
+    
+    @Scalar
     private String description;
 
     @Parent(property = "uri")
@@ -56,13 +64,7 @@ public class Resource
     @MapFilter(UrlParameterFilter.class)
     private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
 
-    @Scalar
-    @Dumper(TypeDumper.class)
-    private String type;
 
-    @Sequence(extraHandler=TraitsExtraHandler.class)
-    @Dumper(TraitsDumper.class)
-    private List<String> is = new ArrayList<String>();
     
     private List<TemplateUse>isModel=new ArrayList<TemplateUse>();
     

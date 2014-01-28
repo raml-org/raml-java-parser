@@ -590,6 +590,10 @@ public class RamlEmitterV2 {
 				isIdentifier = false;
 				break;
 			}
+			if (c == ':') {
+				isIdentifier = false;
+				break;
+			}
 			if (c == '"') {
 				isIdentifier = false;
 				break;

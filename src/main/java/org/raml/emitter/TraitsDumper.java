@@ -26,7 +26,7 @@ public class TraitsDumper implements IRAMLFieldDumper {
 		}
 		dump.append(emitter.indent(depth));
 		dump.append("is: ");
-		if (resourceTypeMap.size() == 1) {
+		if (false) {
 			dump.append(resourceTypeMap.iterator().next());
 			return;
 		} else {
