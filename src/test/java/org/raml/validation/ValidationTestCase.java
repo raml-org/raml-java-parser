@@ -16,11 +16,11 @@
 package org.raml.validation;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 
-import java.util.Deque;
 import java.util.List;
 
 import org.junit.Test;
@@ -208,5 +208,15 @@ public class ValidationTestCase extends AbstractRamlTestCase
         List<ValidationResult> validationResults = validateRaml(resource);
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("Unknown key: nonslash"));
+    }
+
+    @Test
+    public void missingColon()
+    {
+        String resource = "org/raml/validation/missing-colon.yaml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getIncludeName(), nullValue());
+        assertThat(validationResults.get(0).getMessage(), is("could not found expected ':'"));
     }
 }

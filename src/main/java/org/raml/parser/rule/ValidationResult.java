@@ -82,7 +82,7 @@ public class ValidationResult
 
     public String getIncludeName()
     {
-        if (contextPath.size() > 1)
+        if (contextPath != null && contextPath.size() > 1)
         {
             return contextPath.peek().getIncludeName();
         }
