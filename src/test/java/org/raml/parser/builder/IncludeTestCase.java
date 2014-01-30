@@ -149,4 +149,16 @@ public class IncludeTestCase extends AbstractRamlTestCase
         assertThat(raml.getResource("/main").getAction(PUT).getBody().containsKey("text/xml"), is(true));
 
     }
+
+    @Test
+    public void includeSequenceMapping()
+    {
+        String ramlSource = "org/raml/include/include-sequence-mapping.yaml";
+        List<ValidationResult> validationResults = validateRaml(ramlSource);
+        assertThat(validationResults.size(), is(0));
+
+        Raml raml = parseRaml(ramlSource);
+        assertThat(raml.getResource("/main").getAction(GET).getQueryParameters().size(), is(2));
+        assertThat(raml.getResource("/main").getAction(GET).getHeaders().size(), is(1));
+    }
 }

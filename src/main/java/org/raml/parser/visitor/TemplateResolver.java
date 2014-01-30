@@ -112,15 +112,9 @@ public class TemplateResolver
             String key = ((ScalarNode) keyNode).getValue();
             if (key.equals("resourceTypes") || key.equals("traits"))
             {
-                Node templateSequence = rootTuple.getValueNode();
-                if (templateSequence.getNodeId() == scalar)
+                Node templateSequence = resolveInclude(rootTuple.getValueNode());
+                if (templateSequence != rootTuple.getValueNode())
                 {
-                    if (!templateSequence.getTag().equals(INCLUDE_TAG))
-                    {
-                        validationResults.add(createErrorResult("Sequence or !include expected", templateSequence));
-                        break;
-                    }
-                    templateSequence = includeResolver.resolve(templateSequence, resourceLoader, nodeNandler);
                     rootNode.getValue().remove(i);
                     rootNode.getValue().add(i, new NodeTuple(keyNode, templateSequence));
                 }
@@ -142,14 +136,10 @@ public class TemplateResolver
         List<Node> prunedTemplates = new ArrayList<Node>();
         for (int j = 0; j < templateSequence.getValue().size(); j++)
         {
-            Node template = templateSequence.getValue().get(j);
-            if (template.getNodeId() == scalar)
+            Node template = resolveInclude(templateSequence.getValue().get(j));
+            if (template.getNodeId() != mapping)
             {
-                if (!template.getTag().equals(INCLUDE_TAG))
-                {
-                    validationResults.add(createErrorResult("Mapping or !include expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
-                }
-                template = includeResolver.resolve(template, resourceLoader, nodeNandler);
+                validationResults.add(createErrorResult("Mapping expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
             }
             for (NodeTuple tuple : ((MappingNode) template).getValue())
             {
@@ -159,7 +149,7 @@ public class TemplateResolver
                     continue;
                 }
                 String templateKey = ((ScalarNode) tuple.getKeyNode()).getValue();
-                Node templateValue = tuple.getValueNode();
+                Node templateValue = resolveInclude(tuple.getValueNode());
                 if (templateValue.getNodeId() != mapping)
                 {
                     validationResults.add(createErrorResult("Mapping expected", templateValue.getStartMark(), templateValue.getEndMark()));
@@ -178,6 +168,15 @@ public class TemplateResolver
         }
         templateSequence.getValue().clear();
         templateSequence.getValue().addAll(prunedTemplates);
+    }
+
+    private Node resolveInclude(Node node)
+    {
+        if (node.getNodeId() == scalar && node.getTag().equals(INCLUDE_TAG))
+        {
+            return includeResolver.resolve(node, resourceLoader, nodeNandler);
+        }
+        return node;
     }
 
     private Node getFakeTemplateNode(Node keyNode)

@@ -1,0 +1,9 @@
+#%RAML 0.8
+title: include sequence mapping
+traits:
+    - paged: !include include-trait-paged.yaml
+    - secured: !include include-trait-secured.yaml
+
+/main:
+    get:
+        is: [paged, secured]
