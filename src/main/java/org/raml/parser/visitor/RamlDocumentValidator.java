@@ -52,7 +52,7 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     {
         if (templateResolver == null)
         {
-            templateResolver = new TemplateResolver(resourceLoader, this);
+            templateResolver = new TemplateResolver(resourceLoader, this, true);
         }
         return templateResolver;
     }

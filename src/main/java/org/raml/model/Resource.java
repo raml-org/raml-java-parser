@@ -32,7 +32,6 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
-import org.raml.parser.builder.TemplatesExtraHandler;
 import org.raml.parser.builder.TraitsExtraHandler;
 import org.raml.parser.resolver.ResourceHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
@@ -279,6 +278,5 @@ public class Resource
         }
         return null;
     }
-
 	
 }

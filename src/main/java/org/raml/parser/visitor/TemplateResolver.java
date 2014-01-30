@@ -65,16 +65,18 @@ public class TemplateResolver
     private ResourceLoader resourceLoader;
     private NodeHandler nodeNandler;
     private Set<MappingNode> resolvedNodes = new HashSet<MappingNode>();
+	private boolean doResolve;
 
     private enum TemplateType
     {
         RESOURCE_TYPE, TRAIT
     }
 
-    public TemplateResolver(ResourceLoader resourceLoader, NodeHandler nodeNandler)
+    public TemplateResolver(ResourceLoader resourceLoader, NodeHandler nodeNandler,boolean doResolve)
     {
         this.resourceLoader = resourceLoader;
         this.nodeNandler = nodeNandler;
+        this.doResolve=doResolve;
     }
 
     public Map<String, MappingNode> getResourceTypesMap()
@@ -262,8 +264,7 @@ public class TemplateResolver
 
             for (int i = 0; i < resourceNode.getValue().size(); i++)
             {
-//            	//FIXME
-            	if (true){
+            	if (!doResolve){
             		break;
             	}
                 NodeTuple resourceTuple = resourceNode.getValue().get(i);
@@ -427,8 +428,8 @@ public class TemplateResolver
         {
             for (Node ref : traits.getValue())
             {
-            	if (true){
-            		//break;//FIXME
+            	if (!doResolve){
+            		break;
             	}
                 if (actionName == null)
                 {

@@ -32,6 +32,15 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
         }		
 	}
 	
+	public TemplateResolver getTemplateResolver()
+    {
+        if (templateResolver == null)
+        {
+            templateResolver = new TemplateResolver(getResourceLoader(), this,false);
+        }
+        return templateResolver;
+    }
+	
 	private final class IncludedResourceOrTraitBuilder<T> extends
 			YamlDocumentBuilder<T> {
 		private IncludedResourceOrTraitBuilder(Class<T> documentClass,

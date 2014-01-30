@@ -36,6 +36,7 @@ import org.raml.parser.builder.QuestionedActionTypeHandler;
 import org.raml.parser.builder.TraitsExtraHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
+
 public class Action
 {
 
@@ -76,6 +77,7 @@ public class Action
 		return isModel;
 	}
 
+    
 	public void setIsModel(List<TemplateUse> isModel) {
 		this.isModel = isModel;
 	}

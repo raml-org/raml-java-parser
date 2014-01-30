@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.raml.model.Raml;
-import org.raml.model.Raml2;
 import org.raml.model.Resource;
 import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.NodeBuilder;
@@ -39,7 +38,7 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 {
 
-    private TemplateResolver templateResolver;
+    protected TemplateResolver templateResolver;
     private MediaTypeResolver mediaTypeResolver;
 
     public RamlDocumentBuilder()
@@ -125,7 +124,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     {
         if (templateResolver == null)
         {
-            templateResolver = new TemplateResolver(getResourceLoader(), this);
+            templateResolver = new TemplateResolver(getResourceLoader(), this,true);
         }
         return templateResolver;
     }
