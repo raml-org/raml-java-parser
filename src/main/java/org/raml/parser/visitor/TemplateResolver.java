@@ -39,6 +39,7 @@ import org.raml.model.ActionType;
 import org.raml.model.Resource;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.utils.Inflector;
 import org.slf4j.Logger;
@@ -76,6 +77,7 @@ public class TemplateResolver
     {
         this.resourceLoader = resourceLoader;
         this.nodeNandler = nodeNandler;
+        this.includeResolver.setContextPath(((ContextPathAware) nodeNandler).getContextPath());
     }
 
     public Map<String, MappingNode> getResourceTypesMap()

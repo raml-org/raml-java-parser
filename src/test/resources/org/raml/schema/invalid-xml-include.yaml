@@ -4,4 +4,4 @@ title: sample
     put:
         body:
             application/xml:
-                schema: !include org/raml/schema/invalid.xsd
+                schema: !include invalid.xsd

@@ -19,6 +19,7 @@ import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,6 +35,8 @@ import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.resolver.DefaultTupleHandler;
+import org.raml.parser.tagresolver.ContextPath;
+import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.DumperOptions;
@@ -49,7 +52,7 @@ import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.resolver.Resolver;
 import org.yaml.snakeyaml.serializer.Serializer;
 
-public class YamlDocumentBuilder<T> implements NodeHandler
+public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
 {
 
     private Class<T> documentClass;
@@ -59,6 +62,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler
     private MappingNode rootNode;
     private ResourceLoader resourceLoader;
     private TagResolver[] tagResolvers;
+    private ContextPath contextPath;
 
     public YamlDocumentBuilder(Class<T> documentClass, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
@@ -67,15 +71,44 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         this.tagResolvers = tagResolvers;
     }
 
-    public T build(Reader content)
+    public T build(String resourceLocation)
+    {
+        InputStream resourceStream = resourceLoader.fetchResource(resourceLocation);
+        return build(resourceStream, resourceLocation);
+    }
+
+    public T build(Reader content, String resourceLocation)
     {
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader, tagResolvers);
         rootNode = (MappingNode) yamlParser.compose(content);
+        contextPath.pushRoot(resourceLocation);
         preBuildProcess();
         nodeVisitor.visitDocument(rootNode);
         postBuildProcess();
         return documentObject;
+    }
+
+    public T build(InputStream content, String resourceLocation)
+    {
+        return build(new InputStreamReader(content), resourceLocation);
+    }
+
+    public T build(String content, String resourceLocation)
+    {
+        return build(new StringReader(content), resourceLocation);
+    }
+
+    @Deprecated
+    public T build(Reader content)
+    {
+        return build(content, new File("").getPath());
+    }
+
+    @Deprecated
+    public T build(InputStream content)
+    {
+        return build(new InputStreamReader(content));
     }
 
     protected T getDocumentObject()
@@ -104,16 +137,6 @@ public class YamlDocumentBuilder<T> implements NodeHandler
 
     protected void postBuildProcess()
     {
-    }
-
-    public T build(InputStream content)
-    {
-        return build(new InputStreamReader(content));
-    }
-
-    public T build(String content)
-    {
-        return build(new StringReader(content));
     }
 
     public MappingNode getRootNode()
@@ -306,4 +329,15 @@ public class YamlDocumentBuilder<T> implements NodeHandler
         }
     }
 
+    @Override
+    public void setContextPath(ContextPath contextPath)
+    {
+        this.contextPath = contextPath;
+    }
+
+    @Override
+    public ContextPath getContextPath()
+    {
+        return contextPath;
+    }
 }

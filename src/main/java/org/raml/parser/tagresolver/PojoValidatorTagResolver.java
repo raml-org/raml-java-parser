@@ -57,4 +57,16 @@ public class PojoValidatorTagResolver implements TagResolver
         return node;
     }
 
+    @Override
+    public void beforeProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+    {
+        //do nothing
+    }
+
+    @Override
+    public void afterProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+    {
+        //do nothing
+    }
+
 }

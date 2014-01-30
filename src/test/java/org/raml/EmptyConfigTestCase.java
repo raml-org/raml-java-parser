@@ -28,7 +28,7 @@ public class EmptyConfigTestCase
     {
         String simpleTest = "";
         RamlDocumentBuilder builder = new RamlDocumentBuilder();
-        Raml raml = builder.build(simpleTest);
+        Raml raml = builder.build(simpleTest, "");
         Assert.assertTrue(raml != null);
     }
 

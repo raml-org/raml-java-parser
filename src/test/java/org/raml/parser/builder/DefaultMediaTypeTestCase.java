@@ -86,7 +86,7 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
     public void validation() throws Exception
     {
         String ramlStream = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(ramlSource));
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(ramlStream);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(ramlStream, "");
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 
@@ -98,7 +98,7 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
         String emitted1 = YamlDocumentBuilder.dumpFromAst(builder1.getRootNode());
 
         RamlDocumentBuilder builder2 = new RamlDocumentBuilder();
-        Raml raml2 = builder2.build(emitted1);
+        Raml raml2 = builder2.build(emitted1, "");
 
         assertThat(raml2.getResources().get("/simple").getActions().size(),
                    is(raml1.getResources().get("/simple").getActions().size()));

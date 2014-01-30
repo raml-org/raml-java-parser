@@ -3,7 +3,7 @@
 title: Example API
 version: v1
 resourceTypes:
-    - !include org/raml/include/resource-type.yaml
+    - !include resource-type.yaml
 
 /simple:
     type: simple

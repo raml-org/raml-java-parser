@@ -117,7 +117,7 @@ public class SchemaRule extends SimpleRule
         ValidationResult errorResult = createErrorResult(msg, line, UNKNOWN, UNKNOWN);
         if (globaSchemaIncludeInfo != null)
         {
-            errorResult.getIncludeContext().push(globaSchemaIncludeInfo);
+            errorResult.setExtraIncludeInfo(globaSchemaIncludeInfo);
         }
         return errorResult;
     }

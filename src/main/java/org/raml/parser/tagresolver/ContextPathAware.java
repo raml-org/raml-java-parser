@@ -13,15 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.parser.visitor;
+package org.raml.parser.tagresolver;
 
-import java.util.List;
-
-import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.tagresolver.ContextPathAware;
-
-public interface YamlValidator extends NodeHandler, ContextPathAware
+public interface ContextPathAware
 {
 
-    List<ValidationResult> getMessages();
+    void setContextPath(ContextPath contextPath);
+
+    ContextPath getContextPath();
 }

@@ -27,4 +27,8 @@ public interface TagResolver
 
     Node resolve(Node valueNode, ResourceLoader resourceLoader, NodeHandler nodeHandler);
 
+    void beforeProcessingResolvedNode(Tag tag, Node originalNode, Node resolvedNode);
+
+    void afterProcessingResolvedNode(Tag tag, Node originalNode, Node resolvedNode);
+
 }

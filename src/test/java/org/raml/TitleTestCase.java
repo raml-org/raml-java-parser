@@ -22,19 +22,20 @@ import org.apache.commons.io.IOUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationMessage;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlValidationService;
 
 
-public class TitleTestCase
+public class TitleTestCase extends AbstractRamlTestCase
 {
 
     @Test
     public void whenTitleIsNotDefinedErrorShouldBeShown() throws IOException
     {
-        String raml = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("org/raml/title-not-defined.yaml"), "UTF-8");
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        String location = "org/raml/title-not-defined.yaml";
+        List<ValidationResult> errors = validateRaml(location);
         Assert.assertFalse("Errors must not be empty", errors.isEmpty());
         Assert.assertThat(errors.get(0).getMessage(), CoreMatchers.is(ValidationMessage.getMissingRuleMessage("title")));
     }

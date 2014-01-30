@@ -19,6 +19,7 @@ import static java.lang.System.currentTimeMillis;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -55,25 +56,32 @@ public class YamlValidationService
         this.tagResolvers = tagResolvers;
     }
 
-    public List<ValidationResult> validate(MappingNode root)
+    public List<ValidationResult> validate(MappingNode root, String resourceLocation)
     {
         NodeVisitor nodeVisitor = new NodeVisitor(yamlValidator, resourceLoader, tagResolvers);
+        yamlValidator.getContextPath().pushRoot(resourceLocation);
         errorMessage.addAll(preValidation(root));
         nodeVisitor.visitDocument(root);
         return errorMessage;
     }
 
-    public List<ValidationResult> validate(InputStream content)
+    public List<ValidationResult> validate(String resourceLocation)
     {
-        return validate(new InputStreamReader(content));
+        InputStream resourceStream = resourceLoader.fetchResource(resourceLocation);
+        return validate(resourceStream, resourceLocation);
     }
 
-    public List<ValidationResult> validate(String content)
+    public List<ValidationResult> validate(String content, String resourceLocation)
     {
-        return validate(new StringReader(content));
+        return validate(new StringReader(content), resourceLocation);
     }
 
-    public List<ValidationResult> validate(Reader content)
+    public List<ValidationResult> validate(InputStream content, String resourceLocation)
+    {
+        return validate(new InputStreamReader(content), resourceLocation);
+    }
+
+    public List<ValidationResult> validate(Reader content, String resourceLocation)
     {
         long startTime = currentTimeMillis();
 
@@ -84,7 +92,7 @@ public class YamlValidationService
             Node root = yamlParser.compose(content);
             if (root != null && root.getNodeId() == mapping)
             {
-                validate((MappingNode) root);
+                validate((MappingNode) root, resourceLocation);
             }
             else
             {
@@ -108,6 +116,18 @@ public class YamlValidationService
         }
 
         return errorMessage;
+    }
+
+    @Deprecated
+    public List<ValidationResult> validate(Reader content)
+    {
+        return validate(content, new File("").getPath());
+    }
+
+    @Deprecated
+    public List<ValidationResult> validate(InputStream content)
+    {
+        return validate(new InputStreamReader(content));
     }
 
     protected List<ValidationResult> preValidation(MappingNode root)

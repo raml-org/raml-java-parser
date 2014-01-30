@@ -52,14 +52,15 @@ public class TagResolverTestCase extends AbstractRamlTestCase
     @Test
     public void include()
     {
-        Raml raml = parseRaml(RAML);
+        RamlDocumentBuilder builder = new RamlDocumentBuilder(new DefaultResourceLoader(), new CustomTagResolver());
+        Raml raml = parseRaml(RAML, builder);
         assertThat(raml.getResources().get("/file").getAction(PUT).getBody().get("application/json").getSchema(), containsString("file-json"));
     }
 
     @Test
     public void validate()
     {
-        List<ValidationResult> validationResults = RamlValidationService.createDefault(new DefaultResourceLoader(), new CustomTagResolver()).validate(getResourceAsString(RAML));
+        List<ValidationResult> validationResults = RamlValidationService.createDefault(new DefaultResourceLoader(), new CustomTagResolver()).validate(getResourceAsString(RAML), RAML);
         assertThat(validationResults.size(), is(0));
     }
 
@@ -77,6 +78,18 @@ public class TagResolverTestCase extends AbstractRamlTestCase
         public Node resolve(Node valueNode, ResourceLoader resourceLoader, NodeHandler nodeHandler)
         {
             return new ScalarNode(Tag.STR, "custom tag resolved", valueNode.getStartMark(), valueNode.getEndMark(), ((ScalarNode) valueNode).getStyle());
+        }
+
+        @Override
+        public void beforeProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+        {
+            //do nothing
+        }
+
+        @Override
+        public void afterProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+        {
+            //do nothing
         }
     }
 }

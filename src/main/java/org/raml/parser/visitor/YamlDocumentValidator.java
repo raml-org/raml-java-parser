@@ -17,17 +17,12 @@ package org.raml.parser.visitor;
 
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
-import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
-import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.raml.parser.visitor.TupleType.KEY;
 import static org.raml.parser.visitor.TupleType.VALUE;
-import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
@@ -37,6 +32,7 @@ import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.SequenceRule;
 import org.raml.parser.rule.TupleRule;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.ContextPath;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -49,9 +45,9 @@ public class YamlDocumentValidator implements YamlValidator
 
     private Class<?> documentClass;
     private Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
-    private Deque<IncludeInfo> includeContext = new ArrayDeque<IncludeInfo>();
     private List<ValidationResult> messages = new ArrayList<ValidationResult>();
     private NodeRuleFactory nodeRuleFactory;
+    private ContextPath contextPath;
 
 
     protected YamlDocumentValidator(Class<?> documentClass)
@@ -129,7 +125,7 @@ public class YamlDocumentValidator implements YamlValidator
     {
         for (ValidationResult validationResult : result)
         {
-            validationResult.addIncludeContext(includeContext);
+            validationResult.setIncludeContext(contextPath);
             messages.add(validationResult);
         }
     }
@@ -212,24 +208,11 @@ public class YamlDocumentValidator implements YamlValidator
     @Override
     public void onCustomTagStart(Tag tag, Node originalValueNode, Node node)
     {
-        if (INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar)
-        {
-            includeContext.push(new IncludeInfo((ScalarNode) originalValueNode));
-        }
-        else if (tag.startsWith(INCLUDE_APPLIED_TAG))
-        {
-            includeContext.push(new IncludeInfo(tag));
-        }
     }
 
     @Override
     public void onCustomTagEnd(Tag tag, Node originalValueNode, Node node)
     {
-        if ((INCLUDE_TAG.equals(tag) && originalValueNode.getNodeId() == scalar) ||
-            tag.startsWith(INCLUDE_APPLIED_TAG))
-        {
-            includeContext.pop();
-        }
     }
 
     @Override
@@ -250,5 +233,17 @@ public class YamlDocumentValidator implements YamlValidator
     public List<ValidationResult> getMessages()
     {
         return messages;
+    }
+
+    @Override
+    public void setContextPath(ContextPath contextPath)
+    {
+        this.contextPath = contextPath;
+    }
+
+    @Override
+    public ContextPath getContextPath()
+    {
+        return contextPath;
     }
 }

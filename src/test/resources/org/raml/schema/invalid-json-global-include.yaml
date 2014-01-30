@@ -1,7 +1,7 @@
 #%RAML 0.8
 title: sample
 schemas:
-    - league: !include org/raml/schema/invalid.json
+    - league: !include invalid.json
 
 /resource:
     put:

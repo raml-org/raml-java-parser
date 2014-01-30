@@ -78,7 +78,7 @@ public class SalesEnablementTestCase extends AbstractRamlTestCase
         String emitted1 = YamlDocumentBuilder.dumpFromAst(builder1.getRootNode());
 
         RamlDocumentBuilder builder2 = new RamlDocumentBuilder();
-        Raml raml2 = builder2.build(emitted1);
+        Raml raml2 = builder2.build(emitted1, "");
 
         assertThat(raml2.getResources().get("/presentations").getAction(GET).getQueryParameters().size(),
                    is(raml1.getResources().get("/presentations").getAction(GET).getQueryParameters().size()));
@@ -88,7 +88,7 @@ public class SalesEnablementTestCase extends AbstractRamlTestCase
     public void validation() throws Exception
     {
         String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(ramlSource));
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml, "");
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 }

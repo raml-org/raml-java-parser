@@ -2,4 +2,4 @@
 ---
 title: empty include
 version: v0.2
-/collection: !include org/raml/parser/rules/empty.yaml
+/collection: !include empty.yaml

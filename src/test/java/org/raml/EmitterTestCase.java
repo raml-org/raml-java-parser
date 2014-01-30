@@ -67,7 +67,7 @@ public class EmitterTestCase extends AbstractRamlTestCase
     private Raml verifyDump(Raml source, String dump)
     {
         RamlDocumentBuilder verifier = new RamlDocumentBuilder();
-        Raml target = verifier.build(dump);
+        Raml target = verifier.build(dump, "");
 
         assertThat(target.getTitle(), is(source.getTitle()));
         assertThat(target.getVersion(), is(source.getVersion()));

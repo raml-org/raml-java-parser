@@ -15,6 +15,7 @@
  */
 package org.raml.parser.visitor;
 
+import static org.raml.parser.tagresolver.ContextPath.resolveAbsolutePath;
 import static org.raml.parser.tagresolver.IncludeResolver.SEPARATOR;
 
 import org.raml.parser.tagresolver.IncludeResolver;
@@ -43,9 +44,9 @@ public class IncludeInfo
         this(startMark.getLine(), startMark.getColumn(), endMark.getColumn(), includeName);
     }
 
-    public IncludeInfo(ScalarNode node)
+    public IncludeInfo(ScalarNode node, String parentPath)
     {
-        this(node.getStartMark(), node.getEndMark(), node.getValue());
+        this(node.getStartMark(), node.getEndMark(), resolveAbsolutePath(node.getValue(), parentPath));
     }
 
     public IncludeInfo(Tag tag)
@@ -55,6 +56,11 @@ public class IncludeInfo
         startColumn = popTrailingNumber(encodedInclude);
         line = popTrailingNumber(encodedInclude);
         includeName = encodedInclude.substring(IncludeResolver.INCLUDE_APPLIED_TAG.length());
+    }
+
+    public IncludeInfo(String name)
+    {
+        this.includeName = name;
     }
 
     private int popTrailingNumber(StringBuilder encodedInclude)

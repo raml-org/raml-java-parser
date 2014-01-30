@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.visitor.IncludeInfo;
 
 public class ValidationTestCase extends AbstractRamlTestCase
@@ -187,8 +188,8 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), is("Circular reference detected"));
         assertThat(validationResults.get(0).getLine() + 1, is(1));
-        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
-        assertThat(includeContext.size(), is(3));
+        ContextPath includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(4));
         IncludeInfo includeInfo = includeContext.pop();
         assertThat(includeInfo.getIncludeName(), containsString("circular1.raml"));
         assertThat(includeInfo.getLine() + 1, is(2));

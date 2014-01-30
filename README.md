@@ -21,17 +21,17 @@ of the RAML specification.
 
 ### Validation
 
-The validator allows you to check whether a RAML String is valid or not,
+The validator allows you to check whether a RAML resource is valid or not,
 and in the case is not valid it provides a List of validation results:
 
 ```java
-List<ValidationResult> results = RamlValidationService.createDefault().validate(ramlBuffer);
+List<ValidationResult> results = RamlValidationService.createDefault().validate(ramlLocation);
 ```
 
 ### Parsing
 
-The parser returns a Raml object and can be invoked using a String, an InputStream or a Reader:
+The parser returns a Raml object and can be invoked using a String with the RAML file location:
 
 ```java
-Raml raml = new RamlDocumentBuilder().build(ramlBuffer);
+Raml raml = new RamlDocumentBuilder().build(ramlLocation);
 ```

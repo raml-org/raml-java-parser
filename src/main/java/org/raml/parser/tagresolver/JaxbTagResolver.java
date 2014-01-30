@@ -69,4 +69,16 @@ public class JaxbTagResolver implements TagResolver
             throw new YAMLException(e);
         }
     }
+
+    @Override
+    public void beforeProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+    {
+        //do nothing
+    }
+
+    @Override
+    public void afterProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+    {
+        //do nothing
+    }
 }

@@ -13,28 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.parser.rules;
+package org.raml.parser.builder;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
-import java.util.List;
-
 import org.junit.Test;
-import org.raml.parser.builder.AbstractRamlTestCase;
-import org.raml.parser.rule.ValidationResult;
+import org.raml.model.Raml;
 
-public class ResourceTypeValidationTestCase extends AbstractRamlTestCase
+public class IncludeAbsoluteTestCase extends AbstractRamlTestCase
 {
 
     @Test
-    public void noParentResourceType() throws Exception
+    public void absoluteClasspath()
     {
-        String location = "org/raml/parser/rules/resource-type-invalid.yaml";
-        List<ValidationResult> errors = validateRaml(location);
-        assertThat(errors.size(), is(1));
-        assertThat(errors.get(0).getMessage(), containsString("resource type not defined: base"));
+        String location = "org/raml/include/include-main-absolute-classpath.yaml";
+        Raml raml = parseRaml(location);
+        assertThat(raml.getResource("/main/absolute").getDescription(), is("absolute"));
+        assertThat(raml.getResource("/main/absolute/relative").getDescription(), is("relative"));
+    }
+
+    @Test
+    public void absoluteClasspathValidation()
+    {
+        String location = "org/raml/include/include-main-absolute-classpath.yaml";
+        validateRamlNoErrors(location);
     }
 
 }

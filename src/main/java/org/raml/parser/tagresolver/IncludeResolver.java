@@ -26,15 +26,17 @@ import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.visitor.NodeHandler;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.Tag;
 
-public class IncludeResolver implements TagResolver
+public class IncludeResolver implements TagResolver, ContextPathAware
 {
 
     public static final Tag INCLUDE_TAG = new Tag("!include");
     public static final String SEPARATOR = "_";
     public static final String INCLUDE_APPLIED_TAG = "!include-applied" + SEPARATOR;
+    private ContextPath contextPath;
 
     @Override
     public boolean handles(Tag tag)
@@ -61,7 +63,7 @@ public class IncludeResolver implements TagResolver
                 return mockInclude(node);
             }
             ScalarNode scalarNode = (ScalarNode) node;
-            String resourceName = scalarNode.getValue();
+            String resourceName = contextPath.resolveAbsolutePath(scalarNode.getValue());
             inputStream = resourceLoader.fetchResource(resourceName);
 
             if (inputStream == null)
@@ -110,9 +112,44 @@ public class IncludeResolver implements TagResolver
         }
     }
 
+    @Override
+    public void beforeProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+    {
+        if (IncludeResolver.INCLUDE_TAG.equals(tag))
+        {
+            if (originalValueNode.getNodeId() != NodeId.scalar)
+            {
+                //invalid include
+                return;
+            }
+            contextPath.push((ScalarNode) originalValueNode);
+        }
+        else if (tag.startsWith(IncludeResolver.INCLUDE_APPLIED_TAG))
+        {
+            contextPath.push(tag);
+        }
+    }
+
+    @Override
+    public void afterProcessingResolvedNode(Tag tag, Node originalValueNode, Node resolvedNode)
+    {
+        contextPath.pop();
+    }
+
     private Node mockInclude(Node node)
     {
         return new ScalarNode(Tag.STR, "invalid", node.getStartMark(), node.getEndMark(), null);
+    }
+
+    public void setContextPath(ContextPath contextPath)
+    {
+        this.contextPath = contextPath;
+    }
+
+    @Override
+    public ContextPath getContextPath()
+    {
+        return contextPath;
     }
 
     public static class IncludeScalarNode extends ScalarNode

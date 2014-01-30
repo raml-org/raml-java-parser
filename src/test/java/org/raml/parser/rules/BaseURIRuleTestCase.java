@@ -24,12 +24,11 @@ import static org.raml.parser.rule.ValidationMessage.getRuleEmptyMessage;
 import java.util.List;
 
 import org.junit.Test;
+import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.BaseUriRule;
-import org.raml.parser.rule.ValidationMessage;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.RamlValidationService;
 
-public class BaseURIRuleTestCase
+public class BaseURIRuleTestCase extends AbstractRamlTestCase
 {
 
     @Test
@@ -37,7 +36,7 @@ public class BaseURIRuleTestCase
     {
         String raml = "#%RAML 0.8\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
                       + "baseUri:";
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        List<ValidationResult> errors = validateRaml(raml, "");
         assertFalse("Errors must not be empty", errors.isEmpty());
         assertThat(errors.get(0).getMessage(), is(getRuleEmptyMessage("baseUri")));
         assertThat(errors.get(1).getMessage(), is("The baseUri element is not a valid URI"));
@@ -47,7 +46,7 @@ public class BaseURIRuleTestCase
     public void testBaseURIOptional()
     {
         String raml = "#%RAML 0.8\n" + "---\n" + "version: v28.0\n" + "title: apiTitle";
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        List<ValidationResult> errors = validateRaml(raml, "");
         assertTrue("Errors must be empty", errors.isEmpty());
     }
 
@@ -56,7 +55,7 @@ public class BaseURIRuleTestCase
     {
         String raml = "#%RAML 0.8\n" + "---\n" + "version: v28.0\n" + "title: apiTitle\n"
                       + "baseUri: notavaliduri.com";
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        List<ValidationResult> errors = validateRaml(raml, "");
         assertFalse("Errors must not be empty", errors.isEmpty());
         assertThat(errors.get(0).getMessage(), is(BaseUriRule.URI_NOT_VALID_MESSAGE));
     }

@@ -1,6 +1,6 @@
 #%RAML 0.8
 ---
-title: !include org/raml/parser/rules/title.txt
+title: !include title.txt
 version: v0.2
 baseUri: https://localhost:9091/api/{version}/{company}
 baseUriParameters:
@@ -34,5 +34,5 @@ documentation:
                 200:
                     body:
                         application/json:
-                            example: !include org/raml/parser/rules/element.json
-        /subcollection: !include org/raml/parser/rules/included.yaml
+                            example: !include element.json
+        /subcollection: !include included.yaml

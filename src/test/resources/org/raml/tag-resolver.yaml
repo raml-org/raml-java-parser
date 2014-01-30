@@ -5,7 +5,7 @@ version: v1
 baseUri: https://api.sample.com/
 
 schemas:
-    - file-json: !include org/raml/parser/rules/element.json
+    - file-json: !include parser/rules/element.json
 
 /media:
     put:

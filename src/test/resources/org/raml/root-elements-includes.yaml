@@ -1,8 +1,8 @@
 #%RAML 0.8
 ---
-title: !include org/raml/include/include-non-yaml-single-line.txt
+title: !include include/include-non-yaml-single-line.txt
 version: v1
 baseUri: https://sample.com/api
-documentation: !include org/raml/include/include-documentation.yaml
+documentation: !include include/include-documentation.yaml
 /media:
     get: !!null

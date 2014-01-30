@@ -22,27 +22,26 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.visitor.RamlValidationService;
 
-public class DocumentationTestCase
+public class DocumentationTestCase extends AbstractRamlTestCase
 {
 
     @Test
     public void documentation() throws Exception
     {
-        String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation.yaml"));
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        String location = "org/raml/parser/rules/documentation.yaml";
+        List<ValidationResult> errors = validateRaml(location);
         assertTrue("Errors must be empty: " + errors, errors.isEmpty());
     }
 
     @Test
     public void missingContent() throws Exception
     {
-        String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation-nocontent.yaml"));
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        String location = "org/raml/parser/rules/documentation-nocontent.yaml";
+        List<ValidationResult> errors = validateRaml(location);
         assertThat(1, is(errors.size()));
         assertThat(errors.get(0).getMessage(), containsString("content is missing"));
     }
@@ -50,8 +49,8 @@ public class DocumentationTestCase
     @Test
     public void missingTitle() throws Exception
     {
-        String raml = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("org/raml/parser/rules/documentation-notitle.yaml"));
-        List<ValidationResult> errors = RamlValidationService.createDefault().validate(raml);
+        String location = "org/raml/parser/rules/documentation-notitle.yaml";
+        List<ValidationResult> errors = validateRaml(location);
         assertThat(1, is(errors.size()));
         assertThat(errors.get(0).getMessage(), containsString("title is missing"));
     }

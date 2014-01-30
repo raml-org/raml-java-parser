@@ -34,24 +34,29 @@ public class AbstractRamlTestCase
 
     protected static final Logger logger = LoggerFactory.getLogger(AbstractRamlTestCase.class);
 
-    protected static Raml parseRaml(String resource)
+    protected static Raml parseRaml(String resourceLocation)
     {
-        return new RamlDocumentBuilder().build(getInputStream(resource));
+        return new RamlDocumentBuilder().build(getInputStream(resourceLocation), resourceLocation);
     }
 
-    protected static Raml parseRaml(String resource, RamlDocumentBuilder builder)
+    protected static Raml parseRaml(String resourceLocation, RamlDocumentBuilder builder)
     {
-        return builder.build(getInputStream(resource));
+        return builder.build(getInputStream(resourceLocation), resourceLocation);
     }
 
-    protected static List<ValidationResult> validateRaml(String resource)
+    protected static List<ValidationResult> validateRaml(String resourceLocation)
     {
-        return RamlValidationService.createDefault().validate(getResourceAsString(resource));
+        return RamlValidationService.createDefault().validate(resourceLocation);
     }
 
-    protected static void validateRamlNoErrors(String resource)
+    protected static List<ValidationResult> validateRaml(String raml, String resourceLocation)
     {
-        List<ValidationResult> validationResults = validateRaml(resource);
+        return RamlValidationService.createDefault().validate(raml, resourceLocation);
+    }
+
+    protected static void validateRamlNoErrors(String resourceLocation)
+    {
+        List<ValidationResult> validationResults = validateRaml(resourceLocation);
         if (!validationResults.isEmpty())
         {
             StringBuilder msg = new StringBuilder("Unexpected errors:\n ");
@@ -64,11 +69,11 @@ public class AbstractRamlTestCase
         assertTrue("Errors must be empty", validationResults.isEmpty());
     }
 
-    public static String getResourceAsString(String resource)
+    public static String getResourceAsString(String resourceLocation)
     {
         try
         {
-            return IOUtils.toString(getInputStream(resource));
+            return IOUtils.toString(getInputStream(resourceLocation));
         }
         catch (IOException e)
         {
@@ -76,8 +81,8 @@ public class AbstractRamlTestCase
         }
     }
 
-    private static InputStream getInputStream(String resource)
+    private static InputStream getInputStream(String resourceLocation)
     {
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceLocation);
     }
 }

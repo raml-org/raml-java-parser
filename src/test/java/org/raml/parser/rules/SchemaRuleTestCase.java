@@ -20,13 +20,13 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.raml.parser.rule.ValidationResult.UNKNOWN;
 
-import java.util.Deque;
 import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.visitor.IncludeInfo;
 
 public class SchemaRuleTestCase extends AbstractRamlTestCase
@@ -78,12 +78,12 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getLine() + 1, is(4));
         assertThat(validationResults.get(0).getStartColumn(), is(UNKNOWN));
         assertThat(validationResults.get(0).getEndColumn(), is(UNKNOWN));
-        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
-        assertThat(includeContext.size(), is(1));
+        ContextPath includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(2));
         IncludeInfo includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(7));
         assertThat(includeInfo.getStartColumn() + 1, is(25));
-        assertThat(includeInfo.getEndColumn() + 1, is(62));
+        assertThat(includeInfo.getEndColumn() + 1, is(46));
         assertThat(includeInfo.getIncludeName(), is(resource));
     }
 
@@ -107,12 +107,12 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getLine() + 1, is(4));
         assertThat(validationResults.get(0).getStartColumn(), is(UNKNOWN));
         assertThat(validationResults.get(0).getEndColumn(), is(UNKNOWN));
-        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
-        assertThat(includeContext.size(), is(1));
+        ContextPath includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(2));
         IncludeInfo includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(4));
         assertThat(includeInfo.getStartColumn() + 1, is(15));
-        assertThat(includeInfo.getEndColumn() + 1, is(52));
+        assertThat(includeInfo.getEndColumn() + 1, is(36));
         assertThat(includeInfo.getIncludeName(), is(resource));
     }
 
@@ -128,8 +128,8 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getLine() + 1, is(5));
         assertThat(validationResults.get(0).getStartColumn(), is(UNKNOWN));
         assertThat(validationResults.get(0).getEndColumn(), is(UNKNOWN));
-        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
-        assertThat(includeContext.size(), is(1));
+        ContextPath includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(2));
         IncludeInfo includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(4));
         assertThat(includeInfo.getStartColumn() + 1, is(15));
@@ -178,12 +178,12 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(0).getLine() + 1, is(8));
         assertThat(validationResults.get(0).getStartColumn(), is(UNKNOWN));
         assertThat(validationResults.get(0).getEndColumn(), is(UNKNOWN));
-        Deque<IncludeInfo> includeContext = validationResults.get(0).getIncludeContext();
-        assertThat(includeContext.size(), is(1));
+        ContextPath includeContext = validationResults.get(0).getIncludeContext();
+        assertThat(includeContext.size(), is(2));
         IncludeInfo includeInfo = includeContext.pop();
         assertThat(includeInfo.getLine() + 1, is(7));
         assertThat(includeInfo.getStartColumn() + 1, is(25));
-        assertThat(includeInfo.getEndColumn() + 1, is(61));
+        assertThat(includeInfo.getEndColumn() + 1, is(45));
         assertThat(includeInfo.getIncludeName(), is(resource));
     }
 }

@@ -4,4 +4,4 @@ title: sample
     put:
         body:
             application/json:
-                schema: !include org/raml/schema/invalid.json
+                schema: !include invalid.json

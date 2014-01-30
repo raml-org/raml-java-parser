@@ -2,4 +2,4 @@
 ---
 title: Sample API
 /simple:
-  get: !include org/raml/include/get.yaml
+  get: !include get.yaml

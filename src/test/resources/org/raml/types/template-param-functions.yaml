@@ -15,7 +15,7 @@ resourceTypes:
             singular <<resourcePathName | !singularize>>,
             plural <<resourcePathName | !singularize | !pluralize>>
     - includeType:
-        description: !include org/raml/types/<<resourcePathName>>-description.txt
+        description: !include <<resourcePathName>>-description.txt
     - camelize:
         description: >-
             single <<single | !camelize >>,

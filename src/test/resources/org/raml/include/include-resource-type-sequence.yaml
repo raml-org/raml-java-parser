@@ -2,7 +2,7 @@
 ---
 title: Example API
 version: v1
-resourceTypes: !include org/raml/include/resource-type-sequence.yaml
+resourceTypes: !include resource-type-sequence.yaml
 
 /simple:
     type: simple

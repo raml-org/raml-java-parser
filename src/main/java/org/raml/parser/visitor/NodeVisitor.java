@@ -25,7 +25,8 @@ import java.util.Deque;
 import java.util.List;
 
 import org.raml.parser.loader.ResourceLoader;
-import org.raml.parser.tagresolver.IncludeResolver;
+import org.raml.parser.tagresolver.ContextPath;
+import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.TagResolver;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -44,7 +45,8 @@ public class NodeVisitor
     private ResourceLoader resourceLoader;
     private TagResolver[] tagResolvers;
     private Deque<String> loopDetector = new ArrayDeque<String>();
-    private Deque<String> includeStack = new ArrayDeque<String>();
+    private ContextPath contextPath = new ContextPath();
+
 
     public NodeVisitor(NodeHandler nodeHandler, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
@@ -52,7 +54,23 @@ public class NodeVisitor
         this.nodeHandler = nodeHandler;
         this.resourceLoader = resourceLoader;
         this.tagResolvers = tagResolvers;
-        this.includeStack.push("root");
+        initializeContextPathAware(tagResolvers);
+
+    }
+
+    private void initializeContextPathAware(TagResolver[] tagResolvers)
+    {
+        for (TagResolver tagResolver : tagResolvers)
+        {
+            if (tagResolver instanceof ContextPathAware)
+            {
+                ((ContextPathAware) tagResolver).setContextPath(contextPath);
+            }
+        }
+        if (nodeHandler instanceof ContextPathAware)
+        {
+            ((ContextPathAware) nodeHandler).setContextPath(contextPath);
+        }
     }
 
     private void visitMappingNode(MappingNode mappingNode, TupleType tupleType)
@@ -76,7 +94,7 @@ public class NodeVisitor
 
     /**
      * @return true if two mapping nodes in the same file
-     * have the same start mark index
+     *         have the same start mark index
      */
     private boolean checkLoop(Node node)
     {
@@ -85,7 +103,7 @@ public class NodeVisitor
             return false;
         }
 
-        String index = includeStack.peek() + node.getStartMark().getIndex();
+        String index = contextPath.peek().getIncludeName() + node.getStartMark().getIndex();
         if (loopDetector.contains(index))
         {
             return true;
@@ -117,7 +135,8 @@ public class NodeVisitor
             Node originalValueNode = nodeTuple.getValueNode();
 
             Tag tag = originalValueNode.getTag();
-            Node resolvedNode = resolveTag(tag, originalValueNode);
+            TagResolver currentTagResolver = getTagResolver(tag);
+            Node resolvedNode = resolveTag(tag, currentTagResolver, originalValueNode);
             if (originalValueNode != resolvedNode)
             {
                 nodeTuple = new NodeTuple(keyNode, resolvedNode);
@@ -129,16 +148,15 @@ public class NodeVisitor
                 continue;
             }
             visit(keyNode, KEY);
-            visitResolvedNode(originalValueNode, resolvedNode);
+            visitResolvedNode(originalValueNode, resolvedNode, currentTagResolver);
             nodeHandler.onTupleEnd(nodeTuple);
 
         }
         mappingNode.setValue(updatedTuples);
     }
 
-    private Node resolveTag(Tag tag, Node valueNode)
+    private Node resolveTag(Tag tag, TagResolver tagResolver, Node valueNode)
     {
-        TagResolver tagResolver = getTagResolver(tag);
         if (tagResolver != null)
         {
             valueNode = tagResolver.resolve(valueNode, resourceLoader, nodeHandler);
@@ -150,50 +168,20 @@ public class NodeVisitor
         return valueNode;
     }
 
-    private void visitResolvedNode(Node originalValueNode, Node resolvedNode)
+    private void visitResolvedNode(Node originalValueNode, Node resolvedNode, TagResolver tagResolver)
     {
         Tag tag = originalValueNode.getTag();
-        boolean tagResolved = !isStandardTag(tag);
+        boolean tagResolved = tagResolver != null;
         if (tagResolved)
         {
+            tagResolver.beforeProcessingResolvedNode(tag, originalValueNode, resolvedNode);
             nodeHandler.onCustomTagStart(tag, originalValueNode, resolvedNode);
-            pushIncludeIfNeeded(tag, originalValueNode);
         }
         visit(resolvedNode, VALUE);
         if (tagResolved)
         {
             nodeHandler.onCustomTagEnd(tag, originalValueNode, resolvedNode);
-            popIncludeIfNeeded(tag);
-        }
-    }
-
-    private void popIncludeIfNeeded(Tag tag)
-    {
-        if (IncludeResolver.INCLUDE_TAG.equals(tag) || tag.startsWith(IncludeResolver.INCLUDE_APPLIED_TAG))
-        {
-            includeStack.pop();
-        }
-    }
-
-    private void pushIncludeIfNeeded(Tag tag, Node node)
-    {
-        String includeName = null;
-        if (IncludeResolver.INCLUDE_TAG.equals(tag))
-        {
-            if (node.getNodeId() != NodeId.scalar)
-            {
-                //invalid include
-                return;
-            }
-            includeName = ((ScalarNode) node).getValue();
-        }
-        else if (tag.startsWith(IncludeResolver.INCLUDE_APPLIED_TAG))
-        {
-            includeName =  new IncludeInfo(tag).getIncludeName();
-        }
-        if (includeName != null)
-        {
-            includeStack.push(includeName);
+            tagResolver.afterProcessingResolvedNode(tag, originalValueNode, resolvedNode);
         }
     }
 
@@ -214,6 +202,10 @@ public class NodeVisitor
         boolean keepOnVisitingDocument = nodeHandler.onDocumentStart(node);
         if (node != null && keepOnVisitingDocument)
         {
+            if (contextPath.size() == 0)
+            {
+                contextPath.pushRoot("");
+            }
             doVisitMappingNode(node);
         }
         nodeHandler.onDocumentEnd(node);
@@ -241,17 +233,18 @@ public class NodeVisitor
         if (tupleType == VALUE && keepVisitingElements)
         {
             List<Node> value = node.getValue();
-            for (int i=0; i<value.size(); i++)
+            for (int i = 0; i < value.size(); i++)
             {
                 Node originalNode = value.get(i);
-                Node resolvedNode = resolveTag(originalNode.getTag(), originalNode);
+                TagResolver currentTagResolver = getTagResolver(originalNode.getTag());
+                Node resolvedNode = resolveTag(originalNode.getTag(), currentTagResolver, originalNode);
                 if (originalNode != resolvedNode)
                 {
                     node.getValue().remove(i);
                     node.getValue().add(i, resolvedNode);
                 }
                 nodeHandler.onSequenceElementStart(resolvedNode);
-                visitResolvedNode(originalNode, resolvedNode);
+                visitResolvedNode(originalNode, resolvedNode, currentTagResolver);
                 nodeHandler.onSequenceElementEnd(resolvedNode);
             }
         }

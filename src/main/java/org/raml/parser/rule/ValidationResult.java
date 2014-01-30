@@ -15,11 +15,10 @@
  */
 package org.raml.parser.rule;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
+import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.visitor.IncludeInfo;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.nodes.Node;
@@ -39,7 +38,8 @@ public class ValidationResult
     private int line;
     private int startColumn;
     private int endColumn;
-    private Deque<IncludeInfo> includeContext = new ArrayDeque<IncludeInfo>();
+    private ContextPath contextPath;
+    private IncludeInfo extraIncludeInfo;
 
     private ValidationResult(Level level, String message, int line, int startColumn, int endColumn)
     {
@@ -82,26 +82,31 @@ public class ValidationResult
 
     public String getIncludeName()
     {
-        if (includeContext.isEmpty())
+        if (contextPath.size() > 1)
         {
-            return null;
+            return contextPath.peek().getIncludeName();
         }
-        return includeContext.peek().getIncludeName();
+        return null;
     }
 
-    public Deque<IncludeInfo> getIncludeContext()
+    public ContextPath getIncludeContext()
     {
-        return includeContext;
+        return contextPath;
     }
 
-    public void setIncludeContext(Deque<IncludeInfo> includeContext)
+    public void setIncludeContext(ContextPath contextPath)
     {
-        this.includeContext = new ArrayDeque<IncludeInfo>(includeContext);
+        this.contextPath = new ContextPath(contextPath);
+        if (extraIncludeInfo != null)
+        {
+            this.contextPath.push(extraIncludeInfo);
+            extraIncludeInfo = null;
+        }
     }
 
-    public void addIncludeContext(Deque<IncludeInfo> includeContext)
+    public void setExtraIncludeInfo(IncludeInfo extraIncludeInfo)
     {
-        this.includeContext.addAll(includeContext);
+        this.extraIncludeInfo = extraIncludeInfo;
     }
 
     public static boolean areValid(List<ValidationResult> validationResults)
