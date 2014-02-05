@@ -15,9 +15,15 @@
  */
 package org.raml.model;
 
+import static org.raml.model.ParamType.STRING;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.raml.model.parameter.AbstractParam;
 import org.raml.model.parameter.FormParameter;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
@@ -105,5 +111,199 @@ public class MimeType
         return "MimeType{" +
                "type='" + type + '\'' +
                '}';
+    }
+    
+    public Collection<? extends Object> getAllChildren(){
+    	if(this.formParameters==null||this.formParameters.isEmpty())
+    		return null;
+    	
+    	ArrayList<NamedFormParameter> result = new ArrayList<NamedFormParameter>();
+    	for(Map.Entry<String, List<FormParameter>> entry : this.formParameters.entrySet()){
+    		List<FormParameter> lst = entry.getValue();
+    		String name = entry.getKey();
+    		for(FormParameter fp : lst ){
+    			result.add( new NamedFormParameter(name, fp));
+    		}
+    	}
+    	return result;
+    }
+    
+    public static final class NamedFormParameter extends AbstractParam{
+    	
+    	public NamedFormParameter(String name, FormParameter original) {
+			super();
+			this.name = name;
+			this.original = original;
+		}
+
+		String name;
+    	
+    	FormParameter original;
+    	
+    	public String toString(){
+    		return name+": " + original.getType();
+    	}
+    	
+    	public void setDisplayName(String displayName)
+        {
+            this.original.setDisplayName(displayName);
+        }
+
+        public void setDescription(String description)
+        {
+            this.original.setDescription(description);
+        }
+
+        public void setType(ParamType type)
+        {
+            this.original.setType(type);
+        }
+
+        public void setRequired(boolean required)
+        {
+            this.original.setRequired(required);
+        }
+
+        public String getDisplayName()
+        {
+            return original.getDisplayName();
+        }
+
+        public String getDescription()
+        {
+            return original.getDescription();
+        }
+
+        public ParamType getType()
+        {
+            return original.getType();
+        }
+
+        public boolean isRequired()
+        {
+            return original.isRequired();
+        }
+
+        public boolean isRepeat()
+        {
+            return original.isRepeat();
+        }
+
+        public void setRepeat(boolean repeat)
+        {
+            this.original.setRepeat(repeat);
+        }
+
+        public String getDefaultValue()
+        {
+            return original.getDefaultValue();
+        }
+
+        public String getExample()
+        {
+            return original.getExample();
+        }
+
+        public List<String> getEnumeration()
+        {
+            return original.getEnumeration();
+        }
+
+        public void setEnumeration(List<String> enumeration)
+        {
+            this.original.setEnumeration(enumeration);
+        }
+
+        public String getPattern()
+        {
+            return original.getPattern();
+        }
+
+        public void setPattern(String pattern)
+        {
+            this.original.setPattern(pattern);
+        }
+
+        public Integer getMinLength()
+        {
+            return original.getMinLength();
+        }
+
+        public void setMinLength(Integer minLength)
+        {
+            this.original.setMinLength(minLength);
+        }
+
+        public Integer getMaxLength()
+        {
+            return original.getMaxLength();
+        }
+
+        public void setMaxLength(Integer maxLength)
+        {
+            this.original.setMaxLength(maxLength);
+        }
+
+        public BigDecimal getMinimum()
+        {
+            return original.getMinimum();
+        }
+
+        public void setMinimum(BigDecimal minimum)
+        {
+            this.original.setMinimum(minimum);
+        }
+
+        public BigDecimal getMaximum()
+        {
+            return original.getMaximum();
+        }
+
+        public void setMaximum(BigDecimal maximum)
+        {
+            this.original.setMaximum(maximum);
+        }
+
+        public void setDefaultValue(String defaultValue)
+        {
+            this.original.setDefaultValue(defaultValue);
+        }
+
+        public void setExample(String example)
+        {
+            this.original.setExample(example);
+        }
+
+        public boolean validate(String value)
+        {
+            return original.getType().validate(this, value);
+        }
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			NamedFormParameter other = (NamedFormParameter) obj;
+			if (name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!name.equals(other.name))
+				return false;
+			return true;
+		}
+    	
+    	
     }
 }
