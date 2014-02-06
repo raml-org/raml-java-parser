@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class TemplatesExtraHandler implements ExtraHandler {
 
@@ -27,6 +28,7 @@ public class TemplatesExtraHandler implements ExtraHandler {
 		ArrayList<TemplateUse> str = new ArrayList<TemplateUse>();
 		for (Node n : value) {
 			if (n instanceof ScalarNode) {
+				
 				str.add(new TemplateUse(((ScalarNode) n).getValue()));
 			}
 			if (n instanceof MappingNode) {
@@ -50,9 +52,14 @@ public class TemplatesExtraHandler implements ExtraHandler {
 							Node valueNode2 = ma.getValueNode();
 							if (keyNode2 instanceof ScalarNode
 									&& valueNode2 instanceof ScalarNode) {
+								ScalarNode scalarNode = (ScalarNode) valueNode2;
+								String value4 = scalarNode.getValue();
+								if (scalarNode.getTag().equals(new Tag("!include"))){
+									value4="!include "+value4;
+								}								
 								t.getParameters().put(
 										((ScalarNode) keyNode2).getValue(),
-										((ScalarNode) valueNode2).getValue());
+										value4);
 							} else {
 								throw new IllegalStateException();
 							}
