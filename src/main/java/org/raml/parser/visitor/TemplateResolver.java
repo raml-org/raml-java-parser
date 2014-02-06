@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeId;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
@@ -203,6 +204,19 @@ public class TemplateResolver
         return new ResourceTemplateMerger(templateValidations, resourceNode, relativeUri, fullUri).merge();
     }
 
+
+    private static class TemplateReferences
+    {
+        private Node typeReference = null;
+        private Map<String, SequenceNode> traitsReference = new HashMap<String, SequenceNode>();
+        private Map<String, Node> actionNodes;
+
+        public TemplateReferences(Map<String, Node> globalActionNodes)
+        {
+            actionNodes = new HashMap<String, Node>(globalActionNodes);
+        }
+    }
+
     private class ResourceTemplateMerger
     {
 
@@ -231,60 +245,10 @@ public class TemplateResolver
 
         private boolean mergeTemplatesIfNeeded(MappingNode resourceNode, Map<String, Node> globalActionNodes)
         {
-            Node typeReference = null;
-            Map<String, SequenceNode> traitsReference = new HashMap<String, SequenceNode>();
-            HashMap<String, Node> actionNodes = new HashMap<String, Node>(globalActionNodes);
-
-            for (int i = 0; i < resourceNode.getValue().size(); i++)
-            {
-                NodeTuple resourceTuple = resourceNode.getValue().get(i);
-                if (resourceTuple.getKeyNode().getNodeId() != scalar)
-                {
-                    break; //invalid key
-                }
-                String key = ((ScalarNode) resourceTuple.getKeyNode()).getValue();
-                if (key.equals(RESOURCE_TYPE_USE_KEY))
-                {
-                    typeReference = cloneNode(resourceTuple.getValueNode(), new HashMap<String, String>());
-                    removeParametersFromTemplateCall(resourceTuple);
-                }
-                else if (key.equals(TRAIT_USE_KEY))
-                {
-                    SequenceNode sequence = cloneSequenceNode((SequenceNode) resourceTuple.getValueNode(), new HashMap<String, String>());
-                    traitsReference.put(ALL_ACTIONS, sequence);
-                    removeParametersFromTraitsCall(resourceTuple);
-                }
-                else if (isAction(key))
-                {
-                    Node actionNode = resourceTuple.getValueNode();
-                    if (actionNode.getTag().equals(Tag.NULL))
-                    {
-                        actionNode = setTupleValueToEmptyMappingNode(resourceTuple);
-                    }
-                    else if (actionNode.getTag().equals(INCLUDE_TAG))
-                    {
-                        actionNode = includeResolver.resolve(actionNode, resourceLoader, nodeNandler);
-                        resourceNode.getValue().remove(i);
-                        resourceNode.getValue().add(i, new NodeTuple(resourceTuple.getKeyNode(), actionNode));
-                    }
-                    if (actionNode.getNodeId() != mapping)
-                    {
-                        break;
-                    }
-                    actionNodes.put(normalizeKey(key), actionNode);
-                    for (NodeTuple actionTuple : ((MappingNode) actionNode).getValue())
-                    {
-                        String actionTupleKey = ((ScalarNode) actionTuple.getKeyNode()).getValue();
-                        if (actionTupleKey.equals(TRAIT_USE_KEY))
-                        {
-                            SequenceNode sequence = cloneSequenceNode((SequenceNode) actionTuple.getValueNode(), new HashMap<String, String>());
-                            traitsReference.put(normalizeKey(key), sequence);
-                            removeParametersFromTraitsCall(actionTuple);
-                        }
-                    }
-                }
-
-            }
+            TemplateReferences references = extractTemplateReferences(resourceNode, globalActionNodes);
+            Node typeReference = references.typeReference;
+            Map<String, SequenceNode> traitsReference = references.traitsReference;
+            Map<String, Node> actionNodes = references.actionNodes;
 
             if (!traitsReference.isEmpty())
             {
@@ -337,6 +301,74 @@ public class TemplateResolver
             }
 
             return !traitsReference.isEmpty() || typeReference != null;
+        }
+
+        private TemplateReferences extractTemplateReferences(MappingNode resourceNode, Map<String, Node> globalActionNodes)
+        {
+            TemplateReferences templateReferences = new TemplateReferences(globalActionNodes);
+
+            for (int i = 0; i < resourceNode.getValue().size(); i++)
+            {
+                NodeTuple resourceTuple = resourceNode.getValue().get(i);
+                if (resourceTuple.getKeyNode().getNodeId() != scalar)
+                {
+                    break; //invalid key
+                }
+                String key = ((ScalarNode) resourceTuple.getKeyNode()).getValue();
+                if (key.equals(RESOURCE_TYPE_USE_KEY))
+                {
+                    templateReferences.typeReference = cloneNode(resourceTuple.getValueNode(), new HashMap<String, String>());
+                    removeParametersFromTemplateCall(resourceTuple);
+                }
+                else if (key.equals(TRAIT_USE_KEY))
+                {
+                    SequenceNode sequence = cloneSequenceNode((SequenceNode) resourceTuple.getValueNode(), new HashMap<String, String>());
+                    templateReferences.traitsReference.put(ALL_ACTIONS, sequence);
+                    removeParametersFromTraitsCall(resourceTuple);
+                }
+                else if (isAction(key))
+                {
+                    Node actionNode = resourceTuple.getValueNode();
+                    if (actionNode.getTag().equals(Tag.NULL))
+                    {
+                        actionNode = setTupleValueToEmptyMappingNode(resourceTuple);
+                    }
+                    else if (actionNode.getTag().equals(INCLUDE_TAG))
+                    {
+                        actionNode = includeResolver.resolve(actionNode, resourceLoader, nodeNandler);
+                        resourceNode.getValue().remove(i);
+                        resourceNode.getValue().add(i, new NodeTuple(resourceTuple.getKeyNode(), actionNode));
+                    }
+                    if (actionNode.getNodeId() != mapping)
+                    {
+                        break;
+                    }
+                    templateReferences.actionNodes.put(normalizeKey(key), actionNode);
+                    for (NodeTuple actionTuple : ((MappingNode) actionNode).getValue())
+                    {
+                        String actionTupleKey = ((ScalarNode) actionTuple.getKeyNode()).getValue();
+                        if (actionTupleKey.equals(TRAIT_USE_KEY) && expect(actionTuple.getValueNode(), sequence))
+                        {
+                            SequenceNode sequence = cloneSequenceNode((SequenceNode) actionTuple.getValueNode(), new HashMap<String, String>());
+                            templateReferences.traitsReference.put(normalizeKey(key), sequence);
+                            removeParametersFromTraitsCall(actionTuple);
+                        }
+                    }
+                }
+
+            }
+
+            return templateReferences;
+        }
+
+        private boolean expect(Node node, NodeId nodeId)
+        {
+            if (node.getNodeId() != nodeId)
+            {
+                addError(nodeId + " node expected", node);
+                return false;
+            }
+            return true;
         }
 
         private void removeParametersFromTraitsCall(NodeTuple traitsNodeTuple)

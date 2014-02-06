@@ -67,6 +67,14 @@ public class ValidationTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void missingTemplateReference()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/missing-template-reference.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("sequence node expected"));
+    }
+
+    @Test
     public void mapExpected()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/validation/map-expected.yaml");
