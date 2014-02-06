@@ -31,6 +31,9 @@ public class SchemasEmitter implements IRAMLFieldDumper {
 				dump.append("\n");
 				if (emitter.writer != null) {
 					String schemaContent = rp.getSchemaContent(q);
+					if (schemaContent==null){
+						schemaContent = rp.getSchemaContent(Character.toLowerCase(q.charAt(0))+q.substring(1));
+					}
 					emitter.writer.write(str,schemaContent);
 				}
 			}			

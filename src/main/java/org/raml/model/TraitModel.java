@@ -1,6 +1,9 @@
 package org.raml.model;
 
+import java.util.HashSet;
+
 import org.raml.parser.annotation.Scalar;
+
 
 public class TraitModel extends Action{
 
@@ -13,6 +16,8 @@ public class TraitModel extends Action{
 	public String getUsage() {
 		return usage;
 	}
+	
+	
 
 	public void setUsage(String usage) {
 		this.usage = usage;
