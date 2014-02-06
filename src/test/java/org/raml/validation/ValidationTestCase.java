@@ -70,8 +70,9 @@ public class ValidationTestCase extends AbstractRamlTestCase
     public void missingTemplateReference()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/validation/missing-template-reference.yaml");
-        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.size(), is(2));
         assertThat(validationResults.get(0).getMessage(), is("sequence node expected"));
+        assertThat(validationResults.get(1).getMessage(), is("type can not be empty"));
     }
 
     @Test

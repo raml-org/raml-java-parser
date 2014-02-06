@@ -459,6 +459,10 @@ public class TemplateResolver
         private MappingNode cloneTemplate(Node reference, TemplateType type)
         {
             String templateName = getTemplateName(reference);
+            if (templateName.isEmpty())
+            {
+               return null;
+            }
             Map<String, MappingNode> templateMap;
 
             Map<String, String> defaultParameters = new HashMap<String, String>();
