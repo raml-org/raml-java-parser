@@ -7,3 +7,6 @@ baseUri: http://example.com/api
         /:
 /apis:
     get: ~
+    /{apiId}:
+        /{childId}:
+            get: ~

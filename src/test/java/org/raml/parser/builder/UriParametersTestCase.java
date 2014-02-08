@@ -21,6 +21,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Map;
 
 import org.junit.Test;
+import org.raml.model.ParamType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
 
@@ -52,6 +53,21 @@ public class UriParametersTestCase extends AbstractRamlTestCase
         Raml raml = parseRaml(RAML);
         Resource resource = raml.getResource("/apis");
         assertThat(resource.getRelativeUri(), is("/apis"));
+    }
+
+    @Test
+    public void parentUriTemplate()
+    {
+        Raml raml = parseRaml(RAML);
+
+        Resource apiId = raml.getResource("/apis/{apiId}");
+        assertThat(apiId.getUriParameters().size(), is(1));
+        assertThat(apiId.getUriParameters().get("apiId").getType(), is(ParamType.STRING));
+
+        Resource childId = raml.getResource("/apis/{apiId}/{childId}");
+        assertThat(childId.getUriParameters().size(), is(2));
+        assertThat(childId.getUriParameters().get("apiId").getType(), is(ParamType.STRING));
+        assertThat(childId.getUriParameters().get("childId").getType(), is(ParamType.STRING));
     }
 
 }
