@@ -34,7 +34,6 @@ public class TemplatesExtraHandler implements ExtraHandler {
 			if (n instanceof MappingNode) {
 				MappingNode m = (MappingNode) n;
 				List<NodeTuple> value2 = m.getValue();
-				StringBuilder b = new StringBuilder();
 				for (NodeTuple q : value2) {
 					TemplateUse t = null;
 					Node keyNode = q.getKeyNode();

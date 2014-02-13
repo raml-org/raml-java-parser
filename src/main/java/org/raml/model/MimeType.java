@@ -15,8 +15,6 @@
  */
 package org.raml.model;
 
-import static org.raml.model.ParamType.STRING;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,7 +89,7 @@ public class MimeType
 
     public void setExample(String example)
     {
-        this.example = example;
+    	this.example = example;
     }
 
     public Map<String, List<FormParameter>> getFormParameters()
@@ -113,11 +111,22 @@ public class MimeType
                '}';
     }
     
+    
     public Collection<? extends Object> getAllChildren(){
     	if(this.formParameters==null||this.formParameters.isEmpty())
     		return null;
     	
-    	ArrayList<NamedFormParameter> result = new ArrayList<NamedFormParameter>();
+    	ArrayList<NamedFormParameter> result = new ArrayList<NamedFormParameter>(){
+    
+    		@Override
+    		public boolean remove(Object o) {
+    			if (o instanceof NamedFormParameter){
+    				NamedFormParameter qq=(NamedFormParameter) o;
+    				
+    			}
+    			return super.remove(o);
+    		}
+    	};
     	for(Map.Entry<String, List<FormParameter>> entry : this.formParameters.entrySet()){
     		List<FormParameter> lst = entry.getValue();
     		String name = entry.getKey();
@@ -127,6 +136,19 @@ public class MimeType
     	}
     	return result;
     }
+    
+    public void setAllChildren(Collection<Object>z){
+    	Collection<? extends Object> allChildren = getAllChildren();
+    	boolean retainAll = allChildren.removeAll(z);
+    	for (Object q:allChildren){
+    		NamedFormParameter mm=(NamedFormParameter) q;
+    		List<FormParameter> list = formParameters.get(mm.name);
+    		if (list!=null){
+    			list.remove(mm.original);
+    		}    		
+    	}
+    }
+    
     
     public static final class NamedFormParameter extends AbstractParam{
     	

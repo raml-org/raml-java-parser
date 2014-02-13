@@ -531,9 +531,7 @@ public class RamlEmitterV2 {
 	}
 
 	private String sanitizeScalarValue(int depth, Object value) {
-		if (value!=null&&value.toString().equals("{service}_uri")){
-			System.out.println("a");
-		}
+		
 		Class<?> type = value.getClass();
 		String result = handleCustomScalar(value);
 		if (result != null) {
@@ -568,7 +566,12 @@ public class RamlEmitterV2 {
 		if (currentField.getName().equals("schemas")){
 			return text;
 		}
-		
+		if (text.length()==0){
+			return "\"" + "\""; 
+		}
+		if (text.equals("!include")){
+			return "\"" +text+ "\""; 
+		}
 		if (currentField.getName().contains("relative")){
 			return text;
 		}

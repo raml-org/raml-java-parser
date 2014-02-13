@@ -60,7 +60,7 @@ public class IncludeResolver implements TagResolver
                 nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be non-scalar");
                 return mockInclude(node);
             }
-            ScalarNode scalarNode = (ScalarNode) node;
+            ScalarNode scalarNode = (ScalarNode) node;            
             String resourceName = scalarNode.getValue();
             inputStream = resourceLoader.fetchResource(resourceName);
 

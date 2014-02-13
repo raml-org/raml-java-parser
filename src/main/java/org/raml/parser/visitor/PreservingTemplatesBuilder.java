@@ -2,6 +2,8 @@ package org.raml.parser.visitor;
 
 import java.io.Reader;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -98,8 +100,12 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
 		super(Raml2.class, resourceLoader, tagResolvers);
 		this.rs = tagResolvers;
 	}
-
+	protected HashMap<String, Exception>errorMap=new HashMap<String, Exception>();
 	
+
+	public HashMap<String, Exception> getErrorMap() {
+		return errorMap;
+	}
 
 	@Override
 	public Raml2 build(Reader content) {
@@ -119,7 +125,7 @@ public final class PreservingTemplatesBuilder extends RamlDocumentBuilder {
 			partialType.setRelativeUri(s);
 			resourceTypes.put(s, partialType);
 			}catch (Exception e) {
-				// TODO: handle exception
+				errorMap.put(s, e);
 			}
 		}
 		resourceTypesMap = getTemplateResolver().getTraitsMap();
