@@ -1,6 +1,6 @@
 package org.raml.model;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.raml.parser.annotation.Mapping;
@@ -10,7 +10,7 @@ import org.raml.parser.builder.QuestionableActionTypeHandler;
 public class ResourceType extends Resource{
 
 	@Mapping(handler = QuestionableActionTypeHandler.class, implicit = true)
-    private Map<String, Action> questionedActions = new HashMap<String, Action>();
+    private Map<String, Action> questionedActions = new LinkedHashMap<String, Action>();
 
     public Map<String, Action> getQuestionedActions() {
 		return questionedActions;

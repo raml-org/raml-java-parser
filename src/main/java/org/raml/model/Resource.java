@@ -39,8 +39,13 @@ import org.raml.parser.rule.SecurityReferenceSequenceRule;
 public class Resource
 {
 
+	
+	
     @Scalar
     private String displayName;
+    
+    @Sequence(rule = SecurityReferenceSequenceRule.class)
+    private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Scalar
     @Dumper(TypeDumper.class)
@@ -61,7 +66,7 @@ public class Resource
 
     @Mapping
     @MapFilter(UrlParameterFilter.class)
-    private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
+    private Map<String, UriParameter> uriParameters = new LinkedHashMap<String, UriParameter>();
 
 
     
@@ -77,11 +82,10 @@ public class Resource
 		this.isModel = isModel;
 	}
 
-	@Sequence(rule = SecurityReferenceSequenceRule.class)
-    private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
+	
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
-    private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
+    private Map<String, List<UriParameter>> baseUriParameters = new LinkedHashMap<String, List<UriParameter>>();
 
     @Mapping(implicit = true)
     private Map<ActionType, Action> actions = new LinkedHashMap<ActionType, Action>();
