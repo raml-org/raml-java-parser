@@ -38,7 +38,11 @@ public class TemplateUse {
 				bld.append(' ');
 				bld.append(s);
 				bld.append(": ");
-				bld.append(parameters.get(s));
+				String str = parameters.get(s);
+				if (str.equals("!include")){
+					str="\""+str+"\"";
+				}
+				bld.append(str);
 				a++;
 				if (a!=parameters.size()){
 					bld.append(',');

@@ -530,8 +530,7 @@ public class RamlEmitterV2 {
 		return field.getName();
 	}
 
-	private String sanitizeScalarValue(int depth, Object value) {
-		
+	private String sanitizeScalarValue(int depth, Object value) {		
 		Class<?> type = value.getClass();
 		String result = handleCustomScalar(value);
 		if (result != null) {
@@ -563,15 +562,17 @@ public class RamlEmitterV2 {
 
 	private String inlineFormat(int depth, String text) {
 		boolean isIdentifier = true;
-		if (currentField.getName().equals("schemas")){
-			return text;
-		}
 		if (text.length()==0){
 			return "\"" + "\""; 
 		}
 		if (text.equals("!include")){
 			return "\"" +text+ "\""; 
 		}
+		if (currentField.getName().equals("schemas")){
+			
+			return text;
+		}
+		
 		if (currentField.getName().contains("relative")){
 			return text;
 		}
