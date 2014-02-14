@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.emitter.RamlEmitter;
@@ -64,8 +65,9 @@ public class YamlDocumentSuggester implements NodeHandler
 
         final List<Suggestion> result = new ArrayList<Suggestion>();
 
-        topSection = topSection.trim();
-        this.offset = topSection.length();
+        int contextColumn = calculateContextColumn(context);
+        String suggestRaml = digestSuggestRaml(topSection, bottomSection, contextColumn);
+        this.offset = suggestRaml.length();
         if (offset == 0)
         {
             result.add(new DefaultSuggestion(RamlEmitter.VERSION, 0));
@@ -73,12 +75,11 @@ public class YamlDocumentSuggester implements NodeHandler
         }
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this, new DefaultResourceLoader());
-        MappingNode rootNode = (MappingNode) yamlParser.compose(new StringReader(topSection));
+        MappingNode rootNode = (MappingNode) yamlParser.compose(new StringReader(suggestRaml));
 
 
         nodeVisitor.visitDocument(rootNode);
 
-        int contextColumn = calculateContextColumn(context);
 
         NodeBuilder<?> parentNodeBuilder = null;
         NodeContext nodeContext = nodes.peek();
@@ -102,6 +103,50 @@ public class YamlDocumentSuggester implements NodeHandler
 
         Collections.sort(result);
         return result;
+    }
+
+    private String digestSuggestRaml(String topSection, String bottomSection, int contextColumn)
+    {
+        topSection = topSection.trim();
+        if (bottomSection == null)
+        {
+            return topSection;
+        }
+        String bottom = digestBottomSection(bottomSection, contextColumn);
+        return topSection + "\n" + bottom;
+    }
+
+    private String digestBottomSection(String bottomSection, int contextColumn)
+    {
+        Pattern sameContext;
+        Pattern parentContext = null;
+        if (contextColumn > 0)
+        {
+            sameContext = Pattern.compile("[ ]{" + contextColumn + ",}\\S+.*");
+            parentContext = Pattern.compile("[ ]{0," + (contextColumn - 1) + "}\\S+.*");
+        }
+        else if (contextColumn == 0)
+        {
+            sameContext = Pattern.compile("\\S+.*");
+        }
+        else
+        {
+            throw new IllegalArgumentException("invalid column context: " + contextColumn);
+        }
+
+        StringBuilder buffer = new StringBuilder(bottomSection.length());
+        for (String line : bottomSection.split("\n"))
+        {
+            if (sameContext.matcher(line).matches())
+            {
+                buffer.append(line).append("\n");
+            }
+            else if (parentContext != null && parentContext.matcher(line).matches())
+            {
+                break;
+            }
+        }
+        return buffer.toString();
     }
 
     private void addKeySuggestions(String context, List<Suggestion> result, NodeBuilder<?> parent, NodeContext nodeContext)

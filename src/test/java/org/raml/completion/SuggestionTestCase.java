@@ -135,6 +135,94 @@ public class SuggestionTestCase
     }
 
     @Test
+    public void noDuplicatesAfter()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one";
+
+        String bottomSection = "schemas:\n" +
+                            " - user: one\n" +
+                            "traits:\n" +
+                            "baseUri: http://localhost/api";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "", bottomSection);
+
+        assertThat(suggest.size(), is(ROOT_SUGGEST_COUNT - 4));
+        assertThat(suggest.contains(new KeySuggestion("title")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("schemas")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("traits")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("baseUri")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("version")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(0));
+    }
+
+    @Test
+    public void noDuplicatesAfterNestedAligned()
+    {
+        noDuplicatesAfterNestedNoContext("  ");
+    }
+
+    @Test
+    public void noDuplicatesAfterNestedNotAligned()
+    {
+        noDuplicatesAfterNestedNoContext(" ");
+    }
+
+    @Test
+    public void noDuplicatesAfterNestedContextAligned()
+    {
+        noDuplicatesAfterNestedContext("  p");
+    }
+
+    @Test
+    public void noDuplicatesAfterNestedContextNotAligned()
+    {
+        noDuplicatesAfterNestedContext(" p");
+    }
+
+    private void noDuplicatesAfterNestedNoContext(String context)
+    {
+        List<Suggestion> suggest = noDuplicatesAfterNested(context);
+        assertThat(suggest.size(), is(RESOURCE_SUGGEST_COUNT - 4));
+        assertThat(suggest.contains(new KeySuggestion("get")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("post")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("put")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("delete")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("patch")), is(true));
+    }
+
+    private void noDuplicatesAfterNestedContext(String context)
+    {
+        List<Suggestion> suggest = noDuplicatesAfterNested(context);
+        assertThat(suggest.size(), is(1));
+        assertThat(suggest.contains(new KeySuggestion("patch")), is(true));
+    }
+
+    private List<Suggestion> noDuplicatesAfterNested(String context)
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/resource:\n" +
+                            "  get:\n" +
+                            "  post:\n" +
+                            "    body:\n" +
+                            "      text/plain:\n" +
+                            "        example: hi\n";
+
+        String bottomSection = "  put:\n" +
+                               "    body:\n" +
+                               "  delete:\n" +
+                               "/another:\n" +
+                               "  patch:";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, context, bottomSection);
+        assertThat(suggest.get(0).getIndentation(), is(2));
+        return suggest;
+    }
+
+    @Test
     public void resource()
     {
         String topSection = "#%RAML 0.8\n" +
