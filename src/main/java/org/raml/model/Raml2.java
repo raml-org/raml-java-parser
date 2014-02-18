@@ -31,6 +31,59 @@ public class Raml2 extends Raml {
     	}
     	return null;
     }
+    private HashMap<String, String> createSchemaMap(final String schemaName, final String content) {
+        final HashMap<String, String> newSchemaLine = new HashMap<String, String>();
+		newSchemaLine.put(schemaName, content);
+        return newSchemaLine;
+    }
+	
+	private boolean schemaDeclared(final String schemaName) {
+	    return findMapWithSchemaDeclaration(schemaName) != null;
+	}
+
+	private Map<String, String> findMapWithSchemaDeclaration(String schemaName) {
+	    for (final Map<String, String> line : schemas){
+            if (line.keySet().contains(schemaName)){
+                return line;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+	 * @param schemaName Schema name will be used as filename without extension and relative path.
+	 * @param content
+	 * @param json If this parameter is false then it suppose that one should add an XML Schema.
+	 */
+	public void addGlobalSchema(
+        final String schemaName,
+        final String content,
+        final boolean json,
+        final boolean addSchemaSuffix)
+	{
+	    final HashMap<String, String> newSchemaLine = createSchemaMap(schemaName, content);
+	    final String path = "schemas/" + schemaName + (addSchemaSuffix ? "-schema" : "") + "." + (json ? "json" : "xsd");
+	    schemaMap.put(schemaName, path);
+	    
+	    if (!schemaDeclared(schemaName)) {
+	        schemas.add(newSchemaLine);		
+	    }
+	}
+	
+	public void addOrReplaceSchemaContent(
+        final String schemaName,
+        final String content)
+    {
+        final Map<String, String> foundMap = findMapWithSchemaDeclaration(schemaName);
+        
+        if (foundMap != null) {
+            foundMap.put(schemaName, content);
+        } else {
+            final Map<String, String> map = createSchemaMap(schemaName, content);
+            schemas.add(map);
+        }
+    }
 	
 	public Map<String, ResourceType> getResourceTypesModel() {
 		return resourceTypesModel;
