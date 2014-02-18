@@ -36,6 +36,7 @@ public class SuggestionTestCase
     public static final int RESOURCE_SUGGEST_COUNT = 16;
     public static final int ACTION_SUGGEST_COUNT = 9;
     private static final int BODY_SUGGEST_COUNT = 4;
+    private static final int RESPONSES_SUGGEST_COUNT = 8;
 
     public static final String HEADER = "#%RAML 0.8\n" +
                                         "---\n" +
@@ -334,6 +335,26 @@ public class SuggestionTestCase
         assertThat(suggest.contains(new KeySuggestion("application/xml")), is(true));
         assertThat(suggest.contains(new KeySuggestion("application/x-www-form-urlencoded")), is(true));
         assertThat(suggest.contains(new KeySuggestion("multipart/form-data")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
+    @Test
+    public void responseStatusCodes()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/ResourceName:\n" +
+                            " put:\n" +
+                            "  responses:";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "   ");
+        assertThat(suggest.isEmpty(), is(false));
+        assertThat(suggest.size(), is(RESPONSES_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("200")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("201")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("400")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("404")), is(true));
         assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 

@@ -29,6 +29,7 @@ import org.raml.parser.annotation.Parent;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.MimeTypeHandler;
+import org.raml.parser.resolver.ResponseHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 public class Action
@@ -49,7 +50,7 @@ public class Action
     @Mapping (innerHandler = MimeTypeHandler.class)
     private Map<String, MimeType> body = new HashMap<String, MimeType>();
 
-    @Mapping
+    @Mapping (innerHandler = ResponseHandler.class)
     private Map<String, Response> responses = new HashMap<String, Response>();
 
     @Parent
