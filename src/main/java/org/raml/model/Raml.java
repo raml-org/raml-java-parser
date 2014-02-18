@@ -247,6 +247,7 @@ public class Raml
 
     public Resource getResource(String path)
     {
+    	
         for (Resource resource : resources.values())
         {
             if (path.startsWith(resource.getRelativeUri()))
@@ -257,8 +258,11 @@ public class Raml
                 }
                 if (path.charAt(resource.getRelativeUri().length()) == '/')
                 {
-                    return resource.getResource(path.substring(resource.getRelativeUri().length()));
-                }
+                    final Resource found = resource.getResource(path.substring(resource.getRelativeUri().length()));
+                    if (found != null) {
+                     return found;
+                    }
+                }                
             }
         }
         return null;
