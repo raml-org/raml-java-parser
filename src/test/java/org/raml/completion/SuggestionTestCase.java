@@ -96,6 +96,23 @@ public class SuggestionTestCase
     }
 
     @Test
+    public void resourceChildrenEmptyBottomSection()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/ResourceName:\n";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, " ", "");
+        assertThat(suggest.isEmpty(), is(false));
+        assertThat(suggest.size(), is(RESOURCE_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("is")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("get")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("delete")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
+    @Test
     public void mappingWithTrailingSpace()
     {
         String topSection = "#%RAML 0.8\n" +

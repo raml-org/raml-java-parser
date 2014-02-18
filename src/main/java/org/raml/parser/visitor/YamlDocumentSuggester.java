@@ -113,7 +113,7 @@ public class YamlDocumentSuggester implements NodeHandler
             return topSection;
         }
         String bottom = digestBottomSection(bottomSection, contextColumn);
-        return topSection + "\n" + bottom;
+        return topSection.concat("\n").concat(bottom).trim();
     }
 
     private String digestBottomSection(String bottomSection, int contextColumn)
