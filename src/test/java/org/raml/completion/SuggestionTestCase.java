@@ -316,6 +316,28 @@ public class SuggestionTestCase
     }
 
     @Test
+    public void responseBody()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: one\n" +
+                            "/ResourceName:\n" +
+                            " put:\n" +
+                            "  responses:\n" +
+                            "   200:\n" +
+                            "    body:";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "     ");
+        assertThat(suggest.isEmpty(), is(false));
+        assertThat(suggest.size(), is(BODY_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("application/json")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("application/xml")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("application/x-www-form-urlencoded")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("multipart/form-data")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
+    @Test
     public void nonAlignedPosition()
     {
         YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());

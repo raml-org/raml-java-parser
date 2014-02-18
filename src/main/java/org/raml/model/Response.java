@@ -21,6 +21,7 @@ import java.util.Map;
 import org.raml.model.parameter.Header;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
+import org.raml.parser.resolver.MimeTypeHandler;
 
 public class Response
 {
@@ -28,7 +29,7 @@ public class Response
     @Scalar
     private String description;
 
-    @Mapping
+    @Mapping (innerHandler = MimeTypeHandler.class)
     private Map<String, MimeType> body = new HashMap<String, MimeType>();
 
     @Mapping
