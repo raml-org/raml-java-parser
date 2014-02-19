@@ -65,9 +65,10 @@ public class UriParametersTestCase extends AbstractRamlTestCase
         assertThat(apiId.getUriParameters().get("apiId").getType(), is(ParamType.STRING));
 
         Resource childId = raml.getResource("/apis/{apiId}/{childId}");
-        assertThat(childId.getUriParameters().size(), is(2));
-        assertThat(childId.getUriParameters().get("apiId").getType(), is(ParamType.STRING));
-        assertThat(childId.getUriParameters().get("childId").getType(), is(ParamType.STRING));
+        assertThat(childId.getUriParameters().size(), is(1));
+        assertThat(childId.getResolvedUriParameters().size(), is(2));
+        assertThat(childId.getResolvedUriParameters().get("apiId").getType(), is(ParamType.STRING));
+        assertThat(childId.getResolvedUriParameters().get("childId").getType(), is(ParamType.STRING));
     }
 
 }

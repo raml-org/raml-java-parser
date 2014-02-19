@@ -184,7 +184,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 }
                 else
                 {
-                    logger.info(String.format("parent reference field '%s' could not be set with %s onto %s",
+                    logger.debug(String.format("parent reference field '%s' could not be set with %s onto %s",
                                               declaredField.getName(), value.getClass(), pojo.getClass()));
                 }
             }

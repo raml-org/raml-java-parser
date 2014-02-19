@@ -33,6 +33,9 @@ import org.raml.parser.rule.SecurityReferenceSequenceRule;
 public class Resource
 {
 
+    @Parent
+    private Resource parentResource;
+
     @Scalar
     private String displayName;
 
@@ -155,6 +158,21 @@ public class Resource
         return uriParameters;
     }
 
+    /**
+     * @return URI parameters defined for the current resource plus
+     *   all URI parameters defined in the resource hierarchy
+     */
+    public Map<String, UriParameter> getResolvedUriParameters()
+    {
+        if (parentResource != null)
+        {
+            Map<String, UriParameter> uriParams = new HashMap<String, UriParameter>(parentResource.getUriParameters());
+            uriParams.putAll(uriParameters);
+            return uriParams;
+        }
+        return uriParameters;
+    }
+
     public List<String> getIs()
     {
         return is;
@@ -245,5 +263,15 @@ public class Resource
             }
         }
         return null;
+    }
+
+    public Resource getParentResource()
+    {
+        return parentResource;
+    }
+
+    public void setParentResource(Resource parentResource)
+    {
+        this.parentResource = parentResource;
     }
 }
