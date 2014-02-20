@@ -384,4 +384,19 @@ public class SuggestionTestCase
         assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
+    @Test
+    public void scalarInclude()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: !include title.txt";
+
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "", "");
+        assertThat(suggest, notNullValue());
+        assertThat(suggest.size(), is(ROOT_SUGGEST_COUNT - 1));
+        assertThat(suggest.contains(new KeySuggestion("version")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("title")), is(false));
+        assertThat(suggest.get(0).getIndentation(), is(0));
+    }
+
 }

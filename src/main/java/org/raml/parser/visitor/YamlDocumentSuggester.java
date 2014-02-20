@@ -322,6 +322,6 @@ public class YamlDocumentSuggester implements NodeHandler
     @Override
     public void onCustomTagError(Tag tag, Node node, String message)
     {
-        builder.onCustomTagError(tag, node, message);
+        //ignore
     }
 }
