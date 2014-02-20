@@ -46,3 +46,14 @@ resourceTypes:
                 key1:
                     type: string
 
+/empty:
+    put:
+        body:
+        responses:
+            200:
+                body:
+
+/nobody:
+    get:
+        responses:
+            200:

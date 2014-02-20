@@ -30,7 +30,7 @@ public class Response
     private String description;
 
     @Mapping (innerHandler = MimeTypeHandler.class)
-    private Map<String, MimeType> body = new HashMap<String, MimeType>();
+    private Map<String, MimeType> body;
 
     @Mapping
     private Map<String, Header> headers = new HashMap<String, Header>();

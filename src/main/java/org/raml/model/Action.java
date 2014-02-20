@@ -48,7 +48,7 @@ public class Action
     private Map<String, QueryParameter> queryParameters = new HashMap<String, QueryParameter>();
 
     @Mapping (innerHandler = MimeTypeHandler.class)
-    private Map<String, MimeType> body = new HashMap<String, MimeType>();
+    private Map<String, MimeType> body;
 
     @Mapping (innerHandler = ResponseHandler.class)
     private Map<String, Response> responses = new HashMap<String, Response>();

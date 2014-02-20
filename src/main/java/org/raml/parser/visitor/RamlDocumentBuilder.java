@@ -144,6 +144,8 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     @Override
     protected void postBuildProcess()
     {
+        getMediaTypeResolver().setBodyDefaultMediaType(getDocumentObject().getResources());
+
     }
 
     private void populateDefaultUriParameters(Resource resource)

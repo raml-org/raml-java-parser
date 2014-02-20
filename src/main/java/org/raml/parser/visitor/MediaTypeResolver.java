@@ -22,8 +22,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.raml.model.Action;
+import org.raml.model.ActionType;
+import org.raml.model.MimeType;
+import org.raml.model.Resource;
+import org.raml.model.Response;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
@@ -43,6 +49,12 @@ public class MediaTypeResolver
         MEDIA_TYPE_KEYS = new HashSet<String>(Arrays.asList(keys));
     }
 
+    /**
+     * checks if there is a default media type declared
+     *
+     * @param rootNode raml root node
+     * @return a list of validation results
+     */
     public List<ValidationResult> beforeDocumentStart(MappingNode rootNode)
     {
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
@@ -86,6 +98,14 @@ public class MediaTypeResolver
         return value.matches(".+/.+");
     }
 
+    /**
+     * inject the default media type if an explicit media type is not
+     *  declared and the body contains media type child elements
+     *  (e.g.: schema)
+     *
+     * @param bodyNode mapping node with media types or media type child elements
+     * @return a list of validation results
+     */
     public List<ValidationResult> resolve(MappingNode bodyNode)
     {
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
@@ -108,4 +128,32 @@ public class MediaTypeResolver
         return validationResults;
     }
 
+    /**
+     * if no explicit media type is defined in either the request or
+     * response body, the default one is applied
+     *
+     * @param resourceMap the resources to be recursively visited
+     */
+    public void setBodyDefaultMediaType(Map<String, Resource> resourceMap)
+    {
+        for (Resource resource : resourceMap.values())
+        {
+            Map<ActionType,Action> actionMap = resource.getActions();
+            for (Action action : actionMap.values())
+            {
+                if (action.getBody() != null && action.getBody().isEmpty())
+                {
+                    action.getBody().put(mediaType, new MimeType(mediaType));
+                }
+                for (Response response : action.getResponses().values())
+                {
+                    if (response.getBody() != null && response.getBody().isEmpty())
+                    {
+                        response.getBody().put(mediaType, new MimeType(mediaType));
+                    }
+                }
+            }
+            setBodyDefaultMediaType(resource.getResources());
+        }
+    }
 }

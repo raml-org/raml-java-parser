@@ -38,6 +38,14 @@ public class MimeType
     @Mapping
     private Map<String, List<FormParameter>> formParameters;
 
+    public MimeType()
+    {
+    }
+
+    public MimeType(String type)
+    {
+        this.type = type;
+    }
 
     public String getType()
     {

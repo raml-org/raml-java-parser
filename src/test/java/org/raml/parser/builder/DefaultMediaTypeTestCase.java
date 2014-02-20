@@ -16,8 +16,11 @@
 package org.raml.parser.builder;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.raml.model.ActionType.GET;
+import static org.raml.model.ActionType.PUT;
 
 import java.util.List;
 import java.util.Map;
@@ -53,20 +56,22 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
         Resource simpleResource = raml.getResources().get("/simple");
         assertThat(simpleResource.getActions().size(), is(4));
 
-        Map<String, MimeType> getBody = simpleResource.getAction(ActionType.GET).getResponses().get("200").getBody();
-        assertThat(getBody.size(), is(1));
-        assertThat(getBody.containsKey("application/json"), is(true));
+        Map<String, MimeType> getBody = simpleResource.getAction(ActionType.GET).getBody();
+        assertThat(getBody, nullValue());
+        Map<String, MimeType> getResponseBody = simpleResource.getAction(ActionType.GET).getResponses().get("200").getBody();
+        assertThat(getResponseBody.size(), is(1));
+        assertThat(getResponseBody.containsKey("application/json"), is(true));
 
         Map<String, MimeType> postBody = simpleResource.getAction(ActionType.POST).getBody();
         assertThat(postBody.size(), is(1));
         assertThat(postBody.containsKey("application/json"), is(true));
 
-        Map<String, MimeType> putBody = simpleResource.getAction(ActionType.PUT).getBody();
+        Map<String, MimeType> putBody = simpleResource.getAction(PUT).getBody();
         assertThat(putBody.size(), is(1));
         assertThat(putBody.containsKey("application/json"), is(true));
 
         Map<String, MimeType> deleteBody = simpleResource.getAction(ActionType.DELETE).getResponses().get("204").getBody();
-        assertThat(deleteBody.size(), is(0));
+        assertThat(deleteBody, nullValue());
 
     }
 
@@ -81,6 +86,21 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
         assertThat(postBody.containsKey("application/json"), is(true));
     }
 
+    @Test
+    public void emptyBody()
+    {
+        Resource resource = raml.getResource("/empty");
+        assertThat(resource.getAction(PUT).getBody().size(), is(1));
+        assertThat(resource.getAction(PUT).getResponses().get("200").getBody().size(), is(1));
+    }
+
+    @Test
+    public void noBody()
+    {
+        Resource resource = raml.getResource("/nobody");
+        assertThat(resource.getAction(GET).getBody(), nullValue());
+        assertThat(resource.getAction(GET).getResponses().get("200").getBody(), nullValue());
+    }
 
     @Test
     public void validation() throws Exception
