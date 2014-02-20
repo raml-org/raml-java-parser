@@ -148,7 +148,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
 
     private void populateDefaultUriParameters(Resource resource)
     {
-        Pattern pattern = Pattern.compile(URI_PATTERN);
+        Pattern pattern = Pattern.compile("[.*]?\\{([a-zA-Z0-9_-]+)?\\}[.*]*");
         Matcher matcher = pattern.matcher(resource.getRelativeUri());
         while (matcher.find())
         {
