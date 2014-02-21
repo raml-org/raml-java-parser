@@ -47,10 +47,10 @@ public class Action
     @Mapping
     private Map<String, QueryParameter> queryParameters = new HashMap<String, QueryParameter>();
 
-    @Mapping (innerHandler = MimeTypeHandler.class)
+    @Mapping(innerHandler = MimeTypeHandler.class)
     private Map<String, MimeType> body;
 
-    @Mapping (innerHandler = ResponseHandler.class)
+    @Mapping(innerHandler = ResponseHandler.class)
     private Map<String, Response> responses = new HashMap<String, Response>();
 
     @Parent
@@ -120,6 +120,11 @@ public class Action
     public void setBody(Map<String, MimeType> body)
     {
         this.body = body;
+    }
+
+    public boolean hasBody()
+    {
+        return body != null && !body.isEmpty();
     }
 
     public Map<String, Response> getResponses()

@@ -29,7 +29,7 @@ public class Response
     @Scalar
     private String description;
 
-    @Mapping (innerHandler = MimeTypeHandler.class)
+    @Mapping(innerHandler = MimeTypeHandler.class)
     private Map<String, MimeType> body;
 
     @Mapping
@@ -63,5 +63,10 @@ public class Response
     public Map<String, MimeType> getBody()
     {
         return body;
+    }
+
+    public boolean hasBody()
+    {
+        return body != null && !body.isEmpty();
     }
 }
