@@ -119,7 +119,7 @@ public class YamlDocumentSuggester implements NodeHandler
     {
         String[] lines = raml.split("\n");
         int index = lines.length - 1;
-        Pattern blankOrComment = Pattern.compile("\\s+(#.*)?");
+        Pattern blankOrComment = Pattern.compile("\\s*(#.*)?");
         while (index > 0 && blankOrComment.matcher(lines[index]).matches())
         {
             index--;

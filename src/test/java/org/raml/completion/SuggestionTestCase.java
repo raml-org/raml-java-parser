@@ -405,7 +405,7 @@ public class SuggestionTestCase
         String topSection = "#%RAML 0.8\n" +
                             "title: comment\n" +
                             "/name:\n" +
-                            "  # methods";
+                            "# methods";
         String bottomSection = "# one" +
                                " # more" +
                                "   # comment # plus # comment ###";
