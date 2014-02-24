@@ -23,6 +23,7 @@ import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.raml.model.Raml;
 import org.raml.parser.builder.AbstractRamlTestCase;
@@ -227,5 +228,19 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getIncludeName(), nullValue());
         assertThat(validationResults.get(0).getMessage(), is("could not found expected ':'"));
+    }
+
+    @Test
+    @Ignore //version must occur before its use
+    public void versionAfterUse()
+    {
+        String raml =
+                "#%RAML 0.8\n" +
+                "title: version\n" +
+                "baseUri: http://localhost/api/{version}\n" +
+                "version: v1";
+
+        List<ValidationResult> validationResults = validateRaml(raml, "");
+        assertThat(validationResults.size(), is(0));
     }
 }

@@ -107,13 +107,33 @@ public class YamlDocumentSuggester implements NodeHandler
 
     private String digestSuggestRaml(String topSection, String bottomSection, int contextColumn)
     {
-        topSection = topSection.trim();
         if (bottomSection == null)
         {
-            return topSection;
+            return trimTrailingComments(topSection);
         }
         String bottom = digestBottomSection(bottomSection, contextColumn);
-        return topSection.concat("\n").concat(bottom).trim();
+        return trimTrailingComments(topSection + "\n" + bottom);
+    }
+
+    private String trimTrailingComments(String raml)
+    {
+        String[] lines = raml.split("\n");
+        int index = lines.length - 1;
+        Pattern blankOrComment = Pattern.compile("\\s+(#.*)?");
+        while (index > 0 && blankOrComment.matcher(lines[index]).matches())
+        {
+            index--;
+        }
+        if (index > 0)
+        {
+            lines[index] = lines[index].replaceFirst(" #.*", "");
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i <= index; i++)
+        {
+            result.append(lines[i]).append("\n");
+        }
+        return result.toString().trim();
     }
 
     private String digestBottomSection(String bottomSection, int contextColumn)

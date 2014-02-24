@@ -399,4 +399,40 @@ public class SuggestionTestCase
         assertThat(suggest.get(0).getIndentation(), is(0));
     }
 
+    @Test
+    public void afterComment()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: comment\n" +
+                            "/name:\n" +
+                            "  # methods";
+        String bottomSection = "# one" +
+                               " # more" +
+                               "   # comment # plus # comment ###";
+
+        validateRamlWithComments(topSection, bottomSection);
+    }
+
+    @Test
+    public void afterInlineComment()
+    {
+        String topSection = "#%RAML 0.8\n" +
+                            "title: comment\n" +
+                            "/name: # name resource";
+        String bottomSection = "";
+
+        validateRamlWithComments(topSection, bottomSection);
+    }
+
+    private void validateRamlWithComments(String topSection, String bottomSection)
+    {
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "  ", bottomSection);
+        assertThat(suggest, notNullValue());
+        assertThat(suggest.size(), is(RESOURCE_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("get")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("post")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
 }

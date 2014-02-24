@@ -34,6 +34,9 @@ public interface Suggestion extends Comparable<Suggestion>
     String getValue();
 
     /**
+     * If there are siblings to the current auto-complete context
+     *   the right indentation value is returned, otherwise -1
+     *
      * @return right indentation in spaces
      */
     int getIndentation();
