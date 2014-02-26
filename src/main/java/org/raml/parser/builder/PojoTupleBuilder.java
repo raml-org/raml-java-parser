@@ -77,7 +77,10 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
                 Annotation[][] parameterAnnotations = declaredConstructor.getParameterAnnotations();
                 for (Annotation[] parameterAnnotation : parameterAnnotations)
                 {
-
+                    if (parameterAnnotation.length == 0)
+                    {
+                        break;
+                    }
                     if (parameterAnnotation[0].annotationType().equals(Value.class))
                     {
                         arguments.add(NodeUtils.getNodeValue(node));
