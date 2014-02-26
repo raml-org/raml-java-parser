@@ -42,7 +42,7 @@ public class MimeType
     {
     }
 
-    public MimeType(String type)
+    public MimeType(@Key String type)
     {
         this.type = type;
     }
