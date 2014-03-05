@@ -169,10 +169,16 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(tOauth2.getDescribedBy().getResponses().size(), is(sOauth2.getDescribedBy().getResponses().size()));
         assertThat(tOauth2.getDescribedBy().getResponses().get("401").getDescription(),
                    is(sOauth2.getDescribedBy().getResponses().get("401").getDescription()));
-        assertThat(tOauth2.getSettings().size(), is(sOauth2.getSettings().size()));
-        assertThat(tOauth2.getSettings().get("authorizationUrl").size(), is(sOauth2.getSettings().get("authorizationUrl").size()));
-        assertThat(sOauth2.getSettings().get("authorizationUrl").get(0), is("https://www.dropbox.com/1/oauth2/authorize"));
-        assertThat(tOauth2.getSettings().get("authorizationUrl").get(0), is(sOauth2.getSettings().get("authorizationUrl").get(0)));
+        assertThat(tOauth2.getSettings().getAccessTokenUri(), is(sOauth2.getSettings().getAccessTokenUri()));
+        assertThat(tOauth2.getSettings().getAccessTokenUri(), is("https://api.dropbox.com/1/oauth2/token"));
+        assertThat(tOauth2.getSettings().getAuthorizationUri(), is(sOauth2.getSettings().getAuthorizationUri()));
+        assertThat(sOauth2.getSettings().getAuthorizationUri(), is("https://www.dropbox.com/1/oauth2/authorize"));
+        assertThat(tOauth2.getSettings().getScopes().size(), is(sOauth2.getSettings().getScopes().size()));
+        assertThat(tOauth2.getSettings().getScopes().size(), is(1));
+        assertThat(tOauth2.getSettings().getAuthorizationGrants().size(), is(sOauth2.getSettings().getAuthorizationGrants().size()));
+        assertThat(tOauth2.getSettings().getAuthorizationGrants().size(), is(2));
+
+
 
         assertThat(target.getResource("/").getSecuredBy().size(), is(source.getResource("/").getSecuredBy().size()));
         assertThat(target.getResource("/").getSecuredBy().get(0).getName(), is(source.getResource("/").getSecuredBy().get(0).getName()));
