@@ -37,7 +37,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
     private Class<?> pojoClass;
     private String fieldName;
 
-    public PojoTupleBuilder(String fieldName, Class<?> pojoClass)
+    public PojoTupleBuilder(final String fieldName, final Class<?> pojoClass)
     {
         super(new DefaultScalarTupleHandler(fieldName));
         this.fieldName = fieldName;
@@ -45,7 +45,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 
     }
 
-    public PojoTupleBuilder(Class<?> pojoClass)
+    public PojoTupleBuilder(final Class<?> pojoClass)
     {
         this(null, pojoClass);
     }
@@ -60,44 +60,62 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         return super.getBuilders();
     }
 
+    /**
+     * Reflectively construct a new value object. Searches for a constructor that accepts @Value and @Key annotated
+     *   parameters only. If one is not found then it falls back to a default constructor.
+     *
+     * @throws InstantiationException when no possible constructor found.
+     */
+    private Object buildValueByAnnotation(final Object parent, final Node node) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        for(Constructor<?> declaredConstructor : pojoClass.getDeclaredConstructors())
+        {
+            List<Object> arguments = new ArrayList<Object>();
+            Annotation[][] parameterAnnotations = declaredConstructor.getParameterAnnotations();
+            for (Annotation[] parameterAnnotation : parameterAnnotations)
+            {
+                if (parameterAnnotation.length == 0)
+                {
+                    break;
+                }
+                if (parameterAnnotation[0].annotationType().equals(Value.class))
+                {
+                    arguments.add(NodeUtils.getNodeValue(node));
+                }
+                else if (parameterAnnotation[0].annotationType().equals(Key.class))
+                {
+                    arguments.add(fieldName);
+                }
+            }
+
+            if(arguments.size() == declaredConstructor.getParameterTypes().length)
+            {
+                return declaredConstructor.newInstance(arguments.toArray(new Object[arguments.size()]));
+            }
+        }
+
+        return null;
+    }
+
     @Override
-    public Object buildValue(Object parent, Node node)
+    public Object buildValue(final Object parent, final Node node)
     {
         try
         {
-            Object newValue;
+            Object newValue = null;
             if (pojoClass.isEnum())
             {
                 newValue = ConvertUtils.convertTo((String) NodeUtils.getNodeValue(node), pojoClass);
             }
             else if (pojoClass.getDeclaredConstructors().length > 0)
             {
-                List<Object> arguments = new ArrayList<Object>();
-                Constructor<?> declaredConstructor = pojoClass.getDeclaredConstructors()[0];
-                Annotation[][] parameterAnnotations = declaredConstructor.getParameterAnnotations();
-                for (Annotation[] parameterAnnotation : parameterAnnotations)
-                {
-                    if (parameterAnnotation.length == 0)
-                    {
-                        break;
-                    }
-                    if (parameterAnnotation[0].annotationType().equals(Value.class))
-                    {
-                        arguments.add(NodeUtils.getNodeValue(node));
-                    }
-                    else if (parameterAnnotation[0].annotationType().equals(Key.class))
-                    {
-                        arguments.add(fieldName);
-                    }
-
-                }
-
-                newValue = declaredConstructor.newInstance(arguments.toArray(new Object[arguments.size()]));
+                newValue = buildValueByAnnotation(parent, node);
             }
-            else
+
+            if(newValue == null)
             {
                 newValue = pojoClass.newInstance();
             }
+
             ReflectionUtils.setProperty(parent, fieldName, newValue);
             processPojoAnnotations(newValue, fieldName, parent);
             return newValue;
@@ -118,7 +136,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 
 
     @Override
-    public void buildKey(Object parent, ScalarNode node)
+    public void buildKey(final Object parent, final ScalarNode node)
     {
         fieldName = node.getValue();
     }
@@ -133,6 +151,7 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         return pojoClass;
     }
 
+    @Override
     public String toString()
     {
         return fieldName;
