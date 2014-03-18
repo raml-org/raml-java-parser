@@ -9,6 +9,8 @@ public class TemplateUse {
 	public TemplateUse(String value) {
 		this.key=value;
 	}
+	public TemplateUse() {
+	}
 	public String getKey() {
 		return key;
 	}

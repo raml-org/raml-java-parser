@@ -82,6 +82,7 @@ public class Raml2 extends Raml {
         } else {
             final Map<String, String> map = createSchemaMap(schemaName, content);
             schemas.add(map);
+            schemaMap.put(schemaName, "schemas/"+schemaName+".json");    	    
         }
     }
 	

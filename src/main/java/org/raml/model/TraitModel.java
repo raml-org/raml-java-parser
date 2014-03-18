@@ -16,8 +16,6 @@ public class TraitModel extends Action{
 	public String getUsage() {
 		return usage;
 	}
-	
-	
 
 	public void setUsage(String usage) {
 		this.usage = usage;
