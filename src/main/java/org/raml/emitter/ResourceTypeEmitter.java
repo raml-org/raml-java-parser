@@ -12,6 +12,9 @@ public class ResourceTypeEmitter implements IRAMLFieldDumper {
 	@Override
 	public void dumpField(StringBuilder dump, int depth, Field declaredField,
 			Object pojo, RamlEmitterV2 emitter) {
+		if (pojo instanceof Raml2){
+			
+		
 		Raml2 v = (Raml2) pojo;
 		Map<String, ResourceType> resourceTypeMap = v.getResourceTypesModel();
 		if (resourceTypeMap.isEmpty()){
@@ -42,6 +45,13 @@ public class ResourceTypeEmitter implements IRAMLFieldDumper {
 			emitter.dumpMapInSeq(dump, depth + 1, Resource.class,
 					resourceTypeMap, false, true);
 		}
+		}
+		else{
+//			dump.append(emitter.indent(depth + 1));
+//			emitter.dumpMapInSeq(dump, depth + 1, Resource.class,
+//					resourceTypeMap, false, true);
+		}
+			
 	}
 
 }

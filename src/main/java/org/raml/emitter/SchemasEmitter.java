@@ -10,6 +10,7 @@ public class SchemasEmitter implements IRAMLFieldDumper {
 	@Override
 	public void dumpField(StringBuilder dump, int depth, Field declaredField,
 			Object pojo, RamlEmitterV2 emitter) {
+		if (pojo instanceof Raml2){
 		Raml2 rp=(Raml2) pojo;
 		
 		if (emitter.isSeparated){
@@ -37,6 +38,10 @@ public class SchemasEmitter implements IRAMLFieldDumper {
 					emitter.writer.write(str,schemaContent);
 				}
 			}			
+		}
+		else{
+			emitter.dumpSequenceField(dump, depth, declaredField,pojo);
+		}
 		}
 		else{
 			emitter.dumpSequenceField(dump, depth, declaredField,pojo);

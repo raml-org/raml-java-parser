@@ -12,6 +12,7 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 	@Override
 	public void dumpField(StringBuilder dump, int depth, Field declaredField,
 			Object pojo, RamlEmitterV2 emitter) {
+		if (pojo instanceof Raml2){
 		Raml2 v=(Raml2) pojo;
 		List<Map<String, SecurityScheme>> resourceTypeMap = v.getSecuritySchemes();
 		if (resourceTypeMap.isEmpty()){
@@ -41,7 +42,13 @@ public class SecuritySchemeEmitter implements IRAMLFieldDumper{
 		} else {
 			dump.append(emitter.indent(depth));		
 			emitter.dumpSequenceField(dump, depth, declaredField, pojo);
-		}		
+		}	
+		}
+		else{
+			dump.append(emitter.indent(depth));		
+			emitter.dumpSequenceField(dump, depth, declaredField, pojo);
+		}
+			
 	}
 
 }

@@ -99,6 +99,9 @@ public class Resource
 
     public void setRelativeUri(String relativeUri)
     {
+    	if (relativeUri.length()<=1){
+    		System.out.println("A");
+    	}
         this.relativeUri = relativeUri;
     }
 
