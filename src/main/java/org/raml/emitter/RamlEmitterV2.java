@@ -166,7 +166,7 @@ public class RamlEmitterV2 {
 					}
 					}
 					else{
-						dump.append(indent(depth + 2)).append("content: ").append(sanitizeScalarValue(depth+2, it.getContent())).append("\n");
+						dump.append(indent(depth + 2)).append("content: ").append(sanitizeScalarValue(depth+2, it.getContent(), false)).append("\n");
 					}
 				
 					//dumpPojo(dump, depth + 2, item);
@@ -181,7 +181,7 @@ public class RamlEmitterV2 {
 			if (seq.size()>2&&!currentField.getName().equals("is")) {
 				dump.append("\n");
 				for (Object item : seq) {
-					dump.append(indent(depth + 1)).append(YAML_SEQ).append(sanitizeScalarValue(0, item)).append("\n");					
+					dump.append(indent(depth + 1)).append(YAML_SEQ).append(sanitizeScalarValue(0, item, false)).append("\n");					
 				}
 			}
 			else{
@@ -267,7 +267,7 @@ public class RamlEmitterV2 {
 			boolean inlineSeq) {
 		if (inlineSeq) {
 			Object item = seq.get(0);
-			dump.append(sanitizeScalarValue(0, item)).append("\n");
+			dump.append(sanitizeScalarValue(0, item, false)).append("\n");
 			return;
 		}
 		dump.append(YAML_SEQ_START);
@@ -276,7 +276,7 @@ public class RamlEmitterV2 {
 			if(i==0){
 				dump.append(' ');
 			}
-			dump.append(sanitizeScalarValue(0, item));
+			dump.append(sanitizeScalarValue(0, item, false));
 			dump.append(' ');
 			if (i < seq.size() - 1) {
 				dump.append(YAML_SEQ_SEP);
@@ -345,7 +345,7 @@ public class RamlEmitterV2 {
 		// body
 		for (Map.Entry entry : (Set<Map.Entry>) value.entrySet()) {
 			dump.append(indent(k)).append(
-					sanitizeScalarValue(depth, entry.getKey()));
+					sanitizeScalarValue(depth, entry.getKey(), false));
 			k=depth;
 			dump.append(YAML_MAP_SEP);
 
@@ -370,7 +370,7 @@ public class RamlEmitterV2 {
 				dumpPojo(dump, depth + 1, entry.getValue());
 			} else // scalar
 			{
-				dump.append(sanitizeScalarValue(depth + 1, entry.getValue()))
+				dump.append(sanitizeScalarValue(depth + 1, entry.getValue(), true))
 						.append("\n");
 			}
 		}
@@ -393,7 +393,7 @@ public class RamlEmitterV2 {
 		// body
 		for (Map.Entry entry : (Set<Map.Entry>) value.entrySet()) {
 			dump.append(indent(k)).append("- ").append(
-					sanitizeScalarValue(depth, entry.getKey()));
+					sanitizeScalarValue(depth, entry.getKey(), false));
 			k=depth;
 			
 			dump.append(YAML_MAP_SEP);
@@ -418,7 +418,7 @@ public class RamlEmitterV2 {
 				dumpPojo(dump, depth + 2, entry.getValue());
 			} else // scalar
 			{
-				dump.append(sanitizeScalarValue(depth + 2, entry.getValue()))
+				dump.append(sanitizeScalarValue(depth + 2, entry.getValue(), true))
 						.append("\n");
 			}
 		}
@@ -464,7 +464,7 @@ public class RamlEmitterV2 {
 				dump.append("\n");
 				dumpPojo(dump, depth + 1, value);
 			} else {
-				String sanitizeScalarValue = sanitizeScalarValue(depth, value);
+				String sanitizeScalarValue = sanitizeScalarValue(depth, value, true);
 				if (isSeparated&& includeField!=null&&includeField.length()>0){
 					try {
 						Field declaredField = field.getDeclaringClass().getDeclaredField(includeField);
@@ -530,7 +530,7 @@ public class RamlEmitterV2 {
 		return field.getName();
 	}
 
-	private String sanitizeScalarValue(int depth, Object value) {		
+	private String sanitizeScalarValue(int depth, Object value, boolean isValue) {		
 		Class<?> type = value.getClass();
 		String result = handleCustomScalar(value);
 		if (result != null) {
@@ -545,7 +545,7 @@ public class RamlEmitterV2 {
 				
 				result = blockFormat(depth, text);
 			} else {
-				result = inlineFormat(depth, text);
+				result = inlineFormat(depth, text, isValue);
 			}
 		} else {
 			result = String.valueOf(value);
@@ -560,12 +560,12 @@ public class RamlEmitterV2 {
 		return null;
 	}
 
-	private String inlineFormat(int depth, String text) {
+	private String inlineFormat(int depth, String text, boolean isValue) {
 		boolean isIdentifier = true;
 		if (text.length()==0){
 			return "\"" + "\""; 
 		}
-		if (text.equals("!include")){
+		if (text.startsWith("!include")){
 			return "\"" +text+ "\""; 
 		}
 		if (currentField.getName().equals("schemas")){
@@ -590,21 +590,36 @@ public class RamlEmitterV2 {
 					return text;
 				}
 			}
-			if (Character.isWhitespace(c)) {
+			if (!isValue && Character.isWhitespace(c)) {
 				isIdentifier = false;
 				break;
 			}
 			if (c == ':') {
-				isIdentifier = false;
-				break;
+				
+				if(a-"https".length()>=0){
+					if(!text.startsWith("https:",a-"https".length())){
+						isIdentifier = false;
+						break;
+					}
+				}
+				else if(a-"http".length()>=0){
+					if(!text.startsWith("http:",a-"http".length())){
+						isIdentifier = false;
+						break;
+					}
+				}
+				else{
+					isIdentifier = false;
+					break;
+				}
 			}
 			if (c == '"') {
 				isIdentifier = false;
 				break;
 			}
-			if (c=='{'){
-				isIdentifier=false;
-			}
+//			if (c=='{'){
+//				isIdentifier=false;
+//			}
 			if (c == '\'') {
 				isIdentifier = false;
 				break;

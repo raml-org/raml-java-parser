@@ -41,7 +41,7 @@ public class TemplateUse {
 				bld.append(s);
 				bld.append(": ");
 				String str = parameters.get(s);
-				if (str.equals("!include")){
+				if (str.startsWith("!include")){
 					str="\""+str+"\"";
 				}
 				bld.append(str);
