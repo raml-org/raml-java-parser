@@ -64,6 +64,14 @@ public class EmitterTestCase extends AbstractRamlTestCase
         verifyDump(raml, dumpFromAst);
     }
 
+    @Test
+    public void emitEmptyBody()
+    {
+        Raml raml = parseRaml("org/raml/empty-body.raml");
+        RamlEmitter emitter = new RamlEmitter();
+        emitter.dump(raml);
+    }
+
     private Raml verifyDump(Raml source, String dump)
     {
         RamlDocumentBuilder verifier = new RamlDocumentBuilder();

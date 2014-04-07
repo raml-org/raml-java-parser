@@ -136,6 +136,11 @@ public class MediaTypeResolver
      */
     public void setBodyDefaultMediaType(Map<String, Resource> resourceMap)
     {
+        if (mediaType == null)
+        {
+            //no default media type set
+            return;
+        }
         for (Resource resource : resourceMap.values())
         {
             Map<ActionType,Action> actionMap = resource.getActions();
