@@ -5,6 +5,11 @@ baseUri: http://example.com/api
 /nameless-children:
     /:
         /:
+/:
+    /named:
+        /:
+            /:
+                /named:
 /apis:
     get: ~
     /{apiId}:
