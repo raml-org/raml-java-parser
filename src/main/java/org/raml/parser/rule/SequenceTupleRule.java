@@ -81,6 +81,11 @@ public class SequenceTupleRule extends DefaultTupleRule<ScalarNode, SequenceNode
         itemType = valueType;
     }
 
+    public Class<?>[] getValueNodeType()
+    {
+        return new Class[] {SequenceNode.class};
+    }
+
     @Override
     public TupleRule<?, ?> deepCopy()
     {

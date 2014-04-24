@@ -35,11 +35,19 @@ public class ValidationTestCase extends AbstractRamlTestCase
 {
 
     @Test
+    public void sequenceTemplateExpected()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/sequence-template-expected.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Sequence expected"));
+    }
+
+    @Test
     public void sequenceExpected()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/validation/sequence-expected.yaml");
         assertThat(validationResults.size(), is(1));
-        assertThat(validationResults.get(0).getMessage(), is("Sequence expected"));
+        assertThat(validationResults.get(0).getMessage(), is("Invalid value type"));
     }
 
     @Test

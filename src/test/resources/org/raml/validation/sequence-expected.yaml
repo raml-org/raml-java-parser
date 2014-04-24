@@ -1,5 +1,4 @@
 #%RAML 0.8
 title: test
-traits:
-    non-sequence:
-        displayName: invalid trait def
+/hi:
+    securedBy: error
