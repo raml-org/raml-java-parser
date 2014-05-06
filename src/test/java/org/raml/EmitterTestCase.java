@@ -16,6 +16,7 @@
 package org.raml;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.HEAD;
@@ -70,6 +71,15 @@ public class EmitterTestCase extends AbstractRamlTestCase
         Raml raml = parseRaml("org/raml/empty-body.raml");
         RamlEmitter emitter = new RamlEmitter();
         emitter.dump(raml);
+    }
+
+    @Test
+    public void emitRegexp()
+    {
+        Raml raml = parseRaml("org/raml/emitter/pattern.yaml");
+        RamlEmitter emitter = new RamlEmitter();
+        String dump = emitter.dump(raml);
+        assertThat(dump, containsString("([a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+)"));
     }
 
     private Raml verifyDump(Raml source, String dump)

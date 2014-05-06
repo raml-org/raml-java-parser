@@ -340,7 +340,7 @@ public class RamlEmitter
         else if (String.class.isAssignableFrom(type))
         {
             String text = (String) value;
-            if (text.contains("\n"))
+            if (text.contains("\n") || text.contains("\\"))
             {
                 result = blockFormat(depth, text);
             }
