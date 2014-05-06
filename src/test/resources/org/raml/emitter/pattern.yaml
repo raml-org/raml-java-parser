@@ -1,0 +1,7 @@
+#%RAML 0.8
+title: pattern
+/hello:
+    get:
+        headers:
+          one:
+            pattern: ([a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+)
