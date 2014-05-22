@@ -20,6 +20,9 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
+import static org.raml.parser.rule.ValidationResult.Level.ERROR;
+import static org.raml.parser.rule.ValidationResult.Level.WARN;
+import static org.raml.parser.rule.ValidationResult.getLevel;
 
 import java.util.List;
 
@@ -236,6 +239,22 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getIncludeName(), nullValue());
         assertThat(validationResults.get(0).getMessage(), is("could not found expected ':'"));
+    }
+
+    @Test
+    public void emptyScalarValue()
+    {
+        String raml =
+                "#%RAML 0.8\n" +
+                "title: empty scalar\n" +
+                "version:\n" +
+                "/help:\n" +
+                "  description:";
+
+        List<ValidationResult> validationResults = validateRaml(raml, "");
+        assertThat(validationResults.size(), is(2));
+        assertThat(getLevel(WARN, validationResults).size(), is(2));
+        assertThat(getLevel(ERROR, validationResults).size(), is(0));
     }
 
     @Test

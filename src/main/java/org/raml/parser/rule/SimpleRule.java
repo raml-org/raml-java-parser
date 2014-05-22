@@ -61,7 +61,7 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (StringUtils.isEmpty(value))
         {
-            validationResults.add(ValidationResult.createErrorResult(getRuleEmptyMessage(getName()), keyNode != null ? keyNode : node));
+            validationResults.add(ValidationResult.createWarnResult(getRuleEmptyMessage(getName()), keyNode != null ? keyNode : node));
         }
         if (!ConvertUtils.canBeConverted(value, getFieldClass()))
         {

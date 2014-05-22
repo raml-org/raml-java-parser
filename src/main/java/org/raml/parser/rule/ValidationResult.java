@@ -163,6 +163,12 @@ public class ValidationResult
         return createErrorResult(message, UNKNOWN, UNKNOWN, UNKNOWN);
     }
 
+    public static ValidationResult createWarnResult(String message, Node node)
+    {
+        return new ValidationResult(Level.WARN, message, node.getStartMark().getLine(),
+                                    node.getStartMark().getColumn(), node.getEndMark().getColumn());
+    }
+
     public static ValidationResult create(Level level, String message)
     {
         return new ValidationResult(level, message, UNKNOWN, UNKNOWN, UNKNOWN);
