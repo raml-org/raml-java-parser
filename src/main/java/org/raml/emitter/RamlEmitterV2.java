@@ -55,6 +55,7 @@ public class RamlEmitterV2 {
 	
 	protected boolean isSeparated;
 	protected IRamlHierarchyTarget writer;
+	private boolean escape;
 	
 	public RamlEmitterV2(){
 		isSeparated=true;
@@ -583,6 +584,9 @@ public class RamlEmitterV2 {
 		if (text.contains("*")){
 			return "\"" + text + "\"";
 		}
+		if (text.contains("{")&&escape){
+			return "\"" + text + "\"";
+		}
 		for (int a = 0; a < text.length(); a++) {
 			char c = text.charAt(a);
 			if (a==0&&c=='{'&&text.endsWith("}")){
@@ -653,5 +657,9 @@ public class RamlEmitterV2 {
 
 	public void setSingle(boolean b) {
 		this.isSeparated=false;
+	}
+
+	public void setEscapeLiterals(boolean b) {
+		this.escape=b;
 	}
 }
