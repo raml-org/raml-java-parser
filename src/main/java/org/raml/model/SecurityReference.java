@@ -15,6 +15,7 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,15 +24,15 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Value;
 import org.raml.parser.resolver.MatchAllHandler;
 
-public class SecurityReference
+public class SecurityReference implements Serializable
 {
 
+    private static final long serialVersionUID = 8349105890811346195L;
 
     private String name;
 
     @Mapping(handler = MatchAllHandler.class)
     private Map<String, List<String>> parameters = new HashMap<String, List<String>>();
-
 
     public SecurityReference(@Value String name)
     {

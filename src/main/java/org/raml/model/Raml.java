@@ -15,6 +15,7 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,8 +30,10 @@ import org.raml.parser.resolver.ResourceHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 
-public class Raml
+public class Raml implements Serializable
 {
+
+    private static final long serialVersionUID = -7107368438040691199L;
 
     @Scalar(required = true)
     private String title;

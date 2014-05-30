@@ -15,6 +15,7 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,10 @@ import org.raml.parser.resolver.MimeTypeHandler;
 import org.raml.parser.resolver.ResponseHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
-public class Action
+public class Action implements Serializable
 {
+
+    private static final long serialVersionUID = 8444315314405971949L;
 
     @Key
     private ActionType type;

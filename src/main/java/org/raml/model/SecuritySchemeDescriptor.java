@@ -15,6 +15,7 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +23,10 @@ import org.raml.model.parameter.Header;
 import org.raml.model.parameter.QueryParameter;
 import org.raml.parser.annotation.Mapping;
 
-public class SecuritySchemeDescriptor
+public class SecuritySchemeDescriptor implements Serializable
 {
+
+    private static final long serialVersionUID = 8752760480882952807L;
 
     @Mapping
     private Map<String, Header> headers = new HashMap<String, Header>();

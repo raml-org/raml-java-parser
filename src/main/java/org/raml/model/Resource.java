@@ -15,6 +15,7 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -30,8 +31,10 @@ import org.raml.parser.annotation.Sequence;
 import org.raml.parser.resolver.ResourceHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
-public class Resource
+public class Resource implements Serializable
 {
+
+    private static final long serialVersionUID = -1039592210175332252L;
 
     @Parent
     private Resource parentResource;
@@ -160,7 +163,7 @@ public class Resource
 
     /**
      * @return URI parameters defined for the current resource plus
-     *   all URI parameters defined in the resource hierarchy
+     * all URI parameters defined in the resource hierarchy
      */
     public Map<String, UriParameter> getResolvedUriParameters()
     {

@@ -15,6 +15,7 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +24,10 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.resolver.MimeTypeHandler;
 
-public class Response
+public class Response implements Serializable
 {
+
+    private static final long serialVersionUID = 5492447634029702499L;
 
     @Scalar
     private String description;

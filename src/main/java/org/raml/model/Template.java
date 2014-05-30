@@ -15,10 +15,14 @@
  */
 package org.raml.model;
 
+import java.io.Serializable;
+
 import org.raml.parser.annotation.Scalar;
 
-public class Template
+public class Template implements Serializable
 {
+
+    private static final long serialVersionUID = -1251155555050043145L;
 
     @Scalar
     private String displayName;

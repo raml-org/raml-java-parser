@@ -17,6 +17,7 @@ package org.raml.model.parameter;
 
 import static org.raml.model.ParamType.STRING;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -27,8 +28,10 @@ import org.raml.parser.rule.SequenceTupleNullsAllowedRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AbstractParam
+public class AbstractParam implements Serializable
 {
+
+    private static final long serialVersionUID = 7834134766509227575L;
 
     @Scalar
     private String displayName;
