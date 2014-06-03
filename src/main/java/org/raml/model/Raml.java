@@ -57,10 +57,10 @@ public class Raml implements Serializable
     private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
     @Sequence
-    private List<Map<String, Template>> resourceTypes;
+    private List<Map<String, Template>> resourceTypes = new ArrayList<Map<String, Template>>();
 
     @Sequence
-    private List<Map<String, Template>> traits;
+    private List<Map<String, Template>> traits = new ArrayList<Map<String, Template>>();
 
     @Sequence
     private List<Map<String, SecurityScheme>> securitySchemes = new ArrayList<Map<String, SecurityScheme>>();
