@@ -136,4 +136,9 @@ public class YamlValidationService
         return new ArrayList<ValidationResult>();
     }
 
+    protected YamlValidator getValidator()
+    {
+        return yamlValidator;
+    }
+
 }

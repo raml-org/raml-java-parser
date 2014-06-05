@@ -30,13 +30,10 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 public class RamlValidationService extends YamlValidationService
 {
 
-    private RamlDocumentValidator validator;
-
     public RamlValidationService(ResourceLoader resourceLoader, RamlDocumentValidator ramlDocumentValidator, TagResolver... tagResolvers)
     {
         super(resourceLoader, ramlDocumentValidator, defaultResolver(tagResolvers));
-        validator = ramlDocumentValidator;
-        validator.setResourceLoader(resourceLoader);
+        getValidator().setResourceLoader(resourceLoader);
     }
 
     private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)
@@ -51,8 +48,8 @@ public class RamlValidationService extends YamlValidationService
     @Override
     protected List<ValidationResult> preValidation(MappingNode root)
     {
-        List<ValidationResult> validationResults = validator.getTemplateResolver().init(root);
-        validationResults.addAll(validator.getMediaTypeResolver().beforeDocumentStart(root));
+        List<ValidationResult> validationResults = getValidator().getTemplateResolver().init(root);
+        validationResults.addAll(getValidator().getMediaTypeResolver().beforeDocumentStart(root));
         return validationResults;
     }
 
@@ -71,4 +68,9 @@ public class RamlValidationService extends YamlValidationService
         return new RamlValidationService(loader, new RamlDocumentValidator(nodeRuleFactory), tagResolvers);
     }
 
+    @Override
+    protected RamlDocumentValidator getValidator()
+    {
+        return (RamlDocumentValidator) super.getValidator();
+    }
 }
