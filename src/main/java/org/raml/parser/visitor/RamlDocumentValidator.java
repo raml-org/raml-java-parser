@@ -21,10 +21,13 @@ import java.util.List;
 
 import org.raml.model.Raml;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.rule.BaseUriRule;
 import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.ImplicitMapEntryRule;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
+import org.raml.parser.rule.SimpleRule;
+import org.raml.parser.rule.TupleRule;
 import org.raml.parser.rule.TypedTupleRule;
 import org.raml.parser.rule.ValidationResult;
 import org.yaml.snakeyaml.nodes.MappingNode;
@@ -118,5 +121,30 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     public void setResourceLoader(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
+    }
+
+    @Override
+    public void onDocumentEnd(MappingNode node)
+    {
+        validateBaseUriAndVersion();
+        super.onDocumentEnd(node);
+    }
+
+    private void validateBaseUriAndVersion()
+    {
+        BaseUriRule baseUriRule = getRule("baseUri");
+        SimpleRule versionRule = getRule("version");
+
+        if (versionRule.getKeyNode() == null && baseUriRule.getParameters().contains(versionRule.getName()))
+        {
+            ScalarNode node = baseUriRule.getValueNode();
+            getMessages().add(ValidationResult.createErrorResult(BaseUriRule.VERSION_NOT_PRESENT_MESSAGE, node.getStartMark(), node.getEndMark()));
+        }
+    }
+
+    private <T extends TupleRule> T getRule(String fieldName)
+    {
+        //noinspection unchecked
+        return (T) ((DefaultTupleRule) getRuleContext().peek()).getRuleByFieldName(fieldName);
     }
 }

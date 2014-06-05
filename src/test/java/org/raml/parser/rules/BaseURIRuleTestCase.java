@@ -59,4 +59,26 @@ public class BaseURIRuleTestCase extends AbstractRamlTestCase
         assertFalse("Errors must not be empty", errors.isEmpty());
         assertThat(errors.get(0).getMessage(), is(BaseUriRule.URI_NOT_VALID_MESSAGE));
     }
+
+    @Test
+    public void testVersionAfterBaseUri()
+    {
+        String raml = "#%RAML 0.8\n" +
+                      "title: x\n" +
+                      "baseUri: http://localhost/{version}\n" +
+                      "version: v1";
+        List<ValidationResult> errors = validateRaml(raml, "");
+        assertTrue("Errors must be empty", errors.isEmpty());
+    }
+
+    @Test
+    public void testBaseUriNoVersion()
+    {
+        String raml = "#%RAML 0.8\n" +
+                      "title: x\n" +
+                      "baseUri: http://localhost/{version}";
+        List<ValidationResult> errors = validateRaml(raml, "");
+        assertFalse("Errors must not be empty", errors.isEmpty());
+        assertThat(errors.get(0).getMessage(), is(BaseUriRule.VERSION_NOT_PRESENT_MESSAGE));
+    }
 }

@@ -70,10 +70,6 @@ public class BaseUriRule extends SimpleRule
             value = value.replace("{" + paramValue + "}", "temp");
             parameters.add(paramValue);
         }
-        if (getVersionRule().getKeyNode() == null && parameters.contains(getVersionRule().getName()))
-        {
-            validationResults.add(ValidationResult.createErrorResult(VERSION_NOT_PRESENT_MESSAGE, node.getStartMark(), node.getEndMark()));
-        }
         //validate uri only when no parameters are defined
         if (parameters.isEmpty() && !isValid(value))
         {
@@ -103,6 +99,5 @@ public class BaseUriRule extends SimpleRule
     {
         return (SimpleRule) getParentTupleRule().getRuleByFieldName("version");
     }
-
 
 }
