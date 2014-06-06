@@ -39,6 +39,11 @@ public class AbstractRamlTestCase
         return new RamlDocumentBuilder().build(getInputStream(resourceLocation), resourceLocation);
     }
 
+    protected static Raml parseRaml(String raml, String resourceLocation)
+    {
+        return new RamlDocumentBuilder().build(raml, resourceLocation);
+    }
+
     protected static Raml parseRaml(String resourceLocation, RamlDocumentBuilder builder)
     {
         return builder.build(getInputStream(resourceLocation), resourceLocation);

@@ -17,6 +17,7 @@ package org.raml;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.GET;
 import static org.raml.model.ActionType.HEAD;
@@ -80,6 +81,34 @@ public class EmitterTestCase extends AbstractRamlTestCase
         RamlEmitter emitter = new RamlEmitter();
         String dump = emitter.dump(raml);
         assertThat(dump, containsString("([a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+)"));
+    }
+
+    @Test
+    public void emitNumbers()
+    {
+        String yaml = "#%RAML 0.8\n" +
+                      "title: numbers\n" +
+                      "/resource:\n" +
+                      " get:\n" +
+                      "  queryParameters:\n" +
+                      "   integer:\n" +
+                      "    type: integer\n" +
+                      "    maximum: 8.0\n" +
+                      "    minimum: 1\n" +
+                      "   number:\n" +
+                      "    type: number\n" +
+                      "    maximum: 9.5\n" +
+                      "    minimum: 2.0";
+        Raml raml = parseRaml(yaml, "");
+        RamlEmitter emitter = new RamlEmitter();
+        String dump = emitter.dump(raml);
+        assertThat(dump, containsString("maximum: 8"));
+        assertThat(dump, not(containsString("maximum: 8.0")));
+        assertThat(dump, containsString("minimum: 1"));
+        assertThat(dump, not(containsString("minimum: 1.0")));
+        assertThat(dump, containsString("maximum: 9.5"));
+        assertThat(dump, containsString("minimum: 2"));
+        assertThat(dump, not(containsString("minimum: 2.0")));
     }
 
     private Raml verifyDump(Raml source, String dump)

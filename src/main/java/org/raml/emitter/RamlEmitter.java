@@ -22,6 +22,7 @@ import static org.raml.parser.utils.ReflectionUtils.isPojo;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -361,6 +362,10 @@ public class RamlEmitter
         if (value instanceof Protocol)
         {
             return String.valueOf(value);
+        }
+        if (value instanceof BigDecimal)
+        {
+            return ((BigDecimal) value).stripTrailingZeros().toString();
         }
         return null;
     }
