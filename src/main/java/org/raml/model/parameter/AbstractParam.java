@@ -67,7 +67,7 @@ public class AbstractParam implements Serializable
     @Scalar
     private String example;
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    protected transient final Logger logger = LoggerFactory.getLogger(getClass());
 
     public AbstractParam()
     {

@@ -26,7 +26,7 @@ import org.yaml.snakeyaml.nodes.Node;
 public class ValidationResult
 {
 
-    public static int UNKNOWN = -1;
+    public static final int UNKNOWN = -1;
 
     public enum Level
     {

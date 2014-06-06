@@ -26,7 +26,7 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class ResourceHandler implements TupleHandler
 {
 
-    public static String RESOURCE_KEY = "/ResourceName";
+    public static final String RESOURCE_KEY = "/ResourceName";
 
     @Override
     public boolean handles(NodeTuple tuple)
