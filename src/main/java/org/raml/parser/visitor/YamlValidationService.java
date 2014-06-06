@@ -27,6 +27,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.TagResolver;
@@ -85,10 +86,9 @@ public class YamlValidationService
     {
         long startTime = currentTimeMillis();
 
-        Yaml yamlParser = new Yaml();
-
         try
         {
+            Yaml yamlParser = new Yaml();
             Node root = yamlParser.compose(content);
             if (root != null && root.getNodeId() == mapping)
             {
@@ -106,6 +106,10 @@ public class YamlValidationService
         catch (YAMLException ex)
         {
             errorMessage.add(createErrorResult(ex.getMessage()));
+        }
+        finally
+        {
+            IOUtils.closeQuietly(content);
         }
 
         errorMessage.addAll(yamlValidator.getMessages());

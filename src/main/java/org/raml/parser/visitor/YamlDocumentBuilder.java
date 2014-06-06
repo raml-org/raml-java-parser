@@ -29,6 +29,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Stack;
 
+import org.apache.commons.io.IOUtils;
 import org.raml.parser.builder.DefaultTupleBuilder;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
@@ -79,14 +80,21 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
 
     public T build(Reader content, String resourceLocation)
     {
-        Yaml yamlParser = new Yaml();
-        NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader, tagResolvers);
-        rootNode = (MappingNode) yamlParser.compose(content);
-        contextPath.pushRoot(resourceLocation);
-        preBuildProcess();
-        nodeVisitor.visitDocument(rootNode);
-        postBuildProcess();
-        return documentObject;
+        try
+        {
+            Yaml yamlParser = new Yaml();
+            NodeVisitor nodeVisitor = new NodeVisitor(this, resourceLoader, tagResolvers);
+            rootNode = (MappingNode) yamlParser.compose(content);
+            contextPath.pushRoot(resourceLocation);
+            preBuildProcess();
+            nodeVisitor.visitDocument(rootNode);
+            postBuildProcess();
+            return documentObject;
+        }
+        finally
+        {
+            IOUtils.closeQuietly(content);
+        }
     }
 
     public T build(InputStream content, String resourceLocation)
