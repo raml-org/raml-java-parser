@@ -69,6 +69,11 @@ public class ContextPath
     private String getPartentPath()
     {
         int idx = includeStack.peek().getIncludeName().lastIndexOf("/") + 1;
+        int winIdx = includeStack.peek().getIncludeName().lastIndexOf("\\") + 1;
+        if (winIdx > idx)
+        {
+            idx = winIdx;
+        }
         return includeStack.peek().getIncludeName().substring(0, idx);
     }
 
