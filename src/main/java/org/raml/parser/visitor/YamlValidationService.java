@@ -21,7 +21,6 @@ import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.TagResolver;
+import org.raml.parser.utils.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -79,7 +79,7 @@ public class YamlValidationService
 
     public List<ValidationResult> validate(InputStream content, String resourceLocation)
     {
-        return validate(new InputStreamReader(content), resourceLocation);
+        return validate(StreamUtils.reader(content), resourceLocation);
     }
 
     public List<ValidationResult> validate(Reader content, String resourceLocation)
@@ -131,7 +131,7 @@ public class YamlValidationService
     @Deprecated
     public List<ValidationResult> validate(InputStream content)
     {
-        return validate(new InputStreamReader(content));
+        return validate(StreamUtils.reader(content));
     }
 
     protected List<ValidationResult> preValidation(MappingNode root)

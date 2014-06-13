@@ -22,7 +22,6 @@ import static org.raml.parser.visitor.TupleType.VALUE;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,6 +39,7 @@ import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.TagResolver;
+import org.raml.parser.utils.StreamUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.emitter.Emitter;
@@ -99,7 +99,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
 
     public T build(InputStream content, String resourceLocation)
     {
-        return build(new InputStreamReader(content), resourceLocation);
+        return build(StreamUtils.reader(content), resourceLocation);
     }
 
     public T build(String content, String resourceLocation)
@@ -116,7 +116,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
     @Deprecated
     public T build(InputStream content)
     {
-        return build(new InputStreamReader(content));
+        return build(StreamUtils.reader(content));
     }
 
     protected T getDocumentObject()
