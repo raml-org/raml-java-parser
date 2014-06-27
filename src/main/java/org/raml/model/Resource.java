@@ -246,7 +246,7 @@ public class Resource implements Serializable
     public String toString()
     {
         return "Resource{displayName='" + displayName + '\'' +
-               ", uri='" + (parentUri != null ? getUri() : "-" + '\'') + '}';
+               ", uri='" + (parentUri != null ? getUri() : "-") + "'}";
     }
 
     public Resource getResource(String path)
