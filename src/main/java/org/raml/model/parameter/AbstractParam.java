@@ -15,6 +15,7 @@
  */
 package org.raml.model.parameter;
 
+import static org.raml.model.ParamType.OK;
 import static org.raml.model.ParamType.STRING;
 
 import java.io.Serializable;
@@ -213,10 +214,15 @@ public class AbstractParam implements Serializable
 
     public boolean validate(String value)
     {
+        return OK.equals(message(value));
+    }
+
+    public String message(String value)
+    {
         if (type == null)
         {
             type = STRING;
         }
-        return type.validate(this, value);
+        return type.message(this, value);
     }
 }

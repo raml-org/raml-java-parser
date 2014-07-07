@@ -24,31 +24,31 @@ public enum ParamType
     STRING
             {
                 @Override
-                public boolean validate(AbstractParam param, String value)
+                public String message(AbstractParam param, String value)
                 {
                     if (param.getPattern() != null && !value.matches(param.getPattern()))
                     {
-                        return false;
+                        return "Value does not match pattern " + param.getPattern();
                     }
                     if (param.getMinLength() != null && value.length() < param.getMinLength())
                     {
-                        return false;
+                        return "Value length is shorter than " + param.getMinLength();
                     }
                     if (param.getMaxLength() != null && value.length() > param.getMaxLength())
                     {
-                        return false;
+                        return "Value length is longer than " + param.getMaxLength();
                     }
                     if (param.getEnumeration() != null && !param.getEnumeration().contains(value))
                     {
-                        return false;
+                        return "Value must be one of " + param.getEnumeration();
                     }
-                    return true;
+                    return OK;
                 }
             },
     NUMBER
             {
                 @Override
-                public boolean validate(AbstractParam param, String value)
+                public String message(AbstractParam param, String value)
                 {
                     BigDecimal number;
                     try
@@ -57,23 +57,23 @@ public enum ParamType
                     }
                     catch (NumberFormatException nfe)
                     {
-                        return false;
+                        return "Number required";
                     }
                     if (param.getMinimum() != null && number.compareTo(param.getMinimum()) < 0)
                     {
-                        return false;
+                        return "Value is below the minimum " + param.getMinimum();
                     }
                     if (param.getMaximum() != null && number.compareTo(param.getMaximum()) > 0)
                     {
-                        return false;
+                        return "Value is above the maximum " + param.getMaximum();
                     }
-                    return true;
+                    return OK;
                 }
             },
     INTEGER
             {
                 @Override
-                public boolean validate(AbstractParam param, String value)
+                public String message(AbstractParam param, String value)
                 {
                     Integer number;
                     try
@@ -82,17 +82,17 @@ public enum ParamType
                     }
                     catch (NumberFormatException nfe)
                     {
-                        return false;
+                        return "Integer required";
                     }
                     if (param.getMinimum() != null && BigDecimal.valueOf(number).compareTo(param.getMinimum()) < 0)
                     {
-                        return false;
+                        return "Value is below the minimum " + param.getMinimum();
                     }
                     if (param.getMaximum() != null && BigDecimal.valueOf(number).compareTo(param.getMaximum()) > 0)
                     {
-                        return false;
+                        return "Value is above the maximum " + param.getMaximum();
                     }
-                    return true;
+                    return OK;
                 }
             },
     DATE, //TODO add date validation
@@ -100,14 +100,26 @@ public enum ParamType
     BOOLEAN
             {
                 @Override
-                public boolean validate(AbstractParam param, String value)
+                public String message(AbstractParam param, String value)
                 {
-                    return "true".equals(value) || "false".equals(value);
+                    if ("true".equals(value) || "false".equals(value))
+                    {
+                        return OK;
+                    }
+                    return "Value must be one of [true, false]";
                 }
             };
 
     public boolean validate(AbstractParam param, String value)
     {
-        return true;
+        return OK.equals(message(param, value));
     }
+
+    public String message(AbstractParam param, String value)
+    {
+        return OK;
+    }
+
+    public static final String OK = "OK";
+
 }
