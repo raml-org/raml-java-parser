@@ -29,6 +29,11 @@ public class FileResourceLoader implements ResourceLoader
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     private File parentPath;
 
+    public FileResourceLoader()
+    {
+        this(new File("./"));
+    }
+
     public FileResourceLoader(String path)
     {
         this(new File(path));
