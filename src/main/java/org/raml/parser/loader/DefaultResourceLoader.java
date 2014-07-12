@@ -25,7 +25,7 @@ public class DefaultResourceLoader implements ResourceLoader
     public DefaultResourceLoader()
     {
         resourceLoader = new CompositeResourceLoader(
-                new UrlResourceLoader(), new ClassPathResourceLoader());
+                new UrlResourceLoader(), new ClassPathResourceLoader(), new FileResourceLoader("."));
     }
 
     @Override

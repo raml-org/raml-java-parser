@@ -242,6 +242,16 @@ public class ValidationTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void defaultFileResourceLoader()
+    {
+        String resource = "src/test/resources/org/raml/validation/missing-colon.yaml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getIncludeName(), nullValue());
+        assertThat(validationResults.get(0).getMessage(), is("could not found expected ':'"));
+    }
+
+    @Test
     public void emptyScalarValue()
     {
         String raml =
