@@ -17,6 +17,20 @@ and *z* is the version of the parser.
 So *0.1.2* is the 2nd revision of the parser for the *0.1* version
 of the RAML specification.
 
+## Build
+
+### JAR file without dependencies
+
+```mvn clean package```
+
+### JAR file with dependencies
+
+```mvn clean package -P jar-with-dependencies```
+
+**Run standalone validator**
+
+```java -jar raml-parser-{version}.jar raml-file ...```
+
 ## Usage
 
 ### Validation
@@ -34,4 +48,18 @@ The parser returns a Raml object and can be invoked using a String with the RAML
 
 ```java
 Raml raml = new RamlDocumentBuilder().build(ramlLocation);
+```
+
+### Emitter
+
+If you do any change to the Raml object model and you want to get the updated RAML descriptor
+you can use RamlEmitter class:
+
+```java
+Raml raml = new RamlDocumentBuilder().build(ramlLocation);
+
+// modify the raml object
+
+RamlEmitter emitter = new RamlEmitter();
+String dumpFromRaml = emitter.dump(raml);
 ```
