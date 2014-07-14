@@ -15,12 +15,11 @@
  */
 package org.raml;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 
+import org.raml.parser.loader.DefaultResourceLoader;
+import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.visitor.RamlValidationService;
 
@@ -31,20 +30,19 @@ public class Validator
     {
         if (args.length == 0)
         {
-            System.out.println("\n\tusage: java -jar raml-parser-{version}.jar raml-file ...\n");
+            System.out.println("\n\tusage: java -jar raml-parser-{version}.jar raml-resource ...\n");
             return;
         }
         new Validator().validate(args);
     }
 
-    private void validate(String[] files) throws FileNotFoundException
+    private void validate(String[] resources) throws FileNotFoundException
     {
-        for (String fileName : files)
+        ResourceLoader loader = new DefaultResourceLoader();
+        for (String ramlResource : resources)
         {
-            File file = new File(fileName);
-            InputStream stream = new FileInputStream(file);
-            List<ValidationResult> results = RamlValidationService.createDefault().validate(stream, "");
-            System.out.format("Validation Results for %s:\n", fileName);
+            System.out.format("Validation Results for %s:\n", ramlResource);
+            List<ValidationResult> results = RamlValidationService.createDefault().validate(loader.fetchResource(ramlResource), "");
             if (results.isEmpty())
             {
                 System.out.println("\tOK.");
