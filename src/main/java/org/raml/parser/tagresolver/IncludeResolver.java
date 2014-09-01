@@ -17,12 +17,11 @@ package org.raml.parser.tagresolver;
 
 import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.utils.StreamUtils;
 import org.raml.parser.visitor.NodeHandler;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Node;
@@ -54,62 +53,41 @@ public class IncludeResolver implements TagResolver, ContextPathAware
         }
 
         Node includeNode;
-        InputStream inputStream = null;
-        try
+        if (node.getNodeId() != scalar)
         {
-            if (node.getNodeId() != scalar)
-            {
-                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be non-scalar");
-                return mockInclude(node);
-            }
-            ScalarNode scalarNode = (ScalarNode) node;
-            String resourceName = contextPath.resolveAbsolutePath(scalarNode.getValue());
-            inputStream = resourceLoader.fetchResource(resourceName);
+            nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be non-scalar");
+            return mockInclude(node);
+        }
+        ScalarNode scalarNode = (ScalarNode) node;
+        String resourceName = contextPath.resolveAbsolutePath(scalarNode.getValue());
+        InputStream inputStream = resourceLoader.fetchResource(resourceName);
 
-            if (inputStream == null)
-            {
-                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be resolved " + resourceName);
-                return mockInclude(node);
-            }
-            else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
-            {
-                Yaml yamlParser = new Yaml();
-                includeNode = yamlParser.compose(new InputStreamReader(inputStream));
-            }
-            else //scalar value
-            {
-                String newValue = IOUtils.toString(inputStream);
-                includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
-            }
-            if (includeNode == null)
-            {
-                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
-                return mockInclude(node);
-            }
-            //retag node with included resource info
-            String markInfo = node.getStartMark().getLine() + SEPARATOR + node.getStartMark().getColumn()
-                              + SEPARATOR + node.getEndMark().getColumn();
-            includeNode.setTag(new Tag(INCLUDE_APPLIED_TAG + resourceName + SEPARATOR + markInfo));
-            return includeNode;
-        }
-        catch (IOException e)
+        if (inputStream == null)
         {
-            throw new RuntimeException(e);
+            nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be resolved " + resourceName);
+            return mockInclude(node);
         }
-        finally
+        else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                //ignore
-            }
+            Yaml yamlParser = new Yaml();
+            includeNode = yamlParser.compose(new InputStreamReader(inputStream));
         }
+        else //scalar value
+        {
+            //String newValue = IOUtils.toString(inputStream);
+            String newValue = StreamUtils.toString(inputStream);
+            includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
+        }
+        if (includeNode == null)
+        {
+            nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
+            return mockInclude(node);
+        }
+        //retag node with included resource info
+        String markInfo = node.getStartMark().getLine() + SEPARATOR + node.getStartMark().getColumn()
+                          + SEPARATOR + node.getEndMark().getColumn();
+        includeNode.setTag(new Tag(INCLUDE_APPLIED_TAG + resourceName + SEPARATOR + markInfo));
+        return includeNode;
     }
 
     @Override
@@ -154,6 +132,7 @@ public class IncludeResolver implements TagResolver, ContextPathAware
 
     public static class IncludeScalarNode extends ScalarNode
     {
+
         private String includeName;
 
         public IncludeScalarNode(String includeName, String value, ScalarNode node)

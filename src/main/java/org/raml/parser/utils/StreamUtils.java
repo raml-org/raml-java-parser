@@ -15,13 +15,28 @@
  */
 package org.raml.parser.utils;
 
+import static org.apache.commons.io.ByteOrderMark.UTF_8;
+import static org.apache.commons.io.ByteOrderMark.UTF_16BE;
+import static org.apache.commons.io.ByteOrderMark.UTF_16LE;
+import static org.apache.commons.io.ByteOrderMark.UTF_32BE;
+import static org.apache.commons.io.ByteOrderMark.UTF_32LE;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
+import org.mozilla.universalchardet.UniversalDetector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StreamUtils
 {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StreamUtils.class);
 
     private static final String RAML_PARSER_ENCODING = "raml.parser.encoding";
 
@@ -30,15 +45,53 @@ public class StreamUtils
         return System.getProperty(RAML_PARSER_ENCODING, "UTF-8");
     }
 
-    public static Reader reader(InputStream content)
+    public static Reader reader(InputStream stream)
     {
         try
         {
-            return new InputStreamReader(content, getDefaultEncoding());
+            byte[] content = IOUtils.toByteArray(stream);
+            return new InputStreamReader(new ByteArrayInputStream(content), detectEncoding(content));
         }
-        catch (UnsupportedEncodingException e)
+        catch (IOException e)
         {
             throw new RuntimeException(e);
         }
+        finally
+        {
+            IOUtils.closeQuietly(stream);
+        }
+    }
+
+    public static String toString(InputStream stream)
+    {
+        try
+        {
+            byte[] content = IOUtils.toByteArray(stream);
+            String encoding = detectEncoding(content);
+            return IOUtils.toString(new BOMInputStream(new ByteArrayInputStream(content), UTF_8, UTF_16LE, UTF_16BE, UTF_32LE, UTF_32BE), encoding);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String detectEncoding(byte[] content)
+    {
+        UniversalDetector detector = new UniversalDetector(null);
+        detector.handleData(content, 0, content.length);
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        if (encoding != null)
+        {
+            LOGGER.debug(String.format("Detected encoding: %s\n", encoding));
+        }
+        else
+        {
+            encoding = getDefaultEncoding();
+            LOGGER.debug(String.format("No encoding detected, using default: %s\n", encoding));
+        }
+        detector.reset();
+        return encoding;
     }
 }

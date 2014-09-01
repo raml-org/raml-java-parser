@@ -144,6 +144,13 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void validUtf8IncludeUtf16XmlSchema()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/valid-xml-utf8-include-utf16.yaml");
+        assertThat(validationResults.size(), is(0));
+    }
+
+    @Test
     public void invalidXmlSchema()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-xml.yaml");
