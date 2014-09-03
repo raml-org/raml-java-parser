@@ -15,12 +15,6 @@
  */
 package org.raml.parser.utils;
 
-import static org.apache.commons.io.ByteOrderMark.UTF_8;
-import static org.apache.commons.io.ByteOrderMark.UTF_16BE;
-import static org.apache.commons.io.ByteOrderMark.UTF_16LE;
-import static org.apache.commons.io.ByteOrderMark.UTF_32BE;
-import static org.apache.commons.io.ByteOrderMark.UTF_32LE;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +22,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.BOMInputStream;
 import org.mozilla.universalchardet.UniversalDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,12 +61,52 @@ public class StreamUtils
         {
             byte[] content = IOUtils.toByteArray(stream);
             String encoding = detectEncoding(content);
-            return IOUtils.toString(new BOMInputStream(new ByteArrayInputStream(content), UTF_8, UTF_16LE, UTF_16BE, UTF_32LE, UTF_32BE), encoding);
+            return new String(trimBom(content), encoding);
         }
         catch (IOException e)
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private static byte[] trimBom(byte[] content)
+    {
+        int bomSize = 0;
+        if (content.length > 4)
+        {
+            //check for UTF_32BE and UTF_32LE BOMs
+            if (content[0] == 0x00 && content[1] == 0x00 && content[2] == (byte) 0xFE && content[3] == (byte) 0xFF ||
+                content[0] == (byte) 0xFF && content[1] == (byte) 0xFE && content[2] == 0x00 && content[3] == 0x00)
+            {
+                bomSize = 4;
+            }
+        }
+        if (content.length > 3 && bomSize == 0)
+        {
+            //check for UTF-8 BOM
+            if (content[0] == (byte) 0xEF && content[1] == (byte) 0xBB && content[2] == (byte) 0xBF)
+            {
+                bomSize = 3;
+            }
+        }
+        if (content.length > 2 && bomSize == 0)
+        {
+            //check for UTF_16BE and UTF_16LE BOMs
+            if (content[0] == (byte) 0xFE && content[1] == (byte) 0xFF || content[0] == (byte) 0xFF && content[1] == (byte) 0xFE)
+            {
+                bomSize = 2;
+            }
+        }
+
+        if (bomSize > 0)
+        {
+            LOGGER.debug(String.format("Trimming %s-byte BOM\n", bomSize));
+            int trimmedSize = content.length - bomSize;
+            byte[] trimmedArray = new byte[trimmedSize];
+            System.arraycopy(content, bomSize, trimmedArray, 0, trimmedSize);
+            return trimmedArray;
+        }
+        return content;
     }
 
     private static String detectEncoding(byte[] content)
