@@ -83,6 +83,18 @@ public class SuggestionTestCase
     }
 
     @Test
+    public void versionHeaderAndSeparator()
+    {
+        YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(new RamlDocumentBuilder());
+        List<Suggestion> suggest = yamlDocumentSuggester.suggest(VERSION + "\n---\n", "");
+        assertThat(suggest.size(), is(ROOT_SUGGEST_COUNT));
+        assertThat(suggest.contains(new KeySuggestion("title")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("version")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("get")), is(false));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
+    @Test
     public void documentSequence()
     {
         String topSection = "#%RAML 0.8\n" +

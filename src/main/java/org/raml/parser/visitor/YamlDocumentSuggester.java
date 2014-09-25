@@ -75,9 +75,12 @@ public class YamlDocumentSuggester implements NodeHandler
         }
         Yaml yamlParser = new Yaml();
         NodeVisitor nodeVisitor = new NodeVisitor(this, new DefaultResourceLoader());
-        MappingNode rootNode = (MappingNode) yamlParser.compose(new StringReader(suggestRaml));
-
-
+        MappingNode rootNode = null;
+        Node compose = yamlParser.compose(new StringReader(suggestRaml));
+        if (compose != null && compose.getNodeId() == NodeId.mapping)
+        {
+            rootNode = (MappingNode) compose;
+        }
         nodeVisitor.visitDocument(rootNode);
 
 
