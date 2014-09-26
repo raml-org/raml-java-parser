@@ -1,0 +1,11 @@
+#%RAML 0.8
+title: include sequence
+traits:
+    - !include sequence-trait-not-found.yaml
+
+/main:
+    post:
+        body:
+            application/json:
+    get:
+        is: [paged]

@@ -161,4 +161,16 @@ public class IncludeTestCase extends AbstractRamlTestCase
         assertThat(raml.getResource("/main").getAction(GET).getQueryParameters().size(), is(2));
         assertThat(raml.getResource("/main").getAction(GET).getHeaders().size(), is(1));
     }
+
+    @Test
+    public void includeSequenceTemplateNotFound()
+    {
+        String ramlSource = "org/raml/include/include-sequence-template-not-found.yaml";
+        List<ValidationResult> validationResults = validateRaml(ramlSource);
+        assertThat(validationResults.size(), is(3));
+        assertThat(validationResults.get(0).getMessage(), is("Mapping expected"));
+        assertThat(validationResults.get(1).getMessage(), is("Include cannot be resolved org/raml/include/sequence-trait-not-found.yaml"));
+        assertThat(validationResults.get(2).getMessage(), is("trait not defined: paged"));
+    }
+
 }

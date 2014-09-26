@@ -141,6 +141,7 @@ public class TemplateResolver
             if (template.getNodeId() != mapping)
             {
                 validationResults.add(createErrorResult("Mapping expected", templateSequence.getStartMark(), templateSequence.getEndMark()));
+                break;
             }
             for (NodeTuple tuple : ((MappingNode) template).getValue())
             {
