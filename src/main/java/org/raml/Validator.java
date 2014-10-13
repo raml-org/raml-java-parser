@@ -51,37 +51,13 @@ public class Validator
             {
                 for (ValidationResult item : results)
                 {
-                    printResult(item);
+                    System.out.println(item.toDetailedString());
                 }
             }
             System.out.println();
         }
     }
 
-    private void printResult(ValidationResult item)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\t");
-        stringBuilder.append(item.getLevel());
-        stringBuilder.append(" ");
-        stringBuilder.append(item.getMessage());
-        if (item.getLine() != -1)
-        {
-            stringBuilder.append(" (line ");
-            stringBuilder.append(item.getLine());
-            if (item.getStartColumn() != -1)
-            {
-                stringBuilder.append(", col ");
-                stringBuilder.append(item.getStartColumn());
-                if (item.getEndColumn() != item.getStartColumn())
-                {
-                    stringBuilder.append(" to ");
-                    stringBuilder.append(item.getEndColumn());
-                }
-            }
-            stringBuilder.append(")");
-        }
-        System.out.println(stringBuilder.toString());
-    }
+  
 
 }
