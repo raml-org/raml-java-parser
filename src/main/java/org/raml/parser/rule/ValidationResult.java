@@ -173,4 +173,25 @@ public class ValidationResult
     {
         return new ValidationResult(level, message, UNKNOWN, UNKNOWN, UNKNOWN);
     }
+	public String toDetailedString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("\t");
+		stringBuilder.append(getLevel());
+		stringBuilder.append(" ");
+		stringBuilder.append(getMessage());
+		if (getLine() != -1) {
+			stringBuilder.append(" (line ");
+			stringBuilder.append(getLine() + 1);
+			if (getStartColumn() != -1) {
+				stringBuilder.append(", col ");
+				stringBuilder.append(getStartColumn() + 1);
+				if (getEndColumn() != getStartColumn()) {
+					stringBuilder.append(" to ");
+					stringBuilder.append(getEndColumn() + 1);
+				}
+			}
+			stringBuilder.append(")");
+		}
+		return stringBuilder.toString();
+	}
 }
