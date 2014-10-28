@@ -17,7 +17,7 @@ package org.raml.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,16 +45,16 @@ public class Action implements Serializable
     private String description;
 
     @Mapping
-    private Map<String, Header> headers = new HashMap<String, Header>();
+    private Map<String, Header> headers = new LinkedHashMap<String, Header>();
 
     @Mapping
-    private Map<String, QueryParameter> queryParameters = new HashMap<String, QueryParameter>();
+    private Map<String, QueryParameter> queryParameters = new LinkedHashMap<String, QueryParameter>();
 
     @Mapping(innerHandler = MimeTypeHandler.class)
     private Map<String, MimeType> body;
 
     @Mapping(innerHandler = ResponseHandler.class)
-    private Map<String, Response> responses = new HashMap<String, Response>();
+    private Map<String, Response> responses = new LinkedHashMap<String, Response>();
 
     @Parent
     private Resource resource;
@@ -69,7 +69,7 @@ public class Action implements Serializable
     private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
-    private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
+    private Map<String, List<UriParameter>> baseUriParameters = new LinkedHashMap<String, List<UriParameter>>();
 
     public Action()
     {

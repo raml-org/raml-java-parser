@@ -16,7 +16,7 @@
 package org.raml.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class SecurityReference implements Serializable
     private String name;
 
     @Mapping(handler = MatchAllHandler.class)
-    private Map<String, List<String>> parameters = new HashMap<String, List<String>>();
+    private Map<String, List<String>> parameters = new LinkedHashMap<String, List<String>>();
 
     public SecurityReference(@Value String name)
     {

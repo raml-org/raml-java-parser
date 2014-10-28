@@ -48,7 +48,7 @@ public class Raml implements Serializable
     private List<Protocol> protocols = new ArrayList<Protocol>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
-    private Map<String, UriParameter> baseUriParameters = new HashMap<String, UriParameter>();
+    private Map<String, UriParameter> baseUriParameters = new LinkedHashMap<String, UriParameter>();
 
     @Scalar()
     private String mediaType;

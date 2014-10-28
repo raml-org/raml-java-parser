@@ -16,7 +16,7 @@
 package org.raml.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.raml.model.parameter.Header;
@@ -36,7 +36,7 @@ public class Response implements Serializable
     private Map<String, MimeType> body;
 
     @Mapping
-    private Map<String, Header> headers = new HashMap<String, Header>();
+    private Map<String, Header> headers = new LinkedHashMap<String, Header>();
 
     public Map<String, Header> getHeaders()
     {

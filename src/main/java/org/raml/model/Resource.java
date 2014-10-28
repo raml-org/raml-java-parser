@@ -52,7 +52,7 @@ public class Resource implements Serializable
     private String relativeUri;
 
     @Mapping
-    private Map<String, UriParameter> uriParameters = new HashMap<String, UriParameter>();
+    private Map<String, UriParameter> uriParameters = new LinkedHashMap<String, UriParameter>();
 
     @Scalar
     private String type;
@@ -64,13 +64,13 @@ public class Resource implements Serializable
     private List<SecurityReference> securedBy = new ArrayList<SecurityReference>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)
-    private Map<String, List<UriParameter>> baseUriParameters = new HashMap<String, List<UriParameter>>();
+    private Map<String, List<UriParameter>> baseUriParameters = new LinkedHashMap<String, List<UriParameter>>();
 
     @Mapping(implicit = true)
     private Map<ActionType, Action> actions = new LinkedHashMap<ActionType, Action>();
 
     @Mapping(handler = ResourceHandler.class, implicit = true)
-    private Map<String, Resource> resources = new HashMap<String, Resource>();
+    private Map<String, Resource> resources = new LinkedHashMap<String, Resource>();
 
     public Resource()
     {
