@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.model.Protocol;
@@ -47,6 +48,9 @@ public class RamlEmitter
     private static final String YAML_SEQ_END = "]";
     private static final String YAML_SEQ_SEP = ", ";
     private static final String YAML_MAP_SEP = ": ";
+
+    private static final Pattern NO_QUOTES = Pattern.compile("^[a-zA-Z_/+][^:]*$");
+    private static final String[] LITERALS = {"yes", "no", "true", "false", "on", "off", "null"};
 
     public String dump(Raml raml)
     {
@@ -372,6 +376,10 @@ public class RamlEmitter
 
     private String inlineFormat(int depth, String text)
     {
+        if (!requiresQuoting(text))
+        {
+            return text;
+        }
         if (!text.contains("\""))
         {
             return "\"" + text + "\"";
@@ -381,6 +389,24 @@ public class RamlEmitter
             return "'" + text + "'";
         }
         return blockFormat(depth, text);
+    }
+
+    private boolean requiresQuoting(String text)
+    {
+        return !NO_QUOTES.matcher(text).matches() ||
+               isReserved(text);
+    }
+
+    private boolean isReserved(String text)
+    {
+        for (String literal : LITERALS)
+        {
+            if (literal.equalsIgnoreCase(text))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String blockFormat(int depth, String text)
