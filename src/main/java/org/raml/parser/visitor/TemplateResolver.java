@@ -321,7 +321,7 @@ public class TemplateResolver
                     templateReferences.typeReference = cloneNode(resourceTuple.getValueNode(), new HashMap<String, String>());
                     removeParametersFromTemplateCall(resourceTuple);
                 }
-                else if (key.equals(TRAIT_USE_KEY))
+                else if (key.equals(TRAIT_USE_KEY) && expect(resourceTuple.getValueNode(), sequence))
                 {
                     SequenceNode sequence = cloneSequenceNode((SequenceNode) resourceTuple.getValueNode(), new HashMap<String, String>());
                     templateReferences.traitsReference.put(ALL_ACTIONS, sequence);

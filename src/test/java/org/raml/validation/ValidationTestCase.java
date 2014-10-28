@@ -268,6 +268,20 @@ public class ValidationTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void emptyIs()
+    {
+        String raml =
+                "#%RAML 0.8\n" +
+                "title: empty trait\n" +
+                "/resourceName:\n" +
+                "  is:";
+
+        List<ValidationResult> validationResults = validateRaml(raml, "");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("sequence node expected"));
+    }
+
+    @Test
     @Ignore //version must occur before its use
     public void versionAfterUse()
     {
