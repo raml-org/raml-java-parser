@@ -169,7 +169,7 @@ public class Resource implements Serializable
     {
         if (parentResource != null)
         {
-            Map<String, UriParameter> uriParams = new HashMap<String, UriParameter>(parentResource.getUriParameters());
+            Map<String, UriParameter> uriParams = new LinkedHashMap<String, UriParameter>(parentResource.getUriParameters());
             uriParams.putAll(uriParameters);
             return uriParams;
         }
