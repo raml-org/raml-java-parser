@@ -42,7 +42,7 @@ public class Validator
         for (String ramlResource : resources)
         {
             System.out.format("Validation Results for %s:\n", ramlResource);
-            List<ValidationResult> results = RamlValidationService.createDefault().validate(loader.fetchResource(ramlResource), "");
+            List<ValidationResult> results = RamlValidationService.createDefault().validate(loader.fetchResource(ramlResource), ramlResource);
             if (results.isEmpty())
             {
                 System.out.println("\tOK.");

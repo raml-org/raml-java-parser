@@ -150,7 +150,10 @@ public class ValidationResult
 
     public static ValidationResult createErrorResult(String message, Mark startMark, Mark endMark)
     {
-        return createErrorResult(message, startMark.getLine(), startMark.getColumn(), endMark.getColumn());
+        int line = startMark == null ? UNKNOWN : startMark.getLine();
+        int startColumn = startMark == null ? UNKNOWN : startMark.getColumn();
+        int endColumn = endMark == null ? UNKNOWN : endMark.getColumn();
+        return createErrorResult(message, line, startColumn, endColumn);
     }
 
     public static ValidationResult createErrorResult(String message, Node node)

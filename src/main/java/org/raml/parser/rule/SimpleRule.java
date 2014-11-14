@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ConvertUtils;
+import org.raml.parser.utils.NodeUtils;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 
@@ -61,7 +62,9 @@ public class SimpleRule extends DefaultTupleRule<ScalarNode, ScalarNode>
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         if (StringUtils.isEmpty(value))
         {
-            validationResults.add(ValidationResult.createWarnResult(getRuleEmptyMessage(getName()), keyNode != null ? keyNode : node));
+            ScalarNode warnNode = keyNode != null ? keyNode : node;
+            String ruleName = getName() == null ? String.valueOf(NodeUtils.getNodeValue(warnNode)) : getName();
+            validationResults.add(ValidationResult.createWarnResult(getRuleEmptyMessage(ruleName), warnNode));
         }
         if (!ConvertUtils.canBeConverted(value, getFieldClass()))
         {
