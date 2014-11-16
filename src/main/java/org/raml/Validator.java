@@ -16,6 +16,8 @@
 package org.raml;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.parser.loader.DefaultResourceLoader;
@@ -42,7 +44,21 @@ public class Validator
         for (String ramlResource : resources)
         {
             System.out.format("Validation Results for %s:\n", ramlResource);
-            List<ValidationResult> results = RamlValidationService.createDefault().validate(loader.fetchResource(ramlResource), ramlResource);
+            String ramlResourceToFetch = ramlResource;
+            if (ramlResource.startsWith("/"))
+            {
+                ramlResourceToFetch = "file://" + ramlResource;
+            }
+            List<ValidationResult> results = new ArrayList<ValidationResult>();
+            InputStream content = loader.fetchResource(ramlResourceToFetch);
+            if (content != null)
+            {
+                results = RamlValidationService.createDefault().validate(content, ramlResourceToFetch);
+            }
+            else
+            {
+                results.add(ValidationResult.createErrorResult("Raml resource not found: " + ramlResource));
+            }
             if (results.isEmpty())
             {
                 System.out.println("\tOK.");
