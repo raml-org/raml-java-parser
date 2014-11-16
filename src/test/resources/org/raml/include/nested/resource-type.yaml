@@ -1,0 +1,6 @@
+get:
+  responses:
+    200:
+      body:
+        text/plain:
+          example: !include examples/example.txt

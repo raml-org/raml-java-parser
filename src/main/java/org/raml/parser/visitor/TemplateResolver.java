@@ -17,6 +17,7 @@ package org.raml.parser.visitor;
 
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 import static org.yaml.snakeyaml.nodes.NodeId.scalar;
@@ -298,7 +299,7 @@ public class TemplateResolver
                 }
 
                 //merge type, no traits (action level traits could be merged)
-                mergeNodes(resourceNode, clone, Resource.class);
+                mergeNodes(resourceNode, clone, new MergeContext(Resource.class, clone.getTag()));
             }
 
             return !traitsReference.isEmpty() || typeReference != null;
@@ -441,7 +442,7 @@ public class TemplateResolver
                         MappingNode templateNode = cloneTemplate(ref, TemplateType.TRAIT);
                         if (templateNode != null)
                         {
-                            mergeNodes(actionEntry.getValue(), templateNode, Action.class);
+                            mergeNodes(actionEntry.getValue(), templateNode, new MergeContext(Action.class, templateNode.getTag()));
                         }
                     }
                 }
@@ -451,7 +452,7 @@ public class TemplateResolver
                     MappingNode templateNode = cloneTemplate(ref, TemplateType.TRAIT);
                     if (templateNode != null)
                     {
-                        mergeNodes(actionNodes.get(actionName), templateNode, Action.class);
+                        mergeNodes(actionNodes.get(actionName), templateNode, new MergeContext(Action.class, templateNode.getTag()));
                     }
                 }
             }
@@ -658,7 +659,7 @@ public class TemplateResolver
             return result;
         }
 
-        private MappingNode mergeMappingNodes(MappingNode baseNode, MappingNode templateNode, Class<?> context)
+        private MappingNode mergeMappingNodes(MappingNode baseNode, MappingNode templateNode, MergeContext context)
         {
 
             Map<String, NodeTuple> baseTupleMap = getTupleMap(baseNode);
@@ -666,12 +667,12 @@ public class TemplateResolver
             {
                 String templateKey = ((ScalarNode) templateTuple.getKeyNode()).getValue();
 
-                if (!nonMergeableFields(context).contains(templateKey))
+                if (!nonMergeableFields(context.keyNodeType).contains(templateKey))
                 {
                     String baseKey = getMatchingKey(baseTupleMap, templateKey);
                     if (baseKey == null)
                     {
-                        baseNode.getValue().add(templateTuple);
+                        baseNode.getValue().add(context.tagInclude(templateTuple));
                     }
                     else
                     {
@@ -682,7 +683,7 @@ public class TemplateResolver
                         }
                         Node baseInnerNode = baseTupleMap.get(baseKey).getValueNode();
                         Node templateInnerNode = templateTuple.getValueNode();
-                        Node valueNode = mergeNodes(baseInnerNode, templateInnerNode, pushMergeContext(context, baseKey));
+                        Node valueNode = mergeNodes(baseInnerNode, templateInnerNode, new MergeContext(context, baseKey));
                         baseNode.getValue().remove(baseTupleMap.get(baseKey));
                         baseNode.getValue().add(new NodeTuple(keyNode, valueNode));
                     }
@@ -700,7 +701,7 @@ public class TemplateResolver
             return Object.class;
         }
 
-        private Node mergeNodes(Node baseNode, Node templateNode, Class<?> context)
+        private Node mergeNodes(Node baseNode, Node templateNode, MergeContext context)
         {
             if (baseNode.getNodeId() == mapping && templateNode.getNodeId() == mapping)
             {
@@ -713,14 +714,14 @@ public class TemplateResolver
             return baseNode;
         }
 
-        private MappingNode cleanMergedTuples(MappingNode templateNode, Class<?> context)
+        private MappingNode cleanMergedTuples(MappingNode templateNode, MergeContext context)
         {
 
             List<NodeTuple> tuples = new ArrayList<NodeTuple>(templateNode.getValue());
             for (NodeTuple tuple : tuples)
             {
                 String key = ((ScalarNode) tuple.getKeyNode()).getValue();
-                if (nonMergeableFields(context).contains(key))
+                if (nonMergeableFields(context.keyNodeType).contains(key))
                 {
                     templateNode.getValue().remove(tuple);
                 }
@@ -742,19 +743,6 @@ public class TemplateResolver
             return new HashSet<String>(Arrays.asList(fields));
         }
 
-        private boolean isAction(String key)
-        {
-            try
-            {
-                ActionType.valueOf(normalizeKey(key).toUpperCase());
-                return true;
-            }
-            catch (IllegalArgumentException e)
-            {
-                return false;
-            }
-        }
-
         private boolean isOptional(String key)
         {
             return key.endsWith(OPTIONAL_MODIFIER);
@@ -773,15 +761,6 @@ public class TemplateResolver
             return null;
         }
 
-        private String normalizeKey(String key)
-        {
-            if (key.endsWith(OPTIONAL_MODIFIER))
-            {
-                return key.substring(0, key.length() - 1);
-            }
-            return key;
-        }
-
         private Map<String, NodeTuple> getTupleMap(MappingNode mappingNode)
         {
             Map<String, NodeTuple> tupleMap = new HashMap<String, NodeTuple>();
@@ -792,4 +771,65 @@ public class TemplateResolver
             return tupleMap;
         }
     }
+
+    private static class MergeContext
+    {
+        Class<?> keyNodeType;
+        Tag templateInclude;
+
+        MergeContext(Class<?> keyNodeType, Tag templateInclude)
+        {
+            this.keyNodeType = keyNodeType;
+            if (templateInclude != null && templateInclude.startsWith(INCLUDE_APPLIED_TAG))
+            {
+                this.templateInclude = templateInclude;
+            }
+        }
+
+        MergeContext(MergeContext context, String baseKey)
+        {
+            this.templateInclude = context.templateInclude;
+            if (context.keyNodeType.equals(Resource.class) && isAction(baseKey))
+            {
+                this.keyNodeType = Action.class;
+            }
+            this.keyNodeType = Object.class;
+        }
+
+        NodeTuple tagInclude(NodeTuple tuple)
+        {
+            if (Tag.NULL.equals(tuple.getValueNode().getTag()))
+            {
+                return tuple;
+            }
+            if (templateInclude != null)
+            {
+                tuple.getValueNode().setTag(templateInclude);
+            }
+            return tuple;
+        }
+    }
+
+    private static boolean isAction(String key)
+    {
+        try
+        {
+            ActionType.valueOf(normalizeKey(key).toUpperCase());
+            return true;
+        }
+        catch (IllegalArgumentException e)
+        {
+            return false;
+        }
+    }
+
+    private static String normalizeKey(String key)
+    {
+        if (key.endsWith(OPTIONAL_MODIFIER))
+        {
+            return key.substring(0, key.length() - 1);
+        }
+        return key;
+    }
+
 }

@@ -1,0 +1,12 @@
+#%RAML 0.8
+---
+title: Optional Nested Includes API
+version: v1
+resourceTypes:
+    - simple: !include nested/resource-type-optional.yaml
+
+/simple:
+    type: simple
+    get:
+        description: simple get
+

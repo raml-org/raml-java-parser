@@ -33,6 +33,7 @@ public class IncludeResolver implements TagResolver, ContextPathAware
 {
 
     public static final Tag INCLUDE_TAG = new Tag("!include");
+    public static final Tag INCLUDE_NOT_FOUND_TAG = new Tag("!include-not-found");
     public static final String SEPARATOR = "_";
     public static final String INCLUDE_APPLIED_TAG = "!include-applied" + SEPARATOR;
     private ContextPath contextPath;
@@ -116,7 +117,7 @@ public class IncludeResolver implements TagResolver, ContextPathAware
 
     private Node mockInclude(Node node)
     {
-        return new ScalarNode(Tag.STR, "invalid", node.getStartMark(), node.getEndMark(), null);
+        return new ScalarNode(INCLUDE_NOT_FOUND_TAG, "invalid", node.getStartMark(), node.getEndMark(), null);
     }
 
     public void setContextPath(ContextPath contextPath)

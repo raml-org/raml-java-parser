@@ -173,4 +173,17 @@ public class IncludeTestCase extends AbstractRamlTestCase
         assertThat(validationResults.get(2).getMessage(), is("trait not defined: paged"));
     }
 
+    @Test
+    public void includeResourceTypeNested()
+    {
+        String ramlSource = "org/raml/include/include-resource-type-nested.yaml";
+        validateRamlNoErrors(ramlSource);
+    }
+
+    @Test
+    public void includeResourceTypeNestedOptional()
+    {
+        String ramlSource = "org/raml/include/include-resource-type-nested-optional.yaml";
+        validateRamlNoErrors(ramlSource);
+    }
 }
