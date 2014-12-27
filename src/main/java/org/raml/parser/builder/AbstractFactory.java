@@ -19,7 +19,7 @@ import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.resolver.TupleHandler;
 import org.yaml.snakeyaml.nodes.Node;
 
-public class AbastractFactory
+public class AbstractFactory
 {
 
     protected TupleHandler createHandler(Class<? extends TupleHandler> handler, String alias,

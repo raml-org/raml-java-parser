@@ -32,7 +32,7 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public class TupleBuilderFactory extends AbastractFactory
+public class TupleBuilderFactory extends AbstractFactory
 {
 
     public void addBuildersTo(Class<?> pojoClass, TupleBuilder parent)

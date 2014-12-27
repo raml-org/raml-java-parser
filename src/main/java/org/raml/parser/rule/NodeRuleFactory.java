@@ -26,7 +26,7 @@ import java.util.Map;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
-import org.raml.parser.builder.AbastractFactory;
+import org.raml.parser.builder.AbstractFactory;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.resolver.EnumHandler;
 import org.raml.parser.resolver.TupleHandler;
@@ -36,7 +36,7 @@ import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.SequenceNode;
 
-public class NodeRuleFactory extends AbastractFactory
+public class NodeRuleFactory extends AbstractFactory
 {
 
     private NodeRuleFactoryExtension[] extensions;
