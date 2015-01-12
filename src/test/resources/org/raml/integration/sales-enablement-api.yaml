@@ -5,7 +5,7 @@ version: v1
 baseUri: http://vast-coast-7974.herokuapp.com/muse
 schemas:
   - presentation: |
-      {  "$schema": "http://json-schema.org/draft-03/schema",
+      {  "$schema": "http://json-schema.org/draft-04/schema",
          "type": "object",
          "description": "A product presentation",
          "properties": {
@@ -18,7 +18,7 @@ schemas:
          "required": [ "id", "title", "fileUrl", "productId" ]
       }
   - product: |
-      {  "$schema": "http://json-schema.org/draft-03/schema",
+      {  "$schema": "http://json-schema.org/draft-04/schema",
          "type": "object",
          "description": "A Product",
          "properties": {

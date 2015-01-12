@@ -15,6 +15,7 @@
  */
 package org.raml.parser.rules;
 
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -57,6 +58,16 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getMessage(), containsString("invalid JSON schema"));
         assertThat(validationResults.get(0).getLine() + 1, is(7 + 4));
+    }
+
+    @Test
+    public void invalidJsonSchemaValidJson()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/invalid-json-schema.yaml");
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), allOf(
+                containsString("invalid JSON schema"), containsString("value has incorrect type")));
+        assertThat(validationResults.get(0).getLine() + 1, is(7));
     }
 
     @Test

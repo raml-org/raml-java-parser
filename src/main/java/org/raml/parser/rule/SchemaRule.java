@@ -23,6 +23,13 @@ import static org.yaml.snakeyaml.nodes.Tag.STR;
 
 import com.fasterxml.jackson.core.JsonLocation;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.fge.jackson.JsonLoader;
+import com.github.fge.jsonschema.SchemaVersion;
+import com.github.fge.jsonschema.cfg.ValidationConfiguration;
+import com.github.fge.jsonschema.core.report.ProcessingMessage;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.processors.syntax.SyntaxValidator;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -32,7 +39,6 @@ import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 
-import org.eel.kitchen.jsonschema.util.JsonLoader;
 import org.raml.parser.visitor.IncludeInfo;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -41,6 +47,8 @@ import org.yaml.snakeyaml.nodes.Tag;
 
 public class SchemaRule extends SimpleRule
 {
+
+    private static final SyntaxValidator VALIDATOR = new SyntaxValidator(ValidationConfiguration.newBuilder().setDefaultVersion(SchemaVersion.DRAFTV3).freeze());
 
     public SchemaRule()
     {
@@ -77,7 +85,18 @@ public class SchemaRule extends SimpleRule
         {
             try
             {
-                JsonLoader.fromString(value);
+                JsonNode jsonNode = JsonLoader.fromString(value);
+                ProcessingReport report = VALIDATOR.validateSchema(jsonNode);
+                if (!report.isSuccess())
+                {
+                    StringBuilder msg = new StringBuilder("invalid JSON schema");
+                    msg.append(getSourceErrorDetail(node));
+                    for (ProcessingMessage processingMessage : report)
+                    {
+                        msg.append("\n").append(processingMessage.toString());
+                    }
+                    validationResults.add(getErrorResult(msg.toString(), getLineOffset(schemaNode), globaSchemaIncludeInfo));
+                }
             }
             catch (JsonParseException jpe)
             {

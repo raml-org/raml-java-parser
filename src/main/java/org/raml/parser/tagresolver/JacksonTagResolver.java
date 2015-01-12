@@ -16,7 +16,8 @@
 package org.raml.parser.tagresolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
+import com.fasterxml.jackson.module.jsonSchema.factories.SchemaFactoryWrapper;
 
 import java.io.ByteArrayOutputStream;
 
@@ -47,7 +48,9 @@ public class JacksonTagResolver implements TagResolver
         {
             Class<?> clazz = Thread.currentThread().getContextClassLoader().loadClass(className);
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonSchema jsonSchema = objectMapper.generateJsonSchema(clazz);
+            SchemaFactoryWrapper visitor = new SchemaFactoryWrapper();
+            objectMapper.acceptJsonFormatVisitor(objectMapper.constructType(clazz), visitor);
+            JsonSchema jsonSchema = visitor.finalSchema();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             objectMapper.writeValue(baos, jsonSchema);
             String schema = baos.toString();
