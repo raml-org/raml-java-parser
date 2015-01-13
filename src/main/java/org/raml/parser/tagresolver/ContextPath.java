@@ -16,7 +16,10 @@
 package org.raml.parser.tagresolver;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
+import java.util.Stack;
 
 import org.raml.parser.visitor.IncludeInfo;
 import org.yaml.snakeyaml.nodes.ScalarNode;
@@ -58,10 +61,35 @@ public class ContextPath
         {
             return relativeFile;
         }
-        return parentPath + relativeFile;
+        return resolveRelatives(parentPath + relativeFile);
     }
 
-    public String resolveAbsolutePath(String relativeFile)
+    private static String resolveRelatives(String string) {
+    	String[] split = string.split("/");
+    	Stack<String>list=new Stack<String>();
+    	for (String s:split){
+    		if (s.equals("..")){
+    			list.pop();
+    			continue;
+    		}
+    		if (!s.equals(".")){
+    			list.push(s);
+    		}
+    	}
+    	StringBuilder newPath=new StringBuilder();
+    	int pos=0;
+    	int i = list.size()-1;
+    	for (String q:list){
+    		newPath.append(q);
+    		if (pos!=i){
+				newPath.append('/');
+    		}
+    		pos++;
+    	}    	
+		return newPath.toString();
+	}
+
+	public String resolveAbsolutePath(String relativeFile)
     {
         return resolveAbsolutePath(relativeFile, getPartentPath());
     }
