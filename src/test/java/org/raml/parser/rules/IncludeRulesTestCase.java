@@ -45,6 +45,13 @@ public class IncludeRulesTestCase extends AbstractRamlTestCase
         assertThat("Errors are not 1 " + errors, errors.size(), is(1));
         assertThat(errors.get(0).getMessage(), is("Include cannot be resolved org/raml/parser/rules/title2.txt"));
     }
+    
+    @Test
+    public void includeRelative()
+    {
+        List<ValidationResult> errors = validateRaml("org/raml/parser/rules/includesRelative.yaml");
+        assertThat(errors.size(), is(0));        
+    }
 
     @Test
     public void includeWithError()
