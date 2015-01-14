@@ -103,4 +103,12 @@ public class IncludeRulesTestCase extends AbstractRamlTestCase
         assertThat(errors.get(0).getMessage(), is("Include file is empty org/raml/parser/rules/empty.yaml"));
         assertThat(errors.get(1).getMessage(), is("Invalid value type"));
     }
+
+    @Test
+    public void includeRelativeParent()
+    {
+        List<ValidationResult> errors = validateRaml("org/raml/parser/rules/includesRelative.yaml");
+        assertThat(errors.size(), is(0));
+    }
+
 }
