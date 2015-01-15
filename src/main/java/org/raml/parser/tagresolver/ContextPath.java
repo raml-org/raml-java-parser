@@ -64,7 +64,7 @@ public class ContextPath
         return resolveRelatives(parentPath + relativeFile);
     }
 
-    private static String resolveRelatives(String string) {
+    public static String resolveRelatives(String string) {
     	String[] split = string.split("/");
     	Stack<String>list=new Stack<String>();
     	for (String s:split){

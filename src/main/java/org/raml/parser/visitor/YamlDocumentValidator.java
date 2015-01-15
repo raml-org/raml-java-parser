@@ -26,7 +26,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.DefaultTupleRule;
+import org.raml.parser.rule.IParserContext;
+import org.raml.parser.rule.IRuleWithContext;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.SequenceRule;
@@ -44,7 +47,7 @@ public class YamlDocumentValidator implements YamlValidator
 {
 
     private Class<?> documentClass;
-    private Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
+    protected Stack<NodeRule<?>> ruleContext = new Stack<NodeRule<?>>();
     private List<ValidationResult> messages = new ArrayList<ValidationResult>();
     private NodeRuleFactory nodeRuleFactory;
     private ContextPath contextPath;
@@ -112,7 +115,9 @@ public class YamlDocumentValidator implements YamlValidator
 
         if (tupleType == VALUE)
         {
-            result = ((NodeRule<ScalarNode>) peek).validateValue(node);
+            NodeRule<ScalarNode> nodeRule = (NodeRule<ScalarNode>) peek;           
+            result = nodeRule.validateValue(node);
+            
         }
         else
         {
@@ -121,7 +126,7 @@ public class YamlDocumentValidator implements YamlValidator
         addMessages(result);
     }
 
-    private void addMessages(List<ValidationResult> result)
+    protected void addMessages(List<ValidationResult> result)
     {
         for (ValidationResult validationResult : result)
         {
@@ -246,4 +251,6 @@ public class YamlDocumentValidator implements YamlValidator
     {
         return contextPath;
     }
+
+	
 }

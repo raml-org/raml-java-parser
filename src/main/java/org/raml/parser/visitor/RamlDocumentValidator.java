@@ -16,6 +16,7 @@
 package org.raml.parser.visitor;
 
 import static org.raml.parser.visitor.TupleType.KEY;
+import static org.raml.parser.visitor.TupleType.VALUE;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ import org.raml.model.Raml;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.BaseUriRule;
 import org.raml.parser.rule.DefaultTupleRule;
+import org.raml.parser.rule.IParserContext;
+import org.raml.parser.rule.IRuleWithContext;
 import org.raml.parser.rule.ImplicitMapEntryRule;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
@@ -34,7 +37,7 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class RamlDocumentValidator extends YamlDocumentValidator
+public class RamlDocumentValidator extends YamlDocumentValidator implements IParserContext
 {
 
     private TemplateResolver templateResolver;
@@ -129,6 +132,30 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         validateBaseUriAndVersion();
         super.onDocumentEnd(node);
     }
+    @Override
+    @SuppressWarnings("unchecked")
+    public void onScalar(ScalarNode node, TupleType tupleType)
+    {
+        List<ValidationResult> result;
+        NodeRule<?> peek = ruleContext.peek();
+
+        if (tupleType == VALUE)
+        {
+            NodeRule<ScalarNode> nodeRule = (NodeRule<ScalarNode>) peek;
+            if (nodeRule instanceof IRuleWithContext){
+            	IRuleWithContext<ScalarNode>sc=(IRuleWithContext<ScalarNode>) nodeRule;
+            	result=sc.doValidateValue(node, this);
+            }
+            else{
+            	result = nodeRule.validateValue(node);
+            }
+        }
+        else
+        {
+            result = ((TupleRule<ScalarNode, ?>) peek).validateKey(node);
+        }
+        addMessages(result);
+    }
 
     private void validateBaseUriAndVersion()
     {
@@ -147,4 +174,9 @@ public class RamlDocumentValidator extends YamlDocumentValidator
         //noinspection unchecked
         return (T) ((DefaultTupleRule) getRuleContext().peek()).getRuleByFieldName(fieldName);
     }
+
+	@Override
+	public ResourceLoader getResourceLoader() {
+		return resourceLoader;
+	}
 }
