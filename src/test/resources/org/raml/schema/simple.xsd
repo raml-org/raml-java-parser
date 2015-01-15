@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/simple" xmlns:tns="http://www.example.org/simple" elementFormDefault="qualified">
+
+    <complexType name="Message">
+    	<attribute name="item" type="string"></attribute>
+    </complexType>
+</schema>

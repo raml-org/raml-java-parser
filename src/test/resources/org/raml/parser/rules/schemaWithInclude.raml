@@ -1,0 +1,17 @@
+#%RAML 0.8
+---
+title: Sample API
+version: v1
+baseUri: https://sample.com/api
+schemas:
+    - one: !include ../../schema/includer.xsd
+    
+/{element}:
+        displayName: Employee
+        get:
+            description: Get a particular employee.
+            responses:
+                200:
+                    body:
+                        application/xml:
+                            schema: one    

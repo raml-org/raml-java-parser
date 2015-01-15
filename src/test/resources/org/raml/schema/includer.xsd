@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.example.org/simple"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.example.org/simple">
+	<include schemaLocation="simple.xsd"></include>
+	<element name="message" type="tns:Message"></element>
+</schema>

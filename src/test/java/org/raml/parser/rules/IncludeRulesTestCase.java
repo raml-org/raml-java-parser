@@ -52,6 +52,11 @@ public class IncludeRulesTestCase extends AbstractRamlTestCase
         List<ValidationResult> errors = validateRaml("org/raml/parser/rules/includesRelative.yaml");
         assertThat(errors.size(), is(0));        
     }
+    @Test
+    public void includeInSchema(){
+    	List<ValidationResult> errors = validateRaml("org/raml/parser/rules/schemaWithInclude.raml");
+        assertThat(errors.size(), is(0));    	
+    }
 
     @Test
     public void includeWithError()
