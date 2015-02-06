@@ -1,4 +1,5 @@
 # RAML Java Parser
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raml-org/raml-java-parser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This project contains a RAML java parser compatible with version 0.8 of the RAML
 specification. The parser depends on SnakeYaml, a Java YAML parser.
