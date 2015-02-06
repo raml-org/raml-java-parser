@@ -4,3 +4,7 @@ get?:
       body:
         text/plain:
           example: !include examples/example.txt
+    201?:
+      body:
+        application/json:
+          example: !include examples/example.txt

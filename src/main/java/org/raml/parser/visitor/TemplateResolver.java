@@ -725,6 +725,10 @@ public class TemplateResolver
                 {
                     templateNode.getValue().remove(tuple);
                 }
+                else
+                {
+                    context.tagInclude(tuple);
+                }
             }
             return templateNode;
         }

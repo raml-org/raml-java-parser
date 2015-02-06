@@ -9,4 +9,5 @@ resourceTypes:
     type: simple
     get:
         description: simple get
-
+        responses:
+            201:
