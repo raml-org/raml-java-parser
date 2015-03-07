@@ -164,6 +164,9 @@ public class SchemaRule extends SimpleRule
     private ScalarNode getGlobalSchemaNode(String key)
     {
         GlobalSchemasRule schemasRule = (GlobalSchemasRule) getRootTupleRule().getRuleByFieldName("schemas");
+        if (schemasRule==null){
+        	return null;
+        }
         return schemasRule.getSchema(key);
     }
 
