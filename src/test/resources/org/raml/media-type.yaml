@@ -32,6 +32,26 @@ resourceTypes:
         type: typeParent
         put:
             is: [traitOne]
+    - dummy:
+        get:
+            responses:
+                200:
+                    body:
+                        example: |
+                               {
+                                 "id": "foo"
+                               }
+                        application/json:
+                            schema: |
+                               {  "$schema": "http://json-schema.org/draft-03/schema",
+                                   "type": "object",
+                                   "description": "A dummy schema",
+                                   "properties": {
+                                     "id":  { "type": "string" }
+                                   }
+                                }
+                        text/html:
+                            example: dummy resource example
 
 /simple:
     type: typeChild
@@ -57,3 +77,18 @@ resourceTypes:
     get:
         responses:
             200:
+
+/merged:
+    type: dummy
+    get:
+        responses:
+            200:
+              body:
+                schema: |
+                   {  "$schema": "http://json-schema.org/draft-03/schema",
+                      "type": "object",
+                      "description": "A merged schema",
+                      "properties": {
+                        "id":  { "type": "string" }
+                      }
+                   }

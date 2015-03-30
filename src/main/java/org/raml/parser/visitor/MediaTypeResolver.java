@@ -109,26 +109,67 @@ public class MediaTypeResolver
     public List<ValidationResult> resolve(MappingNode bodyNode)
     {
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
-        if (mediaType == null)
-        {
-            return validationResults;
+        
+        NodeTuple mediaTypeNodeTuple = null;
+        
+        if (mediaType!=null){
+        	
+        	 for (NodeTuple tuple : bodyNode.getValue())
+             {
+        		 if (mediaType.equals(((ScalarNode) tuple.getKeyNode()).getValue())){
+        			 mediaTypeNodeTuple = tuple;
+        			 break;
+        		 }
+             }
+        	 
+        	 if (mediaTypeNodeTuple==null){
+     	        Node keyNode = new ScalarNode(Tag.STR, mediaType, null, null, null);
+     	        Node valueNode = new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), false);     	        
+     	        NodeTuple newTuple = new NodeTuple(keyNode, valueNode);
+     	        bodyNode.getValue().add(newTuple);
+     	        mediaTypeNodeTuple= newTuple;
+        	 }
         }
-        for (NodeTuple tuple : bodyNode.getValue())
-        {
-            if (!MEDIA_TYPE_KEYS.contains(((ScalarNode) tuple.getKeyNode()).getValue()))
-            {
-                return validationResults;
-            }
-        }
-        List<NodeTuple> copy = new ArrayList<NodeTuple>(bodyNode.getValue());
-        Node keyNode = new ScalarNode(Tag.STR, mediaType, null, null, null);
-        Node valueNode = new MappingNode(Tag.MAP, copy, false);
-        bodyNode.getValue().clear();
-        bodyNode.getValue().add(new NodeTuple(keyNode, valueNode));
+        
+    	mergeMediaLevelKeys(mediaTypeNodeTuple, bodyNode);
+        
         return validationResults;
     }
 
-    /**
+    private void mergeMediaLevelKeys(NodeTuple targetTouple, MappingNode sourceNode) {
+    	
+    	List<NodeTuple> tuplesToRemove = new ArrayList<NodeTuple>();
+    	
+    	for (NodeTuple sourceTuple : sourceNode.getValue())
+        {
+    		String mediaTypeKey = ((ScalarNode) sourceTuple.getKeyNode()).getValue();
+    		
+            if (MEDIA_TYPE_KEYS.contains(mediaTypeKey))
+            {
+            	tuplesToRemove.add(sourceTuple);
+            	
+            	if (targetTouple!=null){
+            		List<NodeTuple> targetSubTuples = ((MappingNode)targetTouple.getValueNode()).getValue();
+            		boolean containsSuchKey = false;
+            		for (NodeTuple targetSubTuple: targetSubTuples){
+            			if(mediaTypeKey.equals(((ScalarNode)targetSubTuple.getKeyNode()).getValue())){
+            				containsSuchKey = true;
+            				break;
+            			}
+            		}
+            		if (!containsSuchKey){
+            			targetSubTuples.add(sourceTuple);
+            		}
+	          	}
+	        }
+    	}
+    	
+    	for (NodeTuple toRemove: tuplesToRemove){
+    		sourceNode.getValue().remove(toRemove);
+    	}
+	}
+
+	/**
      * if no explicit media type is defined in either the request or
      * response body, the default one is applied
      *

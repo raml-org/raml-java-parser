@@ -17,6 +17,7 @@ package org.raml.parser.builder;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.raml.model.ActionType.GET;
@@ -123,4 +124,19 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
         assertThat(raml2.getResources().get("/simple").getActions().size(),
                    is(raml1.getResources().get("/simple").getActions().size()));
     }
+    
+    @Test
+    public void merged()
+    {
+        Resource resource = raml.getResource("/merged");
+        Map<String, MimeType> getResponseBody = resource.getAction(ActionType.GET).getResponses().get("200").getBody();
+        assertThat(getResponseBody.size(), is(2));
+        assertThat(getResponseBody.containsKey("application/json"), is(true));
+        assertThat(getResponseBody.get("application/json").getSchema(), notNullValue());
+        assertThat(getResponseBody.get("application/json").getExample(), notNullValue());
+        assertThat(getResponseBody.containsKey("text/html"), is(true));
+        assertThat(getResponseBody.get("text/html").getSchema(), nullValue());
+        assertThat(getResponseBody.get("text/html").getExample(), notNullValue());
+    }
+
 }
