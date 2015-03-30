@@ -150,16 +150,18 @@ public class MediaTypeResolver
             	
             	if (targetTouple!=null){
             		List<NodeTuple> targetSubTuples = ((MappingNode)targetTouple.getValueNode()).getValue();
-            		boolean containsSuchKey = false;
+            		
+            		NodeTuple existingTuple = null;
             		for (NodeTuple targetSubTuple: targetSubTuples){
             			if(mediaTypeKey.equals(((ScalarNode)targetSubTuple.getKeyNode()).getValue())){
-            				containsSuchKey = true;
-            				break;
+            				existingTuple = targetSubTuple;
+            				break;            				
             			}
             		}
-            		if (!containsSuchKey){
-            			targetSubTuples.add(sourceTuple);
+            		if (existingTuple!=null){
+            			targetSubTuples.remove(existingTuple);
             		}
+            		targetSubTuples.add(sourceTuple);
 	          	}
 	        }
     	}

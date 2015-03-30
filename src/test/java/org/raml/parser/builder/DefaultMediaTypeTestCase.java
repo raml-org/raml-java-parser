@@ -125,18 +125,25 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
                    is(raml1.getResources().get("/simple").getActions().size()));
     }
     
-    @Test
+  @Test
     public void merged()
     {
         Resource resource = raml.getResource("/merged");
         Map<String, MimeType> getResponseBody = resource.getAction(ActionType.GET).getResponses().get("200").getBody();
         assertThat(getResponseBody.size(), is(2));
+        
         assertThat(getResponseBody.containsKey("application/json"), is(true));
-        assertThat(getResponseBody.get("application/json").getSchema(), notNullValue());
-        assertThat(getResponseBody.get("application/json").getExample(), notNullValue());
+        MimeType applicationJson = getResponseBody.get("application/json");
+        assertThat(applicationJson.getSchema(), notNullValue());
+        assertThat(applicationJson.getSchema().contains("merged"), is(true));
+        assertThat(applicationJson.getExample(), notNullValue());
+        assertThat(applicationJson.getExample().contains("foo"), is(true));
+        
         assertThat(getResponseBody.containsKey("text/html"), is(true));
-        assertThat(getResponseBody.get("text/html").getSchema(), nullValue());
-        assertThat(getResponseBody.get("text/html").getExample(), notNullValue());
+        MimeType textHtml = getResponseBody.get("text/html");
+        assertThat(textHtml.getSchema(), nullValue());
+        assertThat(textHtml.getExample(), notNullValue());
+        assertThat(textHtml.getExample().contains("dummy resource example"), is(true));
     }
 
 }
