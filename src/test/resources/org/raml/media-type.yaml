@@ -79,6 +79,21 @@ resourceTypes:
             200:
 
 /merged:
+    get:
+        responses:
+            200:
+              body:
+                text/html:
+                  schema: |
+                     {  "$schema": "http://json-schema.org/draft-03/schema",
+                        "type": "object",
+                        "description": "A merged schema",
+                        "properties": {
+                          "id":  { "type": "string" }
+                        }
+                     }
+
+/mergedWithType:
     type: dummy
     get:
         responses:
@@ -92,3 +107,4 @@ resourceTypes:
                         "id":  { "type": "string" }
                       }
                    }
+                   

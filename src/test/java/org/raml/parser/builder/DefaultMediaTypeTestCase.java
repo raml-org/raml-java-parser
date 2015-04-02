@@ -29,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.internal.matchers.NotNull;
 import org.raml.model.ActionType;
 import org.raml.model.MimeType;
 import org.raml.model.Raml;
@@ -93,6 +94,42 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
         Resource resource = raml.getResource("/empty");
         assertThat(resource.getAction(PUT).getBody().size(), is(1));
         assertThat(resource.getAction(PUT).getResponses().get("200").getBody().size(), is(1));
+    }
+    
+    @Test
+    public void mergedWithType()
+    {
+        Resource resource = raml.getResource("/mergedWithType");
+        Map<String, MimeType> getResponseBody = resource.getAction(ActionType.GET).getResponses().get("200").getBody();
+        assertThat(getResponseBody.size(), is(2));
+        
+        assertThat(getResponseBody.containsKey("application/json"), is(true));
+        MimeType applicationJson = getResponseBody.get("application/json");
+        assertThat(applicationJson.getSchema(), notNullValue());
+        assertThat(applicationJson.getSchema().contains("merged"), is(true));
+        assertThat(applicationJson.getExample(), notNullValue());
+        assertThat(applicationJson.getExample().contains("foo"), is(true));
+        
+        assertThat(getResponseBody.containsKey("text/html"), is(true));
+        MimeType textHtml = getResponseBody.get("text/html");
+        assertThat(textHtml.getSchema(), nullValue());
+        assertThat(textHtml.getExample(), notNullValue());
+        assertThat(textHtml.getExample().contains("dummy resource example"), is(true));
+    }
+    
+    @Test
+    public void merged()
+    {
+        Resource resource = raml.getResource("/merged");
+        Map<String, MimeType> getResponseBody = resource.getAction(ActionType.GET).getResponses().get("200").getBody();
+        assertThat(getResponseBody.size(), is(1));
+        
+        assertThat(getResponseBody.containsKey("application/json"), is(false));
+        assertThat(getResponseBody.containsKey("text/html"), is(true));
+
+        MimeType textHtml = getResponseBody.get("text/html");
+        assertThat(textHtml.getSchema().contains("merged"), is(true));
+        assertThat(textHtml.getExample(), nullValue());
     }
 
     @Test

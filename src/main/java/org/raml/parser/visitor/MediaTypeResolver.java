@@ -110,33 +110,39 @@ public class MediaTypeResolver
     {
         List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
         
-        NodeTuple mediaTypeNodeTuple = null;
-        
         if (mediaType!=null){
         	
-        	 for (NodeTuple tuple : bodyNode.getValue())
-             {
-        		 if (mediaType.equals(((ScalarNode) tuple.getKeyNode()).getValue())){
-        			 mediaTypeNodeTuple = tuple;
-        			 break;
-        		 }
-             }
-        	 
-        	 if (mediaTypeNodeTuple==null){
+        	NodeTuple mediaTypeNodeTuple = findNodeByKey(bodyNode, mediaType);
+        	
+        	//if mediaTypeNode is null create it, but do not add it to the parent node yet
+        	if (mediaTypeNodeTuple == null){
      	        Node keyNode = new ScalarNode(Tag.STR, mediaType, null, null, null);
      	        Node valueNode = new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), false);     	        
      	        NodeTuple newTuple = new NodeTuple(keyNode, valueNode);
-     	        bodyNode.getValue().add(newTuple);
-     	        mediaTypeNodeTuple= newTuple;
-        	 }
+     	        mediaTypeNodeTuple = newTuple;
+        	}
+        	
+         	moveOrphanedNodes(mediaTypeNodeTuple, bodyNode);
+        	
+        	// in case the mediaTypeNodeTuple was not yet appended to the parent node, 
+         	// append it but only if it is not empty 
+        	if (!bodyNode.getValue().contains(mediaTypeNodeTuple) && 
+        			!((MappingNode)mediaTypeNodeTuple.getValueNode()).getValue().isEmpty()){
+        		bodyNode.getValue().add(mediaTypeNodeTuple);
+        	}
         }
-        
-    	mergeMediaLevelKeys(mediaTypeNodeTuple, bodyNode);
         
         return validationResults;
     }
 
-    private void mergeMediaLevelKeys(NodeTuple targetTouple, MappingNode sourceNode) {
+    /**
+     * It is moving all orphaned schema/example/formParameters nodes from the source node under the
+     * targetTouple node.
+     * 
+     * @param targetTouple the target node which should become new parent of orphaned nodes
+     * @param sourceNode the current parent node of the possibly orphaned nodes
+     */
+	private void moveOrphanedNodes(NodeTuple targetTouple, MappingNode sourceNode) {
     	
     	List<NodeTuple> tuplesToRemove = new ArrayList<NodeTuple>();
     	
@@ -144,31 +150,34 @@ public class MediaTypeResolver
         {
     		String mediaTypeKey = ((ScalarNode) sourceTuple.getKeyNode()).getValue();
     		
+    		// if it is an orphaned schema/example/formParameters
             if (MEDIA_TYPE_KEYS.contains(mediaTypeKey))
             {
-            	tuplesToRemove.add(sourceTuple);
-            	
-            	if (targetTouple!=null){
-            		List<NodeTuple> targetSubTuples = ((MappingNode)targetTouple.getValueNode()).getValue();
-            		
-            		NodeTuple existingTuple = null;
-            		for (NodeTuple targetSubTuple: targetSubTuples){
-            			if(mediaTypeKey.equals(((ScalarNode)targetSubTuple.getKeyNode()).getValue())){
-            				existingTuple = targetSubTuple;
-            				break;            				
-            			}
-            		}
-            		if (existingTuple!=null){
-            			targetSubTuples.remove(existingTuple);
-            		}
-            		targetSubTuples.add(sourceTuple);
-	          	}
+            	// move it to the targetTouple
+        		tuplesToRemove.add(sourceTuple);
+        		MappingNode targetToupleNode = (MappingNode)targetTouple.getValueNode();
+        		NodeTuple existingTuple = findNodeByKey(targetToupleNode, mediaTypeKey);
+        		if (existingTuple!=null){
+        			targetToupleNode.getValue().remove(existingTuple);
+        		}
+        		targetToupleNode.getValue().add(sourceTuple);
 	        }
     	}
     	
+    	// remove the orphaned schema/example/formParameters that were marked for removal earlier
     	for (NodeTuple toRemove: tuplesToRemove){
     		sourceNode.getValue().remove(toRemove);
     	}
+	}
+
+	private NodeTuple findNodeByKey(MappingNode parentNode, String key) {
+		for (NodeTuple tuple : parentNode.getValue())
+		{
+			 if (key.equals(((ScalarNode) tuple.getKeyNode()).getValue())){
+				return  tuple;
+			 }
+		}
+		return null;
 	}
 
 	/**
