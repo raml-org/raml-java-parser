@@ -161,26 +161,5 @@ public class DefaultMediaTypeTestCase extends AbstractRamlTestCase
         assertThat(raml2.getResources().get("/simple").getActions().size(),
                    is(raml1.getResources().get("/simple").getActions().size()));
     }
-    
-  @Test
-    public void merged()
-    {
-        Resource resource = raml.getResource("/merged");
-        Map<String, MimeType> getResponseBody = resource.getAction(ActionType.GET).getResponses().get("200").getBody();
-        assertThat(getResponseBody.size(), is(2));
-        
-        assertThat(getResponseBody.containsKey("application/json"), is(true));
-        MimeType applicationJson = getResponseBody.get("application/json");
-        assertThat(applicationJson.getSchema(), notNullValue());
-        assertThat(applicationJson.getSchema().contains("merged"), is(true));
-        assertThat(applicationJson.getExample(), notNullValue());
-        assertThat(applicationJson.getExample().contains("foo"), is(true));
-        
-        assertThat(getResponseBody.containsKey("text/html"), is(true));
-        MimeType textHtml = getResponseBody.get("text/html");
-        assertThat(textHtml.getSchema(), nullValue());
-        assertThat(textHtml.getExample(), notNullValue());
-        assertThat(textHtml.getExample().contains("dummy resource example"), is(true));
-    }
-
+   
 }
