@@ -1,0 +1,11 @@
+#%RAML 0.8
+---
+title: Example API
+version: v1
+resourceTypes:
+    - simple: !include nested/resource-type-param.yaml
+
+/simple:
+    type:
+        simple:
+            description: !include include-non-yaml-single-line.txt

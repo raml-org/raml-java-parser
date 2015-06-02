@@ -528,12 +528,37 @@ public class TemplateResolver
                 }
                 for (NodeTuple paramTuple : ((MappingNode) params).getValue())
                 {
+                    if (paramTuple.getKeyNode().getNodeId() != scalar)
+                    {
+                        addError("Scalar node expected", paramTuple.getKeyNode());
+                        break;
+                    }
+                    if (paramTuple.getValueNode().getNodeId() != scalar)
+                    {
+                        addError("Scalar node expected", paramTuple.getValueNode());
+                        break;
+                    }
                     String paramKey = ((ScalarNode) paramTuple.getKeyNode()).getValue();
-                    String paramValue = ((ScalarNode) paramTuple.getValueNode()).getValue();
-                    parameters.put(paramKey, paramValue);
+                    ScalarNode valueNode = (ScalarNode) paramTuple.getValueNode();
+                    parameters.put(paramKey, resolveParameterValueInclude(valueNode));
                 }
             }
             return parameters;
+        }
+
+        private String resolveParameterValueInclude(ScalarNode valueNode)
+        {
+            if (valueNode.getTag().equals(INCLUDE_TAG))
+            {
+                Node resolved = includeResolver.resolve(valueNode, resourceLoader, nodeNandler);
+                if (resolved.getNodeId() != scalar)
+                {
+                    addError("Resource type and traits parameters must be scalars", valueNode);
+                    return "";
+                }
+                valueNode = (ScalarNode) resolved;
+            }
+            return valueNode.getValue();
         }
 
         private String getTemplateName(Node templateReferenceNode)

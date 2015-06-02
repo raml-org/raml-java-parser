@@ -99,6 +99,20 @@ public class IncludeTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void includeWithinParam()
+    {
+        Raml raml = parseRaml("org/raml/include/include-within-param.yaml");
+        assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("included title"));
+    }
+
+    @Test
+    public void includeWithinParamNested()
+    {
+        Raml raml = parseRaml("org/raml/include/include-within-param-nested.yaml");
+        assertThat(raml.getResources().get("/simple").getAction(GET).getDescription(), is("included title"));
+    }
+
+    @Test
     public void includeResourceTypeSequence()
     {
         Raml raml = parseRaml("org/raml/include/include-resource-type-sequence.yaml");

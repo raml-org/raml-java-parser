@@ -1,0 +1,13 @@
+#%RAML 0.8
+---
+title: Example API
+version: v1
+resourceTypes:
+    - simple:
+        get:
+            description: <<description>>
+
+/simple:
+    type:
+        simple:
+            description: !include include-non-yaml-single-line.txt
