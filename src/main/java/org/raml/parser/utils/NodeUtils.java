@@ -34,7 +34,6 @@ public class NodeUtils
     private static Set STANDARD_TAGS = new HashSet(
             Arrays.asList(new Tag[] {
                     Tag.YAML,
-                    Tag.VALUE,
                     Tag.MERGE,
                     Tag.SET,
                     Tag.PAIRS,
