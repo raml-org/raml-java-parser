@@ -80,8 +80,9 @@ public class PojoTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
                 newValue = pojoClass.newInstance();
             }
 
-            ReflectionUtils.setProperty(parent, fieldName, newValue);
-            processPojoAnnotations(newValue, fieldName, parent);
+            String unalias = unalias(parent, fieldName);
+            ReflectionUtils.setProperty(parent, unalias, newValue);
+            processPojoAnnotations(newValue, unalias, parent);
             return newValue;
         }
         catch (InstantiationException e)
