@@ -131,10 +131,14 @@ public class Raml implements Serializable
     public String getBasePath()
     {
         //skip protocol separator "//"
-        int start = baseUri.indexOf("//") + 2;
+        int start = baseUri.indexOf("//");
         if (start == -1)
         {
             start = 0;
+        }
+        else
+        {
+            start += 2;
         }
 
         start = baseUri.indexOf("/", start);
