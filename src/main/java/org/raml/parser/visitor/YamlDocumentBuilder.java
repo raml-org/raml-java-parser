@@ -322,9 +322,8 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
             throw new IllegalArgumentException("rootNode is null");
         }
         DumperOptions dumperOptions = new DumperOptions();
-        Tag rootTag = dumperOptions.getExplicitRoot();
         Serializer serializer = new Serializer(new Emitter(output, dumperOptions), new Resolver(),
-                                               dumperOptions, rootTag);
+                                               dumperOptions, null);
         try
         {
             serializer.open();

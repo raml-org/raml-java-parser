@@ -34,7 +34,6 @@ public class NodeUtils
     private static Set STANDARD_TAGS = new HashSet(
             Arrays.asList(new Tag[] {
                     Tag.YAML,
-                    Tag.VALUE,
                     Tag.MERGE,
                     Tag.SET,
                     Tag.PAIRS,
@@ -47,7 +46,8 @@ public class NodeUtils
                     Tag.NULL,
                     Tag.STR,
                     Tag.SEQ,
-                    Tag.MAP
+                    Tag.MAP,
+                    new Tag(Tag.PREFIX + "value")
             }));
 
     public static Object getNodeValue(Node node)

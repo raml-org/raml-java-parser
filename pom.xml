@@ -9,6 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <snakeyaml.version>1.15</snakeyaml.version>
     </properties>
 
     <build>
@@ -129,7 +130,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.13</version>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

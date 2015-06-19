@@ -238,7 +238,7 @@ public class ValidationTestCase extends AbstractRamlTestCase
         List<ValidationResult> validationResults = validateRaml(resource);
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getIncludeName(), nullValue());
-        assertThat(validationResults.get(0).getMessage(), is("could not found expected ':'"));
+        assertThat(validationResults.get(0).getMessage(), containsString("expected ':'"));
     }
 
     @Test
@@ -248,7 +248,7 @@ public class ValidationTestCase extends AbstractRamlTestCase
         List<ValidationResult> validationResults = validateRaml(resource);
         assertThat(validationResults.size(), is(1));
         assertThat(validationResults.get(0).getIncludeName(), nullValue());
-        assertThat(validationResults.get(0).getMessage(), is("could not found expected ':'"));
+        assertThat(validationResults.get(0).getMessage(), containsString("expected ':'"));
     }
 
     @Test
