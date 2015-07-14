@@ -133,6 +133,7 @@ traits:
             host:
                 enum: [ api2 ]
     get:
+        displayName: RetrieveMediaDisplayName
         description: retrieve media
         headers:
             api-key:
