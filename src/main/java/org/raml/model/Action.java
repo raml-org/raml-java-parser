@@ -44,6 +44,9 @@ public class Action implements Serializable
     @Scalar
     private String description;
 
+    @Scalar
+    private String displayName;
+
     @Mapping
     private Map<String, Header> headers = new LinkedHashMap<String, Header>();
 
@@ -188,6 +191,16 @@ public class Action implements Serializable
     public void setBaseUriParameters(Map<String, List<UriParameter>> baseUriParameters)
     {
         this.baseUriParameters = baseUriParameters;
+    }
+
+    public String getDisplayName()
+    {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName)
+    {
+        this.displayName = displayName;
     }
 
     @Override
