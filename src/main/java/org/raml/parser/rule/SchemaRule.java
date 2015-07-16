@@ -48,7 +48,7 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class SchemaRule extends SimpleRule
 {
 
-    private static final SyntaxValidator VALIDATOR = new SyntaxValidator(ValidationConfiguration.newBuilder().setDefaultVersion(SchemaVersion.DRAFTV3).freeze());
+    private static final SyntaxValidator VALIDATOR = new SyntaxValidator(ValidationConfiguration.newBuilder().setDefaultVersion(SchemaVersion.DRAFTV4).freeze());
 
     public SchemaRule()
     {
