@@ -20,6 +20,7 @@ import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.utils.StreamUtils;
 import org.raml.parser.visitor.NodeHandler;
@@ -63,27 +64,34 @@ public class IncludeResolver implements TagResolver, ContextPathAware
         String resourceName = contextPath.resolveAbsolutePath(scalarNode.getValue());
         InputStream inputStream = resourceLoader.fetchResource(resourceName);
 
-        if (inputStream == null)
-        {
-            nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be resolved " + resourceName);
-            return mockInclude(node);
+        try {
+            if (inputStream == null)
+            {
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be resolved " + resourceName);
+                return mockInclude(node);
+            }
+            else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
+            {
+                Yaml yamlParser = new Yaml();
+                includeNode = yamlParser.compose(new InputStreamReader(inputStream));
+            }
+            else //scalar value
+            {
+                //String newValue = IOUtils.toString(inputStream);
+                String newValue = StreamUtils.toString(inputStream);
+                includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
+            }
+            if (includeNode == null)
+            {
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
+                return mockInclude(node);
+            }
+        } finally {
+            if (inputStream != null) {
+                IOUtils.closeQuietly(inputStream);
+            }
         }
-        else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
-        {
-            Yaml yamlParser = new Yaml();
-            includeNode = yamlParser.compose(new InputStreamReader(inputStream));
-        }
-        else //scalar value
-        {
-            //String newValue = IOUtils.toString(inputStream);
-            String newValue = StreamUtils.toString(inputStream);
-            includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
-        }
-        if (includeNode == null)
-        {
-            nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
-            return mockInclude(node);
-        }
+
         //retag node with included resource info
         String markInfo = node.getStartMark().getLine() + SEPARATOR + node.getStartMark().getColumn()
                           + SEPARATOR + node.getEndMark().getColumn();
