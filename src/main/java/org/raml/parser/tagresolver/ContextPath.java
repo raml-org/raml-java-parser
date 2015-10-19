@@ -36,6 +36,11 @@ public class ContextPath
         this.includeStack = new ArrayDeque<IncludeInfo>(contextPath.includeStack);
     }
 
+    public ContextPath(IncludeInfo includeInfo)
+    {
+        includeStack.add(includeInfo);
+    }
+
     public void pushRoot(String absoluteFile)
     {
         if (includeStack.size() > 0)

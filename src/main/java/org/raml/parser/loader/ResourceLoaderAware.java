@@ -13,16 +13,11 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.parser.visitor;
+package org.raml.parser.loader;
 
-import java.util.List;
-
-import org.raml.parser.loader.ResourceLoaderAware;
-import org.raml.parser.rule.ValidationResult;
-import org.raml.parser.tagresolver.ContextPathAware;
-
-public interface YamlValidator extends NodeHandler, ContextPathAware, ResourceLoaderAware
+public interface ResourceLoaderAware
 {
 
-    List<ValidationResult> getMessages();
+    void setResourceLoader(ResourceLoader resourceLoader);
+
 }

@@ -19,7 +19,6 @@ import static org.raml.parser.rule.ValidationResult.UNKNOWN;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
-import static org.yaml.snakeyaml.nodes.Tag.STR;
 
 import com.fasterxml.jackson.core.JsonLocation;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -39,16 +38,24 @@ import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.SchemaFactory;
 
+import org.raml.parser.ResolveResourceException;
+import org.raml.parser.XsdResourceResolver;
+import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.loader.ResourceLoaderAware;
+import org.raml.parser.tagresolver.ContextPath;
+import org.raml.parser.tagresolver.ContextPathAware;
+import org.raml.parser.utils.NodeUtils;
 import org.raml.parser.visitor.IncludeInfo;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.Tag;
 
-public class SchemaRule extends SimpleRule
+public class SchemaRule extends SimpleRule implements ContextPathAware, ResourceLoaderAware
 {
 
     private static final SyntaxValidator VALIDATOR = new SyntaxValidator(ValidationConfiguration.newBuilder().setDefaultVersion(SchemaVersion.DRAFTV3).freeze());
+    private ContextPath contextPath;
+    private ResourceLoader resourceLoader;
 
     public SchemaRule()
     {
@@ -62,6 +69,7 @@ public class SchemaRule extends SimpleRule
         List<ValidationResult> validationResults = super.doValidateValue(node);
 
         IncludeInfo globaSchemaIncludeInfo = null;
+        ContextPath actualContextPath = contextPath;
         ScalarNode schemaNode = getGlobalSchemaNode(value);
         if (schemaNode == null)
         {
@@ -73,9 +81,10 @@ public class SchemaRule extends SimpleRule
             if (schemaNode.getTag().startsWith(INCLUDE_APPLIED_TAG))
             {
                 globaSchemaIncludeInfo = new IncludeInfo(schemaNode.getTag());
+                actualContextPath = new ContextPath(globaSchemaIncludeInfo);
             }
         }
-        if (value == null || isCustomTag(schemaNode.getTag()))
+        if (value == null || NodeUtils.isNonStringTag(schemaNode.getTag()))
         {
             return validationResults;
         }
@@ -113,6 +122,7 @@ public class SchemaRule extends SimpleRule
         else if (mimeType.contains("xml"))
         {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            factory.setResourceResolver(new XsdResourceResolver(actualContextPath, resourceLoader));
             try
             {
                 factory.newSchema(new StreamSource(new StringReader(value)));
@@ -125,6 +135,11 @@ public class SchemaRule extends SimpleRule
             catch (SAXException e)
             {
                 String msg = "invalid XML schema" + getSourceErrorDetail(node);
+                validationResults.add(getErrorResult(msg, getLineOffset(schemaNode), globaSchemaIncludeInfo));
+            }
+            catch (ResolveResourceException e)
+            {
+                String msg = "invalid XML schema: " + e.getMessage();
                 validationResults.add(getErrorResult(msg, getLineOffset(schemaNode), globaSchemaIncludeInfo));
             }
         }
@@ -167,11 +182,6 @@ public class SchemaRule extends SimpleRule
         return schemasRule.getSchema(key);
     }
 
-    private boolean isCustomTag(Tag tag)
-    {
-        return tag != null && !STR.equals(tag) && !tag.startsWith(INCLUDE_APPLIED_TAG);
-    }
-
     @Override
     public TupleRule<?, ?> deepCopy()
     {
@@ -179,6 +189,27 @@ public class SchemaRule extends SimpleRule
         SchemaRule copy = new SchemaRule();
         copy.setNodeRuleFactory(getNodeRuleFactory());
         copy.setHandler(getHandler());
+        copy.setContextPath(contextPath);
+        copy.setResourceLoader(resourceLoader);
         return copy;
     }
+
+    @Override
+    public void setContextPath(ContextPath contextPath)
+    {
+        this.contextPath = contextPath;
+    }
+
+    @Override
+    public ContextPath getContextPath()
+    {
+        return contextPath;
+    }
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader)
+    {
+        this.resourceLoader = resourceLoader;
+    }
+
 }

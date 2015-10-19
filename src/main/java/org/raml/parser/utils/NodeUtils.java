@@ -15,6 +15,9 @@
  */
 package org.raml.parser.utils;
 
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
+import static org.yaml.snakeyaml.nodes.Tag.STR;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -79,5 +82,10 @@ public class NodeUtils
     public static boolean isStandardTag(Tag tag)
     {
         return STANDARD_TAGS.contains(tag);
+    }
+
+    public static boolean isNonStringTag(Tag tag)
+    {
+        return tag != null && !STR.equals(tag) && !tag.startsWith(INCLUDE_APPLIED_TAG);
     }
 }

@@ -23,6 +23,7 @@ import org.raml.model.parameter.FormParameter;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
+import org.raml.parser.builder.SchemaTupleBuilder;
 
 public class MimeType implements Serializable
 {
@@ -32,8 +33,10 @@ public class MimeType implements Serializable
     @Key
     private String type;
 
-    @Scalar(rule = org.raml.parser.rule.SchemaRule.class)
+    @Scalar(rule = org.raml.parser.rule.SchemaRule.class, builder = SchemaTupleBuilder.class)
     private String schema;
+
+    private Object compiledSchema;
 
     @Scalar
     private String example;
@@ -68,6 +71,16 @@ public class MimeType implements Serializable
     public void setSchema(String schema)
     {
         this.schema = schema;
+    }
+
+    public Object getCompiledSchema()
+    {
+        return compiledSchema;
+    }
+
+    public void setCompiledSchema(Object compiledSchema)
+    {
+        this.compiledSchema = compiledSchema;
     }
 
     public String getExample()

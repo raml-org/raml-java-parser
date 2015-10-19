@@ -26,10 +26,10 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class IncludeInfo
 {
 
-    private int line;
-    private int startColumn;
-    private int endColumn;
-    private String includeName;
+    private final int line;
+    private final int startColumn;
+    private final int endColumn;
+    private final String includeName;
 
     public IncludeInfo(int line, int startColumn, int endColumn, String includeName)
     {
@@ -60,7 +60,7 @@ public class IncludeInfo
 
     public IncludeInfo(String name)
     {
-        this.includeName = name;
+        this(0, 0, 0, name);
     }
 
     private int popTrailingNumber(StringBuilder encodedInclude)

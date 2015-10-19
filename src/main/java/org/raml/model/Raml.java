@@ -56,6 +56,8 @@ public class Raml implements Serializable
     @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
     private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
+    private Map<String, Object> compiledSchemas;
+
     @Sequence
     private List<Map<String, Template>> resourceTypes = new ArrayList<Map<String, Template>>();
 
@@ -234,6 +236,16 @@ public class Raml implements Serializable
             consolidated.putAll(map);
         }
         return consolidated;
+    }
+
+    public Map<String, Object> getCompiledSchemas()
+    {
+        return compiledSchemas;
+    }
+
+    public void setCompiledSchemas(Map<String, Object> compiledSchemas)
+    {
+        this.compiledSchemas = compiledSchemas;
     }
 
     public Resource getResource(String path)

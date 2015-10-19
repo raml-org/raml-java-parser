@@ -25,6 +25,7 @@ import java.util.Deque;
 import java.util.List;
 
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.loader.ResourceLoaderAware;
 import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.TagResolver;
@@ -47,7 +48,6 @@ public class NodeVisitor
     private Deque<String> loopDetector = new ArrayDeque<String>();
     private ContextPath contextPath = new ContextPath();
 
-
     public NodeVisitor(NodeHandler nodeHandler, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
         super();
@@ -55,7 +55,16 @@ public class NodeVisitor
         this.resourceLoader = resourceLoader;
         this.tagResolvers = tagResolvers;
         initializeContextPathAware(tagResolvers);
+        initializeResourceLoaderAware();
+        SchemaCompiler.getInstance().init(contextPath, resourceLoader);
+    }
 
+    private void initializeResourceLoaderAware()
+    {
+        if (nodeHandler instanceof ResourceLoaderAware)
+        {
+            ((ResourceLoaderAware) nodeHandler).setResourceLoader(resourceLoader);
+        }
     }
 
     private void initializeContextPathAware(TagResolver[] tagResolvers)

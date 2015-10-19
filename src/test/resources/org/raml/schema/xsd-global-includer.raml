@@ -1,0 +1,11 @@
+#%RAML 0.8
+---
+title: Sample API
+schemas:
+    - name-schema: !include xsd-includer.xsd
+/name:
+    get:
+        responses:
+            200:
+                body: !include refs/xsd-global.raml
+

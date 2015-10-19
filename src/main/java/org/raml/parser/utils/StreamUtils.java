@@ -109,7 +109,7 @@ public class StreamUtils
         return content;
     }
 
-    private static String detectEncoding(byte[] content)
+    public static String detectEncoding(byte[] content)
     {
         UniversalDetector detector = new UniversalDetector(null);
         detector.handleData(content, 0, content.length);

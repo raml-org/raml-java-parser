@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.example.org/simple"
+        elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://www.example.org/simple">
+    <xs:include schemaLocation="refs/xsd-include.xsd"></xs:include>
+    <xs:element name="message" type="Message"></xs:element>
+</xs:schema>

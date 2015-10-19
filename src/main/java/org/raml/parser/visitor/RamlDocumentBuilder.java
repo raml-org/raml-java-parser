@@ -145,7 +145,14 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     protected void postBuildProcess()
     {
         getMediaTypeResolver().setBodyDefaultMediaType(getDocumentObject().getResources());
+        compileGlobalSchemas();
+    }
 
+    private void compileGlobalSchemas()
+    {
+        SchemaCompiler compiler = SchemaCompiler.getInstance();
+        Raml raml = getDocumentObject();
+        raml.setCompiledSchemas(compiler.compile(raml.getConsolidatedSchemas()));
     }
 
     private void populateDefaultUriParameters(Resource resource)

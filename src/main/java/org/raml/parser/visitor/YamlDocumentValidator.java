@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.loader.ResourceLoaderAware;
 import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.NodeRule;
 import org.raml.parser.rule.NodeRuleFactory;
@@ -33,6 +35,7 @@ import org.raml.parser.rule.SequenceRule;
 import org.raml.parser.rule.TupleRule;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.ContextPath;
+import org.raml.parser.tagresolver.ContextPathAware;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
@@ -48,6 +51,7 @@ public class YamlDocumentValidator implements YamlValidator
     private List<ValidationResult> messages = new ArrayList<ValidationResult>();
     private NodeRuleFactory nodeRuleFactory;
     private ContextPath contextPath;
+    private ResourceLoader resourceLoader;
 
 
     protected YamlDocumentValidator(Class<?> documentClass)
@@ -174,6 +178,14 @@ public class YamlDocumentValidator implements YamlValidator
         if (tupleRule != null)
         {
             TupleRule<?, ?> rule = tupleRule.getRuleForTuple(nodeTuple);
+            if (rule instanceof ContextPathAware)
+            {
+                ((ContextPathAware) rule).setContextPath(contextPath);
+            }
+            if (rule instanceof ResourceLoaderAware)
+            {
+                ((ResourceLoaderAware) rule).setResourceLoader(resourceLoader);
+            }
             ruleContext.push(rule);
         }
         else
@@ -245,5 +257,16 @@ public class YamlDocumentValidator implements YamlValidator
     public ContextPath getContextPath()
     {
         return contextPath;
+    }
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader)
+    {
+        this.resourceLoader = resourceLoader;
+    }
+
+    protected ResourceLoader getResourceLoader()
+    {
+        return resourceLoader;
     }
 }

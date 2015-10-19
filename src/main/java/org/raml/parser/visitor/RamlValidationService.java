@@ -33,7 +33,6 @@ public class RamlValidationService extends YamlValidationService
     public RamlValidationService(ResourceLoader resourceLoader, RamlDocumentValidator ramlDocumentValidator, TagResolver... tagResolvers)
     {
         super(resourceLoader, ramlDocumentValidator, defaultResolver(tagResolvers));
-        getValidator().setResourceLoader(resourceLoader);
     }
 
     private static TagResolver[] defaultResolver(TagResolver[] tagResolvers)

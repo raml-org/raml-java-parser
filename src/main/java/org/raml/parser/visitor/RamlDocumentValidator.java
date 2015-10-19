@@ -20,7 +20,6 @@ import static org.raml.parser.visitor.TupleType.KEY;
 import java.util.List;
 
 import org.raml.model.Raml;
-import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.BaseUriRule;
 import org.raml.parser.rule.DefaultTupleRule;
 import org.raml.parser.rule.ImplicitMapEntryRule;
@@ -39,7 +38,6 @@ public class RamlDocumentValidator extends YamlDocumentValidator
 
     private TemplateResolver templateResolver;
     private MediaTypeResolver mediaTypeResolver = new MediaTypeResolver();
-    private ResourceLoader resourceLoader;
 
     public RamlDocumentValidator()
     {
@@ -55,7 +53,7 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     {
         if (templateResolver == null)
         {
-            templateResolver = new TemplateResolver(resourceLoader, this);
+            templateResolver = new TemplateResolver(getResourceLoader(), this);
         }
         return templateResolver;
     }
@@ -116,11 +114,6 @@ public class RamlDocumentValidator extends YamlDocumentValidator
     {
         return rule instanceof TypedTupleRule &&
                ((TypedTupleRule) rule).getValueType().getName().equals("org.raml.model.Resource");
-    }
-
-    public void setResourceLoader(ResourceLoader resourceLoader)
-    {
-        this.resourceLoader = resourceLoader;
     }
 
     @Override

@@ -1,0 +1,11 @@
+#%RAML 0.8
+---
+title: Sample API
+
+/name:
+    get:
+        responses:
+            200:
+                body:
+                    application/xml:
+                        schema: !include xsd-includer.xsd
