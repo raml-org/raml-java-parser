@@ -36,7 +36,7 @@ public class MimeType implements Serializable
     @Scalar(rule = org.raml.parser.rule.SchemaRule.class, builder = SchemaTupleBuilder.class)
     private String schema;
 
-    private Object compiledSchema;
+    private transient Object compiledSchema;
 
     @Scalar
     private String example;

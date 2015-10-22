@@ -56,7 +56,7 @@ public class Raml implements Serializable
     @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
     private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
-    private Map<String, Object> compiledSchemas;
+    private transient Map<String, Object> compiledSchemas;
 
     @Sequence
     private List<Map<String, Template>> resourceTypes = new ArrayList<Map<String, Template>>();
