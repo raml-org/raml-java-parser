@@ -307,7 +307,11 @@ public class YamlDocumentSuggester implements NodeHandler
     {
         try
         {
-            builder.onTupleStart(nodeTuple);
+            boolean found = builder.onTupleStart(nodeTuple);
+            if (!found)
+            {
+                return false;
+            }
             MappingNode mapping = nodeTuple.getValueNode().getNodeId() == NodeId.mapping ? (MappingNode) nodeTuple.getValueNode() : null;
             pushNode(nodeTuple.getKeyNode(), mapping);
         }

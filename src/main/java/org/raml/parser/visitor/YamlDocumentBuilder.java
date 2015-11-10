@@ -270,6 +270,10 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
         if (currentBuilder != null)
         {
             NodeBuilder<?> builder = currentBuilder.getBuilderForTuple(nodeTuple);
+            if (builder == null)
+            {
+                return false;
+            }
             builderContext.push(builder);
         }
         else

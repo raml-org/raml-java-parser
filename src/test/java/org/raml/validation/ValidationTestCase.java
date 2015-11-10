@@ -16,6 +16,7 @@
 package org.raml.validation;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
@@ -28,11 +29,13 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.visitor.IncludeInfo;
+import org.raml.parser.visitor.RamlDocumentBuilder;
 
 public class ValidationTestCase extends AbstractRamlTestCase
 {
@@ -220,6 +223,21 @@ public class ValidationTestCase extends AbstractRamlTestCase
         includeInfo = includeContext.pop();
         assertThat(includeInfo.getIncludeName(), containsString("circular1.raml"));
         assertThat(includeInfo.getLine() + 1, is(3));
+    }
+
+    @Test
+    public void unknownKey()
+    {
+        String resource = "org/raml/validation/unknown-key.yaml";
+        
+        // validation reports the unknown key...
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        assertThat(validationResults.get(0).getMessage(), is("Unknown key: unknown"));
+        
+        // ... but the parser doesn't choke on it
+        Raml validContent = new RamlDocumentBuilder().build(resource);
+        assertThat(validContent.getResource("/partiallyInvalid").getAction(ActionType.POST), is(notNullValue()));
     }
 
     @Test

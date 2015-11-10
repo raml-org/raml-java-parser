@@ -65,7 +65,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 return tupleBuilder;
             }
         }
-        throw new RuntimeException("Builder not found for " + tuple);
+        return null;
     }
 
     protected Map<String, TupleBuilder<?, ?>> getBuilders()
