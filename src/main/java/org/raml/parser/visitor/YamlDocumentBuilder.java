@@ -56,7 +56,7 @@ import org.yaml.snakeyaml.serializer.Serializer;
 public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
 {
 
-    private Class<T> documentClass;
+    private Class<? extends T> documentClass;
     private T documentObject;
     private Stack<NodeBuilder<?>> builderContext = new Stack<NodeBuilder<?>>();
     private Stack<Object> documentContext = new Stack<Object>();
@@ -65,7 +65,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
     private TagResolver[] tagResolvers;
     private ContextPath contextPath;
 
-    public YamlDocumentBuilder(Class<T> documentClass, ResourceLoader resourceLoader, TagResolver... tagResolvers)
+    public YamlDocumentBuilder(Class<? extends T> documentClass, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
         this.documentClass = documentClass;
         this.resourceLoader = resourceLoader;
