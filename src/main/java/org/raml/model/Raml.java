@@ -26,6 +26,7 @@ import org.raml.model.parameter.UriParameter;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
+import org.raml.parser.builder.GlobalSchemaSequenceTupleBuilder;
 import org.raml.parser.resolver.ResourceHandler;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
@@ -53,7 +54,7 @@ public class Raml implements Serializable
     @Scalar()
     private String mediaType;
 
-    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class)
+    @Sequence(rule = org.raml.parser.rule.GlobalSchemasRule.class, builder = GlobalSchemaSequenceTupleBuilder.class)
     private List<Map<String, String>> schemas = new ArrayList<Map<String, String>>();
 
     private transient Map<String, Object> compiledSchemas;

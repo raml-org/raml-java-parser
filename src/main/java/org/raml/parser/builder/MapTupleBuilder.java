@@ -44,7 +44,7 @@ public class MapTupleBuilder extends DefaultTupleBuilder<ScalarNode, Node>
         this.valueClass = valueClass;
     }
 
-    private void addBuilders()
+    protected void addBuilders()
     {
         TupleBuilder tupleBuilder;
         if (ReflectionUtils.isPojo(getValueClass()))

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.XMLConstants;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -28,11 +29,14 @@ import org.apache.commons.lang.StringUtils;
 import org.raml.parser.XsdResourceResolver;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.tagresolver.ContextPath;
+import org.raml.parser.tagresolver.IncludeResolver;
+import org.yaml.snakeyaml.nodes.ScalarNode;
 
-public class SchemaCompiler
+public final class SchemaCompiler
 {
 
-    private final static SchemaCompiler instance = new SchemaCompiler();
+    private static final String SEPARATOR = "-|_";
+    private static final SchemaCompiler instance = new SchemaCompiler();
     private ContextPath contextPath;
     private ResourceLoader resourceLoader;
 
@@ -55,28 +59,35 @@ public class SchemaCompiler
         this.resourceLoader = resourceLoader;
     }
 
-    public Map<String, Object> compile(Map<String, String> schemas)
+    public Map<String, Object> compile(Map<String, String> encodedSchemas)
     {
         Map<String, Object> compiledSchemas = new HashMap<String, Object>();
-        for (Map.Entry<String, String> schema : schemas.entrySet())
+        for (Map.Entry<String, String> encodedSchema : encodedSchemas.entrySet())
         {
-            Schema compiledSchema = compile(schema.getValue());
+            String[] pathAndSchema = decodeIncludePath(encodedSchema.getValue());
+            Schema compiledSchema = compile(pathAndSchema[1], pathAndSchema[0]);
             if (compiledSchema != null)
             {
-                compiledSchemas.put(schema.getKey(), compiledSchema);
+                compiledSchemas.put(encodedSchema.getKey(), compiledSchema);
             }
+            encodedSchema.setValue(pathAndSchema[1]);
         }
         return compiledSchemas;
     }
 
-    public Schema compile(String schema)
+    public Schema compile(String schema, String path)
     {
         Schema compiledSchema = null;
         String trimmedSchema = StringUtils.trimToEmpty(schema);
         if (trimmedSchema.startsWith("<") && trimmedSchema.endsWith(">"))
         {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            factory.setResourceResolver(new XsdResourceResolver(contextPath, resourceLoader));
+            ContextPath actualContextPath = contextPath;
+            if (path != null)
+            {
+                actualContextPath = new ContextPath(new IncludeInfo(path));
+            }
+            factory.setResourceResolver(new XsdResourceResolver(actualContextPath, resourceLoader));
             try
             {
                 compiledSchema = factory.newSchema(new StreamSource(new StringReader(trimmedSchema)));
@@ -88,5 +99,36 @@ public class SchemaCompiler
             }
         }
         return compiledSchema;
+    }
+
+    public Schema compile(String schema)
+    {
+        return compile(schema, null);
+    }
+
+    public static String encodeIncludePath(ScalarNode node)
+    {
+        String schema = node.getValue();
+        String includePath = "";
+        if (node instanceof IncludeResolver.IncludeScalarNode)
+        {
+            includePath = ((IncludeResolver.IncludeScalarNode) node).getIncludeName();
+        }
+        String includeEncoded = DatatypeConverter.printBase64Binary(includePath.getBytes());
+
+        return includeEncoded + SEPARATOR + schema;
+    }
+
+    public static String[] decodeIncludePath(String encodedSchema)
+    {
+        int idx = encodedSchema.indexOf(SEPARATOR);
+        if (idx == -1)
+        {
+            throw new IllegalArgumentException("Invalid include encoded schema.");
+        }
+        String base64Path = encodedSchema.substring(0, idx);
+        String includePath = new String(DatatypeConverter.parseBase64Binary(base64Path));
+        String schema = encodedSchema.substring(idx + SEPARATOR.length(), encodedSchema.length());
+        return new String[] {includePath, schema};
     }
 }

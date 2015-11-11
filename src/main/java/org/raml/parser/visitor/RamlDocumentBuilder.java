@@ -18,6 +18,9 @@ package org.raml.parser.visitor;
 import static org.raml.parser.rule.BaseUriRule.URI_PATTERN;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,7 +155,13 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     {
         SchemaCompiler compiler = SchemaCompiler.getInstance();
         Raml raml = getDocumentObject();
-        raml.setCompiledSchemas(compiler.compile(raml.getConsolidatedSchemas()));
+        Map<String, Object> compiledSchemas = new HashMap<String, Object>();
+        List<Map<String, String>> schemas = raml.getSchemas();
+        for (Map<String, String> schemaMap : schemas)
+        {
+            compiledSchemas.putAll(compiler.compile(schemaMap));
+        }
+        raml.setCompiledSchemas(compiledSchemas);
     }
 
     private void populateDefaultUriParameters(Resource resource)

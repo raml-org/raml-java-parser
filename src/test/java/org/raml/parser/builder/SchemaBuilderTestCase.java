@@ -36,7 +36,7 @@ public class SchemaBuilderTestCase extends AbstractRamlTestCase
         MimeType mimeType = raml.getResources().get("/name").getAction(GET).getResponses().get("200").getBody().get("application/xml");
         assertThat(mimeType.getCompiledSchema(), is(Schema.class));
         assertThat(mimeType.getSchema(), is(String.class));
-        assertThat(mimeType.getSchema(), containsString("include schemaLocation=\"refs/xsd-include.xsd\""));
+        assertThat(mimeType.getSchema(), containsString("include schemaLocation=\"xsd-include.xsd\""));
     }
 
     @Test
