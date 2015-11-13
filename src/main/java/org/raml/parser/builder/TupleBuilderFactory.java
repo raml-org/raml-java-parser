@@ -18,7 +18,7 @@ package org.raml.parser.builder;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class TupleBuilderFactory extends AbstractFactory
     public void addBuildersTo(Class<?> pojoClass, TupleBuilder parent)
     {
         final List<Field> declaredFields = ReflectionUtils.getInheritedFields(pojoClass);
-        final Map<String, TupleBuilder<?, ?>> innerBuilders = new HashMap<String, TupleBuilder<?, ?>>();
+        final Map<String, TupleBuilder<?, ?>> innerBuilders = new LinkedHashMap<String, TupleBuilder<?, ?>>();
         for (Field declaredField : declaredFields)
         {
             Scalar scalar = declaredField.getAnnotation(Scalar.class);
