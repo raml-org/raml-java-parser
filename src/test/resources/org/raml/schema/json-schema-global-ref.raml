@@ -1,0 +1,11 @@
+#%RAML 0.8
+---
+title: Sample API
+schemas:
+    - name-schema: !include refs/fstab-referring.json
+/name:
+    get:
+        responses:
+            200:
+                body: !include refs/json-schema-global.raml
+

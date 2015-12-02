@@ -70,6 +70,10 @@ public final class SchemaCompiler
             {
                 compiledSchemas.put(encodedSchema.getKey(), compiledSchema);
             }
+            else if (StringUtils.isNotBlank(pathAndSchema[0]))
+            {
+                compiledSchemas.put(encodedSchema.getKey(), pathAndSchema[0]);
+            }
             encodedSchema.setValue(pathAndSchema[1]);
         }
         return compiledSchemas;

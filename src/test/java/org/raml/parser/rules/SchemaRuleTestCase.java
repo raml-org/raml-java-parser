@@ -19,17 +19,12 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
-import static org.raml.model.ActionType.GET;
 import static org.raml.parser.rule.ValidationResult.UNKNOWN;
 
 import java.util.List;
 
-import javax.xml.validation.Schema;
-
 import org.junit.Ignore;
 import org.junit.Test;
-import org.raml.model.MimeType;
-import org.raml.model.Raml;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.ContextPath;
@@ -221,6 +216,21 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
     public void validGlobalXsdInclude()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/schema/xsd-global-includer.raml");
+        assertThat(validationResults.size(), is(0));
+    }
+
+
+    @Test
+    public void validJsonSchemaRef()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/json-schema-ref.raml");
+        assertThat(validationResults.size(), is(0));
+    }
+
+    @Test
+    public void validGlobalJsonSchemaRef()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/schema/json-schema-global-ref.raml");
         assertThat(validationResults.size(), is(0));
     }
 

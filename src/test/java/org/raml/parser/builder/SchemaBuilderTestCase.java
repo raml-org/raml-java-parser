@@ -50,4 +50,28 @@ public class SchemaBuilderTestCase extends AbstractRamlTestCase
         assertThat(mimeType.getSchema(), is("name-schema"));
     }
 
+
+    @Test
+    public void jsonSchemaWithRef()
+    {
+        Raml raml = parseRaml("org/raml/schema/json-schema-ref.raml");
+        MimeType mimeType = raml.getResources().get("/name").getAction(GET).getResponses().get("200").getBody().get("application/json");
+        assertThat(mimeType.getCompiledSchema(), is(String.class));
+        assertThat(mimeType.getSchema(), is(String.class));
+        assertThat(mimeType.getSchema(), containsString("draft-04"));
+    }
+
+    @Test
+    public void globalJsonSchemaWithRef()
+    {
+        Raml raml = parseRaml("org/raml/schema/json-schema-global-ref.raml");
+        MimeType mimeType = raml.getResources().get("/name").getAction(GET).getResponses().get("200").getBody().get("application/json");
+        assertThat(raml.getCompiledSchemas().size(), is(1));
+        Object globalCompiledSchema = raml.getCompiledSchemas().get(mimeType.getSchema());
+        assertThat(globalCompiledSchema, is(String.class));
+        assertThat((String) globalCompiledSchema, is("org/raml/schema/refs/fstab-referring.json"));
+        assertThat(mimeType.getSchema(), is(String.class));
+        assertThat(mimeType.getSchema(), is("name-schema"));
+    }
+
 }

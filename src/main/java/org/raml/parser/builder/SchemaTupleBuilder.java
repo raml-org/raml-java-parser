@@ -15,8 +15,7 @@
  */
 package org.raml.parser.builder;
 
-import javax.xml.validation.Schema;
-
+import org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
 import org.raml.parser.utils.NodeUtils;
 import org.raml.parser.utils.ReflectionUtils;
 import org.raml.parser.visitor.SchemaCompiler;
@@ -51,11 +50,16 @@ public class SchemaTupleBuilder extends ScalarTupleBuilder
             return null;
         }
 
-        Schema schema = null;
+        Object schema = null;
         String mimeType = getParent() instanceof PojoTupleBuilder ? ((PojoTupleBuilder) getParent()).getFieldName() : null;
         if (mimeType != null && mimeType.contains("xml"))
         {
             schema = SchemaCompiler.getInstance().compile(value);
+        }
+        else if (mimeType != null && mimeType.contains("json") && (node instanceof IncludeScalarNode))
+        {
+            //in case of json schemas store include path
+            schema = ((IncludeScalarNode) node).getIncludeName();
         }
         return schema;
     }
