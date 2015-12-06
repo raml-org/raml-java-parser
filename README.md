@@ -38,6 +38,8 @@ The parser returns a Raml object and can be invoked using a String with the RAML
 Raml raml = new RamlDocumentBuilder().build(ramlLocation);
 ```
 
+If the location is a file URI, it should be prefixed with `file://`
+
 ### Emitter
 
 If you do any change to the Raml object model and you want to get the updated RAML descriptor

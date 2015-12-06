@@ -75,6 +75,9 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
     public T build(String resourceLocation)
     {
         InputStream resourceStream = resourceLoader.fetchResource(resourceLocation);
+        if (resourceStream == null) {
+            return null;
+        }
         return build(resourceStream, resourceLocation);
     }
 

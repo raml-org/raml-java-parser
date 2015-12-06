@@ -55,6 +55,7 @@ public class FileResourceLoader implements ResourceLoader
         catch (FileNotFoundException e)
         {
             //ignore
+            logger.debug(String.format("Resource was not found: %s", resourceName));
         }
         return inputStream;
     }
