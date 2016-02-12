@@ -411,7 +411,12 @@ public class RamlEmitter
 
     private String blockFormat(int depth, String text)
     {
-        StringBuilder block = new StringBuilder("|\n");
+        String blockPrefix = "|\n";
+        if (!text.contains("\n"))
+        {
+            blockPrefix = "|-\n";
+        }
+        StringBuilder block = new StringBuilder(blockPrefix);
         String[] lines = text.split("\n");
         for (String line : lines)
         {
