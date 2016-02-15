@@ -42,6 +42,11 @@ public class XsdResourceResolver implements LSResourceResolver
     @Override
     public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, String baseURI)
     {
+        if (systemId == null)
+        {
+            //delegate resource resolution to xml parser
+            return null;
+        }
         String path = contextPath.resolveAbsolutePath(systemId);
         if (path == null || path.startsWith("http://"))
         {
