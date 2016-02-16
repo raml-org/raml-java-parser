@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
+import static org.raml.model.ActionType.CONNECT;
 import static org.raml.model.ParamType.INTEGER;
 import static org.raml.model.ParamType.NUMBER;
 import static org.raml.model.ParamType.STRING;
@@ -196,12 +197,13 @@ public class FullConfigTestCase extends AbstractRamlTestCase
         assertThat(mediaItemResource.getRelativeUri(), is(mediaItemUri));
         assertThat(mediaItemResource.getUri(), is(mediaUri + mediaItemUri));
         assertThat(mediaItemResource.getDisplayName(), is("Media item"));
-        assertThat(mediaItemResource.getActions().size(), is(1));
+        assertThat(mediaItemResource.getActions().size(), is(2));
         assertThat(mediaItemResource.getUriParameters().size(), is(1));
         UriParameter mediaIdParam = mediaItemResource.getUriParameters().get("mediaId");
         assertThat(mediaIdParam.getType(), is(STRING));
         assertThat(mediaIdParam.getMaxLength(), is(10));
-
+        action = mediaItemResource.getAction(CONNECT);
+        assertThat(action.getType(), is(CONNECT));
     }
 
 }

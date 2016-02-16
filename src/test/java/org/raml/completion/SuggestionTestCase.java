@@ -33,7 +33,7 @@ public class SuggestionTestCase
 {
 
     public static final int ROOT_SUGGEST_COUNT = 13;
-    public static final int RESOURCE_SUGGEST_COUNT = 16;
+    public static final int RESOURCE_SUGGEST_COUNT = 17;
     public static final int ACTION_SUGGEST_COUNT = 10;
     private static final int BODY_SUGGEST_COUNT = 4;
     private static final int RESPONSES_SUGGEST_COUNT = 8;

@@ -205,6 +205,7 @@ traits:
                 type: string
                 maxLength: 10
         head: !!null
+        connect: !!null
 /tags:
     head: !!null
     /{tagId}:
