@@ -17,6 +17,7 @@ package org.raml;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.raml.model.ActionType.GET;
@@ -75,12 +76,25 @@ public class EmitterTestCase extends AbstractRamlTestCase
     }
 
     @Test
-    public void emitRegexp()
+    public void emitInlineRegexp()
     {
         Raml raml = parseRaml("org/raml/emitter/pattern.yaml");
         RamlEmitter emitter = new RamlEmitter();
         String dump = emitter.dump(raml);
-        assertThat(dump, containsString("([a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+)"));
+        Raml emittedRaml = parseRaml(dump, "");
+        String pattern = emittedRaml.getResource("/hello").getAction("get").getHeaders().get("one").getPattern();
+        assertThat(pattern, not(endsWith("\n")));
+    }
+
+    @Test
+    public void emitRegexpWithPipe()
+    {
+        Raml raml = parseRaml("org/raml/emitter/pattern-with-newline.yaml");
+        RamlEmitter emitter = new RamlEmitter();
+        String dump = emitter.dump(raml);
+        Raml emittedRaml = parseRaml(dump, "");
+        String pattern = emittedRaml.getResource("/hello").getAction("get").getHeaders().get("one").getPattern();
+        assertThat(pattern, endsWith("\n"));
     }
 
     @Test
