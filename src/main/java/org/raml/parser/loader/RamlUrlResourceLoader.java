@@ -15,22 +15,31 @@
  */
 package org.raml.parser.loader;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
-public class DefaultResourceLoader implements ResourceLoader
+public class RamlUrlResourceLoader implements ResourceLoader
 {
+    public static final String APPLICATION_RAML = "application/raml+yaml";
 
-    private ResourceLoader resourceLoader;
-
-    public DefaultResourceLoader()
-    {
-        resourceLoader = new CompositeResourceLoader(
-                new UrlResourceLoader(), new RamlUrlResourceLoader(), new ClassPathResourceLoader(), new FileResourceLoader("."));
-    }
-
-    @Override
     public InputStream fetchResource(String resourceName)
     {
-        return resourceLoader.fetchResource(resourceName);
+        InputStream inputStream = null;
+        try
+        {
+            URL url = new URL(resourceName);
+            URLConnection connection = url.openConnection();
+            connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
+            inputStream = new BufferedInputStream(connection.getInputStream());
+        }
+        catch (IOException e)
+        {
+            //ignore on resource not found
+        }
+        return inputStream;
+
     }
 }

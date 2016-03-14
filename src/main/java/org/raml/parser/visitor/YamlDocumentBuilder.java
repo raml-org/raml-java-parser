@@ -134,7 +134,7 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
         return documentContext;
     }
 
-    protected ResourceLoader getResourceLoader()
+    public ResourceLoader getResourceLoader()
     {
         return resourceLoader;
     }
