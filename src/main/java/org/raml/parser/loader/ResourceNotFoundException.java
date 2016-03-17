@@ -15,18 +15,11 @@
  */
 package org.raml.parser.loader;
 
-import java.io.InputStream;
-
-public interface ResourceLoader
+public class ResourceNotFoundException extends RuntimeException
 {
 
-    /**
-     * Returns an input stream for reading the specified resource.
-     *
-     * @param resourceName
-     * @return An input stream for reading the resource, or <tt>null</tt>
-     *         if the resource could not be found
-     */
-    InputStream fetchResource(String resourceName);
-
+    public ResourceNotFoundException(String resourceLocation)
+    {
+        super(resourceLocation);
+    }
 }

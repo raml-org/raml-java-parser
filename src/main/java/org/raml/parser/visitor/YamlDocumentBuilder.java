@@ -34,6 +34,7 @@ import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.builder.SequenceBuilder;
 import org.raml.parser.builder.TupleBuilder;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.loader.ResourceNotFoundException;
 import org.raml.parser.resolver.DefaultTupleHandler;
 import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.tagresolver.ContextPathAware;
@@ -80,6 +81,10 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
 
     public T build(Reader content, String resourceLocation)
     {
+        if (content == null)
+        {
+            throw new ResourceNotFoundException(resourceLocation);
+        }
         try
         {
             Yaml yamlParser = new Yaml();
@@ -99,6 +104,10 @@ public class YamlDocumentBuilder<T> implements NodeHandler, ContextPathAware
 
     public T build(InputStream content, String resourceLocation)
     {
+        if (content == null)
+        {
+            throw new ResourceNotFoundException(resourceLocation);
+        }
         return build(StreamUtils.reader(content), resourceLocation);
     }
 

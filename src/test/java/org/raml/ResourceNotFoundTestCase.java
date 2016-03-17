@@ -13,20 +13,25 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.parser.loader;
+package org.raml;
 
-import java.io.InputStream;
+import org.junit.Test;
+import org.raml.parser.builder.AbstractRamlTestCase;
+import org.raml.parser.loader.ResourceNotFoundException;
 
-public interface ResourceLoader
+public class ResourceNotFoundTestCase extends AbstractRamlTestCase
 {
 
-    /**
-     * Returns an input stream for reading the specified resource.
-     *
-     * @param resourceName
-     * @return An input stream for reading the resource, or <tt>null</tt>
-     *         if the resource could not be found
-     */
-    InputStream fetchResource(String resourceName);
+    @Test(expected = ResourceNotFoundException.class)
+    public void resourceNotFoundOnParsing()
+    {
+        parseRaml("invalid/raml/resource.raml");
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void resourceNotFoundOnValidation()
+    {
+        validateRaml("invalid/raml/resource.raml");
+    }
 
 }

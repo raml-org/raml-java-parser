@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.loader.ResourceNotFoundException;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.TagResolver;
 import org.raml.parser.utils.StreamUtils;
@@ -69,6 +70,10 @@ public class YamlValidationService
     public List<ValidationResult> validate(String resourceLocation)
     {
         InputStream resourceStream = resourceLoader.fetchResource(resourceLocation);
+        if (resourceStream == null)
+        {
+            throw new ResourceNotFoundException(resourceLocation);
+        }
         return validate(resourceStream, resourceLocation);
     }
 
