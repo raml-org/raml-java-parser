@@ -42,12 +42,16 @@ public class FileResourceLoader implements ResourceLoader
     @Override
     public InputStream fetchResource(String resourceName)
     {
-        File includedFile = new File(parentPath, resourceName);
-        FileInputStream inputStream = null;
-        if (logger.isDebugEnabled())
+        File includedFile = new File(resourceName);
+        if (!includedFile.isAbsolute()) 
         {
-            logger.debug(String.format("Looking for resource: %s on directory: %s...", resourceName, parentPath));
+            includedFile = new File(parentPath, resourceName);
+            if (logger.isDebugEnabled())
+            {
+                logger.debug(String.format("Looking for resource: %s on directory: %s...", resourceName, parentPath));
+            }
         }
+        FileInputStream inputStream = null;
         try
         {
             return new FileInputStream(includedFile);
