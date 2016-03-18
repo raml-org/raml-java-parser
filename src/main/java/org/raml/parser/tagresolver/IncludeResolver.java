@@ -20,6 +20,7 @@ import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.utils.StreamUtils;
 import org.raml.parser.visitor.NodeHandler;
@@ -68,27 +69,37 @@ public class IncludeResolver implements TagResolver, ContextPathAware
             nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include cannot be resolved " + resourceName);
             return mockInclude(node);
         }
-        else if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
+
+        InputStreamReader reader = null;
+        try
         {
-            Yaml yamlParser = new Yaml();
-            includeNode = yamlParser.compose(new InputStreamReader(inputStream));
+            if (resourceName.endsWith(".raml") || resourceName.endsWith(".yaml") || resourceName.endsWith(".yml"))
+            {
+                Yaml yamlParser = new Yaml();
+                reader = new InputStreamReader(inputStream);
+                includeNode = yamlParser.compose(reader);
+            }
+            else //scalar value
+            {
+                String newValue = StreamUtils.toString(inputStream);
+                includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
+            }
+            if (includeNode == null)
+            {
+                nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
+                return mockInclude(node);
+            }
+            //retag node with included resource info
+            String markInfo = node.getStartMark().getLine() + SEPARATOR + node.getStartMark().getColumn()
+                              + SEPARATOR + node.getEndMark().getColumn();
+            includeNode.setTag(new Tag(INCLUDE_APPLIED_TAG + resourceName + SEPARATOR + markInfo));
+            return includeNode;
         }
-        else //scalar value
+        finally
         {
-            //String newValue = IOUtils.toString(inputStream);
-            String newValue = StreamUtils.toString(inputStream);
-            includeNode = new IncludeScalarNode(resourceName, newValue, scalarNode);
+            IOUtils.closeQuietly(inputStream);
+            IOUtils.closeQuietly(reader);
         }
-        if (includeNode == null)
-        {
-            nodeHandler.onCustomTagError(INCLUDE_TAG, node, "Include file is empty " + resourceName);
-            return mockInclude(node);
-        }
-        //retag node with included resource info
-        String markInfo = node.getStartMark().getLine() + SEPARATOR + node.getStartMark().getColumn()
-                          + SEPARATOR + node.getEndMark().getColumn();
-        includeNode.setTag(new Tag(INCLUDE_APPLIED_TAG + resourceName + SEPARATOR + markInfo));
-        return includeNode;
     }
 
     @Override

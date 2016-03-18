@@ -67,6 +67,10 @@ public class StreamUtils
         {
             throw new RuntimeException(e);
         }
+        finally
+        {
+            IOUtils.closeQuietly(stream);
+        }
     }
 
     private static byte[] trimBom(byte[] content)
