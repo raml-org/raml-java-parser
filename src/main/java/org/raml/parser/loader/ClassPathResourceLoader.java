@@ -19,10 +19,24 @@ import java.io.InputStream;
 
 public class ClassPathResourceLoader implements ResourceLoader
 {
+    ClassLoader customClassLoader;
+
+    public ClassPathResourceLoader()
+    {}
+
+    public ClassPathResourceLoader(ClassLoader customClassLoader)
+    {
+        this.customClassLoader = customClassLoader;
+    }
 
     @Override
     public InputStream fetchResource(String resourceName)
     {
+        if (customClassLoader != null)
+        {
+            return customClassLoader.getResourceAsStream(resourceName);
+        }
+
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
         if (inputStream == null)
         {
@@ -30,4 +44,5 @@ public class ClassPathResourceLoader implements ResourceLoader
         }
         return inputStream;
     }
+
 }
