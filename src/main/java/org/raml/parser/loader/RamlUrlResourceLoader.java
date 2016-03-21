@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 (c) MuleSoft, Inc.
+ * Copyright 2013 (c) MuleSoft, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,31 @@
  */
 package org.raml.parser.loader;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
-public class ClassPathResourceLoader implements ResourceLoader
+public class RamlUrlResourceLoader implements ResourceLoader
 {
-    ClassLoader customClassLoader;
+    public static final String APPLICATION_RAML = "application/raml+yaml";
 
-    public ClassPathResourceLoader()
-    {}
-
-    public ClassPathResourceLoader(ClassLoader customClassLoader)
-    {
-        this.customClassLoader = customClassLoader;
-    }
-
-    @Override
     public InputStream fetchResource(String resourceName)
     {
-        if (customClassLoader != null)
+        InputStream inputStream = null;
+        try
         {
-            return customClassLoader.getResourceAsStream(resourceName);
+            URL url = new URL(resourceName);
+            URLConnection connection = url.openConnection();
+            connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
+            inputStream = new BufferedInputStream(connection.getInputStream());
         }
-
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
-        if (inputStream == null)
+        catch (IOException e)
         {
-            inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
+            //ignore on resource not found
         }
         return inputStream;
-    }
 
+    }
 }
