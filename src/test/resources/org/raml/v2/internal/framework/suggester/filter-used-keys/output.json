@@ -1,0 +1,6 @@
+ [ {
+    "label" : "SecuredBy",
+    "description" : "The security schemes that apply to every resource and method in the API.",
+    "value" : "securedBy: ",
+    "prefix" : ""
+  } ]

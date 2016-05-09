@@ -1,0 +1,7 @@
+SYObjectNode (Start: 11 , End: 58)
+    KeyValueNodeImpl (Start: 11 , End: 22)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "hola" (Start: 18 , End: 22)
+    KeyValueNodeImpl (Start: 23 , End: 57)
+        SYStringNode: "/top" (Start: 23 , End: 27)
+        IncludeErrorNode: "Include file is empty: basic-resource.raml" (Start: 29 , End: 57, Source: SYIncludeNode)

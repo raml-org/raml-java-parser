@@ -1,0 +1,34 @@
+#%RAML 1.0 Library
+
+types:
+  ProductItem:
+    type: object
+    properties:
+      product_id: string
+      quantity: integer
+  Order:
+    type: object
+    properties:
+      order_id: string
+      creation_date: string
+      items: ProductItem[]
+  Orders:
+    type: object
+    properties:
+      orders: Order[]
+  Inherit:
+    type: Order
+
+traits:
+  paging:
+    queryParameters:
+      size:
+        description: the amount of elements of each result page
+        type: integer
+        required: false
+        example: 10
+      page:
+        description: the page number
+        type: integer
+        required: false
+        example: 0

@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    properties:
+      name:
+        type: string
+  Employee:
+    type: Person
+    properties:
+      id:
+        type: integer
+/resource:
+  get:
+    responses: 
+      200:
+        body:
+          application/json:
+            type: Employee
+            examples:
+              good:
+                name: carlos
+                id: 1
+              bad:
+                name: 1234
+                id: juan

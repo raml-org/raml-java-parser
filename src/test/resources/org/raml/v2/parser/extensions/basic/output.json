@@ -1,0 +1,6 @@
+{
+    "title": "master",
+    "version": "v1",
+    "baseUri": "http://api.com/extended",
+    "protocols": ["HTTP", "HTTPS"]
+}

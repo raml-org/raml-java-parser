@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: API with Examples
+types:
+ User:
+   type: object
+   properties:
+     name:
+       type: string
+     age:
+       type: integer
+     height:
+       type: number
+   examples:
+     ok:
+         name: tato
+         age: 77
+         height: 1.47
+     bad-int:
+         name: tato
+         age: 77.5
+         height: 1.47

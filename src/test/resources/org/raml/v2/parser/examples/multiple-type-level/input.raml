@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: API with Examples
+
+types:
+  User:
+    properties:
+      name: string
+      lastname: string
+    example:
+      name: Bob
+      lastname: Marley
+  Org:
+    properties:
+      name: string
+      address?: string
+      value? : string
+      age?: number
+    examples:
+      acme:
+        name: Acme
+      softwareCorp:
+        name: Software Corp
+        address: 35 Central Street
+        value: Gold # validate against instance of the `value` property
+        age: AA

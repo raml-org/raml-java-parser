@@ -1,0 +1,70 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="leads">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="lead">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="slideshowid"/>
+              <xs:element type="xs:string" name="email"/>
+              <xs:element type="xs:string" name="phoneno"/>
+              <xs:element name="address">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="paidat">
+                      <xs:annotation>
+                        <xs:documentation>&lt;/Address</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="rating">
+                            <xs:annotation>
+                              <xs:documentation>&lt;/PaidAt</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element type="xs:string" name="createdat"/>
+                          <xs:element name="updatedat">
+                            <xs:complexType mixed="true">
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="message">
+                                  <xs:annotation>
+                                    <xs:documentation>&lt;/UpdatedAt</xs:documentation>
+                                  </xs:annotation>
+                                </xs:element>
+                                <xs:element type="xs:string" name="usercomment"/>
+                                <xs:element type="xs:string" name="city"/>
+                                <xs:element type="xs:string" name="country"/>
+                                <xs:element type="xs:string" name="zipcode"/>
+                                <xs:element type="xs:string" name="state"/>
+                                <xs:element type="xs:string" name="mechanism"/>
+                                <xs:element type="xs:string" name="readat"/>
+                                <xs:element type="xs:string" name="deletedat"/>
+                                <xs:element type="xs:string" name="leadcampaignid"/>
+                                <xs:element name="geodata">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element type="xs:string" name="region"/>
+                                      <xs:element type="xs:string" name="country"/>
+                                      <xs:element type="xs:string" name="city"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element type="xs:string" name="cost"/>
+                                <xs:element type="xs:string" name="firstname"/>
+                                <xs:element type="xs:string" name="lastname"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

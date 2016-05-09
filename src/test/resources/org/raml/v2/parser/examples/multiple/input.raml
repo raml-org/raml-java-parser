@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: API with Examples
+
+types:
+  User:
+    properties:
+      name: string
+      lastname: string
+    example:
+      name: Bob
+      lastname: Marley
+  Org:
+    properties:
+      name: string
+      address?: string
+      value? : string
+      age?: number
+/organisation:
+  post:
+    headers:
+      UserID:
+        description: the identifier for the user that posts a new organisation
+        type: string
+        example: SWED-123 # single scalar example
+    body:
+      application/json:
+        type: Org
+        example:
+          name: Doe Enterprise
+          value: Silver
+          age: AA
+  get:
+    description: Returns an organisation entity.
+    responses:
+      201:
+        body:
+          application/json:
+            type: Org
+            examples:
+              acme:
+                name: Acme
+              softwareCorp:
+                name: Software Corp
+                address: 35 Central Street
+                value: Gold # validate against instance of the `value` property
+                age: AA

@@ -1,0 +1,7 @@
+RamlDocumentNode (Start: 11 , End: 53, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 25)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "New API" (Start: 18 , End: 25)
+    KeyValueNodeImpl (Start: 26 , End: 53)
+        SYStringNode: "mediaType" (Start: 26 , End: 35)
+        SYStringNode: "application/json" (Start: 37 , End: 53)

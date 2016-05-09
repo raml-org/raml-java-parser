@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: My API With Types
+types:
+ Phone:
+   type: object
+   properties:
+     manufacturer:
+       type: string
+     numberOfSIMCards:
+       type: number
+ Notebook:
+   type: object
+   properties:
+     manufacturer:
+       type: string
+     numberOfUSBPorts:
+       type: number
+ Device:
+   type: Phone | Notebook
+   properties:
+     weight: 
+       type: number
+   examples:
+     phone:
+       manufacturer: Sony
+       numberOfSIMCards: 2
+       weight: 200
+     notebook:
+       manufacturer: Apple
+       numberOfUSBPorts: 4
+       weight: 150

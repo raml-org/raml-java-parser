@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Example API
+version: v1
+
+traits:
+  secured:
+    headers:
+      <<header>>:
+        type: string
+
+/users:
+  get:
+    is:
+      - secured:
+          header: head

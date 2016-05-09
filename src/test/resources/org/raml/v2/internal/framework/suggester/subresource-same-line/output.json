@@ -1,0 +1,76 @@
+[ {
+  "label" : "(Annotation)",
+  "description" : "Annotations to be applied to this API. Annotations are any property whose key begins with \"(\" and ends with \")\" and whose name (the part between the beginning and ending parentheses) is a declared annotation name..",
+  "value" : "(<cursor>): ",
+  "prefix" : "\n    "
+}, {
+  "label" : "/Resource",
+  "description" : "The resources of the API, identified as relative URIs that begin with a slash (/). Every property whose key begins with a slash (/), and is either at the root of the API definition or is the child property of a resource property, is a resource property, e.g.: /users, /{groupId}, etc",
+  "value" : "/<cursor>: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Delete",
+  "description" : null,
+  "value" : "delete: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Description",
+  "description" : "A longer, human-friendly description of the API",
+  "value" : "description: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "DisplayName",
+  "description" : "An alternate, human-friendly name for the method (in the resource's context).",
+  "value" : "displayName: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Get",
+  "description" : null,
+  "value" : "get: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Head",
+  "description" : null,
+  "value" : "head: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Is",
+  "description" : "A list of the traits to apply to all methods declared (implicitly or explicitly) for this resource. ",
+  "value" : "is: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Options",
+  "description" : null,
+  "value" : "options: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Patch",
+  "description" : null,
+  "value" : "patch: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Post",
+  "description" : null,
+  "value" : "post: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Put",
+  "description" : null,
+  "value" : "put: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "SecuredBy",
+  "description" : "The security schemes that apply to all methods declared (implicitly or explicitly) for this resource.",
+  "value" : "securedBy: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "Type",
+  "description" : "The resource type which this resource inherits.",
+  "value" : "type: ",
+  "prefix" : "\n    "
+}, {
+  "label" : "UriParameters",
+  "description" : "Detailed information about any URI parameters of this resource",
+  "value" : "uriParameters: ",
+  "prefix" : "\n    "
+} ]

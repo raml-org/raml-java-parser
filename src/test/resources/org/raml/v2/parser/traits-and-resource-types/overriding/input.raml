@@ -1,0 +1,288 @@
+#%RAML 1.0
+title: resource types and traits inheritance
+
+resourceTypes:
+    rt5:
+        type: rt2
+        is: [t8, t9]
+        get:
+            is: [t6, t7]
+            headers:
+                h0:
+                    description: rt5no
+                ht1:
+                    description: rt5no
+                ht2:
+                    description: rt5no
+                ht3:
+                    description: rt5no
+                ht4:
+                    description: rt5no
+                hrt5:
+                    description: rt5yes
+    rt10:
+        is: [t13, t14]
+        get:
+            is: [t11, t12]
+        headers:
+            h0:
+                description: rt10no
+            ht1:
+                description: rt10no
+            ht2:
+                description: rt10no
+            ht3:
+                description: rt10no
+            ht4:
+                description: rt10no
+            hrt5:
+                description: rt10no
+            ht6:
+                description: rt10no
+            ht7:
+                description: rt10no
+            ht8:
+                description: rt10no
+            ht9:
+                description: rt10no
+            hrt10:
+                description: rt10yes
+
+traits:
+    t1:
+        headers:
+            h0:
+                description: t1no
+            ht1:
+                description: t1yes
+    t2:
+        headers:
+            h0:
+                description: t2no
+            ht1:
+                description: t2no
+            ht2:
+                description: t2yes
+    t3:
+        headers:
+            h0:
+                description: t3no
+            ht1:
+                description: t3no
+            ht2:
+                description: t3no
+            ht3:
+                description: t3yes
+    t4:
+        headers:
+            h0:
+                description: t4no
+            ht1:
+                description: t4no
+            ht2:
+                description: t4no
+            ht3:
+                description: t4no
+            ht4:
+                description: t4yes
+    t6:
+        headers:
+            h0:
+                description: t6no
+            ht1:
+                description: t6no
+            ht2:
+                description: t6no
+            ht3:
+                description: t6no
+            ht4:
+                description: t6no
+            hrt5:
+                description: t6no
+            ht6:
+                description: t6yes
+    t7:
+        headers:
+            h0:
+                description: t7no
+            ht1:
+                description: t7no
+            ht2:
+                description: t7no
+            ht3:
+                description: t7no
+            ht4:
+                description: t7no
+            hrt5:
+                description: t7no
+            ht6:
+                description: t7no
+            ht7:
+                description: t7yes
+    t8:
+        headers:
+            h0:
+                description: t8no
+            ht1:
+                description: t8no
+            ht2:
+                description: t8no
+            ht3:
+                description: t8no
+            ht4:
+                description: t8no
+            hrt5:
+                description: t8no
+            ht6:
+                description: t8no
+            ht7:
+                description: t8no
+            ht8:
+                description: t8yes
+    t9:
+        headers:
+            h0:
+                description: t9no
+            ht1:
+                description: t9no
+            ht2:
+                description: t9no
+            ht3:
+                description: t9no
+            ht4:
+                description: t9no
+            hrt5:
+                description: t9no
+            ht6:
+                description: t9no
+            ht7:
+                description: t9no
+            ht8:
+                description: t9no
+            ht9:
+                description: t9yes
+    t11:
+        headers:
+            h0:
+                description: t11no
+            ht1:
+                description: t11no
+            ht2:
+                description: t11no
+            ht3:
+                description: t11no
+            ht4:
+                description: t11no
+            hrt5:
+                description: t11no
+            ht6:
+                description: t11no
+            ht7:
+                description: t11no
+            ht8:
+                description: t11no
+            ht9:
+                description: t11no
+            hrt10:
+                description: t11no
+            ht11:
+                description: t11yes
+    t12:
+        headers:
+            h0:
+                description: t12no
+            ht1:
+                description: t12no
+            ht2:
+                description: t12no
+            ht3:
+                description: t12no
+            ht4:
+                description: t12no
+            hrt5:
+                description: t12no
+            ht6:
+                description: t12no
+            ht7:
+                description: t12no
+            ht8:
+                description: t12no
+            ht9:
+                description: t12no
+            hrt10:
+                description: t12no
+            ht11:
+                description: t12no
+            ht12:
+                description: t12yes
+    t13:
+        headers:
+            h0:
+                description: t13no
+            ht1:
+                description: t13no
+            ht2:
+                description: t13no
+            ht3:
+                description: t13no
+            ht4:
+                description: t13no
+            hrt5:
+                description: t13no
+            ht6:
+                description: t13no
+            ht7:
+                description: t13no
+            ht8:
+                description: t13no
+            ht9:
+                description: t13no
+            hrt10:
+                description: t13no
+            ht11:
+                description: t13no
+            ht12:
+                description: t13no
+            ht13:
+                description: t13yes
+    t14:
+        headers:
+            h0:
+                description: t14no
+            ht1:
+                description: t14no
+            ht2:
+                description: t14no
+            ht3:
+                description: t14no
+            ht4:
+                description: t14no
+            hrt5:
+                description: t14no
+            ht6:
+                description: t14no
+            ht7:
+                description: t14no
+            ht8:
+                description: t14no
+            ht9:
+                description: t14no
+            hrt10:
+                description: t14no
+            ht11:
+                description: t14no
+            ht12:
+                description: t14no
+            ht13:
+                description: t14no
+            ht14:
+                description: t14yes
+
+/subject:
+    type: rt5
+    is: [t3, t4]
+    get:
+        is: [t1, t2]
+        headers:
+            h0:
+                description: h0yes

@@ -1,0 +1,14 @@
+<contacts>
+  
+ <contact> 
+  <username>
+   { Username }
+  </username> 
+  <numslideshows>
+   1
+  </numslideshows> 
+  <numcomments>
+   1
+  </numcomments> 
+ </contact>
+</contacts>

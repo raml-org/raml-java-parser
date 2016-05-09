@@ -1,0 +1,19 @@
+#%RAML 1.0 Library
+usage: |
+  Use to define some basic file-related constructs.
+types:
+  File:
+    type: object
+    properties:
+      name:
+      length:
+        type: integer
+traits:
+  drm:
+    headers:
+      drm-key:
+resourceTypes:
+  file:
+    get:
+      is: drm
+    put:

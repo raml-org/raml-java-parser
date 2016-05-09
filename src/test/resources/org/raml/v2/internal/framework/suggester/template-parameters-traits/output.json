@@ -1,0 +1,16 @@
+[ {
+  "label" : "",
+  "description" : "The resource's full URI relative to the baseUri (if any)",
+  "value" : "resourcePath",
+  "prefix" : ""
+}, {
+  "label" : "",
+  "description" : "The rightmost path fragment of the resource's relative URI, omitting any parametrize brackets (\"{\" and \"}\")",
+  "value" : "resourcePathName",
+  "prefix" : ""
+}, {
+  "label" : "",
+  "description" : "The name of the method",
+  "value" : "methodName",
+  "prefix" : ""
+} ]

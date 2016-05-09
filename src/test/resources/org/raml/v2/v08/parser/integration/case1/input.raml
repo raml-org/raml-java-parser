@@ -1,0 +1,212 @@
+#%RAML 0.8
+---
+title: Sample API
+version: v1
+baseUri: https://{host}.sample.com:{port}/{path}
+baseUriParameters:
+    host:
+        displayName: Host
+        description: host name
+        type: string
+        minLength: 5
+        maxLength: 10
+        pattern: '[a-z]*'
+    port:
+        type: integer
+        minimum: 1025
+        maximum: 65535
+    path:
+        type: string
+        enum: [one,two,three]
+documentation:
+    - title: Home
+      content: |
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna...
+    - title: section
+      content: section content
+protocols: [HTTP, HTTPS]
+schemas:
+    - league-json: |
+        {
+            "title": "League Schema",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+    - league-xml: |
+        <?xml version="1.0" encoding="ISO-8859-1" ?>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         elementFormDefault="qualified" xmlns="http://mulesoft.com/schemas/soccer"
+         targetNamespace="http://mulesoft.com/schemas/soccer">
+        <xs:element name="league">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        </xs:schema>
+
+securitySchemes:
+    - oauth_2_0:
+        description: |
+            Dropbox supports OAuth 2.0 for authenticating all API requests.
+        type: OAuth 2.0
+        describedBy:
+            headers:
+                Authorization:
+                    description: |
+                       Used to send a valid OAuth 2 access token. Do not use
+                       with the "access_token" query string parameter.
+                    type: string
+            queryParameters:
+                access_token:
+                    description: |
+                       Used to send a valid OAuth 2 access token. Do not use together with
+                       the "Authorization" header
+                    type: string
+            responses:
+                401:
+                    description: |
+                        Bad or expired token. This can happen if the user or Dropbox
+                        revoked or expired an access token. To fix, you should re-
+                        authenticate the user.
+                403:
+                    description: |
+                        Bad OAuth request (wrong consumer key, bad nonce, expired
+                        timestamp...). Unfortunately, re-authenticating the user won't help here.
+        settings:
+          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+          accessTokenUri: https://api.dropbox.com/1/oauth2/token
+          authorizationGrants: [code, token]
+          scopes: [ 'https://www.google.com/m8/feeds' ]
+    - oauth_1_0:
+        description: |
+            OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+        type: OAuth 1.0
+        settings:
+          requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+          authorizationUri: https://www.dropbox.com/1/oauth/authorize
+          tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+
+resourceTypes:
+    - basic:
+        displayName: basic type
+    - complex:
+        displayName: <<value>> type
+traits:
+    - simple:
+        displayName: simple trait
+    - knotty:
+        displayName: <<value>> trait
+
+/:
+    type: basic
+    securedBy: [oauth_2_0: { scopes: [ comments ] }, oauth_1_0, null]
+    displayName: Root resource
+    description: Root resource description
+    head:
+        is:
+            - simple
+            - knotty:
+                value: mingled
+        protocols: [HTTP]
+        securedBy: [oauth_2_0: { scopes: [ comments ] }]
+/media:
+    type:
+        complex:
+            value: complicated
+    displayName: Media collection
+    baseUriParameters:
+        host:
+            enum: [ api1 ]
+    head:
+        baseUriParameters:
+            host:
+                enum: [ api2 ]
+    get:
+        displayName: RetrieveMediaDisplayName
+        description: retrieve media
+        headers:
+            api-key:
+                displayName: Api key
+                description: Api key description
+                type: string
+                required: true
+                minLength: 10
+                maxLength: 10
+                example: 0123456789
+        queryParameters:
+            page:
+                type: integer
+                default: 1
+                minimum: 1
+        body:
+            text/xml: !!null
+            application/json:
+                schema: |
+                    {
+                         "$schema": "http://json-schema.org/draft-03/schema",
+                         "properties": {
+                             "input": {
+                                 "required": false,
+                                 "type": "string"
+                             }
+                         },
+                         "required": false,
+                         "type": "object"
+                    }
+                example: '{ "input": "hola" }'
+            multipart/form-data:
+                formParameters:
+                    form-1:
+                        - displayName: form 1
+                          description: form 1 description
+                          type: number
+                          required: true
+                          minimum: 9.5
+                          maximum: 10.5
+                        - type: string
+                          enum: [one, two, three]
+                    form-2:
+                        type: boolean
+                        required: true
+        responses:
+            200:
+                headers:
+                    one:
+                        type: string
+                        required: true
+                    two:
+                        type: integer
+                body:
+                    application/json:
+                        example: '{ "key": "value" }'
+            400:
+                body:
+                    text/xml:
+                        example: '<root>none</root>'
+                    text/plain: !!null
+            <<:
+                404:
+                    description: not found
+    /{mediaId}:
+        displayName: Media item
+        uriParameters:
+            mediaId:
+                type: string
+                maxLength: 10
+        head: !!null
+        connect: !!null
+/tags:
+    head: !!null
+    /{tagId}:
+        head: !!null

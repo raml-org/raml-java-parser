@@ -1,0 +1,16 @@
+{
+    "title": "hola",
+    "resources": [
+        {
+            "relativeUri": "/top",
+            "displayName": "/top",
+            "methods": [
+                {
+                    "method": "get",
+                    "description": "get something",
+                    "displayName": "get"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: World Music API
+baseUri: http://example.api.com/{version}
+version: v1
+
+uses:
+  Songs: songs-library.raml
+
+annotationTypes:
+  monitoringInterval: integer
+
+traits:
+  secured: !include secured/accessToken.raml
+
+/songs:
+  is: [ secured ]
+  get:
+    (monitoringInterval): 30
+    queryParameters:
+      genre:
+        description: filter the songs by genre
+  post:
+  /{songId}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Songs.Song
+            application/xml:
+              type: !include schemas/songs.xsd
+              example: !include examples/songs.xml

@@ -1,0 +1,170 @@
+#%RAML 1.0
+title: api title
+version: v1
+baseUri: http://base.uri/{version}/{param1}
+mediaType: application/json
+protocols: [HTTP, HTTPS]
+
+baseUriParameters:
+    param1:
+        displayName: Param 1
+        description: some description
+        type: string
+        maxLength: 10
+        example: one
+
+documentation:
+    - title: doc title 1
+      content: single line
+    - title: doc title 2
+      content: |
+           multi
+           line
+
+types:
+    User:
+        type: object
+        properties:
+            firstname: string
+            lastname: string
+            age: number
+
+traits:
+    one:
+        displayName: uno
+        description: method description
+        usage: late night
+    two:
+        displayName: dos
+        description: <<text>>
+
+resourceTypes:
+    first:
+        usage: first usage
+
+securitySchemes:
+  oauth_2_0:
+    displayName: OAuth2
+    description: oauth 2.0
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use
+             with the "access_token" query string parameter.
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
+          type: string
+      responses:
+        401:
+          description: |
+              Bad or expired token. This can happen if the user or Dropbox
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
+        403:
+          description: |
+              Bad OAuth request (wrong consumer key, bad nonce, expired
+              timestamp...). Unfortunately, re-authenticating the user won't help here.
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, refresh_token ]
+  oauth_1_0:
+    description: |
+      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+
+securedBy: [oauth_2_0, null]
+
+annotationTypes:
+  basic:
+    type: string
+  complex:
+    allowedTargets: [ API, Resource ]
+    properties:
+      controls:
+        description: where is hypermedia
+        properties:
+          url?:
+            default: href
+          property:
+          names:
+            type: string[]
+      permanentUri?:
+        type: boolean
+        default: true
+
+(basic): sometimes
+
+(complex):
+    controls:
+        url: here
+        property: off
+        names: [one, two]
+    permanentUri: false
+
+/top:
+    description: top description
+    type: first
+    is: ["one", {"two": {"text": "hola"}}]
+    get:
+        description: get something
+        protocols: HTTPS
+        securedBy: oauth_2_0
+        queryParameters:
+            one:
+                displayName: The One
+            two:
+        headers: &headersGet
+            one:
+            two:
+                displayName: The Second
+    post:
+        description: post something
+        is:
+            two:
+                text: picky
+        queryString:
+            properties:
+                lat: number
+                long: number
+        body: &bodyPost
+            application/json:
+                type: User
+                example: |
+                    {
+                        "firstname": "tato",
+                        "lastname": "bores",
+                        "age": 66
+                    }
+            application/xml:
+                schema: |
+                  <?xml version="1.0" encoding="utf-16"?>
+                  <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                    <xsd:element name="first" type="xsd:string" />
+                    <xsd:element name="second" type="xsd:string" />
+                  </xsd:schema>
+                examples:
+                    first: |
+                        <first/>
+                    second: |
+                        <second/>
+        responses:
+            200:
+                body: *bodyPost
+                headers: *headersGet
+            400:
+
+
+    /child:
+        securedBy: [oauth_2_0, null]
+        description: child description

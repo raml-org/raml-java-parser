@@ -1,0 +1,343 @@
+#%RAML 1.0
+title: Slideshare
+version: 2
+baseUri: https://www.slideshare.net/api/{version}
+securitySchemes:
+  apiKey: !include securitySchemes/apiKey.raml
+schemas:
+  slideshow: !include schemas/slideshow.xsd
+  slideshows_by_tag: !include schemas/slideshows_by_tag.xsd
+  slideshows_by_group: !include schemas/slideshows_by_group.xsd
+  slideshows_by_user: !include schemas/slideshows_by_user.xsd
+  search_slideshows: !include schemas/search_slideshows.xsd
+  edit_slideshow: !include schemas/edit_slideshow.xsd
+  delete_slideshow: !include schemas/delete_slideshow.xsd
+  upload_slideshow: !include schemas/upload_slideshow.xsd
+  user_favorites: !include schemas/user_favorites.xsd
+  user_contacts: !include schemas/user_contacts.xsd
+  user_groups: !include schemas/user_groups.xsd
+  user_tags: !include schemas/user_tags.xsd
+  check_favorite: !include schemas/check_favorite.xsd
+  add_favorite: !include schemas/add_favorite.xsd
+  user_campaign_leads: !include schemas/user_campaign_leads.xsd
+  user_campaigns: !include schemas/user_campaigns.xsd
+  user_leads: !include schemas/user_leads.xsd
+resourceTypes:
+  leads: !include resourceTypes/leads.raml
+  slideshow: !include resourceTypes/slideshow.raml
+  favorite: !include resourceTypes/favorite.raml
+  user: !include resourceTypes/user.raml
+traits:
+  pageable: !include traits/pageable.raml
+  canReturnDetailedResponse: !include traits/canReturnDetailedResponse.raml
+  hasSlideshowParameters: !include traits/hasSlideshowParameters.raml
+  fetchesUserPersonalData: !include traits/fetchesUserPersonalData.raml
+  canBeFilteredByDate: !include traits/canBeFilteredByDate.raml
+  canFetchPersonalData: !include traits/canFetchPersonalData.raml
+securedBy: [ apiKey ]
+/get_slideshow: 
+  displayName: get_slideshow
+  type: slideshow
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: false } , canReturnDetailedResponse ]
+    description: Returns slideshow object
+    queryParameters: 
+      slideshow_url: 
+        description: Url of the slideshow being queried for. One of Id or URL is requried
+      exclude_tags: 
+        description: Set it to true if you want exclude tags in the detailed response
+        type: boolean
+      get_transcript: 
+        description: Set it to 1 if you want to return with transcript parameter in the response. requires detailed to be set to 1.
+        type: integer
+        minimum: 0
+        maximum: 1
+      slideshow_id:
+        type: integer
+        description: Id of the slideshow being queried for. One of Id or URL is required
+        example: 13343768
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: slideshow
+            example: !include examples/slideshow.xml
+/get_slideshows_by_tag: 
+  displayName: get_slideshows_by_tag
+  type: slideshow
+  get: 
+    is: [ pageable: { name: slideshows } , canReturnDetailedResponse ]
+    description: Returns slideshows that contain the specified tag
+    queryParameters: 
+      tag: 
+        description: Tag name
+        required: true
+        example: slideshare
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: slideshows_by_tag
+            example: !include examples/slideshows_by_tag.xml
+/get_slideshows_by_group: 
+  displayName: get_slideshows_by_group
+  type: slideshow
+  get: 
+    is: [ pageable: { name: slideshows } , canReturnDetailedResponse ]
+    description: Returns slideshows that are a part of the specified group
+    queryParameters: 
+      group_name: 
+        description: Group name
+        required: true
+        example: javascript
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: slideshows_by_group
+            example: !include examples/slideshows_by_group.xml
+/get_slideshows_by_user: 
+  displayName: get_slideshows_by_user
+  type: slideshow
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: false } , pageable: { name: slideshows } , canReturnDetailedResponse , fetchesUserPersonalData: { name: slideshows } ]
+    description: Returns user slideshows
+    queryParameters: 
+      get_unconverted: 
+        description: Whether or not to include unconverted slideshows. 1 to include them, 0 (default) otherwise.
+        type: boolean
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: slideshows_by_user
+            example: !include examples/slideshows_by_user.xml
+/search_slideshows: 
+  displayName: search_slideshows
+  type: slideshow
+  get: 
+    is: [ canReturnDetailedResponse ]
+    description: Returns slideshows according to the search criteria
+    queryParameters: 
+      fileformat: 
+        description: "File format to search for. Default is 'all'. ('pdf':PDF,'ppt':PowerPoint,'odp':Open Office,'pps':PowerPoint Slideshow,'pot':PowerPoint template)"
+      sort: 
+        description: Sort order, default is relevance
+      cc_adapt: 
+        description: "Set to '1' for results under Creative Commons that allow adaption, modification. Default is '0'"
+        type: boolean
+      get_transcript: 
+        description: Set it to 1 if you want to return with transcript parameter in the response. requires detailed to be set to 1.
+        type: integer
+        minimum: 0
+        maximum: 1
+      cc_commercial: 
+        description: "Set to '1' to retrieve results with the commercial Creative Commons license. Default is '0'"
+        type: boolean
+      download: 
+        description: "Slideshows that are available to download; Set to '0' to do this, otherwise default is all slideshows."
+        type: boolean
+      lang: 
+        description: "Language of slideshows (default is English, 'en') ('**':All,'es':Spanish,'pt':Portuguese,'fr':French,'it':Italian,'nl':Dutch, 'de':German,'zh':Chinese,'ja':Japanese,'ko':Korean,'ro':Romanian, '!!':Other)"
+      file_type: 
+        description: "File type to search for. Default is 'all'. ('presentations', 'documents', 'webinars','videos')"
+      page:
+        type: integer
+        description: The page number of the results (works in conjunction with items_per_page), default is 1
+        example: 1
+      what: 
+        description: "What type of search. If not set, text search is used. 'tag' is the other option."
+      q: 
+        description: Search keyword
+        required: true
+        example: slideshare
+      upload_date: 
+        description: "The time period you want to restrict your search to. 'week' would restrict to the last week. (default is 'any')"
+      items_per_page:
+        type: integer
+        description: Number of results to return per page, default is 12
+        example: 16
+      cc: 
+        description: "Set to '1' to retrieve results under the Creative Commons license. Default is '0'"
+        type: boolean
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: search_slideshows
+            example: !include examples/search_slideshows.xml
+/edit_slideshow: 
+  displayName: edit_slideshow
+  type: slideshow
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } , hasSlideshowParameters: { titleRequired: false } ]
+    description: Corrects a slideshow
+    queryParameters: 
+      slideshow_id: 
+        description: Id of slideshow which is being edited
+        required: true
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: edit_slideshow
+            example: !include examples/edit_slideshow.xml
+/delete_slideshow: 
+  displayName: delete_slideshow
+  type: slideshow
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } ]
+    description: Deletes a slideshow
+    queryParameters: 
+      slideshow_id: 
+        description: Id of slideshow which is being deleted
+        required: true
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: delete_slideshow
+            example: !include examples/delete_slideshow.xml
+/upload_slideshow: 
+  displayName: upload_slideshow
+  type: slideshow
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } , hasSlideshowParameters: { titleRequired: true } ]
+    description: Upload a slideshow
+    queryParameters: 
+      upload_url: 
+        description: "string containing an url pointing to the power point file: ex: http://domain.tld/directory/my_power_point.ppt"
+        required: true
+      slideshow_description: 
+        description: slideshow description
+      make_src_public: 
+        description: Y if you want users to be able to download the ppt file, N otherwise. Default is Y
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: upload_slideshow
+            example: !include examples/upload_slideshow.xml
+/get_user_favorites: 
+  displayName: get_user_favorites
+  type: user
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: false } , fetchesUserPersonalData: { name: favorites } ]
+    description: Returns user favorites
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_favorites
+            example: !include examples/user_favorites.xml
+/get_user_contacts: 
+  displayName: get_user_contacts
+  type: user
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: false } , pageable: { name: contacts } , fetchesUserPersonalData: { name: contacts } ]
+    description: Returns user contacts
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_contacts
+            example: !include examples/user_contacts.xml
+/get_user_groups: 
+  displayName: get_user_groups
+  type: user
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: false } , fetchesUserPersonalData: { name: groups } ]
+    description: Returns user groups
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_groups
+            example: !include examples/user_groups.xml
+/get_user_tags: 
+  displayName: get_user_tags
+  type: user
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } ]
+    description: Returns user tags
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_tags
+            example: !include examples/user_tags.xml
+/check_favorite: 
+  displayName: check_favorite
+  type: favorite
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } ]
+    description: Check user favorites
+    queryParameters: 
+      slideshow_id: 
+        description: Slideshow which is being checked
+        required: true
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: check_favorite
+            example: !include examples/check_favorite.xml
+/add_favorite: 
+  displayName: add_favorite
+  type: favorite
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } ]
+    description: Favorites slideshow (identified by slideshow_id)
+    queryParameters: 
+      slideshow_id: 
+        description: the slideshow to be favorited
+        required: true
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: add_favorite
+            example: !include examples/add_favorite.xml
+/get_user_campaign_leads: 
+  displayName: get_user_campaign_leads
+  type: leads
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } , canBeFilteredByDate: { name: leads collected } ]
+    description: Get user campaign leads
+    queryParameters: 
+      campaign_id: 
+        description: campaign id to select the leads form
+        required: true
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_campaign_leads
+            example: !include examples/user_campaign_leads.xml
+/get_user_campaigns: 
+  displayName: get_user_campaigns
+  type: leads
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } ]
+    description: Get user campaigns
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_campaigns
+            example: !include examples/user_campaigns.xml
+/get_user_leads: 
+  displayName: get_user_leads
+  type: leads
+  get: 
+    is: [ canFetchPersonalData: { requiresUsernameAndPassword: true } , canBeFilteredByDate: { name: leads collected } ]
+    description: Get user leads
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+            schema: user_leads
+            example: !include examples/user_leads.xml
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md

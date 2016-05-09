@@ -1,0 +1,7 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Existent:
+    type: object
+  MyType:
+    type: [ Existent, InexistentType ]

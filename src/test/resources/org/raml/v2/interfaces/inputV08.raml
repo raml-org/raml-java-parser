@@ -1,0 +1,73 @@
+#%RAML 0.8
+title: api title
+version: v1
+baseUri: http://base.uri
+mediaType: application/json
+protocols: [HTTP, HTTPS]
+
+documentation:
+    - title: doc title 1
+      content: single line
+    - title: doc title 2
+      content: |
+           multi
+           line
+
+schemas:
+    UserJson: |
+          {
+             "$schema": "http://json-schema.org/draft-04/schema",
+             "type": "object",
+             "properties": {
+               "firstname":  { "type": "string" },
+               "lastname":  { "type": "string" },
+               "age":  { "type": "integer" }
+             },
+             "required": [ "firstname", "lastname" ]
+          }
+
+    UserXml: |
+        # TODO provide proper xml schema
+
+traits:
+    one:
+        description: method description from trait one
+    two:
+        description: method description from trait two
+
+resourceTypes:
+    first:
+        usage: first usage
+
+/top:
+    description: top description
+    type: first
+    get:
+        description: get something
+    post:
+        description: post something
+        body: &bodyPost
+            application/json:
+                schema: UserJson
+                example: |
+                    {
+                        "firstname": "tato",
+                        "lastname": "bores",
+                        "age": 66
+                    }
+            application/xml:
+                schema: UserXml
+            multipart/form-data:
+                formParameters:
+                    description:
+                        type: string
+                    image:
+                        type: file
+        responses:
+            200:
+                body: *bodyPost
+            400:
+
+
+    /child:
+        description: child description

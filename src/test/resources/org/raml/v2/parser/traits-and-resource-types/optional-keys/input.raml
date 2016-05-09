@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Example API
+version: v1
+traits:
+  optional:
+    headers:
+      fixed:
+        type: string
+        example: yes
+      present?:
+        type: string
+        example: yes
+      absent?:
+        type: string
+        example: no
+/users:
+  get:
+    is: [ optional ]
+    headers:
+      present:
+        type: string

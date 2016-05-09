@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: block mapping error
+/inline:
+  get:
+    body:
+      application/json:
+        type: |
+          {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Employee",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The unique identifier for an employee",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of the employee",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Title of the employee in the company",
+                    "type": "string"
+                }
+            },
+            "required": ["id", "name"]
+        }
+# above '}' should close in its correct indentation

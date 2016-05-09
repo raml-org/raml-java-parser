@@ -1,0 +1,47 @@
+{
+    "title": "Example API",
+    "version": "v1",
+    "traits": {
+        "optional": {
+            "headers": {
+                "fixed": {
+                    "type": "string",
+                    "example": "yes"
+                },
+                "present?": {
+                    "type": "string",
+                    "example": "yes"
+                },
+                "absent?": {
+                    "type": "string",
+                    "example": "no"
+                }
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "displayName": "/users",
+            "methods": [
+                {
+                    "method": "get",
+                    "is": ["optional"],
+                    "headers": {
+                        "present": {
+                            "type": "string",
+                            "displayName": "present",
+                            "example": "yes"
+                        },
+                        "fixed": {
+                            "type": "string",
+                            "example": "yes",
+                            "displayName": "fixed"
+                        }
+                    },
+                    "displayName": "get"
+                }
+            ]
+        }
+    ]
+}

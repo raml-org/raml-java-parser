@@ -1,0 +1,86 @@
+[ {
+  "label" : "(Annotation)",
+  "description" : "Annotations to be applied to this API. Annotations are any property whose key begins with \"(\" and ends with \")\" and whose name (the part between the beginning and ending parentheses) is a declared annotation name..",
+  "value" : "(<cursor>): ",
+  "prefix" : ""
+}, {
+  "label" : "/Resource",
+  "description" : "The resources of the API, identified as relative URIs that begin with a slash (/). Every property whose key begins with a slash (/), and is either at the root of the API definition or is the child property of a resource property, is a resource property, e.g.: /users, /{groupId}, etc",
+  "value" : "/<cursor>: ",
+  "prefix" : ""
+}, {
+  "label" : "AnnotationTypes",
+  "description" : "Declarations of annotation types for use by annotations.",
+  "value" : "annotationTypes: ",
+  "prefix" : ""
+}, {
+  "label" : "BaseUri",
+  "description" : "A URI that's to be used as the base of all the resources' URIs. Often used as the base of the URL of each resource, containing the location of the API. Can be a template URI.",
+  "value" : "baseUri: ",
+  "prefix" : ""
+}, {
+  "label" : "BaseUriParameters",
+  "description" : "Named parameters used in the baseUri (template).",
+  "value" : "baseUriParameters: ",
+  "prefix" : ""
+}, {
+  "label" : "Description",
+  "description" : "A longer, human-friendly description of the API",
+  "value" : "description: ",
+  "prefix" : ""
+}, {
+  "label" : "Documentation",
+  "description" : "Additional overall documentation for the API.",
+  "value" : "documentation: ",
+  "prefix" : ""
+}, {
+  "label" : "MediaType",
+  "description" : "The default media type to use for request and response bodies (payloads), e.g. \"application/json\".",
+  "value" : "mediaType: ",
+  "prefix" : ""
+}, {
+  "label" : "Protocols",
+  "description" : "The protocols supported by the API.",
+  "value" : "protocols: ",
+  "prefix" : ""
+}, {
+  "label" : "ResourceTypes",
+  "description" : "Declarations of resource types for use within this API.",
+  "value" : "resourceTypes: ",
+  "prefix" : ""
+}, {
+  "label" : "Schemas",
+  "description" : "Alias for the equivalent \"types\" property, for compatibility with RAML 0.8. Deprecated - API definitions should use the \"types\" property, as the \"schemas\" alias for that property name may be removed in a future RAML version. The \"types\" property allows for XML and JSON schemas.",
+  "value" : "schemas: ",
+  "prefix" : ""
+}, {
+  "label" : "SecuredBy",
+  "description" : "The security schemes that apply to every resource and method in the API.",
+  "value" : "securedBy: ",
+  "prefix" : ""
+}, {
+  "label" : "SecuritySchemes",
+  "description" : "Declarations of security schemes for use within this API.",
+  "value" : "securitySchemes: ",
+  "prefix" : ""
+}, {
+  "label" : "Traits",
+  "description" : "Declarations of traits for use within this API.",
+  "value" : "traits: ",
+  "prefix" : ""
+}, {
+  "label" : "Types",
+  "description" : "Declarations of (data) types for use within this API.",
+  "value" : "types: ",
+  "prefix" : ""
+}, {
+  "label" : "Uses",
+  "description" : "Importing libraries.",
+  "value" : "uses: ",
+  "prefix" : ""
+}, {
+  "label" : "Version",
+  "description" : "The version of the API, e.g. \"v1\".",
+  "value" : "version: ",
+  "prefix" : ""
+} ]

@@ -1,0 +1,11 @@
+<favorites>
+  
+ <favorite> 
+  <slideshow_id>
+   { Slideshow id }
+  </slideshow_id> 
+  <tag_text>
+   { Tags }
+  </tag_text> 
+ </favorite>
+</favorites>

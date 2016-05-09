@@ -1,0 +1,6 @@
+[ {
+  "label" : "collection",
+  "description" : "This resourceType should be used for any collection of items",
+  "value" : "collection",
+  "prefix" : ""
+} ]

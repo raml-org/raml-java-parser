@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: Example API
+version: v1
+
+resourceTypes:
+  collection:
+    <<method>>:
+        displayName: <<resourcePathName>>
+
+traits:
+  secured:
+    headers:
+      <<header>>:
+        description: <<header>>
+        type: string
+
+/users:
+    get:
+        is:
+            secured:
+                header: hola
+    put:
+        is: secured
+
+/providers:
+    type:
+        collection:
+            method: get
+
+/broken:
+    type: collection

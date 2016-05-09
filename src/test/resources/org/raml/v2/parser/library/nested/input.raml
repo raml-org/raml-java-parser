@@ -1,0 +1,7 @@
+#%RAML 1.0
+title: hola
+uses:
+  lib1: library1.raml
+/top:
+    get:
+        is: [lib1.trait, lib1.lib2.trait]

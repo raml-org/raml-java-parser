@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Example API
+version: v1
+
+traits:
+  functional:
+    description: there were two <<param1 | !pluralize>> and one <<param2|!singularize>>
+
+/users:
+  get:
+    is:
+      - functional:
+          param1: mouse
+          param2: cats

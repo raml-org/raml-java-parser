@@ -1,0 +1,1 @@
+SlideShare began with a simple goal: To share knowledge online. Since then, SlideShare has grown to become the world's largest community for sharing presentations and other professional content.

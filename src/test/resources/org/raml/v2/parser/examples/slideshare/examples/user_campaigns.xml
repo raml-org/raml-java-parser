@@ -1,0 +1,135 @@
+<campaigns>
+    
+ <leadcampaign> 
+  <id>
+   1
+  </id> 
+  <name>
+   {name of campaign}
+  </name> 
+  <slideshowid>
+   1
+  </slideshowid> 
+  <requiresphone>
+   true
+  </requiresphone> 
+  <requiresaddress>
+   true
+  </requiresaddress> 
+  <targetedregion></targetedregion> 
+  <fortagged>
+   {tag targeted(if any)}
+  </fortagged> 
+  <calltoaction>
+   {call to action text}
+  </calltoaction> 
+  <offertext>
+   {offer text}
+  </offertext> 
+  <startedat>
+   {datetime}
+  </startedat> 
+  <pausedat>
+   {datetime}
+  </pausedat> 
+  <createdat>
+   {datetime}
+  </createdat> 
+  <updatedat>
+   {datetime}
+  </updatedat> 
+  <endedat>
+   {datetime}
+  </endedat> 
+  <maximumdailyspend currency="USD">
+   {$}
+  </maximumdailyspend> 
+  <costperlead currency="USD">
+   {$}
+  </costperlead> 
+  <formposition>
+   end
+  </formposition> 
+  <formblocking>
+   true
+  </formblocking> 
+  <fordownload>
+   true
+  </fordownload> 
+  <forsidebar>
+   true
+  </forsidebar> 
+  <stateofcampaign>
+   Running
+  </stateofcampaign> 
+ </leadcampaign>
+    ?
+    
+ <promotioncampaign> 
+  <id>
+   1
+  </id> 
+  <name>
+   {name of campaign}
+  </name> 
+  <slideshowid>
+   1
+  </slideshowid> 
+  <targetedregion>
+   {name of country}
+  </targetedregion> 
+  <fortagged>
+   {tag targeted(if any)}
+  </fortagged> 
+  <startedat>
+   {datetime}
+  </startedat> 
+  <pausedat>
+   {datetime}
+  </pausedat> 
+  <createdat>
+   {datetime}
+  </createdat> 
+  <updatedat>
+   {datetime}
+  </updatedat> 
+  <endedat>
+   {datetime}
+  </endedat> 
+  <maximumdailyspend>
+   {$}
+  </maximumdailyspend> 
+  <slidesharecategory>
+   {category name}
+  </slidesharecategory> 
+  <promotiontype>
+   {category or contextual}
+  </promotiontype> 
+  <cpc>
+   {$}
+  </cpc> 
+  <clickstoday>
+   100
+  </clickstoday> 
+  <clicksalltime>
+   100
+  </clicksalltime> 
+  <impressionstoday>
+   50
+  </impressionstoday> 
+  <impressionsalltime>
+   50
+  </impressionsalltime> 
+  <ctr>
+   0.5
+  </ctr> 
+  <pausecause>
+   {text: can be &quot;userAction&quot;, &quot;dailyLimit&quot;, or &quot;noFund&quot;}
+  </pausecause> 
+  <stateofcampaign>
+   {txt: Running, Paused, Stopped
+  </stateofcampaign> 
+ </promotioncampaign>
+    ?
+
+</campaigns>

@@ -1,0 +1,139 @@
+<user>
+   
+ <name>
+  { username_for }
+ </name>
+   
+ <count>
+  1
+ </count>
+   
+ <slideshow>
+   
+  <id>
+   { slideshow id }
+  </id>
+   
+  <title>{ slideshow title }</title>
+   
+  <description>
+   { slideshow description }
+  </description>
+   
+  <status>
+   2
+  </status>
+   
+  <username>
+   { username }
+  </username>
+   
+  <url>
+   { web permalink }
+  </url>
+   
+  <thumbnailurl>
+   { thumbnail URL }
+  </thumbnailurl>
+   
+  <thumbnailsmallurl>
+   { URL of smaller thumbnail }
+  </thumbnailsmallurl>
+   
+  <embed />{ embed code }
+   
+  <created>
+   { date slideshow created }
+  </created>
+   
+  <updated>
+   { date slideshow was last update }
+  </updated>
+   
+  <language>
+   { language, as specified by two-letter code }
+  </language>
+   
+  <format>
+   pdf
+  </format>
+   
+  <download>
+   1
+  </download>
+   
+  <downloadurl>
+   { returns if available to download }
+  </downloadurl>
+   
+  <slideshowtype>
+   0
+  </slideshowtype>
+   
+  <incontest>
+   0
+   <userid>
+    { userID }
+   </userid> 
+   <externalappuserid>
+    { ExternalAppUserID if uploaded using an external app }
+   </externalappuserid> 
+   <externalappid>
+    { ExternalAppID for the external app }
+   </externalappid> 
+   <pptlocation>
+    { PPTLocation } 
+    <strippedtitle>
+     { Stripped Title }
+    </strippedtitle> 
+    <tags> 
+     <tag count="1" owner="0">
+      { tag name } 
+     </tag> 
+    </tags> 
+    <audio>
+     0
+    </audio> 
+    <numdownloads>
+     100
+    </numdownloads> 
+    <numviews>
+     101
+    </numviews> 
+    <numcomments>
+     1
+    </numcomments> 
+    <numfavorites>
+     1
+    </numfavorites> 
+    <numslides>
+     5
+    </numslides> 
+    <relatedslideshows> 
+     <relatedslideshowid rank="0.5">
+       { slideshow id } 
+     </relatedslideshowid> 
+    </relatedslideshows> 
+    <privacylevel>
+     0
+    </privacylevel> 
+    <flagvisible>
+     1
+    </flagvisible> 
+    <showonss>
+     0
+    </showonss> 
+    <secreturl>
+     0
+    </secreturl> 
+    <allowembed>
+     1
+    </allowembed> 
+    <sharewithcontacts>
+     0 
+    </sharewithcontacts> 
+   </pptlocation>
+  </incontest>
+ </slideshow>
+
+</user>

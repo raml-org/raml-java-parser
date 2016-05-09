@@ -1,0 +1,33 @@
+#%RAML 1.0
+
+title: additional properties
+types:
+ Animal:
+   type: object
+   additionalProperties: false
+   properties:
+     name?: 
+       type: string
+     color:
+       type: string
+     quantity?:
+       type: number
+     endangered?: 
+       type: boolean
+   example:
+     color: yellow
+     segundoNombre: eleo
+ Specie:
+   type: object
+   properties:
+     name?:
+       type: string
+     color:
+       type: string
+     quantity?:
+       type: number
+     endangered?:
+       type: boolean
+   example:
+     color: yellow
+     segundoNombre: eleo

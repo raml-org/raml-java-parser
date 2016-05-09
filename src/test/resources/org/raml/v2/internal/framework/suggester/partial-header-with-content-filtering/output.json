@@ -1,0 +1,11 @@
+[ {
+  "label" : "RAML 1.0 Data Type fragment",
+  "description" : "A data type declaration where the type property may be used",
+  "value" : "#%RAML 1.0 DataType",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Documentation Item fragment",
+  "description" : "An item in the collection of items that is the value of the root-level documentation property",
+  "value" : "#%RAML 1.0 DocumentationItem",
+  "prefix" : ""
+} ]

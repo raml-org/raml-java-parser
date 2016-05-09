@@ -1,0 +1,12 @@
+SYObjectNode (Start: 29 , End: 406)
+    KeyValueNodeImpl (Start: 29 , End: 40)
+        SYStringNode: "title" (Start: 29 , End: 34)
+        SYStringNode: "Home" (Start: 36 , End: 40)
+    KeyValueNodeImpl (Start: 41 , End: 406)
+        SYStringNode: "content" (Start: 41 , End: 48)
+        SYStringNode: "Welcome to the _Zencoder API_ Documentation. The _Zencoder API_
+allows you to connect your application to our encoding service
+and encode videos without going through the web  interface. You
+may also benefit from one of our
+[integration libraries](https://app.zencoder.com/docs/faq/basics/libraries)
+for different languages." (Start: 50 , End: 406)

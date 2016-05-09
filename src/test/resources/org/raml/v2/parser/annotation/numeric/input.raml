@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: Illustrating annotations
+mediaType: application/json
+annotationTypes:
+  age:
+    type: number
+    minimum: 5
+  fingers:
+    type: number
+    maximum: 10
+  leapYear:
+    type: number
+    multipleOf: 4
+  range:
+    type: number
+    minimum: 1
+    maximum: 10
+
+/personOk:
+  (age): 10
+  (fingers): 10
+/personNotOk1:
+  (age): 4
+  (fingers): 8
+/personNotOk2:
+  (age): 5
+  (fingers): 11
+/range:
+  (range): 15
+/yearsOk:
+  (leapYear): 2000
+/yearsBad:
+  (leapYear): 2003

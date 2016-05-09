@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: Tato Bores
+mediaType: [application/json,text/xml]
+/bad0:
+  post:
+    body:
+      example: bores
+      application/csv:
+        example: pepe
+/bad1:
+  post:
+    body:
+      application/csv:
+        example: pepe
+      example: bores
+/ok0:
+  post:
+    body:
+      example: bores
+/ok1:
+  post:
+    body:
+      application/csv:
+        example: pepe

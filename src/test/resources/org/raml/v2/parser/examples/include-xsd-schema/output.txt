@@ -1,0 +1,28 @@
+RamlDocumentNode (Start: 11 , End: 187, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 35)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "API with Examples" (Start: 18 , End: 35)
+    KeyValueNodeImpl (Start: 36 , End: 187)
+        SYStringNode: "types" (Start: 36 , End: 41)
+        SYObjectNode (Start: 45 , End: 187)
+            KeyValueNodeImpl (Start: 45 , End: 187)
+                SYStringNode: "User" (Start: 45 , End: 49)
+                UnionTypeNode (Start: 55 , End: 187, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 55 , End: 78)
+                        SYStringNode: "type" (Start: 55 , End: 59)
+                        SchemaNodeImpl: "<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="User" type="UserType"/>
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="lastName"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>" (Start: 61 , End: 78, Source: StringNodeImpl)
+                    KeyValueNodeImpl (Start: 83 , End: 187)
+                        SYStringNode: "example" (Start: 83 , End: 90)
+                        ErrorNode: "Error validating XML. Error: cvc-complex-type.2.4.a: Invalid content was found starting with element 'name1'. One of '{name}' is expected." (Start: 92 , End: 187, Source: ExampleTypeNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "User" (Start: 45 , End: 49, Source: SYStringNode)

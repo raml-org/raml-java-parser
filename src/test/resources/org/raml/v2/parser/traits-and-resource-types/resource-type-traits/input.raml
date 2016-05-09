@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: Example API
+version: v1
+
+resourceTypes:
+  main:
+    usage: how to use this resource type
+    description: this is the main type
+    is: [paged]
+    get:
+      is: [secured]
+      headers:
+        main:
+          type: string
+
+traits:
+  secured:
+    headers:
+      secured:
+        type: string
+  paged:
+    headers:
+      page:
+        type: integer
+
+/users:
+  type: main

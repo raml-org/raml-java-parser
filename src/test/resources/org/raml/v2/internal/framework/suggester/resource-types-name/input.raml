@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  collection:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of users
+    get:
+      description: Get all users, optionally filtered
+    post:
+      description: Create a new user
+/users:
+  type: <cursor>

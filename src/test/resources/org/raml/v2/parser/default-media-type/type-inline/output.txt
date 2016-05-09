@@ -1,0 +1,52 @@
+RamlDocumentNode (Start: 11 , End: 638, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 28)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "Tato Bores" (Start: 18 , End: 28)
+    KeyValueNodeImpl (Start: 29 , End: 56)
+        SYStringNode: "mediaType" (Start: 29 , End: 38)
+        SYStringNode: "application/json" (Start: 40 , End: 56)
+    ResourceNode (Start: 58 , End: 638, Source: KeyValueNodeImpl)
+        SYStringNode: "/ok0" (Start: 58 , End: 62)
+        SYObjectNode (Start: 66 , End: 638)
+            MethodNode (Start: 66 , End: 638, Source: KeyValueNodeImpl)
+                SYStringNode: "post" (Start: 66 , End: 70)
+                SYObjectNode (Start: 76 , End: 638)
+                    BodyNode (Start: 76 , End: 638, Source: KeyValueNodeImpl)
+                        SYStringNode: "body" (Start: 76 , End: 80)
+                        MediaTypeInjectedNode (Start: 76 , End: 638)
+                            KeyValueNodeImpl (Start: 40 , End: 638)
+                                SYStringNode: "application/json" (Start: 40 , End: 56, Source: SYStringNode)
+                                ObjectTypeNode (Start: 88 , End: 638, Source: UnionTypeNode)
+                                    KeyValueNodeImpl (Start: 88 , End: 102, Source: KeyValueNodeImpl)
+                                        SYStringNode: "example" (Start: 88 , End: 95, Source: SYStringNode)
+                                        ErrorNode: "Error validating JSON. Error: Invalid JsonSchema" (Start: 97 , End: 102, Source: ExampleTypeNode)
+                                    KeyValueNodeImpl (Start: 109 , End: 638, Source: KeyValueNodeImpl)
+                                        SYStringNode: "type" (Start: 109 , End: 113, Source: SYStringNode)
+                                        StringNodeImpl: "{
+    "title": "Example Schema",
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "age": {
+            "description": "Age in years",
+            "type": "integer",
+            "minimum": 0
+        }
+    },
+    "required": ["firstName", "lastName"]
+}
+" (Start: 115 , End: 638, Source: SchemaNodeImpl)
+                                    KeyValueNodeImpl (Start: -1 , End: 80, Source: KeyValueNodeImpl)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1, Source: StringNodeImpl)
+                                        SYStringNode: "body" (Start: 76 , End: 80, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "post" (Start: 66 , End: 70, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                SYStringNode: "/ok0" (Start: 58 , End: 62, Source: SYStringNode)

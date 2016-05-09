@@ -1,0 +1,14 @@
+<slideshow>
+  
+ <slideshowid>
+  SlideShowID
+ </slideshowid>
+  
+ <user>
+  User ID
+ </user>
+  
+ <favorited>
+  true 
+ </favorited>
+</slideshow>

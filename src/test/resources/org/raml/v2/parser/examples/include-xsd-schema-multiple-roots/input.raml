@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    type: !include user.xsd#Animal
+    examples:
+      animal: |
+        <Animal>
+            <name>Fido</name>
+            <specie>Dog</specie>
+        </Animal>
+      user: |
+        <User>
+            <name>John</name>
+            <lastName>Doe</lastName>
+        </Animal>

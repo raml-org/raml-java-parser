@@ -1,0 +1,61 @@
+[ {
+  "label" : "Array",
+  "description" : null,
+  "value" : "array",
+  "prefix" : ""
+}, {
+  "label" : "Boolean",
+  "description" : null,
+  "value" : "boolean",
+  "prefix" : ""
+}, {
+  "label" : "Date-only",
+  "description" : null,
+  "value" : "date-only",
+  "prefix" : ""
+}, {
+  "label" : "Datetime",
+  "description" : null,
+  "value" : "datetime",
+  "prefix" : ""
+}, {
+  "label" : "Datetime-only",
+  "description" : null,
+  "value" : "datetime-only",
+  "prefix" : ""
+}, {
+  "label" : "File",
+  "description" : null,
+  "value" : "file",
+  "prefix" : ""
+}, {
+  "label" : "Integer",
+  "description" : null,
+  "value" : "integer",
+  "prefix" : ""
+}, {
+  "label" : "Number",
+  "description" : null,
+  "value" : "number",
+  "prefix" : ""
+}, {
+  "label" : "Object",
+  "description" : null,
+  "value" : "object",
+  "prefix" : ""
+}, {
+  "label" : "Person",
+  "description" : "",
+  "value" : "Person",
+  "prefix" : ""
+}, {
+  "label" : "String",
+  "description" : null,
+  "value" : "string",
+  "prefix" : ""
+}, {
+  "label" : "Time-only",
+  "description" : null,
+  "value" : "time-only",
+  "prefix" : ""
+} ]

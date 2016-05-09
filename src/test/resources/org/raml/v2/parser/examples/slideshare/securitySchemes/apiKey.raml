@@ -1,0 +1,17 @@
+description: |
+  All requests made using the SlideShare API must have some parameters.
+type: x-ApiKey
+describedBy: 
+  queryParameters: 
+    api_key: 
+      description: |
+        Set this to the API Key that SlideShare has provided for you.
+      required: true
+    ts: 
+      description: |
+        Set this to the current time in Unix TimeStamp format, to the nearest second(?).
+      required: true
+    hash: 
+      description: |
+        Set this to the SHA1 hash of the concatenation of the shared secret and the timestamp (ts). i.e. SHA1 (sharedsecret + timestamp). The order of the terms in the concatenation is important.
+      required: true

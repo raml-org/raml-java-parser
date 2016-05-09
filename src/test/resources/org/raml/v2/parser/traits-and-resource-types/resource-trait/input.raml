@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Example API
+version: v1
+traits:
+  secured:
+    usage: Apply this to any method that needs to be secured
+    description: Some requests require authentication.
+    headers:
+      access_token:
+        type: string
+        description: Access Token
+        example: 5757gh76
+        required: true
+/users:
+  is: [ secured ]
+  get:

@@ -1,0 +1,56 @@
+[ {
+  "label" : "RAML 1.0 Header",
+  "description" : "RAML 1.0 root file header",
+  "value" : "#%RAML 1.0",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Annotation Type Declaration fragment",
+  "description" : "A single annotation type declaration",
+  "value" : "#%RAML 1.0 AnnotationTypeDeclaration",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Data Type fragment",
+  "description" : "A data type declaration where the type property may be used",
+  "value" : "#%RAML 1.0 DataType",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Documentation Item fragment",
+  "description" : "An item in the collection of items that is the value of the root-level documentation property",
+  "value" : "#%RAML 1.0 DocumentationItem",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Extension fragment",
+  "description" : "An extension file",
+  "value" : "#%RAML 1.0 Extension",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Library fragment",
+  "description" : "A RAML library",
+  "value" : "#%RAML 1.0 Library",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Named Example fragment",
+  "description" : "A property of the examples property, whose key is a name of an example and whose value describes the example",
+  "value" : "#%RAML 1.0 NamedExample",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Overlay fragment",
+  "description" : "An overlay file",
+  "value" : "#%RAML 1.0 Overlay",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Resource Type fragment",
+  "description" : "A single resource type declaration",
+  "value" : "#%RAML 1.0 ResourceType",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Security Scheme fragment",
+  "description" : "A definition of a security scheme",
+  "value" : "#%RAML 1.0 SecurityScheme",
+  "prefix" : ""
+}, {
+  "label" : "RAML 1.0 Trait fragment",
+  "description" : "A single trait declaration",
+  "value" : "#%RAML 1.0 Trait",
+  "prefix" : ""
+} ]

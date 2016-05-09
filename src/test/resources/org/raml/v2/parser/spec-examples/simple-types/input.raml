@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: API with Types
+types:
+  User:
+    type: object
+    properties:
+      firstname: string
+      lastname:  string
+      age:       number
+/users/{id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: User

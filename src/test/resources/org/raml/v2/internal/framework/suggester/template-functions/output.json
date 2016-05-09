@@ -1,0 +1,21 @@
+[ {
+  "label" : "camelize",
+  "description" : "",
+  "value" : "!camelize",
+  "prefix" : ""
+}, {
+  "label" : "capitalize",
+  "description" : "",
+  "value" : "!capitalize",
+  "prefix" : ""
+}, {
+  "label" : "pluralize",
+  "description" : "",
+  "value" : "!pluralize",
+  "prefix" : ""
+}, {
+  "label" : "singularize",
+  "description" : "",
+  "value" : "!singularize",
+  "prefix" : ""
+} ]

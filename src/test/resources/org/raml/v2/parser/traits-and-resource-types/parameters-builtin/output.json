@@ -1,0 +1,49 @@
+{
+    "title": "Example API",
+    "version": "v1",
+    "traits": {
+        "builtin": {
+            "description": "resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>> and methodName <<methodName>>"
+        }
+    },
+    "resourceTypes": {
+        "builtin": {
+            "description": "resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>>",
+            "get": {
+                "is": ["builtin"]
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "type": "builtin",
+            "displayName": "/users",
+            "description": "resourcePath /users and resourcePathName users",
+            "methods": [
+                {
+                    "method": "get",
+                    "is": ["builtin"],
+                    "displayName": "get",
+                    "description": "resourcePath /users and resourcePathName users and methodName get"
+                }
+            ],
+            "resources": [
+                {
+                    "relativeUri": "/{userId}",
+                    "type": "builtin",
+                    "displayName": "/{userId}",
+                    "description": "resourcePath /users/{userId} and resourcePathName userId",
+                    "methods": [
+                        {
+                            "method": "get",
+                            "is": ["builtin"],
+                            "displayName": "get",
+                            "description": "resourcePath /users/{userId} and resourcePathName userId and methodName get"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="User" type="UserType"/>
+    <xs:element name="Animal" type="AnimalType"/>
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="lastName"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AnimalType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name"/>
+            <xs:element type="xs:string" name="specie"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

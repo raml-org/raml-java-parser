@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    type: !include user.json
+    examples:
+      bob: |
+        {
+          "name": 15,
+          "age": "Marley"
+        }
+      marley: |
+        {
+          "name": "Bob",
+          "age": 20
+        }

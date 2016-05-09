@@ -1,0 +1,40 @@
+RamlDocumentNode (Start: 11 , End: 143, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 45)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "invalid top level sequences" (Start: 18 , End: 45)
+    KeyValueNodeImpl (Start: 47 , End: 74)
+        SYStringNode: "resourceTypes" (Start: 47 , End: 60)
+        ErrorNode: "Invalid element Array[{
+one: SyNullNode
+}]." (Start: 66 , End: 74, Source: SYArrayNode)
+            SYObjectNode (Start: 68 , End: 74)
+                KeyValueNodeImpl (Start: 68 , End: 72)
+                    SYStringNode: "one" (Start: 68 , End: 71)
+                    SYNullNode (Start: 72 , End: 72)
+    KeyValueNodeImpl (Start: 74 , End: 94)
+        SYStringNode: "traits" (Start: 74 , End: 80)
+        ErrorNode: "Invalid element Array[{
+one: SyNullNode
+}]." (Start: 86 , End: 94, Source: SYArrayNode)
+            SYObjectNode (Start: 88 , End: 94)
+                KeyValueNodeImpl (Start: 88 , End: 92)
+                    SYStringNode: "one" (Start: 88 , End: 91)
+                    SYNullNode (Start: 92 , End: 92)
+    KeyValueNodeImpl (Start: 94 , End: 115)
+        SYStringNode: "schemas" (Start: 94 , End: 101)
+        ErrorNode: "Invalid element Array[{
+one: SyNullNode
+}]." (Start: 107 , End: 115, Source: SYArrayNode)
+            SYObjectNode (Start: 109 , End: 115)
+                KeyValueNodeImpl (Start: 109 , End: 113)
+                    SYStringNode: "one" (Start: 109 , End: 112)
+                    SYNullNode (Start: 113 , End: 113)
+    KeyValueNodeImpl (Start: 115 , End: 143)
+        SYStringNode: "securitySchemes" (Start: 115 , End: 130)
+        ErrorNode: "Invalid element Array[{
+one: SyNullNode
+}]." (Start: 136 , End: 143, Source: SYArrayNode)
+            SYObjectNode (Start: 138 , End: 143)
+                KeyValueNodeImpl (Start: 138 , End: 142)
+                    SYStringNode: "one" (Start: 138 , End: 141)
+                    SYNullNode (Start: 142 , End: 142)

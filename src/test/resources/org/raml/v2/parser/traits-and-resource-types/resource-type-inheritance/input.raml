@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  main:
+    usage: how to use this resource type
+    type: parent
+    description: this is the main type
+    get:
+      headers:
+        main:
+          type: string
+  parent:
+    usage: how to use parent resource type
+    type: grampa
+    description: this is the parent type
+    get:
+      headers:
+        parent:
+          type: string
+  grampa:
+    usage: how to use grampa resource type
+    description: this is the grampa type
+    get:
+      headers:
+        grampa:
+          type: string
+
+/users:
+  type: main

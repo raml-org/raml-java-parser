@@ -1,0 +1,127 @@
+#%RAML 1.0
+---
+title: Leagues API
+version: v1
+baseUri: http://localhost/api
+
+documentation:
+    - title: Leagues
+      content: |
+        Welcome to the _Leagues API_ Documentation. The _Leagues API_
+        allows you to view a list of football leagues. You may also
+        add or delete leagues to keep the list up to date.
+    - title: Contact
+      content: |
+        If you need support, please contact apikit@mulesoft.com.
+
+types:
+    league-json:
+        type: !include league.json
+    league-xml:
+        type: !include league16.xsd
+
+resourceTypes:
+    collection:
+        displayName: collection type
+traits:
+    taxed:
+        displayName: taxed trait
+
+/leagues:
+    type: collection
+    is: [ taxed ]
+    displayName: Leagues
+    description: World Soccer Leagues
+    get:
+        responses:
+            200:
+                body:
+                    application/json:
+                        example: '{}'
+                    text/xml:
+                        example: '.'
+    post:
+        body: &league-schema
+            application/json:
+                type: league-json
+                example: |
+                    { "name": "liga criolla" }
+            text/xml:
+                schema: league-xml
+        responses:
+            201:
+                description: league created
+                body:
+                    text/plain: ~
+    /{leagueId}:
+        uriParameters:
+            leagueId:
+                type: string
+                pattern: '[-a-zA-Z0-9+]*'
+                minLength: 1
+                maxLength: 20
+        get:
+            is: [ taxed ]
+            responses:
+                200:
+                    body: *league-schema
+        put:
+            body: *league-schema
+            responses:
+                204:
+                    description: league modified
+        delete:
+            responses:
+                204:
+                    description: league deleted
+        /badge:
+            put:
+                body:
+                    multipart/form-data:
+#                        formParameters:
+#                            description:
+#                                type: string
+#                            image:
+#                                type: file
+                responses:
+                    200:
+                        body:
+                            application/json:
+                                example: '{}'
+            get:
+                responses:
+                    200:
+                        body:
+                            '*/*':
+                                example: '.'
+        /teams:
+            get:
+                headers:
+                    preferred:
+                        displayName: Preferred
+                        description: preferred team
+                        type: string
+                        default: BCN
+                queryParameters:
+                    offset:
+                        displayName: Offset
+                        description: result set offset
+                        type: integer
+                        required: false
+                        minimum: 0
+                        default: 0
+                    limit:
+                        displayName: Limit
+                        description: result set size
+                        type: integer
+                        required: false
+                        minimum: 1
+                        maximum: 10
+                        default: 5
+                responses:
+                    200:
+                        body:
+                            application/json:
+                                example: '{}'
+            /leader:
+                get: ~

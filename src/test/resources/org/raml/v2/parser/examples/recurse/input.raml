@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: New API
+mediaType: [ application/json, application/xml]
+types:
+  Person:
+    type: object
+    properties:
+      id: string
+  Persona: Person
+  User:
+   type: object
+   properties:
+      name: string
+      friend: Person
+/foo:
+  get:
+    body:
+      application/json:
+        type: Person
+  /tato:
+     get:
+       body:
+         application/json:
+           type: object
+           properties:
+             chango: Person
+

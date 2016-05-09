@@ -1,0 +1,81 @@
+[ {
+  "label" : "(Annotation)",
+  "description" : "Annotations to be applied to this API. Annotations are any property whose key begins with \"(\" and ends with \")\" and whose name (the part between the beginning and ending parentheses) is a declared annotation name..",
+  "value" : "(<cursor>): ",
+  "prefix" : ""
+}, {
+  "label" : "AdditionalProperties",
+  "description" : null,
+  "value" : "additionalProperties: ",
+  "prefix" : ""
+}, {
+  "label" : "Default",
+  "description" : null,
+  "value" : "default: ",
+  "prefix" : ""
+}, {
+  "label" : "Description",
+  "description" : "A longer, human-friendly description of the API",
+  "value" : "description: ",
+  "prefix" : ""
+}, {
+  "label" : "Discriminator",
+  "description" : null,
+  "value" : "discriminator: ",
+  "prefix" : ""
+}, {
+  "label" : "DiscriminatorValue",
+  "description" : null,
+  "value" : "discriminatorValue: ",
+  "prefix" : ""
+}, {
+  "label" : "DisplayName",
+  "description" : "An alternate, human-friendly name for the method (in the resource's context).",
+  "value" : "displayName: ",
+  "prefix" : ""
+}, {
+  "label" : "MaxProperties",
+  "description" : null,
+  "value" : "maxProperties: ",
+  "prefix" : ""
+}, {
+  "label" : "MinProperties",
+  "description" : null,
+  "value" : "minProperties: ",
+  "prefix" : ""
+}, {
+  "label" : "PatternProperties",
+  "description" : null,
+  "value" : "patternProperties: ",
+  "prefix" : ""
+}, {
+  "label" : "Properties",
+  "description" : null,
+  "value" : "properties: ",
+  "prefix" : ""
+}, {
+  "label" : "Required",
+  "description" : null,
+  "value" : "required: ",
+  "prefix" : ""
+}, {
+  "label" : "Schema",
+  "description" : null,
+  "value" : "schema: ",
+  "prefix" : ""
+}, {
+  "label" : "Type",
+  "description" : "The resource type which this resource inherits.",
+  "value" : "type: ",
+  "prefix" : ""
+}, {
+  "label" : "Usage",
+  "description" : null,
+  "value" : "usage: ",
+  "prefix" : ""
+}, {
+  "label" : "Xml",
+  "description" : null,
+  "value" : "xml: ",
+  "prefix" : ""
+} ]

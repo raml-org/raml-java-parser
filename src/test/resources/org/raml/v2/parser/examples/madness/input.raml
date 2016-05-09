@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Dog:
+    type: object
+    properties:
+      bite:
+       type: string
+  Cat:
+    type: object
+    properties:
+      claw:
+        type: string
+  Parrot:
+    type: object
+    properties:
+      feathers:
+        type: string
+        maxLength: 5
+  HasHome:
+    type: object
+    properties:
+      livesInside:
+        type: boolean
+  IsOnFarm:
+    type: object
+    properties:
+      livesOutside:
+        type: boolean
+  HomeAnimal:
+    type: [ HasHome | IsOnFarm ,  Dog | Cat | Parrot ]
+    properties:
+      discriminator:
+        type: string
+    example:
+      discriminator: HasHome Parrot
+      livesInside: a
+      feathers: colourful
+/send:
+  post:
+    body:
+      application/json:
+        type: HomeAnimal

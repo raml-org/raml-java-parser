@@ -1,0 +1,8 @@
+#%RAML 1.0
+title: hola
+types:
+    X-Tracker:
+        type: string
+        minLength: 6
+        maxLength: 100
+        pattern: ^\w{16}$

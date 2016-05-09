@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: Illustrating annotations
+mediaType: application/json
+annotationTypes:
+  experimental:
+  feedbackRequested:
+  testHarness:
+  badge:         # This annotation type, too, allows string values
+  intAnnotation: number
+  clearanceLevel:
+    properties:
+      level:
+        enum: [ low, medium, high ]
+        required: true
+      signature:
+        type: string
+        pattern: "\\d{3}-\\w{12}"
+        required: true
+/groups:
+  (experimental): nonExperimental
+  (feedbackRequested): done
+  (intAnnotation): 2
+/users:
+  (testHarness): usersTest
+  (badge): tested.gif
+  (intAnnotation): a
+  (clearanceLevel):
+    level: low
+    signature: 230-ghtwvfrs1itr
+  get:
+    (experimental): experiment
+    (feedbackRequested): given
+    responses:
+      200:

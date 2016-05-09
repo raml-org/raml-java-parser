@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: api title
+#mediaType: application/json
+
+types:
+    User:
+        type: object
+        properties:
+            firstname: string
+            lastname: string
+            age: number
+
+/top:
+    post:
+        body:
+            application/json:
+                type: User
+                examples:
+                    no-errors: |
+                        {
+                            "firstname": "tato",
+                            "lastname": "bores",
+                            "age": 66
+                        }
+                    errors: |
+                        {
+                            "firstname": "tato",
+                            "lastname": "bores",
+                            "age": "twenty"
+                        }
+#                example: |
+#                    {
+#                        "firstname": "tato",
+#                        "lastname": "bores",
+#                        "age": 66
+#                    }

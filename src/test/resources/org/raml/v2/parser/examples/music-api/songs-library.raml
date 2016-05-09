@@ -1,0 +1,26 @@
+#%RAML 1.0 Library
+
+types:
+  Song:
+    properties:
+      title: string
+      length:
+        type: number
+        multipleOf: 100
+  Album:
+    properties:
+      title: string
+      songs: Song[]
+  Musician:
+    properties:
+      name: string
+      discography: (Song | Album)[]
+    example:
+      name: Prince
+      discography:
+        - title: The Most Beautiful Girl in the World
+          length: 125
+        - title: Little Red Corvette EP
+          songs:
+            - title: Little Red Corvette
+              length: 200

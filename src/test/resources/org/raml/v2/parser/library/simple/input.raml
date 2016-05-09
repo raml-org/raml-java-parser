@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: hola
+uses:
+  library1: library.raml
+/top:
+    type:
+        library1.foo:
+            foo: description
+    get:
+        description: "get something"
+    (library1.bar): hi

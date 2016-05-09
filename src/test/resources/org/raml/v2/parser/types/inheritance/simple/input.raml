@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    properties:
+      name:
+       type: string
+  EmailOwner:
+    type: object
+    properties:
+      address:
+        type: string
+  Employee:
+    type: [Person, EmailOwner]
+    properties:
+        id:
+          type: string
+  Warrior:
+    type: object
+    minProperties: 3
+    maxProperties: 5
+    properties:
+      name: string
+      age: number
+  Mage:
+    type: object
+    minProperties: 1
+    maxProperties: 2
+    properties:
+      name: string
+      age: number
+      power: string

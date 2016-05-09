@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    type: !include user.json#User
+    examples:
+      good: |
+        {
+          "name": "John",
+          "age": 18
+        }
+      bad: |
+        {
+          "name": 15,
+          "age": "Marley"
+        }
+/send:
+  post:
+    body:
+      application/json:
+        type: User
+        example: |
+          {
+            "name": 31,
+            "age": "Ringo"
+          }

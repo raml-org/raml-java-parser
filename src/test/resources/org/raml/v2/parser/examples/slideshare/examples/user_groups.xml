@@ -1,0 +1,26 @@
+<groups>
+  
+ <group> 
+  <name>
+   { Group Name }
+  </name> 
+  <numposts>
+   1 
+  </numposts>
+  <numslideshows>
+   1 
+  </numslideshows>
+  <nummembers>
+   1 
+  </nummembers>
+  <created>
+   { Created date } 
+  </created>
+  <queryname>
+   { Name used for querying (get_slideshows_by_group, etc) }  
+  </queryname>
+  <url>
+   { Group URL } 
+  </url>
+ </group>
+</groups>

@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Illustrating annotations
+mediaType: application/json
+annotationTypes:
+  image:
+    type: string
+  foo:
+    type: string
+    maxLength: 2
+
+/groups:
+  (image): don.png
+  (foo): Ba

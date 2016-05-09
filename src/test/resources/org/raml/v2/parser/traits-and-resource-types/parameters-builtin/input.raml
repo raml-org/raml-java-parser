@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Example API
+version: v1
+
+traits:
+  builtin:
+    description: resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>> and methodName <<methodName>>
+
+resourceTypes:
+    builtin:
+        description: resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>>
+        get:
+            is: [ builtin ]
+
+/users:
+  type: builtin
+  /{userId}:
+    type: builtin

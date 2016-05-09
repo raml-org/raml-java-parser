@@ -1,0 +1,11 @@
+usage: |
+  Apply this to any method that supports some user's authorization parameters.
+description: |
+  Some requests requires username and password of a requestings user.
+queryParameters: 
+  username: 
+    description: username of requesting user
+    required: <<requiresUsernameAndPassword>>
+  password: 
+    description: password of requesting user
+    required: <<requiresUsernameAndPassword>>

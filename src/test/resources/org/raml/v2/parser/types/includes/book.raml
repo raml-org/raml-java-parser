@@ -1,0 +1,23 @@
+#%RAML 1.0 DataType
+
+usage: book description
+
+type: object
+properties:
+  name:
+    type: string
+    maxLength: 10
+  chapters:
+    type: array
+    items: !include chapter.raml
+example:
+  name: Never Ending Story
+  chapters:
+    - name: introduction
+      content: introduction
+    - name: main
+      content: main
+    - name: ending
+      content: ending
+    - name: 1
+      content: 2

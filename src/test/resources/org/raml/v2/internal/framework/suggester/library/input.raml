@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: hola
+uses:
+  library1:
+    resourceTypes:
+       foo:
+        <<foo>>: This is a collection <<foo | !singularize>> hgfjhgf
+/top:
+    type: library<cursor>
+    get:
+        description: "get something"

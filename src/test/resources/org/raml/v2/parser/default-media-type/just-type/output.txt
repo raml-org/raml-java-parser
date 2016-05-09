@@ -1,0 +1,79 @@
+RamlDocumentNode (Start: 11 , End: 604, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 28)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "Tato Bores" (Start: 18 , End: 28)
+    KeyValueNodeImpl (Start: 29 , End: 56)
+        SYStringNode: "mediaType" (Start: 29 , End: 38)
+        SYStringNode: "application/json" (Start: 40 , End: 56)
+    KeyValueNodeImpl (Start: 57 , End: 562)
+        SYStringNode: "types" (Start: 57 , End: 62)
+        SYObjectNode (Start: 66 , End: 562)
+            KeyValueNodeImpl (Start: 66 , End: 562)
+                SYStringNode: "Person" (Start: 66 , End: 72)
+                UnionTypeNode (Start: 74 , End: 562, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                        SchemaNodeImpl: "{
+    "title": "Example Schema",
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "age": {
+            "description": "Age in years",
+            "type": "integer",
+            "minimum": 0
+        }
+    },
+    "required": ["firstName", "lastName"]
+}
+" (Start: -1 , End: -1, Source: SchemaNodeImpl)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "Person" (Start: 66 , End: 72, Source: SYStringNode)
+    ResourceNode (Start: 562 , End: 604, Source: KeyValueNodeImpl)
+        SYStringNode: "/ok0" (Start: 562 , End: 566)
+        SYObjectNode (Start: 570 , End: 604)
+            MethodNode (Start: 570 , End: 604, Source: KeyValueNodeImpl)
+                SYStringNode: "post" (Start: 570 , End: 574)
+                SYObjectNode (Start: 580 , End: 604)
+                    BodyNode (Start: 580 , End: 604, Source: KeyValueNodeImpl)
+                        SYStringNode: "body" (Start: 580 , End: 584)
+                        MediaTypeInjectedNode (Start: 580 , End: 604)
+                            KeyValueNodeImpl (Start: 40 , End: 604)
+                                SYStringNode: "application/json" (Start: 40 , End: 56, Source: SYStringNode)
+                                ObjectTypeNode (Start: 592 , End: 604, Source: UnionTypeNode)
+                                    KeyValueNodeImpl (Start: 592 , End: 604, Source: KeyValueNodeImpl)
+                                        SYStringNode: "type" (Start: 592 , End: 596, Source: SYStringNode)
+                                        StringNodeImpl: "{
+    "title": "Example Schema",
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "age": {
+            "description": "Age in years",
+            "type": "integer",
+            "minimum": 0
+        }
+    },
+    "required": ["firstName", "lastName"]
+}
+" (Start: 598 , End: 604, Source: SchemaNodeImpl)
+                                    KeyValueNodeImpl (Start: -1 , End: 584, Source: KeyValueNodeImpl)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1, Source: StringNodeImpl)
+                                        SYStringNode: "body" (Start: 580 , End: 584, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "post" (Start: 570 , End: 574, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                SYStringNode: "/ok0" (Start: 562 , End: 566, Source: SYStringNode)

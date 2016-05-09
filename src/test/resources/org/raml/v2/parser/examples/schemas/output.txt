@@ -1,0 +1,68 @@
+RamlDocumentNode (Start: 11 , End: 470, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 22)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "test" (Start: 18 , End: 22)
+    KeyValueNodeImpl (Start: 23 , End: 306)
+        SYStringNode: "schemas" (Start: 23 , End: 30)
+        SYObjectNode (Start: 34 , End: 306)
+            KeyValueNodeImpl (Start: 34 , End: 306)
+                SYStringNode: "my-schema" (Start: 34 , End: 43)
+                UnionTypeNode (Start: 45 , End: 306, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                        SchemaNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="ticketid">
+    <xsd:complexType>
+      <xsd:sequence/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
+" (Start: -1 , End: -1, Source: SchemaNodeImpl)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "my-schema" (Start: 34 , End: 43, Source: SYStringNode)
+    ResourceNode (Start: 306 , End: 470, Source: KeyValueNodeImpl)
+        SYStringNode: "/resource" (Start: 306 , End: 315)
+        SYObjectNode (Start: 319 , End: 470)
+            MethodNode (Start: 319 , End: 470, Source: KeyValueNodeImpl)
+                SYStringNode: "post" (Start: 319 , End: 323)
+                SYObjectNode (Start: 329 , End: 470)
+                    KeyValueNodeImpl (Start: 329 , End: 470)
+                        SYStringNode: "responses" (Start: 329 , End: 338)
+                        SYObjectNode (Start: 346 , End: 470)
+                            KeyValueNodeImpl (Start: 346 , End: 470)
+                                SYIntegerNode: 200 (Start: 346 , End: 349)
+                                SYObjectNode (Start: 359 , End: 470)
+                                    BodyNode (Start: 359 , End: 470, Source: KeyValueNodeImpl)
+                                        SYStringNode: "body" (Start: 359 , End: 363)
+                                        SYObjectNode (Start: 375 , End: 470)
+                                            KeyValueNodeImpl (Start: 375 , End: 470)
+                                                SYStringNode: "application/xml" (Start: 375 , End: 390)
+                                                UnionTypeNode (Start: 404 , End: 470, Source: SYObjectNode)
+                                                    KeyValueNodeImpl (Start: 404 , End: 421)
+                                                        SYStringNode: "schema" (Start: 404 , End: 410)
+                                                        SchemaNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="ticketid">
+    <xsd:complexType>
+      <xsd:sequence/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
+" (Start: 412 , End: 421, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: 434 , End: 470)
+                                                        SYStringNode: "example" (Start: 434 , End: 441)
+                                                        ExampleTypeNode (Start: 443 , End: 470, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                        SYStringNode: "application/xml" (Start: 375 , End: 390, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        StringNodeImpl: "200" (Start: 346 , End: 349, Source: SYIntegerNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "post" (Start: 319 , End: 323, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                SYStringNode: "/resource" (Start: 306 , End: 315, Source: SYStringNode)

@@ -1,0 +1,16 @@
+[ {
+  "label" : "Title",
+  "description" : "Short plain-text label for the API.",
+  "value" : "title: ",
+  "prefix" : ""
+}, {
+  "label" : "Traits",
+  "description" : "Declarations of traits for use within this API.",
+  "value" : "traits: ",
+  "prefix" : ""
+}, {
+  "label" : "Types",
+  "description" : "Declarations of (data) types for use within this API.",
+  "value" : "types: ",
+  "prefix" : ""
+} ]

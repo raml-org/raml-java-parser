@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Example with arrays
+types:
+  Email:
+    properties:
+      address: string
+      active: boolean
+  Emails:
+    type: Email[]
+    example:
+      - address: mule@raml.org
+        active: false
+      - address: false
+        active: test@raml.org

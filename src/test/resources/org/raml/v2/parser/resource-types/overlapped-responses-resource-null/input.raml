@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  collection:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of users
+    get: 
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              example: |
+                { "some": "nice-example" }
+/users:
+  type: collection
+  get: 
+    description: Metadata of a Specific Index
+    responses: 
+      200: 
+        body: 
+          application/json: 

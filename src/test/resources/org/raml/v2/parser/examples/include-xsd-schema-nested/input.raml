@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    type: !include xsd-includer.xsd
+    examples:
+      - bad: |
+          <Person>
+              <firstName>Bob</firstName>
+              <lastName>Marley</lastName>
+              <age>ten</age>
+          </Person>
+      - good: |
+          <Person>
+              <firstName>Donald</firstName>
+              <lastName>Trump</lastName>
+              <age>1000</age>
+          </Person>
+/send:
+  post:
+    body:
+      application/json:
+        type: User
+        example: |
+          <Person>
+            <firstName>Bob</firstName>
+            <lastName>Marley</lastName>
+            <age>ten</age>
+          </Person>

@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: hola
+types:
+    PairsUpToOneHundred:
+        type: integer
+        minimum: 2
+        maximum: 100
+        format: int
+        multipleOf: 2
+        required: true

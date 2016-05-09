@@ -1,0 +1,78 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="campaigns">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element name="leadcampaign">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="id"/>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="slideshowid"/>
+              <xs:element type="xs:string" name="requiresphone"/>
+              <xs:element type="xs:string" name="requiresaddress"/>
+              <xs:element type="xs:string" name="targetedregion"/>
+              <xs:element type="xs:string" name="fortagged"/>
+              <xs:element type="xs:string" name="calltoaction"/>
+              <xs:element type="xs:string" name="offertext"/>
+              <xs:element type="xs:string" name="startedat"/>
+              <xs:element type="xs:string" name="pausedat"/>
+              <xs:element type="xs:string" name="createdat"/>
+              <xs:element type="xs:string" name="updatedat"/>
+              <xs:element type="xs:string" name="endedat"/>
+              <xs:element name="maximumdailyspend">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="currency"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="costperlead">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="currency"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="formposition"/>
+              <xs:element type="xs:string" name="formblocking"/>
+              <xs:element type="xs:string" name="fordownload"/>
+              <xs:element type="xs:string" name="forsidebar"/>
+              <xs:element type="xs:string" name="stateofcampaign"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="promotioncampaign">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="id"/>
+              <xs:element type="xs:string" name="name"/>
+              <xs:element type="xs:string" name="slideshowid"/>
+              <xs:element type="xs:string" name="targetedregion"/>
+              <xs:element type="xs:string" name="fortagged"/>
+              <xs:element type="xs:string" name="startedat"/>
+              <xs:element type="xs:string" name="pausedat"/>
+              <xs:element type="xs:string" name="createdat"/>
+              <xs:element type="xs:string" name="updatedat"/>
+              <xs:element type="xs:string" name="endedat"/>
+              <xs:element type="xs:string" name="maximumdailyspend"/>
+              <xs:element type="xs:string" name="slidesharecategory"/>
+              <xs:element type="xs:string" name="promotiontype"/>
+              <xs:element type="xs:string" name="cpc"/>
+              <xs:element type="xs:string" name="clickstoday"/>
+              <xs:element type="xs:string" name="clicksalltime"/>
+              <xs:element type="xs:string" name="impressionstoday"/>
+              <xs:element type="xs:string" name="impressionsalltime"/>
+              <xs:element type="xs:string" name="ctr"/>
+              <xs:element type="xs:string" name="pausecause"/>
+              <xs:element type="xs:string" name="stateofcampaign"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

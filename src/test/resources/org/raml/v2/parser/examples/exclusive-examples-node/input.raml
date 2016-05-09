@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+        minLength: 5
+      lastname:
+        type: string
+        maxLength: 5
+    example:
+      name: Bob
+      lastname: Marley
+    examples:
+      bob:
+        name: Bob
+        lastname: Marley

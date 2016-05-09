@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: Illustrating allowed targets
+mediaType: application/json
+annotationTypes:
+  meta-resource-method:
+    allowedTargets: [ Resource, Method ]
+  meta-data:
+    allowedTargets: TypeDeclaration
+types:
+  User:
+    type: object
+    (meta-data): on an object; on a data type declaration
+    properties:
+      name:
+        type: string
+        (meta-data): on a string property
+/users:
+  (meta-resource-method): on a resource
+  get:
+    (meta-resource-method): on a method
+    responses:
+      200:
+        body:
+          type: User[]
+          (meta-data): on a body

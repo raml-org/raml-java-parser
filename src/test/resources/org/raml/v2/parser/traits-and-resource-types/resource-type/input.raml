@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  collection:
+    usage: how to use this resource type
+    description: this is a collection type
+    get:
+      headers:
+        lat:
+          type: integer
+          example: 575
+    put:
+      body:
+        text/plain:
+          example: soul
+/users:
+  type: collection
+  put:
+    queryParameters:
+      long:
+        type: integer

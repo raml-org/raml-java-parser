@@ -1,0 +1,94 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="slideshows">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="meta"/>
+        <xs:element type="xs:string" name="query"/>
+        <xs:element type="xs:string" name="resultoffset"/>
+        <xs:element type="xs:string" name="numresults"/>
+        <xs:element type="xs:string" name="totalresults"/>
+        <xs:element name="slideshow" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType mixed="true">
+            <xs:sequence>
+              <xs:element type="xs:string" name="id"/>
+              <xs:element type="xs:string" name="title"/>
+              <xs:element type="xs:string" name="description"/>
+              <xs:element type="xs:string" name="status"/>
+              <xs:element type="xs:string" name="username"/>
+              <xs:element type="xs:string" name="url"/>
+              <xs:element type="xs:string" name="thumbnailurl"/>
+              <xs:element type="xs:string" name="thumbnailsmallurl"/>
+              <xs:element type="xs:string" name="embed"/>
+              <xs:element type="xs:string" name="created"/>
+              <xs:element type="xs:string" name="updated"/>
+              <xs:element type="xs:string" name="language"/>
+              <xs:element type="xs:string" name="format"/>
+              <xs:element type="xs:string" name="download"/>
+              <xs:element type="xs:string" name="downloadurl"/>
+              <xs:element type="xs:string" name="slideshowtype"/>
+              <xs:element name="incontest">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="userid"/>
+                    <xs:element type="xs:string" name="externalappuserid"/>
+                    <xs:element type="xs:string" name="externalappid"/>
+                    <xs:element name="pptlocation">
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="strippedtitle"/>
+                          <xs:element name="tags">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="tag">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:string" name="count" use="optional"/>
+                                        <xs:attribute type="xs:string" name="owner" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="audio"/>
+                          <xs:element type="xs:string" name="numdownloads"/>
+                          <xs:element type="xs:string" name="numviews"/>
+                          <xs:element type="xs:string" name="numcomments"/>
+                          <xs:element type="xs:string" name="numfavorites"/>
+                          <xs:element type="xs:string" name="numslides"/>
+                          <xs:element name="relatedslideshows">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="relatedslideshowid">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:string" name="rank" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element type="xs:string" name="privacylevel"/>
+                          <xs:element type="xs:string" name="flagvisible"/>
+                          <xs:element type="xs:string" name="showonss"/>
+                          <xs:element type="xs:string" name="secreturl"/>
+                          <xs:element type="xs:string" name="allowembed"/>
+                          <xs:element type="xs:string" name="sharewithcontacts"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

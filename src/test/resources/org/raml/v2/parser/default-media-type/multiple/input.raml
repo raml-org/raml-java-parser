@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Tato Bores
+mediaType: [application/json,text/xml]
+
+/ok0:
+  post:
+    body:
+      example: bores
+    responses:
+      200:
+        body:
+          example: tato
+      400:
+        body:
+          text/plain:
+            example: coqui
+      401:
+        body:
+          text/csv:
+      402:
+        body:
+      403:

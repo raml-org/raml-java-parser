@@ -1,0 +1,56 @@
+[ {
+  "label" : "(Annotation)",
+  "description" : "Annotations to be applied to this API. Annotations are any property whose key begins with \"(\" and ends with \")\" and whose name (the part between the beginning and ending parentheses) is a declared annotation name..",
+  "value" : "(<cursor>): ",
+  "prefix" : ""
+}, {
+  "label" : "Body",
+  "description" : "Some methods admit request bodies, which are described by this property.",
+  "value" : "body: ",
+  "prefix" : ""
+}, {
+  "label" : "Description",
+  "description" : "A longer, human-friendly description of the API",
+  "value" : "description: ",
+  "prefix" : ""
+}, {
+  "label" : "DisplayName",
+  "description" : "An alternate, human-friendly name for the method (in the resource's context).",
+  "value" : "displayName: ",
+  "prefix" : ""
+}, {
+  "label" : "Headers",
+  "description" : "Detailed information about any request headers needed by this method.",
+  "value" : "headers: ",
+  "prefix" : ""
+}, {
+  "label" : "Is",
+  "description" : "A list of the traits to apply to this method.",
+  "value" : "is: ",
+  "prefix" : ""
+}, {
+  "label" : "Protocols",
+  "description" : "A method can override the protocols specified in the resource or at the API root, by employing this property.",
+  "value" : "protocols: ",
+  "prefix" : ""
+}, {
+  "label" : "QueryParameters",
+  "description" : "Detailed information about any query parameters needed by this method. Mutually exclusive with queryString.",
+  "value" : "queryParameters: ",
+  "prefix" : ""
+}, {
+  "label" : "QueryString",
+  "description" : "Specifies the query string needed by this method. Mutually exclusive with queryParameters.",
+  "value" : "queryString: ",
+  "prefix" : ""
+}, {
+  "label" : "Responses",
+  "description" : "Information about the expected responses to a request",
+  "value" : "responses: ",
+  "prefix" : ""
+}, {
+  "label" : "SecuredBy",
+  "description" : "The security schemes that apply to this method.",
+  "value" : "securedBy: ",
+  "prefix" : ""
+} ]

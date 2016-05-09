@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    discriminator: kind
+    properties:
+      name: string
+      kind: string
+  Employee:
+    type: Person
+    discriminatorValue: employee # override default
+    properties:
+      employeeId: string
+  User:
+    type: Person
+    discriminatorValue: user # override default
+    properties:
+      userId: string

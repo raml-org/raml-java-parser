@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  countryOk:
+    type: string
+    enum: [ usa, rus ]
+    example: usa
+  countryBad:
+    type: string
+    enum: [ usa, rus ]
+    example: arg
+  sizesOk:
+    type: number
+    enum: [ 1, 2, 3 ]
+    example: 2
+  sizesBad:
+    type: number
+    enum: [ 1, 2, 3 ]
+    example: 4
