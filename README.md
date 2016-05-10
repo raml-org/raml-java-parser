@@ -3,7 +3,7 @@
 
 This is a Java parser for [RAML](http://raml.org) version 0.8 as defined in the [0.8 RAML specification](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md) The parser depends on SnakeYaml, a Java YAML parser.
 
-A newer [version](https://github.com/raml-org/raml-java-parser-2) is now available as a beta. It supports RAML 1.0 as well as RAML 0.8.
+A newer [version](https://github.com/raml-org/raml-java-parser/tree/v2) is now available as an alpha. It supports RAML 1.0 as well as RAML 0.8.
 
 ## Build
 
