@@ -27,6 +27,7 @@ import org.raml.v2.internal.impl.commons.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
+import org.raml.v2.internal.impl.commons.phase.ReferenceResolverTransformer;
 import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.SchemaValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
@@ -135,8 +136,12 @@ public class Raml10Builder
         final SugarRushPhase sugar = new SugarRushPhase();
         // Normalize resources and detects duplicated ones and more than one use of url parameters. ???
 
+        final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformer());
+
         // Applies resourceTypes and Traits Library
-        final TransformationPhase third = new TransformationPhase(new ResourceTypesTraitsTransformer(raml10Grammar), new TypesTransformer(resourceLocation));
+        final TransformationPhase third = new TransformationPhase(new ResourceTypesTraitsTransformer(raml10Grammar));
+
+        final Phase typesTransformation = new TransformationPhase(new TypesTransformer(resourceLocation));
 
         // Run grammar again to re-validate tree
         final Phase thirdAndAHalf = second;
@@ -151,7 +156,7 @@ public class Raml10Builder
 
         final ExampleValidationPhase seventh = new ExampleValidationPhase(resourceLoader);
 
-        return Arrays.asList(first, sugar, second, third, thirdAndAHalf, fourth, fifth, sixth, seventh);
+        return Arrays.asList(first, sugar, second, referenceCheck, third, typesTransformation, thirdAndAHalf, fourth, fifth, sixth, seventh);
 
     }
 }

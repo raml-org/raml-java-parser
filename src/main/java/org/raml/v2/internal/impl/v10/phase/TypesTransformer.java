@@ -38,6 +38,7 @@ import org.raml.v2.internal.framework.nodes.snakeyaml.SYNullNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYStringNode;
 import org.raml.v2.internal.framework.phase.Transformer;
+import org.raml.v2.internal.utils.NodeUtils;
 import org.raml.v2.internal.utils.SchemaGenerator;
 
 public class TypesTransformer implements Transformer
@@ -235,11 +236,13 @@ public class TypesTransformer implements Transformer
                         for (InheritedPropertiesInjectedNode inheritedProperties : parentTypeNode.getInheritedProperties())
                         {
                             injectProperties((ObjectTypeNode) node, new StringNodeImpl(type), inheritedProperties);
+                            ((ObjectTypeNode) node).markAsResolved();
                         }
                     }
                     else if (parentTypeNode.get("properties") != null)
                     {
                         injectProperties((ObjectTypeNode) node, new StringNodeImpl(type), (SYObjectNode) parentTypeNode.get("properties"));
+                        ((ObjectTypeNode) node).markAsResolved();
                     }
                     else if (isSchemaNode(getType(parentTypeNode)))
                     {
@@ -273,7 +276,7 @@ public class TypesTransformer implements Transformer
                 {
                     final String trimmedType = StringUtils.trim(type);
                     final TypeNode parentTypeNode = getType(trimmedType, typeNode);
-                    if (parentTypeNode == null)
+                    if (!((ObjectTypeNode) NodeUtils.getAncestor(typeNode, 2)).isResolved() && parentTypeNode == null)
                     {
                         final Node errorNode = ErrorNodeFactory.createInexistentType(trimmedType);
                         typeNode.replaceWith(errorNode);

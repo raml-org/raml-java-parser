@@ -182,6 +182,12 @@ public class ErrorNodeFactory
         return new ErrorNode("provided value " + dateValue + " is not compliant with the format " + dateFormat + " provided in " + rfc);
     }
 
+
+    public static ErrorNode createInvalidReferenceNode(ReferenceNode refNode)
+    {
+        return new ErrorNode("Invalid reference '" + refNode.getRefName() + "'");
+    }
+
     public static ErrorNode createNonexistentReferenceTraitError(ReferenceNode traitReference)
     {
         return new ErrorNode("Reference to nonexistent trait '" + traitReference.getRefName() + "'");

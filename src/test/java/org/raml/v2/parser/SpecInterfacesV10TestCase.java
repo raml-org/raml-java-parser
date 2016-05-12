@@ -294,6 +294,8 @@ public class SpecInterfacesV10TestCase
     private void assertQueryParameters(List<TypeDeclaration> queryParameters)
     {
         assertThat(queryParameters.size(), is(2));
+        assertThat(queryParameters.get(0).validate("10").size(), is(0));
+        assertThat(queryParameters.get(0).validate("10feet").size(), is(1));
     }
 
     private void assertHeaders(List<TypeDeclaration> headers)

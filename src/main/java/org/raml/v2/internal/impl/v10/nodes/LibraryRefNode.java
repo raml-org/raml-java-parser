@@ -47,7 +47,7 @@ public class LibraryRefNode extends AbstractReferenceNode
 
     @Nullable
     @Override
-    public Node getRefNode()
+    public Node resolveReference()
     {
         return NodeSelector.selectFrom(Raml10Grammar.USES_KEY_NAME + "/" + name, getRelativeNode());
     }

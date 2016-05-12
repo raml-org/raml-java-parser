@@ -24,6 +24,7 @@ import org.raml.v2.internal.framework.nodes.FloatingNode;
 import org.raml.v2.internal.framework.nodes.IntegerNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
+import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 
@@ -41,7 +42,23 @@ public class FloatTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof FloatingNode || node instanceof IntegerNode;
+        if (node instanceof FloatingNode || node instanceof IntegerNode)
+        {
+            return true;
+        }
+        if (node instanceof StringNode)
+        {
+            try
+            {
+                Double.parseDouble(((StringNode) node).getValue());
+                return true;
+            }
+            catch (NumberFormatException ex)
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override

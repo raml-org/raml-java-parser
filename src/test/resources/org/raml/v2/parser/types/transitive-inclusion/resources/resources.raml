@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+
+uses:
+  or: more-resources/other-resources.raml
+
+types:
+ Org:
+   type: object
+   properties:
+     name: string
+     owner: or.Person

@@ -1,0 +1,14 @@
+#%RAML 1.0 Library
+
+types:
+  Custom:
+    properties:
+        hi: string
+
+
+resourceTypes:
+  base:
+    get:
+        queryParameters:
+          rt:
+            type: Custom

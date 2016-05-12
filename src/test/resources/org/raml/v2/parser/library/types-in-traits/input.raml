@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Mobile Order API
+version: 1.0
+baseUri: http://localhost:8081/api
+
+uses:
+  assets:  assets-lib.raml
+
+/orders:
+  get:
+    is: assets.base

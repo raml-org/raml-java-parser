@@ -50,7 +50,7 @@ public class AnnotationReferenceNode extends AbstractReferenceNode implements St
 
     @Nullable
     @Override
-    public AnnotationTypeNode getRefNode()
+    public AnnotationTypeNode resolveReference()
     {
         final Node resolve = NodeSelector.selectFrom(Raml10Grammar.ANNOTATION_TYPES_KEY_NAME + "/*/" + getRefName() + "/..", getRelativeNode());
         if (resolve instanceof AnnotationTypeNode)

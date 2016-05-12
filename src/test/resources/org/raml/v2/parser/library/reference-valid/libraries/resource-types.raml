@@ -1,0 +1,17 @@
+#%RAML 1.0 Library
+
+securitySchemes:
+    oauth_2_0:
+        description: OAuth 2.0 for authenticating all API requests.
+
+resourceTypes:
+  base:
+    get:
+      responses:
+        210:
+
+  read-only-collection:
+    type: base
+    securedBy: [oauth_2_0]
+    get:
+        securedBy: [<<scheme>>]

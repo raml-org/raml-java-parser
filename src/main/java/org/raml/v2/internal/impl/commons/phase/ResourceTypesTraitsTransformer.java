@@ -29,6 +29,8 @@ import java.util.Set;
 
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
+import org.raml.v2.internal.framework.phase.Phase;
+import org.raml.v2.internal.framework.phase.TransformationPhase;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
@@ -47,6 +49,7 @@ import org.raml.v2.internal.framework.nodes.snakeyaml.SYNullNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.v2.internal.framework.phase.GrammarPhase;
 import org.raml.v2.internal.framework.phase.Transformer;
+import org.raml.v2.internal.impl.v10.phase.TypesTransformer;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,7 +159,13 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
         // apply grammar phase to generate method nodes
         GrammarPhase validatePhase = new GrammarPhase(ramlGrammar.resourceTypeParamsResolved());
-        validatePhase.apply(templateNode.getValue());
+        // resolve references
+        TransformationPhase referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
+        // resolves types
+        TransformationPhase typeResolution = new TransformationPhase(new TypesTransformer(""));
+
+        applyPhases(templateNode, validatePhase, referenceResolution, typeResolution);
+
 
         // apply traits
         checkTraits(templateNode, baseResourceNode);
@@ -169,6 +178,24 @@ public class ResourceTypesTraitsTransformer implements Transformer
         }
 
         merge(targetNode.getValue(), templateNode.getValue());
+    }
+
+    private void applyPhases(KeyValueNode templateNode, Phase... phases)
+    {
+        List<ErrorNode> errorNodes = templateNode.findDescendantsWith(ErrorNode.class);
+        if (errorNodes.isEmpty())
+        {
+            for (Phase phase : phases)
+            {
+                phase.apply(templateNode.getValue());
+                errorNodes = templateNode.findDescendantsWith(ErrorNode.class);
+                if (!errorNodes.isEmpty())
+                {
+                    return;
+                }
+            }
+        }
+
     }
 
     private Map<String, String> getBuiltinResourceTypeParameters(ResourceNode resourceNode)
@@ -197,6 +224,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
         }
 
         TraitNode copy = refNode.copy();
+        copy.setParent(refNode.getParent());
 
         // resolve parameters
         Map<String, String> parameters = getBuiltinTraitParameters(methodNode, baseResourceNode);
@@ -205,6 +233,15 @@ public class ResourceTypesTraitsTransformer implements Transformer
             parameters.putAll(((ParametrizedReferenceNode) traitReference).getParameters());
         }
         resolveParameters(copy, parameters);
+
+        // apply grammar phase to generate method nodes
+        GrammarPhase validatePhase = new GrammarPhase(ramlGrammar.traitParamsResolved());
+        // resolve references
+        TransformationPhase referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
+        // resolves types
+        TransformationPhase typeResolution = new TransformationPhase(new TypesTransformer(""));
+
+        applyPhases(copy, validatePhase, referenceResolution, typeResolution);
 
         replaceNullValueWithObject(methodNode);
         merge(methodNode.getValue(), copy.getValue());

@@ -42,7 +42,7 @@ public class AnnotationNode extends KeyValueNodeImpl
     public AnnotationTypeNode getAnnotationTypeNode()
     {
         AnnotationReferenceNode key = getKey();
-        return key.getRefNode();
+        return (AnnotationTypeNode) key.getRefNode();
     }
 
     @Nonnull

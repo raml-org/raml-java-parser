@@ -15,31 +15,25 @@
  */
 package org.raml.v2.internal.utils;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang.StringUtils;
-import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
-import org.raml.v2.internal.framework.nodes.snakeyaml.SYIncludeNode;
-
-import java.util.List;
+import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
+import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
+import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
 
 public class NodeUtils
 {
 
-    public static final int DEFAULT_COLUMN_STEP = 2;
-
-    @Nullable
-    public static Node getGrandParent(Node node)
-    {
-        return getAncestor(node, 2);
-    }
+    private static final int DEFAULT_COLUMN_STEP = 2;
 
     @Nullable
     public static Node getAncestor(Node node, int level)
@@ -99,7 +93,7 @@ public class NodeUtils
 
     public static TypeNode getType(String typeName, Node node)
     {
-        Node definitionContext = getNodeContext(node);
+        Node definitionContext = getContextNode(node);
         if (definitionContext == null)
         {
             return null;
@@ -149,23 +143,19 @@ public class NodeUtils
 
     }
 
-    private static Node getNodeContext(Node node)
+    public static Node getContextNode(Node node)
     {
-        if (node == null || node instanceof RamlDocumentNode)
+        if (node instanceof LibraryNode)
         {
-            return node;
+            return ((LibraryNode) node).getValue();
         }
-        else if (node.getSource() != null && node.getSource() instanceof SYIncludeNode)
-        {
-            return node;
-        }
-        else if (node.getParent() == null)
+        else if (node instanceof RamlDocumentNode || node.getParent() == null)
         {
             return node;
         }
         else
         {
-            return getNodeContext(node.getParent());
+            return getContextNode(node.getParent());
         }
     }
 

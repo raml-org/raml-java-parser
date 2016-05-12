@@ -1,0 +1,13 @@
+#%RAML 1.0 Library
+
+resourceTypes:
+  base:
+    get:
+      responses:
+        210:
+          body:
+            application/custom:
+              type: invalidtype #this is not validated
+  read-only-collection:
+    type: base
+    get:

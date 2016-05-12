@@ -48,7 +48,7 @@ public class BaseResourceTypeRefNode extends AbstractReferenceNode
 
     @Override
     @Nullable
-    public ResourceTypeNode getRefNode()
+    public ResourceTypeNode resolveReference()
     {
         // We add the .. as the node selector selects the value and we want the key value pair
         final Node resolve = NodeSelector.selectFrom(Raml10Grammar.RESOURCE_TYPES_KEY_NAME + "/*/" + getRefName() + "/..", getRelativeNode());

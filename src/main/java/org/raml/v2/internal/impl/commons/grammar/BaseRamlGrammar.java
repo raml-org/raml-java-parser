@@ -132,6 +132,22 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(anyResourceTypeMethod(), methodValue()).then(MethodNode.class));
     }
 
+    public Rule traitParamsResolved()
+    {
+        return objectType()
+                           .with(descriptionField())
+                           .with(field(displayNameKey(), scalarType()))
+                           .with(field(queryParametersKey(), parameters()))
+                           .with(headersField())
+                           .with(field(responseKey(), responses()))
+                           .with(bodyField())
+                           .with(protocolsField().description("A method can override the protocols specified in the resource or at the API root, by employing this property."))
+                           .with(isField().description("A list of the traits to apply to this method."))
+                           .with(securedByField().description("The security schemes that apply to this method."))
+                           .with(usageField());
+
+    }
+
     // Documentation
     protected Rule documentations()
     {
