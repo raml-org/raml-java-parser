@@ -1,0 +1,56 @@
+RamlDocumentNode (Start: 11 , End: 474, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 28)
+        SYStringNode: "title" (Start: 11 , End: 16)
+        SYStringNode: "sample api" (Start: 18 , End: 28)
+    ResourceNode (Start: 29 , End: 474, Source: KeyValueNodeImpl)
+        SYStringNode: "/res" (Start: 29 , End: 33)
+        SYObjectNode (Start: 37 , End: 474)
+            MethodNode (Start: 37 , End: 474, Source: KeyValueNodeImpl)
+                SYStringNode: "get" (Start: 37 , End: 40)
+                SYObjectNode (Start: 46 , End: 474)
+                    KeyValueNodeImpl (Start: 46 , End: 474)
+                        SYStringNode: "responses" (Start: 46 , End: 55)
+                        SYObjectNode (Start: 63 , End: 474)
+                            KeyValueNodeImpl (Start: 63 , End: 474)
+                                SYIntegerNode: 200 (Start: 63 , End: 66)
+                                SYObjectNode (Start: 76 , End: 474)
+                                    BodyNode (Start: 76 , End: 474, Source: KeyValueNodeImpl)
+                                        SYStringNode: "body" (Start: 76 , End: 80)
+                                        SYObjectNode (Start: 92 , End: 474)
+                                            KeyValueNodeImpl (Start: 92 , End: 474)
+                                                SYStringNode: "application/json" (Start: 92 , End: 108)
+                                                UnionTypeNode (Start: 122 , End: 474, Source: SYObjectNode)
+                                                    KeyValueNodeImpl (Start: 122 , End: 190)
+                                                        SYStringNode: "examples" (Start: 122 , End: 130)
+                                                        MultipleExampleTypeNode (Start: 146 , End: 190, Source: SYObjectNode)
+                                                            KeyValueNodeImpl (Start: 146 , End: 190)
+                                                                SYStringNode: "example1" (Start: 146 , End: 154)
+                                                                ErrorNode: "Invalid element {
+name: SyNullNode
+}." (Start: 172 , End: 190, Source: SYObjectNode)
+                                                                    KeyValueNodeImpl (Start: 172 , End: 177)
+                                                                        SYStringNode: "name" (Start: 172 , End: 176)
+                                                                        SYNullNode (Start: 177 , End: 177)
+                                                    KeyValueNodeImpl (Start: 190 , End: 474)
+                                                        SYStringNode: "schema" (Start: 190 , End: 196)
+                                                        SchemaNodeImpl: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "currency": {
+      "type": "string"
+    }
+  }
+}" (Start: 198 , End: 474, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                        SYStringNode: "application/json" (Start: 92 , End: 108, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        StringNodeImpl: "200" (Start: 63 , End: 66, Source: SYIntegerNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        SYStringNode: "get" (Start: 37 , End: 40, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                SYStringNode: "/res" (Start: 29 , End: 33, Source: SYStringNode)

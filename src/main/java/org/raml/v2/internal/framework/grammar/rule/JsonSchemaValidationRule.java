@@ -37,6 +37,7 @@ import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
+import org.raml.v2.internal.utils.JSonDumper;
 import org.raml.v2.internal.utils.SchemaGenerator;
 
 public class JsonSchemaValidationRule extends Rule
@@ -97,9 +98,13 @@ public class JsonSchemaValidationRule extends Rule
             {
                 value = ((StringNode) source).getValue();
             }
-            else if (source instanceof SYObjectNode)
+            else if (source instanceof ExampleTypeNode)
             {
-                value = ((ExampleTypeNode) node).toJsonString();
+                value = ((ExampleTypeNode) source).toJsonString();
+            }
+            else
+            {
+                value = JSonDumper.dump(source);
             }
 
             if (value == null)

@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: sample api
+/res:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              example1:
+                name:
+            schema: |
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "properties": {
+                  "currency": {
+                    "type": "string"
+                  }
+                }
+              }
