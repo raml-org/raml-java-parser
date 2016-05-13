@@ -34,7 +34,7 @@ public class Parameter extends BaseModelElement
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }

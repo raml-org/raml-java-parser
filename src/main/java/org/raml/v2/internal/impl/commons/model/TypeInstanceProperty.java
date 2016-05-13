@@ -49,10 +49,9 @@ public class TypeInstanceProperty
 
     public List<TypeInstance> values()
     {
-        List<TypeInstance> result = null;
+        List<TypeInstance> result = new ArrayList<>();
         if (isArray())
         {
-            result = new ArrayList<>();
             for (Node child : node.getValue().getChildren())
             {
                 result.add(new TypeInstance(child));

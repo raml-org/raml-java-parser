@@ -20,7 +20,7 @@ import org.raml.v2.api.model.v10.common.Annotable;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.methods.Trait;
 import org.raml.v2.api.model.v10.resources.ResourceType;
-import org.raml.v2.api.model.v10.security.AbstractSecurityScheme;
+import org.raml.v2.api.model.v10.security.SecurityScheme;
 
 
 public interface LibraryBase extends Annotable
@@ -59,6 +59,6 @@ public interface LibraryBase extends Annotable
     /**
      * Declarations of security schemes for use within this API.
      **/
-    List<AbstractSecurityScheme> securitySchemes();
+    List<SecurityScheme> securitySchemes();
 
 }

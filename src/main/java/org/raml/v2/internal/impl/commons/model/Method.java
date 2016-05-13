@@ -15,8 +15,6 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.List;
-
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
@@ -37,31 +35,6 @@ public class Method extends Operation
     public String method()
     {
         return getMethodNode().getName();
-    }
-
-    public List<TypeDeclaration> body()
-    {
-        return getList("body", TypeDeclaration.class);
-    }
-
-    public List<BodyLike> bodyV08()
-    {
-        return getList("body", BodyLike.class);
-    }
-
-    public List<String> protocols()
-    {
-        return getStringList("protocols");
-    }
-
-    public List<TraitRef> is()
-    {
-        return getListFromSeq("is", TraitRef.class);
-    }
-
-    public List<SecuritySchemeRef> securedBy()
-    {
-        return getListFromSeq("securedBy", SecuritySchemeRef.class);
     }
 
     public Resource resource()

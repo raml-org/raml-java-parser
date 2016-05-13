@@ -28,18 +28,9 @@ public class DocumentationItem extends Annotable
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node;
     }
 
-    public String title()
-    {
-        return getStringValue("title");
-    }
-
-    public StringType content()
-    {
-        return getStringTypeValue("content");
-    }
 }

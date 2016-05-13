@@ -24,6 +24,6 @@ public interface SecuritySchemeRef extends Reference
     /**
      * Returns AST node of security scheme, this reference refers to, or null.
      **/
-    AbstractSecurityScheme securityScheme();
+    SecurityScheme securityScheme();
 
 }

@@ -92,7 +92,8 @@ public class AnyOfRule extends Rule
         {
             if (rule.matches(node))
             {
-                return createNodeUsingFactory(rule.apply(node));
+                final Node appliedNode = rule.apply(node);
+                return createNodeUsingFactory(appliedNode, appliedNode);
             }
         }
 

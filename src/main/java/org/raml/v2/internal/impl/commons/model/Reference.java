@@ -35,7 +35,11 @@ public class Reference
 
     public TypeInstance structuredValue()
     {
-        return new TypeInstance(node.getParametersNode());
+        return new TypeInstance(getNode().getParametersNode());
     }
 
+    public String name()
+    {
+        return getNode().getRefName();
+    }
 }

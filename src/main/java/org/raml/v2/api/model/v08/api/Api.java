@@ -22,7 +22,7 @@ import org.raml.v2.api.model.v08.methods.Trait;
 import org.raml.v2.api.model.v08.parameters.Parameter;
 import org.raml.v2.api.model.v08.resources.Resource;
 import org.raml.v2.api.model.v08.resources.ResourceType;
-import org.raml.v2.api.model.v08.security.AbstractSecurityScheme;
+import org.raml.v2.api.model.v08.security.SecurityScheme;
 import org.raml.v2.api.model.v08.security.SecuritySchemeRef;
 import org.raml.v2.api.model.v08.system.types.FullUriTemplateString;
 
@@ -93,7 +93,7 @@ public interface Api extends RAMLLanguageElement
     /**
      * Security schemes that can be applied using securedBy
      **/
-    List<AbstractSecurityScheme> securitySchemes();
+    List<SecurityScheme> securitySchemes();
 
 
     /**

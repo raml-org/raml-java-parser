@@ -15,21 +15,15 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
-import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 
-public class Api extends LibraryBase
+public class DefaultModelElement extends BaseModelElement
 {
+    private Node node;
 
-    private RamlDocumentNode node;
-
-    public Api(RamlDocumentNode delegateNode)
+    public DefaultModelElement(Node node)
     {
-        node = delegateNode;
+        this.node = node;
     }
 
     @Override
@@ -37,24 +31,4 @@ public class Api extends LibraryBase
     {
         return node;
     }
-
-
-    public List<Resource> resources()
-    {
-        ArrayList<Resource> resultList = new ArrayList<>();
-        for (Node item : node.getChildren())
-        {
-            if (item instanceof ResourceNode)
-            {
-                resultList.add(new Resource((ResourceNode) item));
-            }
-        }
-        return resultList;
-    }
-
-    public String ramlVersion()
-    {
-        return node.getVersion().value();
-    }
-
 }

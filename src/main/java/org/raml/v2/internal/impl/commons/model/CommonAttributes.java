@@ -17,15 +17,4 @@ package org.raml.v2.internal.impl.commons.model;
 
 public abstract class CommonAttributes extends Annotable
 {
-
-    public String displayName()
-    {
-        return getStringValue("displayName");
-    }
-
-    public StringType description()
-    {
-        return getStringTypeValue("description");
-    }
-
 }

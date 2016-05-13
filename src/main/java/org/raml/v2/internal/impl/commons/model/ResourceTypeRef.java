@@ -25,11 +25,6 @@ public class ResourceTypeRef extends Reference
         super(node);
     }
 
-    public String name()
-    {
-        return getNode().getRefName();
-    }
-
     public ResourceType resourceType()
     {
         return new ResourceType(getNode().getRefNode());

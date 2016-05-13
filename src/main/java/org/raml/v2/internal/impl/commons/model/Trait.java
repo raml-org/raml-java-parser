@@ -33,7 +33,7 @@ public class Trait extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
@@ -43,8 +43,4 @@ public class Trait extends CommonAttributes
         return node.getName();
     }
 
-    public String usage()
-    {
-        return getStringValue("usage");
-    }
 }

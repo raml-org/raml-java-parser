@@ -18,7 +18,7 @@ package org.raml.v2.api.model.v08.security;
 import org.raml.v2.api.model.v08.common.RAMLLanguageElement;
 
 
-public interface AbstractSecurityScheme extends RAMLLanguageElement
+public interface SecurityScheme extends RAMLLanguageElement
 {
 
     /**

@@ -19,7 +19,7 @@ import org.raml.v2.api.model.v10.common.Annotable;
 import org.raml.v2.api.model.v10.system.types.MarkdownString;
 
 
-public interface AbstractSecurityScheme extends Annotable
+public interface SecurityScheme extends Annotable
 {
 
     /**

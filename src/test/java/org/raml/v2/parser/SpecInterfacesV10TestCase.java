@@ -18,9 +18,7 @@ package org.raml.v2.parser;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +42,7 @@ import org.raml.v2.api.model.v10.methods.TraitRef;
 import org.raml.v2.api.model.v10.resources.Resource;
 import org.raml.v2.api.model.v10.resources.ResourceType;
 import org.raml.v2.api.model.v10.resources.ResourceTypeRef;
-import org.raml.v2.api.model.v10.security.AbstractSecurityScheme;
+import org.raml.v2.api.model.v10.security.SecurityScheme;
 import org.raml.v2.api.model.v10.security.SecuritySchemePart;
 import org.raml.v2.api.model.v10.security.SecuritySchemeRef;
 import org.raml.v2.api.model.v10.security.SecuritySchemeSettings;
@@ -134,7 +132,7 @@ public class SpecInterfacesV10TestCase
 
     }
 
-    private void assertSecuritySchemes(List<AbstractSecurityScheme> securitySchemes)
+    private void assertSecuritySchemes(List<SecurityScheme> securitySchemes)
     {
         assertThat(securitySchemes.size(), is(2));
         assertOauth2SecurityScheme(securitySchemes.get(0));
@@ -147,11 +145,10 @@ public class SpecInterfacesV10TestCase
         assertOauth2SecurityScheme(securedBy.get(0).securityScheme());
 
         SecuritySchemeRef noSecurity = securedBy.get(1);
-        assertThat(noSecurity.name(), is("null"));
-        assertThat(noSecurity.securityScheme(), nullValue());
+        assertNull(noSecurity);
     }
 
-    private void assertOauth2SecurityScheme(AbstractSecurityScheme oauth2)
+    private void assertOauth2SecurityScheme(SecurityScheme oauth2)
     {
         assertThat(oauth2.name(), is("oauth_2_0"));
         assertThat(oauth2.displayName(), is("OAuth2"));

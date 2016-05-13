@@ -119,6 +119,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
     private List<ReferenceNode> validateAndFilterResourceLevelTraitRefs(final List<ReferenceNode> resourceTraitRefs)
     {
+        // TODO this should not be required any more!!!! Now reference validator
         // TODO - duplicated logic with validation from ResourceTypesTraitsTransformer#applyTrait -> unify :) - moliva - May 5, 2016
         final ArrayList<ReferenceNode> presentTraitRefs = new ArrayList<>();
         for (final ReferenceNode traitReference : resourceTraitRefs)
@@ -274,19 +275,10 @@ public class ResourceTypesTraitsTransformer implements Transformer
         Node isNode = NodeSelector.selectFrom("is", keyValueNode.getValue());
         if (isNode != null)
         {
-            if (isNode instanceof ReferenceNode)
+            List<Node> children = isNode.getChildren();
+            for (Node child : children)
             {
-                // case when using syntactic sugar for single element
-                // that does not require to be in a sequence
-                result.add((ReferenceNode) isNode);
-            }
-            else
-            {
-                List<Node> children = isNode.getChildren();
-                for (Node child : children)
-                {
-                    result.add((ReferenceNode) child);
-                }
+                result.add((ReferenceNode) child);
             }
         }
         return result;

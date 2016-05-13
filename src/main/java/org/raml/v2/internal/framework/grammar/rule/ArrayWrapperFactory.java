@@ -13,12 +13,21 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.security;
+package org.raml.v2.internal.framework.grammar.rule;
 
+import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.Node;
 
-public interface OAuth2SecurityScheme extends SecurityScheme
+public class ArrayWrapperFactory implements NodeFactory
 {
-
-    OAuth2SecuritySchemeSettings settings();
-
+    @Override
+    public Node create(Object... args)
+    {
+        final Node matchNode = (Node) args[0];
+        if (matchNode instanceof ArrayNode)
+        {
+            return matchNode;
+        }
+        return new ArrayWrapperNode(matchNode.copy());
+    }
 }

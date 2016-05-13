@@ -29,7 +29,7 @@ public class SecurityScheme extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
@@ -39,10 +39,6 @@ public class SecurityScheme extends CommonAttributes
         return node.getName();
     }
 
-    public String type()
-    {
-        return getStringValue("type");
-    }
 
     public Operation describedBy()
     {

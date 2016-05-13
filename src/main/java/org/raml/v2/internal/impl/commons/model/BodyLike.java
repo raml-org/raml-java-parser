@@ -15,8 +15,6 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.List;
-
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
@@ -32,7 +30,7 @@ public class BodyLike extends BaseModelElement
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
@@ -40,21 +38,6 @@ public class BodyLike extends BaseModelElement
     public String name()
     {
         return ((StringNode) node.getKey()).getValue();
-    }
-
-    public StringType example()
-    {
-        return getStringTypeValue("example");
-    }
-
-    public StringType schema()
-    {
-        return getStringTypeValue("schema");
-    }
-
-    public List<Parameter> formParameters()
-    {
-        return getList("formParameters", Parameter.class);
     }
 
 }

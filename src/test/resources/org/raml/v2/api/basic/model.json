@@ -1,0 +1,1169 @@
+{
+  "annotationTypes": [
+    {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "displayName": "basic",
+      "example": null,
+      "examples": [],
+      "fixedFacets": null,
+      "isAnnotation": false,
+      "name": "basic",
+      "required": true,
+      "schema": [],
+      "schemaContent": "string",
+      "type": [
+        "string"
+      ]
+    },
+    {
+      "allowedTargets": [
+        {
+          "value": "API"
+        },
+        {
+          "value": "Resource"
+        }
+      ],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "displayName": "complex",
+      "example": null,
+      "examples": [],
+      "fixedFacets": null,
+      "isAnnotation": false,
+      "name": "complex",
+      "required": true,
+      "schema": [],
+      "schemaContent": "object",
+      "type": [
+        "object"
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": null,
+        "displayName": "basic",
+        "example": null,
+        "examples": [],
+        "fixedFacets": null,
+        "isAnnotation": false,
+        "name": "basic",
+        "required": true,
+        "schema": [],
+        "schemaContent": "string",
+        "type": [
+          "string"
+        ]
+      },
+      "name": "(basic)",
+      "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": "sometimes"
+      }
+    },
+    {
+      "annotation": {
+        "allowedTargets": [
+          {
+            "value": "API"
+          },
+          {
+            "value": "Resource"
+          }
+        ],
+        "annotations": [],
+        "defaultValue": null,
+        "description": null,
+        "displayName": "complex",
+        "example": null,
+        "examples": [],
+        "fixedFacets": null,
+        "isAnnotation": false,
+        "name": "complex",
+        "required": true,
+        "schema": [],
+        "schemaContent": "object",
+        "type": [
+          "object"
+        ]
+      },
+      "name": "(complex)",
+      "structuredValue": {
+        "isScalar": false,
+        "properties": [
+          {
+            "isArray": false,
+            "name": "controls",
+            "value": {
+              "isScalar": false,
+              "properties": [
+                {
+                  "isArray": false,
+                  "name": "url",
+                  "value": {
+                    "isScalar": true,
+                    "properties": [],
+                    "value": "here"
+                  },
+                  "values": []
+                },
+                {
+                  "isArray": false,
+                  "name": "property",
+                  "value": {
+                    "isScalar": true,
+                    "properties": [],
+                    "value": "off"
+                  },
+                  "values": []
+                },
+                {
+                  "isArray": true,
+                  "name": "names",
+                  "value": null,
+                  "values": [
+                    {
+                      "isScalar": true,
+                      "properties": [],
+                      "value": "one"
+                    },
+                    {
+                      "isScalar": true,
+                      "properties": [],
+                      "value": "two"
+                    }
+                  ]
+                }
+              ],
+              "value": null
+            },
+            "values": []
+          },
+          {
+            "isArray": false,
+            "name": "permanentUri",
+            "value": {
+              "isScalar": true,
+              "properties": [],
+              "value": false
+            },
+            "values": []
+          }
+        ],
+        "value": null
+      }
+    }
+  ],
+  "baseUri": {
+    "value": "http://base.uri/{version}/{param1}"
+  },
+  "baseUriParameters": [
+    {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": {
+        "value": "some description"
+      },
+      "displayName": "Param 1",
+      "example": {
+        "annotations": [],
+        "name": null,
+        "value": "one"
+      },
+      "examples": [],
+      "fixedFacets": null,
+      "isAnnotation": false,
+      "name": "param1",
+      "required": true,
+      "schema": [],
+      "schemaContent": "string",
+      "type": [
+        "string"
+      ]
+    }
+  ],
+  "documentation": [
+    {
+      "annotations": [],
+      "content": {
+        "value": "single line"
+      },
+      "title": "doc title 1"
+    },
+    {
+      "annotations": [],
+      "content": {
+        "value": "multi\nline\n"
+      },
+      "title": "doc title 2"
+    }
+  ],
+  "mediaType": [
+    {
+      "value": "application/json"
+    }
+  ],
+  "protocols": [
+    "HTTP",
+    "HTTPS"
+  ],
+  "ramlVersion": "1.0",
+  "resourceTypes": [
+    {
+      "displayName": null,
+      "name": "first",
+      "parametrizedProperties": null,
+      "usage": "first usage"
+    }
+  ],
+  "resources": [
+    {
+      "annotations": [],
+      "description": {
+        "value": "top description"
+      },
+      "displayName": "/top",
+      "is": [
+        {
+          "name": "traitOne",
+          "structuredValue": {
+            "isScalar": false,
+            "properties": [],
+            "value": null
+          },
+          "trait": {
+            "annotations": [],
+            "body": [],
+            "description": {
+              "value": "method description"
+            },
+            "displayName": "uno",
+            "headers": [],
+            "is": [],
+            "name": "traitOne",
+            "parametrizedProperties": null,
+            "protocols": [],
+            "queryParameters": [],
+            "queryString": null,
+            "responses": [],
+            "securedBy": [],
+            "usage": "late night"
+          }
+        },
+        {
+          "name": "traitTwo",
+          "structuredValue": {
+            "isScalar": false,
+            "properties": [
+              {
+                "isArray": false,
+                "name": "text",
+                "value": {
+                  "isScalar": true,
+                  "properties": [],
+                  "value": "hola"
+                },
+                "values": []
+              }
+            ],
+            "value": null
+          },
+          "trait": {
+            "annotations": [],
+            "body": [],
+            "description": {
+              "value": "<<text>>"
+            },
+            "displayName": "dos",
+            "headers": [],
+            "is": [],
+            "name": "traitTwo",
+            "parametrizedProperties": null,
+            "protocols": [],
+            "queryParameters": [],
+            "queryString": null,
+            "responses": [],
+            "securedBy": [],
+            "usage": null
+          }
+        }
+      ],
+      "methods": [
+        {
+          "annotations": [],
+          "body": [],
+          "description": {
+            "value": "get something"
+          },
+          "displayName": "get",
+          "headers": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "example": null,
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "one",
+              "required": true,
+              "schema": [],
+              "schemaContent": null,
+              "type": []
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": "The Second",
+              "example": null,
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "two",
+              "required": true,
+              "schema": [],
+              "schemaContent": null,
+              "type": []
+            }
+          ],
+          "is": [],
+          "method": "get",
+          "protocols": [
+            "HTTPS"
+          ],
+          "queryParameters": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": "The One",
+              "example": null,
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "one",
+              "required": true,
+              "schema": [],
+              "schemaContent": "number",
+              "type": [
+                "number"
+              ]
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "example": null,
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "two",
+              "required": true,
+              "schema": [],
+              "schemaContent": null,
+              "type": []
+            }
+          ],
+          "queryString": null,
+          "responses": [],
+          "securedBy": [
+            {
+              "name": "oauth_2_0",
+              "securityScheme": {
+                "annotations": [],
+                "describedBy": {
+                  "annotations": [],
+                  "headers": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
+                      },
+                      "displayName": "Authorization",
+                      "example": null,
+                      "examples": [],
+                      "fixedFacets": null,
+                      "isAnnotation": false,
+                      "name": "Authorization",
+                      "required": true,
+                      "schema": [],
+                      "schemaContent": "string",
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "queryParameters": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
+                      },
+                      "displayName": "access_token",
+                      "example": null,
+                      "examples": [],
+                      "fixedFacets": null,
+                      "isAnnotation": false,
+                      "name": "access_token",
+                      "required": true,
+                      "schema": [],
+                      "schemaContent": "string",
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "queryString": null,
+                  "responses": [
+                    {
+                      "annotations": [],
+                      "body": [],
+                      "code": {
+                        "value": "401"
+                      },
+                      "description": {
+                        "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
+                      },
+                      "headers": []
+                    },
+                    {
+                      "annotations": [],
+                      "body": [],
+                      "code": {
+                        "value": "403"
+                      },
+                      "description": {
+                        "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
+                      },
+                      "headers": []
+                    }
+                  ]
+                },
+                "description": {
+                  "value": "oauth 2.0"
+                },
+                "displayName": "OAuth2",
+                "name": "oauth_2_0",
+                "settings": {
+                  "accessTokenUri": {
+                    "value": "https://api.dropbox.com/1/oauth2/token"
+                  },
+                  "annotations": [],
+                  "authorizationGrants": [
+                    "authorization_code",
+                    "refresh_token"
+                  ],
+                  "authorizationUri": {
+                    "value": "https://www.dropbox.com/1/oauth2/authorize"
+                  },
+                  "requestTokenUri": null,
+                  "scopes": [],
+                  "signatures": [],
+                  "tokenCredentialsUri": null
+                },
+                "type": "OAuth 2.0"
+              },
+              "structuredValue": {
+                "isScalar": false,
+                "properties": [],
+                "value": null
+              }
+            }
+          ]
+        },
+        {
+          "annotations": [],
+          "body": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": "application/json",
+              "example": {
+                "annotations": [],
+                "name": null,
+                "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+              },
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "application/json",
+              "required": true,
+              "schema": [],
+              "schemaContent": "User",
+              "type": [
+                "User"
+              ]
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": "application/xml",
+              "example": null,
+              "examples": [
+                {
+                  "annotations": [],
+                  "name": null,
+                  "value": "<first/>\n"
+                },
+                {
+                  "annotations": [],
+                  "name": null,
+                  "value": "<second/>\n"
+                }
+              ],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "application/xml",
+              "required": true,
+              "schema": [
+                "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n"
+              ],
+              "schemaContent": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n",
+              "type": []
+            }
+          ],
+          "description": {
+            "value": "post something"
+          },
+          "displayName": "post",
+          "headers": [],
+          "is": [
+            {
+              "name": "traitTwo",
+              "structuredValue": {
+                "isScalar": false,
+                "properties": [
+                  {
+                    "isArray": false,
+                    "name": "text",
+                    "value": {
+                      "isScalar": true,
+                      "properties": [],
+                      "value": "picky"
+                    },
+                    "values": []
+                  }
+                ],
+                "value": null
+              },
+              "trait": {
+                "annotations": [],
+                "body": [],
+                "description": {
+                  "value": "<<text>>"
+                },
+                "displayName": "dos",
+                "headers": [],
+                "is": [],
+                "name": "traitTwo",
+                "parametrizedProperties": null,
+                "protocols": [],
+                "queryParameters": [],
+                "queryString": null,
+                "responses": [],
+                "securedBy": [],
+                "usage": null
+              }
+            }
+          ],
+          "method": "post",
+          "protocols": [],
+          "queryParameters": [],
+          "queryString": {
+            "allowedTargets": [],
+            "annotations": [],
+            "defaultValue": null,
+            "description": null,
+            "displayName": "queryString",
+            "example": null,
+            "examples": [],
+            "fixedFacets": null,
+            "isAnnotation": false,
+            "name": "queryString",
+            "required": true,
+            "schema": [],
+            "schemaContent": "object",
+            "type": [
+              "object"
+            ]
+          },
+          "responses": [
+            {
+              "annotations": [],
+              "body": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": "application/json",
+                  "example": {
+                    "annotations": [],
+                    "name": null,
+                    "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+                  },
+                  "examples": [],
+                  "fixedFacets": null,
+                  "isAnnotation": false,
+                  "name": "application/json",
+                  "required": true,
+                  "schema": [],
+                  "schemaContent": "User",
+                  "type": [
+                    "User"
+                  ]
+                },
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": "application/xml",
+                  "example": null,
+                  "examples": [
+                    {
+                      "annotations": [],
+                      "name": null,
+                      "value": "<first/>\n"
+                    },
+                    {
+                      "annotations": [],
+                      "name": null,
+                      "value": "<second/>\n"
+                    }
+                  ],
+                  "fixedFacets": null,
+                  "isAnnotation": false,
+                  "name": "application/xml",
+                  "required": true,
+                  "schema": [
+                    "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n"
+                  ],
+                  "schemaContent": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n",
+                  "type": []
+                }
+              ],
+              "code": {
+                "value": "200"
+              },
+              "description": null,
+              "headers": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "example": null,
+                  "examples": [],
+                  "fixedFacets": null,
+                  "isAnnotation": false,
+                  "name": "one",
+                  "required": true,
+                  "schema": [],
+                  "schemaContent": null,
+                  "type": []
+                },
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": "The Second",
+                  "example": null,
+                  "examples": [],
+                  "fixedFacets": null,
+                  "isAnnotation": false,
+                  "name": "two",
+                  "required": true,
+                  "schema": [],
+                  "schemaContent": null,
+                  "type": []
+                }
+              ]
+            },
+            {
+              "annotations": [],
+              "body": [],
+              "code": {
+                "value": "400"
+              },
+              "description": null,
+              "headers": []
+            }
+          ],
+          "securedBy": []
+        }
+      ],
+      "relativeUri": {
+        "value": "/top"
+      },
+      "resourcePath": "/top",
+      "resources": [
+        {
+          "annotations": [],
+          "description": {
+            "value": "child description"
+          },
+          "displayName": "/child",
+          "is": [],
+          "methods": [],
+          "relativeUri": {
+            "value": "/child"
+          },
+          "resourcePath": "/top/child",
+          "resources": [],
+          "securedBy": [
+            {
+              "name": "oauth_2_0",
+              "securityScheme": {
+                "annotations": [],
+                "describedBy": {
+                  "annotations": [],
+                  "headers": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
+                      },
+                      "displayName": "Authorization",
+                      "example": null,
+                      "examples": [],
+                      "fixedFacets": null,
+                      "isAnnotation": false,
+                      "name": "Authorization",
+                      "required": true,
+                      "schema": [],
+                      "schemaContent": "string",
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "queryParameters": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
+                      },
+                      "displayName": "access_token",
+                      "example": null,
+                      "examples": [],
+                      "fixedFacets": null,
+                      "isAnnotation": false,
+                      "name": "access_token",
+                      "required": true,
+                      "schema": [],
+                      "schemaContent": "string",
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "queryString": null,
+                  "responses": [
+                    {
+                      "annotations": [],
+                      "body": [],
+                      "code": {
+                        "value": "401"
+                      },
+                      "description": {
+                        "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
+                      },
+                      "headers": []
+                    },
+                    {
+                      "annotations": [],
+                      "body": [],
+                      "code": {
+                        "value": "403"
+                      },
+                      "description": {
+                        "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
+                      },
+                      "headers": []
+                    }
+                  ]
+                },
+                "description": {
+                  "value": "oauth 2.0"
+                },
+                "displayName": "OAuth2",
+                "name": "oauth_2_0",
+                "settings": {
+                  "accessTokenUri": {
+                    "value": "https://api.dropbox.com/1/oauth2/token"
+                  },
+                  "annotations": [],
+                  "authorizationGrants": [
+                    "authorization_code",
+                    "refresh_token"
+                  ],
+                  "authorizationUri": {
+                    "value": "https://www.dropbox.com/1/oauth2/authorize"
+                  },
+                  "requestTokenUri": null,
+                  "scopes": [],
+                  "signatures": [],
+                  "tokenCredentialsUri": null
+                },
+                "type": "OAuth 2.0"
+              },
+              "structuredValue": {
+                "isScalar": false,
+                "properties": [],
+                "value": null
+              }
+            },
+            null
+          ],
+          "type": null,
+          "uriParameters": []
+        }
+      ],
+      "securedBy": [],
+      "type": {
+        "name": "first",
+        "resourceType": {
+          "displayName": null,
+          "name": "first",
+          "parametrizedProperties": null,
+          "usage": "first usage"
+        },
+        "structuredValue": {
+          "isScalar": false,
+          "properties": [],
+          "value": null
+        }
+      },
+      "uriParameters": []
+    }
+  ],
+  "schemas": [],
+  "securedBy": [
+    {
+      "name": "oauth_2_0",
+      "securityScheme": {
+        "annotations": [],
+        "describedBy": {
+          "annotations": [],
+          "headers": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
+              },
+              "displayName": "Authorization",
+              "example": null,
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "Authorization",
+              "required": true,
+              "schema": [],
+              "schemaContent": "string",
+              "type": [
+                "string"
+              ]
+            }
+          ],
+          "queryParameters": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
+              },
+              "displayName": "access_token",
+              "example": null,
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "access_token",
+              "required": true,
+              "schema": [],
+              "schemaContent": "string",
+              "type": [
+                "string"
+              ]
+            }
+          ],
+          "queryString": null,
+          "responses": [
+            {
+              "annotations": [],
+              "body": [],
+              "code": {
+                "value": "401"
+              },
+              "description": {
+                "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
+              },
+              "headers": []
+            },
+            {
+              "annotations": [],
+              "body": [],
+              "code": {
+                "value": "403"
+              },
+              "description": {
+                "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
+              },
+              "headers": []
+            }
+          ]
+        },
+        "description": {
+          "value": "oauth 2.0"
+        },
+        "displayName": "OAuth2",
+        "name": "oauth_2_0",
+        "settings": {
+          "accessTokenUri": {
+            "value": "https://api.dropbox.com/1/oauth2/token"
+          },
+          "annotations": [],
+          "authorizationGrants": [
+            "authorization_code",
+            "refresh_token"
+          ],
+          "authorizationUri": {
+            "value": "https://www.dropbox.com/1/oauth2/authorize"
+          },
+          "requestTokenUri": null,
+          "scopes": [],
+          "signatures": [],
+          "tokenCredentialsUri": null
+        },
+        "type": "OAuth 2.0"
+      },
+      "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+      }
+    },
+    null
+  ],
+  "securitySchemes": [
+    {
+      "annotations": [],
+      "describedBy": {
+        "annotations": [],
+        "headers": [
+          {
+            "allowedTargets": [],
+            "annotations": [],
+            "defaultValue": null,
+            "description": {
+              "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
+            },
+            "displayName": "Authorization",
+            "example": null,
+            "examples": [],
+            "fixedFacets": null,
+            "isAnnotation": false,
+            "name": "Authorization",
+            "required": true,
+            "schema": [],
+            "schemaContent": "string",
+            "type": [
+              "string"
+            ]
+          }
+        ],
+        "queryParameters": [
+          {
+            "allowedTargets": [],
+            "annotations": [],
+            "defaultValue": null,
+            "description": {
+              "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
+            },
+            "displayName": "access_token",
+            "example": null,
+            "examples": [],
+            "fixedFacets": null,
+            "isAnnotation": false,
+            "name": "access_token",
+            "required": true,
+            "schema": [],
+            "schemaContent": "string",
+            "type": [
+              "string"
+            ]
+          }
+        ],
+        "queryString": null,
+        "responses": [
+          {
+            "annotations": [],
+            "body": [],
+            "code": {
+              "value": "401"
+            },
+            "description": {
+              "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
+            },
+            "headers": []
+          },
+          {
+            "annotations": [],
+            "body": [],
+            "code": {
+              "value": "403"
+            },
+            "description": {
+              "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
+            },
+            "headers": []
+          }
+        ]
+      },
+      "description": {
+        "value": "oauth 2.0"
+      },
+      "displayName": "OAuth2",
+      "name": "oauth_2_0",
+      "settings": {
+        "accessTokenUri": {
+          "value": "https://api.dropbox.com/1/oauth2/token"
+        },
+        "annotations": [],
+        "authorizationGrants": [
+          "authorization_code",
+          "refresh_token"
+        ],
+        "authorizationUri": {
+          "value": "https://www.dropbox.com/1/oauth2/authorize"
+        },
+        "requestTokenUri": null,
+        "scopes": [],
+        "signatures": [],
+        "tokenCredentialsUri": null
+      },
+      "type": "OAuth 2.0"
+    },
+    {
+      "annotations": [],
+      "describedBy": null,
+      "description": {
+        "value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.\n"
+      },
+      "displayName": "oauth_1_0",
+      "name": "oauth_1_0",
+      "settings": {
+        "accessTokenUri": null,
+        "annotations": [],
+        "authorizationGrants": [],
+        "authorizationUri": {
+          "value": "https://www.dropbox.com/1/oauth/authorize"
+        },
+        "requestTokenUri": {
+          "value": "https://api.dropbox.com/1/oauth/request_token"
+        },
+        "scopes": [],
+        "signatures": [],
+        "tokenCredentialsUri": {
+          "value": "https://api.dropbox.com/1/oauth/access_token"
+        }
+      },
+      "type": "OAuth 1.0"
+    }
+  ],
+  "title": "api title",
+  "traits": [
+    {
+      "annotations": [],
+      "body": [],
+      "description": {
+        "value": "method description"
+      },
+      "displayName": "uno",
+      "headers": [],
+      "is": [],
+      "name": "traitOne",
+      "parametrizedProperties": null,
+      "protocols": [],
+      "queryParameters": [],
+      "queryString": null,
+      "responses": [],
+      "securedBy": [],
+      "usage": "late night"
+    },
+    {
+      "annotations": [],
+      "body": [],
+      "description": {
+        "value": "<<text>>"
+      },
+      "displayName": "dos",
+      "headers": [],
+      "is": [],
+      "name": "traitTwo",
+      "parametrizedProperties": null,
+      "protocols": [],
+      "queryParameters": [],
+      "queryString": null,
+      "responses": [],
+      "securedBy": [],
+      "usage": null
+    }
+  ],
+  "types": [
+    {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "displayName": "User",
+      "example": null,
+      "examples": [],
+      "fixedFacets": null,
+      "isAnnotation": false,
+      "name": "User",
+      "required": true,
+      "schema": [],
+      "schemaContent": "object",
+      "type": [
+        "object"
+      ]
+    }
+  ],
+  "version": "v1"
+}

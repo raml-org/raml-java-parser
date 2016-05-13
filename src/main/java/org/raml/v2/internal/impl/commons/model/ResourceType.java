@@ -33,14 +33,9 @@ public class ResourceType extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
-    }
-
-    public String usage()
-    {
-        return getStringValue("usage");
     }
 
     public String name()

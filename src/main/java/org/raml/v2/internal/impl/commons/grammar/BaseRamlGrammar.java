@@ -25,16 +25,7 @@ import javax.annotation.Nonnull;
 
 import org.raml.v2.internal.framework.grammar.BaseGrammar;
 import org.raml.v2.internal.framework.grammar.ExclusiveSiblingRule;
-import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
-import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
-import org.raml.v2.internal.framework.grammar.rule.NodeFactory;
-import org.raml.v2.internal.framework.grammar.rule.NodeReferenceFactory;
-import org.raml.v2.internal.framework.grammar.rule.NodeReferenceRule;
-import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
-import org.raml.v2.internal.framework.grammar.rule.ParametrizedNodeReferenceRule;
-import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
-import org.raml.v2.internal.framework.grammar.rule.Rule;
-import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
+import org.raml.v2.internal.framework.grammar.rule.*;
 import org.raml.v2.internal.impl.commons.model.BuiltInScalarType;
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
@@ -382,7 +373,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule resourceTypesValue()
     {
-        return anyOf(array(resourceTypes()), resourceTypes());
+        return anyOf(array(resourceTypes()), resourceTypes()).then(new ArrayWrapperFactory());
     }
 
     protected StringValueRule resourceTypesKey()
@@ -449,7 +440,9 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     protected KeyValueRule securedByField()
     {
         AnyOfRule securedBy = anyOf(nullValue(), scalarType().then(new NodeReferenceFactory(SecuritySchemeRefNode.class)), any());
-        return field(securedByKey(), anyOf(array(securedBy), securedBy));
+        return field(securedByKey(),
+                anyOf(array(securedBy), securedBy)
+                                                  .then(new ArrayWrapperFactory()));
     }
 
     protected KeyValueRule usageField()
@@ -460,7 +453,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     protected KeyValueRule isField()
     {
         Rule traitRef = anyTypeReference(TRAITS_KEY_NAME, TraitRefNode.class, ParametrizedTraitRefNode.class);
-        return field(isKey(), anyOf(traitRef, array(traitRef)));
+        return field(isKey(), anyOf(traitRef, array(traitRef)).then(new ArrayWrapperFactory()));
     }
 
     protected KeyValueRule resourceTypeReferenceField()
@@ -614,7 +607,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     protected Rule protocols()
     {
         AnyOfRule protocols = anyOf(string("HTTP"), string("HTTPS"));
-        return anyOf(protocols, array(protocols));
+        return anyOf(protocols, array(protocols)).then(new ArrayWrapperFactory());
     }
 
     protected Rule responseCodes()

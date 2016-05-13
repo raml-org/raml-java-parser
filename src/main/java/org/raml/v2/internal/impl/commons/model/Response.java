@@ -32,7 +32,7 @@ public class Response extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
@@ -42,18 +42,4 @@ public class Response extends CommonAttributes
         return new StringType(((SimpleTypeNode) node.getKey()).getLiteralValue());
     }
 
-    public List<TypeDeclaration> body()
-    {
-        return getList("body", TypeDeclaration.class);
-    }
-
-    public List<BodyLike> bodyV08()
-    {
-        return getList("body", BodyLike.class);
-    }
-
-    public List<TypeDeclaration> headers()
-    {
-        return getList("headers", TypeDeclaration.class);
-    }
 }

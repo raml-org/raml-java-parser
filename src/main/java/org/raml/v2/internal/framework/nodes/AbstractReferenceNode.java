@@ -91,7 +91,7 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
     public Node getParametersNode()
     {
         List<Node> children = getChildren();
-        if (children.size() == 1)
+        if (children.size() == 1 && children.get(0) instanceof KeyValueNode)
         {
             return ((KeyValueNode) children.get(0)).getValue();
         }

@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: Mobile Order API
+version: 1.0
+baseUri: http://localhost:8081/api
+
+uses:
+  assets:  assets-lib.raml
+
+/orders:
+  displayName: Orders
+  description: Orders collection resource used to create new orders.
+  get:
+    is: [ assets.paging ]
+    description: lists all orders of a specific user
+    queryParameters:
+      userId:
+        type: string
+        description: use to query all orders of a user
+        required: true
+        example: "1964401a-a8b3-40c1-b86e-d8b9f75b5842"
+    responses:
+      200:
+        body:
+          application/json:
+            type: assets.Orders
+            examples:
+              single-order:
+                orders:
+                  -
+                    order_id: "ORDER-437563756"
+                    creation_date: "2016-03-30"
+                    items:
+                      -
+                        product_id: "PRODUCT-1"
+                        quantity: 5
+                      -
+                        product_id: "PRODUCT-2"
+                        quantity: 2
+              multiple-orders:
+                  orders:
+                    -
+                      order_id: "ORDER-437563756"
+                      creation_date: "2016-03-30"
+                      items:
+                        -
+                          product_id: "PRODUCT-1"
+                          quantity: 5
+                        -
+                          product_id: "PRODUCT-2"
+                          quantity: 2
+                    -
+                      order_id: "ORDER-437542111"
+                      creation_date: "2016-03-30"
+                      items:
+                        -
+                          product_id: "PRODUCT-7"
+                          quantity: 2

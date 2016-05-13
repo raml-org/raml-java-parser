@@ -35,7 +35,7 @@ public class Resource extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
@@ -76,26 +76,6 @@ public class Resource extends CommonAttributes
         return resultList;
     }
 
-    public ResourceTypeRef type()
-    {
-        Node type = NodeSelector.selectFrom("type", getNode());
-        if (type == null)
-        {
-            return null;
-        }
-        return new ResourceTypeRef(type);
-    }
-
-    public List<TraitRef> is()
-    {
-        return getList("is", TraitRef.class);
-    }
-
-    public List<SecuritySchemeRef> securedBy()
-    {
-        return getList("securedBy", SecuritySchemeRef.class);
-    }
-
     public List<TypeDeclaration> uriParameters()
     {
         ArrayList<TypeDeclaration> result = new ArrayList<>();
@@ -104,14 +84,11 @@ public class Resource extends CommonAttributes
         {
             for (Node child : uriParamsNode.getChildren())
             {
-                result.add(new TypeDeclaration((KeyValueNode) child));
+                result.add(new TypeDeclaration(child));
             }
         }
         return result;
     }
-
-    // TODO
-    // public List<Parameter> uriParametersV08();
 
     public Resource parentResource()
     {

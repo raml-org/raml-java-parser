@@ -16,7 +16,7 @@
 package org.raml.v2.api.model.v08.security;
 
 
-public interface BasicSecurityScheme extends AbstractSecurityScheme
+public interface BasicSecurityScheme extends SecurityScheme
 {
 
 

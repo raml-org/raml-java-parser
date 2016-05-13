@@ -29,14 +29,4 @@ public class TraitRef extends Reference
         return new Trait(getNode().getRefNode());
     }
 
-    public String name()
-    {
-        return getNode().getRefName();
-    }
-
-    public TypeInstance structuredValue()
-    {
-        return new TypeInstance(getNode().getParametersNode());
-    }
-
 }

@@ -23,9 +23,8 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 
-public class TypeInstance
+public class TypeInstance extends BaseModelElement
 {
-
     private Node node;
 
     public TypeInstance(Node node)
@@ -62,5 +61,11 @@ public class TypeInstance
             return ((SimpleTypeNode) node).getValue();
         }
         return null;
+    }
+
+    @Override
+    public Node getNode()
+    {
+        return node;
     }
 }

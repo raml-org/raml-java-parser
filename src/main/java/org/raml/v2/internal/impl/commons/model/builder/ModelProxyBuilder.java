@@ -17,16 +17,20 @@ package org.raml.v2.internal.impl.commons.model.builder;
 
 import static org.raml.v2.internal.impl.commons.model.builder.ModelUtils.isPrimitiveOrWrapperOrString;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Proxy;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.raml.v2.internal.framework.nodes.*;
 import org.raml.v2.internal.impl.commons.model.Api;
+import org.raml.v2.internal.impl.commons.model.BaseModelElement;
+import org.raml.v2.internal.impl.commons.model.DefaultModelElement;
+import org.raml.v2.internal.impl.commons.model.StringType;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
+import org.raml.v2.internal.utils.NodeSelector;
+import org.raml.v2.internal.utils.SimpleValueTransformer;
+
+import javax.annotation.Nullable;
 
 public class ModelProxyBuilder
 {
@@ -57,9 +61,40 @@ public class ModelProxyBuilder
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
         {
             final Class<?> returnType = method.getReturnType();
-            Type genericReturnType = method.getGenericReturnType();
-            Method delegateMethod = findMatchingMethod(method);
+            final Type genericReturnType = method.getGenericReturnType();
+            final Method delegateMethod = findMatchingMethod(method);
+            try
+            {
+                if (delegateMethod == null)
+                {
+                    return fromNodeKey(method, genericReturnType);
+                }
+                else
+                {
+                    return fromMethod(args, returnType, genericReturnType, delegateMethod);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException("Internal error while trying to call " + method.toGenericString(), e);
+            }
+        }
 
+        protected Object fromNodeKey(Method method, Type genericReturnType)
+        {
+            final String propertyName = method.getName();
+            if (delegate instanceof BaseModelElement && method.getParameterTypes().length == 0)
+            {
+                return resolveValue(genericReturnType, NodeSelector.selectFrom(propertyName, ((BaseModelElement) delegate).getNode()));
+            }
+            else
+            {
+                throw new RuntimeException("Can not resolve method : " + method.toGenericString() + " on " + delegate.getClass().getName());
+            }
+        }
+
+        protected Object fromMethod(Object[] args, Class<?> returnType, Type genericReturnType, Method delegateMethod) throws IllegalAccessException, InvocationTargetException
+        {
             if (isPrimitiveOrWrapperOrString(returnType) || isObject(returnType))
             {
                 return delegateMethod.invoke(delegate, args);
@@ -91,16 +126,19 @@ public class ModelProxyBuilder
             // list
             if (List.class.isAssignableFrom(returnType))
             {
-                List<Object> returnList = new ArrayList<>();
-                List<?> result = (List<?>) delegateMethod.invoke(delegate, args);
-                Class<?> itemClass = (Class<?>) ((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
-                if (isPrimitiveOrWrapperOrString(itemClass))
+                final List<Object> returnList = new ArrayList<>();
+                final List<?> result = (List<?>) delegateMethod.invoke(delegate, args);
+                final Class<?> itemClass = (Class<?>) ((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
+                if (result != null)
                 {
-                    return result;
-                }
-                for (Object item : result)
-                {
-                    returnList.add(Proxy.newProxyInstance(itemClass.getClassLoader(), new Class[] {itemClass}, new SimpleProxy(item)));
+                    if (isPrimitiveOrWrapperOrString(itemClass))
+                    {
+                        return result;
+                    }
+                    for (Object item : result)
+                    {
+                        returnList.add(Proxy.newProxyInstance(itemClass.getClassLoader(), new Class[] {itemClass}, new SimpleProxy(item)));
+                    }
                 }
                 return returnList;
             }
@@ -108,11 +146,110 @@ public class ModelProxyBuilder
             throw new RuntimeException("case not handled yet... " + returnType.getName());
         }
 
-        private boolean isObject(Class<?> type)
+        protected Object resolveValue(Type returnType, Node node)
         {
-            return "java.lang.Object".equals(type.getName());
+            final SimpleValueTransformer[] values = SimpleValueTransformer.values();
+            final Class<?> returnClass = toClass(returnType);
+            for (SimpleValueTransformer value : values)
+            {
+                if (value.accepts(returnClass))
+                {
+                    return value.adaptTo(node, returnClass);
+                }
+            }
+
+            // If it is not a simple type then it can be a list or an pojo
+            if (List.class.isAssignableFrom(returnClass) && returnType instanceof ParameterizedType)
+            {
+                final Type itemClass = ((ParameterizedType) returnType).getActualTypeArguments()[0];
+                final List<Object> returnList = new ArrayList<>();
+                if (node == null)
+                {
+                    return returnList;
+                }
+                else if (node instanceof ArrayNode || node instanceof ObjectNode)
+                {
+                    final List<Node> children = node.getChildren();
+                    for (Node child : children)
+                    {
+                        returnList.add(resolveValue(itemClass, child));
+                    }
+                }
+                else
+                {
+                    returnList.add(resolveValue(itemClass, node));
+                }
+                return returnList;
+            }
+            else if (returnClass.equals(Object.class))
+            {
+
+                if (node instanceof SimpleTypeNode)
+                {
+                    return ((SimpleTypeNode) node).getValue();
+                }
+                else
+                {
+                    // TODO: What to do here
+                    return null;
+                }
+            }
+            else
+            {
+                if (node == null || node instanceof NullNode)
+                {
+                    return null;
+                }
+
+                final String simpleName = returnClass.getSimpleName();
+                Object delegate;
+                try
+                {
+                    final Class<?> aClass = Class.forName("org.raml.v2.internal.impl.commons.model." + simpleName);
+                    delegate = aClass.getConstructor(Node.class).newInstance(node);
+                }
+                catch (Exception e)
+                {
+                    if (node instanceof SimpleTypeNode)
+                    {
+                        delegate = new StringType(node);
+                    }
+                    else
+                    {
+                        // No specific class for this return type
+                        delegate = new DefaultModelElement(node);
+                    }
+                }
+                return Proxy.newProxyInstance(returnClass.getClassLoader(), new Class[] {returnClass}, new SimpleProxy(delegate));
+            }
         }
 
+        protected Class<?> toClass(Type type)
+        {
+            if (type instanceof Class<?>)
+            {
+                return (Class<?>) type;
+            }
+            else if (type instanceof ParameterizedType)
+            {
+                return toClass(((ParameterizedType) type).getRawType());
+            }
+            else if (type instanceof WildcardType)
+            {
+                return toClass(((WildcardType) type).getUpperBounds()[0]);
+            }
+            else
+            {
+                return Object.class;
+            }
+        }
+
+        private boolean isObject(Class<?> type)
+        {
+            return Object.class.equals(type);
+        }
+
+        @Nullable
         private Method findMatchingMethod(Method method)
         {
             try
@@ -121,7 +258,7 @@ public class ModelProxyBuilder
             }
             catch (NoSuchMethodException e)
             {
-                throw new RuntimeException("Method not found: " + delegate.getClass().getName() + "." + method.getName());
+                return null;
             }
         }
 

@@ -30,7 +30,7 @@ public class GlobalSchema extends BaseModelElement
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }

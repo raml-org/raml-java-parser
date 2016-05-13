@@ -15,8 +15,6 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.List;
-
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 
@@ -31,43 +29,9 @@ public class SecuritySchemeSettings extends Annotable
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
 
-    public StringType requestTokenUri()
-    {
-        return getStringTypeValue("requestTokenUri");
-    }
-
-    public StringType authorizationUri()
-    {
-        return getStringTypeValue("authorizationUri");
-    }
-
-    public StringType tokenCredentialsUri()
-    {
-        return getStringTypeValue("tokenCredentialsUri");
-    }
-
-    public List<String> signatures()
-    {
-        return getStringList("signatures");
-    }
-
-    public StringType accessTokenUri()
-    {
-        return getStringTypeValue("accessTokenUri");
-    }
-
-    public List<String> authorizationGrants()
-    {
-        return getStringList("authorizationGrants");
-    }
-
-    public List<String> scopes()
-    {
-        return getStringList("scopes");
-    }
 }

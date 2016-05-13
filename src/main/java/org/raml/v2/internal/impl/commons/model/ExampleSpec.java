@@ -40,7 +40,7 @@ public class ExampleSpec extends Annotable
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }

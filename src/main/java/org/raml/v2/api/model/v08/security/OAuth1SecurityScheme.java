@@ -16,7 +16,7 @@
 package org.raml.v2.api.model.v08.security;
 
 
-public interface OAuth1SecurityScheme extends AbstractSecurityScheme
+public interface OAuth1SecurityScheme extends SecurityScheme
 {
 
     OAuth1SecuritySchemeSettings settings();

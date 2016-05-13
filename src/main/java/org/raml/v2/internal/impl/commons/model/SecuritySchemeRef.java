@@ -26,24 +26,17 @@ public class SecuritySchemeRef extends BaseModelElement
 
     public SecuritySchemeRef(Node node)
     {
-        if (!(node instanceof NullNode))
-        {
-            this.node = (SecuritySchemeRefNode) node;
-        }
+        this.node = (SecuritySchemeRefNode) node;
     }
 
     @Override
-    protected SecuritySchemeRefNode getNode()
+    public SecuritySchemeRefNode getNode()
     {
         return node;
     }
 
     public String name()
     {
-        if (node == null)
-        {
-            return "null";
-        }
         return node.getRefName();
     }
 

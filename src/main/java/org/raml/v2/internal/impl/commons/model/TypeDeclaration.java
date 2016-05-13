@@ -41,7 +41,7 @@ public class TypeDeclaration extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
@@ -53,17 +53,12 @@ public class TypeDeclaration extends CommonAttributes
 
     public ExampleSpec example()
     {
-        ExampleTypeNode example = (ExampleTypeNode) NodeSelector.selectFrom("example", getNode());
+        Node example = NodeSelector.selectFrom("example", getNode());
         if (example != null)
         {
             return new ExampleSpec(example.getParent());
         }
         return null;
-    }
-
-    public List<ExampleSpec> examples()
-    {
-        return getList("examples", ExampleSpec.class);
     }
 
     public String schemaContent()

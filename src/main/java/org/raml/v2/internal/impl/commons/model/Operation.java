@@ -15,8 +15,6 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.List;
-
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 
@@ -31,25 +29,11 @@ public class Operation extends CommonAttributes
     }
 
     @Override
-    protected Node getNode()
+    public Node getNode()
     {
         return node.getValue();
     }
 
-    public List<Response> responses()
-    {
-        return getList("responses", Response.class);
-    }
-
-    public List<TypeDeclaration> queryParameters()
-    {
-        return getList("queryParameters", TypeDeclaration.class);
-    }
-
-    public List<TypeDeclaration> headers()
-    {
-        return getList("headers", TypeDeclaration.class);
-    }
 
     public TypeDeclaration queryString()
     {
