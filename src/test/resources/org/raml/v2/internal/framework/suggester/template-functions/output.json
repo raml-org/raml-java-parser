@@ -1,12 +1,22 @@
 [ {
-  "label" : "camelize",
+  "label" : "lowercamelcase",
   "description" : "",
-  "value" : "!camelize",
+  "value" : "!lowercamelcase",
   "prefix" : ""
 }, {
-  "label" : "capitalize",
+  "label" : "lowercase",
   "description" : "",
-  "value" : "!capitalize",
+  "value" : "!lowercase",
+  "prefix" : ""
+}, {
+  "label" : "lowerhyphencase",
+  "description" : "",
+  "value" : "!lowerhyphencase",
+  "prefix" : ""
+}, {
+  "label" : "lowerunderscorecase",
+  "description" : "",
+  "value" : "!lowerunderscorecase",
   "prefix" : ""
 }, {
   "label" : "pluralize",
@@ -17,5 +27,25 @@
   "label" : "singularize",
   "description" : "",
   "value" : "!singularize",
+  "prefix" : ""
+}, {
+  "label" : "uppercamelcase",
+  "description" : "",
+  "value" : "!uppercamelcase",
+  "prefix" : ""
+}, {
+  "label" : "uppercase",
+  "description" : "",
+  "value" : "!uppercase",
+  "prefix" : ""
+}, {
+  "label" : "upperhyphencase",
+  "description" : "",
+  "value" : "!upperhyphencase",
+  "prefix" : ""
+}, {
+  "label" : "upperunderscorecase",
+  "description" : "",
+  "value" : "!upperunderscorecase",
   "prefix" : ""
 } ]
