@@ -109,13 +109,13 @@ public class Raml10Grammar extends BaseRamlGrammar
     }
 
 
-    protected KeyValueRule usesField()
+    public KeyValueRule usesField()
     {
         return field(usesKey(), library());
     }
 
     // Extension
-    public Rule extension()
+    public ObjectRule extension()
     {
         return untitledRaml()
                              .with(requiredField(extendsKey(), scalarType()).then(ExtendsNode.class))
@@ -137,23 +137,29 @@ public class Raml10Grammar extends BaseRamlGrammar
     // Library
     public Rule library()
     {
-        return objectType("library").with(
-                field(scalarType(), libraryValue()).then(LibraryNode.class)
-                                    );
+        return objectType()
+                           .with(
+                                   field(scalarType(), libraryValue()).then(LibraryNode.class)
+                           );
     }
 
-    public Rule libraryValue()
+    public ObjectRule libraryValue()
     {
-        return objectType()
-                           .with(typesField())
-                           .with(schemasField())
-                           .with(resourceTypesField())
-                           .with(traitsField())
-                           .with(securitySchemesField())
-                           .with(annotationTypesField())
-                           .with(annotationField())
-                           .with(field(usesKey(), ref("library")))
-                           .with(usageField());
+        return objectType("library")
+                                    .with(typesField())
+                                    .with(schemasField())
+                                    .with(resourceTypesField())
+                                    .with(traitsField())
+                                    .with(securitySchemesField())
+                                    .with(annotationTypesField())
+                                    .with(annotationField())
+                                    .with(field(usesKey(),
+                                            objectType()
+                                                        .with(
+                                                                field(scalarType(), ref("library")).then(LibraryNode.class)
+                                                        )
+                                            ))
+                                    .with(usageField());
     }
 
     protected KeyValueRule annotationTypesField()
@@ -200,7 +206,7 @@ public class Raml10Grammar extends BaseRamlGrammar
         return anyOf("type", stringType().then(new TypesFactory()), explicitType());
     }
 
-    private ObjectRule explicitType()
+    public ObjectRule explicitType()
     {
         return objectType()
                            .with(field(anyOf(typeKey(), string("schema")), typeReference()))

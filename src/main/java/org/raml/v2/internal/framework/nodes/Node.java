@@ -147,4 +147,6 @@ public interface Node
      * @return The node type
      */
     NodeType getType();
+
+
 }

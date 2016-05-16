@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.IncludeErrorNode;
@@ -27,6 +28,8 @@ import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYIncludeNode;
 import org.raml.v2.internal.framework.phase.Transformer;
+import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentNode;
+import org.raml.v2.internal.impl.v10.RamlFragment;
 import org.raml.v2.internal.utils.StreamUtils;
 
 
@@ -65,17 +68,25 @@ public class IncludeResolver implements Transformer
             String includeContent = StreamUtils.toString(inputStream);
             if (resourcePath.endsWith(".raml") || resourcePath.endsWith(".yaml") || resourcePath.endsWith(".yml"))
             {
-                boolean supportUses = false;
+
                 try
                 {
                     RamlHeader ramlHeader = RamlHeader.parse(includeContent);
-                    supportUses = ramlHeader.getFragment() != null;
+                    final RamlFragment fragment = ramlHeader.getFragment();
+                    result = RamlNodeParser.parse(includeContent, fragment != null);
+                    if (result != null && isTypedFragment(result, fragment))
+                    {
+                        final RamlTypedFragmentNode newNode = new RamlTypedFragmentNode(fragment);
+                        result.replaceWith(newNode);
+                        result = newNode;
+                    }
                 }
                 catch (RamlHeader.InvalidHeaderException e)
                 {
                     // no valid header defined => !supportUses
+                    result = RamlNodeParser.parse(includeContent, false);
                 }
-                result = RamlNodeParser.parse(includeContent, supportUses);
+
             }
             else
             // scalar value
@@ -98,6 +109,11 @@ public class IncludeResolver implements Transformer
         }
     }
 
+    private boolean isTypedFragment(Node result, RamlFragment fragment)
+    {
+        return fragment != null && fragment != RamlFragment.Library && result instanceof ObjectNode;
+    }
+
     private String applyResourceLocation(String includePath)
     {
         String result = includePath;
@@ -118,16 +134,6 @@ public class IncludeResolver implements Transformer
 
     private boolean isAbsolute(String includePath)
     {
-        if (includePath.startsWith("http:") ||
-            includePath.startsWith("https:") ||
-            includePath.startsWith("file:"))
-        {
-            return true;
-        }
-        if (new File(includePath).isAbsolute())
-        {
-            return true;
-        }
-        return false;
+        return includePath.startsWith("http:") || includePath.startsWith("https:") || includePath.startsWith("file:") || new File(includePath).isAbsolute();
     }
 }

@@ -15,20 +15,18 @@
  */
 package org.raml.v2.internal.utils;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.impl.commons.nodes.ContextProviderNode;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
-import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class NodeUtils
 {
@@ -65,12 +63,6 @@ public class NodeUtils
         }
     }
 
-    public static ObjectNode getTypesRoot(final Node node)
-    {
-        final Node typesRoot = getTypes(traverseToRoot(node));
-        return typesRoot instanceof ObjectNode ? (ObjectNode) typesRoot : null;
-    }
-
     public static boolean isStringNode(Node node)
     {
         return node != null && node instanceof StringNode;
@@ -94,11 +86,7 @@ public class NodeUtils
     public static TypeNode getType(String typeName, Node node)
     {
         Node definitionContext = getContextNode(node);
-        if (definitionContext == null)
-        {
-            return null;
-        }
-        else if (typeName != null && typeName.contains("."))
+        if (typeName != null && typeName.contains("."))
         {
             return getTypeFromContext(typeName, definitionContext);
         }
@@ -124,7 +112,7 @@ public class NodeUtils
             String navigationPath = typeName.substring(0, typeName.lastIndexOf("."));
             if (!navigationPath.contains("."))
             {
-                return resolution != null && resolution.get(navigationPath) != null && getTypes(resolution.get(navigationPath)) != null &&
+                return resolution.get(navigationPath) != null && getTypes(resolution.get(navigationPath)) != null &&
                        getTypes(resolution.get(navigationPath)).get(objectName) instanceof TypeNode ? (TypeNode) getTypes(resolution.get(navigationPath)).get(objectName) : null;
             }
             for (String path : navigationPath.split("."))
@@ -143,15 +131,21 @@ public class NodeUtils
 
     }
 
+    /**
+     * Returns the node that defines the scope for the specified node.
+     * @param node The node
+     * @return The context node for the specified node
+     */
+    @Nonnull
     public static Node getContextNode(Node node)
     {
-        if (node instanceof LibraryNode)
-        {
-            return ((LibraryNode) node).getValue();
-        }
-        else if (node instanceof RamlDocumentNode || node.getParent() == null)
+        if (node.getParent() == null)
         {
             return node;
+        }
+        else if (node instanceof ContextProviderNode)
+        {
+            return ((ContextProviderNode) node).getContextNode();
         }
         else
         {

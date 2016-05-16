@@ -28,7 +28,8 @@ public enum RamlFragment
         @Override
         public Rule getRule(Raml10Grammar grammar)
         {
-            return grammar.documentation();
+            return grammar.documentation()
+                          .with(0, grammar.usesField());
         }
     },
     DataType
@@ -36,7 +37,7 @@ public enum RamlFragment
         @Override
         public Rule getRule(Raml10Grammar grammar)
         {
-            return grammar.type();
+            return grammar.explicitType().with(0, grammar.usesField());
         }
     },
     NamedExample
@@ -52,7 +53,7 @@ public enum RamlFragment
         @Override
         public Rule getRule(Raml10Grammar grammar)
         {
-            return grammar.resourceType();
+            return grammar.resourceType().with(0, grammar.usesField());
         }
     },
     Trait
@@ -60,7 +61,7 @@ public enum RamlFragment
         @Override
         public Rule getRule(Raml10Grammar grammar)
         {
-            return grammar.trait();
+            return grammar.trait().with(0, grammar.usesField());
         }
     },
     AnnotationTypeDeclaration
@@ -68,7 +69,7 @@ public enum RamlFragment
         @Override
         public Rule getRule(Raml10Grammar grammar)
         {
-            return grammar.type();
+            return grammar.explicitType().with(0, grammar.usesField());
         }
     },
     Library

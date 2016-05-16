@@ -15,11 +15,8 @@
  */
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Nullable;
 
@@ -29,30 +26,9 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
-import org.yaml.snakeyaml.parser.ParserException;
-import org.yaml.snakeyaml.scanner.ScannerException;
 
 public class RamlNodeParser
 {
-
-    @Nullable
-    public static Node parse(InputStream inputStream)
-    {
-        return parse(inputStream, false);
-    }
-
-    @Nullable
-    public static Node parse(InputStream inputStream, boolean supportLibraries)
-    {
-        try
-        {
-            return parse(new InputStreamReader(inputStream, "UTF-8"), supportLibraries);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            return parse(new InputStreamReader(inputStream), supportLibraries);
-        }
-    }
 
 
     @Nullable

@@ -24,7 +24,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 
-public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode
+public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode, ContextProviderNode
 {
 
     private RamlVersion version;
@@ -72,5 +72,12 @@ public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode
     public void setResourceLoader(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
+    }
+
+    @Nonnull
+    @Override
+    public Node getContextNode()
+    {
+        return this;
     }
 }

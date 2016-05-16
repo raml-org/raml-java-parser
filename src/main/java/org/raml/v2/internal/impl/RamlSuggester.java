@@ -16,28 +16,26 @@
 package org.raml.v2.internal.impl;
 
 
+import org.raml.v2.api.loader.DefaultResourceLoader;
+import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.grammar.rule.Rule;
+import org.raml.v2.internal.framework.nodes.*;
+import org.raml.v2.internal.framework.suggester.*;
+import org.raml.v2.internal.impl.commons.RamlHeader;
+import org.raml.v2.internal.impl.commons.RamlVersion;
+import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.utils.Inflector;
+import org.raml.v2.internal.utils.NodeUtils;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang.StringUtils;
-import org.raml.v2.internal.framework.grammar.rule.Rule;
-import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.RamlVersion;
-import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
-import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
-import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.framework.nodes.*;
-import org.raml.v2.internal.framework.suggester.*;
-import org.raml.v2.internal.utils.Inflector;
-import org.raml.v2.internal.utils.NodeUtils;
 
 public class RamlSuggester
 {
@@ -92,7 +90,7 @@ public class RamlSuggester
         switch (context.getContextType())
         {
         case HEADER:
-            return getSuggestionsAtHeaderLevel(context, document, offset, location);
+            return getHeaderSuggestions();
         case FUNCTION_CALL:
             return getFunctionCallSuggestions();
         case STRING_TEMPLATE:
@@ -107,10 +105,6 @@ public class RamlSuggester
         }
     }
 
-    private List<Suggestion> getSuggestionsAtHeaderLevel(RamlParsingContext context, String document, int offset, int location)
-    {
-        return getHeaderSuggestions();
-    }
 
     @Nonnull
     private List<Suggestion> getTemplateParameterSuggestions(String document, int offset, int location)
@@ -206,7 +200,7 @@ public class RamlSuggester
             {
                 // File still doesn't have any mapping and will not generate any suggestions so we'll force the parsing to make it a mapping
                 final Node rootNode2 = ramlBuilder.build(stripLastChanges(document, offset, location) + "\n\nstub: stub", resourceLoader, ""); // we add an invalid key so as to enforce the creation of
-                                                                                                                                               // the root node
+                // the root node
                 if (rootNode2 instanceof ErrorNode)
                 {
                     // Otherwise let's just try to remove the whole line starting from where we are located
@@ -226,15 +220,9 @@ public class RamlSuggester
                 // File is not corrupted but just empty, we should suggest initial keys for the current file
                 return ramlBuilder.build(document + "\n\nstub: stub", resourceLoader, ""); // we add an invalid key so as to force the creation of the root node
             }
-            else if (rootNode instanceof ErrorNode)
-            {
-                // let's just try to remove the whole line starting from where we are located
-                return ramlBuilder.build(removeChangedLine(document, offset, location) + "\n\nstub: stub", resourceLoader, "");
-            }
             else
-            {
-                // We remove some current keywords to see if it parses
-                return ramlBuilder.build(stripLastChanges(document, offset, location), resourceLoader, "");
+            { // let's just try to remove the whole line starting from where we are located
+                return ramlBuilder.build(removeChangedLine(document, offset, location) + "\n\nstub: stub", resourceLoader, "");
             }
         }
         catch (final Exception e)
@@ -248,18 +236,14 @@ public class RamlSuggester
     {
         final String header = document.substring(0, location + 1);
         final String footer = getFooter1(document, offset);
-        final String realDocument = header + footer;
-
-        return realDocument;
+        return header + footer;
     }
 
     private String stripLastChanges(String document, int offset, int location)
     {
         final String header = document.substring(0, location + 1);
         final String footer = getFooter(document, offset);
-        final String realDocument = header + footer;
-
-        return realDocument;
+        return header + footer;
     }
 
     private List<Suggestion> getSuggestionByColumn(RamlParsingContext context, String document, int offset, int location)
@@ -469,19 +453,7 @@ public class RamlSuggester
     @Nonnull
     private String getFooter1(String document, int offset)
     {
-        int loc = offset + 1;
-        char current = document.charAt(loc);
-        while (loc < document.length() && current != '\n' && current != '}' && current != ']' && current != ',')
-        {
-            loc++;
-            if (loc == document.length())
-            {
-                break;
-            }
-            current = document.charAt(loc);
-        }
-
-        return loc < document.length() ? document.substring(loc) : "";
+        return getFooter(document, offset + 1);
     }
 
     private int getColumnNumber(String document, int offset)

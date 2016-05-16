@@ -80,7 +80,6 @@ public class ResourceTypesTraitsMerger
                 logger.debug("Adding ErrorNode");
                 baseNode.addChild(child);
                 continue;
-
             }
             if (!(child instanceof KeyValueNode))
             {

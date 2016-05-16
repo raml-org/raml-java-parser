@@ -74,6 +74,11 @@
   "value" : "usage: ",
   "prefix" : ""
 }, {
+  "label" : "Uses",
+  "description" : "Importing libraries.",
+  "value" : "uses: ",
+  "prefix" : ""
+}, {
   "label" : "Xml",
   "description" : null,
   "value" : "xml: ",

@@ -15,15 +15,13 @@
  */
 package org.raml.v2.internal.framework.nodes;
 
-import static org.raml.v2.internal.utils.NodeUtils.getContextNode;
+import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
+import org.raml.v2.internal.utils.NodeUtils;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nullable;
-
-import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
 
 public abstract class AbstractReferenceNode extends AbstractRamlNode implements ReferenceNode
 {
@@ -62,7 +60,7 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
         }
         else
         {
-            return getContextNode(this);
+            return NodeUtils.getContextNode(this);
         }
     }
 

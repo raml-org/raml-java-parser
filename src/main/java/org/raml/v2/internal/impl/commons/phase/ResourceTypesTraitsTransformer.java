@@ -159,29 +159,31 @@ public class ResourceTypesTraitsTransformer implements Transformer
         resolveParameters(templateNode, parameters);
 
         // apply grammar phase to generate method nodes
-        GrammarPhase validatePhase = new GrammarPhase(ramlGrammar.resourceTypeParamsResolved());
+        GrammarPhase grammarPhase = new GrammarPhase(ramlGrammar.resourceTypeParamsResolved());
         // resolve references
         TransformationPhase referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
         // resolves types
         TransformationPhase typeResolution = new TransformationPhase(new TypesTransformer(""));
 
-        applyPhases(templateNode, validatePhase, referenceResolution, typeResolution);
+        final boolean success = applyPhases(templateNode, grammarPhase, referenceResolution, typeResolution);
 
-
-        // apply traits
-        checkTraits(templateNode, baseResourceNode);
-
-        // resolve inheritance
-        ReferenceNode parentTypeReference = findResourceTypeReference(templateNode);
-        if (parentTypeReference != null)
+        if (success)
         {
-            applyResourceType(templateNode, parentTypeReference, baseResourceNode);
+            // apply traits
+            checkTraits(templateNode, baseResourceNode);
+
+            // resolve inheritance
+            ReferenceNode parentTypeReference = findResourceTypeReference(templateNode);
+            if (parentTypeReference != null)
+            {
+                applyResourceType(templateNode, parentTypeReference, baseResourceNode);
+            }
         }
 
         merge(targetNode.getValue(), templateNode.getValue());
     }
 
-    private void applyPhases(KeyValueNode templateNode, Phase... phases)
+    private boolean applyPhases(KeyValueNode templateNode, Phase... phases)
     {
         List<ErrorNode> errorNodes = templateNode.findDescendantsWith(ErrorNode.class);
         if (errorNodes.isEmpty())
@@ -192,10 +194,11 @@ public class ResourceTypesTraitsTransformer implements Transformer
                 errorNodes = templateNode.findDescendantsWith(ErrorNode.class);
                 if (!errorNodes.isEmpty())
                 {
-                    return;
+                    return false;
                 }
             }
         }
+        return true;
 
     }
 

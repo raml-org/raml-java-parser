@@ -23,15 +23,7 @@ import java.util.List;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.phase.AnnotationValidationPhase;
-import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
-import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
-import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
-import org.raml.v2.internal.impl.commons.phase.ReferenceResolverTransformer;
-import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
-import org.raml.v2.internal.impl.commons.phase.SchemaValidationPhase;
-import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
-import org.raml.v2.internal.impl.commons.phase.SugarRushPhase;
+import org.raml.v2.internal.impl.commons.phase.*;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjection;
 import org.raml.v2.internal.impl.v10.phase.TypesTransformer;
@@ -127,8 +119,11 @@ public class Raml10Builder
         // The first phase expands the includes.
         final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader, resourceLocation), new StringTemplateExpressionTransformer());
 
+        final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer());
+
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem
-        Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+
         final GrammarPhase second = new GrammarPhase(fragment.getRule(raml10Grammar));
         // Detect invalid references. Library resourceTypes and Traits. This point the nodes are good enough for Editors.
 
@@ -156,7 +151,7 @@ public class Raml10Builder
 
         final ExampleValidationPhase seventh = new ExampleValidationPhase(resourceLoader);
 
-        return Arrays.asList(first, sugar, second, referenceCheck, third, typesTransformation, thirdAndAHalf, fourth, fifth, sixth, seventh);
+        return Arrays.asList(first, ramlFragmentsValidator, sugar, second, referenceCheck, third, typesTransformation, thirdAndAHalf, fourth, fifth, sixth, seventh);
 
     }
 }

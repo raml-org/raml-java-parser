@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.nodes;
 
+import org.raml.v2.internal.impl.commons.nodes.LibraryNodeProvider;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.AbstractReferenceNode;
@@ -49,7 +50,16 @@ public class LibraryRefNode extends AbstractReferenceNode
     @Override
     public Node resolveReference()
     {
-        return NodeSelector.selectFrom(Raml10Grammar.USES_KEY_NAME + "/" + name, getRelativeNode());
+        final Node relativeNode = getRelativeNode();
+        if (relativeNode instanceof LibraryNodeProvider)
+        {
+            final Node libraryNode = ((LibraryNodeProvider) relativeNode).getLibraryNode();
+            return NodeSelector.selectFrom(name, libraryNode);
+        }
+        else
+        {
+            return NodeSelector.selectFrom(Raml10Grammar.USES_KEY_NAME + "/" + name, relativeNode);
+        }
     }
 
     @Nonnull

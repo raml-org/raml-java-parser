@@ -269,6 +269,12 @@ public class ObjectRule extends Rule
         return this;
     }
 
+    public ObjectRule with(int index, KeyValueRule field)
+    {
+        this.fields.add(index, field);
+        return this;
+    }
+
     @Override
     public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
     {

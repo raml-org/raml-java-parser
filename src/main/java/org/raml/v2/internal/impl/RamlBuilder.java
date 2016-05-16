@@ -44,8 +44,7 @@ public class RamlBuilder
 {
 
     public static int FIRST_PHASE = 1;
-    public static int SECOND_PHASE = 2;
-    public static int SUGAR_PHASE = 3;
+    public static int SUGAR_PHASE = 4;
 
     private int maxPhaseNumber;
 

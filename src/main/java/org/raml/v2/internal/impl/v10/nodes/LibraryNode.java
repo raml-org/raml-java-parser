@@ -15,12 +15,14 @@
  */
 package org.raml.v2.internal.impl.v10.nodes;
 
+import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.impl.commons.nodes.ContextProviderNode;
+
 import javax.annotation.Nonnull;
 
-import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
-import org.raml.v2.internal.framework.nodes.StringNode;
-
-public class LibraryNode extends KeyValueNodeImpl
+public class LibraryNode extends KeyValueNodeImpl implements ContextProviderNode
 {
 
     public LibraryNode()
@@ -43,5 +45,12 @@ public class LibraryNode extends KeyValueNodeImpl
     public LibraryNode copy()
     {
         return new LibraryNode(this);
+    }
+
+    @Nonnull
+    @Override
+    public Node getContextNode()
+    {
+        return getValue();
     }
 }
