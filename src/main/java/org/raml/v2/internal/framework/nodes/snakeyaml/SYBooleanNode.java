@@ -25,14 +25,14 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SYBooleanNode extends SYBaseRamlNode implements BooleanNode
 {
 
-    public SYBooleanNode(SYBooleanNode node)
+    public SYBooleanNode(SYBooleanNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYBooleanNode(ScalarNode scalarNode)
+    public SYBooleanNode(ScalarNode scalarNode, String resourcePath)
     {
-        super(scalarNode);
+        super(scalarNode, resourcePath);
     }
 
     public Boolean getValue()
@@ -51,7 +51,7 @@ public class SYBooleanNode extends SYBaseRamlNode implements BooleanNode
     @Override
     public Node copy()
     {
-        return new SYBooleanNode(this);
+        return new SYBooleanNode(this, getResourcePath());
     }
 
     @Override

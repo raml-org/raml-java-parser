@@ -1,9 +1,9 @@
-SYObjectNode (Start: 11 , End: 58)
-    KeyValueNodeImpl (Start: 11 , End: 22)
-        SYStringNode: "title" (Start: 11 , End: 16)
-        SYStringNode: "hola" (Start: 18 , End: 22)
-    KeyValueNodeImpl (Start: 23 , End: 54)
-        SYStringNode: "/top" (Start: 23 , End: 27)
+SYObjectNode (Start: 11 , End: 58, On: input.raml)
+    KeyValueNodeImpl (Start: 11 , End: 22, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        SYStringNode: "hola" (Start: 18 , End: 22, On: input.raml)
+    KeyValueNodeImpl (Start: 23 , End: 54, On: input.raml)
+        SYStringNode: "/top" (Start: 23 , End: 27, On: input.raml)
         ErrorNode: "Underlying error while parsing YAML syntax: 'while scanning a simple key
  in 'reader', line 3, column 1:
     invalidyaml
@@ -12,4 +12,4 @@ could not find expected ':'
  in 'reader', line 4, column 1:
     /{id}:
     ^
-'" (Start: 53 , End: 54, Source: SYIncludeNode)
+'" (Start: 53 , End: 54, On: , Source: SYIncludeNode)

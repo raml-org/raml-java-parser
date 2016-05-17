@@ -27,16 +27,19 @@ public abstract class SYBaseRamlNode extends BaseNode
 {
 
     private Node yamlNode;
+    private String resourcePath;
 
-    public SYBaseRamlNode(SYBaseRamlNode node)
+    public SYBaseRamlNode(SYBaseRamlNode node, String resourcePath)
     {
         super(node);
         this.yamlNode = node.yamlNode;
+        this.resourcePath = resourcePath;
     }
 
-    public SYBaseRamlNode(Node yamlNode)
+    public SYBaseRamlNode(Node yamlNode, String resourcePath)
     {
         this.yamlNode = yamlNode;
+        this.resourcePath = resourcePath;
     }
 
     protected Node getYamlNode()
@@ -44,18 +47,23 @@ public abstract class SYBaseRamlNode extends BaseNode
         return yamlNode;
     }
 
+    public String getResourcePath()
+    {
+        return resourcePath;
+    }
+
     @Nonnull
     @Override
     public Position getStartPosition()
     {
-        return new SYPosition(yamlNode.getStartMark());
+        return new SYPosition(yamlNode.getStartMark(), resourcePath);
     }
 
     @Nonnull
     @Override
     public Position getEndPosition()
     {
-        return new SYPosition(yamlNode.getEndMark());
+        return new SYPosition(yamlNode.getEndMark(), resourcePath);
     }
 
     @Nullable

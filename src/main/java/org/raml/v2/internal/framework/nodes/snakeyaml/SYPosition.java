@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
+import javax.annotation.Nonnull;
+
 import org.raml.v2.internal.framework.nodes.AbstractPosition;
 import org.yaml.snakeyaml.error.Mark;
 
@@ -22,10 +24,12 @@ public class SYPosition extends AbstractPosition
 {
 
     private Mark mark;
+    private String resourcePath;
 
-    public SYPosition(Mark mark)
+    public SYPosition(Mark mark, String resourcePath)
     {
         this.mark = mark;
+        this.resourcePath = resourcePath;
     }
 
     @Override
@@ -46,11 +50,11 @@ public class SYPosition extends AbstractPosition
         return mark.getColumn();
     }
 
+    @Nonnull
     @Override
     public String getResource()
     {
-        // TODO add the resource where this position belongs too
-        return null;
+        return resourcePath;
     }
 
 }

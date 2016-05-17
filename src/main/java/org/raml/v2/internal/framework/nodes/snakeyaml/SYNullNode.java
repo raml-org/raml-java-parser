@@ -23,21 +23,21 @@ import org.yaml.snakeyaml.nodes.Node;
 
 public class SYNullNode extends SYBaseRamlNode implements NullNode
 {
-    public SYNullNode(SYNullNode node)
+    public SYNullNode(SYNullNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYNullNode(Node yamlNode)
+    public SYNullNode(Node yamlNode, String resourcePath)
     {
-        super(yamlNode);
+        super(yamlNode, resourcePath);
     }
 
     @Nonnull
     @Override
     public org.raml.v2.internal.framework.nodes.Node copy()
     {
-        return new SYNullNode(this);
+        return new SYNullNode(this, getResourcePath());
     }
 
     @Override

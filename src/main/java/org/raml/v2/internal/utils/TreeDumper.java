@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.ObjectTypeNode;
 import org.raml.v2.internal.framework.nodes.BooleanNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
@@ -54,6 +55,11 @@ public class TreeDumper
         dump.append(" (");
         dump.append("Start: ").append(node.getStartPosition().getIndex());
         dump.append(" , End: ").append(node.getEndPosition().getIndex());
+        if (node.getStartPosition().getIndex() != Position.UNKNOWN &&
+            node.getEndPosition().getIndex() != Position.UNKNOWN)
+        {
+            dump.append(", On: ").append(node.getStartPosition().getResource());
+        }
         if (node.getSource() != null)
         {
             dump.append(", Source: ");

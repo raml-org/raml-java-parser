@@ -25,14 +25,15 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SYIntegerNode extends SYBaseRamlNode implements IntegerNode
 {
 
-    public SYIntegerNode(SYIntegerNode node)
+    // For copy
+    private SYIntegerNode(SYIntegerNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYIntegerNode(ScalarNode scalarNode)
+    public SYIntegerNode(ScalarNode scalarNode, String resourcePath)
     {
-        super(scalarNode);
+        super(scalarNode, resourcePath);
     }
 
     public Integer getValue()
@@ -55,7 +56,7 @@ public class SYIntegerNode extends SYBaseRamlNode implements IntegerNode
     @Override
     public Node copy()
     {
-        return new SYIntegerNode(this);
+        return new SYIntegerNode(this, getResourcePath());
     }
 
     @Override

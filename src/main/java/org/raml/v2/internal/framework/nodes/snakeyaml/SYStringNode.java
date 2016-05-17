@@ -25,14 +25,16 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SYStringNode extends SYBaseRamlNode implements StringNode
 {
 
-    public SYStringNode(SYStringNode node)
+    // For copy
+    protected SYStringNode(SYStringNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYStringNode(ScalarNode scalarNode)
+
+    public SYStringNode(ScalarNode scalarNode, String resourcePath)
     {
-        super(scalarNode);
+        super(scalarNode, resourcePath);
     }
 
     public String getValue()
@@ -44,7 +46,7 @@ public class SYStringNode extends SYBaseRamlNode implements StringNode
     @Override
     public Node copy()
     {
-        return new SYStringNode(this);
+        return new SYStringNode(this, getResourcePath());
     }
 
     @Override

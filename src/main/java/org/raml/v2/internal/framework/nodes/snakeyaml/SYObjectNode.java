@@ -26,19 +26,15 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 public class SYObjectNode extends SYBaseRamlNode implements ObjectNode
 {
 
-    public SYObjectNode(SYObjectNode node)
+    public SYObjectNode(MappingNode mappingNode, String resourcePath)
     {
-        super(node);
+        super(mappingNode, resourcePath);
     }
 
-    public SYObjectNode(MappingNode mappingNode)
+    // For copy reasons
+    public SYObjectNode(SYBaseRamlNode baseRamlNode, String resourcePath)
     {
-        super(mappingNode);
-    }
-
-    public SYObjectNode(SYBaseRamlNode baseRamlNode)
-    {
-        super(baseRamlNode);
+        super(baseRamlNode, resourcePath);
     }
 
     @Override
@@ -51,7 +47,7 @@ public class SYObjectNode extends SYBaseRamlNode implements ObjectNode
     @Override
     public Node copy()
     {
-        return new SYObjectNode(this);
+        return new SYObjectNode(this, getResourcePath());
     }
 
     @Override

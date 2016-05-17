@@ -28,14 +28,14 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SYIncludeNode extends SYStringNode
 {
 
-    public SYIncludeNode(SYIncludeNode node)
+    private SYIncludeNode(SYIncludeNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYIncludeNode(ScalarNode scalarNode)
+    public SYIncludeNode(ScalarNode scalarNode, String resourcePath)
     {
-        super(scalarNode);
+        super(scalarNode, resourcePath);
     }
 
     public String getIncludePath()
@@ -80,6 +80,6 @@ public class SYIncludeNode extends SYStringNode
     @Override
     public Node copy()
     {
-        return new SYIncludeNode(this);
+        return new SYIncludeNode(this, getResourcePath());
     }
 }

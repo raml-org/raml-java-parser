@@ -267,7 +267,8 @@ public class ResourceTypesTraitsTransformer implements Transformer
         Node valueNode = keyValueNode.getValue();
         if (valueNode instanceof SYNullNode)
         {
-            valueNode = new SYObjectNode((SYBaseRamlNode) valueNode);
+            final SYBaseRamlNode ramlNode = (SYBaseRamlNode) valueNode;
+            valueNode = new SYObjectNode(ramlNode, ramlNode.getResourcePath());
             keyValueNode.setValue(valueNode);
         }
     }

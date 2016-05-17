@@ -216,7 +216,7 @@ public class TckEmitter
     {
         if (node instanceof NullNode)
         {
-            node = new SYObjectNode(new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), null));
+            node = new SYObjectNode(new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), null), "");
         }
         else
         {

@@ -99,7 +99,7 @@ public class NodeValidator
         {
             if (NodeUtils.isStringNode(example.getSource()) && !(rule instanceof JsonSchemaValidationRule || rule instanceof XmlSchemaValidationRule))
             {
-                Node transformed = RamlNodeParser.parse(((StringNode) example.getSource()).getValue());
+                Node transformed = RamlNodeParser.parse(example.getStartPosition().getResource(), ((StringNode) example.getSource()).getValue());
                 if (transformed != null)
                 {
                     transform = rule.apply(transformed);
@@ -195,7 +195,7 @@ public class NodeValidator
             }
             if (!(rule instanceof XmlSchemaValidationRule || rule instanceof JsonSchemaValidationRule) && exampleValue instanceof StringNode)
             {
-                Node parsedExample = RamlNodeParser.parse(((StringNode) exampleValue).getValue());
+                Node parsedExample = RamlNodeParser.parse(exampleValue.getStartPosition().getResource(), ((StringNode) exampleValue).getValue());
                 Node exampleParent = exampleValue.getParent();
                 exampleParent.removeChild(exampleValue);
                 exampleParent.addChild(parsedExample);

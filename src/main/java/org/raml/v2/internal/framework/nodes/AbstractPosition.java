@@ -15,15 +15,19 @@
  */
 package org.raml.v2.internal.framework.nodes;
 
+import javax.annotation.Nonnull;
+
 public abstract class AbstractPosition implements Position
 {
 
+    @Nonnull
     @Override
     public Position rightShift(int offset)
     {
         return new DefaultPosition(getIndex() + offset, getLine(), getColumn() + offset, getResource());
     }
 
+    @Nonnull
     @Override
     public Position leftShift(int offset)
     {

@@ -42,7 +42,7 @@ public class Raml10Builder
 
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = RamlNodeParser.parse(stringContent, true);
+        Node rootNode = RamlNodeParser.parse(resourceLocation, stringContent, true);
         if (rootNode == null)
         {
             return ErrorNodeFactory.createEmptyDocument();

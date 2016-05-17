@@ -15,20 +15,27 @@
  */
 package org.raml.v2.internal.framework.nodes;
 
+import javax.annotation.Nonnull;
+
 /**
  * The position of a given node in a specific resource
  */
 public interface Position
 {
+    int UNKNOWN = -1;
+
     int getIndex();
 
     int getLine();
 
     int getColumn();
 
+    @Nonnull
     String getResource();
 
+    @Nonnull
     Position rightShift(int offset);
 
+    @Nonnull
     Position leftShift(int offset);
 }

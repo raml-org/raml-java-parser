@@ -54,7 +54,7 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
             {
                 builder.append(" -- " + start.getResource());
             }
-            if (start.getLine() != -1)
+            if (start.getLine() != Position.UNKNOWN)
             {
                 builder.append(" [line=").append(start.getLine() + 1)
                        .append(", col=").append(start.getColumn() + 1).append("]");

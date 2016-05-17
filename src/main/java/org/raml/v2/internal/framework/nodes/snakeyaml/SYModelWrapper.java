@@ -31,11 +31,13 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class SYModelWrapper
 {
 
+    private String resourcePath;
     private boolean supportLibraries;
     private int depth;
 
-    public SYModelWrapper(boolean supportLibraries)
+    public SYModelWrapper(String resourcePath, boolean supportLibraries)
     {
+        this.resourcePath = resourcePath;
         this.supportLibraries = supportLibraries;
     }
 
@@ -76,7 +78,7 @@ public class SYModelWrapper
         {
             new MappingNodeMerger().merge(mappingNode);
         }
-        SYObjectNode mapping = new SYObjectNode(mappingNode);
+        SYObjectNode mapping = new SYObjectNode(mappingNode, resourcePath);
         depth++;
         for (NodeTuple nodeTuple : mappingNode.getValue())
         {
@@ -125,19 +127,19 @@ public class SYModelWrapper
         final Tag tag = scalarNode.getTag();
         if (INCLUDE_TAG.equals(tag))
         {
-            return new SYIncludeNode(scalarNode);
+            return new SYIncludeNode(scalarNode, resourcePath);
         }
         else if (Tag.NULL.equals(tag))
         {
-            return new SYNullNode(scalarNode);
+            return new SYNullNode(scalarNode, resourcePath);
         }
         else if (Tag.FLOAT.equals(tag))
         {
-            return new SYFloatingNode(scalarNode);
+            return new SYFloatingNode(scalarNode, resourcePath);
         }
         else if (Tag.INT.equals(tag))
         {
-            SYIntegerNode syIntegerNode = new SYIntegerNode(scalarNode);
+            SYIntegerNode syIntegerNode = new SYIntegerNode(scalarNode, resourcePath);
             try
             {
                 syIntegerNode.getValue();
@@ -146,7 +148,7 @@ public class SYModelWrapper
             catch (NumberFormatException e)
             {
                 // wrap with string node if number is invalid e.g: 12:30:00
-                return new SYStringNode(scalarNode);
+                return new SYStringNode(scalarNode, resourcePath);
             }
         }
         else
@@ -155,18 +157,18 @@ public class SYModelWrapper
             // We only use true or false as boolean possibilities for yaml 1.2 and not yes no.
             if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
             {
-                return new SYBooleanNode(scalarNode);
+                return new SYBooleanNode(scalarNode, resourcePath);
             }
             else
             {
-                return new SYStringNode(scalarNode);
+                return new SYStringNode(scalarNode, resourcePath);
             }
         }
     }
 
     private SYArrayNode wrap(SequenceNode sequenceNode)
     {
-        SYArrayNode sequence = new SYArrayNode(sequenceNode);
+        SYArrayNode sequence = new SYArrayNode(sequenceNode, resourcePath);
         for (org.yaml.snakeyaml.nodes.Node node : sequenceNode.getValue())
         {
             sequence.addChild(wrap(node));

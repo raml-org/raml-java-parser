@@ -27,14 +27,15 @@ import javax.annotation.Nonnull;
 
 public class SYArrayNode extends SYBaseRamlNode implements ArrayNode
 {
-    public SYArrayNode(SYArrayNode node)
+    // For copy
+    private SYArrayNode(SYArrayNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYArrayNode(SequenceNode sequenceNode)
+    public SYArrayNode(SequenceNode sequenceNode, String resourcePath)
     {
-        super(sequenceNode);
+        super(sequenceNode, resourcePath);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class SYArrayNode extends SYBaseRamlNode implements ArrayNode
     @Override
     public Node copy()
     {
-        return new SYArrayNode(this);
+        return new SYArrayNode(this, getResourcePath());
     }
 
     @Override

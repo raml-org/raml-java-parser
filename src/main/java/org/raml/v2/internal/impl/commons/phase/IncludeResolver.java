@@ -73,7 +73,7 @@ public class IncludeResolver implements Transformer
                 {
                     RamlHeader ramlHeader = RamlHeader.parse(includeContent);
                     final RamlFragment fragment = ramlHeader.getFragment();
-                    result = RamlNodeParser.parse(includeContent, fragment != null);
+                    result = RamlNodeParser.parse(resourcePath, includeContent, fragment != null);
                     if (result != null && isTypedFragment(result, fragment))
                     {
                         final RamlTypedFragmentNode newNode = new RamlTypedFragmentNode(fragment);
@@ -84,7 +84,7 @@ public class IncludeResolver implements Transformer
                 catch (RamlHeader.InvalidHeaderException e)
                 {
                     // no valid header defined => !supportUses
-                    result = RamlNodeParser.parse(includeContent, false);
+                    result = RamlNodeParser.parse(resourcePath, includeContent, false);
                 }
 
             }

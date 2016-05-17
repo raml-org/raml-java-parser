@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.framework.nodes;
 
+import javax.annotation.Nonnull;
+
 public class DefaultPosition extends AbstractPosition
 {
     private int index;
@@ -48,6 +50,7 @@ public class DefaultPosition extends AbstractPosition
         return column;
     }
 
+    @Nonnull
     @Override
     public String getResource()
     {
@@ -57,6 +60,6 @@ public class DefaultPosition extends AbstractPosition
 
     public static DefaultPosition emptyPosition()
     {
-        return new DefaultPosition(-1, -1, -1, "empty.raml");
+        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, "[artificial node]");
     }
 }

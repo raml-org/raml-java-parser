@@ -26,14 +26,14 @@ import javax.annotation.Nonnull;
 
 public class SYFloatingNode extends SYBaseRamlNode implements FloatingNode
 {
-    public SYFloatingNode(SYFloatingNode node)
+    public SYFloatingNode(SYFloatingNode node, String resourcePath)
     {
-        super(node);
+        super(node, resourcePath);
     }
 
-    public SYFloatingNode(ScalarNode yamlNode)
+    public SYFloatingNode(ScalarNode yamlNode, String resourcePath)
     {
-        super(yamlNode);
+        super(yamlNode, resourcePath);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SYFloatingNode extends SYBaseRamlNode implements FloatingNode
     @Override
     public Node copy()
     {
-        return new SYFloatingNode(this);
+        return new SYFloatingNode(this, getResourcePath());
     }
 
     @Override
