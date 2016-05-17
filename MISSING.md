@@ -1,6 +1,6 @@
 ## RAML 1.0 features gap
 
-This list covers the current gap of features with the RAML 1.0 RC2 specification:
+This list covers the current gap of features with the RAML 1.0 specification:
 
 #### `uses` key is only supported for root RAML documents and libraries
  The [spec](https://github.com/raml-org/raml-spec/blob/raml-10/versions/raml-10/raml-10.md#applying-libraries) allows using `uses` in any fragment. At this moment the parser only allows its use in root level RAML documents and libraries.
@@ -17,6 +17,10 @@ The extra restrictions that Overlays enforce vs. Extensions are not being valida
 
 - OAuth 1.0 `signatures` setting is not supported.
 - OAuth 2.0 `authorizationUri` is always optional, no matter which authorization grants are used
+
+#### `resourcePathName` should resolve to the last non-parameter fragment
+
+At the moment `resourcePathName` is resolved to the last fragment, removing curly braces if present.
 
 #### XML examples validation against YAML types
 
