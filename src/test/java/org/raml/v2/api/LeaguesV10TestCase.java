@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.parser;
+package org.raml.v2.api;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -27,8 +27,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
-import org.raml.v2.api.RamlModelBuilder;
-import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.api.DocumentationItem;
@@ -45,7 +43,7 @@ public class LeaguesV10TestCase
     @Test
     public void full() throws IOException
     {
-        File input = new File("src/test/resources/org/raml/v2/interfaces/leaguesV10.raml");
+        File input = new File("src/test/resources/org/raml/v2/api/v10/leagues/input.raml");
         assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         assertFalse(ramlModelResult.hasErrors());

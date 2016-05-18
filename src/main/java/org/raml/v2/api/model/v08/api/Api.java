@@ -117,6 +117,6 @@ public interface Api extends RAMLLanguageElement
     /**
      * Returns AST node of security scheme, this reference refers to, or null.
      **/
-    String RAMLVersion();
+    String ramlVersion();
 
 }

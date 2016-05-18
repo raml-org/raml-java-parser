@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.parser;
+package org.raml.v2.api;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,14 +26,13 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
-import org.raml.v2.api.RamlModelBuilder;
-import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.v08.api.Api;
 import org.raml.v2.api.model.v08.api.DocumentationItem;
 import org.raml.v2.api.model.v08.bodies.BodyLike;
 import org.raml.v2.api.model.v08.bodies.Response;
 import org.raml.v2.api.model.v08.methods.Method;
 import org.raml.v2.api.model.v08.methods.Trait;
+import org.raml.v2.api.model.v08.parameters.Parameter;
 import org.raml.v2.api.model.v08.resources.Resource;
 import org.raml.v2.api.model.v08.resources.ResourceType;
 
@@ -43,24 +42,19 @@ public class SpecInterfacesV08TestCase
     @Test
     public void full() throws IOException
     {
-        File input = new File("src/test/resources/org/raml/v2/interfaces/inputV08.raml");
+        File input = new File("src/test/resources/org/raml/v2/api/v08/full/input.raml");
         assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         assertFalse(ramlModelResult.hasErrors());
         Api api = ramlModelResult.getApiV08();
-
         assertApi(api);
-        assertDocumentation(api.documentation());
-        assertTraits(api.traits());
-        assertResourceTypes(api.resourceTypes());
-        assertResources(api.resources());
     }
 
     private void assertApi(Api api)
     {
         assertThat(api.title(), is("api title"));
         assertThat(api.version(), is("v1"));
-        assertThat(api.baseUri().value(), is("http://base.uri"));
+        assertThat(api.baseUri().value(), is("http://base.uri/{version}/{param1}"));
         assertThat(api.mediaType().value(), is("application/json"));
         assertThat(api.protocols().size(), is(2));
         assertThat(api.protocols().get(0), is("HTTP"));
@@ -70,6 +64,20 @@ public class SpecInterfacesV08TestCase
         assertThat(api.schemas().get(0).key(), is("UserJson"));
         assertThat(api.schemas().get(0).value().value(), containsString("\"firstname\":  { \"type\": \"string\" }"));
         assertThat(api.schemas().get(1).key(), is("UserXml"));
+
+        assertDocumentation(api.documentation());
+        assertTraits(api.traits());
+        assertResourceTypes(api.resourceTypes());
+        assertResources(api.resources());
+        assertApiBaseUriParameters(api.baseUriParameters());
+    }
+
+    private void assertApiBaseUriParameters(List<Parameter> parameters)
+    {
+        assertThat(parameters.size(), is(1));
+        assertThat(parameters.get(0).name(), is("param1"));
+        assertThat(parameters.get(0).description().value(), is("some description"));
+        assertThat(parameters.get(0).type(), is("string"));
     }
 
     private void assertDocumentation(List<DocumentationItem> documentation)
@@ -102,6 +110,7 @@ public class SpecInterfacesV08TestCase
         assertThat(top.resourcePath(), is("/top"));
         assertThat(top.description().value(), is("top description"));
         assertThat(top.displayName(), is("/top"));
+        assertResourceBaseUriParameters(top.baseUriParameters());
         assertMethods(top.methods());
 
         List<Resource> children = top.resources();
@@ -112,6 +121,15 @@ public class SpecInterfacesV08TestCase
         assertThat(child.parentResource().resourcePath(), is("/top"));
     }
 
+    private void assertResourceBaseUriParameters(List<Parameter> parameters)
+    {
+        assertThat(parameters.size(), is(1));
+        assertThat(parameters.get(0).name(), is("param1"));
+        assertThat(parameters.get(0).description().value(), is("resource override"));
+        assertThat(parameters.get(0).type(), is("number"));
+    }
+
+
     private void assertMethods(List<Method> methods)
     {
         assertThat(methods.size(), is(2));
@@ -119,12 +137,22 @@ public class SpecInterfacesV08TestCase
         assertThat(get.description().value(), is("get something"));
         assertThat(get.method(), is("get"));
         assertThat(get.resource().relativeUri().value(), is("/top"));
+        assertMethodBaseUriParameters(get.baseUriParameters());
 
         Method post = methods.get(1);
         assertThat(post.method(), is("post"));
         assertBody(post.body());
         assertResponses(post.responses());
     }
+
+    private void assertMethodBaseUriParameters(List<Parameter> parameters)
+    {
+        assertThat(parameters.size(), is(1));
+        assertThat(parameters.get(0).name(), is("param1"));
+        assertThat(parameters.get(0).description().value(), is("method override"));
+        assertThat(parameters.get(0).type(), is("boolean"));
+    }
+
 
     private void assertResponses(List<Response> responses)
     {

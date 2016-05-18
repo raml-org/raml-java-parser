@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.parser;
+package org.raml.v2.api;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
-import org.raml.v2.api.RamlModelBuilder;
-import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.api.DocumentationItem;
@@ -56,7 +54,7 @@ public class SpecInterfacesV10TestCase
     @Test
     public void full() throws IOException
     {
-        File input = new File("src/test/resources/org/raml/v2/interfaces/inputV10.raml");
+        File input = new File("src/test/resources/org/raml/v2/api/v10/full/input.raml");
         assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         assertFalse(ramlModelResult.hasErrors());
@@ -255,10 +253,10 @@ public class SpecInterfacesV10TestCase
     private void assertTraitsRefs(List<TraitRef> traitRefs)
     {
         assertThat(traitRefs.size(), is(2));
-        assertThat(traitRefs.get(0).name(), is("one"));
+        assertThat(traitRefs.get(0).name(), is("traitOne"));
         assertThat(traitRefs.get(0).trait().description().value(), is("method description"));
 
-        assertThat(traitRefs.get(1).name(), is("two"));
+        assertThat(traitRefs.get(1).name(), is("traitTwo"));
         TypeInstance param = traitRefs.get(1).structuredValue();
         assertThat(param.properties().size(), is(1));
         assertThat(param.properties().get(0).name(), is("text"));
@@ -287,7 +285,7 @@ public class SpecInterfacesV10TestCase
         assertBody(post.body());
         assertResponses(post.responses());
         assertThat(post.is().size(), is(1));
-        assertThat(post.is().get(0).name(), is("two"));
+        assertThat(post.is().get(0).name(), is("traitTwo"));
         assertThat(post.queryString().type().get(0), is("object"));
     }
 

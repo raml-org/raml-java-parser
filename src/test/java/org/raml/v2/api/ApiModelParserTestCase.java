@@ -37,7 +37,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.raml.v2.api.model.common.ValidationResult;
-import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.dataprovider.TestDataProvider;
 
 @RunWith(Parameterized.class)
@@ -63,15 +62,25 @@ public class ApiModelParserTestCase extends TestDataProvider
         final RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         final List<ValidationResult> validationResults = ramlModelResult.getValidationResults();
         Assert.assertTrue("Raml has error " + validationResults.toString(), validationResults.isEmpty());
-        Assert.assertTrue("It should be 1.0 version", ramlModelResult.isVersion10());
-        final Api apiV10 = ramlModelResult.getApiV10();
         final StringWriter out = new StringWriter();
         final JsonWriter jsonWriter = new JsonWriter(out);
         jsonWriter.setIndent(" ");
-        dumpToJson(Api.class, apiV10, jsonWriter);
+        dumpApiToJson(ramlModelResult, jsonWriter);
         dump = out.toString();
         expected = IOUtils.toString(new FileInputStream(expectedOutput), "UTF-8");
         Assert.assertTrue(jsonEquals(dump, expected));
+    }
+
+    private void dumpApiToJson(RamlModelResult ramlModelResult, JsonWriter jsonWriter) throws Exception
+    {
+        if (ramlModelResult.isVersion10())
+        {
+            dumpToJson(org.raml.v2.api.model.v10.api.Api.class, ramlModelResult.getApiV10(), jsonWriter);
+        }
+        else
+        {
+            dumpToJson(org.raml.v2.api.model.v08.api.Api.class, ramlModelResult.getApiV08(), jsonWriter);
+        }
     }
 
 

@@ -19,9 +19,6 @@ package org.raml.v2.api.model.v08.system.types;
 public interface Reference
 {
 
-    String value();
-
-
     /**
      * Returns a structured object if the reference point to one.
      **/
