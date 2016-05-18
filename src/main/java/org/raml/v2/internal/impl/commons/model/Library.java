@@ -15,32 +15,27 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.lang.reflect.Constructor;
-
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.utils.NodeSelector;
+import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 
-public abstract class BaseModelElement
+public class Library extends LibraryBase
 {
 
-    public abstract Node getNode();
+    private LibraryNode node;
 
-    protected <T> T getObject(String key, Class<T> clazz)
+    public Library(Node node)
     {
-        Node settings = NodeSelector.selectFrom(key, getNode());
-        if (settings != null)
-        {
-            try
-            {
-                Constructor<T> constructor = clazz.getConstructor(Node.class);
-                return constructor.newInstance(settings.getParent());
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
-        }
-        return null;
+        this.node = (LibraryNode) node;
     }
 
+    @Override
+    public Node getNode()
+    {
+        return node.getValue();
+    }
+
+    public String name()
+    {
+        return node.getName();
+    }
 }

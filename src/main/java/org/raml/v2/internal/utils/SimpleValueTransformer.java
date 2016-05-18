@@ -16,7 +16,10 @@
 package org.raml.v2.internal.utils;
 
 
-import org.raml.v2.internal.framework.nodes.*;
+import org.raml.v2.internal.framework.nodes.BooleanNode;
+import org.raml.v2.internal.framework.nodes.IntegerNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 
 public enum SimpleValueTransformer
 {

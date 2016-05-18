@@ -61,4 +61,10 @@ public interface LibraryBase extends Annotable
      **/
     List<SecurityScheme> securitySchemes();
 
+
+    /***
+     * Importing external libraries that can be used within the API.
+     **/
+    List<Library> uses();
+
 }

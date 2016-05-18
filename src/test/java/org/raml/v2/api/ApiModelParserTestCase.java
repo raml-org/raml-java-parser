@@ -16,14 +16,6 @@
 package org.raml.v2.api;
 
 import com.google.gson.stream.JsonWriter;
-import org.apache.commons.io.IOUtils;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.raml.v2.api.model.common.ValidationResult;
-import org.raml.v2.api.model.v10.api.Api;
-import org.raml.v2.dataprovider.TestDataProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +30,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v10.api.Api;
+import org.raml.v2.dataprovider.TestDataProvider;
 
 @RunWith(Parameterized.class)
 public class ApiModelParserTestCase extends TestDataProvider
@@ -68,8 +69,9 @@ public class ApiModelParserTestCase extends TestDataProvider
         final JsonWriter jsonWriter = new JsonWriter(out);
         jsonWriter.setIndent(" ");
         dumpToJson(Api.class, apiV10, jsonWriter);
-        System.out.println("out = " + out);
-        Assert.assertTrue(jsonEquals(out.toString(), IOUtils.toString(new FileInputStream(expectedOutput), "UTF-8")));
+        dump = out.toString();
+        expected = IOUtils.toString(new FileInputStream(expectedOutput), "UTF-8");
+        Assert.assertTrue(jsonEquals(dump, expected));
     }
 
 
@@ -125,10 +127,8 @@ public class ApiModelParserTestCase extends TestDataProvider
                     if (!isRecursiveMethod(declaredMethod))
                     {
                         final Object methodResult = declaredMethod.invoke(value);
-                        // System.out.println(StringUtils.repeat(" ", indent) + "Property = " + definitionClass + "." + declaredMethod.getName());
                         jsonWriter.name(declaredMethod.getName());
                         dumpToJson(declaredMethod.getGenericReturnType(), methodResult, jsonWriter);
-                        // System.out.println(StringUtils.repeat(" ", indent) + "Done");
                     }
                 }
             }

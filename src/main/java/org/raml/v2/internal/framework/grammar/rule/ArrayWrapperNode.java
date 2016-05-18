@@ -15,7 +15,12 @@
  */
 package org.raml.v2.internal.framework.grammar.rule;
 
-import org.raml.v2.internal.framework.nodes.*;
+import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.BaseNode;
+import org.raml.v2.internal.framework.nodes.DefaultPosition;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.NodeType;
+import org.raml.v2.internal.framework.nodes.Position;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;

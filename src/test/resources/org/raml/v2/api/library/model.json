@@ -239,5 +239,158 @@
   "title": "Mobile Order API",
   "traits": [],
   "types": [],
+  "uses": [
+    {
+      "annotationTypes": [],
+      "annotations": [],
+      "name": "assets",
+      "resourceTypes": [],
+      "schemas": [],
+      "securitySchemes": [],
+      "traits": [
+        {
+          "annotations": [],
+          "body": [],
+          "description": null,
+          "displayName": null,
+          "headers": [],
+          "is": [],
+          "name": "paging",
+          "parametrizedProperties": null,
+          "protocols": [],
+          "queryParameters": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "value": "the amount of elements of each result page"
+              },
+              "displayName": null,
+              "example": {
+                "annotations": [],
+                "name": "example",
+                "value": "10"
+              },
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "size",
+              "required": false,
+              "schema": [],
+              "schemaContent": "integer",
+              "type": [
+                "integer"
+              ]
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "value": "the page number"
+              },
+              "displayName": null,
+              "example": {
+                "annotations": [],
+                "name": "example",
+                "value": "0"
+              },
+              "examples": [],
+              "fixedFacets": null,
+              "isAnnotation": false,
+              "name": "page",
+              "required": false,
+              "schema": [],
+              "schemaContent": "integer",
+              "type": [
+                "integer"
+              ]
+            }
+          ],
+          "queryString": null,
+          "responses": [],
+          "securedBy": [],
+          "usage": null
+        }
+      ],
+      "types": [
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "displayName": "ProductItem",
+          "example": null,
+          "examples": [],
+          "fixedFacets": null,
+          "isAnnotation": false,
+          "name": "ProductItem",
+          "required": true,
+          "schema": [],
+          "schemaContent": "object",
+          "type": [
+            "object"
+          ]
+        },
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "displayName": "Order",
+          "example": null,
+          "examples": [],
+          "fixedFacets": null,
+          "isAnnotation": false,
+          "name": "Order",
+          "required": true,
+          "schema": [],
+          "schemaContent": "object",
+          "type": [
+            "object"
+          ]
+        },
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "displayName": "Orders",
+          "example": null,
+          "examples": [],
+          "fixedFacets": null,
+          "isAnnotation": false,
+          "name": "Orders",
+          "required": true,
+          "schema": [],
+          "schemaContent": "object",
+          "type": [
+            "object"
+          ]
+        },
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "displayName": "Inherit",
+          "example": null,
+          "examples": [],
+          "fixedFacets": null,
+          "isAnnotation": false,
+          "name": "Inherit",
+          "required": true,
+          "schema": [],
+          "schemaContent": "Order",
+          "type": [
+            "Order"
+          ]
+        }
+      ],
+      "usage": null,
+      "uses": []
+    }
+  ],
   "version": "1.0"
 }

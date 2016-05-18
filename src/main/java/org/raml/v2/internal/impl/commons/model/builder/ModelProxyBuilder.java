@@ -17,11 +17,23 @@ package org.raml.v2.internal.impl.commons.model.builder;
 
 import static org.raml.v2.internal.impl.commons.model.builder.ModelUtils.isPrimitiveOrWrapperOrString;
 
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.raml.v2.internal.framework.nodes.*;
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.NullNode;
+import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.impl.commons.model.Api;
 import org.raml.v2.internal.impl.commons.model.BaseModelElement;
 import org.raml.v2.internal.impl.commons.model.DefaultModelElement;
@@ -29,8 +41,6 @@ import org.raml.v2.internal.impl.commons.model.StringType;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.SimpleValueTransformer;
-
-import javax.annotation.Nullable;
 
 public class ModelProxyBuilder
 {
@@ -254,7 +264,7 @@ public class ModelProxyBuilder
         {
             try
             {
-                return delegate.getClass().getMethod(getActualMethodName(method), method.getParameterTypes());
+                return delegate.getClass().getMethod(method.getName(), method.getParameterTypes());
             }
             catch (NoSuchMethodException e)
             {
@@ -262,22 +272,6 @@ public class ModelProxyBuilder
             }
         }
 
-        /**
-         *  resolves collisions when methods only differ on return types
-         */
-        private String getActualMethodName(Method method)
-        {
-            if (method.toGenericString().contains("List<org.raml.v2.api.model.v08.bodies.BodyLike> org.raml.v2.api.model.v08.methods.MethodBase.body()") ||
-                method.toGenericString().contains("List<org.raml.v2.api.model.v08.bodies.BodyLike> org.raml.v2.api.model.v08.bodies.Response.body()"))
-            {
-                return "bodyV08";
-            }
-            if (method.toGenericString().contains("List<org.raml.v2.api.model.v08.api.GlobalSchema> org.raml.v2.api.model.v08.api.Api.schemas()"))
-            {
-                return "schemasV08";
-            }
-            return method.getName();
-        }
     }
 
 }
