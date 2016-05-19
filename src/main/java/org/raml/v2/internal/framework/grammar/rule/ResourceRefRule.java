@@ -13,47 +13,32 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.nodes.snakeyaml;
+package org.raml.v2.internal.framework.grammar.rule;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.raml.v2.internal.framework.nodes.ReferenceNode;
 
 import javax.annotation.Nonnull;
 
-public class SYIncludeNode extends SYStringNode
+public class ResourceRefRule extends StringTypeRule
 {
 
-    private SYIncludeNode(SYIncludeNode node, String resourcePath)
+    @Override
+    public Node apply(@Nonnull Node node)
     {
-        super(node, resourcePath);
-    }
-
-    public SYIncludeNode(ScalarNode scalarNode, String resourcePath)
-    {
-        super(scalarNode, resourcePath);
-    }
-
-    public String getIncludePath()
-    {
-        return getValue();
-    }
-
-    public String getIncludedType()
-    {
-        String parts[];
-        parts = this.getValue().split("#");
-        if (parts.length == 2)
+        if (node instanceof ReferenceNode)
         {
-            return parts[1];
+            return node;
         }
         else
-            return null;
+        {
+            return super.apply(node);
+        }
     }
 
-    @Nonnull
     @Override
-    public Node copy()
+    public boolean matches(@Nonnull Node node)
     {
-        return new SYIncludeNode(this, getResourcePath());
+        return super.matches(node) || node instanceof ReferenceNode;
     }
 }

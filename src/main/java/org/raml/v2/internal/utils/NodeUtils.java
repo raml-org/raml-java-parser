@@ -22,6 +22,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.impl.commons.nodes.ContextProviderNode;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
 
 import javax.annotation.Nonnull;
@@ -112,8 +113,12 @@ public class NodeUtils
             String navigationPath = typeName.substring(0, typeName.lastIndexOf("."));
             if (!navigationPath.contains("."))
             {
-                return resolution.get(navigationPath) != null && getTypes(resolution.get(navigationPath)) != null &&
-                       getTypes(resolution.get(navigationPath)).get(objectName) instanceof TypeNode ? (TypeNode) getTypes(resolution.get(navigationPath)).get(objectName) : null;
+                Node libraryNode = resolution.get(navigationPath);
+                if (libraryNode instanceof LibraryLinkNode)
+                {
+                    libraryNode = ((LibraryLinkNode) libraryNode).getRefNode();
+                }
+                return libraryNode != null && getTypes(libraryNode) != null && getTypes(libraryNode).get(objectName) instanceof TypeNode ? (TypeNode) getTypes(libraryNode).get(objectName) : null;
             }
             for (String path : navigationPath.split("."))
             {

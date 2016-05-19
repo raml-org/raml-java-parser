@@ -46,6 +46,8 @@ public class RamlBuilder
     public static int FIRST_PHASE = 1;
     public static int SUGAR_PHASE = 4;
 
+    public static int ALL_PHASES = Integer.MAX_VALUE;
+
     private int maxPhaseNumber;
 
     private ResourceLoader resourceLoader = null;
@@ -54,7 +56,7 @@ public class RamlBuilder
 
     public RamlBuilder()
     {
-        maxPhaseNumber = Integer.MAX_VALUE;
+        maxPhaseNumber = ALL_PHASES;
     }
 
     public RamlBuilder(int maxPhaseNumber)

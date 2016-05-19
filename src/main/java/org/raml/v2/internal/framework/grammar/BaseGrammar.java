@@ -24,32 +24,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
-import org.raml.v2.internal.framework.grammar.rule.AllOfRule;
-import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
-import org.raml.v2.internal.framework.grammar.rule.AnyValueRule;
-import org.raml.v2.internal.framework.grammar.rule.ArrayRule;
-import org.raml.v2.internal.framework.grammar.rule.BooleanTypeRule;
-import org.raml.v2.internal.framework.grammar.rule.ConditionalRule;
-import org.raml.v2.internal.framework.grammar.rule.ConditionalRules;
-import org.raml.v2.internal.framework.grammar.rule.DefaultValue;
-import org.raml.v2.internal.framework.grammar.rule.DiscriminatorRule;
-import org.raml.v2.internal.framework.grammar.rule.FieldPresentRule;
-import org.raml.v2.internal.framework.grammar.rule.FirstOfRule;
-import org.raml.v2.internal.framework.grammar.rule.FloatTypeRule;
-import org.raml.v2.internal.framework.grammar.rule.IntegerTypeRule;
-import org.raml.v2.internal.framework.grammar.rule.IntegerValueRule;
-import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
-import org.raml.v2.internal.framework.grammar.rule.MinLengthRule;
-import org.raml.v2.internal.framework.grammar.rule.NegativeRule;
-import org.raml.v2.internal.framework.grammar.rule.NullValueRule;
-import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
-import org.raml.v2.internal.framework.grammar.rule.ParentKeyDefaultValue;
-import org.raml.v2.internal.framework.grammar.rule.ReferenceRule;
-import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
-import org.raml.v2.internal.framework.grammar.rule.Rule;
-import org.raml.v2.internal.framework.grammar.rule.ScalarTypeRule;
-import org.raml.v2.internal.framework.grammar.rule.StringTypeRule;
-import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
+import org.raml.v2.internal.framework.grammar.rule.*;
 
 public class BaseGrammar
 {
@@ -156,6 +131,11 @@ public class BaseGrammar
     public RegexValueRule regex(String pattern)
     {
         return new RegexValueRule(Pattern.compile(pattern));
+    }
+
+    protected NodeReferenceRule nodeRef(String referenceKey)
+    {
+        return new NodeReferenceRule(referenceKey);
     }
 
     public AnyOfRule anyOf(Rule... rules)

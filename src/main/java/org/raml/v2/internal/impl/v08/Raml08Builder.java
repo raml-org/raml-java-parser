@@ -59,7 +59,7 @@ public class Raml08Builder
     private List<Phase> createPhases(ResourceLoader resourceLoader, String resourceLocation)
     {
         // The first phase expands the includes.
-        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader, resourceLocation), new StringTemplateExpressionTransformer(),
+        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer(),
                 new TypesTransformer());
         // Overlays and extensions.
 

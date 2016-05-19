@@ -167,21 +167,20 @@ public class ErrorNodeFactory
         return new ErrorNode("Error validating Schema. Error: " + error);
     }
 
-    public static ErrorNode createInexistentType(String typeName)
+    public static ErrorNode createInvalidType(String typeName)
     {
-        return new ErrorNode("Inexistent type definition for " + typeName);
+        return new ErrorNode("Invalid type name: " + typeName);
     }
 
     public static ErrorNode createInvalidNumberOfProperties(String comparator, Integer expected, Integer actual)
     {
-        return new ErrorNode("expected " + comparator + " number of properties to be: " + expected + " but was: " + actual);
+        return new ErrorNode("Expected " + comparator + " number of properties to be: " + expected + " but was: " + actual);
     }
 
     public static ErrorNode createInvalidDateValue(String dateValue, String dateFormat, String rfc)
     {
-        return new ErrorNode("provided value " + dateValue + " is not compliant with the format " + dateFormat + " provided in " + rfc);
+        return new ErrorNode("Provided value " + dateValue + " is not compliant with the format " + dateFormat + " provided in " + rfc);
     }
-
 
     public static ErrorNode createInvalidReferenceNode(ReferenceNode refNode)
     {

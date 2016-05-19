@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.framework.nodes.Position;
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.ObjectTypeNode;
 import org.raml.v2.internal.framework.nodes.BooleanNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
@@ -71,6 +72,10 @@ public class TreeDumper
         for (Node child : getChildren(node))
         {
             dump(child);
+        }
+        if (node instanceof LibraryLinkNode)
+        {
+            dump(((LibraryLinkNode) node).getRefNode());
         }
         dedent();
         return dump.toString();

@@ -32,7 +32,7 @@ public class RamlNodeParser
 
 
     @Nullable
-    public static Node parse(String resourcePath, Reader reader, boolean supportLibraries)
+    public static Node parse(String resourcePath, Reader reader)
     {
         try
         {
@@ -44,7 +44,7 @@ public class RamlNodeParser
             }
             else
             {
-                return new SYModelWrapper(resourcePath, supportLibraries).wrap(composedNode);
+                return new SYModelWrapper(resourcePath).wrap(composedNode);
             }
         }
         catch (final MarkedYAMLException e)
@@ -65,12 +65,8 @@ public class RamlNodeParser
     @Nullable
     public static Node parse(String resourcePath, String content)
     {
-        return parse(resourcePath, content, false);
+        return parse(resourcePath, new StringReader(content));
     }
 
-    @Nullable
-    public static Node parse(String resourcePath, String content, boolean supportLibraries)
-    {
-        return parse(resourcePath, new StringReader(content), supportLibraries);
-    }
+
 }

@@ -30,6 +30,7 @@ import org.raml.v2.internal.framework.nodes.snakeyaml.SYIncludeNode;
 import org.raml.v2.internal.framework.phase.Transformer;
 import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentNode;
 import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 
 
@@ -37,32 +38,28 @@ public class IncludeResolver implements Transformer
 {
 
     private final ResourceLoader resourceLoader;
-    private final String resourceLocation;
 
-    public IncludeResolver(ResourceLoader resourceLoader, String resourceLocation)
+    public IncludeResolver(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
-        this.resourceLocation = resourceLocation;
     }
 
     @Override
-    public boolean matches(Node tree)
+    public boolean matches(Node node)
     {
-        return tree instanceof SYIncludeNode;
+        return node instanceof SYIncludeNode;
     }
 
     @Override
-    public Node transform(Node tree)
+    public Node transform(Node node)
     {
-
-        SYIncludeNode includeNode = (SYIncludeNode) tree;
-        String resourcePath = applyResourceLocation(includeNode.getIncludePath());
+        final SYIncludeNode includeNode = (SYIncludeNode) node;
+        String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getResource(), includeNode.getIncludePath());
         try (InputStream inputStream = resourceLoader.fetchResource(resourcePath))
         {
             if (inputStream == null)
             {
-                String msg = "Include cannot be resolved: " + resourcePath;
-                return new IncludeErrorNode(msg);
+                return new IncludeErrorNode("Include cannot be resolved: " + resourcePath);
             }
             Node result;
             String includeContent = StreamUtils.toString(inputStream);
@@ -73,7 +70,7 @@ public class IncludeResolver implements Transformer
                 {
                     RamlHeader ramlHeader = RamlHeader.parse(includeContent);
                     final RamlFragment fragment = ramlHeader.getFragment();
-                    result = RamlNodeParser.parse(resourcePath, includeContent, fragment != null);
+                    result = RamlNodeParser.parse(resourcePath, includeContent);
                     if (result != null && isTypedFragment(result, fragment))
                     {
                         final RamlTypedFragmentNode newNode = new RamlTypedFragmentNode(fragment);
@@ -84,7 +81,7 @@ public class IncludeResolver implements Transformer
                 catch (RamlHeader.InvalidHeaderException e)
                 {
                     // no valid header defined => !supportUses
-                    result = RamlNodeParser.parse(resourcePath, includeContent, false);
+                    result = RamlNodeParser.parse(resourcePath, includeContent);
                 }
 
             }
@@ -96,16 +93,14 @@ public class IncludeResolver implements Transformer
 
             if (result == null)
             {
-                String msg = "Include file is empty: " + resourcePath;
-                result = new IncludeErrorNode(msg);
+                result = new IncludeErrorNode("Include file is empty: " + resourcePath);
             }
 
             return result;
         }
         catch (IOException e)
         {
-            String msg = String.format("Include cannot be resolved: %s. (%s)", resourcePath, e.getMessage());
-            return new IncludeErrorNode(msg);
+            return new IncludeErrorNode(String.format("Include cannot be resolved: %s. (%s)", resourcePath, e.getMessage()));
         }
     }
 
@@ -114,26 +109,5 @@ public class IncludeResolver implements Transformer
         return fragment != null && fragment != RamlFragment.Library && result instanceof ObjectNode;
     }
 
-    private String applyResourceLocation(String includePath)
-    {
-        String result = includePath;
-        if (!isAbsolute(includePath))
-        {
-            int lastSlash = resourceLocation.lastIndexOf("/");
-            if (lastSlash != -1)
-            {
-                result = resourceLocation.substring(0, lastSlash + 1) + includePath;
-            }
-        }
-        if (result.contains("#"))
-        {
-            return result.split("#")[0];
-        }
-        return result;
-    }
 
-    private boolean isAbsolute(String includePath)
-    {
-        return includePath.startsWith("http:") || includePath.startsWith("https:") || includePath.startsWith("file:") || new File(includePath).isAbsolute();
-    }
 }

@@ -15,30 +15,21 @@
  */
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
-import static org.yaml.snakeyaml.nodes.NodeId.mapping;
-import static org.yaml.snakeyaml.nodes.NodeId.scalar;
-import static org.yaml.snakeyaml.nodes.NodeId.sequence;
-
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
-import org.yaml.snakeyaml.nodes.MappingNode;
-import org.yaml.snakeyaml.nodes.NodeTuple;
-import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.SequenceNode;
-import org.yaml.snakeyaml.nodes.Tag;
+import org.yaml.snakeyaml.nodes.*;
+
+import static org.yaml.snakeyaml.nodes.NodeId.*;
 
 public class SYModelWrapper
 {
 
     private String resourcePath;
-    private boolean supportLibraries;
-    private int depth;
 
-    public SYModelWrapper(String resourcePath, boolean supportLibraries)
+    public SYModelWrapper(String resourcePath)
     {
         this.resourcePath = resourcePath;
-        this.supportLibraries = supportLibraries;
     }
 
     private static class MappingNodeMerger extends SafeConstructor
@@ -79,48 +70,16 @@ public class SYModelWrapper
             new MappingNodeMerger().merge(mappingNode);
         }
         SYObjectNode mapping = new SYObjectNode(mappingNode, resourcePath);
-        depth++;
         for (NodeTuple nodeTuple : mappingNode.getValue())
         {
-            checkForUsesKey(nodeTuple);
             Node key = wrap(nodeTuple.getKeyNode());
             Node value = wrap(nodeTuple.getValueNode());
             KeyValueNodeImpl keyValue = new KeyValueNodeImpl(key, value);
             mapping.addChild(keyValue);
         }
-        depth--;
         return mapping;
     }
 
-    /*
-     * check if tuple is a 'uses' definition at root level and inject !include tags for each library reference
-     */
-    private void checkForUsesKey(NodeTuple nodeTuple)
-    {
-        if (!supportLibraries)
-        {
-            return;
-        }
-        if (depth > 1)
-        {
-            return;
-        }
-        if (!(nodeTuple.getKeyNode() instanceof ScalarNode) ||
-            !"uses".equals(((ScalarNode) nodeTuple.getKeyNode()).getValue()))
-        {
-            return;
-        }
-        if (nodeTuple.getValueNode() instanceof MappingNode)
-        {
-            for (NodeTuple libTuple : ((MappingNode) nodeTuple.getValueNode()).getValue())
-            {
-                if (libTuple.getValueNode() instanceof ScalarNode)
-                {
-                    libTuple.getValueNode().setTag(INCLUDE_TAG);
-                }
-            }
-        }
-    }
 
     private Node wrap(ScalarNode scalarNode)
     {

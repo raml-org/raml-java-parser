@@ -50,6 +50,24 @@ public class LibraryRefNode extends AbstractReferenceNode
     @Override
     public Node resolveReference()
     {
+        final Node node = selectLibraryLinkNode();
+        if (node == null)
+        {
+            return null;
+        }
+        if (node instanceof LibraryLinkNode)
+        {
+            return ((LibraryLinkNode) node).getRefNode();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    @Nullable
+    protected Node selectLibraryLinkNode()
+    {
         final Node relativeNode = getRelativeNode();
         if (relativeNode instanceof LibraryNodeProvider)
         {

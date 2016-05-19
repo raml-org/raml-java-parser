@@ -25,6 +25,7 @@ import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.commons.phase.*;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjection;
 import org.raml.v2.internal.impl.v10.phase.TypesTransformer;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -42,7 +43,7 @@ public class Raml10Builder
 
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = RamlNodeParser.parse(resourceLocation, stringContent, true);
+        Node rootNode = RamlNodeParser.parse(resourceLocation, stringContent);
         if (rootNode == null)
         {
             return ErrorNodeFactory.createEmptyDocument();
@@ -117,9 +118,9 @@ public class Raml10Builder
     private List<Phase> createPhases(ResourceLoader resourceLoader, String resourceLocation, RamlFragment fragment)
     {
         // The first phase expands the includes.
-        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader, resourceLocation), new StringTemplateExpressionTransformer());
+        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
 
-        final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer());
+        final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer(resourceLoader));
 
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem
         final Raml10Grammar raml10Grammar = new Raml10Grammar();
@@ -130,6 +131,8 @@ public class Raml10Builder
         // sugar
         final SugarRushPhase sugar = new SugarRushPhase();
         // Normalize resources and detects duplicated ones and more than one use of url parameters. ???
+
+        final TransformationPhase libraryLink = new TransformationPhase(new LibraryLinkingTransformation(resourceLoader));
 
         final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformer());
 
@@ -151,7 +154,7 @@ public class Raml10Builder
 
         final ExampleValidationPhase seventh = new ExampleValidationPhase(resourceLoader);
 
-        return Arrays.asList(first, ramlFragmentsValidator, sugar, second, referenceCheck, third, typesTransformation, thirdAndAHalf, fourth, fifth, sixth, seventh);
+        return Arrays.asList(first, ramlFragmentsValidator, sugar, second, libraryLink, referenceCheck, third, typesTransformation, thirdAndAHalf, fourth, fifth, sixth, seventh);
 
     }
 }

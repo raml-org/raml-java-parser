@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 
 public class Library extends Annotable
@@ -31,7 +32,8 @@ public class Library extends Annotable
     @Override
     public Node getNode()
     {
-        return node.getValue();
+        final Node value = node.getValue();
+        return ((LibraryLinkNode) value).getRefNode();
     }
 
     public String name()

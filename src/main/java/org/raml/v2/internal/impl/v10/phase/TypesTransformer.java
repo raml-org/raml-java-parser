@@ -285,7 +285,7 @@ public class TypesTransformer implements Transformer
                     final TypeNode parentTypeNode = getType(trimmedType, typeNode);
                     if (!((ObjectTypeNode) NodeUtils.getAncestor(typeNode, 2)).isResolved() && parentTypeNode == null)
                     {
-                        final Node errorNode = ErrorNodeFactory.createInexistentType(trimmedType);
+                        final Node errorNode = ErrorNodeFactory.createInvalidType(trimmedType);
                         typeNode.replaceWith(errorNode);
                     }
                 }
@@ -336,7 +336,7 @@ public class TypesTransformer implements Transformer
                     final TypeNode typeDefinition = getType(objectType, typeNode);
                     if (typeDefinition == null)
                     {
-                        Node error = ErrorNodeFactory.createInexistentType(objectType);
+                        Node error = ErrorNodeFactory.createInvalidType(objectType);
                         typeNode.replaceWith(error);
                     }
                     else

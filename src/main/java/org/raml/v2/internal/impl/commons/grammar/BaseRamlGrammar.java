@@ -472,9 +472,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
         final KeyValueRule typeWithParams = field(scalarType(), objectType().with(paramsRule));
         final NodeFactory factory = new NodeReferenceFactory(simpleClass);
         final NodeFactory parametrisedFactory = new NodeReferenceFactory(parametrisedClass);
-        return anyOf(new NodeReferenceRule(referenceKey).then(factory), new ParametrizedNodeReferenceRule(referenceKey).with(typeWithParams).then(parametrisedFactory));
+        return anyOf(nodeRef(referenceKey).then(factory), new ParametrizedNodeReferenceRule(referenceKey).with(typeWithParams).then(parametrisedFactory));
     }
-
 
     protected StringValueRule titleKey()
     {
