@@ -15,7 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.nodes.types.builtin;
 
-import static org.raml.v2.internal.impl.commons.model.builder.ModelUtils.*;
+import static org.raml.v2.internal.impl.commons.model.builder.ModelUtils.getStringValue;
 
 import javax.annotation.Nonnull;
 
@@ -23,7 +23,6 @@ import org.raml.v2.internal.framework.nodes.AbstractRamlNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
-import org.raml.v2.internal.framework.nodes.StringNode;
 
 public class DateTypeNode extends AbstractRamlNode implements ObjectNode, TypeNode
 {

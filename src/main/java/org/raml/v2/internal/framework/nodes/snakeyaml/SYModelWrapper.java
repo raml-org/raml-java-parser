@@ -15,12 +15,18 @@
  */
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
+import static org.yaml.snakeyaml.nodes.NodeId.mapping;
+import static org.yaml.snakeyaml.nodes.NodeId.scalar;
+import static org.yaml.snakeyaml.nodes.NodeId.sequence;
+
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
-import org.yaml.snakeyaml.nodes.*;
-
-import static org.yaml.snakeyaml.nodes.NodeId.*;
+import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class SYModelWrapper
 {

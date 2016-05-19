@@ -21,7 +21,18 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.raml.v2.internal.framework.grammar.rule.*;
+import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
+import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
+import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
+import org.raml.v2.internal.framework.grammar.rule.NodeReferenceFactory;
+import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
+import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
+import org.raml.v2.internal.framework.grammar.rule.ResourceRefRule;
+import org.raml.v2.internal.framework.grammar.rule.Rule;
+import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
+import org.raml.v2.internal.framework.grammar.rule.TypeNodeReferenceRule;
+import org.raml.v2.internal.framework.grammar.rule.TypesFactory;
+import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
@@ -33,7 +44,6 @@ import org.raml.v2.internal.impl.commons.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 import org.raml.v2.internal.impl.v10.nodes.types.factories.TypeNodeFactory;
-import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 
 public class Raml10Grammar extends BaseRamlGrammar
 {

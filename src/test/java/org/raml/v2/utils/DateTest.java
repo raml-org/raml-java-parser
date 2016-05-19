@@ -15,23 +15,12 @@
  */
 package org.raml.v2.utils;
 
-import static org.junit.Assert.*;
-
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by federicodonnarumma on 4/25/16.
- */
+
 public class DateTest
 {
     @Test

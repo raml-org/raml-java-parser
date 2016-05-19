@@ -16,26 +16,36 @@
 package org.raml.v2.internal.impl;
 
 
-import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.framework.grammar.rule.Rule;
-import org.raml.v2.internal.framework.nodes.*;
-import org.raml.v2.internal.framework.suggester.*;
-import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.RamlVersion;
-import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
-import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
-import org.raml.v2.internal.utils.Inflector;
-import org.raml.v2.internal.utils.NodeUtils;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.v2.api.loader.DefaultResourceLoader;
+import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.grammar.rule.Rule;
+import org.raml.v2.internal.framework.nodes.EmptyErrorNode;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.suggester.DefaultSuggestion;
+import org.raml.v2.internal.framework.suggester.RamlParsingContext;
+import org.raml.v2.internal.framework.suggester.RamlParsingContextType;
+import org.raml.v2.internal.framework.suggester.Suggestion;
+import org.raml.v2.internal.framework.suggester.Suggestions;
+import org.raml.v2.internal.impl.commons.RamlHeader;
+import org.raml.v2.internal.impl.commons.RamlVersion;
+import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.utils.Inflector;
+import org.raml.v2.internal.utils.NodeUtils;
 
 public class RamlSuggester
 {
