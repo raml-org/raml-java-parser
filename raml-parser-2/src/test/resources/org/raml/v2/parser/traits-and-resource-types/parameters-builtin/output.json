@@ -48,7 +48,7 @@
                         "value": "/{userId}"
                     },
                     "description": {
-                        "value": "resourcePath /users/{userId} and resourcePathName userId"
+                        "value": "resourcePath /users/{userId} and resourcePathName users"
                     },
                     "methods": [
                         {
@@ -58,7 +58,7 @@
                                 "value": "get"
                             },
                             "description": {
-                                "value": "resourcePath /users/{userId} and resourcePathName userId and methodName get"
+                                "value": "resourcePath /users/{userId} and resourcePathName users and methodName get"
                             }
                         }
                     ]
