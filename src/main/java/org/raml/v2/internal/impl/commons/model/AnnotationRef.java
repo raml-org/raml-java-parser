@@ -15,7 +15,6 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 
 public class AnnotationRef
@@ -23,9 +22,9 @@ public class AnnotationRef
 
     private AnnotationNode node;
 
-    public AnnotationRef(Node node)
+    public AnnotationRef(AnnotationNode node)
     {
-        this.node = (AnnotationNode) node;
+        this.node = node;
     }
 
     public TypeDeclaration annotation()

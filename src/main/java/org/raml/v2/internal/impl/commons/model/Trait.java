@@ -18,18 +18,14 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 import org.raml.v2.internal.framework.nodes.Node;
 
-public class Trait extends CommonAttributes
+public class Trait extends Annotable
 {
 
     private TraitNode node;
 
-    public Trait(Node node)
+    public Trait(TraitNode node)
     {
-        if (!(node instanceof TraitNode))
-        {
-            throw new IllegalArgumentException("Invalid node type: " + node.getClass().getName());
-        }
-        this.node = (TraitNode) node;
+        this.node = node;
     }
 
     @Override

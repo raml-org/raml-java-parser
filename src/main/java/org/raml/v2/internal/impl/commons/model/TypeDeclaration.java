@@ -24,20 +24,19 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.impl.commons.model.builder.ModelUtils;
-import org.raml.v2.internal.impl.commons.nodes.ExampleTypeNode;
 import org.raml.v2.internal.impl.commons.nodes.PayloadValidationResultNode;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
 import org.raml.v2.internal.utils.NodeValidator;
 
-public class TypeDeclaration extends CommonAttributes
+public class TypeDeclaration extends Annotable
 {
 
     private KeyValueNode node;
 
-    public TypeDeclaration(Node node)
+    public TypeDeclaration(KeyValueNode node)
     {
-        this.node = (KeyValueNode) node;
+        this.node = node;
     }
 
     @Override
@@ -56,7 +55,7 @@ public class TypeDeclaration extends CommonAttributes
         Node example = NodeSelector.selectFrom("example", getNode());
         if (example != null)
         {
-            return new ExampleSpec(example.getParent());
+            return new ExampleSpec((KeyValueNode) example.getParent());
         }
         return null;
     }

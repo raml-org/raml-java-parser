@@ -15,6 +15,10 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
@@ -345,6 +349,16 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected Rule objectTypeLiteral()
     {
         return not(anyBuiltinType());
+    }
+
+    protected AnyOfRule anyBuiltinType()
+    {
+        List<Rule> builtInTypes = Lists.newArrayList();
+        for (BuiltInScalarType builtInScalarType : BuiltInScalarType.values())
+        {
+            builtInTypes.add(string(builtInScalarType.getType()));
+        }
+        return anyOf(builtInTypes);
     }
 
     protected KeyValueRule mediaTypeField()

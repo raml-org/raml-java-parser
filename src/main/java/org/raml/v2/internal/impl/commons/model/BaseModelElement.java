@@ -15,32 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.lang.reflect.Constructor;
-
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.utils.NodeSelector;
 
 public abstract class BaseModelElement
 {
 
     public abstract Node getNode();
-
-    protected <T> T getObject(String key, Class<T> clazz)
-    {
-        Node settings = NodeSelector.selectFrom(key, getNode());
-        if (settings != null)
-        {
-            try
-            {
-                Constructor<T> constructor = clazz.getConstructor(Node.class);
-                return constructor.newInstance(settings.getParent());
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
-        }
-        return null;
-    }
 
 }

@@ -15,11 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.grammar;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
-
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -36,7 +33,6 @@ import org.raml.v2.internal.framework.grammar.rule.ParametrizedNodeReferenceRule
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
-import org.raml.v2.internal.impl.commons.model.BuiltInScalarType;
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedResourceTypeRefNode;
@@ -596,16 +592,6 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     protected AnyOfRule anyOptionalMethod()
     {
         return anyOf(string("get?"), string("patch?"), string("put?"), string("post?"), string("delete?"), string("options?"), string("head?"));
-    }
-
-    protected AnyOfRule anyBuiltinType()
-    {
-        List<Rule> builtInTypes = Lists.newArrayList();
-        for (BuiltInScalarType builtInScalarType : BuiltInScalarType.values())
-        {
-            builtInTypes.add(string(builtInScalarType.getType()));
-        }
-        return anyOf(builtInTypes);
     }
 
     protected AnyOfRule anyResourceTypeMethod()

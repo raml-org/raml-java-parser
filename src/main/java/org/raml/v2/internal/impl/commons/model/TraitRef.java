@@ -15,18 +15,19 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 
 public class TraitRef extends Reference
 {
-    public TraitRef(Node node)
+    public TraitRef(ReferenceNode node)
     {
         super(node);
     }
 
     public Trait trait()
     {
-        return new Trait(getNode().getRefNode());
+        return new Trait((TraitNode) getNode().getRefNode());
     }
 
 }

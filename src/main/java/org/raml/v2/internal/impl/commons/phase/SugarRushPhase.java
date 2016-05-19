@@ -19,7 +19,7 @@ import static org.raml.v2.internal.utils.NodeUtils.getType;
 
 import java.util.List;
 
-import org.raml.v2.internal.impl.commons.model.BuiltInScalarType;
+import org.raml.v2.internal.impl.v10.grammar.BuiltInScalarType;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.BooleanTypeNode;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.FloatTypeNode;
 import org.raml.v2.internal.impl.v10.nodes.types.builtin.IntegerTypeNode;

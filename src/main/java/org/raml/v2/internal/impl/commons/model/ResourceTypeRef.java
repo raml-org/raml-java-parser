@@ -15,12 +15,12 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ReferenceNode;
 
 public class ResourceTypeRef extends Reference
 {
 
-    public ResourceTypeRef(Node node)
+    public ResourceTypeRef(ReferenceNode node)
     {
         super(node);
     }

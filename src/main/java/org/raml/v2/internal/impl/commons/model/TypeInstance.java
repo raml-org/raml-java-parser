@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
@@ -37,13 +38,13 @@ public class TypeInstance extends BaseModelElement
         List<TypeInstanceProperty> result = new ArrayList<>();
         if (node instanceof ArrayNode)
         {
-            result.add(new TypeInstanceProperty(node.getParent()));
+            result.add(new TypeInstanceProperty((KeyValueNode) node.getParent()));
         }
         else if (node instanceof ObjectNode)
         {
             for (Node child : node.getChildren())
             {
-                result.add(new TypeInstanceProperty(child));
+                result.add(new TypeInstanceProperty((KeyValueNode) child));
             }
         }
         return result;

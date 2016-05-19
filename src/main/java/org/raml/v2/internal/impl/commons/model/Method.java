@@ -19,27 +19,30 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 
-public class Method extends Operation
+public class Method extends Annotable
 {
+
+    private MethodNode node;
 
     public Method(MethodNode node)
     {
-        super(node);
+        this.node = node;
     }
 
-    protected MethodNode getMethodNode()
+    @Override
+    public Node getNode()
     {
-        return (MethodNode) super.getNode().getParent();
+        return node.getValue();
     }
 
     public String method()
     {
-        return getMethodNode().getName();
+        return node.getName();
     }
 
     public Resource resource()
     {
-        Node parent = getMethodNode().getParent();
+        Node parent = node.getParent();
         if (parent != null)
         {
             if (parent.getParent() instanceof ResourceNode)
@@ -49,5 +52,4 @@ public class Method extends Operation
         }
         return null;
     }
-
 }

@@ -24,9 +24,9 @@ public class GlobalSchema extends BaseModelElement
 
     private KeyValueNode node;
 
-    public GlobalSchema(Node node)
+    public GlobalSchema(KeyValueNode node)
     {
-        this.node = (KeyValueNode) node;
+        this.node = node;
     }
 
     @Override

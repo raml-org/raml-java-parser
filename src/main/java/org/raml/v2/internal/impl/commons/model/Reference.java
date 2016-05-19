@@ -16,26 +16,26 @@
 package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.framework.nodes.AbstractReferenceNode;
-import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ReferenceNode;
 
 public class Reference
 {
 
-    private AbstractReferenceNode node;
+    private ReferenceNode node;
 
-    public Reference(Node node)
+    public Reference(ReferenceNode node)
     {
-        this.node = (AbstractReferenceNode) node;
+        this.node = node;
     }
 
-    protected AbstractReferenceNode getNode()
+    protected ReferenceNode getNode()
     {
         return node;
     }
 
     public TypeInstance structuredValue()
     {
-        return new TypeInstance(getNode().getParametersNode());
+        return new TypeInstance(((AbstractReferenceNode) getNode()).getParametersNode());
     }
 
     public String name()

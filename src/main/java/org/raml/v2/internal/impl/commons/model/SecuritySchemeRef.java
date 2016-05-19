@@ -15,8 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.NullNode;
+import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeRefNode;
 
 public class SecuritySchemeRef extends BaseModelElement
@@ -24,9 +23,9 @@ public class SecuritySchemeRef extends BaseModelElement
 
     private SecuritySchemeRefNode node;
 
-    public SecuritySchemeRef(Node node)
+    public SecuritySchemeRef(SecuritySchemeRefNode node)
     {
-        this.node = (SecuritySchemeRefNode) node;
+        this.node = node;
     }
 
     @Override
@@ -46,7 +45,7 @@ public class SecuritySchemeRef extends BaseModelElement
         {
             return null;
         }
-        return new SecurityScheme(node.getRefNode());
+        return new SecurityScheme((SecuritySchemeNode) node.getRefNode());
     }
 
     public TypeInstance structuredValue()

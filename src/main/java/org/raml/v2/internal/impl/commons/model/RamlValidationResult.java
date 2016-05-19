@@ -50,12 +50,9 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
         StringBuilder builder = new StringBuilder(message);
         if (start != null)
         {
-            if (start.getResource() != null)
-            {
-                builder.append(" -- " + start.getResource());
-            }
             if (start.getLine() != Position.UNKNOWN)
             {
+                builder.append(" -- ").append(start.getResource());
                 builder.append(" [line=").append(start.getLine() + 1)
                        .append(", col=").append(start.getColumn() + 1).append("]");
             }

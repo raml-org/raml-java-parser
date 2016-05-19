@@ -28,9 +28,9 @@ public class TypeInstanceProperty
 
     private KeyValueNode node;
 
-    public TypeInstanceProperty(Node node)
+    public TypeInstanceProperty(KeyValueNode node)
     {
-        this.node = (KeyValueNode) node;
+        this.node = node;
     }
 
     public String name()
@@ -64,4 +64,5 @@ public class TypeInstanceProperty
     {
         return node.getValue() instanceof ArrayNode;
     }
+
 }

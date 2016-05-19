@@ -18,14 +18,14 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 
-public class SecurityScheme extends CommonAttributes
+public class SecurityScheme extends Annotable
 {
 
     private SecuritySchemeNode node;
 
-    public SecurityScheme(Node node)
+    public SecurityScheme(SecuritySchemeNode node)
     {
-        this.node = (SecuritySchemeNode) node;
+        this.node = node;
     }
 
     @Override
@@ -37,17 +37,6 @@ public class SecurityScheme extends CommonAttributes
     public String name()
     {
         return node.getName();
-    }
-
-
-    public Operation describedBy()
-    {
-        return getObject("describedBy", Operation.class);
-    }
-
-    public SecuritySchemeSettings settings()
-    {
-        return getObject("settings", SecuritySchemeSettings.class);
     }
 
 }

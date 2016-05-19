@@ -15,20 +15,18 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.List;
-
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 
-public class Response extends CommonAttributes
+public class Response extends Annotable
 {
 
     private KeyValueNode node;
 
-    public Response(Node node)
+    public Response(KeyValueNode node)
     {
-        this.node = (KeyValueNode) node;
+        this.node = node;
     }
 
     @Override

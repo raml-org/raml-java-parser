@@ -24,13 +24,9 @@ public class Parameter extends BaseModelElement
 
     private KeyValueNode node;
 
-    public Parameter(Node node)
+    public Parameter(KeyValueNode node)
     {
-        if (!(node instanceof KeyValueNode))
-        {
-            throw new IllegalArgumentException("Invalid node type: " + node.getClass().getName());
-        }
-        this.node = (KeyValueNode) node;
+        this.node = node;
     }
 
     @Override

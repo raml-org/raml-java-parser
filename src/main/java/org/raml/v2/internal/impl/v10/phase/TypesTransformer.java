@@ -15,8 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.phase;
 
-import static org.raml.v2.internal.utils.NodeUtils.*;
-import static org.raml.v2.internal.utils.SchemaGenerator.*;
+import static org.raml.v2.internal.utils.NodeUtils.getType;
+import static org.raml.v2.internal.utils.SchemaGenerator.isSchemaNode;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -26,18 +26,25 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
-import org.raml.v2.internal.impl.commons.model.BuiltInScalarType;
-import org.raml.v2.internal.impl.commons.nodes.PropertyNode;
-import org.raml.v2.internal.impl.v10.nodes.types.InheritedPropertiesInjectedNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.ObjectTypeNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.UnionTypeNode;
-import org.raml.v2.internal.framework.nodes.*;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.framework.nodes.SchemaNodeImpl;
+import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYArrayNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYNullNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYStringNode;
 import org.raml.v2.internal.framework.phase.Transformer;
+import org.raml.v2.internal.impl.commons.nodes.PropertyNode;
+import org.raml.v2.internal.impl.v10.grammar.BuiltInScalarType;
+import org.raml.v2.internal.impl.v10.nodes.types.InheritedPropertiesInjectedNode;
+import org.raml.v2.internal.impl.v10.nodes.types.builtin.ObjectTypeNode;
+import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
+import org.raml.v2.internal.impl.v10.nodes.types.builtin.UnionTypeNode;
 import org.raml.v2.internal.utils.NodeUtils;
 import org.raml.v2.internal.utils.SchemaGenerator;
 

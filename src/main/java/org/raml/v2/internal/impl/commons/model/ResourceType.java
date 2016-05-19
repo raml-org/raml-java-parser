@@ -18,7 +18,7 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.impl.commons.nodes.ResourceTypeNode;
 import org.raml.v2.internal.framework.nodes.Node;
 
-public class ResourceType extends CommonAttributes
+public class ResourceType extends Annotable
 {
 
     private ResourceTypeNode node;

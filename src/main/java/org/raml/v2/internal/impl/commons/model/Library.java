@@ -18,14 +18,14 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 
-public class Library extends LibraryBase
+public class Library extends Annotable
 {
 
     private LibraryNode node;
 
-    public Library(Node node)
+    public Library(LibraryNode node)
     {
-        this.node = (LibraryNode) node;
+        this.node = node;
     }
 
     @Override

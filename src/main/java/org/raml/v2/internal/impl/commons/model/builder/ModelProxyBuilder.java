@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.commons.model.builder;
 
 import static org.raml.v2.internal.impl.commons.model.builder.ModelUtils.isPrimitiveOrWrapperOrString;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,6 +31,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NullNode;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
@@ -216,7 +218,22 @@ public class ModelProxyBuilder
                 try
                 {
                     final Class<?> aClass = Class.forName("org.raml.v2.internal.impl.commons.model." + simpleName);
-                    delegate = aClass.getConstructor(Node.class).newInstance(node);
+                    Constructor<?> nodeConstructor = findNodeConstructor(aClass);
+                    if (KeyValueNode.class.isAssignableFrom(nodeConstructor.getParameterTypes()[0]))
+                    {
+                        if (node instanceof KeyValueNode)
+                        {
+                            delegate = nodeConstructor.newInstance(node);
+                        }
+                        else
+                        {
+                            delegate = nodeConstructor.newInstance(node.getParent());
+                        }
+                    }
+                    else
+                    {
+                        delegate = nodeConstructor.newInstance(node);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -272,6 +289,22 @@ public class ModelProxyBuilder
             }
         }
 
+    }
+
+    private static Constructor<?> findNodeConstructor(Class<?> aClass) throws NoSuchMethodException
+    {
+        Constructor<?>[] constructors = aClass.getConstructors();
+        for (Constructor<?> constructor : constructors)
+        {
+            if (constructor.getParameterTypes().length == 1)
+            {
+                if (Node.class.isAssignableFrom(constructor.getParameterTypes()[0]))
+                {
+                    return constructor;
+                }
+            }
+        }
+        throw new RuntimeException("No constructor with a single Node type was found.");
     }
 
 }

@@ -22,7 +22,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 
-public class Api extends LibraryBase
+public class Api extends Annotable
 {
 
     private RamlDocumentNode node;

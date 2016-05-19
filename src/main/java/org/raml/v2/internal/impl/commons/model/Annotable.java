@@ -31,7 +31,7 @@ public abstract class Annotable extends BaseModelElement
         {
             if (child instanceof AnnotationNode)
             {
-                result.add(new AnnotationRef(child));
+                result.add(new AnnotationRef((AnnotationNode) child));
             }
         }
         return result;

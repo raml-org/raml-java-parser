@@ -24,9 +24,9 @@ public class ExampleSpec extends Annotable
 
     private KeyValueNode node;
 
-    public ExampleSpec(Node node)
+    public ExampleSpec(KeyValueNode node)
     {
-        this.node = (KeyValueNode) node;
+        this.node = node;
     }
 
     public String value()

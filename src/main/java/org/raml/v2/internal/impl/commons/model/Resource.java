@@ -24,7 +24,7 @@ import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.utils.NodeSelector;
 
-public class Resource extends CommonAttributes
+public class Resource extends Annotable
 {
 
     private ResourceNode node;
@@ -84,7 +84,7 @@ public class Resource extends CommonAttributes
         {
             for (Node child : uriParamsNode.getChildren())
             {
-                result.add(new TypeDeclaration(child));
+                result.add(new TypeDeclaration((KeyValueNode) child));
             }
         }
         return result;

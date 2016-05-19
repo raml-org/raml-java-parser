@@ -17,7 +17,7 @@ package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.framework.nodes.Node;
 
-public class DefaultModelElement extends BaseModelElement
+public class DefaultModelElement extends Annotable
 {
     private Node node;
 
