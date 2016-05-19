@@ -18,6 +18,7 @@ package org.raml.v2.api;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -141,12 +142,34 @@ public class SpecInterfacesV10TestCase
 
     private void assertSecuredBy(List<SecuritySchemeRef> securedBy)
     {
-        assertThat(securedBy.size(), is(2));
+        assertThat(securedBy.size(), is(3));
+
         assertThat(securedBy.get(0).name(), is("oauth_2_0"));
         assertOauth2SecurityScheme(securedBy.get(0).securityScheme());
 
-        SecuritySchemeRef noSecurity = securedBy.get(1);
+        assertThat(securedBy.get(1).name(), is("oauth_1_0"));
+        assertOauth1SecurityScheme(securedBy.get(1).securityScheme());
+
+        SecuritySchemeRef noSecurity = securedBy.get(2);
         assertNull(noSecurity);
+    }
+
+    private void assertOauth1SecurityScheme(SecurityScheme oauth1)
+    {
+        assertThat(oauth1.name(), is("oauth_1_0"));
+        assertThat(oauth1.displayName(), is("oauth_1_0"));
+        assertThat(oauth1.description().value(), is("OAuth 1.0 continues to be supported"));
+        assertThat(oauth1.type(), is("OAuth 1.0"));
+
+        SecuritySchemeSettings settings = oauth1.settings();
+        assertThat(settings.requestTokenUri().value(), is("https://api.dropbox.com/1/oauth/request_token"));
+        assertThat(settings.authorizationUri().value(), is("https://www.dropbox.com/1/oauth/authorize"));
+        assertThat(settings.tokenCredentialsUri().value(), is("https://api.dropbox.com/1/oauth/access_token"));
+
+
+        assertThat(settings.signatures(), hasSize(2));
+        assertThat(settings.signatures().get(0), is("HMAC-SHA1"));
+        assertThat(settings.signatures().get(1), is("PLAINTEXT"));
     }
 
     private void assertOauth2SecurityScheme(SecurityScheme oauth2)

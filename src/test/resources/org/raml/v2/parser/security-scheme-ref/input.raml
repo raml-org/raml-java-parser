@@ -42,6 +42,7 @@ securitySchemes:
           requestTokenUri: https://api.dropbox.com/1/oauth/request_token
           authorizationUri: https://www.dropbox.com/1/oauth/authorize
           tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+          signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
 /users:
   get:
     securedBy: [oauth_2_0, oauth_1_0, null]

@@ -27,12 +27,12 @@ import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
 import org.raml.v2.internal.framework.grammar.rule.NodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.NodeReferenceFactory;
-import org.raml.v2.internal.framework.grammar.rule.NodeReferenceRule;
 import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
 import org.raml.v2.internal.framework.grammar.rule.ParametrizedNodeReferenceRule;
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
+import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedResourceTypeRefNode;
@@ -45,7 +45,6 @@ import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitRefNode;
-import org.raml.v2.internal.framework.nodes.Node;
 
 public abstract class BaseRamlGrammar extends BaseGrammar
 {
@@ -206,7 +205,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(responseKey(), responses()));
     }
 
-    protected Rule securitySchemeSettings()
+    protected ObjectRule securitySchemeSettings()
     {
         return objectType()
                            .with(field(string("requestTokenUri"), scalarType()))

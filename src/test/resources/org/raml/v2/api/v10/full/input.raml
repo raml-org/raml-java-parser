@@ -75,15 +75,15 @@ securitySchemes:
       accessTokenUri: https://api.dropbox.com/1/oauth2/token
       authorizationGrants: [ authorization_code, refresh_token ]
   oauth_1_0:
-    description: |
-      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+    description: OAuth 1.0 continues to be supported
     type: OAuth 1.0
     settings:
       requestTokenUri: https://api.dropbox.com/1/oauth/request_token
       authorizationUri: https://www.dropbox.com/1/oauth/authorize
       tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
 
-securedBy: [oauth_2_0, null]
+securedBy: [oauth_2_0, oauth_1_0, null]
 
 annotationTypes:
   basic:
@@ -167,5 +167,5 @@ annotationTypes:
 
 
     /child:
-        securedBy: [oauth_2_0, null]
+        securedBy: [oauth_2_0, oauth_1_0, null]
         description: child description
