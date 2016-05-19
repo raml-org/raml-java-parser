@@ -33,13 +33,13 @@
                     "relativeUri": "/{userId}",
                     "type": "builtin",
                     "displayName": "/{userId}",
-                    "description": "resourcePath /users/{userId} and resourcePathName userId",
+                    "description": "resourcePath /users/{userId} and resourcePathName users",
                     "methods": [
                         {
                             "method": "get",
                             "is": ["builtin"],
                             "displayName": "get",
-                            "description": "resourcePath /users/{userId} and resourcePathName userId and methodName get"
+                            "description": "resourcePath /users/{userId} and resourcePathName users and methodName get"
                         }
                     ]
                 }
