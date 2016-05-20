@@ -152,7 +152,7 @@ public class KeyValueRule extends Rule
     }
 
     @Nonnull
-    public KeyValueRule required(RequiredField requiredField)
+    public KeyValueRule requiredWhen(RequiredField requiredField)
     {
         this.requiredField = requiredField;
         return this;

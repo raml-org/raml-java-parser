@@ -85,7 +85,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return super.securitySchemeSettings()
                     .with(field(string("signatures"), array(scalarType())))
-                    .with(field(string("authorizationUri"), scalarType()).required(new AuthorizationUriRequiredField()));
+                    .with(field(string("authorizationUri"), scalarType()).requiredWhen(new AuthorizationUriRequiredField()));
     }
 
     @Override
