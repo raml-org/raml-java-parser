@@ -215,4 +215,11 @@ public class Raml08Grammar extends BaseRamlGrammar
         return anyOf(array(securitySchemes()), securitySchemes());
     }
 
+    @Override
+    protected ObjectRule securitySchemeSettings()
+    {
+        return super.securitySchemeSettings()
+                    .with(field(string("authorizationUri"), scalarType()));
+    }
+
 }

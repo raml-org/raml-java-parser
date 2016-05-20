@@ -209,7 +209,6 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     {
         return objectType()
                            .with(field(string("requestTokenUri"), scalarType()))
-                           .with(field(string("authorizationUri"), scalarType()))
                            .with(field(string("tokenCredentialsUri"), scalarType()))
                            .with(field(string("accessTokenUri"), scalarType()))
                            .with(field(string("authorizationGrants"), array(scalarType())))

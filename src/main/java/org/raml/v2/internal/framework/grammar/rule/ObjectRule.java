@@ -127,7 +127,7 @@ public class ObjectRule extends Rule
         boolean matches = true;
         for (KeyValueRule rule : allFieldRules)
         {
-            matches &= !rule.isRequired() || matchesAny(rule, children);
+            matches &= !rule.isRequired(node) || matchesAny(rule, children);
         }
         return matches;
     }
@@ -174,7 +174,7 @@ public class ObjectRule extends Rule
 
             for (KeyValueRule rule : nonMatchingRules)
             {
-                if (rule.isRequired())
+                if (rule.isRequired(node))
                 {
                     result.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
                 }

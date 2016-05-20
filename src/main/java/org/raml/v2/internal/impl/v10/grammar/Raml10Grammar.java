@@ -80,10 +80,12 @@ public class Raml10Grammar extends BaseRamlGrammar
         return super.securitySchemePart().with(annotationField());
     }
 
+    @Override
     protected ObjectRule securitySchemeSettings()
     {
         return super.securitySchemeSettings()
-                    .with(field(string("signatures"), array(scalarType())));
+                    .with(field(string("signatures"), array(scalarType())))
+                    .with(field(string("authorizationUri"), scalarType()).required(new AuthorizationUriRequiredField()));
     }
 
     @Override

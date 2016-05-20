@@ -35,22 +35,14 @@ public class KeyValueRule extends Rule
     private final Rule keyRule;
     private final Rule valueRule;
     private String description;
-    private boolean required;
 
+    private RequiredField requiredField;
     private DefaultValue defaultValue;
 
     public KeyValueRule(Rule keyRule, Rule valueRule)
     {
-
         this.keyRule = keyRule;
         this.valueRule = valueRule;
-        this.required = false;
-    }
-
-    public KeyValueRule required()
-    {
-        this.required = true;
-        return this;
     }
 
     @Nonnull
@@ -152,9 +144,23 @@ public class KeyValueRule extends Rule
         return getKeyRule().getDescription() + ": " + getValueRule().getDescription();
     }
 
-    public boolean isRequired()
+    @Nonnull
+    public KeyValueRule required()
     {
-        return required;
+        this.requiredField = AlwaysRequiredField.getInstance();
+        return this;
+    }
+
+    @Nonnull
+    public KeyValueRule required(RequiredField requiredField)
+    {
+        this.requiredField = requiredField;
+        return this;
+    }
+
+    public boolean isRequired(Node parent)
+    {
+        return requiredField != null && requiredField.isRequiredField(parent);
     }
 
     @Nonnull
