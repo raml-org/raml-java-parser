@@ -2,9 +2,6 @@
 
 This list covers the current gap of features with the RAML 1.0 specification:
 
-#### `uses` key is only supported for root RAML documents and libraries
- The [spec](https://github.com/raml-org/raml-spec/blob/raml-10/versions/raml-10/raml-10.md#applying-libraries) allows using `uses` in any fragment. At this moment the parser only allows its use in root level RAML documents and libraries.
-
 #### `annotations` are no supported for scalar fields
 
 The [spec](https://github.com/raml-org/raml-spec/blob/raml-10/versions/raml-10/raml-10.md#annotating-scalar-valued-nodes) allows applying annotations to scalar nodes besides certain mapping nodes. Annotations at scalar level are not supported.
@@ -12,15 +9,6 @@ The [spec](https://github.com/raml-org/raml-spec/blob/raml-10/versions/raml-10/r
 #### Overlay application is not enforcing all the required restrictions
 
 The extra restrictions that Overlays enforce vs. Extensions are not being validated.
-
-#### Security Schemes gaps
-
-- OAuth 1.0 `signatures` setting is not supported.
-- OAuth 2.0 `authorizationUri` is always optional, no matter which authorization grants are used
-
-#### `resourcePathName` should resolve to the last non-parameter fragment
-
-At the moment `resourcePathName` is resolved to the last fragment, removing curly braces if present.
 
 #### XML examples validation against YAML types
 
