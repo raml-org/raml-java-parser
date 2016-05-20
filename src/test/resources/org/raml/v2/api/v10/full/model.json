@@ -179,6 +179,11 @@
    "example": {
     "annotations": [],
     "name": null,
+    "structuredValue": {
+     "isScalar": true,
+     "properties": [],
+     "value": "one"
+    },
     "value": "one"
    },
    "examples": [],
@@ -505,6 +510,11 @@
        "example": {
         "annotations": [],
         "name": null,
+        "structuredValue": {
+         "isScalar": true,
+         "properties": [],
+         "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+        },
         "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
        },
        "examples": [],
@@ -528,12 +538,22 @@
        "examples": [
         {
          "annotations": [],
-         "name": null,
+         "name": "first",
+         "structuredValue": {
+          "isScalar": true,
+          "properties": [],
+          "value": "<first/>\n"
+         },
          "value": "<first/>\n"
         },
         {
          "annotations": [],
-         "name": null,
+         "name": "second",
+         "structuredValue": {
+          "isScalar": true,
+          "properties": [],
+          "value": "<second/>\n"
+         },
          "value": "<second/>\n"
         }
        ],
@@ -626,6 +646,11 @@
          "example": {
           "annotations": [],
           "name": null,
+          "structuredValue": {
+           "isScalar": true,
+           "properties": [],
+           "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+          },
           "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
          },
          "examples": [],
@@ -649,12 +674,22 @@
          "examples": [
           {
            "annotations": [],
-           "name": null,
+           "name": "first",
+           "structuredValue": {
+            "isScalar": true,
+            "properties": [],
+            "value": "<first/>\n"
+           },
            "value": "<first/>\n"
           },
           {
            "annotations": [],
-           "name": null,
+           "name": "second",
+           "structuredValue": {
+            "isScalar": true,
+            "properties": [],
+            "value": "<second/>\n"
+           },
            "value": "<second/>\n"
           }
          ],
@@ -1230,7 +1265,90 @@
    "description": null,
    "displayName": "User",
    "example": null,
-   "examples": [],
+   "examples": [
+    {
+     "annotations": [],
+     "name": "batman",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [
+       {
+        "isArray": false,
+        "name": "firstname",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": "bruce"
+        },
+        "values": []
+       },
+       {
+        "isArray": false,
+        "name": "lastname",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": "wayne"
+        },
+        "values": []
+       },
+       {
+        "isArray": false,
+        "name": "age",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": 77
+        },
+        "values": []
+       }
+      ],
+      "value": null
+     },
+     "value": "{\nfirstname: bruce,\nlastname: wayne,\nage: 77\n}"
+    },
+    {
+     "annotations": [],
+     "name": "daredevil",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [
+       {
+        "isArray": false,
+        "name": "firstname",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": "matt"
+        },
+        "values": []
+       },
+       {
+        "isArray": false,
+        "name": "lastname",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": "murdock"
+        },
+        "values": []
+       },
+       {
+        "isArray": false,
+        "name": "age",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": 52
+        },
+        "values": []
+       }
+      ],
+      "value": null
+     },
+     "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
+    }
+   ],
    "fixedFacets": null,
    "isAnnotation": false,
    "name": "User",

@@ -1,396 +1,686 @@
 {
-  "annotationTypes": [],
-  "annotations": [],
-  "baseUri": {
-    "value": "http://localhost:8081/api"
-  },
-  "baseUriParameters": [],
-  "documentation": [],
-  "mediaType": [],
-  "protocols": [],
-  "ramlVersion": "1.0",
-  "resourceTypes": [],
-  "resources": [
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": {
+  "value": "http://localhost:8081/api"
+ },
+ "baseUriParameters": [],
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [
+  {
+   "annotations": [],
+   "description": {
+    "value": "Orders collection resource used to create new orders."
+   },
+   "displayName": "Orders",
+   "is": [],
+   "methods": [
     {
-      "annotations": [],
-      "description": {
-        "value": "Orders collection resource used to create new orders."
-      },
-      "displayName": "Orders",
-      "is": [],
-      "methods": [
-        {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "value": "lists all orders of a specific user"
+     },
+     "displayName": "get",
+     "headers": [],
+     "is": [
+      {
+       "name": "paging",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "annotations": [],
+        "body": [],
+        "description": null,
+        "displayName": null,
+        "headers": [],
+        "is": [],
+        "name": "paging",
+        "parametrizedProperties": null,
+        "protocols": [],
+        "queryParameters": [
+         {
+          "allowedTargets": [],
           "annotations": [],
-          "body": [],
+          "defaultValue": null,
           "description": {
-            "value": "lists all orders of a specific user"
+           "value": "the amount of elements of each result page"
           },
-          "displayName": "get",
-          "headers": [],
-          "is": [
-            {
-              "name": "paging",
-              "structuredValue": {
-                "isScalar": false,
-                "properties": [],
-                "value": null
-              },
-              "trait": {
-                "annotations": [],
-                "body": [],
-                "description": null,
-                "displayName": null,
-                "headers": [],
-                "is": [],
-                "name": "paging",
-                "parametrizedProperties": null,
-                "protocols": [],
-                "queryParameters": [
-                  {
-                    "allowedTargets": [],
-                    "annotations": [],
-                    "defaultValue": null,
-                    "description": {
-                      "value": "the amount of elements of each result page"
-                    },
-                    "displayName": null,
-                    "example": {
-                      "annotations": [],
-                      "name": "example",
-                      "value": "10"
-                    },
-                    "examples": [],
-                    "fixedFacets": null,
-                    "isAnnotation": false,
-                    "name": "size",
-                    "required": false,
-                    "schema": [],
-                    "schemaContent": "integer",
-                    "type": [
-                      "integer"
-                    ]
-                  },
-                  {
-                    "allowedTargets": [],
-                    "annotations": [],
-                    "defaultValue": null,
-                    "description": {
-                      "value": "the page number"
-                    },
-                    "displayName": null,
-                    "example": {
-                      "annotations": [],
-                      "name": "example",
-                      "value": "0"
-                    },
-                    "examples": [],
-                    "fixedFacets": null,
-                    "isAnnotation": false,
-                    "name": "page",
-                    "required": false,
-                    "schema": [],
-                    "schemaContent": "integer",
-                    "type": [
-                      "integer"
-                    ]
-                  }
-                ],
-                "queryString": null,
-                "responses": [],
-                "securedBy": [],
-                "usage": null
-              }
-            }
-          ],
-          "method": "get",
-          "protocols": [],
-          "queryParameters": [
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": {
-                "value": "use to query all orders of a user"
-              },
-              "displayName": "userId",
-              "example": {
-                "annotations": [],
-                "name": null,
-                "value": "1964401a-a8b3-40c1-b86e-d8b9f75b5842"
-              },
-              "examples": [],
-              "fixedFacets": null,
-              "isAnnotation": false,
-              "name": "userId",
-              "required": true,
-              "schema": [],
-              "schemaContent": "string",
-              "type": [
-                "string"
-              ]
-            },
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": {
-                "value": "the amount of elements of each result page"
-              },
-              "displayName": "size",
-              "example": {
-                "annotations": [],
-                "name": null,
-                "value": "10"
-              },
-              "examples": [],
-              "fixedFacets": null,
-              "isAnnotation": false,
-              "name": "size",
-              "required": false,
-              "schema": [],
-              "schemaContent": "integer",
-              "type": [
-                "integer"
-              ]
-            },
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": {
-                "value": "the page number"
-              },
-              "displayName": "page",
-              "example": {
-                "annotations": [],
-                "name": null,
-                "value": "0"
-              },
-              "examples": [],
-              "fixedFacets": null,
-              "isAnnotation": false,
-              "name": "page",
-              "required": false,
-              "schema": [],
-              "schemaContent": "integer",
-              "type": [
-                "integer"
-              ]
-            }
-          ],
-          "queryString": null,
-          "responses": [
-            {
-              "annotations": [],
-              "body": [
-                {
-                  "allowedTargets": [],
-                  "annotations": [],
-                  "defaultValue": null,
-                  "description": null,
-                  "displayName": "application/json",
-                  "example": null,
-                  "examples": [
-                    {
-                      "annotations": [],
-                      "name": null,
-                      "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n}]\n}"
-                    },
-                    {
-                      "annotations": [],
-                      "name": null,
-                      "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n},{\norder_id: ORDER-437542111,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-7,\nquantity: 2\n}]\n}]\n}"
-                    }
-                  ],
-                  "fixedFacets": null,
-                  "isAnnotation": false,
-                  "name": "application/json",
-                  "required": true,
-                  "schema": [],
-                  "schemaContent": "assets.Orders",
-                  "type": [
-                    "assets.Orders"
-                  ]
-                }
-              ],
-              "code": {
-                "value": "200"
-              },
-              "description": null,
-              "headers": []
-            }
-          ],
-          "securedBy": []
-        }
-      ],
-      "relativeUri": {
-        "value": "/orders"
-      },
-      "resourcePath": "/orders",
-      "resources": [],
-      "securedBy": [],
-      "type": null,
-      "uriParameters": []
-    }
-  ],
-  "schemas": [],
-  "securedBy": [],
-  "securitySchemes": [],
-  "title": "Mobile Order API",
-  "traits": [],
-  "types": [],
-  "uses": [
-    {
-      "annotationTypes": [],
-      "annotations": [],
-      "name": "assets",
-      "resourceTypes": [],
-      "schemas": [],
-      "securitySchemes": [],
-      "traits": [
-        {
-          "annotations": [],
-          "body": [],
-          "description": null,
           "displayName": null,
-          "headers": [],
-          "is": [],
-          "name": "paging",
-          "parametrizedProperties": null,
-          "protocols": [],
-          "queryParameters": [
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": {
-                "value": "the amount of elements of each result page"
-              },
-              "displayName": null,
-              "example": {
-                "annotations": [],
-                "name": "example",
-                "value": "10"
-              },
-              "examples": [],
-              "fixedFacets": null,
-              "isAnnotation": false,
-              "name": "size",
-              "required": false,
-              "schema": [],
-              "schemaContent": "integer",
-              "type": [
-                "integer"
+          "example": {
+           "annotations": [],
+           "name": null,
+           "structuredValue": {
+            "isScalar": true,
+            "properties": [],
+            "value": 10
+           },
+           "value": "10"
+          },
+          "examples": [],
+          "fixedFacets": null,
+          "isAnnotation": false,
+          "name": "size",
+          "required": false,
+          "schema": [],
+          "schemaContent": "integer",
+          "type": [
+           "integer"
+          ]
+         },
+         {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+           "value": "the page number"
+          },
+          "displayName": null,
+          "example": {
+           "annotations": [],
+           "name": null,
+           "structuredValue": {
+            "isScalar": true,
+            "properties": [],
+            "value": 0
+           },
+           "value": "0"
+          },
+          "examples": [],
+          "fixedFacets": null,
+          "isAnnotation": false,
+          "name": "page",
+          "required": false,
+          "schema": [],
+          "schemaContent": "integer",
+          "type": [
+           "integer"
+          ]
+         }
+        ],
+        "queryString": null,
+        "responses": [],
+        "securedBy": [],
+        "usage": null
+       }
+      }
+     ],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "value": "use to query all orders of a user"
+       },
+       "displayName": "userId",
+       "example": {
+        "annotations": [],
+        "name": null,
+        "structuredValue": {
+         "isScalar": true,
+         "properties": [],
+         "value": "1964401a-a8b3-40c1-b86e-d8b9f75b5842"
+        },
+        "value": "1964401a-a8b3-40c1-b86e-d8b9f75b5842"
+       },
+       "examples": [],
+       "fixedFacets": null,
+       "isAnnotation": false,
+       "name": "userId",
+       "required": true,
+       "schema": [],
+       "schemaContent": "string",
+       "type": [
+        "string"
+       ]
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "value": "the amount of elements of each result page"
+       },
+       "displayName": "size",
+       "example": {
+        "annotations": [],
+        "name": null,
+        "structuredValue": {
+         "isScalar": true,
+         "properties": [],
+         "value": 10
+        },
+        "value": "10"
+       },
+       "examples": [],
+       "fixedFacets": null,
+       "isAnnotation": false,
+       "name": "size",
+       "required": false,
+       "schema": [],
+       "schemaContent": "integer",
+       "type": [
+        "integer"
+       ]
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "value": "the page number"
+       },
+       "displayName": "page",
+       "example": {
+        "annotations": [],
+        "name": null,
+        "structuredValue": {
+         "isScalar": true,
+         "properties": [],
+         "value": 0
+        },
+        "value": "0"
+       },
+       "examples": [],
+       "fixedFacets": null,
+       "isAnnotation": false,
+       "name": "page",
+       "required": false,
+       "schema": [],
+       "schemaContent": "integer",
+       "type": [
+        "integer"
+       ]
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": "application/json",
+         "example": null,
+         "examples": [
+          {
+           "annotations": [],
+           "name": "single-order",
+           "structuredValue": {
+            "isScalar": false,
+            "properties": [
+             {
+              "isArray": true,
+              "name": "orders",
+              "value": null,
+              "values": [
+               {
+                "isScalar": false,
+                "properties": [
+                 {
+                  "isArray": false,
+                  "name": "order_id",
+                  "value": {
+                   "isScalar": true,
+                   "properties": [],
+                   "value": "ORDER-437563756"
+                  },
+                  "values": []
+                 },
+                 {
+                  "isArray": false,
+                  "name": "creation_date",
+                  "value": {
+                   "isScalar": true,
+                   "properties": [],
+                   "value": "2016-03-30"
+                  },
+                  "values": []
+                 },
+                 {
+                  "isArray": true,
+                  "name": "items",
+                  "value": null,
+                  "values": [
+                   {
+                    "isScalar": false,
+                    "properties": [
+                     {
+                      "isArray": false,
+                      "name": "product_id",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": "PRODUCT-1"
+                      },
+                      "values": []
+                     },
+                     {
+                      "isArray": false,
+                      "name": "quantity",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": 5
+                      },
+                      "values": []
+                     }
+                    ],
+                    "value": null
+                   },
+                   {
+                    "isScalar": false,
+                    "properties": [
+                     {
+                      "isArray": false,
+                      "name": "product_id",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": "PRODUCT-2"
+                      },
+                      "values": []
+                     },
+                     {
+                      "isArray": false,
+                      "name": "quantity",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": 2
+                      },
+                      "values": []
+                     }
+                    ],
+                    "value": null
+                   }
+                  ]
+                 }
+                ],
+                "value": null
+               }
               ]
-            },
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": {
-                "value": "the page number"
-              },
-              "displayName": null,
-              "example": {
-                "annotations": [],
-                "name": "example",
-                "value": "0"
-              },
-              "examples": [],
-              "fixedFacets": null,
-              "isAnnotation": false,
-              "name": "page",
-              "required": false,
-              "schema": [],
-              "schemaContent": "integer",
-              "type": [
-                "integer"
+             }
+            ],
+            "value": null
+           },
+           "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n}]\n}"
+          },
+          {
+           "annotations": [],
+           "name": "multiple-orders",
+           "structuredValue": {
+            "isScalar": false,
+            "properties": [
+             {
+              "isArray": true,
+              "name": "orders",
+              "value": null,
+              "values": [
+               {
+                "isScalar": false,
+                "properties": [
+                 {
+                  "isArray": false,
+                  "name": "order_id",
+                  "value": {
+                   "isScalar": true,
+                   "properties": [],
+                   "value": "ORDER-437563756"
+                  },
+                  "values": []
+                 },
+                 {
+                  "isArray": false,
+                  "name": "creation_date",
+                  "value": {
+                   "isScalar": true,
+                   "properties": [],
+                   "value": "2016-03-30"
+                  },
+                  "values": []
+                 },
+                 {
+                  "isArray": true,
+                  "name": "items",
+                  "value": null,
+                  "values": [
+                   {
+                    "isScalar": false,
+                    "properties": [
+                     {
+                      "isArray": false,
+                      "name": "product_id",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": "PRODUCT-1"
+                      },
+                      "values": []
+                     },
+                     {
+                      "isArray": false,
+                      "name": "quantity",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": 5
+                      },
+                      "values": []
+                     }
+                    ],
+                    "value": null
+                   },
+                   {
+                    "isScalar": false,
+                    "properties": [
+                     {
+                      "isArray": false,
+                      "name": "product_id",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": "PRODUCT-2"
+                      },
+                      "values": []
+                     },
+                     {
+                      "isArray": false,
+                      "name": "quantity",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": 2
+                      },
+                      "values": []
+                     }
+                    ],
+                    "value": null
+                   }
+                  ]
+                 }
+                ],
+                "value": null
+               },
+               {
+                "isScalar": false,
+                "properties": [
+                 {
+                  "isArray": false,
+                  "name": "order_id",
+                  "value": {
+                   "isScalar": true,
+                   "properties": [],
+                   "value": "ORDER-437542111"
+                  },
+                  "values": []
+                 },
+                 {
+                  "isArray": false,
+                  "name": "creation_date",
+                  "value": {
+                   "isScalar": true,
+                   "properties": [],
+                   "value": "2016-03-30"
+                  },
+                  "values": []
+                 },
+                 {
+                  "isArray": true,
+                  "name": "items",
+                  "value": null,
+                  "values": [
+                   {
+                    "isScalar": false,
+                    "properties": [
+                     {
+                      "isArray": false,
+                      "name": "product_id",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": "PRODUCT-7"
+                      },
+                      "values": []
+                     },
+                     {
+                      "isArray": false,
+                      "name": "quantity",
+                      "value": {
+                       "isScalar": true,
+                       "properties": [],
+                       "value": 2
+                      },
+                      "values": []
+                     }
+                    ],
+                    "value": null
+                   }
+                  ]
+                 }
+                ],
+                "value": null
+               }
               ]
-            }
-          ],
-          "queryString": null,
-          "responses": [],
-          "securedBy": [],
-          "usage": null
+             }
+            ],
+            "value": null
+           },
+           "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n},{\norder_id: ORDER-437542111,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-7,\nquantity: 2\n}]\n}]\n}"
+          }
+         ],
+         "fixedFacets": null,
+         "isAnnotation": false,
+         "name": "application/json",
+         "required": true,
+         "schema": [],
+         "schemaContent": "assets.Orders",
+         "type": [
+          "assets.Orders"
+         ]
         }
-      ],
-      "types": [
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": "ProductItem",
-          "example": null,
-          "examples": [],
-          "fixedFacets": null,
-          "isAnnotation": false,
-          "name": "ProductItem",
-          "required": true,
-          "schema": [],
-          "schemaContent": "object",
-          "type": [
-            "object"
-          ]
-        },
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": "Order",
-          "example": null,
-          "examples": [],
-          "fixedFacets": null,
-          "isAnnotation": false,
-          "name": "Order",
-          "required": true,
-          "schema": [],
-          "schemaContent": "object",
-          "type": [
-            "object"
-          ]
-        },
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": "Orders",
-          "example": null,
-          "examples": [],
-          "fixedFacets": null,
-          "isAnnotation": false,
-          "name": "Orders",
-          "required": true,
-          "schema": [],
-          "schemaContent": "object",
-          "type": [
-            "object"
-          ]
-        },
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": "Inherit",
-          "example": null,
-          "examples": [],
-          "fixedFacets": null,
-          "isAnnotation": false,
-          "name": "Inherit",
-          "required": true,
-          "schema": [],
-          "schemaContent": "Order",
-          "type": [
-            "Order"
-          ]
-        }
-      ],
-      "usage": null,
-      "uses": []
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
     }
-  ],
-  "version": "1.0"
+   ],
+   "relativeUri": {
+    "value": "/orders"
+   },
+   "resourcePath": "/orders",
+   "resources": [],
+   "securedBy": [],
+   "type": null,
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": "Mobile Order API",
+ "traits": [],
+ "types": [],
+ "uses": [
+  {
+   "annotationTypes": [],
+   "annotations": [],
+   "name": "assets",
+   "resourceTypes": [],
+   "schemas": [],
+   "securitySchemes": [],
+   "traits": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": null,
+     "displayName": null,
+     "headers": [],
+     "is": [],
+     "name": "paging",
+     "parametrizedProperties": null,
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "value": "the amount of elements of each result page"
+       },
+       "displayName": null,
+       "example": {
+        "annotations": [],
+        "name": null,
+        "structuredValue": {
+         "isScalar": true,
+         "properties": [],
+         "value": 10
+        },
+        "value": "10"
+       },
+       "examples": [],
+       "fixedFacets": null,
+       "isAnnotation": false,
+       "name": "size",
+       "required": false,
+       "schema": [],
+       "schemaContent": "integer",
+       "type": [
+        "integer"
+       ]
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "value": "the page number"
+       },
+       "displayName": null,
+       "example": {
+        "annotations": [],
+        "name": null,
+        "structuredValue": {
+         "isScalar": true,
+         "properties": [],
+         "value": 0
+        },
+        "value": "0"
+       },
+       "examples": [],
+       "fixedFacets": null,
+       "isAnnotation": false,
+       "name": "page",
+       "required": false,
+       "schema": [],
+       "schemaContent": "integer",
+       "type": [
+        "integer"
+       ]
+      }
+     ],
+     "queryString": null,
+     "responses": [],
+     "securedBy": [],
+     "usage": null
+    }
+   ],
+   "types": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "ProductItem",
+     "example": null,
+     "examples": [],
+     "fixedFacets": null,
+     "isAnnotation": false,
+     "name": "ProductItem",
+     "required": true,
+     "schema": [],
+     "schemaContent": "object",
+     "type": [
+      "object"
+     ]
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "Order",
+     "example": null,
+     "examples": [],
+     "fixedFacets": null,
+     "isAnnotation": false,
+     "name": "Order",
+     "required": true,
+     "schema": [],
+     "schemaContent": "object",
+     "type": [
+      "object"
+     ]
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "Orders",
+     "example": null,
+     "examples": [],
+     "fixedFacets": null,
+     "isAnnotation": false,
+     "name": "Orders",
+     "required": true,
+     "schema": [],
+     "schemaContent": "object",
+     "type": [
+      "object"
+     ]
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "Inherit",
+     "example": null,
+     "examples": [],
+     "fixedFacets": null,
+     "isAnnotation": false,
+     "name": "Inherit",
+     "required": true,
+     "schema": [],
+     "schemaContent": "Order",
+     "type": [
+      "Order"
+     ]
+    }
+   ],
+   "usage": null,
+   "uses": []
+  }
+ ],
+ "version": "1.0"
 }

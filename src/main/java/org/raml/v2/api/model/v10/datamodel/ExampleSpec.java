@@ -33,4 +33,10 @@ public interface ExampleSpec extends Annotable
      **/
     String name();
 
+
+    /**
+     * Returns object representation of example, if possible
+     **/
+    TypeInstance structuredValue();
+
 }

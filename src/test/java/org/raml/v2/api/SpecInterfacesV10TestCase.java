@@ -89,15 +89,43 @@ public class SpecInterfacesV10TestCase
         assertResources(api.resources());
         assertDocumentation(api.documentation());
         assertThat(api.ramlVersion(), is("1.0"));
-
         assertThat(api.schemas().size(), is(0));
-        assertThat(api.types().size(), is(1));
-        assertThat(api.types().get(0).name(), is("User"));
+
+        assertTypes(api.types());
         assertTraits(api.traits());
         assertResourceTypes(api.resourceTypes());
         assertAnnotationTypes(api.annotationTypes());
         assertSecuritySchemes(api.securitySchemes());
         assertAnnotations(api.annotations());
+    }
+
+    private void assertTypes(List<TypeDeclaration> types)
+    {
+        assertThat(types, hasSize(1));
+        TypeDeclaration user = types.get(0);
+        assertThat(user.name(), is("User"));
+        assertUserExamples(user.examples());
+    }
+
+    private void assertUserExamples(List<ExampleSpec> examples)
+    {
+        assertThat(examples, hasSize(2));
+        ExampleSpec batman = examples.get(0);
+        assertThat(batman.name(), is("batman"));
+        List<TypeInstanceProperty> batmanProps = batman.structuredValue().properties();
+        assertThat(batmanProps, hasSize(3));
+        assertThat(batmanProps.get(0).name(), is("firstname"));
+        assertTrue(batmanProps.get(0).value().isScalar());
+        assertThat(batmanProps.get(0).value().value().toString(), is("bruce"));
+        assertThat(batmanProps.get(1).name(), is("lastname"));
+        assertTrue(batmanProps.get(1).value().isScalar());
+        assertThat(batmanProps.get(1).value().value().toString(), is("wayne"));
+        assertThat(batmanProps.get(2).name(), is("age"));
+        assertTrue(batmanProps.get(2).value().isScalar());
+        assertThat(batmanProps.get(2).value().value().toString(), is("77"));
+
+        assertThat(examples.get(1).name(), is("daredevil"));
+
     }
 
     private void assertAnnotations(List<AnnotationRef> annotations)
@@ -220,6 +248,7 @@ public class SpecInterfacesV10TestCase
     private void assertBaseUriExample(ExampleSpec example)
     {
         assertThat(example.value(), is("one"));
+        assertThat(example.structuredValue().value().toString(), is("one"));
         assertThat(example.name(), nullValue());
     }
 
