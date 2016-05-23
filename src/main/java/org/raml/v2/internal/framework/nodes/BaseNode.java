@@ -162,6 +162,7 @@ public abstract class BaseNode implements Node
     }
 
     @Override
+    @Nullable
     public Node get(String selector)
     {
         return NodeSelector.selectFrom(selector, this);

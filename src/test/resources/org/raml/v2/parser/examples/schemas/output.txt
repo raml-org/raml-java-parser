@@ -7,10 +7,10 @@ RamlDocumentNode (Start: 11 , End: 470, On: input.raml, Source: SYObjectNode)
         SYObjectNode (Start: 34 , End: 306, On: input.raml)
             KeyValueNodeImpl (Start: 34 , End: 306, On: input.raml)
                 SYStringNode: "my-schema" (Start: 34 , End: 43, On: input.raml)
-                UnionTypeNode (Start: 45 , End: 306, On: input.raml, Source: SYStringNode)
+                TypeDeclarationNode (Start: 45 , End: 306, On: input.raml, Source: SYStringNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "type" (Start: -1 , End: -1)
-                        SchemaNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
+                        ExternalSchemaTypeExpressionNode: "<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <xsd:element name="ticketid">
     <xsd:complexType>
@@ -18,7 +18,7 @@ RamlDocumentNode (Start: 11 , End: 470, On: input.raml, Source: SYObjectNode)
     </xsd:complexType>
   </xsd:element>
 </xsd:schema>
-" (Start: -1 , End: -1, Source: SchemaNodeImpl)
+" (Start: -1 , End: -1, Source: ExternalSchemaTypeExpressionNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                         SYStringNode: "my-schema" (Start: 34 , End: 43, On: input.raml, Source: SYStringNode)
@@ -39,21 +39,13 @@ RamlDocumentNode (Start: 11 , End: 470, On: input.raml, Source: SYObjectNode)
                                         SYObjectNode (Start: 375 , End: 470, On: input.raml)
                                             KeyValueNodeImpl (Start: 375 , End: 470, On: input.raml)
                                                 SYStringNode: "application/xml" (Start: 375 , End: 390, On: input.raml)
-                                                UnionTypeNode (Start: 404 , End: 470, On: input.raml, Source: SYObjectNode)
+                                                TypeDeclarationNode (Start: 404 , End: 470, On: input.raml, Source: SYObjectNode)
                                                     KeyValueNodeImpl (Start: 404 , End: 421, On: input.raml)
                                                         SYStringNode: "schema" (Start: 404 , End: 410, On: input.raml)
-                                                        SchemaNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <xsd:element name="ticketid">
-    <xsd:complexType>
-      <xsd:sequence/>
-    </xsd:complexType>
-  </xsd:element>
-</xsd:schema>
-" (Start: 412 , End: 421, On: input.raml, Source: SYStringNode)
-                                                    KeyValueNodeImpl (Start: 434 , End: 470, On: input.raml)
+                                                        NamedTypeExpressionNode my-schema -> {TypeDeclarationNode RefStart: 45 , RefEnd: 306} (Start: 412 , End: 421, On: input.raml, Source: SYStringNode)
+                                                    ExampleDeclarationNode (Start: 434 , End: 470, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 434 , End: 441, On: input.raml)
-                                                        ExampleTypeNode (Start: 443 , End: 470, On: input.raml, Source: SYStringNode)
+                                                        SYStringNode: "<ticketid/>" (Start: 443 , End: 470, On: input.raml)
                                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                                         SYStringNode: "application/xml" (Start: 375 , End: 390, On: input.raml, Source: SYStringNode)

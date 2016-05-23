@@ -16,13 +16,13 @@ RamlDocumentNode (Start: 11 , End: 638, On: input.raml, Source: SYObjectNode)
                         MediaTypeInjectedNode (Start: 76 , End: 638, On: input.raml)
                             KeyValueNodeImpl (Start: 40 , End: 638, On: input.raml)
                                 SYStringNode: "application/json" (Start: 40 , End: 56, On: input.raml, Source: SYStringNode)
-                                ObjectTypeNode (Start: 88 , End: 638, On: input.raml, Source: UnionTypeNode)
-                                    KeyValueNodeImpl (Start: 88 , End: 102, On: input.raml, Source: KeyValueNodeImpl)
+                                TypeDeclarationNode (Start: 88 , End: 638, On: input.raml, Source: TypeDeclarationNode)
+                                    ExampleDeclarationNode (Start: 88 , End: 102, On: input.raml, Source: ExampleDeclarationNode)
                                         SYStringNode: "example" (Start: 88 , End: 95, On: input.raml, Source: SYStringNode)
-                                        ErrorNode: "Error validating JSON. Error: Invalid JsonSchema" (Start: 97 , End: 102, On: input.raml, Source: ExampleTypeNode)
+                                        ErrorNode: "Error validating JSON. Error: Invalid json content : bores" (Start: 97 , End: 102, On: input.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: 109 , End: 638, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "type" (Start: 109 , End: 113, On: input.raml, Source: SYStringNode)
-                                        StringNodeImpl: "{
+                                        ExternalSchemaTypeExpressionNode: "{
     "title": "Example Schema",
     "type": "object",
     "properties": {
@@ -40,7 +40,7 @@ RamlDocumentNode (Start: 11 , End: 638, On: input.raml, Source: SYObjectNode)
     },
     "required": ["firstName", "lastName"]
 }
-" (Start: 115 , End: 638, On: input.raml, Source: SchemaNodeImpl)
+" (Start: 115 , End: 638, On: input.raml, Source: ExternalSchemaTypeExpressionNode)
                                     KeyValueNodeImpl (Start: -1 , End: 80, Source: KeyValueNodeImpl)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1, Source: StringNodeImpl)
                                         SYStringNode: "body" (Start: 76 , End: 80, On: input.raml, Source: SYStringNode)

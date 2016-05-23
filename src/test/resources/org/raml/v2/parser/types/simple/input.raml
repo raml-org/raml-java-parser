@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: arrays
+types:
+  Human:
+    type: object
+    properties:
+      family:
+        properties:
+            count: integer
+            members: Human[]
+      name: string
+
+  Address:
+  Email:
+      properties:
+        base:
+        domain: string

@@ -17,16 +17,7 @@ package org.raml.v2.internal.impl.emitter.tck;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
-import org.raml.v2.internal.impl.commons.nodes.ExampleTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.MethodNode;
-import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
@@ -37,9 +28,16 @@ import org.raml.v2.internal.framework.nodes.ReferenceNode;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYObjectNode;
+import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
+import org.raml.v2.internal.impl.commons.nodes.MethodNode;
+import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.Tag;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TckEmitter
 {
@@ -200,16 +198,7 @@ public class TckEmitter
         // key
         String keyText = sanitizeScalarValue(node.getKey());
         dump.append(addNewline(dump)).append(indent(depth + 1)).append(keyText).append(COLON_SEP);
-
-        // value
-        if (node.getValue() instanceof ExampleTypeNode && node.getValue().getChildren().isEmpty())
-        {
-            dumpNode(node.getValue().getSource(), dump, depth + 1);
-        }
-        else
-        {
-            dumpNode(node.getValue(), dump, depth + 1);
-        }
+        dumpNode(node.getValue(), dump, depth + 1);
     }
 
     private Node copy(Node node)

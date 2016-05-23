@@ -15,11 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
@@ -31,21 +26,24 @@ import org.raml.v2.internal.framework.phase.Phase;
 import org.raml.v2.internal.framework.phase.TransformationPhase;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.RamlFragmentGrammarTransformer;
 import org.raml.v2.internal.impl.commons.phase.ReferenceResolverTransformer;
 import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
-import org.raml.v2.internal.impl.commons.phase.SchemaValidationPhase;
+import org.raml.v2.internal.impl.commons.phase.SchemaValidationTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
-import org.raml.v2.internal.impl.commons.phase.SugarRushPhase;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
-import org.raml.v2.internal.impl.v10.phase.MediaTypeInjection;
-import org.raml.v2.internal.impl.v10.phase.TypesTransformer;
+import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.utils.StreamUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class Raml10Builder
 {
@@ -63,7 +61,7 @@ public class Raml10Builder
             applyExtension = true;
             maxPhaseNumber = RamlBuilder.SUGAR_PHASE;
         }
-        final List<Phase> phases = createPhases(resourceLoader, resourceLocation, fragment);
+        final List<Phase> phases = createPhases(resourceLoader, fragment);
         for (int i = 0; i < phases.size(); i++)
         {
             if (i < maxPhaseNumber)
@@ -124,46 +122,51 @@ public class Raml10Builder
     }
 
 
-    private List<Phase> createPhases(ResourceLoader resourceLoader, String resourceLocation, RamlFragment fragment)
+    private List<Phase> createPhases(ResourceLoader resourceLoader, RamlFragment fragment)
     {
         // The first phase expands the includes.
-        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
+        final TransformationPhase includePhase = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
 
         final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer(resourceLoader));
 
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem
         final Raml10Grammar raml10Grammar = new Raml10Grammar();
 
-        final GrammarPhase second = new GrammarPhase(fragment.getRule(raml10Grammar));
+        final GrammarPhase grammarPhase = new GrammarPhase(fragment.getRule(raml10Grammar));
         // Detect invalid references. Library resourceTypes and Traits. This point the nodes are good enough for Editors.
 
         // sugar
-        final SugarRushPhase sugar = new SugarRushPhase();
         // Normalize resources and detects duplicated ones and more than one use of url parameters. ???
-
         final TransformationPhase libraryLink = new TransformationPhase(new LibraryLinkingTransformation(resourceLoader));
 
         final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformer());
 
         // Applies resourceTypes and Traits Library
-        final TransformationPhase third = new TransformationPhase(new ResourceTypesTraitsTransformer(raml10Grammar));
-
-        final Phase typesTransformation = new TransformationPhase(new TypesTransformer(resourceLocation));
+        final TransformationPhase resourcePhase = new TransformationPhase(new ResourceTypesTraitsTransformer(raml10Grammar));
 
         // Run grammar again to re-validate tree
-        final Phase thirdAndAHalf = second;
 
-        final AnnotationValidationPhase fourth = new AnnotationValidationPhase();
+        final AnnotationValidationPhase annotationValidationPhase = new AnnotationValidationPhase(resourceLoader);
 
-        final MediaTypeInjection fifth = new MediaTypeInjection();
+        final MediaTypeInjectionPhase mediaTypeInjection = new MediaTypeInjectionPhase();
 
         // Schema Types example validation
 
-        final SchemaValidationPhase sixth = new SchemaValidationPhase(resourceLoader);
+        final TransformationPhase schemaValidationPhase = new TransformationPhase(new SchemaValidationTransformer(resourceLoader));
 
-        final ExampleValidationPhase seventh = new ExampleValidationPhase(resourceLoader);
+        final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
 
-        return Arrays.asList(first, ramlFragmentsValidator, sugar, second, libraryLink, referenceCheck, third, typesTransformation, thirdAndAHalf, fourth, fifth, sixth, seventh);
+        return Arrays.asList(includePhase,
+                ramlFragmentsValidator,
+                grammarPhase,
+                libraryLink,
+                referenceCheck,
+                resourcePhase,
+                annotationValidationPhase,
+                mediaTypeInjection,
+                grammarPhase,
+                schemaValidationPhase,
+                exampleValidationPhase);
 
     }
 }

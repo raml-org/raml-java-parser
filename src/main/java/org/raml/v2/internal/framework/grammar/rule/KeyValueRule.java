@@ -176,21 +176,34 @@ public class KeyValueRule extends Rule
         {
             return;
         }
-        if (!(getKeyRule() instanceof StringValueRule))
-        {
-            throw new RuntimeException("Key rule " + getKeyRule().getClass().getSimpleName() + " does not support default values");
-        }
+
+        StringValueRule keyRule = getStringKeyRule(getKeyRule());
         Node valueNode = this.defaultValue.getDefaultValue(parent);
         if (valueNode == null)
         {
-            // default not applcable in fragment file
+            // default not applicable in fragment file
             return;
         }
-        Node keyNode = new StringNodeImpl(((StringValueRule) getKeyRule()).getValue());
+        Node keyNode = new StringNodeImpl(keyRule.getValue());
         KeyValueNodeImpl newNode = new KeyValueNodeImpl(keyNode, valueNode);
         newNode.setEndPosition(DefaultPosition.emptyPosition());
         newNode.setStartPosition(DefaultPosition.emptyPosition());
         parent.addChild(newNode);
+    }
+
+    private StringValueRule getStringKeyRule(Rule keyRule)
+    {
+
+        if (keyRule instanceof AnyOfRule)
+        {
+            keyRule = getStringKeyRule(((AnyOfRule) keyRule).getRules().get(0));
+        }
+
+        if (!(keyRule instanceof StringValueRule))
+        {
+            throw new RuntimeException("Key rule " + keyRule.getClass().getSimpleName() + " does not support default values");
+        }
+        return (StringValueRule) keyRule;
     }
 
 }

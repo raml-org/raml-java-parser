@@ -17,7 +17,21 @@ package org.raml.v2.internal.framework.grammar.rule;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.NodeType;
+import org.raml.v2.internal.framework.nodes.NullNode;
+import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.framework.suggester.RamlParsingContext;
+import org.raml.v2.internal.framework.suggester.RamlParsingContextType;
+import org.raml.v2.internal.framework.suggester.Suggestion;
+import org.raml.v2.internal.utils.NodeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,23 +39,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.raml.v2.internal.framework.nodes.ErrorNode;
-import org.raml.v2.internal.framework.nodes.KeyValueNode;
-import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.NodeType;
-import org.raml.v2.internal.framework.nodes.NullNode;
-import org.raml.v2.internal.framework.nodes.ObjectNode;
-import org.raml.v2.internal.impl.commons.nodes.ExampleTypeNode;
-import org.raml.v2.internal.framework.suggester.RamlParsingContext;
-import org.raml.v2.internal.framework.suggester.RamlParsingContextType;
-import org.raml.v2.internal.framework.suggester.Suggestion;
-import org.raml.v2.internal.utils.NodeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ObjectRule extends Rule
 {
@@ -51,7 +48,7 @@ public class ObjectRule extends Rule
     private ConditionalRules conditionalRules;
 
     private boolean strict = false;
-    private boolean allowsAdditionalProperties = true;
+    private boolean allowsAdditionalProperties = false;
 
     public ObjectRule()
     {
@@ -132,6 +129,7 @@ public class ObjectRule extends Rule
         return matches;
     }
 
+    @Nonnull
     @Override
     public Node apply(@Nonnull Node node)
     {
@@ -141,7 +139,7 @@ public class ObjectRule extends Rule
         }
         else
         {
-            Node result = getResult(node);
+
             final List<Node> children = node.getChildren();
             final List<KeyValueRule> allFieldRules = getAllFieldRules(node);
             final List<KeyValueRule> nonMatchingRules = new ArrayList<>(allFieldRules);
@@ -157,7 +155,7 @@ public class ObjectRule extends Rule
                 }
                 else
                 {
-                    if (!allowsAdditionalProperties || !(node instanceof ExampleTypeNode))
+                    if (!allowsAdditionalProperties)
                     {
                         final Collection<String> options = Collections2.transform(allFieldRules, new Function<KeyValueRule, String>()
                         {
@@ -176,7 +174,7 @@ public class ObjectRule extends Rule
             {
                 if (rule.isRequired(node))
                 {
-                    result.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
+                    node.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
                 }
                 else
                 {
@@ -184,13 +182,12 @@ public class ObjectRule extends Rule
                 }
             }
 
-            validateKeysUniquity(result);
-
-            return result;
+            validateKeysUnique(node);
+            return getResult(node);
         }
     }
 
-    private void validateKeysUniquity(final Node node)
+    private void validateKeysUnique(final Node node)
     {
         final List<Node> children = node.getChildren();
 
@@ -218,7 +215,7 @@ public class ObjectRule extends Rule
 
     protected Node getResult(Node node)
     {
-        return createNodeUsingFactory(node, node);
+        return createNodeUsingFactory(node);
     }
 
     private List<KeyValueRule> getAllFieldRules(Node node)
@@ -308,7 +305,7 @@ public class ObjectRule extends Rule
         this.strict = strict;
     }
 
-    public void setAllowsAdditionalProperties(boolean allowsAdditionalProperties)
+    public void additionalProperties(boolean allowsAdditionalProperties)
     {
         this.allowsAdditionalProperties = allowsAdditionalProperties;
     }

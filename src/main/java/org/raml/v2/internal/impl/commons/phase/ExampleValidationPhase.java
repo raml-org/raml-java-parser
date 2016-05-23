@@ -15,19 +15,25 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import java.util.List;
-
-import org.raml.v2.internal.impl.commons.nodes.ExampleTypeNode;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
 import org.raml.v2.internal.framework.phase.Phase;
-import org.raml.v2.internal.utils.NodeValidator;
+import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeToRuleVisitor;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeDefinition;
+import org.raml.v2.internal.utils.NodeUtils;
+
+import java.util.List;
 
 public class ExampleValidationPhase implements Phase
 {
-
     private ResourceLoader resourceLoader;
-
 
     public ExampleValidationPhase(ResourceLoader resourceLoader)
     {
@@ -37,13 +43,58 @@ public class ExampleValidationPhase implements Phase
     @Override
     public Node apply(Node tree)
     {
-        final List<ExampleTypeNode> examples = tree.findDescendantsWith(ExampleTypeNode.class);
-        NodeValidator validator = new NodeValidator(this.resourceLoader);
-        for (ExampleTypeNode example : examples)
+        final List<ExampleDeclarationNode> descendantsWith = tree.findDescendantsWith(ExampleDeclarationNode.class);
+        for (ExampleDeclarationNode exampleTypeNode : descendantsWith)
         {
-            validator.validateExample(example);
+            if (!exampleTypeNode.isStrict())
+            {
+                final TypeDeclarationNode type = NodeUtils.getAncestor(exampleTypeNode, TypeDeclarationNode.class);
+                final Node exampleValue = exampleTypeNode.getExampleValue();
+                if (type != null)
+                {
+                    final Node validate = validate(type, exampleValue);
+                    if (validate != null)
+                    {
+                        exampleValue.replaceWith(validate);
+                    }
+                }
+            }
         }
         return tree;
     }
 
+    public Node validate(TypeDeclarationNode type, Node exampleValue)
+    {
+        final TypeDefinition typeDefinition = type.getTypeDefinition();
+        final Rule rule = typeDefinition.visit(new TypeToRuleVisitor(resourceLoader));
+
+        if (exampleValue instanceof StringNode && !isExternalSchemaType(typeDefinition))
+        {
+            final String value = ((StringNode) exampleValue).getValue();
+            if (isXmlValue(value))
+            {
+                // TODO add xml validation based on type definition
+            }
+            else
+            {
+                final Node parse = RamlNodeParser.parse("", value);
+                return rule.apply(parse);
+            }
+        }
+        else if (exampleValue != null)
+        {
+            return rule.apply(exampleValue);
+        }
+        return null;
+    }
+
+    private boolean isXmlValue(String value)
+    {
+        return value.trim().startsWith("<");
+    }
+
+    private boolean isExternalSchemaType(TypeDefinition typeDefinition)
+    {
+        return typeDefinition instanceof XmlSchemaTypeDefinition || typeDefinition instanceof JsonSchemaTypeDefinition;
+    }
 }

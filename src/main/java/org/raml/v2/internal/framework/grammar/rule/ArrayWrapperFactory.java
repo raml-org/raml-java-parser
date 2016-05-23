@@ -21,9 +21,8 @@ import org.raml.v2.internal.framework.nodes.Node;
 public class ArrayWrapperFactory implements NodeFactory
 {
     @Override
-    public Node create(Object... args)
+    public Node create(Node matchNode, Object... args)
     {
-        final Node matchNode = (Node) args[0];
         if (matchNode instanceof ArrayNode)
         {
             return matchNode;

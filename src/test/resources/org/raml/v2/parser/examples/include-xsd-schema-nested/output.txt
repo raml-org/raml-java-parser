@@ -7,18 +7,32 @@ RamlDocumentNode (Start: 11 , End: 668, On: input.raml, Source: SYObjectNode)
         SYObjectNode (Start: 45 , End: 437, On: input.raml)
             KeyValueNodeImpl (Start: 45 , End: 437, On: input.raml)
                 SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
-                UnionTypeNode (Start: 55 , End: 437, On: input.raml, Source: SYObjectNode)
+                TypeDeclarationNode (Start: 55 , End: 437, On: input.raml, Source: SYObjectNode)
                     KeyValueNodeImpl (Start: 55 , End: 86, On: input.raml)
                         SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
-                        SchemaNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
+                        ExternalSchemaTypeExpressionNode: "<?xml version="1.0" encoding="UTF-8"?>
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <xs:include schemaLocation="refs/person.xsd"/>
-</xs:schema>" (Start: 61 , End: 86, On: input.raml, Source: SchemaNodeImpl)
+</xs:schema>" (Start: 61 , End: 86, On: input.raml, Source: StringNodeImpl)
                     KeyValueNodeImpl (Start: 91 , End: 437, On: input.raml)
                         SYStringNode: "examples" (Start: 91 , End: 99, On: input.raml)
-                        MultipleExampleTypeNode (Start: 107 , End: 437, On: input.raml, Source: SYArrayNode)
-                            ErrorNode: "Error validating XML. Error: cvc-datatype-valid.1.2.1: 'ten' is not a valid value for 'integer'." (Start: 109 , End: 273, On: input.raml, Source: SYObjectNode)
+                        ErrorNode: "Invalid element Array[{
+bad: <Person>
+    <firstName>Bob</firstName>
+    <lastName>Marley</lastName>
+    <age>ten</age>
+</Person>
+
+},{
+good: <Person>
+    <firstName>Donald</firstName>
+    <lastName>Trump</lastName>
+    <age>1000</age>
+</Person>
+
+}]." (Start: 107 , End: 437, On: input.raml, Source: SYArrayNode)
+                            SYObjectNode (Start: 109 , End: 273, On: input.raml)
                                 KeyValueNodeImpl (Start: 109 , End: 267, On: input.raml)
                                     SYStringNode: "bad" (Start: 109 , End: 112, On: input.raml)
                                     SYStringNode: "<Person>
@@ -50,17 +64,17 @@ RamlDocumentNode (Start: 11 , End: 668, On: input.raml, Source: SYObjectNode)
                         SYObjectNode (Start: 468 , End: 668, On: input.raml)
                             KeyValueNodeImpl (Start: 468 , End: 668, On: input.raml)
                                 SYStringNode: "application/json" (Start: 468 , End: 484, On: input.raml)
-                                UnionTypeNode (Start: 494 , End: 668, On: input.raml, Source: SYObjectNode)
+                                TypeDeclarationNode (Start: 494 , End: 668, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 494 , End: 504, On: input.raml)
                                         SYStringNode: "type" (Start: 494 , End: 498, On: input.raml)
-                                        SchemaNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
-
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:include schemaLocation="refs/person.xsd"/>
-</xs:schema>" (Start: 500 , End: 504, On: input.raml, Source: SYStringNode)
-                                    KeyValueNodeImpl (Start: 513 , End: 668, On: input.raml)
+                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 55 , RefEnd: 437} (Start: 500 , End: 504, On: input.raml, Source: SYStringNode)
+                                    ExampleDeclarationNode (Start: 513 , End: 668, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 513 , End: 520, On: input.raml)
-                                        ErrorNode: "Error validating XML. Error: cvc-datatype-valid.1.2.1: 'ten' is not a valid value for 'integer'." (Start: 522 , End: 668, On: input.raml, Source: ExampleTypeNode)
+                                        SYStringNode: "<Person>
+  <firstName>Bob</firstName>
+  <lastName>Marley</lastName>
+  <age>ten</age>
+</Person>" (Start: 522 , End: 668, On: input.raml)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                         SYStringNode: "application/json" (Start: 468 , End: 484, On: input.raml, Source: SYStringNode)

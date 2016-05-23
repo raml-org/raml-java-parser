@@ -15,12 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import javax.annotation.Nonnull;
-
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
+
+import javax.annotation.Nonnull;
 
 public class AnnotationTypeNode extends KeyValueNodeImpl
 {
@@ -40,9 +39,9 @@ public class AnnotationTypeNode extends KeyValueNodeImpl
         return key.getValue();
     }
 
-    public TypeNode getTypeNode()
+    public TypeDeclarationNode getDeclaredType()
     {
-        return (TypeNode) getValue();
+        return (TypeDeclarationNode) getValue();
     }
 
     @Nonnull

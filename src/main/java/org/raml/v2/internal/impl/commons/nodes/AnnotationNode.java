@@ -21,6 +21,9 @@ import javax.annotation.Nullable;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 
+/**
+ * An annotation usage
+ */
 public class AnnotationNode extends KeyValueNodeImpl
 {
 

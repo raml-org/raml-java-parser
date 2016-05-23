@@ -35,7 +35,7 @@ import org.raml.v2.internal.framework.grammar.rule.DefaultValue;
 import org.raml.v2.internal.framework.grammar.rule.DiscriminatorRule;
 import org.raml.v2.internal.framework.grammar.rule.FieldPresentRule;
 import org.raml.v2.internal.framework.grammar.rule.FirstOfRule;
-import org.raml.v2.internal.framework.grammar.rule.FloatTypeRule;
+import org.raml.v2.internal.framework.grammar.rule.NumberTypeRule;
 import org.raml.v2.internal.framework.grammar.rule.IntegerTypeRule;
 import org.raml.v2.internal.framework.grammar.rule.IntegerValueRule;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
@@ -51,6 +51,8 @@ import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.ScalarTypeRule;
 import org.raml.v2.internal.framework.grammar.rule.StringTypeRule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
+
+import static java.util.Collections.singletonList;
 
 public class BaseGrammar
 {
@@ -99,14 +101,9 @@ public class BaseGrammar
         return new IntegerTypeRule(null);
     }
 
-    public FloatTypeRule floatType()
-    {
-        return new FloatTypeRule();
-    }
-
     public Rule numberType()
     {
-        return anyOf(integerType(), floatType());
+        return new NumberTypeRule();
     }
 
     public IntegerTypeRule range(Range<Integer> range)
@@ -218,6 +215,11 @@ public class BaseGrammar
     }
 
     public ConditionalRules when(String expr, ConditionalRule... cases)
+    {
+        return new ConditionalRules(singletonList(expr), cases);
+    }
+
+    public ConditionalRules when(List<String> expr, ConditionalRule... cases)
     {
         return new ConditionalRules(expr, cases);
     }

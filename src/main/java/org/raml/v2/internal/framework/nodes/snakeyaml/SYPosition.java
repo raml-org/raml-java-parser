@@ -52,7 +52,7 @@ public class SYPosition extends AbstractPosition
 
     @Nonnull
     @Override
-    public String getResource()
+    public String getPath()
     {
         return resourcePath;
     }

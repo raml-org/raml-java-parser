@@ -101,7 +101,7 @@ public class ModelProxyBuilder
             }
             else
             {
-                throw new RuntimeException("Can not resolve method : " + method.toGenericString() + " on " + delegate.getClass().getName());
+                throw new RuntimeException("Can not generateDefinition method : " + method.toGenericString() + " on " + delegate.getClass().getName());
             }
         }
 

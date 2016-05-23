@@ -19,6 +19,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.utils.NodeSelector;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,12 +27,12 @@ import java.util.List;
 public class ConditionalRules
 {
 
-    private String selectorExpression;
+    private List<String> selectorExpression;
     private List<ConditionalRule> options;
-    private Node defaultValue;
+    private DefaultValue defaultValue;
 
 
-    public ConditionalRules(String selectorExpression, ConditionalRule... cases)
+    public ConditionalRules(List<String> selectorExpression, ConditionalRule... cases)
     {
         this.selectorExpression = selectorExpression;
         this.options = Arrays.asList(cases);
@@ -40,10 +41,10 @@ public class ConditionalRules
     @Nonnull
     public List<KeyValueRule> getRulesNode(Node node)
     {
-        Node from = NodeSelector.selectFrom(selectorExpression, node);
-        if (from == null)
+        Node from = selectValue(node);
+        if (from == null && defaultValue != null)
         {
-            from = defaultValue;
+            from = defaultValue.getDefaultValue(node);
         }
 
         if (from != null)
@@ -60,9 +61,30 @@ public class ConditionalRules
         return Collections.emptyList();
     }
 
-    public ConditionalRules defaultValue(Node node)
+    @Nullable
+    private Node selectValue(Node node)
     {
-        defaultValue = node;
+
+        for (String expr : selectorExpression)
+        {
+            Node from = NodeSelector.selectFrom(expr, node);
+            if (from != null)
+            {
+                return from;
+            }
+        }
+        return null;
+    }
+
+    public ConditionalRules defaultValue(DefaultValue defaultValue)
+    {
+        this.defaultValue = defaultValue;
+        return this;
+    }
+
+    public ConditionalRules defaultValue(Node defaultValue)
+    {
+        this.defaultValue = new LiteralDefaultValue(defaultValue);
         return this;
     }
 

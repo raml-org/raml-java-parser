@@ -68,6 +68,13 @@ public class NodeSelector
         return selectType(path, from, null);
     }
 
+
+    @Nullable
+    public static Boolean selectBooleanValue(String path, Node from)
+    {
+        return selectType(path, from, null);
+    }
+
     @Nullable
     public static String selectStringValue(String path, Node from)
     {
@@ -201,4 +208,6 @@ public class NodeSelector
     {
         return path.replaceAll("/", ENCODED_SLASH);
     }
+
+
 }

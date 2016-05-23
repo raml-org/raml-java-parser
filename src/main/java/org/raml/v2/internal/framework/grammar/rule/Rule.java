@@ -73,7 +73,7 @@ public abstract class Rule
     {
         if (getFactory() != null)
         {
-            Node newNode = getFactory().create(args);
+            Node newNode = getFactory().create(currentNode, args);
             if (!newNode.getClass().equals(currentNode.getClass()))
             {
                 return newNode;

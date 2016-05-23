@@ -15,19 +15,24 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.model.builder.ModelUtils;
-import org.raml.v2.internal.impl.commons.nodes.PayloadValidationResultNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
-import org.raml.v2.internal.utils.NodeValidator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Collections.singletonList;
 
 public class TypeDeclaration extends Annotable
 {
@@ -99,14 +104,19 @@ public class TypeDeclaration extends Annotable
 
     public List<RamlValidationResult> validate(String payload)
     {
-        NodeValidator validator = new NodeValidator(NodeUtils.getResourceLoader(node));
-        PayloadValidationResultNode payloadValidationResultNode = validator.validatePayload(node.getValue(), payload);
-        List<RamlValidationResult> results = new ArrayList<>();
-        for (ErrorNode errorNode : payloadValidationResultNode.findDescendantsWith(ErrorNode.class))
+        final ResourceLoader resourceLoader = NodeUtils.getResourceLoader(node);
+        final TypeDeclarationNode node = (TypeDeclarationNode) getNode();
+        final StringNodeImpl stringNode = new StringNodeImpl(payload);
+        final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
+        final Node validate = exampleValidationPhase.validate(node, stringNode);
+        if (validate instanceof ErrorNode)
         {
-            results.add(new RamlValidationResult(errorNode));
+            return singletonList(new RamlValidationResult((ErrorNode) validate));
         }
-        return results;
+        else
+        {
+            return Collections.emptyList();
+        }
     }
 
     public Boolean required()

@@ -17,9 +17,7 @@ package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.nodes.ExampleTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.MultipleExampleTypeNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
+
 
 public class ExampleSpec extends Annotable
 {
@@ -38,21 +36,17 @@ public class ExampleSpec extends Annotable
 
     public String name()
     {
-        if ((node.getParent() instanceof MultipleExampleTypeNode))
-        {
-            return String.valueOf(node.getKey());
-        }
-        return null;
+        return String.valueOf(node.getKey());
     }
 
     public TypeInstance structuredValue()
     {
         Node value = node.getValue();
         // FIXME ExampleTypeNode may wrap a SimpleTypeNode
-        if ((value instanceof ExampleTypeNode) && value.getSource() != null)
-        {
-            value = value.getSource();
-        }
+        // if ((value instanceof ExampleTypeNode) && value.getSource() != null)
+        // {
+        // value = value.getSource();
+        // }
         return new TypeInstance(value);
     }
 

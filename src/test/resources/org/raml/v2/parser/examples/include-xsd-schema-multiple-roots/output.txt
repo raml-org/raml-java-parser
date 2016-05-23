@@ -1,16 +1,16 @@
-RamlDocumentNode (Start: 11 , End: 327, On: input.raml, Source: SYObjectNode)
+RamlDocumentNode (Start: 11 , End: 325, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
         SYStringNode: "API with Examples" (Start: 18 , End: 35, On: input.raml)
-    KeyValueNodeImpl (Start: 36 , End: 327, On: input.raml)
+    KeyValueNodeImpl (Start: 36 , End: 325, On: input.raml)
         SYStringNode: "types" (Start: 36 , End: 41, On: input.raml)
-        SYObjectNode (Start: 45 , End: 327, On: input.raml)
-            KeyValueNodeImpl (Start: 45 , End: 327, On: input.raml)
+        SYObjectNode (Start: 45 , End: 325, On: input.raml)
+            KeyValueNodeImpl (Start: 45 , End: 325, On: input.raml)
                 SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
-                UnionTypeNode (Start: 55 , End: 327, On: input.raml, Source: SYObjectNode)
+                TypeDeclarationNode (Start: 55 , End: 325, On: input.raml, Source: SYObjectNode)
                     KeyValueNodeImpl (Start: 55 , End: 85, On: input.raml)
                         SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
-                        SchemaNodeImpl: "<?xml version="1.0"?>
+                        ExternalSchemaTypeExpressionNode: "<?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
     <xs:element name="User" type="UserType"/>
     <xs:element name="Animal" type="AnimalType"/>
@@ -27,19 +27,19 @@ RamlDocumentNode (Start: 11 , End: 327, On: input.raml, Source: SYObjectNode)
         </xs:sequence>
     </xs:complexType>
 </xs:schema>" (Start: 61 , End: 85, On: input.raml, Source: StringNodeImpl)
-                    KeyValueNodeImpl (Start: 90 , End: 327, On: input.raml)
+                    KeyValueNodeImpl (Start: 90 , End: 325, On: input.raml)
                         SYStringNode: "examples" (Start: 90 , End: 98, On: input.raml)
-                        MultipleExampleTypeNode (Start: 106 , End: 327, On: input.raml, Source: SYObjectNode)
-                            KeyValueNodeImpl (Start: 106 , End: 214, On: input.raml)
+                        SYObjectNode (Start: 106 , End: 325, On: input.raml)
+                            ExampleDeclarationNode (Start: 106 , End: 214, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "animal" (Start: 106 , End: 112, On: input.raml)
                                 SYStringNode: "<Animal>
     <name>Fido</name>
     <specie>Dog</specie>
 </Animal>
 " (Start: 114 , End: 214, On: input.raml)
-                            KeyValueNodeImpl (Start: 220 , End: 327, On: input.raml)
+                            ExampleDeclarationNode (Start: 220 , End: 325, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "user" (Start: 220 , End: 224, On: input.raml)
-                                ErrorNode: "Error validating XML. Error: provided object is not of type Animal" (Start: 226 , End: 327, On: input.raml, Source: SYStringNode)
+                                ErrorNode: "Error validating XML. Error: Provided object is not of type Animal" (Start: 226 , End: 325, On: input.raml, Source: SYStringNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                         SYStringNode: "User" (Start: 45 , End: 49, On: input.raml, Source: SYStringNode)

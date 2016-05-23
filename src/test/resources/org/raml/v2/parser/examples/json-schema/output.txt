@@ -19,21 +19,21 @@ RamlDocumentNode (Start: 11 , End: 474, On: input.raml, Source: SYObjectNode)
                                         SYObjectNode (Start: 92 , End: 474, On: input.raml)
                                             KeyValueNodeImpl (Start: 92 , End: 474, On: input.raml)
                                                 SYStringNode: "application/json" (Start: 92 , End: 108, On: input.raml)
-                                                UnionTypeNode (Start: 122 , End: 474, On: input.raml, Source: SYObjectNode)
+                                                TypeDeclarationNode (Start: 122 , End: 474, On: input.raml, Source: SYObjectNode)
                                                     KeyValueNodeImpl (Start: 122 , End: 190, On: input.raml)
                                                         SYStringNode: "examples" (Start: 122 , End: 130, On: input.raml)
-                                                        MultipleExampleTypeNode (Start: 146 , End: 190, On: input.raml, Source: SYObjectNode)
-                                                            KeyValueNodeImpl (Start: 146 , End: 190, On: input.raml)
+                                                        SYObjectNode (Start: 146 , End: 190, On: input.raml)
+                                                            ExampleDeclarationNode (Start: 146 , End: 190, On: input.raml, Source: KeyValueNodeImpl)
                                                                 SYStringNode: "example1" (Start: 146 , End: 154, On: input.raml)
-                                                                ErrorNode: "Invalid element {
+                                                                ErrorNode: "Error validating JSON. Error: Invalid json content : {
 name: SyNullNode
-}." (Start: 172 , End: 190, On: input.raml, Source: SYObjectNode)
+}" (Start: 172 , End: 190, On: input.raml, Source: SYObjectNode)
                                                                     KeyValueNodeImpl (Start: 172 , End: 177, On: input.raml)
                                                                         SYStringNode: "name" (Start: 172 , End: 176, On: input.raml)
                                                                         SYNullNode (Start: 177 , End: 177, On: input.raml)
                                                     KeyValueNodeImpl (Start: 190 , End: 474, On: input.raml)
                                                         SYStringNode: "schema" (Start: 190 , End: 196, On: input.raml)
-                                                        SchemaNodeImpl: "{
+                                                        ExternalSchemaTypeExpressionNode: "{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {

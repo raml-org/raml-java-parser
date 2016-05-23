@@ -24,19 +24,23 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
+import org.raml.v2.internal.utils.DateType;
 import org.raml.v2.internal.utils.DateUtils;
 
 public class DateValueRule extends Rule
 {
 
-    private String dateType;
-    private String rfc;
+    private DateType dateType;
+    private String rfc = "rfc3339";
 
 
-    public DateValueRule(String dateType, String rfc)
+    public DateValueRule(DateType dateType, String rfc)
     {
         this.dateType = dateType;
-        this.rfc = rfc;
+        if (rfc != null)
+        {
+            this.rfc = rfc;
+        }
     }
 
     @Nonnull
@@ -63,7 +67,7 @@ public class DateValueRule extends Rule
             }
             else
             {
-                return ErrorNodeFactory.createInvalidDateValue(((StringNode) node).getValue(), this.dateType, this.rfc);
+                return ErrorNodeFactory.createInvalidDateValue(((StringNode) node).getValue(), this.dateType.name(), this.rfc);
             }
         }
         else

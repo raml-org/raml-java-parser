@@ -22,8 +22,6 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.impl.commons.nodes.ContextProviderNode;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
-import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.TypeNode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,6 +43,28 @@ public class NodeUtils
             i++;
         }
         return parent;
+    }
+
+    @Nullable
+    public static <T extends Node> T getAncestor(Node node, Class<T> ancestorType)
+    {
+        Node parent = node.getParent();
+        while (parent != null && !ancestorType.isAssignableFrom(parent.getClass()))
+        {
+            parent = parent.getParent();
+        }
+        return ancestorType.cast(parent);
+    }
+
+    @Nullable
+    public static <T extends Node> T getSource(Node node, Class<T> ancestorType)
+    {
+        Node parent = node.getSource();
+        while (parent != null && !ancestorType.isAssignableFrom(parent.getClass()))
+        {
+            parent = parent.getSource();
+        }
+        return ancestorType.cast(parent);
     }
 
     @Nullable
@@ -74,67 +94,11 @@ public class NodeUtils
         return node.get("type") != null ? node.get("type") : node.get("schema");
     }
 
-    public static Node getTypes(Node node)
-    {
-        return node.get("types") != null ? node.get("types") : node.get("schemas");
-    }
-
     public static boolean isErrorResult(Node node)
     {
         return node != null && (node instanceof ErrorNode || node.findDescendantsWith(ErrorNode.class).size() > 0);
     }
 
-    public static TypeNode getType(String typeName, Node node)
-    {
-        Node definitionContext = getContextNode(node);
-        if (typeName != null && typeName.contains("."))
-        {
-            return getTypeFromContext(typeName, definitionContext);
-        }
-        else if (getTypes(definitionContext) != null)
-        {
-            Node type = getTypes(definitionContext).get(typeName);
-            return type instanceof TypeNode ? (TypeNode) type : null;
-        }
-        return null;
-    }
-
-    private static TypeNode getTypeFromContext(String typeName, Node definitionContext)
-    {
-        Node localContext = definitionContext.get("uses");
-        if (localContext == null)
-        {
-            return null;
-        }
-        else
-        {
-            Node resolution = localContext;
-            String objectName = typeName.substring(typeName.lastIndexOf(".") + 1);
-            String navigationPath = typeName.substring(0, typeName.lastIndexOf("."));
-            if (!navigationPath.contains("."))
-            {
-                Node libraryNode = resolution.get(navigationPath);
-                if (libraryNode instanceof LibraryLinkNode)
-                {
-                    libraryNode = ((LibraryLinkNode) libraryNode).getRefNode();
-                }
-                return libraryNode != null && getTypes(libraryNode) != null && getTypes(libraryNode).get(objectName) instanceof TypeNode ? (TypeNode) getTypes(libraryNode).get(objectName) : null;
-            }
-            for (String path : navigationPath.split("."))
-            {
-                if (resolution == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    resolution = resolution.get(path);
-                }
-            }
-            return resolution != null && getTypes(resolution) != null && getTypes(resolution).get(objectName) instanceof TypeNode ? (TypeNode) getTypes(resolution).get(objectName) : null;
-        }
-
-    }
 
     /**
      * Returns the node that defines the scope for the specified node.

@@ -15,18 +15,17 @@
  */
 package org.raml.v2.internal.impl.v08;
 
+import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
+import org.raml.v2.internal.framework.phase.GrammarPhase;
+import org.raml.v2.internal.framework.phase.Phase;
+import org.raml.v2.internal.framework.phase.TransformationPhase;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
-import org.raml.v2.internal.impl.v10.phase.TypesTransformer;
-import org.raml.v2.internal.framework.nodes.ErrorNode;
-import org.raml.v2.internal.framework.phase.GrammarPhase;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
-import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
-import org.raml.v2.internal.framework.phase.Phase;
-import org.raml.v2.internal.framework.phase.TransformationPhase;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -38,7 +37,7 @@ public class Raml08Builder
     public Node build(String stringContent, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
         Node rootNode = RamlNodeParser.parse(resourceLocation, stringContent);
-        final List<Phase> phases = createPhases(resourceLoader, resourceLocation);
+        final List<Phase> phases = createPhases(resourceLoader);
         for (int i = 0; i < phases.size(); i++)
         {
             if (i < maxPhaseNumber)
@@ -56,11 +55,10 @@ public class Raml08Builder
     }
 
 
-    private List<Phase> createPhases(ResourceLoader resourceLoader, String resourceLocation)
+    private List<Phase> createPhases(ResourceLoader resourceLoader)
     {
         // The first phase expands the includes.
-        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer(),
-                new TypesTransformer());
+        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
         // Overlays and extensions.
 
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem

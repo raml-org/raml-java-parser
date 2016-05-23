@@ -7,10 +7,10 @@ RamlDocumentNode (Start: 11 , End: 255, On: input.raml, Source: SYObjectNode)
         SYObjectNode (Start: 45 , End: 255, On: input.raml)
             KeyValueNodeImpl (Start: 45 , End: 255, On: input.raml)
                 SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
-                UnionTypeNode (Start: 55 , End: 255, On: input.raml, Source: SYObjectNode)
+                TypeDeclarationNode (Start: 55 , End: 255, On: input.raml, Source: SYObjectNode)
                     KeyValueNodeImpl (Start: 55 , End: 79, On: input.raml)
                         SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
-                        SchemaNodeImpl: "{
+                        ExternalSchemaTypeExpressionNode: "{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://jsonschema.net",
   "type": "object",
@@ -31,14 +31,14 @@ RamlDocumentNode (Start: 11 , End: 255, On: input.raml, Source: SYObjectNode)
 }" (Start: 61 , End: 79, On: input.raml, Source: StringNodeImpl)
                     KeyValueNodeImpl (Start: 84 , End: 255, On: input.raml)
                         SYStringNode: "examples" (Start: 84 , End: 92, On: input.raml)
-                        MultipleExampleTypeNode (Start: 100 , End: 255, On: input.raml, Source: SYObjectNode)
-                            KeyValueNodeImpl (Start: 100 , End: 175, On: input.raml)
+                        SYObjectNode (Start: 100 , End: 255, On: input.raml)
+                            ExampleDeclarationNode (Start: 100 , End: 175, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "bob" (Start: 100 , End: 103, On: input.raml)
                                 ErrorNode: "Error validating JSON. Error: {
 instance type (string) does not match any allowed primitive type (allowed: ["integer"]),
 instance type (integer) does not match any allowed primitive type (allowed: ["string"])
 }" (Start: 105 , End: 175, On: input.raml, Source: SYStringNode)
-                            KeyValueNodeImpl (Start: 181 , End: 255, On: input.raml)
+                            ExampleDeclarationNode (Start: 181 , End: 255, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "marley" (Start: 181 , End: 187, On: input.raml)
                                 SYStringNode: "{
   "name": "Bob",

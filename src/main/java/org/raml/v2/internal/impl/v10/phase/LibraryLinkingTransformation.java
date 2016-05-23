@@ -49,7 +49,7 @@ public class LibraryLinkingTransformation implements Transformer
     public Node transform(Node node)
     {
         final LibraryLinkNode linkNode = (LibraryLinkNode) node;
-        final String baseLocation = linkNode.getStartPosition().getResource();
+        final String baseLocation = linkNode.getStartPosition().getPath();
         final String refName = linkNode.getRefName();
         final String absoluteLocation = ResourcePathUtils.toAbsoluteLocation(baseLocation, refName);
         try

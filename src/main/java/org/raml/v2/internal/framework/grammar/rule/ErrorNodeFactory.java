@@ -102,6 +102,26 @@ public class ErrorNodeFactory
         return new ErrorNode("Expected max length " + maxLength);
     }
 
+    public static Node createInvalidMaxItems(int maxItems)
+    {
+        return new ErrorNode("Expected max items " + maxItems);
+    }
+
+    public static Node createInvalidMinItems(int minItems)
+    {
+        return new ErrorNode("Expected min items " + minItems);
+    }
+
+    public static Node createInvalidMaxProperties(int maxProperties)
+    {
+        return new ErrorNode("Expected max properties " + maxProperties);
+    }
+
+    public static Node createInvalidMinProperties(int minProperties)
+    {
+        return new ErrorNode("Expected min properties " + minProperties);
+    }
+
     public static Node createInvalidMinLength(int minLength)
     {
         return new ErrorNode("Expected min length " + minLength);
@@ -195,5 +215,10 @@ public class ErrorNodeFactory
     public static ErrorNode createNonexistentReferenceResourceTypeError(ReferenceNode resourceTypeReference)
     {
         return new ErrorNode("Reference to nonexistent resource type '" + resourceTypeReference.getRefName() + "'");
+    }
+
+    public static ErrorNode createInvalidTypeExpressionSyntax(String message, int location)
+    {
+        return new ErrorNode("Invalid type expression syntax. Caused by : " + message + " at character : " + location);
     }
 }

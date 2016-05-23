@@ -52,7 +52,7 @@ public class DefaultPosition extends AbstractPosition
 
     @Nonnull
     @Override
-    public String getResource()
+    public String getPath()
     {
         return resource;
     }

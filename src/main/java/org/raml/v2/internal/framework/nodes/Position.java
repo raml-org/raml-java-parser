@@ -24,14 +24,30 @@ public interface Position
 {
     int UNKNOWN = -1;
 
+    /**
+     * The offset from the begining of the file
+     * @return The offset
+     */
     int getIndex();
 
+    /**
+     * The line line number
+     * @return line number
+     */
     int getLine();
 
+    /**
+     * Column number
+     * @return The column number
+     */
     int getColumn();
 
+    /**
+     * Returns the absolute path of the resource where this position is relative to
+     * @return The absolute path
+     */
     @Nonnull
-    String getResource();
+    String getPath();
 
     @Nonnull
     Position rightShift(int offset);

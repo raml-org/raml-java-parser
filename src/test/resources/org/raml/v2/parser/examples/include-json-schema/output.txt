@@ -7,10 +7,10 @@ RamlDocumentNode (Start: 11 , End: 422, On: input.raml, Source: SYObjectNode)
         SYObjectNode (Start: 45 , End: 260, On: input.raml)
             KeyValueNodeImpl (Start: 45 , End: 260, On: input.raml)
                 SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
-                UnionTypeNode (Start: 55 , End: 260, On: input.raml, Source: SYObjectNode)
+                TypeDeclarationNode (Start: 55 , End: 260, On: input.raml, Source: SYObjectNode)
                     KeyValueNodeImpl (Start: 55 , End: 84, On: input.raml)
                         SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
-                        SchemaNodeImpl: "{
+                        ExternalSchemaTypeExpressionNode: "{
   "definitions": {
     "User" : {
       "$schema": "http://json-schema.org/draft-04/schema#",
@@ -33,18 +33,18 @@ RamlDocumentNode (Start: 11 , End: 422, On: input.raml, Source: SYObjectNode)
     }
   }
 }
-" (Start: 61 , End: 84, On: input.raml, Source: SchemaNodeImpl)
+" (Start: 61 , End: 84, On: input.raml, Source: StringNodeImpl)
                     KeyValueNodeImpl (Start: 89 , End: 260, On: input.raml)
                         SYStringNode: "examples" (Start: 89 , End: 97, On: input.raml)
-                        MultipleExampleTypeNode (Start: 105 , End: 260, On: input.raml, Source: SYObjectNode)
-                            KeyValueNodeImpl (Start: 105 , End: 179, On: input.raml)
+                        SYObjectNode (Start: 105 , End: 260, On: input.raml)
+                            ExampleDeclarationNode (Start: 105 , End: 179, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "good" (Start: 105 , End: 109, On: input.raml)
                                 SYStringNode: "{
   "name": "John",
   "age": 18
 }
 " (Start: 111 , End: 179, On: input.raml)
-                            KeyValueNodeImpl (Start: 185 , End: 260, On: input.raml)
+                            ExampleDeclarationNode (Start: 185 , End: 260, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "bad" (Start: 185 , End: 188, On: input.raml)
                                 ErrorNode: "Error validating JSON. Error: {
 instance type (string) does not match any allowed primitive type (allowed: ["integer"]),
@@ -64,39 +64,16 @@ instance type (integer) does not match any allowed primitive type (allowed: ["st
                         SYObjectNode (Start: 291 , End: 422, On: input.raml)
                             KeyValueNodeImpl (Start: 291 , End: 422, On: input.raml)
                                 SYStringNode: "application/json" (Start: 291 , End: 307, On: input.raml)
-                                UnionTypeNode (Start: 317 , End: 422, On: input.raml, Source: SYObjectNode)
+                                TypeDeclarationNode (Start: 317 , End: 422, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 317 , End: 327, On: input.raml)
                                         SYStringNode: "type" (Start: 317 , End: 321, On: input.raml)
-                                        SchemaNodeImpl: "{
-  "definitions": {
-    "User" : {
-      "$schema": "http://json-schema.org/draft-04/schema#",
-      "id": "User",
-      "type": "object",
-      "properties": {
-        "name": {
-          "id": "http://jsonschema.net/name",
-          "type": "string"
-        },
-        "age": {
-          "id": "http://jsonschema.net/age",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "name",
-        "age"
-      ]
-    }
-  }
-}
-" (Start: 323 , End: 327, On: input.raml, Source: SYStringNode)
-                                    KeyValueNodeImpl (Start: 336 , End: 422, On: input.raml)
+                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 55 , RefEnd: 260} (Start: 323 , End: 327, On: input.raml, Source: SYStringNode)
+                                    ExampleDeclarationNode (Start: 336 , End: 422, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 336 , End: 343, On: input.raml)
                                         ErrorNode: "Error validating JSON. Error: {
 instance type (string) does not match any allowed primitive type (allowed: ["integer"]),
 instance type (integer) does not match any allowed primitive type (allowed: ["string"])
-}" (Start: 345 , End: 422, On: input.raml, Source: ExampleTypeNode)
+}" (Start: 345 , End: 422, On: input.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                         SYStringNode: "application/json" (Start: 291 , End: 307, On: input.raml, Source: SYStringNode)

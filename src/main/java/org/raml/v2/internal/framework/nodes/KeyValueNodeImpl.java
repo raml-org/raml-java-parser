@@ -66,7 +66,7 @@ public class KeyValueNodeImpl extends BaseNode implements KeyValueNode
     {
         if (getChildren().size() >= 2)
         {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Can not add '" + node + "' to " + this + " node it already has hey and value.");
         }
         super.addChild(node);
     }

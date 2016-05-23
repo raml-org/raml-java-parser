@@ -1,0 +1,46 @@
+Bitactora!!!!
+TODO Type Definitions:
+    Custom Facets
+    XML Facets
+
+    Array
+        uniqueItems How do we validate uniques in object and arrays. Where is the comparison defined???
+
+    Object
+        required property in grammar supports not only ?
+        Discriminator
+        DiscriminatorValue
+
+    XmlSchema validator this does not look ok
+      if (this.type != null && !value.trim().startsWith("<" + this.type))
+        {
+            node.replaceWith(ErrorNodeFactory.createInvalidXmlExampleNode("Provided object is not of type " + this.type));
+        }
+
+    ReferenceNode and TypeExpression position is not correctly set
+
+    NodeReferenceFactory change null
+
+Examples:
+    #%RAML 1.0
+    title: API with Examples
+    types:
+      User:
+        type: object
+        properties:
+          name:
+            type: string
+            minLength: 5
+          lastname:
+            type: string
+            maxLength: 5
+        example:
+          name: Bob
+          lastname: Marley
+
+
+Multiple Inheritance
+    - how facets are being merge between elements
+    - What does it mean to be compatible???
+
+

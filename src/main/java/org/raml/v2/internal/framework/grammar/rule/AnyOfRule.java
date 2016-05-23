@@ -47,6 +47,11 @@ public class AnyOfRule extends Rule
         this(Arrays.asList(rules));
     }
 
+    public List<Rule> getRules()
+    {
+        return rules;
+    }
+
     @Override
     @Nonnull
     public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
@@ -93,7 +98,7 @@ public class AnyOfRule extends Rule
             if (rule.matches(node))
             {
                 final Node appliedNode = rule.apply(node);
-                return createNodeUsingFactory(appliedNode, appliedNode);
+                return createNodeUsingFactory(appliedNode);
             }
         }
 

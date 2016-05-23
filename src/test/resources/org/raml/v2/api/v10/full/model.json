@@ -178,7 +178,7 @@
    "displayName": "Param 1",
    "example": {
     "annotations": [],
-    "name": null,
+    "name": "example",
     "structuredValue": {
      "isScalar": true,
      "properties": [],
@@ -318,7 +318,7 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": null,
+       "displayName": "one",
        "example": null,
        "examples": [],
        "fixedFacets": null,
@@ -326,8 +326,10 @@
        "name": "one",
        "required": true,
        "schema": [],
-       "schemaContent": null,
-       "type": []
+       "schemaContent": "string",
+       "type": [
+        "string"
+       ]
       },
       {
        "allowedTargets": [],
@@ -342,8 +344,10 @@
        "name": "two",
        "required": true,
        "schema": [],
-       "schemaContent": null,
-       "type": []
+       "schemaContent": "string",
+       "type": [
+        "string"
+       ]
       }
      ],
      "is": [],
@@ -375,7 +379,7 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": null,
+       "displayName": "two",
        "example": null,
        "examples": [],
        "fixedFacets": null,
@@ -383,8 +387,10 @@
        "name": "two",
        "required": true,
        "schema": [],
-       "schemaContent": null,
-       "type": []
+       "schemaContent": "string",
+       "type": [
+        "string"
+       ]
       }
      ],
      "queryString": null,
@@ -509,13 +515,44 @@
        "displayName": "application/json",
        "example": {
         "annotations": [],
-        "name": null,
+        "name": "example",
         "structuredValue": {
-         "isScalar": true,
-         "properties": [],
-         "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+         "isScalar": false,
+         "properties": [
+          {
+           "isArray": false,
+           "name": "firstname",
+           "value": {
+            "isScalar": true,
+            "properties": [],
+            "value": "tato"
+           },
+           "values": []
+          },
+          {
+           "isArray": false,
+           "name": "lastname",
+           "value": {
+            "isScalar": true,
+            "properties": [],
+            "value": "bores"
+           },
+           "values": []
+          },
+          {
+           "isArray": false,
+           "name": "age",
+           "value": {
+            "isScalar": true,
+            "properties": [],
+            "value": 66
+           },
+           "values": []
+          }
+         ],
+         "value": null
         },
-        "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+        "value": "{\nfirstname: tato,\nlastname: bores,\nage: 66\n}"
        },
        "examples": [],
        "fixedFacets": null,
@@ -645,13 +682,44 @@
          "displayName": "application/json",
          "example": {
           "annotations": [],
-          "name": null,
+          "name": "example",
           "structuredValue": {
-           "isScalar": true,
-           "properties": [],
-           "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+           "isScalar": false,
+           "properties": [
+            {
+             "isArray": false,
+             "name": "firstname",
+             "value": {
+              "isScalar": true,
+              "properties": [],
+              "value": "tato"
+             },
+             "values": []
+            },
+            {
+             "isArray": false,
+             "name": "lastname",
+             "value": {
+              "isScalar": true,
+              "properties": [],
+              "value": "bores"
+             },
+             "values": []
+            },
+            {
+             "isArray": false,
+             "name": "age",
+             "value": {
+              "isScalar": true,
+              "properties": [],
+              "value": 66
+             },
+             "values": []
+            }
+           ],
+           "value": null
           },
-          "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+          "value": "{\nfirstname: tato,\nlastname: bores,\nage: 66\n}"
          },
          "examples": [],
          "fixedFacets": null,
@@ -714,7 +782,7 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": null,
+         "displayName": "one",
          "example": null,
          "examples": [],
          "fixedFacets": null,
@@ -722,8 +790,10 @@
          "name": "one",
          "required": true,
          "schema": [],
-         "schemaContent": null,
-         "type": []
+         "schemaContent": "string",
+         "type": [
+          "string"
+         ]
         },
         {
          "allowedTargets": [],
@@ -738,8 +808,10 @@
          "name": "two",
          "required": true,
          "schema": [],
-         "schemaContent": null,
-         "type": []
+         "schemaContent": "string",
+         "type": [
+          "string"
+         ]
         }
        ]
       },

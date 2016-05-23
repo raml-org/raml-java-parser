@@ -23,8 +23,8 @@ import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
-import org.raml.v2.internal.impl.v10.nodes.types.factories.TypeNodeFactory;
-import org.raml.v2.internal.framework.nodes.StringNodeImpl;
+import org.raml.v2.internal.impl.v08.nodes.DefaultParameterTypeValueNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 public class Raml08Grammar extends BaseRamlGrammar
 {
@@ -94,8 +94,8 @@ public class Raml08Grammar extends BaseRamlGrammar
                                            is(fileTypeLiteral())
                                                                 .add(minLengthField())
                                                                 .add(maxLengthField())
-                                   ).defaultValue(new StringNodeImpl("string"))
-                           ).then(new TypeNodeFactory());
+                                   ).defaultValue(new DefaultParameterTypeValueNode())
+                           ).then(TypeDeclarationNode.class);
     }
 
     private KeyValueRule defaultField()

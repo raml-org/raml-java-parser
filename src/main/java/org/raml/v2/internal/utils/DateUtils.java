@@ -26,22 +26,22 @@ public class DateUtils
     private static DateTimeFormatter dateTimeSecondFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss.SSS'Z'");
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
 
-    public static boolean isValidDate(String date, String format, String rfc)
+    public static boolean isValidDate(String date, DateType format, String rfc)
     {
         try
         {
             switch (format)
             {
-            case "date-only":
+            case date_only:
                 dateFormatter.parseLocalDate(date);
                 break;
-            case "time-only":
+            case time_only:
                 hourFormatter.parseLocalTime(date);
                 break;
-            case "datetime-only":
+            case datetime_only:
                 dateTimeFormatter.parseLocalDateTime(date);
                 break;
-            case "datetime":
+            case datetime:
                 if (rfc != null && "rfc2616".equals(rfc))
                 {
                     rfc2616Formatter.parseLocalDateTime(date);

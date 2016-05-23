@@ -29,9 +29,14 @@ public class NodeReferenceFactory implements NodeFactory
     }
 
     @Override
-    public Node create(Object... args)
+    public Node create(Node currentNode, Object... args)
     {
         final String value = (String) args[0];
+        return parse(value);
+    }
+
+    public Node parse(String value)
+    {
         final String[] parts = value.split("\\.");
         Node result = null;
         Node parent = null;
@@ -40,7 +45,8 @@ public class NodeReferenceFactory implements NodeFactory
             String part = parts[i];
             if (parent == null)
             {
-                parent = defaultFactory.create(part);
+                // TODO change this null
+                parent = defaultFactory.create(null, part);
                 result = parent;
             }
             else

@@ -19,5 +19,5 @@ import org.raml.v2.internal.framework.nodes.Node;
 
 public interface NodeFactory
 {
-    Node create(Object... args);
+    Node create(Node currentNode, Object... args);
 }

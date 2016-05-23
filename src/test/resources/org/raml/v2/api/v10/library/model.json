@@ -56,7 +56,7 @@
           "displayName": null,
           "example": {
            "annotations": [],
-           "name": null,
+           "name": "example",
            "structuredValue": {
             "isScalar": true,
             "properties": [],
@@ -85,7 +85,7 @@
           "displayName": null,
           "example": {
            "annotations": [],
-           "name": null,
+           "name": "example",
            "structuredValue": {
             "isScalar": true,
             "properties": [],
@@ -125,7 +125,7 @@
        "displayName": "userId",
        "example": {
         "annotations": [],
-        "name": null,
+        "name": "example",
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -154,7 +154,7 @@
        "displayName": "size",
        "example": {
         "annotations": [],
-        "name": null,
+        "name": "example",
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -183,7 +183,7 @@
        "displayName": "page",
        "example": {
         "annotations": [],
-        "name": null,
+        "name": "example",
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -487,9 +487,9 @@
          "name": "application/json",
          "required": true,
          "schema": [],
-         "schemaContent": "assets.Orders",
+         "schemaContent": "Orders",
          "type": [
-          "assets.Orders"
+          "Orders"
          ]
         }
        ],
@@ -549,7 +549,7 @@
        "displayName": null,
        "example": {
         "annotations": [],
-        "name": null,
+        "name": "example",
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -578,7 +578,7 @@
        "displayName": null,
        "example": {
         "annotations": [],
-        "name": null,
+        "name": "example",
         "structuredValue": {
          "isScalar": true,
          "properties": [],

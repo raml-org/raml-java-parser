@@ -19,7 +19,7 @@ RamlDocumentNode (Start: 15 , End: 1261, On: input.raml, Source: SYObjectNode)
                         SYObjectNode (Start: 151 , End: 290, On: input.raml)
                             KeyValueNodeImpl (Start: 151 , End: 290, On: input.raml)
                                 SYStringNode: "AccountSid" (Start: 151 , End: 161, On: input.raml)
-                                StringTypeNode (Start: 172 , End: 290, On: input.raml, Source: SYObjectNode)
+                                TypeDeclarationNode (Start: 172 , End: 290, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 172 , End: 263, On: input.raml)
                                         SYStringNode: "description" (Start: 172 , End: 183, On: input.raml)
                                         SYStringNode: "An Account instance resource represents a single Twilio account.
@@ -56,7 +56,7 @@ but each call is popped off the queue at a rate of one per second.
                                                         SYObjectNode (Start: 825 , End: 1261, On: input.raml)
                                                             KeyValueNodeImpl (Start: 825 , End: 1261, On: input.raml)
                                                                 SYStringNode: "From" (Start: 825 , End: 829, On: input.raml)
-                                                                StringTypeNode (Start: 848 , End: 1261, On: input.raml, Source: SYObjectNode)
+                                                                TypeDeclarationNode (Start: 848 , End: 1261, On: input.raml, Source: SYObjectNode)
                                                                     KeyValueNodeImpl (Start: 848 , End: 1086, On: input.raml)
                                                                         SYStringNode: "description" (Start: 848 , End: 859, On: input.raml)
                                                                         SYStringNode: "The phone number or client identifier to use as the caller id. If

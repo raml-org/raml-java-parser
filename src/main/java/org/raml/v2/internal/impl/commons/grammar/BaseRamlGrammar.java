@@ -52,6 +52,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     public static final String USES_KEY_NAME = "uses";
     public static final String RESOURCE_TYPES_KEY_NAME = "resourceTypes";
     public static final String TRAITS_KEY_NAME = "traits";
+    public static final String TYPES_KEY_NAME = "types";
+    public static final String SCHEMAS_KEY_NAME = "schemas";
     public static final String SECURITY_SCHEMES_KEY_NAME = "securitySchemes";
     public static final String MIME_TYPE_REGEX =
             "([\\w\\d\\.\\-\\_\\+]+|\\*)\\/([\\w\\d\\.\\-\\_\\+]+|\\*);?([\\w\\d\\.\\-\\_\\+]+=[\\w\\d\\.\\-\\_\\+]+)?(\\s+[\\w\\d\\.\\-\\_\\+]+=[\\w\\d\\.\\-\\_\\+]+)*";
@@ -336,7 +338,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
      */
     protected abstract Rule parameter();
 
-    protected ExclusiveSiblingRule stringExcluding(String key, String... notAllowedSiblings)
+    protected ExclusiveSiblingRule exclusiveWith(String key, String... notAllowedSiblings)
     {
         return new ExclusiveSiblingRule(key, Sets.newHashSet(notAllowedSiblings));
     }

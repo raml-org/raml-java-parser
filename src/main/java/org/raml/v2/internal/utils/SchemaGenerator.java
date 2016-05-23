@@ -15,8 +15,6 @@
  */
 package org.raml.v2.internal.utils;
 
-import static org.raml.v2.internal.utils.NodeUtils.isStringNode;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
@@ -33,49 +31,27 @@ import javax.xml.validation.SchemaFactory;
 
 import org.raml.v2.internal.framework.grammar.rule.xml.XsdResourceResolver;
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.SchemaNodeImpl;
-import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeDefinition;
 import org.xml.sax.SAXException;
 
 public class SchemaGenerator
 {
 
-    private ResourceLoader resourceLoader;
-
-    public SchemaGenerator(ResourceLoader resourceLoader)
+    public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaTypeDefinition schemaNode) throws SAXException
     {
-        this.resourceLoader = resourceLoader;
-    }
-
-    public SchemaGenerator()
-    {
-    }
-
-    public Schema generateXmlSchema(Node node) throws SAXException
-    {
-        if (!isXmlSchemaNode(node))
-        {
-            throw new SAXException("invalid xml schema");
-        }
-        SchemaNodeImpl schema = (SchemaNodeImpl) node;
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        factory.setResourceResolver(new XsdResourceResolver(resourceLoader, schema.getSchemaPath()));
-        return factory.newSchema(new StreamSource(new StringReader(schema.getValue())));
+        factory.setResourceResolver(new XsdResourceResolver(resourceLoader, schemaNode.getSchemaPath()));
+        return factory.newSchema(new StreamSource(new StringReader(schemaNode.getSchemaValue())));
     }
 
-    public JsonSchema generateJsonSchema(Node node) throws IOException, ProcessingException
+    public static JsonSchema generateJsonSchema(JsonSchemaTypeDefinition jsonTypeDefinition) throws IOException, ProcessingException
     {
-        if (!isJsonSchemaNode(node))
-        {
-            throw new ProcessingException("invalid json schema");
-        }
-        SchemaNodeImpl schema = (SchemaNodeImpl) node;
-        JsonNode jsonSchema = JsonLoader.fromString(schema.getValue());
+        JsonNode jsonSchema = JsonLoader.fromString(jsonTypeDefinition.getSchemaValue());
         JsonSchemaFactory factory = JsonSchemaFactory.newBuilder().freeze();
-        if (schema.getTypeReference() != null)
+        if (jsonTypeDefinition.getInternalFragment() != null)
         {
-            return factory.getJsonSchema(jsonSchema, "/definitions/" + schema.getTypeReference());
+            return factory.getJsonSchema(jsonSchema, "/definitions/" + jsonTypeDefinition.getInternalFragment());
         }
         else
         {
@@ -83,34 +59,16 @@ public class SchemaGenerator
         }
     }
 
-    public static boolean isJsonSchemaNode(Node node)
+
+    public static boolean isJsonSchema(String schema)
     {
-        return isStringNode(node) && nodeStartsWith((StringNode) node, "{");
+        return schema.trim().startsWith("{");
     }
 
-    public static boolean isXmlSchemaNode(Node node)
+
+    public static boolean isXmlSchema(String schema)
     {
-        return isStringNode(node) && nodeStartsWith((StringNode) node, "<");
+        return schema.trim().startsWith("<");
     }
 
-    private static boolean isSchema(Node node)
-    {
-        return node instanceof SchemaNodeImpl;
-    }
-
-    public static boolean isSchemaNode(final Node node)
-    {
-        return isSchema(node) || isJsonSchemaNode(node) || isXmlSchemaNode(node);
-    }
-
-    public static boolean nodeStartsWith(StringNode node, String prefix)
-    {
-        return node.getValue().startsWith(prefix);
-    }
-
-    public static void wrapNode(Node node, String actualPath)
-    {
-        SchemaNodeImpl schemaNode = new SchemaNodeImpl((StringNode) node, actualPath);
-        node.replaceWith(schemaNode);
-    }
 }

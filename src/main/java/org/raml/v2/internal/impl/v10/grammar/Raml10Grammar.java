@@ -15,12 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
-import com.google.common.collect.Lists;
-
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
 import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
@@ -30,20 +24,28 @@ import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.ResourceRefRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
-import org.raml.v2.internal.framework.grammar.rule.TypeNodeReferenceRule;
-import org.raml.v2.internal.framework.grammar.rule.TypesFactory;
-import org.raml.v2.internal.framework.nodes.StringNodeImpl;
+import org.raml.v2.internal.framework.nodes.NullNodeImpl;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.ExampleTypeNode;
+import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
-import org.raml.v2.internal.impl.commons.nodes.MultipleExampleTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.PropertyNode;
+import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
-import org.raml.v2.internal.impl.v10.nodes.types.factories.TypeNodeFactory;
+import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
+import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
+import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
+import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
+import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
+
+import javax.annotation.Nonnull;
+
+import static java.util.Arrays.asList;
 
 public class Raml10Grammar extends BaseRamlGrammar
 {
@@ -186,9 +188,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private Rule annotationType()
     {
-        return anyOf(stringType().then(new TypesFactory()),
-                explicitType()
-                              .with(allowedTargetsField()));
+        return anyOf(inlineType(), explicitType().with(allowedTargetsField()));
     }
 
     private KeyValueRule allowedTargetsField()
@@ -203,40 +203,48 @@ public class Raml10Grammar extends BaseRamlGrammar
                            .with(field(scalarType(), type()));
     }
 
-
     protected Rule parameter()
     {
         return type();
     }
 
-
     public Rule type()
     {
-        return anyOf(stringType().then(new TypesFactory()), explicitType());
+        return anyOf(inlineType(), explicitType());
+    }
+
+    private AnyOfRule typeRef()
+    {
+        return anyOf(inlineType(), ref("explicitType"));
+    }
+
+    protected Rule inlineType()
+    {
+        return typeExpressionReference().then(new InlineTypeDeclarationFactory());
     }
 
     public ObjectRule explicitType()
     {
         return objectType("explicitType")
-                                         .with(field(anyOf(typeKey(), string("schema")), typeReference()))
+                                         .with(typeField())
                                          .with(xmlFacetField())
                                          .with(displayNameField())
                                          .with(descriptionField())
                                          .with(usageField())
                                          .with(annotationField())
                                          .with(defaultField())
-                                         .with(field(string("required"), booleanType()))
-                                         .with(exampleFieldRule())
-                                         .with(multipleExampleFieldRule())
+                                         .with(requiredField())
+                                         .with(field(exclusiveWith("example", "examples"), exampleValue()).then(ExampleDeclarationNode.class))
+                                         .with(field(exclusiveWith("examples", "example"), examplesValue()))
                                          .with(
-                                                 when("type", // todo what to do with inherited does not match object
+                                                 when(asList("type", "schema"),
                                                          is(stringTypeLiteral())
                                                                                 .add(field(string("pattern"), scalarType()))
                                                                                 .add(field(string("minLength"), integerType()))
                                                                                 .add(field(string("maxLength"), integerType()))
                                                                                 .add(field(string("enum"), array(scalarType()))),
-                                                         is(dateTypeLiteral())
-                                                                              .add(field(string("format"), stringType())),
+                                                         is(dateTimeTypeLiteral())
+                                                                                  .add(field(string("format"), anyOf(string("rfc3339"), string("rfc2616")))),
                                                          is(arrayTypeLiteral())
                                                                                .add(field(string("uniqueItems"), booleanType()))
                                                                                .add(field(string("items"), typeRef()))
@@ -249,26 +257,68 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                  .add(field(string("multipleOf"), integerType()))
                                                                                  .add(field(string("enum"), array(integerType()))),
                                                          is(fileTypeLiteral())
-                                                                              .add(field(string("fileTypes"), any())) // todo finish
+                                                                              .add(field(string("fileTypes"), any()))
                                                                               .add(field(string("minLength"), integerType()))
                                                                               .add(field(string("maxLength"), integerType())),
                                                          is(objectTypeLiteral())
                                                                                 .add(field(string("properties"), properties()))
                                                                                 .add(field(string("minProperties"), integerType()))
                                                                                 .add(field(string("maxProperties"), integerType()))
-                                                                                .add(field(string("additionalProperties"), anyOf(scalarType(), ref("explicitType"))))
+                                                                                .add(field(string("additionalProperties"), booleanType())) // TODO add default true
                                                                                 .add(field(string("patternProperties"), properties()))
-                                                                                .add(field(string("discriminator"), anyOf(scalarType(), booleanType())))
-                                                                                .add(field(string("discriminatorValue"), scalarType()))
-
-
-                                                 ).defaultValue(new StringNodeImpl("string"))
-                                         ).then(new TypeNodeFactory());
+                                                                                .add(field(string("discriminator"), scalarType()))
+                                                                                .add(field(string("discriminatorValue"), scalarType())), // TODO add default name of the type
+                                                         is(any()) // If it is an inherited type then we don't know we suggest all the properties
+                                                         .add(field(string("pattern"), scalarType()))
+                                                                  .add(field(string("minLength"), integerType()))
+                                                                  .add(field(string("maxLength"), integerType()))
+                                                                  .add(field(string("enum"), array(scalarType())))
+                                                                  .add(field(string("format"), anyOf(string("rfc3339"), string("rfc2616"))))
+                                                                  .add(field(string("uniqueItems"), booleanType()))
+                                                                  .add(field(string("items"), typeRef()))
+                                                                  .add(field(string("minItems"), integerType()))
+                                                                  .add(field(string("maxItems"), integerType()))
+                                                                  .add(field(string("fileTypes"), any()))
+                                                                  .add(field(string("minLength"), integerType()))
+                                                                  .add(field(string("maxLength"), integerType()))
+                                                                  .add(field(string("fileTypes"), any()))
+                                                                  .add(field(string("minLength"), integerType()))
+                                                                  .add(field(string("maxLength"), integerType()))
+                                                                  .add(field(string("properties"), properties()))
+                                                                  .add(field(string("minProperties"), integerType()))
+                                                                  .add(field(string("maxProperties"), integerType()))
+                                                                  .add(field(string("additionalProperties"), booleanType()))
+                                                                  // TODO add default true
+                                                                  .add(field(string("patternProperties"), properties()))
+                                                                  .add(field(string("discriminator"), scalarType()))
+                                                                  .add(field(string("discriminatorValue"), scalarType()))
+                                                 ).defaultValue(new TypeDefaultValue())
+                                         ).then(TypeDeclarationNode.class);
     }
 
-    private AnyOfRule typeRef()
+    protected ObjectRule examplesValue()
     {
-        return anyOf(stringType().then(new TypesFactory()), ref("explicitType"));
+        return objectType()
+                           .with(
+                                   field(scalarType(), exampleValue()).then(ExampleDeclarationNode.class)
+                           );
+    }
+
+    private KeyValueRule typeField()
+    {
+        return field(
+                anyOf(typeKey(), schemaKey()),
+                anyOf(typeExpressionReference(), array(typeExpressionReference()))).defaultValue(new TypeDefaultValue());
+    }
+
+    private KeyValueRule requiredField()
+    {
+        return field(string("required"), booleanType());
+    }
+
+    private StringValueRule schemaKey()
+    {
+        return string("schema");
     }
 
     private KeyValueRule xmlFacetField()
@@ -282,32 +332,39 @@ public class Raml10Grammar extends BaseRamlGrammar
     }
 
 
-    private AnyOfRule typeReference()
+    private AnyOfRule typeExpressionReference()
     {
-        return anyOf(objectTypeLiteral(),
-                arrayTypeLiteral(),
-                stringTypeLiteral(),
-                numericTypeLiteral(),
-                booleanTypeLiteral(),
-                dateTypeLiteral(),
-                fileTypeLiteral(),
-                new TypeNodeReferenceRule("types"));
+        return anyOf(nullValue().then(NativeTypeExpressionNode.class),
+                new SchemaDeclarationRule().then(ExternalSchemaTypeExpressionNode.class),
+                new TypeExpressionReferenceRule().then(new TypeExpressionReferenceFactory()));
     }
 
     @Override
     protected Rule mimeType()
     {
-        return type();
+        return explicitType();
     }
 
-    protected KeyValueRule exampleFieldRule()
+    protected Rule exampleValue()
     {
-        return field(stringExcluding("example", "examples"), any().then(ExampleTypeNode.class));
+        return anyOf(explicitExample(), any());
     }
 
-    protected KeyValueRule multipleExampleFieldRule()
+    private ObjectRule explicitExample()
     {
-        return field(stringExcluding("examples", "example"), any().then(MultipleExampleTypeNode.class));
+        return objectType()
+                           .with(
+                                   when("value",
+                                           is(not(nullValue()))
+                                                               .add(displayNameField())
+                                                               .add(descriptionField())
+                                                               .add(annotationField())
+                                                               .add(field(string("value"), any()))
+                                                               .add(field(string("strict"), booleanType())),
+                                           is(nullValue())
+                                                          .add(field(scalarType(), any()))
+                                   ).defaultValue(new NullNodeImpl())
+                           );
     }
 
     protected StringValueRule fileTypeLiteral()
@@ -330,19 +387,14 @@ public class Raml10Grammar extends BaseRamlGrammar
         return string("integer");
     }
 
-    protected Rule booleanTypeLiteral()
-    {
-        return string("boolean");
-    }
-
     protected StringValueRule stringTypeLiteral()
     {
         return string("string");
     }
 
-    protected AnyOfRule dateTypeLiteral()
+    private StringValueRule dateTimeTypeLiteral()
     {
-        return new AnyOfRule(string("date-only"), string("time-only"), string("datetime-only"), string("datetime"));
+        return string("datetime");
     }
 
     protected AnyOfRule arrayTypeLiteral()
@@ -353,22 +405,17 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected ObjectRule properties()
     {
         return objectType()
-                           .with(field(scalarType(), typeRef()).then(PropertyNode.class));
+                           .with(propertyField());
+    }
+
+    private KeyValueRule propertyField()
+    {
+        return field(scalarType(), typeRef()).then(PropertyNode.class);
     }
 
     protected Rule objectTypeLiteral()
     {
-        return not(anyBuiltinType());
-    }
-
-    protected AnyOfRule anyBuiltinType()
-    {
-        List<Rule> builtInTypes = Lists.newArrayList();
-        for (BuiltInScalarType builtInScalarType : BuiltInScalarType.values())
-        {
-            builtInTypes.add(string(builtInScalarType.getType()));
-        }
-        return anyOf(builtInTypes);
+        return string("object");
     }
 
     protected KeyValueRule mediaTypeField()

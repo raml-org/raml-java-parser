@@ -15,21 +15,17 @@
  */
 package org.raml.v2.internal.utils;
 
-import com.google.common.collect.Lists;
-
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.raml.v2.internal.framework.nodes.Position;
-import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.ObjectTypeNode;
 import org.raml.v2.internal.framework.nodes.BooleanNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.IntegerNode;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.framework.nodes.ReferenceNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
+
+import java.util.Collection;
 
 
 public class TreeDumper
@@ -59,7 +55,7 @@ public class TreeDumper
         if (node.getStartPosition().getIndex() != Position.UNKNOWN &&
             node.getEndPosition().getIndex() != Position.UNKNOWN)
         {
-            dump.append(", On: ").append(node.getStartPosition().getResource());
+            dump.append(", On: ").append(node.getStartPosition().getPath());
         }
         if (node.getSource() != null)
         {
@@ -73,9 +69,14 @@ public class TreeDumper
         {
             dump(child);
         }
+
         if (node instanceof LibraryLinkNode)
         {
-            dump(((LibraryLinkNode) node).getRefNode());
+            final Node refNode = ((LibraryLinkNode) node).getRefNode();
+            if (refNode != null)
+            {
+                dump(refNode);
+            }
         }
         dedent();
         return dump.toString();
@@ -83,15 +84,7 @@ public class TreeDumper
 
     private Collection<Node> getChildren(Node node)
     {
-        Collection<Node> children = node.getChildren();
-        if (node instanceof ObjectTypeNode)
-        {
-            List<Node> merged = Lists.newArrayList();
-            merged.addAll(children);
-            merged.addAll(((ObjectTypeNode) node).getInheritedProperties());
-            children = merged;
-        }
-        return children;
+        return node.getChildren();
     }
 
     protected void dumpNode(Node node)
@@ -116,8 +109,9 @@ public class TreeDumper
         }
         else if (node instanceof ReferenceNode)
         {
-            final Node refNode = ((ReferenceNode) node).getRefNode();
-            dump.append(" -> {").append(refNode == null ? "null" : refNode.getClass().getSimpleName());
+            final ReferenceNode referenceNode = (ReferenceNode) node;
+            final Node refNode = referenceNode.getRefNode();
+            dump.append(" ").append(referenceNode.getRefName()).append(" -> {").append(refNode == null ? "null" : refNode.getClass().getSimpleName());
             if (refNode != null)
             {
                 dump.append(" RefStart: ").append(refNode.getStartPosition().getIndex());

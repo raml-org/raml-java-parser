@@ -70,16 +70,8 @@ public class ResourceNode extends KeyValueNodeImpl
     public String getResourcePathName()
     {
         String path = getRelativeUri().substring(1); // remove leading slash
-        while (path.contains("{"))
-        {
-            ResourceNode parent = getParentResourceNode();
-            if (parent == null)
-            {
-                return "";
-            }
-            path = parent.getRelativeUri().substring(1);
-        }
-        return path;
+        path = path.replace("{", "");
+        return path.replace("}", "");
     }
 
     @Nonnull

@@ -15,7 +15,6 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -54,7 +53,7 @@ public class IncludeResolver implements Transformer
     public Node transform(Node node)
     {
         final SYIncludeNode includeNode = (SYIncludeNode) node;
-        String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getResource(), includeNode.getIncludePath());
+        String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getPath(), includeNode.getIncludePath());
         try (InputStream inputStream = resourceLoader.fetchResource(resourcePath))
         {
             if (inputStream == null)
@@ -65,7 +64,6 @@ public class IncludeResolver implements Transformer
             String includeContent = StreamUtils.toString(inputStream);
             if (resourcePath.endsWith(".raml") || resourcePath.endsWith(".yaml") || resourcePath.endsWith(".yml"))
             {
-
                 try
                 {
                     RamlHeader ramlHeader = RamlHeader.parse(includeContent);

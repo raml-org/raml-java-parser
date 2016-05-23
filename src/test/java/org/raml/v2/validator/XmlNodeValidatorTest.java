@@ -15,16 +15,6 @@
  */
 package org.raml.v2.validator;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.raml.v2.internal.impl.RamlBuilder;
-import org.raml.v2.internal.impl.commons.nodes.PayloadValidationResultNode;
-import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
-import org.raml.v2.internal.impl.v10.nodes.types.builtin.UnionTypeNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.utils.NodeValidator;
 
@@ -35,36 +25,36 @@ public class XmlNodeValidatorTest
     private Node type;
 
 
-    @Before
-    public void setUp() throws IOException
-    {
-        RamlBuilder builder = new RamlBuilder();
-        tree = builder.build(new File(this.getClass().getClassLoader().getResource("org/raml/v2/parser/examples/include-xsd-schema-nested/input.raml").getPath()));
-        this.nodeValidator = new NodeValidator(builder.getResourceLoader());
-        this.type = tree.findDescendantsWith(ResourceNode.class).get(0).findDescendantsWith(UnionTypeNode.class).get(0);
-    }
-
-    @Test
-    public void testParsingFailure()
-    {
-
-
-        PayloadValidationResultNode validationNode = this.nodeValidator.validatePayload(type, "<Person>\n" +
-                                                                                              "    <firstName>Bob</firstName>\n" +
-                                                                                              "    <lastName>Marley</lastName>\n" +
-                                                                                              "    <age>one hundreed</age>\n" +
-                                                                                              "</Person>");
-        Assert.assertFalse(validationNode.validationSucceeded());
-    }
-
-    @Test
-    public void testParsingOk()
-    {
-        PayloadValidationResultNode validationNode = this.nodeValidator.validatePayload(type, "<Person>\n" +
-                                                                                              "    <firstName>Donald</firstName>\n" +
-                                                                                              "    <lastName>Trump</lastName>\n" +
-                                                                                              "    <age>1000</age>\n" +
-                                                                                              "</Person>");
-        Assert.assertTrue(validationNode.validationSucceeded());
-    }
+    // @Before
+    // public void setUp() throws IOException
+    // {
+    // RamlBuilder builder = new RamlBuilder();
+    // tree = builder.build(new File(this.getClass().getClassLoader().getResource("org/raml/v2/parser/examples/include-xsd-schema-nested/input.raml").getPath()));
+    // this.nodeValidator = new NodeValidator(builder.getResourceLoader());
+    // this.type = tree.findDescendantsWith(ResourceNode.class).get(0).findDescendantsWith(UnionTypeNode.class).get(0);
+    // }
+    //
+    // @Test
+    // public void testParsingFailure()
+    // {
+    //
+    //
+    // PayloadValidationResultNode validationNode = this.nodeValidator.validatePayload(type, "<Person>\n" +
+    // "    <firstName>Bob</firstName>\n" +
+    // "    <lastName>Marley</lastName>\n" +
+    // "    <age>one hundreed</age>\n" +
+    // "</Person>");
+    // Assert.assertFalse(validationNode.validationSucceeded());
+    // }
+    //
+    // @Test
+    // public void testParsingOk()
+    // {
+    // PayloadValidationResultNode validationNode = this.nodeValidator.validatePayload(type, "<Person>\n" +
+    // "    <firstName>Donald</firstName>\n" +
+    // "    <lastName>Trump</lastName>\n" +
+    // "    <age>1000</age>\n" +
+    // "</Person>");
+    // Assert.assertTrue(validationNode.validationSucceeded());
+    // }
 }

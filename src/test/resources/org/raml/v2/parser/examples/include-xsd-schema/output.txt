@@ -7,10 +7,10 @@ RamlDocumentNode (Start: 11 , End: 187, On: input.raml, Source: SYObjectNode)
         SYObjectNode (Start: 45 , End: 187, On: input.raml)
             KeyValueNodeImpl (Start: 45 , End: 187, On: input.raml)
                 SYStringNode: "User" (Start: 45 , End: 49, On: input.raml)
-                UnionTypeNode (Start: 55 , End: 187, On: input.raml, Source: SYObjectNode)
+                TypeDeclarationNode (Start: 55 , End: 187, On: input.raml, Source: SYObjectNode)
                     KeyValueNodeImpl (Start: 55 , End: 78, On: input.raml)
                         SYStringNode: "type" (Start: 55 , End: 59, On: input.raml)
-                        SchemaNodeImpl: "<?xml version="1.0"?>
+                        ExternalSchemaTypeExpressionNode: "<?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
     <xs:element name="User" type="UserType"/>
     <xs:complexType name="UserType">
@@ -20,9 +20,9 @@ RamlDocumentNode (Start: 11 , End: 187, On: input.raml, Source: SYObjectNode)
         </xs:sequence>
     </xs:complexType>
 </xs:schema>" (Start: 61 , End: 78, On: input.raml, Source: StringNodeImpl)
-                    KeyValueNodeImpl (Start: 83 , End: 187, On: input.raml)
+                    ExampleDeclarationNode (Start: 83 , End: 187, On: input.raml, Source: KeyValueNodeImpl)
                         SYStringNode: "example" (Start: 83 , End: 90, On: input.raml)
-                        ErrorNode: "Error validating XML. Error: cvc-complex-type.2.4.a: Invalid content was found starting with element 'name1'. One of '{name}' is expected." (Start: 92 , End: 187, On: input.raml, Source: ExampleTypeNode)
+                        ErrorNode: "Error validating XML. Error: cvc-complex-type.2.4.a: Invalid content was found starting with element 'name1'. One of '{name}' is expected." (Start: 92 , End: 187, On: input.raml, Source: SYStringNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                         SYStringNode: "User" (Start: 45 , End: 49, On: input.raml, Source: SYStringNode)
