@@ -32,21 +32,6 @@ public class ModelUtils
         return NodeSelector.selectType(key, node, null);
     }
 
-    public static String getStringValue(String key, Node node)
-    {
-        return getSimpleValue(key, node);
-    }
-
-    public static StringType getStringTypeValue(String key, Node node)
-    {
-        String value = getSimpleValue(key, node);
-        if (value != null)
-        {
-            return new StringType(value);
-        }
-        return null;
-    }
-
     private static final Set<Class<?>> WRAPPERS_PLUS_STRING = new HashSet<Class<?>>();
 
     static

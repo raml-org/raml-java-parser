@@ -60,6 +60,7 @@ import org.raml.v2.internal.impl.v10.type.UnionTypeDefinition;
 import org.raml.v2.internal.utils.DateType;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -72,6 +73,7 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
 
     private ResourceLoader resourceLoader;
     private boolean strictMode = false;
+    private Map<TypeDefinition, Rule> definitionRuleMap = new IdentityHashMap<>();
 
     public TypeToRuleVisitor(ResourceLoader resourceLoader)
     {
@@ -80,8 +82,15 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
 
     public Rule generateRule(TypeDefinition items, boolean strict)
     {
-        this.strictMode = strict;
-        return items.visit(this);
+        if (definitionRuleMap.containsKey(items))
+        {
+            return definitionRuleMap.get(items);
+        }
+        else
+        {
+            this.strictMode = strict;
+            return items.visit(this);
+        }
     }
 
     public Rule generateRule(TypeDefinition items)
@@ -89,11 +98,11 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
         return generateRule(items, strictMode);
     }
 
-
     @Override
     public Rule visitString(StringTypeDefinition stringTypeNode)
     {
         final AllOfRule typeRule = new AllOfRule(new StringTypeRule());
+        registerRule(stringTypeNode, typeRule);
         if (StringUtils.isNotEmpty(stringTypeNode.getPattern()))
         {
             typeRule.and(new RegexValueRule(Pattern.compile(stringTypeNode.getPattern())));
@@ -132,6 +141,7 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
     public Rule visitObject(ObjectTypeDefinition objectTypeDefinition)
     {
         final ObjectRule objectRule = new ObjectRule(strictMode);
+        registerRule(objectTypeDefinition, objectRule);
         objectRule.additionalProperties(asBoolean(objectTypeDefinition.getAdditionalProperties(), true));
         final Map<String, ObjectPropertyDefinition> properties = objectTypeDefinition.getProperties();
         for (Map.Entry<String, ObjectPropertyDefinition> property : properties.entrySet())
@@ -161,6 +171,11 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
         return allOfRule;
     }
 
+    protected void registerRule(TypeDefinition objectTypeDefinition, Rule objectRule)
+    {
+        definitionRuleMap.put(objectTypeDefinition, objectRule);
+    }
+
     protected boolean asBoolean(Boolean required, boolean defaultValue)
     {
         return required == null ? defaultValue : required;
@@ -187,7 +202,7 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
     private Rule visitNumber(NumberTypeDefinition numericTypeNode, Rule numericTypeRule)
     {
         final AllOfRule typeRule = new AllOfRule(numericTypeRule);
-
+        registerRule(numericTypeNode, typeRule);
         if (numericTypeNode.getMinimum() != null && numericTypeNode.getMaximum() != null)
         {
             typeRule.and(new RangeValueRule(numericTypeNode.getMinimum(), numericTypeNode.getMaximum()));
@@ -261,7 +276,7 @@ public class TypeToRuleVisitor implements TypeDefinitionVisitor<Rule>
     {
         final TypeDefinition items = arrayTypeDefinition.getItems();
         final AllOfRule rule = new AllOfRule(new ArrayRule(generateRule(items)));
-
+        registerRule(arrayTypeDefinition, rule);
         if (arrayTypeDefinition.getMaxItems() != null)
         {
             rule.and(new MaxItemsRule(arrayTypeDefinition.getMaxItems()));

@@ -13,26 +13,9 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.model;
+package org.raml.v2.internal.impl.commons.type;
 
-import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
-
-public class StringType
+public interface SchemaBasedTypeDefinition extends TypeDefinition
 {
-    private String value;
-
-    public StringType(String value)
-    {
-        this.value = value;
-    }
-
-    public StringType(SimpleTypeNode node)
-    {
-        this.value = node.getLiteralValue();
-    }
-
-    public String value()
-    {
-        return value;
-    }
+    String getSchemaValue();
 }

@@ -37,9 +37,9 @@ traits:
             200:
                 body:
                     application/json:
-                        example: '{}'
+                        example: 'foo'
                     text/xml:
-                        example: '.'
+                        example: '<foo/>'
     post:
         body: &league-schema
             application/json:
@@ -87,13 +87,13 @@ traits:
                     200:
                         body:
                             application/json:
-                                example: '{}'
+                                example: 'foo'
             get:
                 responses:
                     200:
                         body:
                             '*/*':
-                                example: '.'
+                                example: '<foo/>'
         /teams:
             get:
                 headers:
@@ -122,6 +122,6 @@ traits:
                     200:
                         body:
                             application/json:
-                                example: '{}'
+                                example: 'foo'
             /leader:
                 get: ~

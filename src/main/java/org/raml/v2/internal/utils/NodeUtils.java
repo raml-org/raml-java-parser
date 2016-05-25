@@ -122,20 +122,6 @@ public class NodeUtils
         }
     }
 
-    @Nonnull
-    public static ResourceLoader getResourceLoader(Node node)
-    {
-        while (node != null)
-        {
-            if (node instanceof RamlDocumentNode)
-            {
-                return ((RamlDocumentNode) node).getResourceLoader();
-            }
-            node = node.getParent();
-        }
-        throw new IllegalArgumentException("node does not belong to a raml document");
-    }
-
     public static String computeColumnForChild(Node node)
     {
         return StringUtils.repeat(" ", node.getStartPosition().getColumn() + DEFAULT_COLUMN_STEP);
@@ -192,4 +178,13 @@ public class NodeUtils
         return node.equals(lastChild);
     }
 
+    public static Node getRootSource(Node child)
+    {
+        Node result = child;
+        while (result != null && result.getSource() != null)
+        {
+            result = result.getSource();
+        }
+        return result;
+    }
 }

@@ -211,12 +211,12 @@ public class SpecInterfacesV10TestCase
         List<TypeDeclaration> headers = describedBy.headers();
         assertThat(headers.size(), is(1));
         assertThat(headers.get(0).name(), is("Authorization"));
-        assertThat(headers.get(0).schemaContent(), is("string"));
+        assertThat(headers.get(0).schemaContent(), nullValue());
 
         List<TypeDeclaration> queryParameters = describedBy.queryParameters();
         assertThat(queryParameters.size(), is(1));
         assertThat(queryParameters.get(0).name(), is("access_token"));
-        assertThat(queryParameters.get(0).schemaContent(), is("string"));
+        assertThat(queryParameters.get(0).schemaContent(), nullValue());
 
         List<Response> responses = describedBy.responses();
         assertThat(responses.size(), is(2));

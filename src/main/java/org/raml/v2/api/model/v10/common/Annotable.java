@@ -24,7 +24,7 @@ public interface Annotable
 {
 
     /**
-     * Most of RAML model elements may have attached annotations decribing additional meta data about this element
+     * Most of RAML model elements may have attached annotations describing additional meta data about this element
      **/
     List<AnnotationRef> annotations();
 

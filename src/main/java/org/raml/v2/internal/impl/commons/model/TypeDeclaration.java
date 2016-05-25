@@ -15,16 +15,22 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.model.builder.ModelUtils;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
+import org.raml.v2.internal.impl.commons.type.SchemaBasedTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeDefinition;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
 
@@ -55,60 +61,68 @@ public class TypeDeclaration extends Annotable
         return ((StringNode) node.getKey()).getValue();
     }
 
-    public ExampleSpec example()
-    {
-        Node example = NodeSelector.selectFrom("example", getNode());
-        if (example != null)
-        {
-            return new ExampleSpec((KeyValueNode) example.getParent());
-        }
-        return null;
-    }
-
     public String schemaContent()
     {
-        List<String> type = type("type");
-        type.addAll(type("schema"));
-        if (!type.isEmpty())
+        if (node.getValue() instanceof TypeDeclarationNode)
         {
-            return type.get(0);
+            final List<TypeExpressionNode> baseTypes = ((TypeDeclarationNode) node.getValue()).getBaseTypes();
+            if (!baseTypes.isEmpty())
+            {
+                final TypeDefinition typeDefinition = baseTypes.get(0).generateDefinition();
+                if (typeDefinition instanceof SchemaBasedTypeDefinition)
+                {
+                    return ((SchemaBasedTypeDefinition) typeDefinition).getSchemaValue();
+                }
+
+            }
         }
         return null;
     }
 
     public List<String> schema()
     {
-        return type("schema");
+        return selectStringList("schema");
+    }
+
+    protected List<String> selectStringList(String propertyName)
+    {
+        final Node schema = NodeSelector.selectFrom(propertyName, node.getValue());
+        if (schema instanceof ArrayNode)
+        {
+            final List<Node> children = schema.getChildren();
+            final List<String> result = new ArrayList<>();
+            for (Node child : children)
+            {
+                final Node rootSource = NodeUtils.getRootSource(child);
+                if (rootSource instanceof SimpleTypeNode)
+                {
+                    result.add(((SimpleTypeNode) rootSource).getLiteralValue());
+                }
+            }
+            return result;
+        }
+        else if (schema != null)
+        {
+            final Node rootSource = NodeUtils.getRootSource(schema);
+            if (rootSource instanceof SimpleTypeNode)
+            {
+                return singletonList(((SimpleTypeNode) rootSource).getLiteralValue());
+            }
+        }
+        return Collections.emptyList();
     }
 
     public List<String> type()
     {
-        return type("type");
-    }
-
-    private List<String> type(String key)
-    {
-        List<String> result = new ArrayList<>();
-        Node type = NodeSelector.selectFrom(key, getNode());
-        if (type instanceof SimpleTypeNode)
-        {
-            result.add(((SimpleTypeNode) type).getLiteralValue());
-        }
-        else if (type != null)
-        {
-            // TODO we can do better
-            result.add(type.toString());
-        }
-        return result;
+        return selectStringList("type");
     }
 
     public List<RamlValidationResult> validate(String payload)
     {
-        final ResourceLoader resourceLoader = NodeUtils.getResourceLoader(node);
+        final ResourceLoader resourceLoader = new DefaultResourceLoader();
         final TypeDeclarationNode node = (TypeDeclarationNode) getNode();
-        final StringNodeImpl stringNode = new StringNodeImpl(payload);
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
-        final Node validate = exampleValidationPhase.validate(node, stringNode);
+        final Node validate = exampleValidationPhase.validate(node, new StringNodeImpl(payload));
         if (validate instanceof ErrorNode)
         {
             return singletonList(new RamlValidationResult((ErrorNode) validate));

@@ -16,7 +16,9 @@
 package org.raml.v2.internal.impl.commons.phase;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
@@ -75,10 +77,39 @@ public class ExampleValidationPhase implements Phase
             {
                 // TODO add xml validation based on type definition
             }
-            else
+            else if (isJsonValue(value))
             {
                 final Node parse = RamlNodeParser.parse("", value);
-                return rule.apply(parse);
+                final Node apply = rule.apply(parse);
+                final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
+                if (apply instanceof ErrorNode || !errorNodeList.isEmpty())
+                {
+                    String errorMessage = "";
+                    if (apply instanceof ErrorNode)
+                    {
+                        errorMessage += "- " + ((ErrorNode) apply).getErrorMessage();
+                    }
+                    for (ErrorNode errorNode : errorNodeList)
+                    {
+                        if (errorMessage.isEmpty())
+                        {
+                            errorMessage = "- " + errorNode.getErrorMessage();
+                        }
+                        else
+                        {
+                            errorMessage += "\n" + "- " + errorNode.getErrorMessage();
+                        }
+                    }
+                    return ErrorNodeFactory.createInvalidJsonExampleNode(errorMessage);
+                }
+                else
+                {
+                    return exampleValue;
+                }
+            }
+            else
+            {
+                return rule.apply(exampleValue);
             }
         }
         else if (exampleValue != null)
@@ -91,6 +122,11 @@ public class ExampleValidationPhase implements Phase
     private boolean isXmlValue(String value)
     {
         return value.trim().startsWith("<");
+    }
+
+    private boolean isJsonValue(String value)
+    {
+        return value.trim().startsWith("{") || value.trim().startsWith("[");
     }
 
     private boolean isExternalSchemaType(TypeDefinition typeDefinition)

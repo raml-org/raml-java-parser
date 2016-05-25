@@ -15,9 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
-
 public abstract class BaseTypeDefinition implements TypeDefinition
 {
+
 
 }

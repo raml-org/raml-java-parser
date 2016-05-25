@@ -13,7 +13,7 @@
    "name": "basic",
    "required": true,
    "schema": [],
-   "schemaContent": "string",
+   "schemaContent": null,
    "type": [
     "string"
    ]
@@ -38,7 +38,7 @@
    "name": "complex",
    "required": true,
    "schema": [],
-   "schemaContent": "object",
+   "schemaContent": null,
    "type": [
     "object"
    ]
@@ -59,7 +59,7 @@
     "name": "basic",
     "required": true,
     "schema": [],
-    "schemaContent": "string",
+    "schemaContent": null,
     "type": [
      "string"
     ]
@@ -92,7 +92,7 @@
     "name": "complex",
     "required": true,
     "schema": [],
-    "schemaContent": "object",
+    "schemaContent": null,
     "type": [
      "object"
     ]
@@ -178,7 +178,7 @@
    "displayName": "Param 1",
    "example": {
     "annotations": [],
-    "name": "example",
+    "name": null,
     "structuredValue": {
      "isScalar": true,
      "properties": [],
@@ -192,7 +192,7 @@
    "name": "param1",
    "required": true,
    "schema": [],
-   "schemaContent": "string",
+   "schemaContent": null,
    "type": [
     "string"
    ]
@@ -326,7 +326,7 @@
        "name": "one",
        "required": true,
        "schema": [],
-       "schemaContent": "string",
+       "schemaContent": null,
        "type": [
         "string"
        ]
@@ -344,7 +344,7 @@
        "name": "two",
        "required": true,
        "schema": [],
-       "schemaContent": "string",
+       "schemaContent": null,
        "type": [
         "string"
        ]
@@ -369,7 +369,7 @@
        "name": "one",
        "required": true,
        "schema": [],
-       "schemaContent": "number",
+       "schemaContent": null,
        "type": [
         "number"
        ]
@@ -387,7 +387,7 @@
        "name": "two",
        "required": true,
        "schema": [],
-       "schemaContent": "string",
+       "schemaContent": null,
        "type": [
         "string"
        ]
@@ -418,7 +418,7 @@
            "name": "Authorization",
            "required": true,
            "schema": [],
-           "schemaContent": "string",
+           "schemaContent": null,
            "type": [
             "string"
            ]
@@ -440,7 +440,7 @@
            "name": "access_token",
            "required": true,
            "schema": [],
-           "schemaContent": "string",
+           "schemaContent": null,
            "type": [
             "string"
            ]
@@ -515,44 +515,13 @@
        "displayName": "application/json",
        "example": {
         "annotations": [],
-        "name": "example",
+        "name": null,
         "structuredValue": {
-         "isScalar": false,
-         "properties": [
-          {
-           "isArray": false,
-           "name": "firstname",
-           "value": {
-            "isScalar": true,
-            "properties": [],
-            "value": "tato"
-           },
-           "values": []
-          },
-          {
-           "isArray": false,
-           "name": "lastname",
-           "value": {
-            "isScalar": true,
-            "properties": [],
-            "value": "bores"
-           },
-           "values": []
-          },
-          {
-           "isArray": false,
-           "name": "age",
-           "value": {
-            "isScalar": true,
-            "properties": [],
-            "value": 66
-           },
-           "values": []
-          }
-         ],
-         "value": null
+         "isScalar": true,
+         "properties": [],
+         "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
         },
-        "value": "{\nfirstname: tato,\nlastname: bores,\nage: 66\n}"
+        "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
        },
        "examples": [],
        "fixedFacets": null,
@@ -560,7 +529,7 @@
        "name": "application/json",
        "required": true,
        "schema": [],
-       "schemaContent": "User",
+       "schemaContent": null,
        "type": [
         "User"
        ]
@@ -665,7 +634,7 @@
       "name": "queryString",
       "required": true,
       "schema": [],
-      "schemaContent": "object",
+      "schemaContent": null,
       "type": [
        "object"
       ]
@@ -682,44 +651,13 @@
          "displayName": "application/json",
          "example": {
           "annotations": [],
-          "name": "example",
+          "name": null,
           "structuredValue": {
-           "isScalar": false,
-           "properties": [
-            {
-             "isArray": false,
-             "name": "firstname",
-             "value": {
-              "isScalar": true,
-              "properties": [],
-              "value": "tato"
-             },
-             "values": []
-            },
-            {
-             "isArray": false,
-             "name": "lastname",
-             "value": {
-              "isScalar": true,
-              "properties": [],
-              "value": "bores"
-             },
-             "values": []
-            },
-            {
-             "isArray": false,
-             "name": "age",
-             "value": {
-              "isScalar": true,
-              "properties": [],
-              "value": 66
-             },
-             "values": []
-            }
-           ],
-           "value": null
+           "isScalar": true,
+           "properties": [],
+           "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
           },
-          "value": "{\nfirstname: tato,\nlastname: bores,\nage: 66\n}"
+          "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
          },
          "examples": [],
          "fixedFacets": null,
@@ -727,7 +665,7 @@
          "name": "application/json",
          "required": true,
          "schema": [],
-         "schemaContent": "User",
+         "schemaContent": null,
          "type": [
           "User"
          ]
@@ -790,7 +728,7 @@
          "name": "one",
          "required": true,
          "schema": [],
-         "schemaContent": "string",
+         "schemaContent": null,
          "type": [
           "string"
          ]
@@ -808,7 +746,7 @@
          "name": "two",
          "required": true,
          "schema": [],
-         "schemaContent": "string",
+         "schemaContent": null,
          "type": [
           "string"
          ]
@@ -869,7 +807,7 @@
            "name": "Authorization",
            "required": true,
            "schema": [],
-           "schemaContent": "string",
+           "schemaContent": null,
            "type": [
             "string"
            ]
@@ -891,7 +829,7 @@
            "name": "access_token",
            "required": true,
            "schema": [],
-           "schemaContent": "string",
+           "schemaContent": null,
            "type": [
             "string"
            ]
@@ -1038,7 +976,7 @@
        "name": "Authorization",
        "required": true,
        "schema": [],
-       "schemaContent": "string",
+       "schemaContent": null,
        "type": [
         "string"
        ]
@@ -1060,7 +998,7 @@
        "name": "access_token",
        "required": true,
        "schema": [],
-       "schemaContent": "string",
+       "schemaContent": null,
        "type": [
         "string"
        ]
@@ -1182,7 +1120,7 @@
       "name": "Authorization",
       "required": true,
       "schema": [],
-      "schemaContent": "string",
+      "schemaContent": null,
       "type": [
        "string"
       ]
@@ -1204,7 +1142,7 @@
       "name": "access_token",
       "required": true,
       "schema": [],
-      "schemaContent": "string",
+      "schemaContent": null,
       "type": [
        "string"
       ]
@@ -1426,7 +1364,7 @@
    "name": "User",
    "required": true,
    "schema": [],
-   "schemaContent": "object",
+   "schemaContent": null,
    "type": [
     "object"
    ]

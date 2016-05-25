@@ -223,7 +223,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     public ObjectRule trait()
     {
         return objectType("trait")
-                                  .with(field(scalarType(), any()).then(TraitNode.class));
+                                  .with(field(scalarType(), any())
+                                                                  .then(TraitNode.class));
     }
 
     // Resource Types

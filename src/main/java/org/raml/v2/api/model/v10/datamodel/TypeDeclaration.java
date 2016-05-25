@@ -27,7 +27,7 @@ public interface TypeDeclaration extends Annotable
 {
 
     /**
-     * name of the parameter
+     * Name of the parameter
      **/
     String name();
 

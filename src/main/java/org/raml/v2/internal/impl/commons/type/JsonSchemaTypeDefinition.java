@@ -18,7 +18,7 @@ package org.raml.v2.internal.impl.commons.type;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.type.TypeDefinitionVisitor;
 
-public class JsonSchemaTypeDefinition extends BaseTypeDefinition
+public class JsonSchemaTypeDefinition extends BaseTypeDefinition implements SchemaBasedTypeDefinition
 {
 
     private final String schemaValue;

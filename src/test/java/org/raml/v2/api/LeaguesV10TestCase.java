@@ -169,7 +169,7 @@ public class LeaguesV10TestCase
         String jsonExample = appJson.example().value();
         assertThat(jsonExample, containsString("\"name\": \"liga criolla\""));
         assertThat(appJson.type().size(), is(1));
-        assertThat(appJson.type().get(0), containsString("draft-03"));
+        assertThat(appJson.type().get(0), containsString("league-json"));
         List<ValidationResult> validationResults = appJson.validate(jsonExample);
         assertThat(validationResults.size(), is(0));
         validationResults = appJson.validate("{\"liga\": \"Criolla\"}");

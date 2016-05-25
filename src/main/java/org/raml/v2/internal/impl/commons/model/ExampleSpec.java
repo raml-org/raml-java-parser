@@ -17,6 +17,11 @@ package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.utils.NodeSelector;
+import org.raml.v2.internal.utils.NodeUtils;
+
+import javax.annotation.Nonnull;
 
 
 public class ExampleSpec extends Annotable
@@ -31,12 +36,12 @@ public class ExampleSpec extends Annotable
 
     public String value()
     {
-        return getNode() != null ? getNode().toString() : null;
+        return getExampleValue().toString();
     }
 
     public String name()
     {
-        return String.valueOf(node.getKey());
+        return getName();
     }
 
     public TypeInstance structuredValue()
@@ -54,5 +59,58 @@ public class ExampleSpec extends Annotable
     public Node getNode()
     {
         return node.getValue();
+    }
+
+
+    public Node getExampleValue()
+    {
+        if (isExplicitExample())
+        {
+            return NodeSelector.selectFrom("value", node.getValue());
+        }
+        else
+        {
+            return node.getValue();
+        }
+    }
+
+    public String getName()
+    {
+        final Node ancestor = NodeUtils.getAncestor(node, 2);
+        if (ancestor instanceof KeyValueNode && ((KeyValueNode) ancestor).getKey().toString().equals("examples"))
+        {
+            return node.getKey().toString();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public boolean isExplicitExample()
+    {
+        if (node.getValue() instanceof ObjectNode)
+        {
+            final Node value = NodeSelector.selectFrom("value", node.getValue());
+            if (value != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Nonnull
+    public Boolean isStrict()
+    {
+        if (isExplicitExample())
+        {
+            final Boolean strict = NodeSelector.selectBooleanValue("strict", node.getValue());
+            return strict != null ? strict : false;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

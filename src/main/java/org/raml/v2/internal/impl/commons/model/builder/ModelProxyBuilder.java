@@ -101,61 +101,36 @@ public class ModelProxyBuilder
             }
             else
             {
-                throw new RuntimeException("Can not generateDefinition method : " + method.toGenericString() + " on " + delegate.getClass().getName());
+                throw new RuntimeException("Can not resolve method : " + method.getDeclaringClass().getName() + " from " + method.toGenericString() + " on " + delegate.getClass().getName());
             }
         }
 
         protected Object fromMethod(Object[] args, Class<?> returnType, Type genericReturnType, Method delegateMethod) throws IllegalAccessException, InvocationTargetException
         {
-            if (isPrimitiveOrWrapperOrString(returnType) || isObject(returnType))
+            final Object invoke = delegateMethod.invoke(delegate, args);
+            if (invoke == null || isPrimitiveOrWrapperOrString(returnType) || isObject(returnType))
             {
-                return delegateMethod.invoke(delegate, args);
+                return invoke;
             }
-
-            // antother spec interface
-            if (!(genericReturnType instanceof ParameterizedType))
-            {
-                Object result = delegateMethod.invoke(delegate, args);
-                if (result == null)
-                {
-                    return null;
-                }
-                // interface expects single element or list depending on version
-                // e.g.:
-                // List<MimeType> mediaType(); //v10
-                // MimeType mediaType(); //v08
-                if (result instanceof List)
-                {
-                    if (((List) result).isEmpty())
-                    {
-                        return null;
-                    }
-                    result = ((List) result).get(0);
-                }
-                return Proxy.newProxyInstance(returnType.getClassLoader(), new Class[] {returnType}, new SimpleProxy(result));
-            }
-
-            // list
-            if (List.class.isAssignableFrom(returnType))
+            else if (List.class.isAssignableFrom(returnType))
             {
                 final List<Object> returnList = new ArrayList<>();
-                final List<?> result = (List<?>) delegateMethod.invoke(delegate, args);
+                final List<?> result = (List<?>) invoke;
                 final Class<?> itemClass = (Class<?>) ((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
-                if (result != null)
+                if (isPrimitiveOrWrapperOrString(itemClass))
                 {
-                    if (isPrimitiveOrWrapperOrString(itemClass))
-                    {
-                        return result;
-                    }
-                    for (Object item : result)
-                    {
-                        returnList.add(Proxy.newProxyInstance(itemClass.getClassLoader(), new Class[] {itemClass}, new SimpleProxy(item)));
-                    }
+                    return result;
+                }
+                for (Object item : result)
+                {
+                    returnList.add(Proxy.newProxyInstance(itemClass.getClassLoader(), new Class[] {itemClass}, new SimpleProxy(item)));
                 }
                 return returnList;
             }
-
-            throw new RuntimeException("case not handled yet... " + returnType.getName());
+            else
+            {
+                return Proxy.newProxyInstance(returnType.getClassLoader(), new Class[] {returnType}, new SimpleProxy(invoke));
+            }
         }
 
         protected Object resolveValue(Type returnType, Node node)
@@ -239,7 +214,7 @@ public class ModelProxyBuilder
                 {
                     if (node instanceof SimpleTypeNode)
                     {
-                        delegate = new StringType(node);
+                        delegate = new StringType((SimpleTypeNode) node);
                     }
                     else
                     {

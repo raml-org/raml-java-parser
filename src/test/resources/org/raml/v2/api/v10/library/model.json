@@ -56,7 +56,7 @@
           "displayName": null,
           "example": {
            "annotations": [],
-           "name": "example",
+           "name": null,
            "structuredValue": {
             "isScalar": true,
             "properties": [],
@@ -70,7 +70,7 @@
           "name": "size",
           "required": false,
           "schema": [],
-          "schemaContent": "integer",
+          "schemaContent": null,
           "type": [
            "integer"
           ]
@@ -85,7 +85,7 @@
           "displayName": null,
           "example": {
            "annotations": [],
-           "name": "example",
+           "name": null,
            "structuredValue": {
             "isScalar": true,
             "properties": [],
@@ -99,7 +99,7 @@
           "name": "page",
           "required": false,
           "schema": [],
-          "schemaContent": "integer",
+          "schemaContent": null,
           "type": [
            "integer"
           ]
@@ -125,7 +125,7 @@
        "displayName": "userId",
        "example": {
         "annotations": [],
-        "name": "example",
+        "name": null,
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -139,7 +139,7 @@
        "name": "userId",
        "required": true,
        "schema": [],
-       "schemaContent": "string",
+       "schemaContent": null,
        "type": [
         "string"
        ]
@@ -154,7 +154,7 @@
        "displayName": "size",
        "example": {
         "annotations": [],
-        "name": "example",
+        "name": null,
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -168,7 +168,7 @@
        "name": "size",
        "required": false,
        "schema": [],
-       "schemaContent": "integer",
+       "schemaContent": null,
        "type": [
         "integer"
        ]
@@ -183,7 +183,7 @@
        "displayName": "page",
        "example": {
         "annotations": [],
-        "name": "example",
+        "name": null,
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -197,7 +197,7 @@
        "name": "page",
        "required": false,
        "schema": [],
-       "schemaContent": "integer",
+       "schemaContent": null,
        "type": [
         "integer"
        ]
@@ -487,9 +487,9 @@
          "name": "application/json",
          "required": true,
          "schema": [],
-         "schemaContent": "Orders",
+         "schemaContent": null,
          "type": [
-          "Orders"
+          "assets.Orders"
          ]
         }
        ],
@@ -549,7 +549,7 @@
        "displayName": null,
        "example": {
         "annotations": [],
-        "name": "example",
+        "name": null,
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -563,7 +563,7 @@
        "name": "size",
        "required": false,
        "schema": [],
-       "schemaContent": "integer",
+       "schemaContent": null,
        "type": [
         "integer"
        ]
@@ -578,7 +578,7 @@
        "displayName": null,
        "example": {
         "annotations": [],
-        "name": "example",
+        "name": null,
         "structuredValue": {
          "isScalar": true,
          "properties": [],
@@ -592,7 +592,7 @@
        "name": "page",
        "required": false,
        "schema": [],
-       "schemaContent": "integer",
+       "schemaContent": null,
        "type": [
         "integer"
        ]
@@ -618,7 +618,7 @@
      "name": "ProductItem",
      "required": true,
      "schema": [],
-     "schemaContent": "object",
+     "schemaContent": null,
      "type": [
       "object"
      ]
@@ -636,7 +636,7 @@
      "name": "Order",
      "required": true,
      "schema": [],
-     "schemaContent": "object",
+     "schemaContent": null,
      "type": [
       "object"
      ]
@@ -654,7 +654,7 @@
      "name": "Orders",
      "required": true,
      "schema": [],
-     "schemaContent": "object",
+     "schemaContent": null,
      "type": [
       "object"
      ]
@@ -672,7 +672,7 @@
      "name": "Inherit",
      "required": true,
      "schema": [],
-     "schemaContent": "Order",
+     "schemaContent": null,
      "type": [
       "Order"
      ]

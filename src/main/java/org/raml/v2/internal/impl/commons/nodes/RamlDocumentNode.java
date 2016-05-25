@@ -28,7 +28,6 @@ public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode, Co
 {
 
     private RamlVersion version;
-    private ResourceLoader resourceLoader;
 
     public RamlDocumentNode()
     {
@@ -61,17 +60,6 @@ public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode, Co
     public void setVersion(RamlVersion version)
     {
         this.version = version;
-    }
-
-    @Nonnull
-    public ResourceLoader getResourceLoader()
-    {
-        return resourceLoader;
-    }
-
-    public void setResourceLoader(ResourceLoader resourceLoader)
-    {
-        this.resourceLoader = resourceLoader;
     }
 
     @Nonnull

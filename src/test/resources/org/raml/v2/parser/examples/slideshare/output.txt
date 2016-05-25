@@ -1396,129 +1396,129 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 2671 , End: 2711, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 2671 , End: 2678, On: input.raml)
                                                         StringNodeImpl: "<slideshow>
-
+  
  <id>
   { slideshow id }
  </id>
-
+  
  <title>{ slideshow title }</title>
-
+  
  <description>
   { slideshow description }
  </description>
-
+  
  <status>
   2
  </status>
-
+  
  <username>
   { username }
  </username>
-
+  
  <url>
   { web permalink }
  </url>
-
+  
  <thumbnailurl>
   { thumbnail URL }
  </thumbnailurl>
-
+  
  <thumbnailsmallurl>
   { URL of smaller thumbnail }
  </thumbnailsmallurl>
-
+  
  <embed />{ embed code }
-
+  
  <created>
   { date slideshow created }
  </created>
-
+  
  <updated>
   { date slideshow was last update }
  </updated>
-
+  
  <language>
   { language, as specified by two-letter code }
  </language>
-
+  
  <format>
   pdf
  </format>
-
+  
  <download>
   1
  </download>
-
+  
  <downloadurl>
   { returns if available to download }
  </downloadurl>
-
+  
  <slideshowtype>
   0
  </slideshowtype>
-
+  
  <incontest>
   0
   <userid>
    { userID }
-  </userid>
+  </userid> 
   <externalappuserid>
    { ExternalAppUserID if uploaded using an external app }
-  </externalappuserid>
+  </externalappuserid> 
   <externalappid>
    { ExternalAppID for the external app }
-  </externalappid>
+  </externalappid> 
   <pptlocation>
-   { PPTLocation }
+   { PPTLocation } 
    <strippedtitle>
     { Stripped Title }
-   </strippedtitle>
-   <tags>
+   </strippedtitle> 
+   <tags> 
     <tag count="1" owner="0">
-     { tag name }
-    </tag>
-   </tags>
+     { tag name } 
+    </tag> 
+   </tags> 
    <audio>
     0
-   </audio>
+   </audio> 
    <numdownloads>
     100
-   </numdownloads>
+   </numdownloads> 
    <numviews>
     101
-   </numviews>
+   </numviews> 
    <numcomments>
     1
-   </numcomments>
+   </numcomments> 
    <numfavorites>
     1
-   </numfavorites>
+   </numfavorites> 
    <numslides>
     5
-   </numslides>
-   <relatedslideshows>
+   </numslides> 
+   <relatedslideshows> 
     <relatedslideshowid rank="0.5">
-      { slideshow id }
-    </relatedslideshowid>
-   </relatedslideshows>
+      { slideshow id } 
+    </relatedslideshowid> 
+   </relatedslideshows> 
    <privacylevel>
     0
-   </privacylevel>
+   </privacylevel> 
    <flagvisible>
     1
-   </flagvisible>
+   </flagvisible> 
    <showonss>
     0
-   </showonss>
+   </showonss> 
    <secreturl>
     0
-   </secreturl>
+   </secreturl> 
    <allowembed>
     1
-   </allowembed>
+   </allowembed> 
    <sharewithcontacts>
-    0
-   </sharewithcontacts>
+    0 
+   </sharewithcontacts> 
   </pptlocation>
  </incontest>
 </slideshow>" (Start: 2680 , End: 2711, On: input.raml, Source: SYIncludeNode)
@@ -1569,9 +1569,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 3010 , End: 3024, On: input.raml)
                                         SYStringNode: "required" (Start: 3010 , End: 3018, On: input.raml)
                                         SYBooleanNode: true (Start: 3020 , End: 3024, On: input.raml)
-                                    ExampleDeclarationNode (Start: 3033 , End: 10, On: input.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 3033 , End: 3052, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 3033 , End: 3040, On: input.raml)
-                                        SYStringNode: "slideshare" (Start: 0 , End: 10, On: , Source: SYStringNode)
+                                        SYStringNode: "slideshare" (Start: 3042 , End: 3052, On: input.raml)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -1650,139 +1650,139 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 3174 , End: 3222, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 3174 , End: 3181, On: input.raml)
                                                         StringNodeImpl: "<tag>
-
+   
  <name>
   { Tag Name }
  </name>
-
+ 
  <count>
   1
  </count>
-
+   
  <slideshow>
-
+   
   <id>
    { slideshow id }
   </id>
-
+   
   <title>{ slideshow title }</title>
-
+   
   <description>
    { slideshow description }
   </description>
-
+   
   <status>
    2
   </status>
-
+   
   <username>
    { username }
   </username>
-
+   
   <url>
    { web permalink }
   </url>
-
+   
   <thumbnailurl>
    { thumbnail URL }
   </thumbnailurl>
-
+   
   <thumbnailsmallurl>
    { URL of smaller thumbnail }
   </thumbnailsmallurl>
-
+   
   <embed />{ embed code }
-
+   
   <created>
    { date slideshow created }
   </created>
-
+   
   <updated>
    { date slideshow was last update }
   </updated>
-
+   
   <language>
    { language, as specified by two-letter code }
   </language>
-
+   
   <format>
    pdf
   </format>
-
+   
   <download>
    1
   </download>
-
+   
   <downloadurl>
    { returns if available to download }
   </downloadurl>
-
+   
   <slideshowtype>
    0
   </slideshowtype>
-
+   
   <incontest>
    0
    <userid>
     { userID }
-   </userid>
+   </userid> 
    <externalappuserid>
     { ExternalAppUserID if uploaded using an external app }
-   </externalappuserid>
+   </externalappuserid> 
    <externalappid>
     { ExternalAppID for the external app }
-   </externalappid>
+   </externalappid> 
    <pptlocation>
-    { PPTLocation }
+    { PPTLocation } 
     <strippedtitle>
      { Stripped Title }
-    </strippedtitle>
-    <tags>
+    </strippedtitle> 
+    <tags> 
      <tag count="1" owner="0">
-      { tag name }
-     </tag>
-    </tags>
+      { tag name } 
+     </tag> 
+    </tags> 
     <audio>
      0
-    </audio>
+    </audio> 
     <numdownloads>
      100
-    </numdownloads>
+    </numdownloads> 
     <numviews>
      101
-    </numviews>
+    </numviews> 
     <numcomments>
      1
-    </numcomments>
+    </numcomments> 
     <numfavorites>
      1
-    </numfavorites>
+    </numfavorites> 
     <numslides>
      5
-    </numslides>
-    <relatedslideshows>
+    </numslides> 
+    <relatedslideshows> 
      <relatedslideshowid rank="0.5">
-       { slideshow id }
-     </relatedslideshowid>
-    </relatedslideshows>
+       { slideshow id } 
+     </relatedslideshowid> 
+    </relatedslideshows> 
     <privacylevel>
      0
-    </privacylevel>
+    </privacylevel> 
     <flagvisible>
      1
-    </flagvisible>
+    </flagvisible> 
     <showonss>
      0
-    </showonss>
+    </showonss> 
     <secreturl>
      0
-    </secreturl>
+    </secreturl> 
     <allowembed>
      1
-    </allowembed>
+    </allowembed> 
     <sharewithcontacts>
-     0
-    </sharewithcontacts>
+     0 
+    </sharewithcontacts> 
    </pptlocation>
   </incontest>
  </slideshow>
@@ -1835,9 +1835,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 3542 , End: 3556, On: input.raml)
                                         SYStringNode: "required" (Start: 3542 , End: 3550, On: input.raml)
                                         SYBooleanNode: true (Start: 3552 , End: 3556, On: input.raml)
-                                    ExampleDeclarationNode (Start: 3565 , End: 10, On: input.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 3565 , End: 3584, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 3565 , End: 3572, On: input.raml)
-                                        SYStringNode: "javascript" (Start: 0 , End: 10, On: , Source: SYStringNode)
+                                        SYStringNode: "javascript" (Start: 3574 , End: 3584, On: input.raml)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -1916,139 +1916,139 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 3708 , End: 3758, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 3708 , End: 3715, On: input.raml)
                                                         StringNodeImpl: "<group>
-
+   
  <name>
   { Group Name }
  </name>
-
+   
  <count>
   1
  </count>
-
+  
  <slideshow>
-
+   
   <id>
    { slideshow id }
   </id>
-
+   
   <title>{ slideshow title }</title>
-
+   
   <description>
    { slideshow description }
   </description>
-
+   
   <status>
    2
   </status>
-
+   
   <username>
    { username }
   </username>
-
+   
   <url>
    { web permalink }
   </url>
-
+   
   <thumbnailurl>
    { thumbnail URL }
   </thumbnailurl>
-
+   
   <thumbnailsmallurl>
    { URL of smaller thumbnail }
   </thumbnailsmallurl>
-
+   
   <embed />{ embed code }
-
+   
   <created>
    { date slideshow created }
   </created>
-
+   
   <updated>
    { date slideshow was last update }
   </updated>
-
+   
   <language>
    { language, as specified by two-letter code }
   </language>
-
+   
   <format>
    pdf
   </format>
-
+   
   <download>
    1
   </download>
-
+   
   <downloadurl>
    { returns if available to download }
   </downloadurl>
-
+   
   <slideshowtype>
    0
   </slideshowtype>
-
+   
   <incontest>
    0
    <userid>
     { userID }
-   </userid>
+   </userid> 
    <externalappuserid>
     { ExternalAppUserID if uploaded using an external app }
-   </externalappuserid>
+   </externalappuserid> 
    <externalappid>
     { ExternalAppID for the external app }
-   </externalappid>
+   </externalappid> 
    <pptlocation>
-    { PPTLocation }
+    { PPTLocation } 
     <strippedtitle>
      { Stripped Title }
-    </strippedtitle>
-    <tags>
+    </strippedtitle> 
+    <tags> 
      <tag count="1" owner="0">
-      { tag name }
-     </tag>
-    </tags>
+      { tag name } 
+     </tag> 
+    </tags> 
     <audio>
      0
-    </audio>
+    </audio> 
     <numdownloads>
      100
-    </numdownloads>
+    </numdownloads> 
     <numviews>
      101
-    </numviews>
+    </numviews> 
     <numcomments>
      1
-    </numcomments>
+    </numcomments> 
     <numfavorites>
      1
-    </numfavorites>
+    </numfavorites> 
     <numslides>
      5
-    </numslides>
-    <relatedslideshows>
+    </numslides> 
+    <relatedslideshows> 
      <relatedslideshowid rank="0.5">
-       { slideshow id }
-     </relatedslideshowid>
-    </relatedslideshows>
+       { slideshow id } 
+     </relatedslideshowid> 
+    </relatedslideshows> 
     <privacylevel>
      0
-    </privacylevel>
+    </privacylevel> 
     <flagvisible>
      1
-    </flagvisible>
+    </flagvisible> 
     <showonss>
      0
-    </showonss>
+    </showonss> 
     <secreturl>
      0
-    </secreturl>
+    </secreturl> 
     <allowembed>
      1
-    </allowembed>
+    </allowembed> 
     <sharewithcontacts>
-     0
-    </sharewithcontacts>
+     0 
+    </sharewithcontacts> 
    </pptlocation>
   </incontest>
  </slideshow>
@@ -2216,9 +2216,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 108 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "required" (Start: 108 , End: 116, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                         SYBooleanNode: true (Start: 118 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: SYBooleanNode)
-                                    ExampleDeclarationNode (Start: 127 , End: 6, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 127 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 127 , End: 134, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
-                                        SYStringNode: "rashmi" (Start: 0 , End: 6, On: , Source: SYStringNode)
+                                        SYStringNode: "rashmi" (Start: 136 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -2243,139 +2243,139 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 4375 , End: 4424, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 4375 , End: 4382, On: input.raml)
                                                         StringNodeImpl: "<user>
-
+   
  <name>
   { username_for }
  </name>
-
+   
  <count>
   1
  </count>
-
+   
  <slideshow>
-
+   
   <id>
    { slideshow id }
   </id>
-
+   
   <title>{ slideshow title }</title>
-
+   
   <description>
    { slideshow description }
   </description>
-
+   
   <status>
    2
   </status>
-
+   
   <username>
    { username }
   </username>
-
+   
   <url>
    { web permalink }
   </url>
-
+   
   <thumbnailurl>
    { thumbnail URL }
   </thumbnailurl>
-
+   
   <thumbnailsmallurl>
    { URL of smaller thumbnail }
   </thumbnailsmallurl>
-
+   
   <embed />{ embed code }
-
+   
   <created>
    { date slideshow created }
   </created>
-
+   
   <updated>
    { date slideshow was last update }
   </updated>
-
+   
   <language>
    { language, as specified by two-letter code }
   </language>
-
+   
   <format>
    pdf
   </format>
-
+   
   <download>
    1
   </download>
-
+   
   <downloadurl>
    { returns if available to download }
   </downloadurl>
-
+   
   <slideshowtype>
    0
   </slideshowtype>
-
+   
   <incontest>
    0
    <userid>
     { userID }
-   </userid>
+   </userid> 
    <externalappuserid>
     { ExternalAppUserID if uploaded using an external app }
-   </externalappuserid>
+   </externalappuserid> 
    <externalappid>
     { ExternalAppID for the external app }
-   </externalappid>
+   </externalappid> 
    <pptlocation>
-    { PPTLocation }
+    { PPTLocation } 
     <strippedtitle>
      { Stripped Title }
-    </strippedtitle>
-    <tags>
+    </strippedtitle> 
+    <tags> 
      <tag count="1" owner="0">
-      { tag name }
-     </tag>
-    </tags>
+      { tag name } 
+     </tag> 
+    </tags> 
     <audio>
      0
-    </audio>
+    </audio> 
     <numdownloads>
      100
-    </numdownloads>
+    </numdownloads> 
     <numviews>
      101
-    </numviews>
+    </numviews> 
     <numcomments>
      1
-    </numcomments>
+    </numcomments> 
     <numfavorites>
      1
-    </numfavorites>
+    </numfavorites> 
     <numslides>
      5
-    </numslides>
-    <relatedslideshows>
+    </numslides> 
+    <relatedslideshows> 
      <relatedslideshowid rank="0.5">
-       { slideshow id }
-     </relatedslideshowid>
-    </relatedslideshows>
+       { slideshow id } 
+     </relatedslideshowid> 
+    </relatedslideshows> 
     <privacylevel>
      0
-    </privacylevel>
+    </privacylevel> 
     <flagvisible>
      1
-    </flagvisible>
+    </flagvisible> 
     <showonss>
      0
-    </showonss>
+    </showonss> 
     <secreturl>
      0
-    </secreturl>
+    </secreturl> 
     <allowembed>
      1
-    </allowembed>
+    </allowembed> 
     <sharewithcontacts>
-     0
-    </sharewithcontacts>
+     0 
+    </sharewithcontacts> 
    </pptlocation>
   </incontest>
  </slideshow>
@@ -2550,9 +2550,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 6294 , End: 6308, On: input.raml)
                                         SYStringNode: "required" (Start: 6294 , End: 6302, On: input.raml)
                                         SYBooleanNode: true (Start: 6304 , End: 6308, On: input.raml)
-                                    ExampleDeclarationNode (Start: 6317 , End: 10, On: input.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 6317 , End: 6336, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 6317 , End: 6324, On: input.raml)
-                                        SYStringNode: "slideshare" (Start: 0 , End: 10, On: , Source: SYStringNode)
+                                        SYStringNode: "slideshare" (Start: 6326 , End: 6336, On: input.raml)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -2636,275 +2636,275 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                         StringNodeImpl: "<slideshows>
 
  <meta />
-
+  
  <query>
   { query }
  </query>
-
+  
  <resultoffset>
-  0
+  0 
  </resultoffset>
-
+  
  <numresults>
   2
  </numresults>
-
+  
  <totalresults>
   2
  </totalresults>
 
  <slideshow>
-
+   
   <id>
    { slideshow id }
   </id>
-
+   
   <title>{ slideshow title }</title>
-
+   
   <description>
    { slideshow description }
   </description>
-
+   
   <status>
    2
   </status>
-
+   
   <username>
    { username }
   </username>
-
+   
   <url>
    { web permalink }
   </url>
-
+   
   <thumbnailurl>
    { thumbnail URL }
   </thumbnailurl>
-
+   
   <thumbnailsmallurl>
    { URL of smaller thumbnail }
   </thumbnailsmallurl>
-
+   
   <embed />{ embed code }
-
+   
   <created>
    { date slideshow created }
   </created>
-
+   
   <updated>
    { date slideshow was last update }
   </updated>
-
+   
   <language>
    { language, as specified by two-letter code }
   </language>
-
+   
   <format>
    pdf
   </format>
-
+   
   <download>
    1
   </download>
-
+   
   <downloadurl>
    { returns if available to download }
   </downloadurl>
-
+   
   <slideshowtype>
    0
   </slideshowtype>
-
+   
   <incontest>
    0
    <userid>
     { userID }
-   </userid>
+   </userid> 
    <externalappuserid>
     { ExternalAppUserID if uploaded using an external app }
-   </externalappuserid>
+   </externalappuserid> 
    <externalappid>
     { ExternalAppID for the external app }
-   </externalappid>
+   </externalappid> 
    <pptlocation>
-    { PPTLocation }
+    { PPTLocation } 
     <strippedtitle>
      { Stripped Title }
-    </strippedtitle>
-    <tags>
+    </strippedtitle> 
+    <tags> 
      <tag count="1" owner="0">
-      { tag name }
-     </tag>
-    </tags>
+      { tag name } 
+     </tag> 
+    </tags> 
     <audio>
      0
-    </audio>
+    </audio> 
     <numdownloads>
      100
-    </numdownloads>
+    </numdownloads> 
     <numviews>
      101
-    </numviews>
+    </numviews> 
     <numcomments>
      1
-    </numcomments>
+    </numcomments> 
     <numfavorites>
      1
-    </numfavorites>
+    </numfavorites> 
     <numslides>
      5
-    </numslides>
-    <relatedslideshows>
+    </numslides> 
+    <relatedslideshows> 
      <relatedslideshowid rank="0.5">
-       { slideshow id }
-     </relatedslideshowid>
-    </relatedslideshows>
+       { slideshow id } 
+     </relatedslideshowid> 
+    </relatedslideshows> 
     <privacylevel>
      0
-    </privacylevel>
+    </privacylevel> 
     <flagvisible>
      1
-    </flagvisible>
+    </flagvisible> 
     <showonss>
      0
-    </showonss>
+    </showonss> 
     <secreturl>
      0
-    </secreturl>
+    </secreturl> 
     <allowembed>
      1
-    </allowembed>
+    </allowembed> 
     <sharewithcontacts>
-     0
-    </sharewithcontacts>
+     0 
+    </sharewithcontacts> 
    </pptlocation>
   </incontest>
  </slideshow>
-
+ 
  <slideshow>
-
+   
   <id>
    { slideshow id }
   </id>
-
+   
   <title>{ slideshow title }</title>
-
+   
   <description>
    { slideshow description }
   </description>
-
+   
   <status>
    2
   </status>
-
+   
   <username>
    { username }
   </username>
-
+   
   <url>
    { web permalink }
   </url>
-
+   
   <thumbnailurl>
    { thumbnail URL }
   </thumbnailurl>
-
+   
   <thumbnailsmallurl>
    { URL of smaller thumbnail }
   </thumbnailsmallurl>
-
+   
   <embed />{ embed code }
-
+   
   <created>
    { date slideshow created }
   </created>
-
+   
   <updated>
    { date slideshow was last update }
   </updated>
-
+   
   <language>
    { language, as specified by two-letter code }
   </language>
-
+   
   <format>
    pdf
   </format>
-
+   
   <download>
    1
   </download>
-
+   
   <downloadurl>
    { returns if available to download }
   </downloadurl>
-
+   
   <slideshowtype>
    0
   </slideshowtype>
-
+   
   <incontest>
    0
    <userid>
     { userID }
-   </userid>
+   </userid> 
    <externalappuserid>
     { ExternalAppUserID if uploaded using an external app }
-   </externalappuserid>
+   </externalappuserid> 
    <externalappid>
     { ExternalAppID for the external app }
-   </externalappid>
+   </externalappid> 
    <pptlocation>
-    { PPTLocation }
+    { PPTLocation } 
     <strippedtitle>
      { Stripped Title }
-    </strippedtitle>
-    <tags>
+    </strippedtitle> 
+    <tags> 
      <tag count="1" owner="0">
-      { tag name }
-     </tag>
-    </tags>
+      { tag name } 
+     </tag> 
+    </tags> 
     <audio>
      0
-    </audio>
+    </audio> 
     <numdownloads>
      100
-    </numdownloads>
+    </numdownloads> 
     <numviews>
      101
-    </numviews>
+    </numviews> 
     <numcomments>
      1
-    </numcomments>
+    </numcomments> 
     <numfavorites>
      1
-    </numfavorites>
+    </numfavorites> 
     <numslides>
      5
-    </numslides>
-    <relatedslideshows>
+    </numslides> 
+    <relatedslideshows> 
      <relatedslideshowid rank="0.5">
-       { slideshow id }
-     </relatedslideshowid>
-    </relatedslideshows>
+       { slideshow id } 
+     </relatedslideshowid> 
+    </relatedslideshows> 
     <privacylevel>
      0
-    </privacylevel>
+    </privacylevel> 
     <flagvisible>
      1
-    </flagvisible>
+    </flagvisible> 
     <showonss>
      0
-    </showonss>
+    </showonss> 
     <secreturl>
      0
-    </secreturl>
+    </secreturl> 
     <allowembed>
      1
-    </allowembed>
+    </allowembed> 
     <sharewithcontacts>
-     0
-    </sharewithcontacts>
+     0 
+    </sharewithcontacts> 
    </pptlocation>
   </incontest>
  </slideshow>
@@ -3095,7 +3095,7 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 7415 , End: 7460, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 7415 , End: 7422, On: input.raml)
                                                         StringNodeImpl: "<slideshowedited>
-
+  
  <slideshowid>
   SlideShowID
  </slideshowid>
@@ -3204,7 +3204,7 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 7894 , End: 7941, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 7894 , End: 7901, On: input.raml)
                                                         StringNodeImpl: "<slideshowdeleted>
-
+  
  <slideshowid>
   SlideShowID
  </slideshowid>
@@ -3420,7 +3420,7 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 8696 , End: 8743, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 8696 , End: 8703, On: input.raml)
                                                         StringNodeImpl: "<slideshowuploaded>
-
+  
  <slideshowid>
   {slideshow id goes here}
  </slideshowid>
@@ -3485,14 +3485,14 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 9099 , End: 9144, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 9099 , End: 9106, On: input.raml)
                                                         StringNodeImpl: "<favorites>
-
- <favorite>
+  
+ <favorite> 
   <slideshow_id>
    { Slideshow id }
-  </slideshow_id>
+  </slideshow_id> 
   <tag_text>
    { Tags }
-  </tag_text>
+  </tag_text> 
  </favorite>
 </favorites>" (Start: 9108 , End: 9144, On: input.raml, Source: SYIncludeNode)
                                                     KeyValueNodeImpl (Start: -1 , End: -1)
@@ -3551,9 +3551,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 108 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "required" (Start: 108 , End: 116, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                         SYBooleanNode: true (Start: 118 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: SYBooleanNode)
-                                    ExampleDeclarationNode (Start: 127 , End: 6, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 127 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 127 , End: 134, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
-                                        SYStringNode: "rashmi" (Start: 0 , End: 6, On: , Source: SYStringNode)
+                                        SYStringNode: "rashmi" (Start: 136 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -3617,17 +3617,17 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 9526 , End: 9570, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 9526 , End: 9533, On: input.raml)
                                                         StringNodeImpl: "<contacts>
-
- <contact>
+  
+ <contact> 
   <username>
    { Username }
-  </username>
+  </username> 
   <numslideshows>
    1
-  </numslideshows>
+  </numslideshows> 
   <numcomments>
    1
-  </numcomments>
+  </numcomments> 
  </contact>
 </contacts>
 " (Start: 9535 , End: 9570, On: input.raml, Source: SYIncludeNode)
@@ -3723,9 +3723,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 108 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "required" (Start: 108 , End: 116, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                         SYBooleanNode: true (Start: 118 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: SYBooleanNode)
-                                    ExampleDeclarationNode (Start: 127 , End: 6, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 127 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 127 , End: 134, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
-                                        SYStringNode: "rashmi" (Start: 0 , End: 6, On: , Source: SYStringNode)
+                                        SYStringNode: "rashmi" (Start: 136 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -3782,28 +3782,28 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 9911 , End: 9953, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 9911 , End: 9918, On: input.raml)
                                                         StringNodeImpl: "<groups>
-
- <group>
+  
+ <group> 
   <name>
    { Group Name }
-  </name>
+  </name> 
   <numposts>
-   1
+   1 
   </numposts>
   <numslideshows>
-   1
+   1 
   </numslideshows>
   <nummembers>
-   1
+   1 
   </nummembers>
   <created>
-   { Created date }
+   { Created date } 
   </created>
   <queryname>
-   { Name used for querying (get_slideshows_by_group, etc) }
+   { Name used for querying (get_slideshows_by_group, etc) }  
   </queryname>
   <url>
-   { Group URL }
+   { Group URL } 
   </url>
  </group>
 </groups>
@@ -3864,9 +3864,9 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 108 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "required" (Start: 108 , End: 116, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                         SYBooleanNode: true (Start: 118 , End: 122, On: traits/fetchesUserPersonalData.raml, Source: SYBooleanNode)
-                                    ExampleDeclarationNode (Start: 127 , End: 6, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 127 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 127 , End: 134, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
-                                        SYStringNode: "rashmi" (Start: 0 , End: 6, On: , Source: SYStringNode)
+                                        SYStringNode: "rashmi" (Start: 136 , End: 142, On: traits/fetchesUserPersonalData.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
                                         NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
@@ -3916,11 +3916,11 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 10241 , End: 10281, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 10241 , End: 10248, On: input.raml)
                                                         StringNodeImpl: "<tags>
-
+  
  <tag count="5">
   { Tag name }
  </tag>
-
+ 
  <tag count="5">
   { Tag name }
  </tag>
@@ -4063,17 +4063,17 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 10703 , End: 10748, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 10703 , End: 10710, On: input.raml)
                                                         StringNodeImpl: "<slideshow>
-
+  
  <slideshowid>
   SlideShowID
  </slideshowid>
-
+  
  <user>
   User ID
  </user>
-
+  
  <favorited>
-  true
+  true 
  </favorited>
 </slideshow>
 " (Start: 10712 , End: 10748, On: input.raml, Source: SYIncludeNode)
@@ -4179,7 +4179,7 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 11189 , End: 11232, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 11189 , End: 11196, On: input.raml)
                                                         StringNodeImpl: "<slideshow>
-
+  
  <slideshowid>
   SlideShowID
  </slideshowid>
@@ -4324,75 +4324,75 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 11729 , End: 11779, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 11729 , End: 11736, On: input.raml)
                                                         StringNodeImpl: "<leads>
-
- <lead>
+    
+ <lead> 
   <slideshowid>
    1
-  </slideshowid>
+  </slideshowid> 
   <email>
    {txt}
-  </email>
+  </email> 
   <phoneno>
    {txt}
-  </phoneno>
+  </phoneno> 
   <address>{txt}
-   <!--</Address-->
+   <!--</Address--> 
    <paidat>
     {datetime}
-    <!--</PaidAt-->
+    <!--</PaidAt--> 
     <rating>
      1
-    </rating>
+    </rating> 
     <createdat>
      {datetime}
-    </createdat>
+    </createdat> 
     <updatedat>
      {datetime}
-     <!--</UpdatedAt-->
+     <!--</UpdatedAt--> 
      <message>
       {txt}
-     </message>
+     </message> 
      <usercomment>
       {txt}
-     </usercomment>
+     </usercomment> 
      <city>
       {txt}
-     </city>
+     </city> 
      <country>
       {txt}
-     </country>
+     </country> 
      <zipcode>
       {txt}
-     </zipcode>
+     </zipcode> 
      <state>
       {txt}
-     </state>
+     </state> 
      <mechanism>
       {txt: download, sidebar, or player}
-     </mechanism>
+     </mechanism> 
      <readat>
       {datetime}
-     </readat>
+     </readat> 
      <deletedat>
       {datetime}
-     </deletedat>
+     </deletedat> 
      <leadcampaignid>
       1
-     </leadcampaignid>
-     <geodata>
-      <region></region>
-      <country></country>
-      <city></city>
-     </geodata>
+     </leadcampaignid> 
+     <geodata> 
+      <region></region> 
+      <country></country> 
+      <city></city> 
+     </geodata> 
      <cost>
       {$}
-     </cost>
+     </cost> 
      <firstname>
       {txt}
-     </firstname>
+     </firstname> 
      <lastname>
       {txt}
-     </lastname>  ?
+     </lastname>  ?  
     </updatedat>
    </paidat></address>
  </lead>
@@ -4449,136 +4449,136 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 12084 , End: 12129, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 12084 , End: 12091, On: input.raml)
                                                         StringNodeImpl: "<campaigns>
-
- <leadcampaign>
+    
+ <leadcampaign> 
   <id>
    1
-  </id>
+  </id> 
   <name>
    {name of campaign}
-  </name>
+  </name> 
   <slideshowid>
    1
-  </slideshowid>
+  </slideshowid> 
   <requiresphone>
    true
-  </requiresphone>
+  </requiresphone> 
   <requiresaddress>
    true
-  </requiresaddress>
-  <targetedregion></targetedregion>
+  </requiresaddress> 
+  <targetedregion></targetedregion> 
   <fortagged>
    {tag targeted(if any)}
-  </fortagged>
+  </fortagged> 
   <calltoaction>
    {call to action text}
-  </calltoaction>
+  </calltoaction> 
   <offertext>
    {offer text}
-  </offertext>
+  </offertext> 
   <startedat>
    {datetime}
-  </startedat>
+  </startedat> 
   <pausedat>
    {datetime}
-  </pausedat>
+  </pausedat> 
   <createdat>
    {datetime}
-  </createdat>
+  </createdat> 
   <updatedat>
    {datetime}
-  </updatedat>
+  </updatedat> 
   <endedat>
    {datetime}
-  </endedat>
+  </endedat> 
   <maximumdailyspend currency="USD">
    {$}
-  </maximumdailyspend>
+  </maximumdailyspend> 
   <costperlead currency="USD">
    {$}
-  </costperlead>
+  </costperlead> 
   <formposition>
    end
-  </formposition>
+  </formposition> 
   <formblocking>
    true
-  </formblocking>
+  </formblocking> 
   <fordownload>
    true
-  </fordownload>
+  </fordownload> 
   <forsidebar>
    true
-  </forsidebar>
+  </forsidebar> 
   <stateofcampaign>
    Running
-  </stateofcampaign>
+  </stateofcampaign> 
  </leadcampaign>
     ?
-
- <promotioncampaign>
+    
+ <promotioncampaign> 
   <id>
    1
-  </id>
+  </id> 
   <name>
    {name of campaign}
-  </name>
+  </name> 
   <slideshowid>
    1
-  </slideshowid>
+  </slideshowid> 
   <targetedregion>
    {name of country}
-  </targetedregion>
+  </targetedregion> 
   <fortagged>
    {tag targeted(if any)}
-  </fortagged>
+  </fortagged> 
   <startedat>
    {datetime}
-  </startedat>
+  </startedat> 
   <pausedat>
    {datetime}
-  </pausedat>
+  </pausedat> 
   <createdat>
    {datetime}
-  </createdat>
+  </createdat> 
   <updatedat>
    {datetime}
-  </updatedat>
+  </updatedat> 
   <endedat>
    {datetime}
-  </endedat>
+  </endedat> 
   <maximumdailyspend>
    {$}
-  </maximumdailyspend>
+  </maximumdailyspend> 
   <slidesharecategory>
    {category name}
-  </slidesharecategory>
+  </slidesharecategory> 
   <promotiontype>
    {category or contextual}
-  </promotiontype>
+  </promotiontype> 
   <cpc>
    {$}
-  </cpc>
+  </cpc> 
   <clickstoday>
    100
-  </clickstoday>
+  </clickstoday> 
   <clicksalltime>
    100
-  </clicksalltime>
+  </clicksalltime> 
   <impressionstoday>
    50
-  </impressionstoday>
+  </impressionstoday> 
   <impressionsalltime>
    50
-  </impressionsalltime>
+  </impressionsalltime> 
   <ctr>
    0.5
-  </ctr>
+  </ctr> 
   <pausecause>
    {text: can be &quot;userAction&quot;, &quot;dailyLimit&quot;, or &quot;noFund&quot;}
-  </pausecause>
+  </pausecause> 
   <stateofcampaign>
    {txt: Running, Paused, Stopped
-  </stateofcampaign>
+  </stateofcampaign> 
  </promotioncampaign>
     ?
 
@@ -4678,75 +4678,75 @@ RamlDocumentNode (Start: 11 , End: 12583, On: input.raml, Source: SYObjectNode)
                                                     ExampleDeclarationNode (Start: 12467 , End: 12508, On: input.raml, Source: KeyValueNodeImpl)
                                                         SYStringNode: "example" (Start: 12467 , End: 12474, On: input.raml)
                                                         StringNodeImpl: "<leads>
-
- <lead>
+    
+ <lead> 
   <slideshowid>
    1
-  </slideshowid>
+  </slideshowid> 
   <email>
    {txt}
-  </email>
+  </email> 
   <phoneno>
    {txt}
-  </phoneno>
+  </phoneno> 
   <address>{txt}
-   <!--</Address-->
+   <!--</Address--> 
    <paidat>
     {datetime}
-    <!--</PaidAt-->
+    <!--</PaidAt--> 
     <rating>
      1
-    </rating>
+    </rating> 
     <createdat>
      {datetime}
-    </createdat>
+    </createdat> 
     <updatedat>
      {datetime}
-     <!--</UpdatedAt-->
+     <!--</UpdatedAt--> 
      <message>
       {txt}
-     </message>
+     </message> 
      <usercomment>
       {txt}
-     </usercomment>
+     </usercomment> 
      <city>
       {txt}
-     </city>
+     </city> 
      <country>
       {txt}
-     </country>
+     </country> 
      <zipcode>
       {txt}
-     </zipcode>
+     </zipcode> 
      <state>
       {txt}
-     </state>
+     </state> 
      <mechanism>
       {txt: download, sidebar, or player}
-     </mechanism>
+     </mechanism> 
      <readat>
       {datetime}
-     </readat>
+     </readat> 
      <deletedat>
       {datetime}
-     </deletedat>
+     </deletedat> 
      <leadcampaignid>
       1
-     </leadcampaignid>
-     <geodata>
-      <region></region>
-      <country></country>
-      <city></city>
-     </geodata>
+     </leadcampaignid> 
+     <geodata> 
+      <region></region> 
+      <country></country> 
+      <city></city> 
+     </geodata> 
      <cost>
       {$}
-     </cost>
+     </cost> 
      <firstname>
       {txt}
-     </firstname>
+     </firstname> 
      <lastname>
       {txt}
-     </lastname>  ?
+     </lastname>  ?  
     </updatedat>
    </paidat></address>
  </lead>

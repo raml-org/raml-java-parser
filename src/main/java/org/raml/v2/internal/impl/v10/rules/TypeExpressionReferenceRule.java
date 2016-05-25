@@ -15,15 +15,19 @@
  */
 package org.raml.v2.internal.impl.v10.rules;
 
+import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.framework.grammar.rule.ReferenceSuggester;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.suggester.DefaultSuggestion;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.v10.type.TypeIds;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypeExpressionReferenceRule extends Rule
@@ -63,6 +67,12 @@ public class TypeExpressionReferenceRule extends Rule
     @Override
     public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
     {
-        return suggester.getSuggestions(node);
+        final List<Suggestion> suggestions = new ArrayList<>(suggester.getSuggestions(node));
+        final TypeIds[] values = TypeIds.values();
+        for (TypeIds value : values)
+        {
+            suggestions.add(new DefaultSuggestion(value.getType(), "", StringUtils.capitalize(value.getType())));
+        }
+        return suggestions;
     }
 }

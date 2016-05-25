@@ -15,10 +15,12 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.utils.NodeSelector;
+import org.raml.v2.internal.utils.NodeUtils;
 
 import javax.annotation.Nonnull;
 
@@ -49,6 +51,19 @@ public class ExampleDeclarationNode extends KeyValueNodeImpl
         else
         {
             return getValue();
+        }
+    }
+
+    public String getName()
+    {
+        final Node ancestor = NodeUtils.getAncestor(this, 2);
+        if (ancestor instanceof KeyValueNode && ((KeyValueNode) ancestor).getKey().toString().equals("examples"))
+        {
+            return getKey().toString();
+        }
+        else
+        {
+            return null;
         }
     }
 

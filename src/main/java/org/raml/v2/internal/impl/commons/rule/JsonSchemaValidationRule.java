@@ -82,32 +82,19 @@ public class JsonSchemaValidationRule extends Rule
         }
         try
         {
-            Node source = node.getSource();
-            if (source == null)
-            {
-                if (!(node instanceof StringNode) && !(node instanceof ObjectNode))
-                {
-                    return ErrorNodeFactory.createInvalidJsonExampleNode("Source was null");
-                }
-                else
-                {
-                    source = node;
-                }
-            }
             String value;
-
-            if (source instanceof StringNode)
+            if (node instanceof StringNode)
             {
-                value = ((StringNode) source).getValue();
+                value = ((StringNode) node).getValue();
             }
             else
             {
-                value = JSonDumper.dump(source);
+                value = JSonDumper.dump(node);
             }
 
             if (value == null)
             {
-                return ErrorNodeFactory.createInvalidJsonExampleNode("Source example is not valid: " + source);
+                return ErrorNodeFactory.createInvalidJsonExampleNode("Source example is not valid: " + node);
             }
 
             JsonNode json = JsonLoader.fromString(value);
@@ -121,12 +108,12 @@ public class JsonSchemaValidationRule extends Rule
                     ProcessingMessage next = iterator.next();
                     errors.add(next.getMessage());
                 }
-                node.replaceWith(ErrorNodeFactory.createInvalidJsonExampleNode("{\n" + Joiner.on(",\n").join(errors) + "\n}"));
+                return ErrorNodeFactory.createInvalidJsonExampleNode("{\n" + Joiner.on(",\n").join(errors) + "\n}");
             }
         }
         catch (IOException | ProcessingException e)
         {
-            node.replaceWith(ErrorNodeFactory.createInvalidJsonExampleNode("Invalid json content : " + node.toString()));
+            return ErrorNodeFactory.createInvalidJsonExampleNode("Invalid json content : " + node.toString());
         }
         return node;
     }

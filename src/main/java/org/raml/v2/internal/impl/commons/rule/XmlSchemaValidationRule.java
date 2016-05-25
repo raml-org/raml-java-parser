@@ -80,20 +80,20 @@ public class XmlSchemaValidationRule extends Rule
         }
         if (node instanceof SimpleTypeNode)
         {
-            validateXmlExample(node);
+            return validateXmlExample(node);
         }
         // else We only validate xml schema against xml examples so we do nothing
         return node;
     }
 
-    private void validateXmlExample(@Nonnull Node node)
+    private Node validateXmlExample(@Nonnull Node node)
     {
         String value = ((SimpleTypeNode) node).getLiteralValue();
         try
         {
             if (this.type != null && !value.trim().startsWith("<" + this.type))
             {
-                node.replaceWith(ErrorNodeFactory.createInvalidXmlExampleNode("Provided object is not of type " + this.type));
+                return ErrorNodeFactory.createInvalidXmlExampleNode("Provided object is not of type " + this.type);
             }
             else
             {
@@ -102,8 +102,9 @@ public class XmlSchemaValidationRule extends Rule
         }
         catch (SAXException | IOException e)
         {
-            node.replaceWith(ErrorNodeFactory.createInvalidXmlExampleNode(e.getMessage()));
+            return ErrorNodeFactory.createInvalidXmlExampleNode(e.getMessage());
         }
+        return node;
     }
 
     @Override
