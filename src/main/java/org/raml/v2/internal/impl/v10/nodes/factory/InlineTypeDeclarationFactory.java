@@ -21,11 +21,13 @@ import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.framework.nodes.Node;
 
+import javax.annotation.Nonnull;
+
 public class InlineTypeDeclarationFactory implements NodeFactory
 {
 
     @Override
-    public Node create(Node currentNode, Object... args)
+    public Node create(@Nonnull Node currentNode, Object... args)
     {
         final TypeDeclarationNode node = new TypeDeclarationNode();
         node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), currentNode.copy()));

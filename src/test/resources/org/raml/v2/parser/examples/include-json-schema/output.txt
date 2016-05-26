@@ -65,9 +65,9 @@ instance type (integer) does not match any allowed primitive type (allowed: ["st
                             KeyValueNodeImpl (Start: 291 , End: 422, On: input.raml)
                                 SYStringNode: "application/json" (Start: 291 , End: 307, On: input.raml)
                                 TypeDeclarationNode (Start: 317 , End: 422, On: input.raml, Source: SYObjectNode)
-                                    KeyValueNodeImpl (Start: 317 , End: 327, On: input.raml)
+                                    KeyValueNodeImpl (Start: 317 , End: 331, On: input.raml)
                                         SYStringNode: "type" (Start: 317 , End: 321, On: input.raml)
-                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 55 , RefEnd: 260} (Start: 323 , End: 327, On: input.raml, Source: SYStringNode)
+                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 55 , RefEnd: 260} (Start: 327 , End: 331, On: input.raml, Source: SYStringNode)
                                     ExampleDeclarationNode (Start: 336 , End: 422, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 336 , End: 343, On: input.raml)
                                         ErrorNode: "Error validating JSON. Error: {

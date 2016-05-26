@@ -15,8 +15,13 @@
  */
 package org.raml.v2.internal.framework.grammar.rule;
 
+import org.raml.v2.internal.framework.nodes.AbstractRamlNode;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
+
+import javax.annotation.Nonnull;
+import java.text.CharacterIterator;
 
 public class NodeReferenceFactory implements NodeFactory
 {
@@ -29,35 +34,46 @@ public class NodeReferenceFactory implements NodeFactory
     }
 
     @Override
-    public Node create(Node currentNode, Object... args)
+    public Node create(@Nonnull Node currentNode, Object... args)
     {
         final String value = (String) args[0];
-        return parse(value);
+        return parse(currentNode, value, 0);
     }
 
-    public Node parse(String value)
+    public Node parse(Node currentNode, String value, int startLocation)
     {
+
         final String[] parts = value.split("\\.");
         Node result = null;
         Node parent = null;
+        int currentShift = value.length();
         for (int i = parts.length - 1; i >= 0; i--)
         {
             String part = parts[i];
+            currentShift -= part.length();
+            final Position endPosition = currentNode.getStartPosition().rightShift(startLocation + currentShift + value.length());
+            final Position startPosition = currentNode.getStartPosition().rightShift(startLocation + currentShift);
             if (parent == null)
             {
-                // TODO change this null
-                parent = defaultFactory.create(null, part);
+                parent = defaultFactory.create(currentNode, part);
+                if (parent instanceof AbstractRamlNode)
+                {
+                    ((AbstractRamlNode) parent).setStartPosition(startPosition);
+                    ((AbstractRamlNode) parent).setEndPosition(endPosition);
+                }
                 result = parent;
             }
             else
             {
                 final LibraryRefNode libraryRefNode = new LibraryRefNode(part);
+                libraryRefNode.setStartPosition(startPosition);
+                libraryRefNode.setEndPosition(endPosition);
                 parent.addChild(libraryRefNode);
                 parent = libraryRefNode;
+                // The 1 is from the dot
+                currentShift -= 1;
             }
-
         }
-
         return result;
     }
 }

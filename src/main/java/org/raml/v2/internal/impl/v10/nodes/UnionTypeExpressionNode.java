@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.v10.nodes;
 import org.raml.v2.internal.framework.nodes.AbstractRamlNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
+import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.TypeDefinition;
 import org.raml.v2.internal.impl.v10.type.UnionTypeDefinition;
@@ -37,6 +38,20 @@ public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExp
     private UnionTypeExpressionNode(UnionTypeExpressionNode unionTypeTypeNode)
     {
         super(unionTypeTypeNode);
+    }
+
+    @Nonnull
+    @Override
+    public Position getStartPosition()
+    {
+        return getChildren().get(0).getStartPosition();
+    }
+
+    @Nonnull
+    @Override
+    public Position getEndPosition()
+    {
+        return getChildren().get(getChildren().size() - 1).getEndPosition();
     }
 
     @Nonnull

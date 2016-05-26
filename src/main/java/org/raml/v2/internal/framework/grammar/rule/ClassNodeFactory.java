@@ -17,6 +17,7 @@ package org.raml.v2.internal.framework.grammar.rule;
 
 import org.raml.v2.internal.framework.nodes.Node;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -33,7 +34,7 @@ public class ClassNodeFactory implements NodeFactory
     }
 
     @Override
-    public Node create(Node currentNode, Object... args)
+    public Node create(@Nonnull Node currentNode, Object... args)
     {
         try
         {

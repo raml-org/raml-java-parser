@@ -18,10 +18,12 @@ package org.raml.v2.internal.framework.grammar.rule;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.Node;
 
+import javax.annotation.Nonnull;
+
 public class ArrayWrapperFactory implements NodeFactory
 {
     @Override
-    public Node create(Node matchNode, Object... args)
+    public Node create(@Nonnull Node matchNode, Object... args)
     {
         if (matchNode instanceof ArrayNode)
         {

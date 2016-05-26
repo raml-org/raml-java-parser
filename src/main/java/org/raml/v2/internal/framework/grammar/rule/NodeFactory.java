@@ -17,7 +17,9 @@ package org.raml.v2.internal.framework.grammar.rule;
 
 import org.raml.v2.internal.framework.nodes.Node;
 
+import javax.annotation.Nonnull;
+
 public interface NodeFactory
 {
-    Node create(Node currentNode, Object... args);
+    Node create(@Nonnull Node currentNode, Object... args);
 }

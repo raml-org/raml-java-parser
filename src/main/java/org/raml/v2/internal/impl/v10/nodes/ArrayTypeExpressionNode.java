@@ -33,6 +33,11 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
     {
     }
 
+    public ArrayTypeExpressionNode(Node of)
+    {
+        this.addChild(of);
+    }
+
     private ArrayTypeExpressionNode(ArrayTypeExpressionNode arrayTypeTypeNode)
     {
         super(arrayTypeTypeNode);
