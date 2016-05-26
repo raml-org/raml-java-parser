@@ -56,15 +56,4 @@ public class ScalarTypeRule extends AbstractTypeRule
         return NodeType.String;
     }
 
-    @Nonnull
-    @Override
-    public Node apply(@Nonnull Node node)
-    {
-        Node applied = super.apply(node);
-        if (applied == node && !(node instanceof StringNode))
-        {
-            applied = new StringNodeImpl(((SimpleTypeNode) node).getLiteralValue());
-        }
-        return applied;
-    }
 }

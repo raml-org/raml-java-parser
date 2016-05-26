@@ -5,7 +5,7 @@
   "prefix" : ""
 }, {
   "label" : "AdditionalProperties",
-  "description" : null,
+  "description" : "A Boolean that indicates if an object instance has additional properties.",
   "value" : "additionalProperties: ",
   "prefix" : ""
 }, {
@@ -20,12 +20,12 @@
   "prefix" : ""
 }, {
   "label" : "Discriminator",
-  "description" : null,
+  "description" : "Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance. The value must match the name of one of the declared properties of a type. Unsupported practices are inline type declarations and using discriminator with non-scalar properties.",
   "value" : "discriminator: ",
   "prefix" : ""
 }, {
   "label" : "DiscriminatorValue",
-  "description" : null,
+  "description" : "Identifies the declaring type. Requires including a discriminator facet in the type declaration. A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type. Inline type declarations are not supported.",
   "value" : "discriminatorValue: ",
   "prefix" : ""
 }, {
@@ -34,23 +34,23 @@
   "value" : "displayName: ",
   "prefix" : ""
 }, {
+  "label" : "Facets",
+  "description" : "A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section User-defined Facets for more information.",
+  "value" : "facets: ",
+  "prefix" : ""
+}, {
   "label" : "MaxProperties",
-  "description" : null,
+  "description" : "The maximum number of properties allowed for instances of this type.",
   "value" : "maxProperties: ",
   "prefix" : ""
 }, {
   "label" : "MinProperties",
-  "description" : null,
+  "description" : "The minimum number of properties allowed for instances of this type.",
   "value" : "minProperties: ",
   "prefix" : ""
 }, {
-  "label" : "PatternProperties",
-  "description" : null,
-  "value" : "patternProperties: ",
-  "prefix" : ""
-}, {
   "label" : "Properties",
-  "description" : null,
+  "description" : "The properties that instances of this type can or must have.",
   "value" : "properties: ",
   "prefix" : ""
 }, {
@@ -60,12 +60,12 @@
   "prefix" : ""
 }, {
   "label" : "Schema",
-  "description" : null,
+  "description" : "A base type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.",
   "value" : "schema: ",
   "prefix" : ""
 }, {
   "label" : "Type",
-  "description" : "The resource type which this resource inherits.",
+  "description" : "A base type which the current type extends or just wraps. The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.",
   "value" : "type: ",
   "prefix" : ""
 }, {

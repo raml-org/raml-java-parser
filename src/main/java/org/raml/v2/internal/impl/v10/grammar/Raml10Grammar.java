@@ -234,66 +234,234 @@ public class Raml10Grammar extends BaseRamlGrammar
                                          .with(annotationField())
                                          .with(defaultField())
                                          .with(requiredField())
-                                         .with(field(exclusiveWith("example", "examples"), exampleValue()).then(ExampleDeclarationNode.class))
-                                         .with(field(exclusiveWith("examples", "example"), examplesValue()))
+                                         .with(facetsField())
+                                         .with(exampleField())
+                                         .with(examplesField())
                                          .with(
                                                  when(asList("type", "schema"),
                                                          is(stringTypeLiteral())
-                                                                                .add(field(string("pattern"), scalarType()))
-                                                                                .add(field(string("minLength"), integerType()))
-                                                                                .add(field(string("maxLength"), integerType()))
-                                                                                .add(field(string("enum"), array(scalarType()))),
+                                                                                .add(patternField())
+                                                                                .add(minLengthField())
+                                                                                .add(maxLengthField())
+                                                                                .add(enumField()),
                                                          is(dateTimeTypeLiteral())
-                                                                                  .add(field(string("format"), anyOf(string("rfc3339"), string("rfc2616")))),
+                                                                                  .add(formatField()),
                                                          is(arrayTypeLiteral())
-                                                                               .add(field(string("uniqueItems"), booleanType()))
-                                                                               .add(field(string("items"), typeRef()))
-                                                                               .add(field(string("minItems"), integerType()))
-                                                                               .add(field(string("maxItems"), integerType())),
+                                                                               .add(uniqueItemsField())
+                                                                               .add(itemsField())
+                                                                               .add(minItemsField())
+                                                                               .add(maxItemsField()),
                                                          is(numericTypeLiteral())
-                                                                                 .add(field(string("minimum"), integerType()))
-                                                                                 .add(field(string("maximum"), integerType()))
-                                                                                 .add(field(string("format"), scalarType()))
-                                                                                 .add(field(string("multipleOf"), integerType()))
-                                                                                 .add(field(string("enum"), array(integerType()))),
+                                                                                 .add(minimumField())
+                                                                                 .add(maximumField())
+                                                                                 .add(numberFormat())
+                                                                                 .add(enumField())
+                                                                                 .add(multipleOfField()),
                                                          is(fileTypeLiteral())
-                                                                              .add(field(string("fileTypes"), any()))
-                                                                              .add(field(string("minLength"), integerType()))
-                                                                              .add(field(string("maxLength"), integerType())),
+                                                                              .add(fileTypesField())
+                                                                              .add(minLengthField())
+                                                                              .add(maxLengthField()),
                                                          is(objectTypeLiteral())
-                                                                                .add(field(string("properties"), properties()))
-                                                                                .add(field(string("minProperties"), integerType()))
-                                                                                .add(field(string("maxProperties"), integerType()))
-                                                                                .add(field(string("additionalProperties"), booleanType()))
-                                                                                .add(field(string("patternProperties"), properties()))
-                                                                                .add(field(string("discriminator"), scalarType()))
-                                                                                .add(field(string("discriminatorValue"), scalarType())),
+                                                                                .add(propertiesField())
+                                                                                .add(minPropertiesField())
+                                                                                .add(maxPropertiesField())
+                                                                                .add(additionalPropertiesField())
+                                                                                .add(discriminatorField())
+                                                                                .add(discriminatorValueField()),
                                                          // If it is an inherited type then we don't know we suggest all the properties
-                                                         is(any())
-                                                                  .add(field(string("pattern"), scalarType()))
-                                                                  .add(field(string("minLength"), integerType()))
-                                                                  .add(field(string("maxLength"), integerType()))
-                                                                  .add(field(string("enum"), array(scalarType())))
-                                                                  .add(field(string("format"), anyOf(string("rfc3339"), string("rfc2616"))))
-                                                                  .add(field(string("uniqueItems"), booleanType()))
-                                                                  .add(field(string("items"), typeRef()))
-                                                                  .add(field(string("minItems"), integerType()))
-                                                                  .add(field(string("maxItems"), integerType()))
-                                                                  .add(field(string("fileTypes"), any()))
-                                                                  .add(field(string("minLength"), integerType()))
-                                                                  .add(field(string("maxLength"), integerType()))
-                                                                  .add(field(string("fileTypes"), any()))
-                                                                  .add(field(string("minLength"), integerType()))
-                                                                  .add(field(string("maxLength"), integerType()))
-                                                                  .add(field(string("properties"), properties()))
-                                                                  .add(field(string("minProperties"), integerType()))
-                                                                  .add(field(string("maxProperties"), integerType()))
-                                                                  .add(field(string("additionalProperties"), booleanType()))
-                                                                  .add(field(string("patternProperties"), properties()))
-                                                                  .add(field(string("discriminator"), scalarType()))
-                                                                  .add(field(string("discriminatorValue"), scalarType()))
+                                                         is(not(nullValue()))
+                                                                             .add(patternField())
+                                                                             .add(minLengthField())
+                                                                             .add(maxLengthField())
+                                                                             .add(enumField())
+                                                                             .add(formatField())
+                                                                             .add(uniqueItemsField())
+                                                                             .add(itemsField())
+                                                                             .add(minItemsField())
+                                                                             .add(maxItemsField())
+                                                                             .add(minimumField())
+                                                                             .add(maximumField())
+                                                                             .add(numberFormat())
+                                                                             .add(multipleOfField())
+                                                                             .add(fileTypesField())
+                                                                             .add(propertiesField())
+                                                                             .add(minPropertiesField())
+                                                                             .add(maxPropertiesField())
+                                                                             .add(additionalPropertiesField())
+                                                                             .add(discriminatorField())
+                                                                             .add(discriminatorValueField())
+                                                                             .add(field(facetRegex(), any()))
                                                  ).defaultValue(new TypeDefaultValue())
-                                         ).then(TypeDeclarationNode.class);
+                                         )
+                                         .then(TypeDeclarationNode.class);
+    }
+
+    protected KeyValueRule discriminatorValueField()
+    {
+        return field(string("discriminatorValue"), scalarType())
+                                                                .description(
+                                                                        "Identifies the declaring type."
+                                                                                +
+                                                                                " Requires including a discriminator facet in the type declaration."
+                                                                                +
+                                                                                " A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type."
+                                                                                +
+                                                                                " Inline type declarations are not supported.");
+    }
+
+    protected KeyValueRule discriminatorField()
+    {
+        return field(string("discriminator"), scalarType())
+                                                           .description(
+                                                                   "Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance."
+                                                                           +
+                                                                           " The value must match the name of one of the declared properties of a type. " +
+                                                                           "Unsupported practices are inline type declarations and using discriminator with non-scalar properties.");
+    }
+
+    protected KeyValueRule additionalPropertiesField()
+    {
+        return field(string("additionalProperties"), booleanType())
+                                                                   .description("A Boolean that indicates if an object instance has additional properties.");
+    }
+
+    protected KeyValueRule maxPropertiesField()
+    {
+        return field(string("maxProperties"), integerType())
+                                                            .description("The maximum number of properties allowed for instances of this type.");
+    }
+
+    protected KeyValueRule minPropertiesField()
+    {
+        return field(string("minProperties"), integerType())
+                                                            .description("The minimum number of properties allowed for instances of this type.");
+    }
+
+    protected KeyValueRule propertiesField()
+    {
+        return field(string("properties"), properties())
+                                                        .description("The properties that instances of this type can or must have.");
+    }
+
+    protected KeyValueRule fileTypesField()
+    {
+        return field(string("fileTypes"), any())
+                                                .description("A list of valid content-type strings for the file. The file type */* MUST be a valid value.");
+    }
+
+    protected KeyValueRule multipleOfField()
+    {
+        return field(string("multipleOf"), integerType())
+                                                         .description(
+                                                                 "A numeric instance is valid against \"multipleOf\" if the result of dividing the instance by this keyword's value is an integer.");
+    }
+
+    protected KeyValueRule numberFormat()
+    {
+        return field(string("format"), anyOf(string("int32"), string("int64"), string("int"), string("long"), string("float"), string("float"), string("int16"), string("int8")))
+                                                                                                                                                                                 .description(
+                                                                                                                                                                                         "The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8");
+    }
+
+    protected KeyValueRule maximumField()
+    {
+        return field(string("maximum"), integerType())
+                                                      .description("The maximum value of the parameter. Applicable only to parameters of type number or integer.");
+    }
+
+    protected KeyValueRule minimumField()
+    {
+        return field(string("minimum"), integerType())
+                                                      .description("The minimum value of the parameter. Applicable only to parameters of type number or integer.");
+    }
+
+    protected KeyValueRule maxItemsField()
+    {
+        return field(string("maxItems"), integerType())
+                                                       .description("Maximum amount of items in array. Value MUST be equal to or greater than 0.");
+    }
+
+    protected KeyValueRule minItemsField()
+    {
+        return field(string("minItems"), integerType())
+                                                       .description("Minimum amount of items in array. Value MUST be equal to or greater than 0.");
+    }
+
+    protected KeyValueRule itemsField()
+    {
+        return field(string("items"), typeRef())
+                                                .description("Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline type declaration.");
+    }
+
+    protected KeyValueRule uniqueItemsField()
+    {
+        return field(string("uniqueItems"), booleanType())
+                                                          .description("Boolean value that indicates if items in the array MUST be unique.");
+    }
+
+    protected KeyValueRule formatField()
+    {
+        return field(string("format"), anyOf(string("rfc3339"), string("rfc2616")));
+    }
+
+    protected KeyValueRule enumField()
+    {
+        return field(string("enum"), array(scalarType()))
+                                                         .description(
+                                                                 "Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.");
+    }
+
+    protected KeyValueRule maxLengthField()
+    {
+        return field(string("maxLength"), integerType())
+                                                        .description("Maximum length of the string. Value MUST be equal to or greater than 0.");
+    }
+
+    protected KeyValueRule minLengthField()
+    {
+        return field(string("minLength"), integerType())
+                                                        .description("Minimum length of the string. Value MUST be equal to or greater than 0.");
+    }
+
+    protected KeyValueRule patternField()
+    {
+        return field(string("pattern"), scalarType())
+                                                     .description("Regular expression that this string should match.");
+    }
+
+    protected KeyValueRule examplesField()
+    {
+        return field(exclusiveWith("examples", "example"), examplesValue())
+                                                                           .description(
+                                                                                   "Examples of instances of this type."
+                                                                                           +
+                                                                                           " This can be used, for example, by documentation generators to generate sample values for an object of this type."
+                                                                                           +
+                                                                                           " The \"examples\" facet MUST not be available when the \"example\" facet is already defined." +
+                                                                                           " See section Examples for more information.");
+    }
+
+    protected KeyValueRule exampleField()
+    {
+        return field(exclusiveWith("example", "examples"), exampleValue())
+                                                                          .then(ExampleDeclarationNode.class)
+                                                                          .description(
+                                                                                  "An example of an instance of this type that can be used, for example, by documentation generators to generate sample values for an object of this type."
+                                                                                          +
+                                                                                          " The \"example\" facet MUST not be available when the \"examples\" facet is already defined." +
+                                                                                          " See section Examples for more information.");
+    }
+
+    protected KeyValueRule facetsField()
+    {
+        return field(string("facets"), objectType().with(field(facetRegex(), typeRef())))
+                                                                                         .description(
+                                                                                                 "A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section User-defined Facets for more information.");
+    }
+
+    private RegexValueRule facetRegex()
+    {
+        return regex("[^\\(].*");
     }
 
     protected ObjectRule examplesValue()
@@ -306,7 +474,11 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return field(
                 anyOf(typeKey(), schemaKey()),
-                anyOf(typeExpressionReference(), array(typeExpressionReference()))).defaultValue(new TypeDefaultValue());
+                anyOf(typeExpressionReference(), array(typeExpressionReference()))).defaultValue(new TypeDefaultValue())
+                                                                                   .description(
+                                                                                           "A base type which the current type extends or just wraps."
+                                                                                                   +
+                                                                                                   " The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.");
     }
 
     private KeyValueRule requiredField()

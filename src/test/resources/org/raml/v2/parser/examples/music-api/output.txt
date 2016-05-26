@@ -294,7 +294,7 @@ to any resources or HTTP methods.
                                                                 SYStringNode: "application/xml" (Start: 518 , End: 533, On: input.raml, Source: SYStringNode)
                                             KeyValueNodeImpl (Start: -1 , End: -1)
                                                 StringNodeImpl: "displayName" (Start: -1 , End: -1)
-                                                StringNodeImpl: "200" (Start: 424 , End: 427, On: input.raml, Source: SYIntegerNode)
+                                                SYIntegerNode: 200 (Start: 424 , End: 427, On: input.raml, Source: SYIntegerNode)
                             KeyValueNodeImpl (Start: -1 , End: -1)
                                 StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                 SYStringNode: "get" (Start: 394 , End: 397, On: input.raml, Source: SYStringNode)

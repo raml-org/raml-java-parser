@@ -222,9 +222,10 @@ public class ObjectRule extends Rule
     {
         if (conditionalRules != null)
         {
+            // We first add the local rules and then conditional rules
+            final ArrayList<KeyValueRule> rules = new ArrayList<>(fields);
             final List<KeyValueRule> rulesNode = conditionalRules.getRulesNode(node);
-            final ArrayList<KeyValueRule> rules = new ArrayList<>(rulesNode);
-            rules.addAll(fields);
+            rules.addAll(rulesNode);
             return rules;
         }
         else
@@ -298,11 +299,6 @@ public class ObjectRule extends Rule
     public String getDescription()
     {
         return "Mapping";
-    }
-
-    public void setStrict(boolean strict)
-    {
-        this.strict = strict;
     }
 
     public void additionalProperties(boolean allowsAdditionalProperties)

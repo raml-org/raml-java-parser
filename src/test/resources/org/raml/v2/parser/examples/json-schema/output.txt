@@ -47,7 +47,7 @@ name: SyNullNode
                                                         SYStringNode: "application/json" (Start: 92 , End: 108, On: input.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
-                                        StringNodeImpl: "200" (Start: 63 , End: 66, On: input.raml, Source: SYIntegerNode)
+                                        SYIntegerNode: 200 (Start: 63 , End: 66, On: input.raml, Source: SYIntegerNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                         SYStringNode: "get" (Start: 37 , End: 40, On: input.raml, Source: SYStringNode)
