@@ -15,7 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 import java.util.List;
@@ -23,56 +23,56 @@ import java.util.List;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectStringCollection;
 
-public class FileTypeDefinition implements TypeDefinition
+public class FileTypeFacets extends BaseTypeFacets
 {
 
     private Number minLength;
     private Number maxLength;
     private List<String> fileTypes;
 
-    public FileTypeDefinition()
+    public FileTypeFacets()
     {
     }
 
-    public FileTypeDefinition(Number minLength, Number maxLength, List<String> fileTypes)
+    public FileTypeFacets(Number minLength, Number maxLength, List<String> fileTypes)
     {
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.fileTypes = fileTypes;
     }
 
-    protected FileTypeDefinition copy()
+    protected FileTypeFacets copy()
     {
-        return new FileTypeDefinition(minLength, maxLength, fileTypes);
+        return new FileTypeFacets(minLength, maxLength, fileTypes);
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        final FileTypeDefinition result = copy();
+        final FileTypeFacets result = copy();
         result.setMinLength(selectIntValue("minLength", from));
         result.setMaxLength(selectIntValue("maxLength", from));
         result.setFileTypes(selectStringCollection("fileTypes", from));
-        return result;
+        return overwriteFacets(result, from);
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        final FileTypeDefinition result = copy();
+        final FileTypeFacets result = copy();
 
-        if (with instanceof FileTypeDefinition)
+        if (with instanceof FileTypeFacets)
         {
-            FileTypeDefinition fileTypeDefinition = (FileTypeDefinition) with;
+            FileTypeFacets fileTypeDefinition = (FileTypeFacets) with;
             result.setMinLength(fileTypeDefinition.getMinLength());
             result.setMaxLength(fileTypeDefinition.getMaxLength());
             result.setFileTypes(fileTypeDefinition.getFileTypes());
         }
-        return result;
+        return mergeFacets(result, with);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
         return visitor.visitFile(this);
     }

@@ -16,7 +16,7 @@
 package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 
 import javax.annotation.Nullable;
 
@@ -30,5 +30,5 @@ public interface TypeExpressionNode extends Node
      * @return The type definition
      */
     @Nullable
-    TypeDefinition generateDefinition();
+    TypeFacets generateDefinition();
 }

@@ -13,9 +13,29 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.type;
+package org.raml.v2.internal.impl.v10.type;
 
-public interface SchemaBasedTypeDefinition extends TypeDefinition
+public class IntegerTypeFacets extends NumberTypeFacets
 {
-    String getSchemaValue();
+
+    public IntegerTypeFacets()
+    {
+    }
+
+    public IntegerTypeFacets(Number minimum, Number maximum, Number multiple, String format)
+    {
+        super(minimum, maximum, multiple, format);
+    }
+
+    @Override
+    public NumberTypeFacets copy()
+    {
+        return new IntegerTypeFacets(getMinimum(), getMaximum(), getMultiple(), getFormat());
+    }
+
+    @Override
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    {
+        return visitor.visitInteger(this);
+    }
 }

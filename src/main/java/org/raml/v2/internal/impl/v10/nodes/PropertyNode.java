@@ -18,8 +18,8 @@ package org.raml.v2.internal.impl.v10.nodes;
 import javax.annotation.Nonnull;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.StringTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.v10.type.StringTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
@@ -50,16 +50,16 @@ public class PropertyNode extends KeyValueNodeImpl
         return !key.getValue().endsWith("?");
     }
 
-    public TypeDefinition getTypeDefinition()
+    public TypeFacets getTypeDefinition()
     {
         final Node value = getValue();
         if (value instanceof TypeDeclarationNode)
         {
-            return ((TypeDeclarationNode) value).getTypeDefinition();
+            return ((TypeDeclarationNode) value).getTypeFacets();
         }
         else
         {
-            return new StringTypeDefinition();
+            return new StringTypeFacets();
         }
     }
 

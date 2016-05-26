@@ -15,27 +15,31 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-public class IntegerTypeDefinition extends NumberTypeDefinition
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+
+public class DateOnlyTypeFacets extends BaseTypeFacets
 {
-
-    public IntegerTypeDefinition()
+    @Override
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
+        return overwriteFacets(copy(), from);
     }
 
-    public IntegerTypeDefinition(Number minimum, Number maximum, Number multiple, String format)
+    private DateOnlyTypeFacets copy()
     {
-        super(minimum, maximum, multiple, format);
+        return new DateOnlyTypeFacets();
     }
 
     @Override
-    public NumberTypeDefinition copy()
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        return new IntegerTypeDefinition(getMinimum(), getMaximum(), getMultiple(), getFormat());
+        return mergeFacets(copy(), with);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
-        return visitor.visitInteger(this);
+        return visitor.visitDate(this);
     }
 }

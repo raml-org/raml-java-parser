@@ -24,7 +24,7 @@ import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.raml.v2.internal.utils.SchemaGenerator;
 import org.xml.sax.SAXException;
 
@@ -44,7 +44,7 @@ public class XmlSchemaValidationRule extends Rule
     private Schema schema;
     private String type;
 
-    public XmlSchemaValidationRule(XmlSchemaTypeDefinition schemaNode, ResourceLoader resourceLoader)
+    public XmlSchemaValidationRule(XmlSchemaTypeFacets schemaNode, ResourceLoader resourceLoader)
     {
         try
         {

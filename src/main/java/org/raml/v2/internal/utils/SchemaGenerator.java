@@ -31,21 +31,21 @@ import javax.xml.validation.SchemaFactory;
 
 import org.raml.v2.internal.framework.grammar.rule.xml.XsdResourceResolver;
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.xml.sax.SAXException;
 
 public class SchemaGenerator
 {
 
-    public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaTypeDefinition schemaNode) throws SAXException
+    public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaTypeFacets schemaNode) throws SAXException
     {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         factory.setResourceResolver(new XsdResourceResolver(resourceLoader, schemaNode.getSchemaPath()));
         return factory.newSchema(new StreamSource(new StringReader(schemaNode.getSchemaValue())));
     }
 
-    public static JsonSchema generateJsonSchema(JsonSchemaTypeDefinition jsonTypeDefinition) throws IOException, ProcessingException
+    public static JsonSchema generateJsonSchema(JsonSchemaTypeFacets jsonTypeDefinition) throws IOException, ProcessingException
     {
         JsonNode jsonSchema = JsonLoader.fromString(jsonTypeDefinition.getSchemaValue());
         JsonSchemaFactory factory = JsonSchemaFactory.newBuilder().freeze();

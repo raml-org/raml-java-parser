@@ -25,10 +25,10 @@ import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
 import org.raml.v2.internal.framework.phase.Phase;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.type.TypeToRuleVisitor;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.raml.v2.internal.utils.NodeUtils;
 
 import java.util.List;
@@ -67,10 +67,10 @@ public class ExampleValidationPhase implements Phase
 
     public Node validate(TypeDeclarationNode type, Node exampleValue)
     {
-        final TypeDefinition typeDefinition = type.getTypeDefinition();
-        final Rule rule = typeDefinition.visit(new TypeToRuleVisitor(resourceLoader));
+        final TypeFacets typeFacets = type.getTypeFacets();
+        final Rule rule = typeFacets.visit(new TypeToRuleVisitor(resourceLoader));
 
-        if (exampleValue instanceof StringNode && !isExternalSchemaType(typeDefinition))
+        if (exampleValue instanceof StringNode && !isExternalSchemaType(typeFacets))
         {
             final String value = ((StringNode) exampleValue).getValue();
             if (isXmlValue(value))
@@ -129,8 +129,8 @@ public class ExampleValidationPhase implements Phase
         return value.trim().startsWith("{") || value.trim().startsWith("[");
     }
 
-    private boolean isExternalSchemaType(TypeDefinition typeDefinition)
+    private boolean isExternalSchemaType(TypeFacets typeFacets)
     {
-        return typeDefinition instanceof XmlSchemaTypeDefinition || typeDefinition instanceof JsonSchemaTypeDefinition;
+        return typeFacets instanceof XmlSchemaTypeFacets || typeFacets instanceof JsonSchemaTypeFacets;
     }
 }

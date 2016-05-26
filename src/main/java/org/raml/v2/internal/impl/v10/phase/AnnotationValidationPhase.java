@@ -52,7 +52,7 @@ public class AnnotationValidationPhase implements Phase
             else
             {
                 final TypeDeclarationNode typeNode = annotationTypeNode.getDeclaredType();
-                final Rule annotationRule = typeNode.getTypeDefinition().visit(new TypeToRuleVisitor(resourceLoader));
+                final Rule annotationRule = typeNode.getTypeFacets().visit(new TypeToRuleVisitor(resourceLoader));
                 final Node annotationValue = annotation.getValue();
                 annotationValue.replaceWith(annotationRule.apply(annotationValue));
             }

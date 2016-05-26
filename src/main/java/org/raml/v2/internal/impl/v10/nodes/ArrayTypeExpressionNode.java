@@ -19,8 +19,8 @@ import org.raml.v2.internal.framework.nodes.AbstractRamlNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.type.ArrayTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.v10.type.ArrayTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.utils.NodeUtils;
 
 import javax.annotation.Nonnull;
@@ -85,12 +85,12 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
 
     @Override
     @Nullable
-    public TypeDefinition generateDefinition()
+    public TypeFacets generateDefinition()
     {
         final TypeExpressionNode of = of();
         if (of != null)
         {
-            return new ArrayTypeDefinition(of.generateDefinition());
+            return new ArrayTypeFacets(of.generateDefinition());
         }
         else
         {

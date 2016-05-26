@@ -15,31 +15,32 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-public class BooleanTypeDefinition implements TypeDefinition
+public class NullTypeFacets extends BaseTypeFacets
 {
-    private BooleanTypeDefinition copy()
+
+    protected TypeFacets copy()
     {
-        return new BooleanTypeDefinition();
+        return new NullTypeFacets();
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
         return copy();
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
         return copy();
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
-        return visitor.visitBoolean(this);
+        return visitor.visitNull(this);
     }
 }

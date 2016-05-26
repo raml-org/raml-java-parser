@@ -1,0 +1,150 @@
+/*
+ * Copyright 2013 (c) MuleSoft, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+package org.raml.v2.internal.impl.commons.type;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
+import org.raml.v2.internal.utils.NodeSelector;
+
+public class XmlFacets implements TypeFacets
+{
+    private Boolean attribute;
+    private Boolean wrapped;
+    private String name;
+    private String namespace;
+    private String prefix;
+
+    public XmlFacets()
+    {
+    }
+
+    public XmlFacets(Boolean attribute, Boolean wrapped, String name, String namespace, String prefix)
+    {
+        this.attribute = attribute;
+        this.wrapped = wrapped;
+        this.name = name;
+        this.namespace = namespace;
+        this.prefix = prefix;
+    }
+
+
+    protected XmlFacets copy()
+    {
+        return new XmlFacets(attribute, wrapped, name, namespace, prefix);
+    }
+
+    @Override
+    public XmlFacets overwriteFacets(TypeDeclarationNode from)
+    {
+        final XmlFacets copy = copy();
+        copy.setAttribute(NodeSelector.selectBooleanValue("attribute", from));
+        copy.setName(NodeSelector.selectStringValue("name", from));
+        copy.setNamespace(NodeSelector.selectStringValue("namespace", from));
+        copy.setPrefix(NodeSelector.selectStringValue("prefix", from));
+        copy.setWrapped(NodeSelector.selectBooleanValue("wrapped", from));
+        return copy;
+    }
+
+    @Override
+    public XmlFacets mergeFacets(TypeFacets with)
+    {
+        final XmlFacets copy = copy();
+        if (with instanceof XmlFacets)
+        {
+            copy.setAttribute(((XmlFacets) with).getAttribute());
+            copy.setName(((XmlFacets) with).getName());
+            copy.setNamespace(((XmlFacets) with).getNamespace());
+            copy.setPrefix(((XmlFacets) with).getPrefix());
+            copy.setWrapped(((XmlFacets) with).getWrapped());
+        }
+        return copy;
+    }
+
+    @Override
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    {
+        return null;
+    }
+
+    // Getters and Setters
+
+    public Boolean getAttribute()
+    {
+        return attribute;
+    }
+
+    public Boolean getWrapped()
+    {
+        return wrapped;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getNamespace()
+    {
+        return namespace;
+    }
+
+    public String getPrefix()
+    {
+        return prefix;
+    }
+
+    private void setAttribute(Boolean attribute)
+    {
+        if (attribute != null)
+        {
+            this.attribute = attribute;
+        }
+    }
+
+    private void setWrapped(Boolean wrapped)
+    {
+        if (wrapped != null)
+        {
+            this.wrapped = wrapped;
+        }
+    }
+
+    private void setName(String name)
+    {
+        if (name != null)
+        {
+            this.name = name;
+        }
+    }
+
+    private void setNamespace(String namespace)
+    {
+        if (namespace != null)
+        {
+            this.namespace = namespace;
+        }
+    }
+
+    private void setPrefix(String prefix)
+    {
+        if (prefix != null)
+        {
+            this.prefix = prefix;
+        }
+    }
+
+
+}

@@ -16,22 +16,21 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.utils.NodeSelector;
 
 import static org.raml.v2.internal.utils.NodeSelector.selectBooleanValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 
-public class ArrayTypeDefinition implements TypeDefinition
+public class ArrayTypeFacets extends BaseTypeFacets
 {
-    private TypeDefinition items;
+    private TypeFacets items;
     private Boolean uniqueItems;
     private Integer minItems;
     private Integer maxItems;
 
-    public ArrayTypeDefinition(TypeDefinition items, Boolean uniqueItems, Integer minItems, Integer maxItems)
+    public ArrayTypeFacets(TypeFacets items, Boolean uniqueItems, Integer minItems, Integer maxItems)
     {
         this.items = items;
         this.uniqueItems = uniqueItems;
@@ -39,61 +38,61 @@ public class ArrayTypeDefinition implements TypeDefinition
         this.maxItems = maxItems;
     }
 
-    public ArrayTypeDefinition()
+    public ArrayTypeFacets()
     {
     }
 
-    public ArrayTypeDefinition(TypeDefinition items)
+    public ArrayTypeFacets(TypeFacets items)
     {
         this.items = items;
     }
 
-    private ArrayTypeDefinition copy()
+    private ArrayTypeFacets copy()
     {
-        return new ArrayTypeDefinition(items, uniqueItems, minItems, maxItems);
+        return new ArrayTypeFacets(items, uniqueItems, minItems, maxItems);
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        final ArrayTypeDefinition result = copy();
+        final ArrayTypeFacets result = copy();
         result.setMinItems(selectIntValue("minItems", from));
         result.setMaxItems(selectIntValue("maxItems", from));
         result.setUniqueItems(selectBooleanValue("uniqueItems", from));
         final Node items = NodeSelector.selectFrom("items", from);
         if (items != null && items instanceof TypeDeclarationNode)
         {
-            result.setItems(((TypeDeclarationNode) items).getTypeDefinition());
+            result.setItems(((TypeDeclarationNode) items).getTypeFacets());
         }
-        return result;
+        return overwriteFacets(result, from);
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        final ArrayTypeDefinition result = copy();
-        if (with instanceof ArrayTypeDefinition)
+        final ArrayTypeFacets result = copy();
+        if (with instanceof ArrayTypeFacets)
         {
-            result.setMinItems(((ArrayTypeDefinition) with).getMinItems());
-            result.setMaxItems(((ArrayTypeDefinition) with).getMaxItems());
-            result.setUniqueItems(((ArrayTypeDefinition) with).getUniqueItems());
-            result.setItems(((ArrayTypeDefinition) with).getItems());
+            result.setMinItems(((ArrayTypeFacets) with).getMinItems());
+            result.setMaxItems(((ArrayTypeFacets) with).getMaxItems());
+            result.setUniqueItems(((ArrayTypeFacets) with).getUniqueItems());
+            result.setItems(((ArrayTypeFacets) with).getItems());
         }
-        return result;
+        return mergeFacets(result, with);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
         return visitor.visitArray(this);
     }
 
-    public TypeDefinition getItems()
+    public TypeFacets getItems()
     {
         return items;
     }
 
-    private void setItems(TypeDefinition items)
+    private void setItems(TypeFacets items)
     {
         if (items != null)
         {

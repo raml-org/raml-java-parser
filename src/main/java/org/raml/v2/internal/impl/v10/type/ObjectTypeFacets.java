@@ -16,7 +16,7 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
@@ -28,7 +28,7 @@ import static org.raml.v2.internal.utils.NodeSelector.selectBooleanValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectStringValue;
 
-public class ObjectTypeDefinition implements TypeDefinition
+public class ObjectTypeFacets extends BaseTypeFacets
 {
     private Integer minProperties;
     private Integer maxProperties;
@@ -38,7 +38,7 @@ public class ObjectTypeDefinition implements TypeDefinition
 
     private Map<String, ObjectPropertyDefinition> properties = new HashMap<>();
 
-    public ObjectTypeDefinition(Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator, String discriminatorValue,
+    public ObjectTypeFacets(Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator, String discriminatorValue,
             Map<String, ObjectPropertyDefinition> properties)
     {
         this.minProperties = minProperties;
@@ -49,19 +49,19 @@ public class ObjectTypeDefinition implements TypeDefinition
         this.properties = properties;
     }
 
-    public ObjectTypeDefinition()
+    public ObjectTypeFacets()
     {
     }
 
-    protected ObjectTypeDefinition copy()
+    protected ObjectTypeFacets copy()
     {
-        return new ObjectTypeDefinition(minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue, new HashMap<>(properties));
+        return new ObjectTypeFacets(minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue, new HashMap<>(properties));
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        final ObjectTypeDefinition result = copy();
+        final ObjectTypeFacets result = copy();
         result.setMinProperties(selectIntValue("minProperties", from));
         result.setMaxProperties(selectIntValue("maxProperties", from));
         result.setAdditionalProperties(selectBooleanValue("additionalProperties", from));
@@ -82,21 +82,21 @@ public class ObjectTypeDefinition implements TypeDefinition
                 }
             }
         }
-        return result;
+        return overwriteFacets(result, from);
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        final ObjectTypeDefinition result = copy();
-        if (with instanceof ObjectTypeDefinition)
+        final ObjectTypeFacets result = copy();
+        if (with instanceof ObjectTypeFacets)
         {
-            result.setMinProperties(((ObjectTypeDefinition) with).getMinProperties());
-            result.setMaxProperties(((ObjectTypeDefinition) with).getMaxProperties());
-            result.setAdditionalProperties(((ObjectTypeDefinition) with).getAdditionalProperties());
-            result.setDiscriminator(((ObjectTypeDefinition) with).getDiscriminator());
-            result.setDiscriminatorValue(((ObjectTypeDefinition) with).getDiscriminatorValue());
-            final Map<String, ObjectPropertyDefinition> properties = ((ObjectTypeDefinition) with).getProperties();
+            result.setMinProperties(((ObjectTypeFacets) with).getMinProperties());
+            result.setMaxProperties(((ObjectTypeFacets) with).getMaxProperties());
+            result.setAdditionalProperties(((ObjectTypeFacets) with).getAdditionalProperties());
+            result.setDiscriminator(((ObjectTypeFacets) with).getDiscriminator());
+            result.setDiscriminatorValue(((ObjectTypeFacets) with).getDiscriminatorValue());
+            final Map<String, ObjectPropertyDefinition> properties = ((ObjectTypeFacets) with).getProperties();
             for (Map.Entry<String, ObjectPropertyDefinition> property : properties.entrySet())
             {
                 if (!getProperties().containsKey(property.getKey()))
@@ -111,12 +111,12 @@ public class ObjectTypeDefinition implements TypeDefinition
                 }
             }
         }
-        return result;
+        return mergeFacets(result, with);
 
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
         return visitor.visitObject(this);
     }

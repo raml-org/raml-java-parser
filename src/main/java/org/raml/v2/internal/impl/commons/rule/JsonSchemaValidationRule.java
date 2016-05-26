@@ -26,11 +26,10 @@ import com.google.common.collect.Lists;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
 import org.raml.v2.internal.utils.JSonDumper;
 import org.raml.v2.internal.utils.SchemaGenerator;
 
@@ -47,7 +46,7 @@ public class JsonSchemaValidationRule extends Rule
 
     private JsonSchema schema;
 
-    public JsonSchemaValidationRule(JsonSchemaTypeDefinition schemaNode)
+    public JsonSchemaValidationRule(JsonSchemaTypeFacets schemaNode)
     {
         try
         {

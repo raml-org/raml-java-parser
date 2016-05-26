@@ -16,26 +16,27 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.TypeDefinitionVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
 
 /**
  * Represents a resolved type in the type system.
+ * It describes all the facets of a type.
  */
-public interface TypeDefinition
+public interface TypeFacets
 {
     /**
      * Returns a new type definition with the facets being overwritten from the specified node
      * @param from The node from where to load the facets
      * @return A new type definition
      */
-    TypeDefinition overwriteFacets(TypeDeclarationNode from);
+    TypeFacets overwriteFacets(TypeDeclarationNode from);
 
     /**
      * Returns a new type definition after merging the facets of both TypeDefinitions
      * @param with The type definition to merge with
      * @return The new type definition
      */
-    TypeDefinition mergeFacets(TypeDefinition with);
+    TypeFacets mergeFacets(TypeFacets with);
 
     /**
      * Dispatch the implementation to the visitor method
@@ -43,5 +44,5 @@ public interface TypeDefinition
      * @param <T> The result type
      * @return The result of the visitor execution
      */
-    <T> T visit(TypeDefinitionVisitor<T> visitor);
+    <T> T visit(TypeFacetsVisitor<T> visitor);
 }

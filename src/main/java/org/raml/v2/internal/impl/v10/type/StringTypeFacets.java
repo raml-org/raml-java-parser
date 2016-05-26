@@ -18,7 +18,7 @@ package org.raml.v2.internal.impl.v10.type;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYArrayNode;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 import javax.annotation.Nonnull;
@@ -29,18 +29,18 @@ import java.util.List;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectStringValue;
 
-public class StringTypeDefinition implements TypeDefinition
+public class StringTypeFacets extends BaseTypeFacets
 {
     private Integer minLength;
     private Integer maxLength;
     private String pattern;
     private List<String> enums;
 
-    public StringTypeDefinition()
+    public StringTypeFacets()
     {
     }
 
-    public StringTypeDefinition(Integer minLength, Integer maxLength, String pattern, List<String> enums)
+    public StringTypeFacets(Integer minLength, Integer maxLength, String pattern, List<String> enums)
     {
         this.minLength = minLength;
         this.maxLength = maxLength;
@@ -48,21 +48,21 @@ public class StringTypeDefinition implements TypeDefinition
         this.enums = enums;
     }
 
-    protected StringTypeDefinition copy()
+    protected StringTypeFacets copy()
     {
-        return new StringTypeDefinition(minLength, maxLength, pattern, enums);
+        return new StringTypeFacets(minLength, maxLength, pattern, enums);
     }
 
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        final StringTypeDefinition result = copy();
+        final StringTypeFacets result = copy();
         result.setMinLength(selectIntValue("minLength", from));
         result.setMaxLength(selectIntValue("maxLength", from));
         result.setPattern(selectStringValue("pattern", from));
         result.setEnums(getEnumValues(from));
-        return result;
+        return overwriteFacets(result, from);
     }
 
     @Nonnull
@@ -82,22 +82,22 @@ public class StringTypeDefinition implements TypeDefinition
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        final StringTypeDefinition result = copy();
-        if (with instanceof StringTypeDefinition)
+        final StringTypeFacets result = copy();
+        if (with instanceof StringTypeFacets)
         {
-            final StringTypeDefinition stringTypeDefinition = (StringTypeDefinition) with;
+            final StringTypeFacets stringTypeDefinition = (StringTypeFacets) with;
             result.setMaxLength(stringTypeDefinition.getMaxLength());
             result.setMinLength(stringTypeDefinition.getMinLength());
             result.setPattern(stringTypeDefinition.getPattern());
             result.setEnums(stringTypeDefinition.getEnums());
         }
-        return result;
+        return mergeFacets(result, with);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
         return visitor.visitString(this);
     }

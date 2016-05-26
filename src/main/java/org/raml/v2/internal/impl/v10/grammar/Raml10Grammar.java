@@ -264,12 +264,13 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                 .add(field(string("properties"), properties()))
                                                                                 .add(field(string("minProperties"), integerType()))
                                                                                 .add(field(string("maxProperties"), integerType()))
-                                                                                .add(field(string("additionalProperties"), booleanType())) // TODO add default true
+                                                                                .add(field(string("additionalProperties"), booleanType()))
                                                                                 .add(field(string("patternProperties"), properties()))
                                                                                 .add(field(string("discriminator"), scalarType()))
-                                                                                .add(field(string("discriminatorValue"), scalarType())), // TODO add default name of the type
-                                                         is(any()) // If it is an inherited type then we don't know we suggest all the properties
-                                                         .add(field(string("pattern"), scalarType()))
+                                                                                .add(field(string("discriminatorValue"), scalarType())),
+                                                         // If it is an inherited type then we don't know we suggest all the properties
+                                                         is(any())
+                                                                  .add(field(string("pattern"), scalarType()))
                                                                   .add(field(string("minLength"), integerType()))
                                                                   .add(field(string("maxLength"), integerType()))
                                                                   .add(field(string("enum"), array(scalarType())))
@@ -288,7 +289,6 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                   .add(field(string("minProperties"), integerType()))
                                                                   .add(field(string("maxProperties"), integerType()))
                                                                   .add(field(string("additionalProperties"), booleanType()))
-                                                                  // TODO add default true
                                                                   .add(field(string("patternProperties"), properties()))
                                                                   .add(field(string("discriminator"), scalarType()))
                                                                   .add(field(string("discriminatorValue"), scalarType()))
@@ -299,9 +299,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected ObjectRule examplesValue()
     {
         return objectType()
-                           .with(
-                                   field(scalarType(), exampleValue()).then(ExampleDeclarationNode.class)
-                           );
+                           .with(field(scalarType(), exampleValue()).then(ExampleDeclarationNode.class));
     }
 
     private KeyValueRule typeField()
@@ -323,7 +321,38 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private KeyValueRule xmlFacetField()
     {
-        return field(string("xml"), any());
+        return field(string("xml"),
+                objectType()
+                            .with(attributeField())
+                            .with(wrappedField())
+                            .with(xmlNameField())
+                            .with(namespaceField())
+                            .with(prefixField()));
+    }
+
+    private KeyValueRule xmlNameField()
+    {
+        return field(string("name"), stringType()).description("Overrides the name of the XML element or XML attribute.");
+    }
+
+    private KeyValueRule prefixField()
+    {
+        return field(string("prefix"), stringType()).description("Configures the prefix used during serialization to XML.");
+    }
+
+    private KeyValueRule namespaceField()
+    {
+        return field(string("namespace"), stringType()).description("Configures the name of the XML namespace.");
+    }
+
+    private KeyValueRule wrappedField()
+    {
+        return field(string("wrapped"), booleanType()).description("true wraps a type instance in its own XML element. Cannot be true for scalar types or true at the same moment attribute is true.");
+    }
+
+    private KeyValueRule attributeField()
+    {
+        return field(string("attribute"), booleanType()).description("Serializes a type instance as an XML attribute. Can be true only for scalar types.");
     }
 
     private KeyValueRule defaultField()

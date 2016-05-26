@@ -15,22 +15,22 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.utils.NodeSelector;
 
-public class NumberTypeDefinition implements TypeDefinition
+public class NumberTypeFacets extends BaseTypeFacets
 {
     private Number minimum;
     private Number maximum;
     private Number multiple;
     private String format;
 
-    public NumberTypeDefinition()
+    public NumberTypeFacets()
     {
     }
 
-    public NumberTypeDefinition(Number minimum, Number maximum, Number multiple, String format)
+    public NumberTypeFacets(Number minimum, Number maximum, Number multiple, String format)
     {
         this.minimum = minimum;
         this.maximum = maximum;
@@ -38,39 +38,39 @@ public class NumberTypeDefinition implements TypeDefinition
         this.format = format;
     }
 
-    public NumberTypeDefinition copy()
+    public NumberTypeFacets copy()
     {
-        return new NumberTypeDefinition(minimum, maximum, multiple, format);
+        return new NumberTypeFacets(minimum, maximum, multiple, format);
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        final NumberTypeDefinition result = copy();
+        final NumberTypeFacets result = copy();
         result.setMinimum(NodeSelector.selectIntValue("minimum", from));
         result.setMaximum(NodeSelector.selectIntValue("maximum", from));
         result.setMultiple(NodeSelector.selectIntValue("multipleOf", from));
         result.setFormat(NodeSelector.selectStringValue("format", from));
-        return result;
+        return overwriteFacets(result, from);
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        final NumberTypeDefinition result = copy();
-        if (with instanceof NumberTypeDefinition)
+        final NumberTypeFacets result = copy();
+        if (with instanceof NumberTypeFacets)
         {
-            NumberTypeDefinition numberTypeDefinition = (NumberTypeDefinition) with;
+            NumberTypeFacets numberTypeDefinition = (NumberTypeFacets) with;
             result.setMinimum(numberTypeDefinition.getMinimum());
             result.setMaximum(numberTypeDefinition.getMaximum());
             result.setMultiple(numberTypeDefinition.getMultiple());
             result.setFormat(numberTypeDefinition.getFormat());
         }
-        return result;
+        return mergeFacets(result, with);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
         return visitor.visitNumber(this);
     }

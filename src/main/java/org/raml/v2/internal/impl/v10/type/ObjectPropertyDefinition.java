@@ -15,21 +15,21 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 
 public class ObjectPropertyDefinition
 {
 
     private String name;
-    private TypeDefinition typeDefinition;
+    private TypeFacets typeFacets;
     private Boolean required;
     private PropertyNode propertyNode;
 
-    public ObjectPropertyDefinition(String name, TypeDefinition typeDefinition, Boolean required)
+    public ObjectPropertyDefinition(String name, TypeFacets typeFacets, Boolean required)
     {
         this.name = name;
-        this.typeDefinition = typeDefinition;
+        this.typeFacets = typeFacets;
         this.required = required;
     }
 
@@ -45,14 +45,14 @@ public class ObjectPropertyDefinition
         return name;
     }
 
-    public TypeDefinition getTypeDefinition()
+    public TypeFacets getTypeFacets()
     {
         // Load it lazy so it support recursive definitions
-        if (typeDefinition == null)
+        if (typeFacets == null)
         {
-            typeDefinition = propertyNode.getTypeDefinition();
+            typeFacets = propertyNode.getTypeDefinition();
         }
-        return typeDefinition;
+        return typeFacets;
     }
 
     public Boolean getRequired()
@@ -62,6 +62,6 @@ public class ObjectPropertyDefinition
 
     public ObjectPropertyDefinition mergeFacets(ObjectPropertyDefinition value)
     {
-        return new ObjectPropertyDefinition(name, getTypeDefinition().mergeFacets(value.getTypeDefinition()), required || value.getRequired());
+        return new ObjectPropertyDefinition(name, getTypeFacets().mergeFacets(value.getTypeFacets()), required || value.getRequired());
     }
 }

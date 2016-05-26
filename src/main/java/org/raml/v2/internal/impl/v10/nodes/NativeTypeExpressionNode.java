@@ -18,19 +18,19 @@ package org.raml.v2.internal.impl.v10.nodes;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.type.ArrayTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.BooleanTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.DateOnlyTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.DateTimeOnlyTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.DateTimeTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.FileTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.IntegerTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.NullTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.NumberTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.ObjectTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.StringTypeDefinition;
-import org.raml.v2.internal.impl.v10.type.TimeOnlyTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.v10.type.ArrayTypeFacets;
+import org.raml.v2.internal.impl.v10.type.BooleanTypeFacets;
+import org.raml.v2.internal.impl.v10.type.DateOnlyTypeFacets;
+import org.raml.v2.internal.impl.v10.type.DateTimeOnlyTypeFacets;
+import org.raml.v2.internal.impl.v10.type.DateTimeTypeFacets;
+import org.raml.v2.internal.impl.v10.type.FileTypeFacets;
+import org.raml.v2.internal.impl.v10.type.IntegerTypeFacets;
+import org.raml.v2.internal.impl.v10.type.NullTypeFacets;
+import org.raml.v2.internal.impl.v10.type.NumberTypeFacets;
+import org.raml.v2.internal.impl.v10.type.ObjectTypeFacets;
+import org.raml.v2.internal.impl.v10.type.StringTypeFacets;
+import org.raml.v2.internal.impl.v10.type.TimeOnlyTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.v10.type.TypeIds;
 
 import javax.annotation.Nonnull;
@@ -88,7 +88,7 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
 
     @Nullable
     @Override
-    public TypeDefinition generateDefinition()
+    public TypeFacets generateDefinition()
     {
         final TypeIds typeIds = getType(getLiteralValue());
         if (typeIds == null)
@@ -98,29 +98,29 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
         switch (typeIds)
         {
         case STRING:
-            return new StringTypeDefinition();
+            return new StringTypeFacets();
         case NUMBER:
-            return new NumberTypeDefinition();
+            return new NumberTypeFacets();
         case INTEGER:
-            return new IntegerTypeDefinition();
+            return new IntegerTypeFacets();
         case BOOLEAN:
-            return new BooleanTypeDefinition();
+            return new BooleanTypeFacets();
         case DATE_ONLY:
-            return new DateOnlyTypeDefinition();
+            return new DateOnlyTypeFacets();
         case TIME_ONLY:
-            return new TimeOnlyTypeDefinition();
+            return new TimeOnlyTypeFacets();
         case DATE_TIME_ONLY:
-            return new DateTimeOnlyTypeDefinition();
+            return new DateTimeOnlyTypeFacets();
         case DATE_TIME:
-            return new DateTimeTypeDefinition();
+            return new DateTimeTypeFacets();
         case FILE:
-            return new FileTypeDefinition();
+            return new FileTypeFacets();
         case OBJECT:
-            return new ObjectTypeDefinition();
+            return new ObjectTypeFacets();
         case ARRAY:
-            return new ArrayTypeDefinition();
+            return new ArrayTypeFacets();
         case NULL:
-            return new NullTypeDefinition();
+            return new NullTypeFacets();
         }
         return null;
     }

@@ -15,8 +15,14 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
-public abstract class BaseTypeDefinition implements TypeDefinition
+/**
+ * Type descriptor for external schema based type descriptor e.g JsonSchema or XmlSchema.
+ */
+public interface SchemaBasedTypeFacets extends TypeFacets
 {
-
-
+    /**
+     * The schema string content
+     * @return The schema content
+     */
+    String getSchemaValue();
 }

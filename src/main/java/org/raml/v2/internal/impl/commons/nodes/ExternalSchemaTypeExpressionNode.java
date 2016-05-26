@@ -18,9 +18,9 @@ package org.raml.v2.internal.impl.commons.nodes;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYIncludeNode;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeDefinition;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.raml.v2.internal.utils.NodeUtils;
 import org.raml.v2.internal.utils.SchemaGenerator;
 
@@ -83,15 +83,15 @@ public class ExternalSchemaTypeExpressionNode extends StringNodeImpl implements 
 
     @Nullable
     @Override
-    public TypeDefinition generateDefinition()
+    public TypeFacets generateDefinition()
     {
         if (isXmlSchema())
         {
-            return new XmlSchemaTypeDefinition(getSchemaValue(), getSchemaPath(), getInternalFragment());
+            return new XmlSchemaTypeFacets(getSchemaValue(), getSchemaPath(), getInternalFragment());
         }
         else
         {
-            return new JsonSchemaTypeDefinition(getSchemaValue(), getSchemaPath(), getInternalFragment());
+            return new JsonSchemaTypeFacets(getSchemaValue(), getSchemaPath(), getInternalFragment());
         }
 
     }

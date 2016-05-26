@@ -15,33 +15,31 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.BaseTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-public class TimeOnlyTypeDefinition extends BaseTypeDefinition
+public class BooleanTypeFacets extends BaseTypeFacets
 {
-
-    protected TimeOnlyTypeDefinition copy()
+    private BooleanTypeFacets copy()
     {
-        return new TimeOnlyTypeDefinition();
+        return new BooleanTypeFacets();
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        return copy();
+        return overwriteFacets(copy(), from);
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        return copy();
+        return mergeFacets(copy(), with);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
-        return visitor.visitTimeOnly(this);
+        return visitor.visitBoolean(this);
     }
 }

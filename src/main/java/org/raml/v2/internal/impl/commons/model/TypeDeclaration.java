@@ -20,7 +20,6 @@ import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
-import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
@@ -29,8 +28,8 @@ import org.raml.v2.internal.impl.commons.model.builder.ModelUtils;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
-import org.raml.v2.internal.impl.commons.type.SchemaBasedTypeDefinition;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.SchemaBasedTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
 
@@ -68,10 +67,10 @@ public class TypeDeclaration extends Annotable
             final List<TypeExpressionNode> baseTypes = ((TypeDeclarationNode) node.getValue()).getBaseTypes();
             if (!baseTypes.isEmpty())
             {
-                final TypeDefinition typeDefinition = baseTypes.get(0).generateDefinition();
-                if (typeDefinition instanceof SchemaBasedTypeDefinition)
+                final TypeFacets typeFacets = baseTypes.get(0).generateDefinition();
+                if (typeFacets instanceof SchemaBasedTypeFacets)
                 {
-                    return ((SchemaBasedTypeDefinition) typeDefinition).getSchemaValue();
+                    return ((SchemaBasedTypeFacets) typeFacets).getSchemaValue();
                 }
 
             }

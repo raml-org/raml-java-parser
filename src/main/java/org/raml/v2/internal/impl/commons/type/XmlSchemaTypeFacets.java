@@ -16,16 +16,15 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.TypeDefinitionVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
 
-public class JsonSchemaTypeDefinition extends BaseTypeDefinition implements SchemaBasedTypeDefinition
+public class XmlSchemaTypeFacets implements SchemaBasedTypeFacets
 {
-
     private final String schemaValue;
     private final String schemaPath;
     private final String internalFragment;
 
-    public JsonSchemaTypeDefinition(String schemaValue, String schemaPath, String internalFragment)
+    public XmlSchemaTypeFacets(String schemaValue, String schemaPath, String internalFragment)
     {
 
         this.schemaValue = schemaValue;
@@ -33,27 +32,27 @@ public class JsonSchemaTypeDefinition extends BaseTypeDefinition implements Sche
         this.internalFragment = internalFragment;
     }
 
-    protected JsonSchemaTypeDefinition copy()
+    protected XmlSchemaTypeFacets copy()
     {
-        return new JsonSchemaTypeDefinition(schemaValue, schemaPath, internalFragment);
+        return new XmlSchemaTypeFacets(schemaValue, schemaPath, internalFragment);
     }
 
     @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
         return copy();
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
         return copy();
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
     {
-        return visitor.visitJson(this);
+        return visitor.visitXml(this);
     }
 
     public String getSchemaValue()

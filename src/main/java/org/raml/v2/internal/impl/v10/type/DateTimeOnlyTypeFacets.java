@@ -15,31 +15,35 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-public class DateOnlyTypeDefinition implements TypeDefinition
+public class DateTimeOnlyTypeFacets extends BaseTypeFacets
 {
-    @Override
-    public TypeDefinition overwriteFacets(TypeDeclarationNode from)
-    {
-        return copy();
-    }
 
-    private DateOnlyTypeDefinition copy()
+
+    protected DateTimeOnlyTypeFacets copy()
     {
-        return new DateOnlyTypeDefinition();
+        return new DateTimeOnlyTypeFacets();
     }
 
     @Override
-    public TypeDefinition mergeFacets(TypeDefinition with)
+    public TypeFacets overwriteFacets(TypeDeclarationNode from)
     {
-        return copy();
+        return overwriteFacets(copy(), from);
     }
 
     @Override
-    public <T> T visit(TypeDefinitionVisitor<T> visitor)
+    public TypeFacets mergeFacets(TypeFacets with)
     {
-        return visitor.visitDate(this);
+        return mergeFacets(copy(), with);
     }
+
+    @Override
+    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    {
+        return visitor.visitDateTimeOnly(this);
+    }
+
+
 }

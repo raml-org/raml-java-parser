@@ -20,7 +20,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
-import org.raml.v2.internal.impl.commons.type.TypeDefinition;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.utils.NodeSelector;
 
 import javax.annotation.Nonnull;
@@ -77,11 +77,11 @@ public class NamedTypeExpressionNode extends AbstractReferenceNode implements Ty
 
     @Nullable
     @Override
-    public TypeDefinition generateDefinition()
+    public TypeFacets generateDefinition()
     {
         if (getRefNode() != null)
         {
-            return ((TypeDeclarationNode) getRefNode()).getTypeDefinition();
+            return ((TypeDeclarationNode) getRefNode()).getTypeFacets();
         }
         else
         {
