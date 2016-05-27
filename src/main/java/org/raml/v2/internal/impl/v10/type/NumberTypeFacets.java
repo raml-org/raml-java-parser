@@ -15,9 +15,16 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.framework.nodes.snakeyaml.SYArrayNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.utils.NodeSelector;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NumberTypeFacets extends BaseTypeFacets
 {
@@ -25,6 +32,7 @@ public class NumberTypeFacets extends BaseTypeFacets
     private Number maximum;
     private Number multiple;
     private String format;
+    private List<Number> enums = new ArrayList<>();
 
     public NumberTypeFacets()
     {
@@ -51,7 +59,24 @@ public class NumberTypeFacets extends BaseTypeFacets
         result.setMaximum(NodeSelector.selectIntValue("maximum", from));
         result.setMultiple(NodeSelector.selectIntValue("multipleOf", from));
         result.setFormat(NodeSelector.selectStringValue("format", from));
+        result.setEnums(getEnumValues(from));
         return overwriteFacets(result, from);
+    }
+
+    @Nonnull
+    private List<Number> getEnumValues(Node typeNode)
+    {
+
+        Node values = typeNode.get("enum");
+        List<Number> enumValues = new ArrayList<>();
+        if (values != null && values instanceof SYArrayNode)
+        {
+            for (Node node : values.getChildren())
+            {
+                enumValues.add((Number) ((SimpleTypeNode) node).getValue());
+            }
+        }
+        return enumValues;
     }
 
     @Override
@@ -65,6 +90,7 @@ public class NumberTypeFacets extends BaseTypeFacets
             result.setMaximum(numberTypeDefinition.getMaximum());
             result.setMultiple(numberTypeDefinition.getMultiple());
             result.setFormat(numberTypeDefinition.getFormat());
+            result.setEnums(numberTypeDefinition.getEnums());
         }
         return mergeFacets(result, with);
     }
@@ -80,7 +106,21 @@ public class NumberTypeFacets extends BaseTypeFacets
         return minimum;
     }
 
-    public void setMinimum(Number minimum)
+
+    public List<Number> getEnums()
+    {
+        return enums;
+    }
+
+    public void setEnums(List<Number> enums)
+    {
+        if (enums != null && !enums.isEmpty())
+        {
+            this.enums = enums;
+        }
+    }
+
+    private void setMinimum(Number minimum)
     {
         if (minimum != null)
         {
@@ -93,7 +133,7 @@ public class NumberTypeFacets extends BaseTypeFacets
         return maximum;
     }
 
-    public void setMaximum(Number maximum)
+    private void setMaximum(Number maximum)
     {
         if (maximum != null)
         {
@@ -106,7 +146,7 @@ public class NumberTypeFacets extends BaseTypeFacets
         return multiple;
     }
 
-    public void setMultiple(Number multiple)
+    private void setMultiple(Number multiple)
     {
         if (multiple != null)
         {
@@ -119,7 +159,7 @@ public class NumberTypeFacets extends BaseTypeFacets
         return format;
     }
 
-    public void setFormat(String format)
+    private void setFormat(String format)
     {
         if (format != null)
         {

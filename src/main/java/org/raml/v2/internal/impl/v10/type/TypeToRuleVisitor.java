@@ -25,6 +25,7 @@ import org.raml.v2.internal.framework.grammar.rule.BooleanTypeRule;
 import org.raml.v2.internal.framework.grammar.rule.DateValueRule;
 import org.raml.v2.internal.framework.grammar.rule.DivisorValueRule;
 import org.raml.v2.internal.framework.grammar.rule.IntegerTypeRule;
+import org.raml.v2.internal.framework.grammar.rule.IntegerValueRule;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
 import org.raml.v2.internal.framework.grammar.rule.MaxItemsRule;
 import org.raml.v2.internal.framework.grammar.rule.MaxLengthRule;
@@ -35,6 +36,7 @@ import org.raml.v2.internal.framework.grammar.rule.MinLengthRule;
 import org.raml.v2.internal.framework.grammar.rule.MinimumValueRule;
 import org.raml.v2.internal.framework.grammar.rule.NullValueRule;
 import org.raml.v2.internal.framework.grammar.rule.NumberTypeRule;
+import org.raml.v2.internal.framework.grammar.rule.NumberValueRule;
 import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
 import org.raml.v2.internal.framework.grammar.rule.RangeValueRule;
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
@@ -48,6 +50,7 @@ import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.raml.v2.internal.utils.BasicRuleFactory;
 import org.raml.v2.internal.utils.DateType;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -142,9 +145,9 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
             if (propertyValue.isPatternProperty())
             {
                 keyValue = patternProperty(propertyValue.getPatternRegex(), value);
-                //We set to false as it should only validate the ones that matches the regex
+                // We set to false as it should only validate the ones that matches the regex
                 objectRule.additionalProperties(false);
-                //Pattern properties are never required
+                // Pattern properties are never required
             }
             else
             {
@@ -220,6 +223,17 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
         if (numericTypeNode.getMultiple() != null)
         {
             typeRule.and(new DivisorValueRule(numericTypeNode.getMultiple()));
+        }
+
+        final List<Number> enums = numericTypeNode.getEnums();
+        if (enums != null && !enums.isEmpty())
+        {
+            final List<Rule> options = new ArrayList<>();
+            for (Number anEnum : enums)
+            {
+                options.add(new NumberValueRule(anEnum));
+            }
+            typeRule.and(new AnyOfRule(options));
         }
         return typeRule;
     }

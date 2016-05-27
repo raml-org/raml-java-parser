@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.grammar.rule.xml;
+package org.raml.v2.internal.utils.xml;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

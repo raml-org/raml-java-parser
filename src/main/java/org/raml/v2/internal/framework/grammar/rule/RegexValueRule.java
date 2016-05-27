@@ -53,7 +53,7 @@ public class RegexValueRule extends Rule
         }
         else
         {
-            return Collections.<Suggestion>singletonList(new DefaultSuggestion(suggestion, description, label));
+            return Collections.<Suggestion> singletonList(new DefaultSuggestion(suggestion, description, label));
         }
     }
 
