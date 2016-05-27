@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.phase;
+package org.raml.v2.internal.impl.v10.phase;
 
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
@@ -27,7 +27,7 @@ import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
 import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.commons.type.TypeToRuleVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.raml.v2.internal.utils.NodeUtils;
 

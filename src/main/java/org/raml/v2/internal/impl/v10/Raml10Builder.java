@@ -26,7 +26,7 @@ import org.raml.v2.internal.framework.phase.Phase;
 import org.raml.v2.internal.framework.phase.TransformationPhase;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.phase.ExampleValidationPhase;
+import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.RamlFragmentGrammarTransformer;

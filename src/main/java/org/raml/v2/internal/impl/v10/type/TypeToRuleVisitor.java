@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.type;
+package org.raml.v2.internal.impl.v10.type;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -42,21 +42,9 @@ import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringTypeRule;
 import org.raml.v2.internal.impl.commons.rule.JsonSchemaValidationRule;
 import org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule;
-import org.raml.v2.internal.impl.v10.type.ArrayTypeFacets;
-import org.raml.v2.internal.impl.v10.type.BooleanTypeFacets;
-import org.raml.v2.internal.impl.v10.type.DateOnlyTypeFacets;
-import org.raml.v2.internal.impl.v10.type.DateTimeOnlyTypeFacets;
-import org.raml.v2.internal.impl.v10.type.DateTimeTypeFacets;
-import org.raml.v2.internal.impl.v10.type.FileTypeFacets;
-import org.raml.v2.internal.impl.v10.type.IntegerTypeFacets;
-import org.raml.v2.internal.impl.v10.type.NullTypeFacets;
-import org.raml.v2.internal.impl.v10.type.NumberTypeFacets;
-import org.raml.v2.internal.impl.v10.type.ObjectPropertyDefinition;
-import org.raml.v2.internal.impl.v10.type.ObjectTypeFacets;
-import org.raml.v2.internal.impl.v10.type.StringTypeFacets;
-import org.raml.v2.internal.impl.v10.type.TimeOnlyTypeFacets;
-import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
-import org.raml.v2.internal.impl.v10.type.UnionTypeFacets;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
+import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
 import org.raml.v2.internal.utils.DateType;
 
 import java.util.ArrayList;

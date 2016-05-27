@@ -22,7 +22,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.phase.Phase;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
-import org.raml.v2.internal.impl.commons.type.TypeToRuleVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 import java.util.List;
