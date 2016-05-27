@@ -62,7 +62,7 @@ public class ErrorNodeFactory
 
     public static Node createRequiredValueNotFound(Node node, Rule keyRule)
     {
-        final ErrorNode errorNode = new ErrorNode("Missing required field " + keyRule);
+        final ErrorNode errorNode = new ErrorNode("Missing required field " + keyRule.getDescription());
         errorNode.setSource(node);
         return errorNode;
     }

@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    properties:
+      name:
+        required: true
+        type: string
+      age:
+        required: false
+        type: number
+      /^note\d+$/: # restrict any properties whose keys start with "note"
+                   # followed by one or more digits to be a string
+        type: string
+    example:
+      name: Peter
+      age: 23
+      lastName: Parker #This should validate

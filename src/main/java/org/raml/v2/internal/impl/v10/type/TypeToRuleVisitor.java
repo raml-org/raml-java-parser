@@ -45,6 +45,7 @@ import org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
 import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
+import org.raml.v2.internal.utils.BasicRuleFactory;
 import org.raml.v2.internal.utils.DateType;
 
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static org.raml.v2.internal.utils.BasicRuleFactory.keyValue;
+import static org.raml.v2.internal.utils.BasicRuleFactory.patternProperty;
+import static org.raml.v2.internal.utils.BasicRuleFactory.property;
 import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
 
 public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
@@ -131,15 +133,27 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
         final ObjectRule objectRule = new ObjectRule(strictMode);
         registerRule(objectTypeDefinition, objectRule);
         objectRule.additionalProperties(asBoolean(objectTypeDefinition.getAdditionalProperties(), true));
-        final Map<String, ObjectPropertyDefinition> properties = objectTypeDefinition.getProperties();
-        for (Map.Entry<String, ObjectPropertyDefinition> property : properties.entrySet())
+        final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
+        for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
         {
-            final ObjectPropertyDefinition propertyValue = property.getValue();
-            final KeyValueRule keyValue = keyValue(property.getKey(), generateRule(propertyValue.getTypeFacets()));
-            final Boolean required = propertyValue.getRequired();
-            if (required)
+            final PropertyFacets propertyValue = property.getValue();
+            final KeyValueRule keyValue;
+            final Rule value = generateRule(propertyValue.getTypeFacets());
+            if (propertyValue.isPatternProperty())
             {
-                keyValue.required();
+                keyValue = patternProperty(propertyValue.getPatternRegex(), value);
+                //We set to false as it should only validate the ones that matches the regex
+                objectRule.additionalProperties(false);
+                //Pattern properties are never required
+            }
+            else
+            {
+                keyValue = property(property.getKey(), value);
+                final Boolean required = propertyValue.isRequired();
+                if (required)
+                {
+                    keyValue.required();
+                }
             }
             objectRule.with(keyValue);
         }

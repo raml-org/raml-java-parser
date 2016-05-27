@@ -17,8 +17,11 @@ package org.raml.v2.internal.utils;
 
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
 import org.raml.v2.internal.framework.grammar.rule.NullValueRule;
+import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
+
+import java.util.regex.Pattern;
 
 public class BasicRuleFactory
 {
@@ -28,14 +31,24 @@ public class BasicRuleFactory
         return new StringValueRule(value);
     }
 
+    public static RegexValueRule regexValue(String value)
+    {
+        return new RegexValueRule(Pattern.compile(value));
+    }
+
     public static NullValueRule nullValue()
     {
         return new NullValueRule();
     }
 
-    public static KeyValueRule keyValue(String key, Rule value)
+    public static KeyValueRule property(String key, Rule value)
     {
         return new KeyValueRule(stringValue(key), value);
+    }
+
+    public static KeyValueRule patternProperty(String key, Rule value)
+    {
+        return new KeyValueRule(regexValue(key), value);
     }
 
 

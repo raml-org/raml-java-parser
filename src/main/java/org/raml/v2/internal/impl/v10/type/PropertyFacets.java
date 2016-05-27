@@ -18,22 +18,24 @@ package org.raml.v2.internal.impl.v10.type;
 import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 
-public class ObjectPropertyDefinition
+import javax.annotation.Nullable;
+
+public class PropertyFacets
 {
 
     private String name;
     private TypeFacets typeFacets;
-    private Boolean required;
+    private boolean required;
     private PropertyNode propertyNode;
 
-    public ObjectPropertyDefinition(String name, TypeFacets typeFacets, Boolean required)
+    public PropertyFacets(String name, TypeFacets typeFacets, Boolean required)
     {
         this.name = name;
         this.typeFacets = typeFacets;
         this.required = required;
     }
 
-    public ObjectPropertyDefinition(PropertyNode propertyNode)
+    public PropertyFacets(PropertyNode propertyNode)
     {
         this.name = propertyNode.getName();
         this.required = propertyNode.isRequired();
@@ -55,13 +57,31 @@ public class ObjectPropertyDefinition
         return typeFacets;
     }
 
-    public Boolean getRequired()
+    public boolean isRequired()
     {
         return required;
     }
 
-    public ObjectPropertyDefinition mergeFacets(ObjectPropertyDefinition value)
+    public boolean isPatternProperty()
     {
-        return new ObjectPropertyDefinition(name, getTypeFacets().mergeFacets(value.getTypeFacets()), required || value.getRequired());
+        return name.startsWith("/") && name.endsWith("/");
+    }
+
+    @Nullable
+    public String getPatternRegex()
+    {
+        if (isPatternProperty())
+        {
+            return name.substring(1, name.length() - 1);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public PropertyFacets mergeFacets(PropertyFacets value)
+    {
+        return new PropertyFacets(name, getTypeFacets().mergeFacets(value.getTypeFacets()), required || value.isRequired());
     }
 }

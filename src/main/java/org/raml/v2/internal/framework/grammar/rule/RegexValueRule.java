@@ -53,7 +53,7 @@ public class RegexValueRule extends Rule
         }
         else
         {
-            return Collections.<Suggestion> singletonList(new DefaultSuggestion(suggestion, description, label));
+            return Collections.<Suggestion>singletonList(new DefaultSuggestion(suggestion, description, label));
         }
     }
 
@@ -106,12 +106,12 @@ public class RegexValueRule extends Rule
             final String group = matcher.group(j);
             groups.add(group);
         }
-        return createNodeUsingFactory(node, groups.toArray(new String[groups.size()]));
+        return createNodeUsingFactory(node, (String[]) groups.toArray(new String[groups.size()]));
     }
 
     @Override
     public String getDescription()
     {
-        return "\"" + value + "\"";
+        return "/" + value.pattern() + "/";
     }
 }

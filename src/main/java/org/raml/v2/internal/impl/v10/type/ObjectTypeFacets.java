@@ -36,10 +36,10 @@ public class ObjectTypeFacets extends BaseTypeFacets
     private String discriminator;
     private String discriminatorValue;
 
-    private Map<String, ObjectPropertyDefinition> properties = new HashMap<>();
+    private Map<String, PropertyFacets> properties = new HashMap<>();
 
     public ObjectTypeFacets(Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator, String discriminatorValue,
-            Map<String, ObjectPropertyDefinition> properties)
+            Map<String, PropertyFacets> properties)
     {
         this.minProperties = minProperties;
         this.maxProperties = maxProperties;
@@ -77,7 +77,7 @@ public class ObjectTypeFacets extends BaseTypeFacets
                 {
                     final PropertyNode propertyNode = (PropertyNode) child;
                     final String name = propertyNode.getName();
-                    final ObjectPropertyDefinition propertyDefinition = new ObjectPropertyDefinition(propertyNode);
+                    final PropertyFacets propertyDefinition = new PropertyFacets(propertyNode);
                     result.getProperties().put(name, propertyDefinition);
                 }
             }
@@ -96,8 +96,8 @@ public class ObjectTypeFacets extends BaseTypeFacets
             result.setAdditionalProperties(((ObjectTypeFacets) with).getAdditionalProperties());
             result.setDiscriminator(((ObjectTypeFacets) with).getDiscriminator());
             result.setDiscriminatorValue(((ObjectTypeFacets) with).getDiscriminatorValue());
-            final Map<String, ObjectPropertyDefinition> properties = ((ObjectTypeFacets) with).getProperties();
-            for (Map.Entry<String, ObjectPropertyDefinition> property : properties.entrySet())
+            final Map<String, PropertyFacets> properties = ((ObjectTypeFacets) with).getProperties();
+            for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
             {
                 if (!getProperties().containsKey(property.getKey()))
                 {
@@ -106,7 +106,7 @@ public class ObjectTypeFacets extends BaseTypeFacets
                 else
                 {
                     // If present in both merge facets of both types
-                    final ObjectPropertyDefinition propertyDefinition = result.getProperties().get(property.getKey());
+                    final PropertyFacets propertyDefinition = result.getProperties().get(property.getKey());
                     result.getProperties().put(property.getKey(), propertyDefinition.mergeFacets(property.getValue()));
                 }
             }
@@ -186,12 +186,12 @@ public class ObjectTypeFacets extends BaseTypeFacets
         }
     }
 
-    public Map<String, ObjectPropertyDefinition> getProperties()
+    public Map<String, PropertyFacets> getProperties()
     {
         return properties;
     }
 
-    public void setProperties(Map<String, ObjectPropertyDefinition> properties)
+    public void setProperties(Map<String, PropertyFacets> properties)
     {
         if (properties != null && !properties.isEmpty())
         {
