@@ -1,0 +1,27 @@
+{
+    "title": "master",
+    "baseUri": "http://api.com/master",
+    "annotationTypes": {
+        "User": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "displayName": "name"
+                },
+                "age?": {
+                    "type": "integer",
+                    "displayName": "age?"
+                }
+            },
+            "type": "object",
+            "displayName": "User"
+        }
+    },
+    "annotations": {
+        
+        "User": {
+            "name": "mike",
+            "height": 178
+        }
+    }
+}

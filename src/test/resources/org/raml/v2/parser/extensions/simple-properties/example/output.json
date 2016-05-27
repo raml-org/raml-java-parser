@@ -1,0 +1,23 @@
+{
+    "title": "master",
+    "baseUri": "http://api.com/master",
+    "types": {
+        "User": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "displayName": "name"
+                },
+                "age?": {
+                    "type": "integer",
+                    "displayName": "age?"
+                }
+            },
+            "example": {
+                "name": "pipo"
+            },
+            "type": "object",
+            "displayName": "User"
+        }
+    }
+}

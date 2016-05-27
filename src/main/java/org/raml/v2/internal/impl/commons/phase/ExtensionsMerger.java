@@ -18,13 +18,15 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
-import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
+import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
+import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,27 +72,42 @@ public class ExtensionsMerger
 
             Node keyNode = ((KeyValueNode) child).getKey();
             String key = keyNode.toString();
+
             if (shouldIgnoreNode(child))
             {
-                logger.info("Ignoring key '{}'", key);
+                logger.debug("Ignoring key '{}'", key);
                 continue;
             }
 
-            Node node = NodeSelector.selectFrom(key, baseNode);
+            Node valueNode = ((KeyValueNode) child).getValue();
+            Node node = NodeSelector.selectFrom(NodeSelector.encodePath(key), baseNode);
             if (node == null)
             {
-                logger.info("Adding key '{}'", key);
+                logger.debug("Adding key '{}'", key);
                 baseNode.addChild(child);
             }
-            else if (((KeyValueNode) child).getValue() instanceof SimpleTypeNode)
+            else if (child instanceof AnnotationNode)
             {
-                logger.info("Replacing existing scalar key '{}'", key);
-                node.replaceWith(((KeyValueNode) child).getValue());
+                logger.debug("Replacing annotation '{}'", key);
+                ((KeyValueNode) node.getParent()).setValue(valueNode);
+            }
+            else if (child instanceof ExampleDeclarationNode)
+            {
+                logger.debug("Replacing example '{}'", key);
+                ((KeyValueNode) node.getParent()).setValue(valueNode);
             }
             else
             {
-                logger.info("Merging values '{}' and '{}'", node.getParent(), child);
-                merge(node, ((KeyValueNode) child).getValue());
+                if (valueNode instanceof SimpleTypeNode)
+                {
+                    logger.debug("Replacing existing scalar key '{}'", key);
+                    node.replaceWith(valueNode);
+                }
+                else
+                {
+                    logger.debug("Merging values '{}' and '{}'", node.getParent(), child);
+                    merge(node, valueNode);
+                }
             }
         }
     }

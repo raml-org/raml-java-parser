@@ -15,6 +15,10 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
+import static java.util.Arrays.asList;
+
+import javax.annotation.Nonnull;
+
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
 import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
@@ -43,24 +47,19 @@ import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactor
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
 import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
 
-import javax.annotation.Nonnull;
-
-import static java.util.Arrays.asList;
-
 public class Raml10Grammar extends BaseRamlGrammar
 {
 
     public static final String ANNOTATION_TYPES_KEY_NAME = "annotationTypes";
 
-    public ObjectRule raml()
+    public ObjectRule untitledRaml()
     {
-        return super.raml()
+        return super.untitledRaml()
                     .with(annotationTypesField())
                     .with(annotationField())
                     .with(typesField())
                     .with(usesField());
     }
-
 
     @Override
     protected ObjectRule resourceValue()

@@ -15,6 +15,16 @@
  */
 package org.raml.v2.internal.impl.v10;
 
+import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
+import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
+import static org.raml.v2.internal.impl.v10.RamlFragment.Extension;
+import static org.raml.v2.internal.impl.v10.RamlFragment.Overlay;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
@@ -40,11 +50,6 @@ import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.utils.StreamUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 public class Raml10Builder
 {
 
@@ -56,12 +61,22 @@ public class Raml10Builder
             return ErrorNodeFactory.createEmptyDocument();
         }
         boolean applyExtension = false;
-        if (fragment == RamlFragment.Extension && maxPhaseNumber > RamlBuilder.FIRST_PHASE)
+        if ((fragment == Extension || fragment == Overlay) && maxPhaseNumber > FIRST_PHASE)
         {
             applyExtension = true;
-            maxPhaseNumber = RamlBuilder.SUGAR_PHASE;
+            maxPhaseNumber = GRAMMAR_PHASE;
         }
         final List<Phase> phases = createPhases(resourceLoader, fragment);
+        rootNode = runPhases(rootNode, phases, maxPhaseNumber);
+        if (applyExtension && rootNode.findDescendantsWith(ErrorNode.class).isEmpty())
+        {
+            rootNode = applyExtension(rootNode, resourceLoader, resourceLocation);
+        }
+        return rootNode;
+    }
+
+    private Node runPhases(Node rootNode, List<Phase> phases, int maxPhaseNumber)
+    {
         for (int i = 0; i < phases.size(); i++)
         {
             if (i < maxPhaseNumber)
@@ -71,13 +86,9 @@ public class Raml10Builder
                 List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
                 if (!errorNodes.isEmpty())
                 {
-                    return rootNode;
+                    break;
                 }
             }
-        }
-        if (applyExtension && rootNode.findDescendantsWith(ErrorNode.class).isEmpty())
-        {
-            return applyExtension(rootNode, resourceLoader, resourceLocation);
         }
         return rootNode;
     }
@@ -85,42 +96,31 @@ public class Raml10Builder
     private Node applyExtension(Node extensionNode, ResourceLoader resourceLoader, String resourceLocation) throws IOException
     {
         StringNode baseRef = (StringNode) extensionNode.get("extends");
-        RamlBuilder builder = new RamlBuilder(RamlBuilder.SUGAR_PHASE);
         InputStream baseStream = resourceLoader.fetchResource(baseRef.getValue());
         String baseContent = StreamUtils.toString(baseStream);
-        Node baseNode = builder.build(baseContent, resourceLoader, resourceLocation);
+        Node baseNode = new RamlBuilder().build(baseContent, resourceLoader, resourceLocation);
 
-        if (!baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
+        if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
         {
-            return baseNode;
+            ExtensionsMerger.merge(baseNode, extensionNode);
+            List<Phase> phases = createPhases(resourceLoader, getFragment(baseContent));
+            baseNode = runPhases(baseNode, phases, Integer.MAX_VALUE);
         }
-
-        if (isOverlayOrExtension(baseContent))
-        {
-            applyExtension(baseNode, resourceLoader, resourceLocation);
-        }
-
-        ExtensionsMerger.merge(baseNode, extensionNode);
         return baseNode;
     }
 
-    private boolean isOverlayOrExtension(String baseContent) throws IOException
+    private RamlFragment getFragment(String content)
     {
         try
         {
-            RamlHeader ramlHeader = RamlHeader.parse(baseContent);
-            if (ramlHeader.getFragment() == RamlFragment.Extension || ramlHeader.getFragment() == RamlFragment.Overlay)
-            {
-                return true;
-            }
+            return RamlHeader.parse(content).getFragment();
         }
         catch (RamlHeader.InvalidHeaderException e)
         {
-            // ignore, detected by the builder
+            // already validated by builder
+            throw new RuntimeException("Unreachable code");
         }
-        return false;
     }
-
 
     private List<Phase> createPhases(ResourceLoader resourceLoader, RamlFragment fragment)
     {
