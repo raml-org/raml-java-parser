@@ -1,27 +1,24 @@
 Bitactora!!!!
-    Custom Facets
+    Custom Facets: Missing tests. Grammar should work
     Array
         uniqueItems How do we validate uniques in object and arrays. Where is the comparison defined???
     Object
         required property in grammar supports not only ?
         Discriminator
         DiscriminatorValue
-        PatternProperties are required????
-        If PatternProperties means additionalProperties should match the regex??? if not error
+
     XmlSchema validator this does not look ok
       if (this.type != null && !value.trim().startsWith("<" + this.type))
         {
             node.replaceWith(ErrorNodeFactory.createInvalidXmlExampleNode("Provided object is not of type " + this.type));
         }
-    Number enums
+
 
 Move error node factory to impl???
+
 Split beteween framework and implementations
 
-Enums con null????
 Declaring the type of a property to be null represents the lack of a value in a type instance. In a RAML context that requires values of type null (vs just type declarations), the usual YAML null is used, e.g. when the type is null | number you may use enum: [ 1, 2, ~ ] or more explicitly/verbosely enum: [ 1, 2, !!null "" ]; in non-inline notation you can just omit the value completely, of course.
-
-
 
 Model
     Example is model as string what should we do with complex example written in Yaml???

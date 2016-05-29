@@ -133,19 +133,20 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     {
         final ObjectRule objectRule = new ObjectRule(strictMode);
         registerRule(objectTypeDefinition, objectRule);
-        objectRule.additionalProperties(asBoolean(objectTypeDefinition.getAdditionalProperties(), true));
+        final boolean additionalProperties = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
+        objectRule.additionalProperties(additionalProperties);
         final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
         for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
         {
             final PropertyFacets propertyValue = property.getValue();
             final KeyValueRule keyValue;
             final Rule value = generateRule(propertyValue.getValueTypeFacets());
-            if (propertyValue.isPatternProperty())
+            // If additional properties is set to false the pattern properties are ignored
+            if (propertyValue.isPatternProperty() && additionalProperties)
             {
                 keyValue = patternProperty(propertyValue.getPatternRegex(), value);
                 // We set to false as it should only validate the ones that matches the regex
                 objectRule.additionalProperties(false);
-                // Pattern properties are never required
             }
             else
             {
