@@ -13,29 +13,24 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.v10.type;
+package org.raml.v2.internal.utils;
 
-public class IntegerTypeFacets extends NumberTypeFacets
+import java.util.List;
+
+public class ValueUtils
 {
-
-    public IntegerTypeFacets()
+    public static boolean asBoolean(Boolean booleanValue, boolean defaultValue)
     {
+        return booleanValue == null ? defaultValue : booleanValue;
     }
 
-    public IntegerTypeFacets(Number minimum, Number maximum, Number multiple, String format)
+    public static <T> T defaultTo(T stringValue, T defaultValue)
     {
-        super(minimum, maximum, multiple, format);
+        return stringValue == null ? defaultValue : stringValue;
     }
 
-    @Override
-    public NumberTypeFacets copy()
+    public static boolean isEmpty(List<?> collection)
     {
-        return new IntegerTypeFacets(getMinimum(), getMaximum(), getMultiple(), getFormat());
-    }
-
-    @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
-    {
-        return visitor.visitInteger(this);
+        return collection == null || collection.isEmpty();
     }
 }

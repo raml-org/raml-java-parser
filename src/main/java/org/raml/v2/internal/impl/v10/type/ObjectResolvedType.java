@@ -16,11 +16,12 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ import static org.raml.v2.internal.utils.NodeSelector.selectBooleanValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectStringValue;
 
-public class ObjectTypeFacets extends BaseTypeFacets
+public class ObjectResolvedType extends XmlFacetsCapableType
 {
     private Integer minProperties;
     private Integer maxProperties;
@@ -36,11 +37,12 @@ public class ObjectTypeFacets extends BaseTypeFacets
     private String discriminator;
     private String discriminatorValue;
 
-    private Map<String, PropertyFacets> properties = new HashMap<>();
+    private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
-    public ObjectTypeFacets(Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator, String discriminatorValue,
+    public ObjectResolvedType(XmlFacets xmlFacets, Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator, String discriminatorValue,
             Map<String, PropertyFacets> properties)
     {
+        super(xmlFacets);
         this.minProperties = minProperties;
         this.maxProperties = maxProperties;
         this.additionalProperties = additionalProperties;
@@ -49,19 +51,19 @@ public class ObjectTypeFacets extends BaseTypeFacets
         this.properties = properties;
     }
 
-    public ObjectTypeFacets()
+    public ObjectResolvedType()
     {
     }
 
-    protected ObjectTypeFacets copy()
+    protected ObjectResolvedType copy()
     {
-        return new ObjectTypeFacets(minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue, new HashMap<>(properties));
+        return new ObjectResolvedType(getXmlFacets().copy(), minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue, new LinkedHashMap<>(properties));
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        final ObjectTypeFacets result = copy();
+        final ObjectResolvedType result = copy();
         result.setMinProperties(selectIntValue("minProperties", from));
         result.setMaxProperties(selectIntValue("maxProperties", from));
         result.setAdditionalProperties(selectBooleanValue("additionalProperties", from));
@@ -86,17 +88,17 @@ public class ObjectTypeFacets extends BaseTypeFacets
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
-        final ObjectTypeFacets result = copy();
-        if (with instanceof ObjectTypeFacets)
+        final ObjectResolvedType result = copy();
+        if (with instanceof ObjectResolvedType)
         {
-            result.setMinProperties(((ObjectTypeFacets) with).getMinProperties());
-            result.setMaxProperties(((ObjectTypeFacets) with).getMaxProperties());
-            result.setAdditionalProperties(((ObjectTypeFacets) with).getAdditionalProperties());
-            result.setDiscriminator(((ObjectTypeFacets) with).getDiscriminator());
-            result.setDiscriminatorValue(((ObjectTypeFacets) with).getDiscriminatorValue());
-            final Map<String, PropertyFacets> properties = ((ObjectTypeFacets) with).getProperties();
+            result.setMinProperties(((ObjectResolvedType) with).getMinProperties());
+            result.setMaxProperties(((ObjectResolvedType) with).getMaxProperties());
+            result.setAdditionalProperties(((ObjectResolvedType) with).getAdditionalProperties());
+            result.setDiscriminator(((ObjectResolvedType) with).getDiscriminator());
+            result.setDiscriminatorValue(((ObjectResolvedType) with).getDiscriminatorValue());
+            final Map<String, PropertyFacets> properties = ((ObjectResolvedType) with).getProperties();
             for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
             {
                 if (!getProperties().containsKey(property.getKey()))
@@ -116,7 +118,7 @@ public class ObjectTypeFacets extends BaseTypeFacets
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitObject(this);
     }

@@ -19,14 +19,14 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYArrayNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.utils.NodeSelector;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NumberTypeFacets extends BaseTypeFacets
+public class NumberResolvedType extends XmlFacetsCapableType
 {
     private Number minimum;
     private Number maximum;
@@ -34,27 +34,28 @@ public class NumberTypeFacets extends BaseTypeFacets
     private String format;
     private List<Number> enums = new ArrayList<>();
 
-    public NumberTypeFacets()
+    public NumberResolvedType()
     {
     }
 
-    public NumberTypeFacets(Number minimum, Number maximum, Number multiple, String format)
+    public NumberResolvedType(XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
     {
+        super(xmlFacets);
         this.minimum = minimum;
         this.maximum = maximum;
         this.multiple = multiple;
         this.format = format;
     }
 
-    public NumberTypeFacets copy()
+    public NumberResolvedType copy()
     {
-        return new NumberTypeFacets(minimum, maximum, multiple, format);
+        return new NumberResolvedType(getXmlFacets().copy(), minimum, maximum, multiple, format);
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        final NumberTypeFacets result = copy();
+        final NumberResolvedType result = copy();
         result.setMinimum(NodeSelector.selectIntValue("minimum", from));
         result.setMaximum(NodeSelector.selectIntValue("maximum", from));
         result.setMultiple(NodeSelector.selectIntValue("multipleOf", from));
@@ -80,12 +81,12 @@ public class NumberTypeFacets extends BaseTypeFacets
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
-        final NumberTypeFacets result = copy();
-        if (with instanceof NumberTypeFacets)
+        final NumberResolvedType result = copy();
+        if (with instanceof NumberResolvedType)
         {
-            NumberTypeFacets numberTypeDefinition = (NumberTypeFacets) with;
+            NumberResolvedType numberTypeDefinition = (NumberResolvedType) with;
             result.setMinimum(numberTypeDefinition.getMinimum());
             result.setMaximum(numberTypeDefinition.getMaximum());
             result.setMultiple(numberTypeDefinition.getMultiple());
@@ -96,7 +97,7 @@ public class NumberTypeFacets extends BaseTypeFacets
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitNumber(this);
     }

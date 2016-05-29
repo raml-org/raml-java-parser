@@ -16,83 +16,84 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.utils.NodeSelector;
 
 import static org.raml.v2.internal.utils.NodeSelector.selectBooleanValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 
-public class ArrayTypeFacets extends BaseTypeFacets
+public class ArrayResolvedType extends XmlFacetsCapableType
 {
-    private TypeFacets items;
+    private ResolvedType items;
     private Boolean uniqueItems;
     private Integer minItems;
     private Integer maxItems;
 
-    public ArrayTypeFacets(TypeFacets items, Boolean uniqueItems, Integer minItems, Integer maxItems)
+    public ArrayResolvedType(XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems)
     {
+        super(xmlFacets);
         this.items = items;
         this.uniqueItems = uniqueItems;
         this.minItems = minItems;
         this.maxItems = maxItems;
     }
 
-    public ArrayTypeFacets()
+    public ArrayResolvedType()
     {
     }
 
-    public ArrayTypeFacets(TypeFacets items)
+    public ArrayResolvedType(ResolvedType items)
     {
         this.items = items;
     }
 
-    private ArrayTypeFacets copy()
+    private ArrayResolvedType copy()
     {
-        return new ArrayTypeFacets(items, uniqueItems, minItems, maxItems);
+        return new ArrayResolvedType(getXmlFacets().copy(), items, uniqueItems, minItems, maxItems);
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        final ArrayTypeFacets result = copy();
+        final ArrayResolvedType result = copy();
         result.setMinItems(selectIntValue("minItems", from));
         result.setMaxItems(selectIntValue("maxItems", from));
         result.setUniqueItems(selectBooleanValue("uniqueItems", from));
         final Node items = NodeSelector.selectFrom("items", from);
         if (items != null && items instanceof TypeDeclarationNode)
         {
-            result.setItems(((TypeDeclarationNode) items).getTypeFacets());
+            result.setItems(((TypeDeclarationNode) items).getResolvedType());
         }
         return overwriteFacets(result, from);
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
-        final ArrayTypeFacets result = copy();
-        if (with instanceof ArrayTypeFacets)
+        final ArrayResolvedType result = copy();
+        if (with instanceof ArrayResolvedType)
         {
-            result.setMinItems(((ArrayTypeFacets) with).getMinItems());
-            result.setMaxItems(((ArrayTypeFacets) with).getMaxItems());
-            result.setUniqueItems(((ArrayTypeFacets) with).getUniqueItems());
-            result.setItems(((ArrayTypeFacets) with).getItems());
+            result.setMinItems(((ArrayResolvedType) with).getMinItems());
+            result.setMaxItems(((ArrayResolvedType) with).getMaxItems());
+            result.setUniqueItems(((ArrayResolvedType) with).getUniqueItems());
+            result.setItems(((ArrayResolvedType) with).getItems());
         }
         return mergeFacets(result, with);
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitArray(this);
     }
 
-    public TypeFacets getItems()
+    public ResolvedType getItems()
     {
         return items;
     }
 
-    private void setItems(TypeFacets items)
+    private void setItems(ResolvedType items)
     {
         if (items != null)
         {

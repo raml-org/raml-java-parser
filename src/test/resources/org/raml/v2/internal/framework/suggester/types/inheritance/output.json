@@ -1,4 +1,9 @@
 [ {
+  "label" : "Any",
+  "description" : "",
+  "value" : "any",
+  "prefix" : ""
+}, {
   "label" : "Array",
   "description" : "",
   "value" : "array",

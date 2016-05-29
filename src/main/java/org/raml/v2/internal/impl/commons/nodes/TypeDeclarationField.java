@@ -13,34 +13,29 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.v10.type;
+package org.raml.v2.internal.impl.commons.nodes;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
+import org.raml.v2.internal.framework.nodes.Node;
 
-public class TimeOnlyTypeFacets extends BaseTypeFacets
+import javax.annotation.Nonnull;
+
+public class TypeDeclarationField extends KeyValueNodeImpl
 {
-
-    protected TimeOnlyTypeFacets copy()
+    public TypeDeclarationField(KeyValueNodeImpl node)
     {
-        return new TimeOnlyTypeFacets();
+        super(node);
     }
 
-    @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public TypeDeclarationField()
     {
-        return overwriteFacets(copy(), from);
+        super();
     }
 
+    @Nonnull
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public Node copy()
     {
-        return mergeFacets(copy(), with);
-    }
-
-    @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
-    {
-        return visitor.visitTimeOnly(this);
+        return new TypeDeclarationField(this);
     }
 }

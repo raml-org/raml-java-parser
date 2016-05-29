@@ -13,34 +13,16 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.v10.type;
+package org.raml.v2.internal.impl.commons.type;
 
-public enum TypeIds
+/**
+ * Type descriptor for external schema based type descriptor e.g JsonSchema or XmlSchema.
+ */
+public interface SchemaBasedResolvedType extends ResolvedType
 {
-
-    STRING("string"),
-    NULL("null"),
-    NUMBER("number"),
-    INTEGER("integer"),
-    BOOLEAN("boolean"),
-    DATE_ONLY("date-only"),
-    TIME_ONLY("time-only"),
-    DATE_TIME_ONLY("datetime-only"),
-    DATE_TIME("datetime"),
-    FILE("file"),
-    OBJECT("object"),
-    ARRAY("array"); // TODO this is not a valid id but
-
-    private final String type;
-
-    TypeIds(String type)
-    {
-        this.type = type;
-    }
-
-    public String getType()
-    {
-        return this.type;
-    }
-
+    /**
+     * The schema string content
+     * @return The schema content
+     */
+    String getSchemaValue();
 }

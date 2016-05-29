@@ -20,17 +20,20 @@ import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.v10.type.UnionTypeFacets;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+import org.raml.v2.internal.utils.NodeUtils;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode
 {
 
-    private TypeFacets typeFacets;
+    private ResolvedType resolvedType;
 
     public TypeDeclarationNode()
     {
@@ -61,24 +64,24 @@ public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode
         return result;
     }
 
-    public TypeFacets getTypeFacets()
+    public ResolvedType getResolvedType()
     {
         // Cache it to support recursive definitions
-        if (typeFacets == null)
+        if (resolvedType == null)
         {
-            typeFacets = resolveTypeDefinition();
+            resolvedType = resolveTypeDefinition();
         }
-        return typeFacets;
+        return resolvedType;
     }
 
-    protected TypeFacets resolveTypeDefinition()
+    protected ResolvedType resolveTypeDefinition()
     {
         final List<TypeExpressionNode> baseTypes = getBaseTypes();
-        TypeFacets result = null;
+        ResolvedType result = null;
         // First we inherit all base properties and merge with multiple inheritance
         for (TypeExpressionNode baseType : baseTypes)
         {
-            final TypeFacets baseTypeDef = baseType.generateDefinition();
+            final ResolvedType baseTypeDef = baseType.generateDefinition();
             if (result == null)
             {
                 result = baseTypeDef;
@@ -86,7 +89,7 @@ public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode
             else
             {
                 // It can inherit from union and non union and in this case the result is a union so we flip the merge order
-                if (baseTypeDef instanceof UnionTypeFacets && !(result instanceof UnionTypeFacets))
+                if (baseTypeDef instanceof UnionResolvedType && !(result instanceof UnionResolvedType))
                 {
                     result = baseTypeDef.mergeFacets(result);
                 }
@@ -106,8 +109,20 @@ public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode
 
     private Node getTypeValue()
     {
-        final Node type = get("type");
-        return type == null ? get("schema") : type;
+        return NodeUtils.getType(this);
+    }
+
+    @Nullable
+    public String getTypeName()
+    {
+        if (getParent() instanceof TypeDeclarationField)
+        {
+            return ((SimpleTypeNode) ((TypeDeclarationField) getParent()).getKey()).getLiteralValue();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Nonnull

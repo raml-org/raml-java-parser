@@ -291,6 +291,17 @@
             <artifactId>juniversalchardet</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.ws.xmlschema</groupId>
+            <artifactId>xmlschema-core</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
+        </dependency>
         <!--test deps -->
         <dependency>
             <groupId>junit</groupId>

@@ -13,13 +13,13 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.type;
+package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.utils.NodeSelector;
 
-public class XmlFacets implements TypeFacets
+public class XmlFacets
 {
     private Boolean attribute;
     private Boolean wrapped;
@@ -41,12 +41,12 @@ public class XmlFacets implements TypeFacets
     }
 
 
-    protected XmlFacets copy()
+    public XmlFacets copy()
     {
         return new XmlFacets(attribute, wrapped, name, namespace, prefix);
     }
 
-    @Override
+
     public XmlFacets overwriteFacets(TypeDeclarationNode from)
     {
         final XmlFacets copy = copy();
@@ -58,25 +58,16 @@ public class XmlFacets implements TypeFacets
         return copy;
     }
 
-    @Override
-    public XmlFacets mergeFacets(TypeFacets with)
+
+    public XmlFacets mergeFacets(XmlFacets with)
     {
         final XmlFacets copy = copy();
-        if (with instanceof XmlFacets)
-        {
-            copy.setAttribute(((XmlFacets) with).getAttribute());
-            copy.setName(((XmlFacets) with).getName());
-            copy.setNamespace(((XmlFacets) with).getNamespace());
-            copy.setPrefix(((XmlFacets) with).getPrefix());
-            copy.setWrapped(((XmlFacets) with).getWrapped());
-        }
+        copy.setAttribute(with.getAttribute());
+        copy.setName(with.getName());
+        copy.setNamespace(with.getNamespace());
+        copy.setPrefix(with.getPrefix());
+        copy.setWrapped(with.getWrapped());
         return copy;
-    }
-
-    @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
-    {
-        return null;
     }
 
     // Getters and Setters

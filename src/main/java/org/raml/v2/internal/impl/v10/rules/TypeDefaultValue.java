@@ -17,17 +17,24 @@ package org.raml.v2.internal.impl.v10.rules;
 
 import org.raml.v2.internal.framework.grammar.rule.DefaultValue;
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.type.TypeId;
 
 import javax.annotation.Nullable;
 
 public class TypeDefaultValue implements DefaultValue
 {
+    private TypeId defaultType;
+
+    public TypeDefaultValue(TypeId defaultType)
+    {
+        this.defaultType = defaultType;
+    }
+
     @Nullable
     @Override
     public Node getDefaultValue(Node parent)
     {
-        return parent.get("properties") != null ? new NativeTypeExpressionNode("object") : new NativeTypeExpressionNode("string");
+        return parent.get("properties") != null ? new NativeTypeExpressionNode(TypeId.OBJECT.getType()) : new NativeTypeExpressionNode(defaultType.getType());
     }
 }

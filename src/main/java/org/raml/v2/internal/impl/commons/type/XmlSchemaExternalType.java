@@ -16,15 +16,15 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 
-public class XmlSchemaTypeFacets implements SchemaBasedTypeFacets
+public class XmlSchemaExternalType extends BaseType implements SchemaBasedResolvedType
 {
     private final String schemaValue;
     private final String schemaPath;
     private final String internalFragment;
 
-    public XmlSchemaTypeFacets(String schemaValue, String schemaPath, String internalFragment)
+    public XmlSchemaExternalType(String schemaValue, String schemaPath, String internalFragment)
     {
 
         this.schemaValue = schemaValue;
@@ -32,25 +32,25 @@ public class XmlSchemaTypeFacets implements SchemaBasedTypeFacets
         this.internalFragment = internalFragment;
     }
 
-    protected XmlSchemaTypeFacets copy()
+    protected XmlSchemaExternalType copy()
     {
-        return new XmlSchemaTypeFacets(schemaValue, schemaPath, internalFragment);
+        return new XmlSchemaExternalType(schemaValue, schemaPath, internalFragment);
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
-    {
-        return copy();
-    }
-
-    @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         return copy();
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public ResolvedType mergeFacets(ResolvedType with)
+    {
+        return copy();
+    }
+
+    @Override
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitXml(this);
     }

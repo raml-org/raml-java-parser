@@ -13,22 +13,34 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.nodes;
+package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-import javax.annotation.Nullable;
-
-/**
- * Represents a type expression element it can be a union type a reference to another type an array type declaration
- */
-public interface TypeExpressionNode extends Node
+public class NullResolvedType extends XmlFacetsCapableType
 {
-    /**
-     * Generates the definition that results of evaluating this expression
-     * @return The type definition
-     */
-    @Nullable
-    ResolvedType generateDefinition();
+
+    protected ResolvedType copy()
+    {
+        return new NullResolvedType();
+    }
+
+    @Override
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
+    {
+        return copy();
+    }
+
+    @Override
+    public ResolvedType mergeFacets(ResolvedType with)
+    {
+        return copy();
+    }
+
+    @Override
+    public <T> T visit(TypeVisitor<T> visitor)
+    {
+        return visitor.visitNull(this);
+    }
 }

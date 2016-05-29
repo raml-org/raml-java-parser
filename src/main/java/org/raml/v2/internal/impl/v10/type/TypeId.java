@@ -13,16 +13,35 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.type;
+package org.raml.v2.internal.impl.v10.type;
 
-/**
- * Type descriptor for external schema based type descriptor e.g JsonSchema or XmlSchema.
- */
-public interface SchemaBasedTypeFacets extends TypeFacets
+public enum TypeId
 {
-    /**
-     * The schema string content
-     * @return The schema content
-     */
-    String getSchemaValue();
+
+    STRING("string"),
+    ANY("any"),
+    NULL("null"),
+    NUMBER("number"),
+    INTEGER("integer"),
+    BOOLEAN("boolean"),
+    DATE_ONLY("date-only"),
+    TIME_ONLY("time-only"),
+    DATE_TIME_ONLY("datetime-only"),
+    DATE_TIME("datetime"),
+    FILE("file"),
+    OBJECT("object"),
+    ARRAY("array"); // TODO this is not a valid id but
+
+    private final String type;
+
+    TypeId(String type)
+    {
+        this.type = type;
+    }
+
+    public String getType()
+    {
+        return this.type;
+    }
+
 }

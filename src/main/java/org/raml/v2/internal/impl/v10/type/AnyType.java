@@ -15,32 +15,32 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 
-public class NullTypeFacets extends BaseTypeFacets
+public class AnyType extends XmlFacetsCapableType
 {
 
-    protected TypeFacets copy()
+    protected ResolvedType copy()
     {
-        return new NullTypeFacets();
+        return new AnyType();
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         return copy();
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
         return copy();
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
-        return visitor.visitNull(this);
+        return visitor.visitAny(this);
     }
 }

@@ -24,7 +24,7 @@ import org.raml.v2.internal.framework.suggester.DefaultSuggestion;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.type.TypeIds;
+import org.raml.v2.internal.impl.v10.type.TypeId;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -68,8 +68,8 @@ public class TypeExpressionReferenceRule extends Rule
     public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
     {
         final List<Suggestion> suggestions = new ArrayList<>(suggester.getSuggestions(node));
-        final TypeIds[] values = TypeIds.values();
-        for (TypeIds value : values)
+        final TypeId[] values = TypeId.values();
+        for (TypeId value : values)
         {
             suggestions.add(new DefaultSuggestion(value.getType(), "", StringUtils.capitalize(value.getType())));
         }

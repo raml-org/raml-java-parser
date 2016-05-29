@@ -15,42 +15,52 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 import static org.raml.v2.internal.utils.NodeSelector.selectStringValue;
 
-public class DateTimeTypeFacets extends BaseTypeFacets
+public class DateTimeResolvedType extends XmlFacetsCapableType
 {
 
     private String format;
 
-    protected DateTimeTypeFacets copy()
+    public DateTimeResolvedType(XmlFacets xmlFacets, String format)
     {
-        return new DateTimeTypeFacets();
+        super(xmlFacets);
+        this.format = format;
+    }
+
+    public DateTimeResolvedType()
+    {
+    }
+
+    protected DateTimeResolvedType copy()
+    {
+        return new DateTimeResolvedType(getXmlFacets().copy(), format);
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        final DateTimeTypeFacets result = copy();
+        final DateTimeResolvedType result = copy();
         result.setFormat(selectStringValue("format", from));
         return overwriteFacets(result, from);
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
-        final DateTimeTypeFacets result = copy();
-        if (with instanceof DateTimeTypeFacets)
+        final DateTimeResolvedType result = copy();
+        if (with instanceof DateTimeResolvedType)
         {
-            result.setFormat(((DateTimeTypeFacets) with).getFormat());
+            result.setFormat(((DateTimeResolvedType) with).getFormat());
         }
         return mergeFacets(result, with);
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitDateTime(this);
     }

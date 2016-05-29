@@ -21,9 +21,9 @@ import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.phase.Transformer;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.utils.SchemaGenerator;
 
 /**
@@ -53,14 +53,14 @@ public class SchemaValidationTransformer implements Transformer
         ExternalSchemaTypeExpressionNode schema = (ExternalSchemaTypeExpressionNode) node;
         try
         {
-            final TypeFacets typeFacets = schema.generateDefinition();
-            if (typeFacets instanceof XmlSchemaTypeFacets)
+            final ResolvedType resolvedType = schema.generateDefinition();
+            if (resolvedType instanceof XmlSchemaExternalType)
             {
-                SchemaGenerator.generateXmlSchema(resourceLoader, (XmlSchemaTypeFacets) typeFacets);
+                SchemaGenerator.generateXmlSchema(resourceLoader, (XmlSchemaExternalType) resolvedType);
             }
-            else if (typeFacets instanceof JsonSchemaTypeFacets)
+            else if (resolvedType instanceof JsonSchemaExternalType)
             {
-                SchemaGenerator.generateJsonSchema((JsonSchemaTypeFacets) typeFacets);
+                SchemaGenerator.generateJsonSchema((JsonSchemaExternalType) resolvedType);
             }
         }
         catch (JsonParseException ex)

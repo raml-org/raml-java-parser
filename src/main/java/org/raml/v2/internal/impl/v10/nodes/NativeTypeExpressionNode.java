@@ -18,20 +18,21 @@ package org.raml.v2.internal.impl.v10.nodes;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.type.ArrayTypeFacets;
-import org.raml.v2.internal.impl.v10.type.BooleanTypeFacets;
-import org.raml.v2.internal.impl.v10.type.DateOnlyTypeFacets;
-import org.raml.v2.internal.impl.v10.type.DateTimeOnlyTypeFacets;
-import org.raml.v2.internal.impl.v10.type.DateTimeTypeFacets;
-import org.raml.v2.internal.impl.v10.type.FileTypeFacets;
-import org.raml.v2.internal.impl.v10.type.IntegerTypeFacets;
-import org.raml.v2.internal.impl.v10.type.NullTypeFacets;
-import org.raml.v2.internal.impl.v10.type.NumberTypeFacets;
-import org.raml.v2.internal.impl.v10.type.ObjectTypeFacets;
-import org.raml.v2.internal.impl.v10.type.StringTypeFacets;
-import org.raml.v2.internal.impl.v10.type.TimeOnlyTypeFacets;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.v10.type.TypeIds;
+import org.raml.v2.internal.impl.v10.type.AnyType;
+import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
+import org.raml.v2.internal.impl.v10.type.BooleanResolvedType;
+import org.raml.v2.internal.impl.v10.type.DateOnlyResolvedType;
+import org.raml.v2.internal.impl.v10.type.DateTimeOnlyResolvedType;
+import org.raml.v2.internal.impl.v10.type.DateTimeResolvedType;
+import org.raml.v2.internal.impl.v10.type.FileResolvedType;
+import org.raml.v2.internal.impl.v10.type.IntegerResolvedType;
+import org.raml.v2.internal.impl.v10.type.NullResolvedType;
+import org.raml.v2.internal.impl.v10.type.NumberResolvedType;
+import org.raml.v2.internal.impl.v10.type.ObjectResolvedType;
+import org.raml.v2.internal.impl.v10.type.StringResolvedType;
+import org.raml.v2.internal.impl.v10.type.TimeOnlyResolvedType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.TypeId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,7 +47,7 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
 
     public NativeTypeExpressionNode()
     {
-        super(TypeIds.STRING.getType());
+        super(TypeId.STRING.getType());
     }
 
     public NativeTypeExpressionNode(String value)
@@ -56,7 +57,7 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
 
     public static boolean isNativeType(String type)
     {
-        for (TypeIds builtInScalarType : TypeIds.values())
+        for (TypeId builtInScalarType : TypeId.values())
         {
             if (builtInScalarType.getType().equals(type))
             {
@@ -74,9 +75,9 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
         return new NativeTypeExpressionNode(this);
     }
 
-    public static TypeIds getType(String type)
+    public static TypeId getType(String type)
     {
-        for (TypeIds builtInScalarType : TypeIds.values())
+        for (TypeId builtInScalarType : TypeId.values())
         {
             if (builtInScalarType.getType().equals(type))
             {
@@ -88,40 +89,42 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
 
     @Nullable
     @Override
-    public TypeFacets generateDefinition()
+    public ResolvedType generateDefinition()
     {
-        final TypeIds typeIds = getType(getLiteralValue());
-        if (typeIds == null)
+        final TypeId typeId = getType(getLiteralValue());
+        if (typeId == null)
         {
             return null;
         }
-        switch (typeIds)
+        switch (typeId)
         {
         case STRING:
-            return new StringTypeFacets();
+            return new StringResolvedType();
         case NUMBER:
-            return new NumberTypeFacets();
+            return new NumberResolvedType();
         case INTEGER:
-            return new IntegerTypeFacets();
+            return new IntegerResolvedType();
         case BOOLEAN:
-            return new BooleanTypeFacets();
+            return new BooleanResolvedType();
         case DATE_ONLY:
-            return new DateOnlyTypeFacets();
+            return new DateOnlyResolvedType();
         case TIME_ONLY:
-            return new TimeOnlyTypeFacets();
+            return new TimeOnlyResolvedType();
         case DATE_TIME_ONLY:
-            return new DateTimeOnlyTypeFacets();
+            return new DateTimeOnlyResolvedType();
         case DATE_TIME:
-            return new DateTimeTypeFacets();
+            return new DateTimeResolvedType();
         case FILE:
-            return new FileTypeFacets();
+            return new FileResolvedType();
         case OBJECT:
-            return new ObjectTypeFacets();
+            return new ObjectResolvedType();
         case ARRAY:
-            return new ArrayTypeFacets();
+            return new ArrayResolvedType();
         case NULL:
-            return new NullTypeFacets();
+            return new NullResolvedType();
+        case ANY:
+            return new AnyType();
         }
-        return null;
+        return new AnyType();
     }
 }

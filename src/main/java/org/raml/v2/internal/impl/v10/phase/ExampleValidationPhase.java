@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.phase;
 
+import org.apache.ws.commons.schema.XmlSchema;
+import org.apache.ws.commons.schema.XmlSchemaElement;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
@@ -25,13 +27,28 @@ import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
 import org.raml.v2.internal.framework.phase.Phase;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.AnyType;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
+import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.utils.NodeUtils;
+import org.raml.v2.internal.utils.ValueUtils;
+import org.raml.v2.internal.utils.xml.XsdResourceResolver;
+import org.xml.sax.SAXException;
 
+import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.List;
+
+import static org.raml.v2.internal.utils.ValueUtils.defaultTo;
 
 public class ExampleValidationPhase implements Phase
 {
@@ -65,56 +82,92 @@ public class ExampleValidationPhase implements Phase
         return tree;
     }
 
+    @Nullable
     public Node validate(TypeDeclarationNode type, Node exampleValue)
     {
-        final TypeFacets typeFacets = type.getTypeFacets();
-        final Rule rule = typeFacets.visit(new TypeToRuleVisitor(resourceLoader));
-
-        if (exampleValue instanceof StringNode && !isExternalSchemaType(typeFacets))
+        final ResolvedType resolvedType = type.getResolvedType();
+        if (resolvedType instanceof AnyType) // If accepts any no need for validation
+        {
+            return null;
+        }
+        if (exampleValue instanceof StringNode && !isExternalSchemaType(resolvedType))
         {
             final String value = ((StringNode) exampleValue).getValue();
             if (isXmlValue(value))
             {
-                // TODO add xml validation based on type definition
+                return validateXml(type, resolvedType, value);
             }
             else if (isJsonValue(value))
             {
-                final Node parse = RamlNodeParser.parse("", value);
-                final Node apply = rule.apply(parse);
-                final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
-                if (apply instanceof ErrorNode || !errorNodeList.isEmpty())
-                {
-                    String errorMessage = "";
-                    if (apply instanceof ErrorNode)
-                    {
-                        errorMessage += "- " + ((ErrorNode) apply).getErrorMessage();
-                    }
-                    for (ErrorNode errorNode : errorNodeList)
-                    {
-                        if (errorMessage.isEmpty())
-                        {
-                            errorMessage = "- " + errorNode.getErrorMessage();
-                        }
-                        else
-                        {
-                            errorMessage += "\n" + "- " + errorNode.getErrorMessage();
-                        }
-                    }
-                    return ErrorNodeFactory.createInvalidJsonExampleNode(errorMessage);
-                }
-                else
-                {
-                    return exampleValue;
-                }
+                return validateJson(exampleValue, resolvedType, value);
             }
             else
             {
+                final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
                 return rule.apply(exampleValue);
             }
         }
         else if (exampleValue != null)
         {
+            final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
             return rule.apply(exampleValue);
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
+    protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
+    {
+        final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
+        final Node parse = RamlNodeParser.parse("", value);
+        final Node apply = rule.apply(parse);
+        final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
+        if (apply instanceof ErrorNode || !errorNodeList.isEmpty())
+        {
+            String errorMessage = "";
+            if (apply instanceof ErrorNode)
+            {
+                errorMessage += "- " + ((ErrorNode) apply).getErrorMessage();
+            }
+            for (ErrorNode errorNode : errorNodeList)
+            {
+                if (errorMessage.isEmpty())
+                {
+                    errorMessage = "- " + errorNode.getErrorMessage();
+                }
+                else
+                {
+                    errorMessage += "\n" + "- " + errorNode.getErrorMessage();
+                }
+            }
+            return ErrorNodeFactory.createInvalidJsonExampleNode(errorMessage);
+        }
+        else
+        {
+            return exampleValue;
+        }
+    }
+
+    @Nullable
+    protected Node validateXml(TypeDeclarationNode type, ResolvedType resolvedType, String value)
+    {
+        final TypeToSchemaVisitor typeToSchemaVisitor = new TypeToSchemaVisitor();
+        typeToSchemaVisitor.transform(defaultTo(type.getTypeName(), "raml-root"), resolvedType);
+        final XmlSchema schema = typeToSchemaVisitor.getSchema();
+        final StringWriter xsd = new StringWriter();
+        schema.write(xsd);
+        try
+        {
+            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            final Validator validator = factory.newSchema(new StreamSource(new StringReader(xsd.toString()))).newValidator();
+            validator.validate(new StreamSource(new StringReader(value)));
+        }
+        catch (IOException | SAXException e)
+        {
+            return ErrorNodeFactory.createInvalidXmlExampleNode(e.getMessage());
         }
         return null;
     }
@@ -129,8 +182,8 @@ public class ExampleValidationPhase implements Phase
         return value.trim().startsWith("{") || value.trim().startsWith("[");
     }
 
-    private boolean isExternalSchemaType(TypeFacets typeFacets)
+    private boolean isExternalSchemaType(ResolvedType resolvedType)
     {
-        return typeFacets instanceof XmlSchemaTypeFacets || typeFacets instanceof JsonSchemaTypeFacets;
+        return resolvedType instanceof XmlSchemaExternalType || resolvedType instanceof JsonSchemaExternalType;
     }
 }

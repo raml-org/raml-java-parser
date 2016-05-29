@@ -16,27 +16,29 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeVisitor;
+
+import javax.annotation.Nullable;
 
 /**
  * Represents a resolved type in the type system.
  * It describes all the facets of a type.
  */
-public interface TypeFacets
+public interface ResolvedType
 {
     /**
      * Returns a new type definition with the facets being overwritten from the specified node
      * @param from The node from where to load the facets
-     * @return A new type definition
+     * @return A new type
      */
-    TypeFacets overwriteFacets(TypeDeclarationNode from);
+    ResolvedType overwriteFacets(TypeDeclarationNode from);
 
     /**
-     * Returns a new type definition after merging the facets of both TypeDefinitions
+     * Returns a new type definition after merging the facets of both Types
      * @param with The type definition to merge with
-     * @return The new type definition
+     * @return The new type
      */
-    TypeFacets mergeFacets(TypeFacets with);
+    ResolvedType mergeFacets(ResolvedType with);
 
     /**
      * Dispatch the implementation to the visitor method
@@ -44,5 +46,8 @@ public interface TypeFacets
      * @param <T> The result type
      * @return The result of the visitor execution
      */
-    <T> T visit(TypeFacetsVisitor<T> visitor);
+    <T> T visit(TypeVisitor<T> visitor);
+
+    @Nullable
+    String getTypeName();
 }

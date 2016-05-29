@@ -15,31 +15,40 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-public class BooleanTypeFacets extends BaseTypeFacets
+public class DateOnlyResolvedType extends XmlFacetsCapableType
 {
-    private BooleanTypeFacets copy()
+    public DateOnlyResolvedType(XmlFacets xmlFacets)
     {
-        return new BooleanTypeFacets();
+        super(xmlFacets);
+    }
+
+    public DateOnlyResolvedType()
+    {
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         return overwriteFacets(copy(), from);
     }
 
+    private DateOnlyResolvedType copy()
+    {
+        return new DateOnlyResolvedType(getXmlFacets().copy());
+    }
+
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
         return mergeFacets(copy(), with);
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
-        return visitor.visitBoolean(this);
+        return visitor.visitDate(this);
     }
 }

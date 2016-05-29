@@ -16,42 +16,42 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.type.TypeFacetsVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 
-public class JsonSchemaTypeFacets implements SchemaBasedTypeFacets
+public class JsonSchemaExternalType extends BaseType implements SchemaBasedResolvedType
 {
 
     private final String schemaValue;
     private final String schemaPath;
     private final String internalFragment;
 
-    public JsonSchemaTypeFacets(String schemaValue, String schemaPath, String internalFragment)
+    public JsonSchemaExternalType(String schemaValue, String schemaPath, String internalFragment)
     {
-
         this.schemaValue = schemaValue;
         this.schemaPath = schemaPath;
         this.internalFragment = internalFragment;
     }
 
-    protected JsonSchemaTypeFacets copy()
+    protected JsonSchemaExternalType copy()
     {
-        return new JsonSchemaTypeFacets(schemaValue, schemaPath, internalFragment);
+        return new JsonSchemaExternalType(schemaValue, schemaPath, internalFragment);
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
+    {
+        setTypeNode(from);
+        return copy();
+    }
+
+    @Override
+    public ResolvedType mergeFacets(ResolvedType with)
     {
         return copy();
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
-    {
-        return copy();
-    }
-
-    @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitJson(this);
     }

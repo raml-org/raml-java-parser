@@ -28,8 +28,8 @@ import org.raml.v2.internal.impl.commons.model.builder.ModelUtils;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
-import org.raml.v2.internal.impl.commons.type.SchemaBasedTypeFacets;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
 
@@ -67,10 +67,10 @@ public class TypeDeclaration extends Annotable
             final List<TypeExpressionNode> baseTypes = ((TypeDeclarationNode) node.getValue()).getBaseTypes();
             if (!baseTypes.isEmpty())
             {
-                final TypeFacets typeFacets = baseTypes.get(0).generateDefinition();
-                if (typeFacets instanceof SchemaBasedTypeFacets)
+                final ResolvedType resolvedType = baseTypes.get(0).generateDefinition();
+                if (resolvedType instanceof SchemaBasedResolvedType)
                 {
-                    return ((SchemaBasedTypeFacets) typeFacets).getSchemaValue();
+                    return ((SchemaBasedResolvedType) resolvedType).getSchemaValue();
                 }
 
             }

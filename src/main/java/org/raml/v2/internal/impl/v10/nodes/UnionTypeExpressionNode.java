@@ -20,8 +20,8 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.v10.type.UnionTypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -82,14 +82,14 @@ public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExp
 
     @Nullable
     @Override
-    public TypeFacets generateDefinition()
+    public ResolvedType generateDefinition()
     {
         final List<TypeExpressionNode> of = of();
-        List<TypeFacets> definitions = new ArrayList<>();
+        List<ResolvedType> definitions = new ArrayList<>();
         for (TypeExpressionNode typeExpressionNode : of)
         {
             definitions.add(typeExpressionNode.generateDefinition());
         }
-        return new UnionTypeFacets(definitions);
+        return new UnionResolvedType(definitions);
     }
 }

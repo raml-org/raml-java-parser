@@ -41,7 +41,7 @@
                     "body": {
                         "text/plain": {
                             "example": "soul",
-                            "type": "string",
+                            "type": "any",
                             "displayName": "text/plain"
                         }
                     }

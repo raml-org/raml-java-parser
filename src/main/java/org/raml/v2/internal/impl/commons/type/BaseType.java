@@ -13,33 +13,30 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.v10.type;
+package org.raml.v2.internal.impl.commons.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-public class DateOnlyTypeFacets extends BaseTypeFacets
+import javax.annotation.Nullable;
+
+public abstract class BaseType implements ResolvedType
 {
-    @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    private TypeDeclarationNode typeNode;
+
+    protected void setTypeNode(TypeDeclarationNode typeNode)
     {
-        return overwriteFacets(copy(), from);
+        this.typeNode = typeNode;
     }
 
-    private DateOnlyTypeFacets copy()
+    @Nullable
+    @Override
+    public String getTypeName()
     {
-        return new DateOnlyTypeFacets();
+        return getTypeNode() != null ? getTypeNode().getTypeName() : null;
     }
 
-    @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public TypeDeclarationNode getTypeNode()
     {
-        return mergeFacets(copy(), with);
-    }
-
-    @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
-    {
-        return visitor.visitDate(this);
+        return typeNode;
     }
 }

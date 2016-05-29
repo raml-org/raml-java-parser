@@ -15,32 +15,40 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
-public class DateTimeOnlyTypeFacets extends BaseTypeFacets
+public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
 {
 
-
-    protected DateTimeOnlyTypeFacets copy()
+    public DateTimeOnlyResolvedType(XmlFacets xmlFacets)
     {
-        return new DateTimeOnlyTypeFacets();
+        super(xmlFacets);
+    }
+
+    public DateTimeOnlyResolvedType()
+    {
+    }
+
+    protected DateTimeOnlyResolvedType copy()
+    {
+        return new DateTimeOnlyResolvedType(getXmlFacets().copy());
     }
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         return overwriteFacets(copy(), from);
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
         return mergeFacets(copy(), with);
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitDateTimeOnly(this);
     }

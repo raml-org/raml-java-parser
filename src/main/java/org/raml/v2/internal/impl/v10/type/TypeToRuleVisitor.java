@@ -25,7 +25,6 @@ import org.raml.v2.internal.framework.grammar.rule.BooleanTypeRule;
 import org.raml.v2.internal.framework.grammar.rule.DateValueRule;
 import org.raml.v2.internal.framework.grammar.rule.DivisorValueRule;
 import org.raml.v2.internal.framework.grammar.rule.IntegerTypeRule;
-import org.raml.v2.internal.framework.grammar.rule.IntegerValueRule;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
 import org.raml.v2.internal.framework.grammar.rule.MaxItemsRule;
 import org.raml.v2.internal.framework.grammar.rule.MaxLengthRule;
@@ -44,13 +43,11 @@ import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringTypeRule;
 import org.raml.v2.internal.impl.commons.rule.JsonSchemaValidationRule;
 import org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaTypeFacets;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaTypeFacets;
-import org.raml.v2.internal.utils.BasicRuleFactory;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.utils.DateType;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -60,20 +57,21 @@ import java.util.regex.Pattern;
 import static org.raml.v2.internal.utils.BasicRuleFactory.patternProperty;
 import static org.raml.v2.internal.utils.BasicRuleFactory.property;
 import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
+import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
 
-public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
+public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
 
     private ResourceLoader resourceLoader;
     private boolean strictMode = false;
-    private Map<TypeFacets, Rule> definitionRuleMap = new IdentityHashMap<>();
+    private Map<ResolvedType, Rule> definitionRuleMap = new IdentityHashMap<>();
 
     public TypeToRuleVisitor(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
     }
 
-    public Rule generateRule(TypeFacets items, boolean strict)
+    public Rule generateRule(ResolvedType items, boolean strict)
     {
         if (definitionRuleMap.containsKey(items))
         {
@@ -86,13 +84,13 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
         }
     }
 
-    public Rule generateRule(TypeFacets items)
+    public Rule generateRule(ResolvedType items)
     {
         return generateRule(items, strictMode);
     }
 
     @Override
-    public Rule visitString(StringTypeFacets stringTypeNode)
+    public Rule visitString(StringResolvedType stringTypeNode)
     {
         final AllOfRule typeRule = new AllOfRule(new StringTypeRule());
         registerRule(stringTypeNode, typeRule);
@@ -131,7 +129,7 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
     }
 
     @Override
-    public Rule visitObject(ObjectTypeFacets objectTypeDefinition)
+    public Rule visitObject(ObjectResolvedType objectTypeDefinition)
     {
         final ObjectRule objectRule = new ObjectRule(strictMode);
         registerRule(objectTypeDefinition, objectRule);
@@ -141,7 +139,7 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
         {
             final PropertyFacets propertyValue = property.getValue();
             final KeyValueRule keyValue;
-            final Rule value = generateRule(propertyValue.getTypeFacets());
+            final Rule value = generateRule(propertyValue.getValueTypeFacets());
             if (propertyValue.isPatternProperty())
             {
                 keyValue = patternProperty(propertyValue.getPatternRegex(), value);
@@ -176,35 +174,31 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
         return allOfRule;
     }
 
-    protected void registerRule(TypeFacets objectTypeFacets, Rule objectRule)
+    protected void registerRule(ResolvedType objectResolvedType, Rule objectRule)
     {
-        definitionRuleMap.put(objectTypeFacets, objectRule);
+        definitionRuleMap.put(objectResolvedType, objectRule);
     }
 
-    protected boolean asBoolean(Boolean required, boolean defaultValue)
-    {
-        return required == null ? defaultValue : required;
-    }
 
     @Override
-    public Rule visitBoolean(BooleanTypeFacets booleanTypeDefinition)
+    public Rule visitBoolean(BooleanResolvedType booleanTypeDefinition)
     {
         return new BooleanTypeRule();
     }
 
     @Override
-    public Rule visitInteger(IntegerTypeFacets integerTypeDefinition)
+    public Rule visitInteger(IntegerResolvedType integerTypeDefinition)
     {
         return visitNumber(integerTypeDefinition, new IntegerTypeRule());
     }
 
     @Override
-    public Rule visitNumber(NumberTypeFacets numberTypeDefinition)
+    public Rule visitNumber(NumberResolvedType numberTypeDefinition)
     {
         return visitNumber(numberTypeDefinition, new NumberTypeRule());
     }
 
-    private Rule visitNumber(NumberTypeFacets numericTypeNode, Rule numericTypeRule)
+    private Rule visitNumber(NumberResolvedType numericTypeNode, Rule numericTypeRule)
     {
         final AllOfRule typeRule = new AllOfRule(numericTypeRule);
         registerRule(numericTypeNode, typeRule);
@@ -239,58 +233,64 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
     }
 
     @Override
-    public Rule visitDateTimeOnly(DateTimeOnlyTypeFacets dateTimeOnlyTypeDefinition)
+    public Rule visitDateTimeOnly(DateTimeOnlyResolvedType dateTimeOnlyTypeDefinition)
     {
         return new DateValueRule(DateType.datetime_only, null);
     }
 
     @Override
-    public Rule visitDate(DateOnlyTypeFacets dateOnlyTypeDefinition)
+    public Rule visitDate(DateOnlyResolvedType dateOnlyTypeDefinition)
     {
         return new DateValueRule(DateType.date_only, null);
     }
 
     @Override
-    public Rule visitDateTime(DateTimeTypeFacets dateTimeTypeDefinition)
+    public Rule visitDateTime(DateTimeResolvedType dateTimeTypeDefinition)
     {
         return new DateValueRule(DateType.datetime, dateTimeTypeDefinition.getFormat());
     }
 
     @Override
-    public Rule visitTimeOnly(TimeOnlyTypeFacets timeOnlyTypeDefinition)
+    public Rule visitTimeOnly(TimeOnlyResolvedType timeOnlyTypeDefinition)
     {
         return new DateValueRule(DateType.time_only, null);
     }
 
     @Override
-    public Rule visitJson(JsonSchemaTypeFacets jsonTypeDefinition)
+    public Rule visitJson(JsonSchemaExternalType jsonTypeDefinition)
     {
         return new JsonSchemaValidationRule(jsonTypeDefinition);
     }
 
     @Override
-    public Rule visitXml(XmlSchemaTypeFacets xmlTypeDefinition)
+    public Rule visitXml(XmlSchemaExternalType xmlTypeDefinition)
     {
         return new XmlSchemaValidationRule(xmlTypeDefinition, resourceLoader);
     }
 
     @Override
-    public Rule visitFile(FileTypeFacets fileTypeDefinition)
+    public Rule visitAny(AnyType anyType)
+    {
+        return new AnyValueRule();
+    }
+
+    @Override
+    public Rule visitFile(FileResolvedType fileTypeDefinition)
     {
         // TODO how do we validate files??
         return new AnyValueRule();
     }
 
     @Override
-    public Rule visitNull(NullTypeFacets nullTypeDefinition)
+    public Rule visitNull(NullResolvedType nullTypeDefinition)
     {
         return new NullValueRule();
     }
 
     @Override
-    public Rule visitArray(ArrayTypeFacets arrayTypeDefinition)
+    public Rule visitArray(ArrayResolvedType arrayTypeDefinition)
     {
-        final TypeFacets items = arrayTypeDefinition.getItems();
+        final ResolvedType items = arrayTypeDefinition.getItems();
         final AllOfRule rule = new AllOfRule(new ArrayRule(generateRule(items)));
         registerRule(arrayTypeDefinition, rule);
         if (arrayTypeDefinition.getMaxItems() != null)
@@ -310,13 +310,13 @@ public class TypeToRuleVisitor implements TypeFacetsVisitor<Rule>
 
 
     @Override
-    public Rule visitUnion(UnionTypeFacets unionTypeDefinition)
+    public Rule visitUnion(UnionResolvedType unionTypeDefinition)
     {
-        final List<TypeFacets> of = unionTypeDefinition.of();
+        final List<ResolvedType> of = unionTypeDefinition.of();
         final List<Rule> rules = new ArrayList<>();
-        for (TypeFacets typeFacets : of)
+        for (ResolvedType resolvedType : of)
         {
-            rules.add(generateRule(typeFacets, true));
+            rules.add(generateRule(resolvedType, true));
         }
         return new AnyOfRule(rules);
     }

@@ -18,7 +18,7 @@ package org.raml.v2.internal.impl.v10.type;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYArrayNode;
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 import javax.annotation.Nonnull;
@@ -29,35 +29,36 @@ import java.util.List;
 import static org.raml.v2.internal.utils.NodeSelector.selectIntValue;
 import static org.raml.v2.internal.utils.NodeSelector.selectStringValue;
 
-public class StringTypeFacets extends BaseTypeFacets
+public class StringResolvedType extends XmlFacetsCapableType
 {
     private Integer minLength;
     private Integer maxLength;
     private String pattern;
     private List<String> enums;
 
-    public StringTypeFacets()
+    public StringResolvedType()
     {
     }
 
-    public StringTypeFacets(Integer minLength, Integer maxLength, String pattern, List<String> enums)
+    public StringResolvedType(XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums)
     {
+        super(xmlFacets);
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.pattern = pattern;
         this.enums = enums;
     }
 
-    protected StringTypeFacets copy()
+    protected StringResolvedType copy()
     {
-        return new StringTypeFacets(minLength, maxLength, pattern, enums);
+        return new StringResolvedType(getXmlFacets(), minLength, maxLength, pattern, enums);
     }
 
 
     @Override
-    public TypeFacets overwriteFacets(TypeDeclarationNode from)
+    public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        final StringTypeFacets result = copy();
+        final StringResolvedType result = copy();
         result.setMinLength(selectIntValue("minLength", from));
         result.setMaxLength(selectIntValue("maxLength", from));
         result.setPattern(selectStringValue("pattern", from));
@@ -82,12 +83,12 @@ public class StringTypeFacets extends BaseTypeFacets
     }
 
     @Override
-    public TypeFacets mergeFacets(TypeFacets with)
+    public ResolvedType mergeFacets(ResolvedType with)
     {
-        final StringTypeFacets result = copy();
-        if (with instanceof StringTypeFacets)
+        final StringResolvedType result = copy();
+        if (with instanceof StringResolvedType)
         {
-            final StringTypeFacets stringTypeDefinition = (StringTypeFacets) with;
+            final StringResolvedType stringTypeDefinition = (StringResolvedType) with;
             result.setMaxLength(stringTypeDefinition.getMaxLength());
             result.setMinLength(stringTypeDefinition.getMinLength());
             result.setPattern(stringTypeDefinition.getPattern());
@@ -97,7 +98,7 @@ public class StringTypeFacets extends BaseTypeFacets
     }
 
     @Override
-    public <T> T visit(TypeFacetsVisitor<T> visitor)
+    public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitString(this);
     }

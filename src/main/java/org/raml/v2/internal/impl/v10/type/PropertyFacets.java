@@ -15,7 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.TypeFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 
 import javax.annotation.Nullable;
@@ -24,14 +24,14 @@ public class PropertyFacets
 {
 
     private String name;
-    private TypeFacets typeFacets;
+    private ResolvedType resolvedType;
     private boolean required;
     private PropertyNode propertyNode;
 
-    public PropertyFacets(String name, TypeFacets typeFacets, Boolean required)
+    public PropertyFacets(String name, ResolvedType resolvedType, Boolean required)
     {
         this.name = name;
-        this.typeFacets = typeFacets;
+        this.resolvedType = resolvedType;
         this.required = required;
     }
 
@@ -47,14 +47,14 @@ public class PropertyFacets
         return name;
     }
 
-    public TypeFacets getTypeFacets()
+    public ResolvedType getValueTypeFacets()
     {
         // Load it lazy so it support recursive definitions
-        if (typeFacets == null)
+        if (resolvedType == null)
         {
-            typeFacets = propertyNode.getTypeDefinition();
+            resolvedType = propertyNode.getTypeDefinition();
         }
-        return typeFacets;
+        return resolvedType;
     }
 
     public boolean isRequired()
@@ -82,6 +82,6 @@ public class PropertyFacets
 
     public PropertyFacets mergeFacets(PropertyFacets value)
     {
-        return new PropertyFacets(name, getTypeFacets().mergeFacets(value.getTypeFacets()), required || value.isRequired());
+        return new PropertyFacets(name, getValueTypeFacets().mergeFacets(value.getValueTypeFacets()), required || value.isRequired());
     }
 }

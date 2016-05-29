@@ -15,10 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
-import static java.util.Arrays.asList;
-
-import javax.annotation.Nonnull;
-
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
 import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
@@ -36,6 +32,7 @@ import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
@@ -46,6 +43,14 @@ import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
 import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
+import org.raml.v2.internal.impl.v10.type.TypeId;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 
 public class Raml10Grammar extends BaseRamlGrammar
 {
@@ -199,7 +204,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected Rule types()
     {
         return objectType()
-                           .with(field(scalarType(), type()));
+                           .with(field(scalarType(), type()).then(TypeDeclarationField.class));
     }
 
     protected Rule parameter()
@@ -224,8 +229,13 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     public ObjectRule explicitType()
     {
+        return explicitType(TypeId.STRING);
+    }
+
+    public ObjectRule explicitType(TypeId defaultType)
+    {
         return objectType("explicitType")
-                                         .with(typeField())
+                                         .with(typeField(defaultType))
                                          .with(xmlFacetField())
                                          .with(displayNameField())
                                          .with(descriptionField())
@@ -268,31 +278,42 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                 .add(discriminatorField())
                                                                                 .add(discriminatorValueField()),
                                                          // If it is an inherited type then we don't know we suggest all the properties
-                                                         is(not(nullValue()))
-                                                                             .add(patternField())
-                                                                             .add(minLengthField())
-                                                                             .add(maxLengthField())
-                                                                             .add(enumField())
-                                                                             .add(formatField())
-                                                                             .add(uniqueItemsField())
-                                                                             .add(itemsField())
-                                                                             .add(minItemsField())
-                                                                             .add(maxItemsField())
-                                                                             .add(minimumField())
-                                                                             .add(maximumField())
-                                                                             .add(numberFormat())
-                                                                             .add(multipleOfField())
-                                                                             .add(fileTypesField())
-                                                                             .add(propertiesField())
-                                                                             .add(minPropertiesField())
-                                                                             .add(maxPropertiesField())
-                                                                             .add(additionalPropertiesField())
-                                                                             .add(discriminatorField())
-                                                                             .add(discriminatorValueField())
-                                                                             .add(field(facetRegex(), any()))
-                                                 ).defaultValue(new TypeDefaultValue())
+                                                         is(not(builtinTypes()))
+                                                                                .add(patternField())
+                                                                                .add(minLengthField())
+                                                                                .add(maxLengthField())
+                                                                                .add(enumField())
+                                                                                .add(formatField())
+                                                                                .add(uniqueItemsField())
+                                                                                .add(itemsField())
+                                                                                .add(minItemsField())
+                                                                                .add(maxItemsField())
+                                                                                .add(minimumField())
+                                                                                .add(maximumField())
+                                                                                .add(numberFormat())
+                                                                                .add(multipleOfField())
+                                                                                .add(fileTypesField())
+                                                                                .add(propertiesField())
+                                                                                .add(minPropertiesField())
+                                                                                .add(maxPropertiesField())
+                                                                                .add(additionalPropertiesField())
+                                                                                .add(discriminatorField())
+                                                                                .add(discriminatorValueField())
+                                                                                .add(field(facetRegex(), any()))
+                                                 ).defaultValue(new TypeDefaultValue(defaultType))
                                          )
                                          .then(TypeDeclarationNode.class);
+    }
+
+    protected Rule builtinTypes()
+    {
+        final TypeId[] values = TypeId.values();
+        List<Rule> typeNames = new ArrayList<>();
+        for (TypeId value : values)
+        {
+            typeNames.add(string(value.getType()));
+        }
+        return anyOf(typeNames);
     }
 
     protected KeyValueRule discriminatorValueField()
@@ -469,11 +490,11 @@ public class Raml10Grammar extends BaseRamlGrammar
                            .with(field(scalarType(), exampleValue()).then(ExampleDeclarationNode.class));
     }
 
-    private KeyValueRule typeField()
+    private KeyValueRule typeField(TypeId defaultType)
     {
         return field(
                 anyOf(typeKey(), schemaKey()),
-                anyOf(typeExpressionReference(), array(typeExpressionReference()))).defaultValue(new TypeDefaultValue())
+                anyOf(typeExpressionReference(), array(typeExpressionReference()))).defaultValue(new TypeDefaultValue(defaultType))
                                                                                    .description(
                                                                                            "A base type which the current type extends or just wraps."
                                                                                                    +
@@ -542,7 +563,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected Rule mimeType()
     {
-        return explicitType();
+        return explicitType(TypeId.ANY);
     }
 
     protected Rule exampleValue()
