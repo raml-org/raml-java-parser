@@ -47,7 +47,7 @@ public class PropertyFacets
         return name;
     }
 
-    public ResolvedType getValueTypeFacets()
+    public ResolvedType getValueType()
     {
         // Load it lazy so it support recursive definitions
         if (resolvedType == null)
@@ -82,6 +82,6 @@ public class PropertyFacets
 
     public PropertyFacets mergeFacets(PropertyFacets value)
     {
-        return new PropertyFacets(name, getValueTypeFacets().mergeFacets(value.getValueTypeFacets()), required || value.isRequired());
+        return new PropertyFacets(name, getValueType().mergeFacets(value.getValueType()), required || value.isRequired());
     }
 }

@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -46,7 +47,6 @@ public class ObjectRule extends Rule
 
     private List<KeyValueRule> fields;
     private ConditionalRules conditionalRules;
-
     private boolean strict = false;
     private boolean allowsAdditionalProperties = false;
 
@@ -267,6 +267,15 @@ public class ObjectRule extends Rule
         return this;
     }
 
+    public ObjectRule withAll(KeyValueRule... fields)
+    {
+        if (fields != null)
+        {
+            this.fields.addAll(Arrays.asList(fields));
+        }
+        return this;
+    }
+
     public ObjectRule with(int index, KeyValueRule field)
     {
         this.fields.add(index, field);
@@ -312,20 +321,4 @@ public class ObjectRule extends Rule
         return this;
     }
 
-    public ObjectRule merge(ObjectRule objectRule)
-    {
-        if (objectRule.conditionalRules != null)
-        {
-            if (this.conditionalRules != null)
-            {
-                throw new IllegalStateException("Cannot merge conditional rules.");
-            }
-            this.conditionalRules = objectRule.conditionalRules;
-        }
-        for (KeyValueRule keyValueRule : objectRule.fields)
-        {
-            this.fields.add(keyValueRule);
-        }
-        return this;
-    }
 }

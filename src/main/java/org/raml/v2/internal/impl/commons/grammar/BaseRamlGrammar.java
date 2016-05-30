@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import org.raml.v2.internal.framework.grammar.BaseGrammar;
 import org.raml.v2.internal.framework.grammar.ExclusiveSiblingRule;
+import org.raml.v2.internal.framework.grammar.RuleFactory;
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
 import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
@@ -124,10 +125,9 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     public Rule resourceTypeParamsResolved()
     {
-        return objectType()
-                           .merge(baseResourceValue())
-                           .with(usageField())
-                           .with(field(anyResourceTypeMethod(), methodValue()).then(MethodNode.class));
+        return baseResourceValue()
+                                  .with(usageField())
+                                  .with(field(anyResourceTypeMethod(), methodValue()).then(MethodNode.class));
     }
 
     public Rule traitParamsResolved()
@@ -222,9 +222,16 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     public ObjectRule trait()
     {
-        return objectType("trait")
-                                  .with(field(scalarType(), any())
-                                                                  .then(TraitNode.class));
+        return named("trait", new RuleFactory<ObjectRule>()
+        {
+            @Override
+            public ObjectRule create()
+            {
+                return objectType()
+                                   .with(field(scalarType(), any())
+                                                                   .then(TraitNode.class));
+            }
+        });
     }
 
     // Resource Types
@@ -237,10 +244,16 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     // Resources
     protected ObjectRule resourceValue()
     {
-        return objectType("resourceValue")
-                                          .merge(baseResourceValue())
+        return named("resourceValue", new RuleFactory<ObjectRule>()
+        {
+            @Override
+            public ObjectRule create()
+            {
+                return baseResourceValue()
                                           .with(field(anyMethod(), methodValue()).then(MethodNode.class))
-                                          .with(field(resourceKey(), ref("resourceValue")).then(ResourceNode.class));
+                                          .with(field(resourceKey(), resourceValue()).then(ResourceNode.class));
+            }
+        });
     }
 
     protected ObjectRule baseResourceValue()

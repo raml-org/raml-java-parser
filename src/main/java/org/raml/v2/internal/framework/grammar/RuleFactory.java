@@ -17,34 +17,7 @@ package org.raml.v2.internal.framework.grammar;
 
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-
-public class GrammarContext
+public interface RuleFactory<T extends Rule>
 {
-
-    private Map<String, Rule> ruleMap;
-
-    public GrammarContext()
-    {
-        this.ruleMap = new HashMap<>();
-    }
-
-    public <T extends Rule> T registerRule(String name, T rule)
-    {
-        this.ruleMap.put(name, rule);
-        return rule;
-    }
-
-    @Nullable
-    public Rule getRuleByName(String name)
-    {
-        return ruleMap.get(name);
-    }
-
-    public boolean hasRule(String name)
-    {
-        return ruleMap.containsKey(name);
-    }
+    T create();
 }

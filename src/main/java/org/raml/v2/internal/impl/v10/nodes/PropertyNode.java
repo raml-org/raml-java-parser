@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.v10.nodes;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.framework.nodes.BooleanNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.type.StringResolvedType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -40,14 +41,27 @@ public class PropertyNode extends KeyValueNodeImpl
     public String getName()
     {
         final StringNode key = (StringNode) getKey();
-        String keyValue = key.getValue();
-        return keyValue.endsWith("?") ? keyValue.substring(0, keyValue.length() - 1) : keyValue;
+        final String keyValue = key.getValue();
+        if (getRequiredNode() == null)
+        {
+            // If required field is set then the ? should be ignored
+            return keyValue.endsWith("?") ? keyValue.substring(0, keyValue.length() - 1) : keyValue;
+        }
+        else
+        {
+            return keyValue;
+        }
+    }
+
+    private Node getRequiredNode()
+    {
+        return getValue().get("required");
     }
 
     public boolean isRequired()
     {
         final StringNode key = (StringNode) getKey();
-        return !key.getValue().endsWith("?");
+        return getRequiredNode() instanceof BooleanNode ? ((BooleanNode) getRequiredNode()).getValue() : !key.getValue().endsWith("?");
     }
 
     public ResolvedType getTypeDefinition()

@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
+import org.raml.v2.internal.framework.grammar.RuleFactory;
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
 import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
@@ -32,6 +33,8 @@ import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
+import org.raml.v2.internal.impl.commons.nodes.MethodNode;
+import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
@@ -56,6 +59,8 @@ public class Raml10Grammar extends BaseRamlGrammar
 {
 
     public static final String ANNOTATION_TYPES_KEY_NAME = "annotationTypes";
+    public static final String DEFAULT_TYPE_RULE = "defaultTypeRule";
+    public static final String PROPERTY_TYPE_RULE = "propertyTypeRule";
 
     public ObjectRule untitledRaml()
     {
@@ -69,7 +74,18 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected ObjectRule resourceValue()
     {
-        return super.resourceValue().with(annotationField());
+        return named("resourceValue", new RuleFactory<ObjectRule>()
+        {
+            @Override
+            public ObjectRule create()
+            {
+                return baseResourceValue()
+                                          .with(field(anyMethod(), methodValue()).then(MethodNode.class))
+                                          .with(field(resourceKey(), resourceValue()).then(ResourceNode.class))
+                                          .with(annotationField());
+            }
+        });
+
     }
 
     @Override
@@ -162,16 +178,23 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     public ObjectRule libraryValue()
     {
-        return objectType("library")
-                                    .with(typesField())
-                                    .with(schemasField())
-                                    .with(resourceTypesField())
-                                    .with(traitsField())
-                                    .with(securitySchemesField())
-                                    .with(annotationTypesField())
-                                    .with(annotationField())
-                                    .with(usesField())
-                                    .with(usageField());
+        return named("library", new RuleFactory<ObjectRule>()
+        {
+            @Override
+            public ObjectRule create()
+            {
+                return objectType()
+                                   .with(typesField())
+                                   .with(schemasField())
+                                   .with(resourceTypesField())
+                                   .with(traitsField())
+                                   .with(securitySchemesField())
+                                   .with(annotationTypesField())
+                                   .with(annotationField())
+                                   .with(usesField())
+                                   .with(usageField());
+            }
+        });
     }
 
     protected KeyValueRule annotationTypesField()
@@ -209,7 +232,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected Rule parameter()
     {
-        return type();
+        return anyOf(inlineType(), propertyType());
     }
 
     public Rule type()
@@ -219,7 +242,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private AnyOfRule typeRef()
     {
-        return anyOf(inlineType(), ref("explicitType"));
+        return anyOf(inlineType(), explicitType());
     }
 
     protected Rule inlineType()
@@ -229,86 +252,96 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     public ObjectRule explicitType()
     {
-        return explicitType(TypeId.STRING);
+        return baseType(TypeId.STRING, DEFAULT_TYPE_RULE);
     }
 
-    public ObjectRule explicitType(TypeId defaultType)
+    private ObjectRule baseType(final TypeId defaultType, final String ruleName, final KeyValueRule... additionalRules)
     {
-        return objectType("explicitType")
-                                         .with(typeField(defaultType))
-                                         .with(xmlFacetField())
-                                         .with(displayNameField())
-                                         .with(descriptionField())
-                                         .with(usageField())
-                                         .with(annotationField())
-                                         .with(defaultField())
-                                         .with(requiredField())
-                                         .with(facetsField())
-                                         .with(exampleField())
-                                         .with(examplesField())
-                                         .with(
-                                                 when(asList("type", "schema"),
-                                                         is(stringTypeLiteral())
-                                                                                .add(patternField())
-                                                                                .add(minLengthField())
-                                                                                .add(maxLengthField())
-                                                                                .add(enumField()),
-                                                         is(dateTimeTypeLiteral())
-                                                                                  .add(formatField()),
-                                                         is(arrayTypeLiteral())
-                                                                               .add(uniqueItemsField())
-                                                                               .add(itemsField())
-                                                                               .add(minItemsField())
-                                                                               .add(maxItemsField()),
-                                                         is(numericTypeLiteral())
-                                                                                 .add(minimumField())
-                                                                                 .add(maximumField())
-                                                                                 .add(numberFormat())
-                                                                                 .add(enumField())
-                                                                                 .add(multipleOfField()),
-                                                         is(fileTypeLiteral())
-                                                                              .add(fileTypesField())
-                                                                              .add(minLengthField())
-                                                                              .add(maxLengthField()),
-                                                         is(objectTypeLiteral())
-                                                                                .add(propertiesField())
-                                                                                .add(minPropertiesField())
-                                                                                .add(maxPropertiesField())
-                                                                                .add(additionalPropertiesField())
-                                                                                .add(discriminatorField())
-                                                                                .add(discriminatorValueField()),
-                                                         // If it is an inherited type then we don't know we suggest all the properties
-                                                         is(not(builtinTypes()))
-                                                                                .add(patternField())
-                                                                                .add(minLengthField())
-                                                                                .add(maxLengthField())
-                                                                                .add(enumField())
-                                                                                .add(formatField())
-                                                                                .add(uniqueItemsField())
-                                                                                .add(itemsField())
-                                                                                .add(minItemsField())
-                                                                                .add(maxItemsField())
-                                                                                .add(minimumField())
-                                                                                .add(maximumField())
-                                                                                .add(numberFormat())
-                                                                                .add(multipleOfField())
+        return named(ruleName,
+                new RuleFactory<ObjectRule>()
+                {
+                    @Override
+                    public ObjectRule create()
+                    {
+                        return objectType()
+                                           .with(typeField(defaultType))
+                                           .with(xmlFacetField())
+                                           .with(displayNameField())
+                                           .with(descriptionField())
+                                           .with(usageField())
+                                           .with(annotationField())
+                                           .with(defaultField())
+                                           .with(requiredField())
+                                           .with(facetsField())
+                                           .with(exampleField())
+                                           .with(examplesField())
+                                           .with(
+                                                   when(asList("type", "schema"),
+                                                           is(stringTypeLiteral())
+                                                                                  .add(patternField())
+                                                                                  .add(minLengthField())
+                                                                                  .add(maxLengthField())
+                                                                                  .add(enumField()),
+                                                           is(dateTimeTypeLiteral())
+                                                                                    .add(formatField()),
+                                                           is(arrayTypeLiteral())
+                                                                                 .add(uniqueItemsField())
+                                                                                 .add(itemsField())
+                                                                                 .add(minItemsField())
+                                                                                 .add(maxItemsField()),
+                                                           is(numericTypeLiteral())
+                                                                                   .add(minimumField())
+                                                                                   .add(maximumField())
+                                                                                   .add(numberFormat())
+                                                                                   .add(enumField())
+                                                                                   .add(multipleOfField()),
+                                                           is(fileTypeLiteral())
                                                                                 .add(fileTypesField())
-                                                                                .add(propertiesField())
-                                                                                .add(minPropertiesField())
-                                                                                .add(maxPropertiesField())
-                                                                                .add(additionalPropertiesField())
-                                                                                .add(discriminatorField())
-                                                                                .add(discriminatorValueField())
-                                                                                .add(field(facetRegex(), any()))
-                                                 ).defaultValue(new TypeDefaultValue(defaultType))
-                                         )
-                                         .then(TypeDeclarationNode.class);
+                                                                                .add(minLengthField())
+                                                                                .add(maxLengthField()),
+                                                           is(objectTypeLiteral())
+                                                                                  .add(propertiesField())
+                                                                                  .add(minPropertiesField())
+                                                                                  .add(maxPropertiesField())
+                                                                                  .add(additionalPropertiesField())
+                                                                                  .add(discriminatorField())
+                                                                                  .add(discriminatorValueField()),
+                                                           // If it is an inherited type then we don't know we suggest all the properties
+                                                           is(not(builtinTypes()))
+                                                                                  .add(patternField())
+                                                                                  .add(minLengthField())
+                                                                                  .add(maxLengthField())
+                                                                                  .add(enumField())
+                                                                                  .add(formatField())
+                                                                                  .add(uniqueItemsField())
+                                                                                  .add(itemsField())
+                                                                                  .add(minItemsField())
+                                                                                  .add(maxItemsField())
+                                                                                  .add(minimumField())
+                                                                                  .add(maximumField())
+                                                                                  .add(numberFormat())
+                                                                                  .add(multipleOfField())
+                                                                                  .add(fileTypesField())
+                                                                                  .add(propertiesField())
+                                                                                  .add(minPropertiesField())
+                                                                                  .add(maxPropertiesField())
+                                                                                  .add(additionalPropertiesField())
+                                                                                  .add(discriminatorField())
+                                                                                  .add(discriminatorValueField())
+                                                                                  .add(field(facetRegex(), any()))
+                                                   ).defaultValue(new TypeDefaultValue(defaultType))
+                                           ).withAll(additionalRules)
+                                           .then(TypeDeclarationNode.class);
+
+
+                    }
+                });
     }
 
     protected Rule builtinTypes()
     {
         final TypeId[] values = TypeId.values();
-        List<Rule> typeNames = new ArrayList<>();
+        final List<Rule> typeNames = new ArrayList<>();
         for (TypeId value : values)
         {
             typeNames.add(string(value.getType()));
@@ -563,7 +596,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected Rule mimeType()
     {
-        return explicitType(TypeId.ANY);
+        return baseType(TypeId.ANY, "mimeType");
     }
 
     protected Rule exampleValue()
@@ -631,7 +664,12 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private KeyValueRule propertyField()
     {
-        return field(scalarType(), typeRef()).then(PropertyNode.class);
+        return field(scalarType(), anyOf(inlineType(), propertyType())).then(PropertyNode.class);
+    }
+
+    private ObjectRule propertyType()
+    {
+        return baseType(TypeId.STRING, PROPERTY_TYPE_RULE, requiredField());
     }
 
     protected Rule objectTypeLiteral()

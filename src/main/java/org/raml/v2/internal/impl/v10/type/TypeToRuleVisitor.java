@@ -158,7 +158,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
             {
                 final PropertyFacets propertyValue = property.getValue();
                 final KeyValueRule keyValue;
-                final Rule value = generateRule(propertyValue.getValueTypeFacets());
+                final Rule value = generateRule(propertyValue.getValueType());
                 // If additional properties is set to false the pattern properties are ignored
                 if (propertyValue.isPatternProperty() && additionalProperties)
                 {

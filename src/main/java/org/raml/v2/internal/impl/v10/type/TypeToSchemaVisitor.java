@@ -160,7 +160,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
             for (PropertyFacets propertyDefinition : properties.values())
             {
 
-                final ResolvedType valueResolvedType = propertyDefinition.getValueTypeFacets();
+                final ResolvedType valueResolvedType = propertyDefinition.getValueType();
                 if (valueResolvedType instanceof XmlFacetsCapableType)
                 {
 
@@ -286,7 +286,9 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         final XmlFacets xmlFacets = arrayTypeDefinition.getXmlFacets();
         if (asBoolean(xmlFacets.getWrapped(), false))
         {
-            final String name = defaultTo(defaultTo(xmlFacets.getName(), itemType.getTypeName()), currentElement.peek().getName());
+            // This is for the inside element not the wrapped. So this one is the tag for the item type
+            // First uses the xml facet then the item name finally the field name or parent type name
+            final String name = defaultTo(defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), itemType.getTypeName()), currentElement.peek().getName());
             final XmlSchemaElement transform = transform(name, itemType);
             visit = transform.getSchemaType();
         }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.raml.v2.internal.framework.grammar.rule.AllOfRule;
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
@@ -45,7 +46,6 @@ import org.raml.v2.internal.framework.grammar.rule.NodeReferenceRule;
 import org.raml.v2.internal.framework.grammar.rule.NullValueRule;
 import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
 import org.raml.v2.internal.framework.grammar.rule.ParentKeyDefaultValue;
-import org.raml.v2.internal.framework.grammar.rule.ReferenceRule;
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.ScalarTypeRule;
@@ -59,6 +59,9 @@ public class BaseGrammar
 
     private GrammarContext context;
 
+    @Nullable
+    private String nextRuleName;
+
     public BaseGrammar()
     {
         this.context = new GrammarContext();
@@ -66,15 +69,38 @@ public class BaseGrammar
 
     public ObjectRule objectType()
     {
-        return new ObjectRule();
+        return register(new ObjectRule());
     }
 
-    public ObjectRule objectType(String name)
+    /**
+     * Register the rule in the context if a named for this rule was set.
+     * @param rule The rule to register
+     * @param <T> The rule type
+     * @return The specified rule
+     */
+    private <T extends Rule> T register(T rule)
     {
-        final ObjectRule mapping = objectType();
-        this.context.registerRule(name, mapping);
-        return mapping;
+        if (nextRuleName != null)
+        {
+            context.registerRule(nextRuleName, rule);
+            nextRuleName = null;
+        }
+        return rule;
     }
+
+    public <T extends Rule> T named(String name, RuleFactory<T> ruleFactory)
+    {
+        if (context.hasRule(name))
+        {
+            return (T) context.getRuleByName(name);
+        }
+        else
+        {
+            this.nextRuleName = name;
+            return ruleFactory.create();
+        }
+    }
+
 
     public DiscriminatorRule whenChildIs(Rule discriminator, Rule then)
     {
@@ -119,6 +145,11 @@ public class BaseGrammar
     public KeyValueRule field(Rule keyRule, Rule valueRule)
     {
         return new KeyValueRule(keyRule, optional(valueRule));
+    }
+
+    public KeyValueRule field(String keyRule, Rule valueRule)
+    {
+        return new KeyValueRule(string(keyRule), optional(valueRule));
     }
 
     public KeyValueRule fieldWithRequiredValue(Rule keyRule, Rule valueRule)
@@ -166,13 +197,6 @@ public class BaseGrammar
         return new AnyOfRule(Arrays.asList(rules));
     }
 
-    public AnyOfRule anyOf(String name, Rule... rules)
-    {
-        AnyOfRule rule = new AnyOfRule(Arrays.asList(rules));
-        context.registerRule(name, rule);
-        return rule;
-    }
-
     public AnyOfRule anyOf(List<Rule> rules)
     {
         return new AnyOfRule(rules);
@@ -191,11 +215,6 @@ public class BaseGrammar
     public AllOfRule allOf(Rule... rules)
     {
         return new AllOfRule(Arrays.asList(rules));
-    }
-
-    public ReferenceRule ref(String name)
-    {
-        return new ReferenceRule(context, name);
     }
 
     public AnyOfRule optional(Rule rule)
