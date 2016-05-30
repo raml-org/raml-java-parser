@@ -23,10 +23,12 @@ import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +103,7 @@ public class DiscriminatorBasedRule extends Rule
     @Nullable
     protected TypeDeclarationNode findTypeDeclaration(String literalValue)
     {
-        final List<TypeDeclarationField> descendantsWith = rootElement.findDescendantsWith(TypeDeclarationField.class);
+        final List<TypeDeclarationField> descendantsWith = findTypeDeclarationField(rootElement);
         for (TypeDeclarationField typeDeclarationField : descendantsWith)
         {
             final Node typeDeclaration = typeDeclarationField.getValue();
@@ -122,6 +124,27 @@ public class DiscriminatorBasedRule extends Rule
             }
         }
         return null;
+    }
+
+    @Nonnull
+    public List<TypeDeclarationField> findTypeDeclarationField(Node node)
+    {
+        final List<TypeDeclarationField> result = new ArrayList<>();
+        final List<Node> children = node.getChildren();
+        for (Node child : children)
+        {
+            if (child instanceof TypeDeclarationField)
+            {
+                result.add((TypeDeclarationField) child);
+            }
+            else if (child instanceof LibraryLinkNode)
+            {
+                // Should search across libraries
+                result.addAll(findTypeDeclarationField(((LibraryLinkNode) child).getRefNode()));
+            }
+            result.addAll(findTypeDeclarationField(child));
+        }
+        return result;
     }
 
     @Override
