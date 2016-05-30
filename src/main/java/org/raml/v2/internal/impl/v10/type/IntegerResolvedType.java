@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+
 public class IntegerResolvedType extends NumberResolvedType
 {
 
@@ -22,15 +24,15 @@ public class IntegerResolvedType extends NumberResolvedType
     {
     }
 
-    public IntegerResolvedType(XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
+    public IntegerResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
     {
-        super(xmlFacets, minimum, maximum, multiple, format);
+        super(declarationNode, xmlFacets, minimum, maximum, multiple, format);
     }
 
     @Override
     public NumberResolvedType copy()
     {
-        return new IntegerResolvedType(getXmlFacets().copy(), getMinimum(), getMaximum(), getMultiple(), getFormat());
+        return new IntegerResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), getMinimum(), getMaximum(), getMultiple(), getFormat());
     }
 
     @Override

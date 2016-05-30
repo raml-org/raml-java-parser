@@ -15,7 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.apache.commons.lang.StringUtils;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.AllOfRule;
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
@@ -41,11 +40,13 @@ import org.raml.v2.internal.framework.grammar.rule.RangeValueRule;
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringTypeRule;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.JsonSchemaValidationRule;
 import org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
+import org.raml.v2.internal.impl.v10.rules.DiscriminatorBasedRule;
 import org.raml.v2.internal.utils.DateType;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
 import static org.raml.v2.internal.utils.BasicRuleFactory.patternProperty;
 import static org.raml.v2.internal.utils.BasicRuleFactory.property;
 import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
@@ -65,6 +67,9 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     private ResourceLoader resourceLoader;
     private boolean strictMode = false;
     private Map<ResolvedType, Rule> definitionRuleMap = new IdentityHashMap<>();
+
+    // Flag that should be turn on when discriminator should be resolved
+    private boolean resolvingDiscriminator = false;
 
     public TypeToRuleVisitor(ResourceLoader resourceLoader)
     {
@@ -94,7 +99,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     {
         final AllOfRule typeRule = new AllOfRule(new StringTypeRule());
         registerRule(stringTypeNode, typeRule);
-        if (StringUtils.isNotEmpty(stringTypeNode.getPattern()))
+        if (isNotEmpty(stringTypeNode.getPattern()))
         {
             typeRule.and(new RegexValueRule(Pattern.compile(stringTypeNode.getPattern())));
         }
@@ -128,51 +133,65 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         return rules;
     }
 
+    public void resolveDiscrimintor()
+    {
+        this.resolvingDiscriminator = true;
+    }
+
     @Override
     public Rule visitObject(ObjectResolvedType objectTypeDefinition)
     {
-        final ObjectRule objectRule = new ObjectRule(strictMode);
-        registerRule(objectTypeDefinition, objectRule);
-        final boolean additionalProperties = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
-        objectRule.additionalProperties(additionalProperties);
-        final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
-        for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
+        if (!resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
         {
-            final PropertyFacets propertyValue = property.getValue();
-            final KeyValueRule keyValue;
-            final Rule value = generateRule(propertyValue.getValueTypeFacets());
-            // If additional properties is set to false the pattern properties are ignored
-            if (propertyValue.isPatternProperty() && additionalProperties)
+            resolvingDiscriminator = false;
+            final TypeDeclarationNode typeDeclarationNode = objectTypeDefinition.getTypeDeclarationNode();
+            return new DiscriminatorBasedRule(this, typeDeclarationNode.getRootNode(), objectTypeDefinition.getDiscriminator());
+        }
+        else
+        {
+            final ObjectRule objectRule = new ObjectRule(strictMode);
+            registerRule(objectTypeDefinition, objectRule);
+            final boolean additionalProperties = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
+            objectRule.additionalProperties(additionalProperties);
+            final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
+            for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
             {
-                keyValue = patternProperty(propertyValue.getPatternRegex(), value);
-                // We set to false as it should only validate the ones that matches the regex
-                objectRule.additionalProperties(false);
-            }
-            else
-            {
-                keyValue = property(property.getKey(), value);
-                final Boolean required = propertyValue.isRequired();
-                if (required)
+                final PropertyFacets propertyValue = property.getValue();
+                final KeyValueRule keyValue;
+                final Rule value = generateRule(propertyValue.getValueTypeFacets());
+                // If additional properties is set to false the pattern properties are ignored
+                if (propertyValue.isPatternProperty() && additionalProperties)
                 {
-                    keyValue.required();
+                    keyValue = patternProperty(propertyValue.getPatternRegex(), value);
+                    // We set to false as it should only validate the ones that matches the regex
+                    objectRule.additionalProperties(false);
                 }
+                else
+                {
+                    keyValue = property(property.getKey(), value);
+                    final Boolean required = propertyValue.isRequired();
+                    if (required)
+                    {
+                        keyValue.required();
+                    }
+                }
+                objectRule.with(keyValue);
             }
-            objectRule.with(keyValue);
+
+            final AllOfRule allOfRule = new AllOfRule(objectRule);
+
+            if (objectTypeDefinition.getMaxProperties() != null)
+            {
+                allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMaxProperties()));
+            }
+
+            if (objectTypeDefinition.getMinProperties() != null)
+            {
+                allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMinProperties()));
+            }
+
+            return allOfRule;
         }
-
-        final AllOfRule allOfRule = new AllOfRule(objectRule);
-
-        if (objectTypeDefinition.getMaxProperties() != null)
-        {
-            allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMaxProperties()));
-        }
-
-        if (objectTypeDefinition.getMinProperties() != null)
-        {
-            allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMinProperties()));
-        }
-
-        return allOfRule;
     }
 
     protected void registerRule(ResolvedType objectResolvedType, Rule objectRule)

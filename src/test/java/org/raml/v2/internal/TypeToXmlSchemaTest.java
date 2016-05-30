@@ -127,7 +127,7 @@ public class TypeToXmlSchemaTest
     {
         final HashMap<String, PropertyFacets> properties = new LinkedHashMap<>();
         properties.put("name", new PropertyFacets("name", new StringResolvedType(), true));
-        final ObjectResolvedType objectTypeFacets = new ObjectResolvedType(new XmlFacets(), null, null, true, null, null, properties);
+        final ObjectResolvedType objectTypeFacets = new ObjectResolvedType(null, new XmlFacets(), null, null, true, null, null, properties);
 
         validateEquals(objectTypeFacets, SIMPLE_SCENARIO, "user");
     }
@@ -136,9 +136,9 @@ public class TypeToXmlSchemaTest
     public void testAttributeScenario() throws IOException, SAXException
     {
         final HashMap<String, PropertyFacets> properties = new LinkedHashMap<>();
-        final StringResolvedType typeFacets = new StringResolvedType(new XmlFacets(true, null, null, null, null), null, null, null, null);
+        final StringResolvedType typeFacets = new StringResolvedType(null, new XmlFacets(true, null, null, null, null), null, null, null, null);
         properties.put("name", new PropertyFacets("name", typeFacets, true));
-        final ObjectResolvedType objectTypeFacets = new ObjectResolvedType(new XmlFacets(), null, null, true, null, null, properties);
+        final ObjectResolvedType objectTypeFacets = new ObjectResolvedType(null, new XmlFacets(), null, null, true, null, null, properties);
 
         validateEquals(objectTypeFacets, ATTRIBUTE_EXPECTED, "user");
     }
@@ -149,12 +149,12 @@ public class TypeToXmlSchemaTest
 
         final HashMap<String, PropertyFacets> friendProperties = new LinkedHashMap<>();
         friendProperties.put("name", new PropertyFacets("name", new StringResolvedType(), true));
-        final ObjectResolvedType friendType = new ObjectResolvedType(new XmlFacets(), null, null, false, null, null, friendProperties);
+        final ObjectResolvedType friendType = new ObjectResolvedType(null, new XmlFacets(), null, null, false, null, null, friendProperties);
 
         final HashMap<String, PropertyFacets> userProperties = new HashMap<>();
         userProperties.put("name", new PropertyFacets("name", new StringResolvedType(), true));
         userProperties.put("friend", new PropertyFacets("friend", friendType, true));
-        final ObjectResolvedType userType = new ObjectResolvedType(new XmlFacets(), null, null, true, null, null, userProperties);
+        final ObjectResolvedType userType = new ObjectResolvedType(null, new XmlFacets(), null, null, true, null, null, userProperties);
 
         validateEquals(userType, NESTED_OBJECT_EXPECTED, "user");
     }
@@ -165,12 +165,12 @@ public class TypeToXmlSchemaTest
 
         final HashMap<String, PropertyFacets> friendProperties = new LinkedHashMap<>();
         friendProperties.put("name", new PropertyFacets("name", new StringResolvedType(), true));
-        final ArrayResolvedType friendType = new ArrayResolvedType(new ObjectResolvedType(new XmlFacets(), null, null, false, null, null, friendProperties));
+        final ArrayResolvedType friendType = new ArrayResolvedType(new ObjectResolvedType(null, new XmlFacets(), null, null, false, null, null, friendProperties));
 
         final HashMap<String, PropertyFacets> userProperties = new LinkedHashMap<>();
         userProperties.put("name", new PropertyFacets("name", new StringResolvedType(), true));
         userProperties.put("friends", new PropertyFacets("friends", friendType, true));
-        final ObjectResolvedType userType = new ObjectResolvedType(new XmlFacets(), null, null, true, null, null, userProperties);
+        final ObjectResolvedType userType = new ObjectResolvedType(null, new XmlFacets(), null, null, true, null, null, userProperties);
 
         validateEquals(userType, ARRAY_EXPECTED, "user");
     }

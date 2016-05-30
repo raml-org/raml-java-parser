@@ -21,9 +21,9 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 public class BooleanResolvedType extends XmlFacetsCapableType
 {
 
-    public BooleanResolvedType(XmlFacets xmlFacets)
+    public BooleanResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
     }
 
     public BooleanResolvedType()
@@ -32,7 +32,7 @@ public class BooleanResolvedType extends XmlFacetsCapableType
 
     private BooleanResolvedType copy()
     {
-        return new BooleanResolvedType(getXmlFacets().copy());
+        return new BooleanResolvedType(getTypeDeclarationNode(), getXmlFacets().copy());
     }
 
     @Override

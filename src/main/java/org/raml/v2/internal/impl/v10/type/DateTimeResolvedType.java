@@ -25,9 +25,9 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
 
     private String format;
 
-    public DateTimeResolvedType(XmlFacets xmlFacets, String format)
+    public DateTimeResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, String format)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
         this.format = format;
     }
 
@@ -37,7 +37,7 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
 
     protected DateTimeResolvedType copy()
     {
-        return new DateTimeResolvedType(getXmlFacets().copy(), format);
+        return new DateTimeResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), format);
     }
 
     @Override

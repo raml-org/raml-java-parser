@@ -40,9 +40,9 @@ public class StringResolvedType extends XmlFacetsCapableType
     {
     }
 
-    public StringResolvedType(XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums)
+    public StringResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.pattern = pattern;
@@ -51,7 +51,7 @@ public class StringResolvedType extends XmlFacetsCapableType
 
     protected StringResolvedType copy()
     {
-        return new StringResolvedType(getXmlFacets(), minLength, maxLength, pattern, enums);
+        return new StringResolvedType(getTypeDeclarationNode(), getXmlFacets(), minLength, maxLength, pattern, enums);
     }
 
 

@@ -21,9 +21,9 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
 {
 
-    public DateTimeOnlyResolvedType(XmlFacets xmlFacets)
+    public DateTimeOnlyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
     }
 
     public DateTimeOnlyResolvedType()
@@ -32,7 +32,7 @@ public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
 
     protected DateTimeOnlyResolvedType copy()
     {
-        return new DateTimeOnlyResolvedType(getXmlFacets().copy());
+        return new DateTimeOnlyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy());
     }
 
     @Override

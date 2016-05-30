@@ -38,9 +38,9 @@ public class NumberResolvedType extends XmlFacetsCapableType
     {
     }
 
-    public NumberResolvedType(XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
+    public NumberResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
         this.minimum = minimum;
         this.maximum = maximum;
         this.multiple = multiple;
@@ -49,7 +49,7 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
     public NumberResolvedType copy()
     {
-        return new NumberResolvedType(getXmlFacets().copy(), minimum, maximum, multiple, format);
+        return new NumberResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minimum, maximum, multiple, format);
     }
 
     @Override

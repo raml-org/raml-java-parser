@@ -30,9 +30,9 @@ public class ArrayResolvedType extends XmlFacetsCapableType
     private Integer minItems;
     private Integer maxItems;
 
-    public ArrayResolvedType(XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems)
+    public ArrayResolvedType(TypeDeclarationNode node, XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems)
     {
-        super(xmlFacets);
+        super(node, xmlFacets);
         this.items = items;
         this.uniqueItems = uniqueItems;
         this.minItems = minItems;
@@ -50,7 +50,7 @@ public class ArrayResolvedType extends XmlFacetsCapableType
 
     private ArrayResolvedType copy()
     {
-        return new ArrayResolvedType(getXmlFacets().copy(), items, uniqueItems, minItems, maxItems);
+        return new ArrayResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), items, uniqueItems, minItems, maxItems);
     }
 
     @Override

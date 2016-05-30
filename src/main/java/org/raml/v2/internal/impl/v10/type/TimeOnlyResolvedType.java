@@ -21,9 +21,9 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 public class TimeOnlyResolvedType extends XmlFacetsCapableType
 {
 
-    public TimeOnlyResolvedType(XmlFacets xmlFacets)
+    public TimeOnlyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
     }
 
     public TimeOnlyResolvedType()
@@ -32,7 +32,7 @@ public class TimeOnlyResolvedType extends XmlFacetsCapableType
 
     protected TimeOnlyResolvedType copy()
     {
-        return new TimeOnlyResolvedType(getXmlFacets().copy());
+        return new TimeOnlyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy());
     }
 
     @Override

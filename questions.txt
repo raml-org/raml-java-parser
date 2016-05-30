@@ -1,10 +1,10 @@
 Bitactora!!!!
     Custom Facets: Missing tests. Grammar should work
-    Array
+    Array:
         uniqueItems How do we validate uniques in object and arrays. Where is the comparison defined???
-    Object
+    Object:
         required property in grammar supports not only ?
-        Discriminator
+        Discriminator: Can discriminator be overwritten
         DiscriminatorValue
 
     XmlSchema validator this does not look ok

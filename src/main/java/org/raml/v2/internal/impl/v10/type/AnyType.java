@@ -21,9 +21,18 @@ import org.raml.v2.internal.impl.commons.type.ResolvedType;
 public class AnyType extends XmlFacetsCapableType
 {
 
+    public AnyType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
+    {
+        super(declarationNode, xmlFacets);
+    }
+
+    public AnyType()
+    {
+    }
+
     protected ResolvedType copy()
     {
-        return new AnyType();
+        return new AnyType(getTypeDeclarationNode(), getXmlFacets().copy());
     }
 
     @Override

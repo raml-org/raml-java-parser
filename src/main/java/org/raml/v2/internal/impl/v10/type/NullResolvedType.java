@@ -21,9 +21,18 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 public class NullResolvedType extends XmlFacetsCapableType
 {
 
+    public NullResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
+    {
+        super(declarationNode, xmlFacets);
+    }
+
+    public NullResolvedType()
+    {
+    }
+
     protected ResolvedType copy()
     {
-        return new NullResolvedType();
+        return new NullResolvedType(getTypeDeclarationNode(), getXmlFacets().copy());
     }
 
     @Override

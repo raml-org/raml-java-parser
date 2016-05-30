@@ -39,10 +39,11 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
-    public ObjectResolvedType(XmlFacets xmlFacets, Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator, String discriminatorValue,
+    public ObjectResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator,
+            String discriminatorValue,
             Map<String, PropertyFacets> properties)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
         this.minProperties = minProperties;
         this.maxProperties = maxProperties;
         this.additionalProperties = additionalProperties;
@@ -57,7 +58,8 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     protected ObjectResolvedType copy()
     {
-        return new ObjectResolvedType(getXmlFacets().copy(), minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue, new LinkedHashMap<>(properties));
+        return new ObjectResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue,
+                new LinkedHashMap<>(properties));
     }
 
     @Override

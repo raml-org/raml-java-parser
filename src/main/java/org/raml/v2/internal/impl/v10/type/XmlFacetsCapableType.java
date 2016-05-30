@@ -23,8 +23,9 @@ public abstract class XmlFacetsCapableType extends BaseType implements ResolvedT
 {
     private XmlFacets xmlFacets = new XmlFacets();
 
-    public XmlFacetsCapableType(XmlFacets xmlFacets)
+    public XmlFacetsCapableType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
     {
+        super(declarationNode);
         this.xmlFacets = xmlFacets;
     }
 
@@ -34,7 +35,7 @@ public abstract class XmlFacetsCapableType extends BaseType implements ResolvedT
 
     protected XmlFacetsCapableType overwriteFacets(XmlFacetsCapableType on, TypeDeclarationNode from)
     {
-        setTypeNode(from);
+        on.setTypeNode(from);
         on.setXmlFacets(on.getXmlFacets().overwriteFacets(from));
         return on;
     }

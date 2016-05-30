@@ -23,6 +23,15 @@ public abstract class BaseType implements ResolvedType
 {
     private TypeDeclarationNode typeNode;
 
+    public BaseType(TypeDeclarationNode typeNode)
+    {
+        this.typeNode = typeNode;
+    }
+
+    public BaseType()
+    {
+    }
+
     protected void setTypeNode(TypeDeclarationNode typeNode)
     {
         this.typeNode = typeNode;
@@ -32,10 +41,10 @@ public abstract class BaseType implements ResolvedType
     @Override
     public String getTypeName()
     {
-        return getTypeNode() != null ? getTypeNode().getTypeName() : null;
+        return getTypeDeclarationNode() != null ? getTypeDeclarationNode().getTypeName() : null;
     }
 
-    public TypeDeclarationNode getTypeNode()
+    public TypeDeclarationNode getTypeDeclarationNode()
     {
         return typeNode;
     }

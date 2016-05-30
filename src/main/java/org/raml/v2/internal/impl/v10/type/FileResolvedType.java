@@ -34,9 +34,9 @@ public class FileResolvedType extends XmlFacetsCapableType
     {
     }
 
-    public FileResolvedType(XmlFacets xmlFacets, Number minLength, Number maxLength, List<String> fileTypes)
+    public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minLength, Number maxLength, List<String> fileTypes)
     {
-        super(xmlFacets);
+        super(declarationNode, xmlFacets);
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.fileTypes = fileTypes;
@@ -44,7 +44,7 @@ public class FileResolvedType extends XmlFacetsCapableType
 
     protected FileResolvedType copy()
     {
-        return new FileResolvedType(getXmlFacets().copy(), minLength, maxLength, fileTypes);
+        return new FileResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minLength, maxLength, fileTypes);
     }
 
     @Override
