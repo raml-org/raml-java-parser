@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 836, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 38, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "arrays tests example" (Start: 18 , End: 38, On: input.raml)
+        OverlayableStringNode: "arrays tests example" (Start: 18 , End: 38, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 39 , End: 836, On: input.raml)
         SYStringNode: "types" (Start: 39 , End: 44, On: input.raml)
         SYObjectNode (Start: 48 , End: 836, On: input.raml)

@@ -20,12 +20,11 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.raml.v2.internal.framework.nodes.ReferenceNode;
-import org.raml.v2.internal.impl.v10.RamlFragment;
 import org.raml.v2.internal.framework.nodes.EmptyErrorNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
+import org.raml.v2.internal.framework.nodes.ReferenceNode;
 
 public class ErrorNodeFactory
 {
@@ -220,5 +219,10 @@ public class ErrorNodeFactory
     public static ErrorNode createInvalidTypeExpressionSyntax(String message, int location)
     {
         return new ErrorNode("Invalid type expression syntax. Caused by : " + message + " at character : " + location);
+    }
+
+    public static ErrorNode createInvalidOverlayNode(Node overlayNode)
+    {
+        return new ErrorNode("Invalid overlay node. Cannot override node: " + overlayNode.getParent().getChildren().get(0));
     }
 }

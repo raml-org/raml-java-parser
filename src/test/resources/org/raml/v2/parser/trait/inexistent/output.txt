@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 77, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 37, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "non existent traits" (Start: 18 , End: 37, On: input.raml)
+        OverlayableStringNode: "non existent traits" (Start: 18 , End: 37, On: input.raml, Source: SYStringNode)
     ResourceNode (Start: 38 , End: 77, On: input.raml, Source: KeyValueNodeImpl)
         SYStringNode: "/orders" (Start: 38 , End: 45, On: input.raml)
         SYObjectNode (Start: 49 , End: 77, On: input.raml)

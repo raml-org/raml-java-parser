@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 778, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 29, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "Example API" (Start: 18 , End: 29, On: input.raml)
+        OverlayableStringNode: "Example API" (Start: 18 , End: 29, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 30 , End: 41, On: input.raml)
         SYStringNode: "version" (Start: 30 , End: 37, On: input.raml)
         SYStringNode: "v1" (Start: 39 , End: 41, On: input.raml)

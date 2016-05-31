@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: master
+
+annotationTypes:
+    scalar: string
+    object:
+        properties:
+            lat: number
+            long: number
+
+(scalar): plain
+
+/home:
+    (object):
+        lat: -40.8
+        long: -65.1

@@ -15,6 +15,13 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
+import static java.util.Arrays.asList;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import org.raml.v2.internal.framework.grammar.RuleFactory;
 import org.raml.v2.internal.framework.grammar.rule.AnyOfRule;
 import org.raml.v2.internal.framework.grammar.rule.ArrayWrapperFactory;
@@ -43,16 +50,11 @@ import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
+import org.raml.v2.internal.impl.v10.nodes.factory.OverlayableSimpleTypeFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
 import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
 import org.raml.v2.internal.impl.v10.type.TypeId;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.asList;
 
 
 public class Raml10Grammar extends BaseRamlGrammar
@@ -167,7 +169,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule optionalTitleField()
     {
-        return field(titleKey(), scalarType());
+        return field(titleKey(), titleValue());
     }
 
 
@@ -709,6 +711,18 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected Rule securitySchemesValue()
     {
         return securitySchemes();
+    }
+
+    @Override
+    protected Rule descriptionValue()
+    {
+        return super.descriptionValue().then(new OverlayableSimpleTypeFactory());
+    }
+
+    @Override
+    protected Rule titleValue()
+    {
+        return super.titleValue().then(new OverlayableSimpleTypeFactory());
     }
 
 }

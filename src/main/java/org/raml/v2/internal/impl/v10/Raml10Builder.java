@@ -36,7 +36,6 @@ import org.raml.v2.internal.framework.phase.Phase;
 import org.raml.v2.internal.framework.phase.TransformationPhase;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.RamlFragmentGrammarTransformer;
@@ -46,6 +45,7 @@ import org.raml.v2.internal.impl.commons.phase.SchemaValidationTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
+import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.utils.StreamUtils;
@@ -70,7 +70,7 @@ public class Raml10Builder
         rootNode = runPhases(rootNode, phases, maxPhaseNumber);
         if (applyExtension && rootNode.findDescendantsWith(ErrorNode.class).isEmpty())
         {
-            rootNode = applyExtension(rootNode, resourceLoader, resourceLocation);
+            rootNode = applyExtension(rootNode, resourceLoader, resourceLocation, fragment);
         }
         return rootNode;
     }
@@ -93,7 +93,7 @@ public class Raml10Builder
         return rootNode;
     }
 
-    private Node applyExtension(Node extensionNode, ResourceLoader resourceLoader, String resourceLocation) throws IOException
+    private Node applyExtension(Node extensionNode, ResourceLoader resourceLoader, String resourceLocation, RamlFragment fragment) throws IOException
     {
         StringNode baseRef = (StringNode) extensionNode.get("extends");
         InputStream baseStream = resourceLoader.fetchResource(baseRef.getValue());
@@ -102,7 +102,7 @@ public class Raml10Builder
 
         if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
         {
-            ExtensionsMerger.merge(baseNode, extensionNode);
+            new ExtensionsMerger(fragment == Overlay).merge(baseNode, extensionNode);
             List<Phase> phases = createPhases(resourceLoader, getFragment(baseContent));
             baseNode = runPhases(baseNode, phases, Integer.MAX_VALUE);
         }

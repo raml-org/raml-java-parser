@@ -110,7 +110,7 @@ public abstract class TestDataProvider
                 }
                 else if (scenario.listFiles().length > 0)
                 {
-                    result.addAll(scanPath(scenario.getName() + ".", scenario.toURI(), inputFileName, outputFileName));
+                    result.addAll(scanPath(folderPath + scenario.getName() + ".", scenario.toURI(), inputFileName, outputFileName));
                 }
             }
         }

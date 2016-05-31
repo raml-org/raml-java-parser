@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 625, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 28, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "Tato Bores" (Start: 18 , End: 28, On: input.raml)
+        OverlayableStringNode: "Tato Bores" (Start: 18 , End: 28, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 29 , End: 56, On: input.raml)
         SYStringNode: "mediaType" (Start: 29 , End: 38, On: input.raml)
         SYStringNode: "application/json" (Start: 40 , End: 56, On: input.raml)

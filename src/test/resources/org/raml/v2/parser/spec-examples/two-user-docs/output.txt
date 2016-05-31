@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 524, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 30, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "ZEncoder API" (Start: 18 , End: 30, On: input.raml)
+        OverlayableStringNode: "ZEncoder API" (Start: 18 , End: 30, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 31 , End: 68, On: input.raml)
         SYStringNode: "baseUri" (Start: 31 , End: 38, On: input.raml)
         SYStringNode: "https://app.zencoder.com/api" (Start: 40 , End: 68, On: input.raml)

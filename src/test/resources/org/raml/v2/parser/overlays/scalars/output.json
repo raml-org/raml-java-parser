@@ -1,0 +1,5 @@
+{
+    "title": "overlay",
+    "baseUri": "http://api.com/master",
+    "description": "some overlaid description"
+}

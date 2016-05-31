@@ -1,0 +1,12 @@
+#%RAML 1.0 Overlay
+extends: master.raml
+
+annotationTypes:
+    another-scalar: string
+
+(another-scalar): overlay
+
+/home:
+    (object):
+        lat: -34.6
+        long: -58.4

@@ -94,11 +94,20 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     }
 
 
-    protected KeyValueRule titleField()
+    protected KeyValueRule docTitleField()
     {
         return requiredField(titleKey(), allOf(scalarType(), minLength(1)));
     }
 
+    protected KeyValueRule titleField()
+    {
+        return requiredField(titleKey(), allOf(titleValue(), minLength(1)));
+    }
+
+    protected Rule titleValue()
+    {
+        return scalarType();
+    }
 
     protected KeyValueRule resourceField()
     {
@@ -155,7 +164,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     public ObjectRule documentation()
     {
         return objectType()
-                           .with(titleField().description("Title of documentation section."))
+                           .with(docTitleField().description("Title of documentation section."))
                            .with(contentField().description("Content of documentation section."));
     }
 
@@ -448,7 +457,12 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule descriptionField()
     {
-        return field(descriptionKey(), scalarType());
+        return field(descriptionKey(), descriptionValue());
+    }
+
+    protected Rule descriptionValue()
+    {
+        return scalarType();
     }
 
     protected KeyValueRule displayNameField()

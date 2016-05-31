@@ -15,17 +15,16 @@
  */
 package org.raml.v2.internal.utils;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.StringUtils;
-import org.raml.v2.internal.framework.nodes.BooleanNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
-import org.raml.v2.internal.framework.nodes.IntegerNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.framework.nodes.ReferenceNode;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
-
-import java.util.Collection;
 
 
 public class TreeDumper
@@ -95,13 +94,9 @@ public class TreeDumper
         {
             dump.append(": \"").append(((StringNode) node).getValue()).append("\"");
         }
-        if (node instanceof IntegerNode)
+        else if (node instanceof SimpleTypeNode)
         {
-            dump.append(": ").append(((IntegerNode) node).getValue());
-        }
-        if (node instanceof BooleanNode)
-        {
-            dump.append(": ").append(((BooleanNode) node).getValue());
+            dump.append(": ").append(((SimpleTypeNode) node).getValue());
         }
         else if (node instanceof ErrorNode)
         {

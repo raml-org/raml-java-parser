@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 485, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 22, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "hola" (Start: 18 , End: 22, On: input.raml)
+        OverlayableStringNode: "hola" (Start: 18 , End: 22, On: input.raml, Source: SYStringNode)
     ResourceNode (Start: 23 , End: 485, On: input.raml, Source: KeyValueNodeImpl)
         SYStringNode: "/orgs" (Start: 23 , End: 28, On: input.raml)
         SYObjectNode (Start: 32 , End: 485, On: input.raml)

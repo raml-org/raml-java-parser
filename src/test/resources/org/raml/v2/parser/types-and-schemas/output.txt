@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 49, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 33, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "type resolution" (Start: 18 , End: 33, On: input.raml)
+        OverlayableStringNode: "type resolution" (Start: 18 , End: 33, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 34 , End: 42, On: input.raml)
         SYStringNode: "schemas" (Start: 34 , End: 41, On: input.raml)
         SYNullNode (Start: 42 , End: 42, On: input.raml)

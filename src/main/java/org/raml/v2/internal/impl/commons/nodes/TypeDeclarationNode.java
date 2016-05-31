@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode
+public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode, OverlayableNode
 {
 
     private ResolvedType resolvedType;

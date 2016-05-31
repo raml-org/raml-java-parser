@@ -1,4 +1,4 @@
 RamlDocumentNode (Start: 11 , End: 25, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 24, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "My API" (Start: 18 , End: 24, On: input.raml)
+        OverlayableStringNode: "My API" (Start: 18 , End: 24, On: input.raml, Source: SYStringNode)

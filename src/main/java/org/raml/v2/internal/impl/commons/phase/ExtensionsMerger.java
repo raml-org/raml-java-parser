@@ -18,14 +18,17 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.framework.nodes.Position;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
+import org.raml.v2.internal.impl.commons.nodes.OverlayableNode;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.slf4j.Logger;
@@ -36,7 +39,14 @@ public class ExtensionsMerger
 
     private static final Logger logger = LoggerFactory.getLogger(ExtensionsMerger.class);
 
-    public static void merge(Node baseNode, Node copyNode)
+    private boolean overlay;
+
+    public ExtensionsMerger(boolean overlay)
+    {
+        this.overlay = overlay;
+    }
+
+    public void merge(Node baseNode, Node copyNode)
     {
         if (baseNode instanceof ObjectNode && copyNode instanceof ObjectNode)
         {
@@ -53,7 +63,7 @@ public class ExtensionsMerger
         }
     }
 
-    static void merge(ArrayNode baseNode, ArrayNode copyNode)
+    private void merge(ArrayNode baseNode, ArrayNode copyNode)
     {
         for (Node child : copyNode.getChildren())
         {
@@ -61,7 +71,7 @@ public class ExtensionsMerger
         }
     }
 
-    static void merge(ObjectNode baseNode, ObjectNode copyNode)
+    private void merge(ObjectNode baseNode, ObjectNode copyNode)
     {
         for (Node child : copyNode.getChildren())
         {
@@ -83,6 +93,7 @@ public class ExtensionsMerger
             Node node = NodeSelector.selectFrom(NodeSelector.encodePath(key), baseNode);
             if (node == null)
             {
+                overlayCheck(valueNode, valueNode);
                 logger.debug("Adding key '{}'", key);
                 baseNode.addChild(child);
             }
@@ -98,10 +109,18 @@ public class ExtensionsMerger
             }
             else
             {
+                if (isDefaultNode(child))
+                {
+                    logger.debug("Ignoring default key '{}'", key);
+                    continue;
+                }
                 if (valueNode instanceof SimpleTypeNode)
                 {
-                    logger.debug("Replacing existing scalar key '{}'", key);
-                    node.replaceWith(valueNode);
+                    if (overlayCheck(node, valueNode))
+                    {
+                        logger.debug("Replacing existing scalar key '{}'", key);
+                        node.replaceWith(valueNode);
+                    }
                 }
                 else
                 {
@@ -112,7 +131,23 @@ public class ExtensionsMerger
         }
     }
 
-    private static boolean shouldIgnoreNode(Node node)
+    private boolean isDefaultNode(Node node)
+    {
+        return node.getStartPosition().getLine() == Position.UNKNOWN;
+    }
+
+    private boolean overlayCheck(Node baseNode, Node overlayNode)
+    {
+        boolean check = true;
+        if (overlay && !((overlayNode instanceof OverlayableNode) || (overlayNode.getParent() instanceof OverlayableNode)))
+        {
+            baseNode.replaceWith(ErrorNodeFactory.createInvalidOverlayNode(overlayNode));
+            check = false;
+        }
+        return check;
+    }
+
+    private boolean shouldIgnoreNode(Node node)
     {
         if (node instanceof ExtendsNode)
         {
@@ -125,7 +160,7 @@ public class ExtensionsMerger
         return false;
     }
 
-    private static boolean isUsageNode(Node node)
+    private boolean isUsageNode(Node node)
     {
         Node keyNode = ((KeyValueNode) node).getKey();
         String key = keyNode.toString();

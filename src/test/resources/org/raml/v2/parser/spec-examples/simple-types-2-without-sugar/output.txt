@@ -1,7 +1,7 @@
 RamlDocumentNode (Start: 11 , End: 870, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        SYStringNode: "My API with Types" (Start: 18 , End: 35, On: input.raml)
+        OverlayableStringNode: "My API with Types" (Start: 18 , End: 35, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 36 , End: 63, On: input.raml)
         SYStringNode: "mediaType" (Start: 36 , End: 45, On: input.raml)
         SYStringNode: "application/json" (Start: 47 , End: 63, On: input.raml)

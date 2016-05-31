@@ -24,7 +24,7 @@ import org.raml.v2.internal.utils.NodeUtils;
 
 import javax.annotation.Nonnull;
 
-public class ExampleDeclarationNode extends KeyValueNodeImpl
+public class ExampleDeclarationNode extends KeyValueNodeImpl implements OverlayableNode
 {
     public ExampleDeclarationNode()
     {
