@@ -18,8 +18,9 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.model.NodeModel;
 
-public class BodyLike extends BaseModelElement
+public class BodyLike implements NodeModel
 {
 
     private KeyValueNode node;

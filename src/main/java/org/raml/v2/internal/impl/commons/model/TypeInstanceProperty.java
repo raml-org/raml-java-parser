@@ -18,12 +18,13 @@ package org.raml.v2.internal.impl.commons.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.raml.v2.internal.framework.model.NodeModel;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 
-public class TypeInstanceProperty
+public class TypeInstanceProperty implements NodeModel
 {
 
     private KeyValueNode node;
@@ -65,4 +66,9 @@ public class TypeInstanceProperty
         return node.getValue() instanceof ArrayNode;
     }
 
+    @Override
+    public Node getNode()
+    {
+        return node;
+    }
 }

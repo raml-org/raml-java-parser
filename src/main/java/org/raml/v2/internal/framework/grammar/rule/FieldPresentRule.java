@@ -24,7 +24,9 @@ import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 import org.raml.v2.internal.utils.NodeSelector;
 
-
+/**
+ * Delegates to a rule if a selector expression returns a value
+ */
 public class FieldPresentRule extends Rule
 {
 

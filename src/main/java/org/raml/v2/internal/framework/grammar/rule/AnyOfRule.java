@@ -27,6 +27,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Accepts if any rule matches and suggests all the possibilities.
+ */
 public class AnyOfRule extends Rule
 {
 

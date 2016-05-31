@@ -13,13 +13,25 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.model;
+package org.raml.v2.internal.framework.model;
 
 import org.raml.v2.internal.framework.nodes.Node;
 
-public abstract class BaseModelElement
+/**
+ * Default Model implementation
+ */
+public class DefaultNodeBaseModel implements NodeModel
 {
+    private Node node;
 
-    public abstract Node getNode();
+    public DefaultNodeBaseModel(Node node)
+    {
+        this.node = node;
+    }
 
+    @Override
+    public Node getNode()
+    {
+        return node;
+    }
 }

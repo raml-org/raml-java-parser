@@ -15,9 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.internal.framework.model.NodeModel;
+import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 
-public class AnnotationRef
+public class AnnotationRef implements NodeModel
 {
 
     private AnnotationNode node;
@@ -40,5 +42,11 @@ public class AnnotationRef
     public TypeInstance structuredValue()
     {
         return new TypeInstance(node.getValue());
+    }
+
+    @Override
+    public Node getNode()
+    {
+        return node;
     }
 }

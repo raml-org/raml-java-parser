@@ -24,7 +24,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
-import org.raml.v2.internal.impl.commons.model.builder.ModelUtils;
+import org.raml.v2.internal.framework.model.ModelUtils;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;

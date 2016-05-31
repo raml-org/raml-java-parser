@@ -48,6 +48,10 @@ public interface ResolvedType
      */
     <T> T visit(TypeVisitor<T> visitor);
 
+    /**
+     * Returns the type name if any
+     * @return The type name
+     */
     @Nullable
     String getTypeName();
 }

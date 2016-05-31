@@ -15,31 +15,35 @@
  */
 package org.raml.v2.api;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.internal.framework.model.DefaultModelBindingConfiguration;
+import org.raml.v2.internal.framework.model.ModelBindingConfiguration;
+import org.raml.v2.internal.framework.model.ModelProxyBuilder;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.commons.RamlVersion;
+import org.raml.v2.internal.impl.commons.model.Api;
+import org.raml.v2.internal.impl.commons.model.DefaultModelElement;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
-import org.raml.v2.internal.impl.commons.model.builder.ModelProxyBuilder;
+import org.raml.v2.internal.impl.commons.model.StringType;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.v10.RamlFragment;
 import org.raml.v2.internal.utils.StreamUtils;
+
+import javax.annotation.Nonnull;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entry point class to parse top level RAML descriptors.
@@ -48,6 +52,7 @@ import org.raml.v2.internal.utils.StreamUtils;
 public class RamlModelBuilder
 {
 
+    public static final String MODEL_PACKAGE = "org.raml.v2.internal.impl.commons.model";
     private ResourceLoader resourceLoader;
     private RamlBuilder builder = new RamlBuilder();
 
@@ -153,14 +158,35 @@ public class RamlModelBuilder
     {
         if (ramlNode.getVersion() == RamlVersion.RAML_10)
         {
-            org.raml.v2.api.model.v10.api.Api apiV10 = ModelProxyBuilder.createRaml(org.raml.v2.api.model.v10.api.Api.class, ramlNode);
+            org.raml.v2.api.model.v10.api.Api apiV10 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v10.api.Api.class, new Api(ramlNode), createV10Binding());
             return new RamlModelResult(apiV10);
         }
         else
         {
-            org.raml.v2.api.model.v08.api.Api apiV08 = ModelProxyBuilder.createRaml(org.raml.v2.api.model.v08.api.Api.class, ramlNode);
+            org.raml.v2.api.model.v08.api.Api apiV08 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v08.api.Api.class, new Api(ramlNode), createV08Binding());
             return new RamlModelResult(apiV08);
         }
+    }
+
+    private ModelBindingConfiguration createV10Binding()
+    {
+        final DefaultModelBindingConfiguration bindingConfiguration = new DefaultModelBindingConfiguration();
+        bindingConfiguration.bindPackage(MODEL_PACKAGE);
+        // Bind all StringTypes to the StringType implementation they are only marker interfaces
+        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v10.system.types.StringType.class, StringType.class);
+        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v10.system.types.ValueType.class, StringType.class);
+        bindingConfiguration.defaultTo(DefaultModelElement.class);
+        return bindingConfiguration;
+    }
+
+    private ModelBindingConfiguration createV08Binding()
+    {
+        final DefaultModelBindingConfiguration bindingConfiguration = new DefaultModelBindingConfiguration();
+        bindingConfiguration.bindPackage(MODEL_PACKAGE);
+        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v08.system.types.StringType.class, StringType.class);
+        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v08.system.types.ValueType.class, StringType.class);
+        bindingConfiguration.defaultTo(DefaultModelElement.class);
+        return bindingConfiguration;
     }
 
     private String getRamlContent(File ramlFile)

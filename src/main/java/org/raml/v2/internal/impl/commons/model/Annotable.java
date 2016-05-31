@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.model.NodeModel;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 
-public abstract class Annotable extends BaseModelElement
+public abstract class Annotable implements NodeModel
 {
 
     public List<AnnotationRef> annotations()

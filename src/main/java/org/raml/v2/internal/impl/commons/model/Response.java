@@ -37,7 +37,7 @@ public class Response extends Annotable
 
     public StringType code()
     {
-        return new StringType(((SimpleTypeNode) node.getKey()).getLiteralValue());
+        return new StringType(((SimpleTypeNode) node.getKey()));
     }
 
 }

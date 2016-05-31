@@ -13,24 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.grammar.rule;
+package org.raml.v2.internal.framework.model;
 
 import javax.annotation.Nullable;
 
-import org.raml.v2.internal.framework.nodes.Node;
-
-/**
- * Generates a default value when needed.
- */
-public interface DefaultValue
+public class ImplementsInterfaceBinding implements ModelBinding
 {
 
-    /**
-     * Generates a default value node based on the parent context.
-     *
-     * @param parent The parent node of the default value.
-     * @return The default value node or null when it cannot be generated in a fragment file
-     */
+
+    private Class<?> anInterface;
+    private Class<? extends NodeModel> model;
+
+    public ImplementsInterfaceBinding(Class<?> anInterface, Class<? extends NodeModel> model)
+    {
+        this.anInterface = anInterface;
+        this.model = model;
+    }
+
     @Nullable
-    Node getDefaultValue(Node parent);
+    @Override
+    public NodeModelFactory binding(Class<?> clazz)
+    {
+        if (anInterface.isAssignableFrom(clazz))
+        {
+            return new ClassNodeModelFactory(model, false);
+        }
+        return null;
+    }
 }

@@ -13,24 +13,18 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.grammar.rule;
-
-import javax.annotation.Nullable;
+package org.raml.v2.internal.framework.model;
 
 import org.raml.v2.internal.framework.nodes.Node;
 
 /**
- * Generates a default value when needed.
+ * Interface used by the model proxy builder
  */
-public interface DefaultValue
+public interface NodeModel
 {
-
     /**
-     * Generates a default value node based on the parent context.
-     *
-     * @param parent The parent node of the default value.
-     * @return The default value node or null when it cannot be generated in a fragment file
+     * The node this model is represented by
+     * @return The node
      */
-    @Nullable
-    Node getDefaultValue(Node parent);
+    Node getNode();
 }

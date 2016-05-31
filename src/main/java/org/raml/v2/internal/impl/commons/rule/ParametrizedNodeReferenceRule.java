@@ -13,13 +13,15 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.grammar.rule;
+package org.raml.v2.internal.impl.commons.rule;
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
+import org.raml.v2.internal.framework.grammar.rule.ReferenceSuggester;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ParametrizedReferenceNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;

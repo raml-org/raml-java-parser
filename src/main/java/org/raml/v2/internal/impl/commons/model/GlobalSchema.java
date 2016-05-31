@@ -18,8 +18,9 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.framework.model.NodeModel;
 
-public class GlobalSchema extends BaseModelElement
+public class GlobalSchema implements NodeModel
 {
 
     private KeyValueNode node;
@@ -42,6 +43,6 @@ public class GlobalSchema extends BaseModelElement
 
     public StringType value()
     {
-        return new StringType(((SimpleTypeNode) node.getValue()).getLiteralValue());
+        return new StringType((SimpleTypeNode) node.getValue());
     }
 }

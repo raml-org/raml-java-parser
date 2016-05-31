@@ -13,24 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.grammar.rule;
+package org.raml.v2.internal.framework.model;
 
 import javax.annotation.Nullable;
+import java.util.Set;
 
-import org.raml.v2.internal.framework.nodes.Node;
-
-/**
- * Generates a default value when needed.
- */
-public interface DefaultValue
+public class SimpleClassNameBinding implements ModelBinding
 {
 
-    /**
-     * Generates a default value node based on the parent context.
-     *
-     * @param parent The parent node of the default value.
-     * @return The default value node or null when it cannot be generated in a fragment file
-     */
+    private Set<String> simpleNames;
+    private Class<? extends NodeModel> model;
+
+    public SimpleClassNameBinding(Set<String> simpleNames, Class<? extends NodeModel> model)
+    {
+        this.simpleNames = simpleNames;
+        this.model = model;
+    }
+
     @Nullable
-    Node getDefaultValue(Node parent);
+    @Override
+    public NodeModelFactory binding(Class<?> clazz)
+    {
+        if (simpleNames.contains(clazz.getSimpleName()))
+        {
+            return new ClassNodeModelFactory(model, false);
+        }
+        return null;
+    }
 }

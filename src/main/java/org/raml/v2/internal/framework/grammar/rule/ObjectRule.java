@@ -261,12 +261,22 @@ public class ObjectRule extends Rule
         return this;
     }
 
+    /**
+     * Adds a field to this object rule
+     * @param field The field defined to this object
+     * @return this
+     */
     public ObjectRule with(KeyValueRule field)
     {
         this.fields.add(field);
         return this;
     }
 
+    /**
+     * Adds all a field to this object rule
+     * @param fields The fields defined to this object
+     * @return this
+     */
     public ObjectRule withAll(KeyValueRule... fields)
     {
         if (fields != null)
@@ -276,6 +286,12 @@ public class ObjectRule extends Rule
         return this;
     }
 
+    /**
+     * Adds a field to this object rule at a given order
+     * @param field The field defined to this object
+     * @param index the index
+     * @return this
+     */
     public ObjectRule with(int index, KeyValueRule field)
     {
         this.fields.add(index, field);
@@ -315,6 +331,12 @@ public class ObjectRule extends Rule
         this.allowsAdditionalProperties = allowsAdditionalProperties;
     }
 
+    /**
+     * Defines conditional fields based on a condition.
+     * This fields are only valid if the specified condition is
+     * @param conditional The conditional fields
+     * @return this
+     */
     public ObjectRule with(ConditionalRules conditional)
     {
         this.conditionalRules = conditional;

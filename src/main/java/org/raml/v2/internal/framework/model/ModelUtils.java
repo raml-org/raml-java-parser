@@ -13,8 +13,11 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.model.builder;
+package org.raml.v2.internal.framework.model;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashSet;
@@ -55,4 +58,28 @@ public class ModelUtils
     }
 
 
+    public static boolean isObject(Class<?> type)
+    {
+        return Object.class.equals(type);
+    }
+
+    public static Class<?> toClass(Type type)
+    {
+        if (type instanceof Class<?>)
+        {
+            return (Class<?>) type;
+        }
+        else if (type instanceof ParameterizedType)
+        {
+            return toClass(((ParameterizedType) type).getRawType());
+        }
+        else if (type instanceof WildcardType)
+        {
+            return toClass(((WildcardType) type).getUpperBounds()[0]);
+        }
+        else
+        {
+            return Object.class;
+        }
+    }
 }

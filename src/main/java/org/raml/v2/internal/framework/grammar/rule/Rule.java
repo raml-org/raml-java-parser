@@ -27,7 +27,6 @@ import java.util.List;
 
 public abstract class Rule
 {
-
     @Nullable
     private NodeFactory factory;
 
@@ -35,7 +34,6 @@ public abstract class Rule
     {
 
     }
-
 
     /**
      * Check if the current rule matches the specified node
@@ -60,6 +58,10 @@ public abstract class Rule
     @Nonnull
     public abstract Node apply(@Nonnull Node node);
 
+    /**
+     * Returns a description of this rule
+     * @return the description
+     */
     public abstract String getDescription();
 
     @Nullable
@@ -69,7 +71,7 @@ public abstract class Rule
     }
 
     @Nonnull
-    public Node createNodeUsingFactory(@Nonnull Node currentNode, Object... args)
+    protected Node createNodeUsingFactory(@Nonnull Node currentNode, Object... args)
     {
         if (getFactory() != null)
         {
@@ -82,12 +84,24 @@ public abstract class Rule
         return currentNode;
     }
 
+    /**
+     * Sets the clazz of the node that is going to be created to replaced the matched node of this rule.
+     * This is only applied if the rule matches
+     * @param clazz The class of the node
+     * @return this
+     */
     public Rule then(Class<? extends Node> clazz)
     {
         this.factory = new ClassNodeFactory(clazz);
         return this;
     }
 
+    /**
+     * Sets the factory of the node that is going to be created to replaced the matched node of this rule.
+     * This is only applied if the rule matches
+     * @param factory The class of the node
+     * @return this
+     */
     public Rule then(NodeFactory factory)
     {
         this.factory = factory;

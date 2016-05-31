@@ -29,7 +29,7 @@ import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
 import org.raml.v2.internal.framework.grammar.rule.NodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.NodeReferenceFactory;
 import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
-import org.raml.v2.internal.framework.grammar.rule.ParametrizedNodeReferenceRule;
+import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;

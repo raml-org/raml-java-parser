@@ -15,10 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.internal.framework.model.NodeModel;
 import org.raml.v2.internal.framework.nodes.AbstractReferenceNode;
 import org.raml.v2.internal.framework.nodes.ReferenceNode;
 
-public class Reference
+public class Reference implements NodeModel
 {
 
     private ReferenceNode node;
@@ -28,7 +29,7 @@ public class Reference
         this.node = node;
     }
 
-    protected ReferenceNode getNode()
+    public ReferenceNode getNode()
     {
         return node;
     }

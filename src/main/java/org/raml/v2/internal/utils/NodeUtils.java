@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.NullNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.impl.commons.nodes.ContextProviderNode;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
@@ -176,6 +177,11 @@ public class NodeUtils
         List<Node> children = parent.getChildren();
         Node lastChild = children.get(children.size() - 1);
         return node.equals(lastChild);
+    }
+
+    public static boolean isNull(Node node)
+    {
+        return node == null || node instanceof NullNode;
     }
 
     public static Node getRootSource(Node child)

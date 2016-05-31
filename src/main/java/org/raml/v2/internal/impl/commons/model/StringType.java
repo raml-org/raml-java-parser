@@ -15,23 +15,26 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.framework.model.NodeModel;
 
-public class StringType
+public class StringType implements NodeModel
 {
-    private String value;
-
-    public StringType(String value)
-    {
-        this.value = value;
-    }
+    private SimpleTypeNode value;
 
     public StringType(SimpleTypeNode node)
     {
-        this.value = node.getLiteralValue();
+        this.value = node;
     }
 
     public String value()
+    {
+        return value.getLiteralValue();
+    }
+
+    @Override
+    public Node getNode()
     {
         return value;
     }

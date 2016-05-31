@@ -25,15 +25,18 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 
-public class DiscriminatorRule extends Rule
+/**
+ * Delegates to a rule if the specified condition matches the first child.
+ */
+public class ChildBasedConditionalRule extends Rule
 {
 
     private Rule discriminator;
     private Rule delegate;
 
-    public DiscriminatorRule(Rule discriminator, Rule delegate)
+    public ChildBasedConditionalRule(Rule condition, Rule delegate)
     {
-        this.discriminator = discriminator;
+        this.discriminator = condition;
         this.delegate = delegate;
     }
 

@@ -15,10 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.internal.framework.model.NodeModel;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeRefNode;
 
-public class SecuritySchemeRef extends BaseModelElement
+public class SecuritySchemeRef implements NodeModel
 {
 
     private SecuritySchemeRefNode node;

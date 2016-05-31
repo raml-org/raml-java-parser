@@ -18,8 +18,9 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.framework.model.NodeModel;
 
-public class Parameter extends BaseModelElement
+public class Parameter implements NodeModel
 {
 
     private KeyValueNode node;

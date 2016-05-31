@@ -23,8 +23,9 @@ import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.framework.model.NodeModel;
 
-public class TypeInstance extends BaseModelElement
+public class TypeInstance implements NodeModel
 {
     private Node node;
 

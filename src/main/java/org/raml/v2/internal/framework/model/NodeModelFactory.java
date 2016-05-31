@@ -13,30 +13,25 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.grammar.rule;
-
-import java.util.List;
-
-import javax.annotation.Nonnull;
+package org.raml.v2.internal.framework.model;
 
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.suggester.RamlParsingContext;
-import org.raml.v2.internal.framework.suggester.Suggestion;
 
-public class TypeNodeReferenceRule extends StringTypeRule
+/**
+ * Create a Node based model based on a Node
+ */
+public interface NodeModelFactory
 {
+    /**
+     * The model to create
+     * @param node The node
+     * @return The model
+     */
+    NodeModel create(Node node);
 
-    private ReferenceSuggester suggester;
-
-    public TypeNodeReferenceRule(String referenceKey)
-    {
-        this.suggester = new ReferenceTypeSuggester(referenceKey);
-    }
-
-    @Nonnull
-    @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
-    {
-        return suggester.getSuggestions(node);
-    }
+    /**
+     * True if this factory create polymorphic implementations
+     * @return If the model is polymorphic
+     */
+    boolean polymorphic();
 }

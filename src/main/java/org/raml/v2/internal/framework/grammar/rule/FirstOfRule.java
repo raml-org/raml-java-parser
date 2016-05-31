@@ -24,6 +24,9 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 
+/**
+ * Accepts if any rule matches and delegates the suggestion to the first one that matches.
+ */
 public class FirstOfRule extends AnyOfRule
 {
 
