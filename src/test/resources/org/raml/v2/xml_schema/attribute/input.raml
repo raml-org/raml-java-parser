@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name:
+        type: string
+        xml:
+          attribute: true # serialize it as an XML attribute
+          name: "fullname" # attribute should be called fullname

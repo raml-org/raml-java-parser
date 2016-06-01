@@ -20,8 +20,9 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 public class IntegerResolvedType extends NumberResolvedType
 {
 
-    public IntegerResolvedType()
+    public IntegerResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     public IntegerResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)

@@ -39,12 +39,14 @@ public class ArrayResolvedType extends XmlFacetsCapableType
         this.maxItems = maxItems;
     }
 
-    public ArrayResolvedType()
+    public ArrayResolvedType(TypeDeclarationNode node)
     {
+        super(node);
     }
 
-    public ArrayResolvedType(ResolvedType items)
+    public ArrayResolvedType(TypeDeclarationNode node, ResolvedType items)
     {
+        super(node);
         this.items = items;
     }
 

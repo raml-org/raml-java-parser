@@ -30,8 +30,9 @@ public class FileResolvedType extends XmlFacetsCapableType
     private Number maxLength;
     private List<String> fileTypes;
 
-    public FileResolvedType()
+    public FileResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minLength, Number maxLength, List<String> fileTypes)

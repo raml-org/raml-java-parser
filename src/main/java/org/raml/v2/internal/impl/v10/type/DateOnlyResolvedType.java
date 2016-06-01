@@ -25,8 +25,9 @@ public class DateOnlyResolvedType extends XmlFacetsCapableType
         super(declarationNode, xmlFacets);
     }
 
-    public DateOnlyResolvedType()
+    public DateOnlyResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     @Override

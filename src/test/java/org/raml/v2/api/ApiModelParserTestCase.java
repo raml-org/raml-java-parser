@@ -112,7 +112,15 @@ public class ApiModelParserTestCase extends TestDataProvider
             jsonWriter.beginArray();
             for (java.lang.Object o : ((List) value))
             {
-                final Class<?> genericListType = (Class<?>) ((ParameterizedType) definitionClass).getActualTypeArguments()[0];
+                final Class<?> genericListType;
+                if (o != null && o.getClass().getInterfaces().length > 0)
+                {
+                    genericListType = o.getClass().getInterfaces()[0];
+                }
+                else
+                {
+                    genericListType = (Class<?>) ((ParameterizedType) definitionClass).getActualTypeArguments()[0];
+                }
                 dumpToJson(genericListType, o, jsonWriter);
             }
             jsonWriter.endArray();

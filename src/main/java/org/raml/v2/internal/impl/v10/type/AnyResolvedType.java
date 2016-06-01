@@ -26,8 +26,9 @@ public class AnyResolvedType extends XmlFacetsCapableType
         super(declarationNode, xmlFacets);
     }
 
-    public AnyResolvedType()
+    public AnyResolvedType(TypeDeclarationNode declarationNode)
     {
+        super(declarationNode);
     }
 
     protected ResolvedType copy()

@@ -73,7 +73,7 @@ public class PropertyNode extends KeyValueNodeImpl
         }
         else
         {
-            return new StringResolvedType();
+            throw new RuntimeException("Invalid value it should always be a TypeDeclarationNode but was " + value);
         }
     }
 

@@ -50,11 +50,11 @@ public class XmlFacets
     public XmlFacets overwriteFacets(TypeDeclarationNode from)
     {
         final XmlFacets copy = copy();
-        copy.setAttribute(NodeSelector.selectBooleanValue("attribute", from));
-        copy.setName(NodeSelector.selectStringValue("name", from));
-        copy.setNamespace(NodeSelector.selectStringValue("namespace", from));
-        copy.setPrefix(NodeSelector.selectStringValue("prefix", from));
-        copy.setWrapped(NodeSelector.selectBooleanValue("wrapped", from));
+        copy.setAttribute(NodeSelector.selectBooleanValue("xml/attribute", from));
+        copy.setName(NodeSelector.selectStringValue("xml/name", from));
+        copy.setNamespace(NodeSelector.selectStringValue("xml/namespace", from));
+        copy.setPrefix(NodeSelector.selectStringValue("xml/prefix", from));
+        copy.setWrapped(NodeSelector.selectBooleanValue("xml/wrapped", from));
         return copy;
     }
 

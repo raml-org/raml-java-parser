@@ -83,15 +83,15 @@ public class ExternalSchemaTypeExpressionNode extends StringNodeImpl implements 
 
     @Nullable
     @Override
-    public ResolvedType generateDefinition()
+    public ResolvedType generateDefinition(TypeDeclarationNode node)
     {
         if (isXmlSchema())
         {
-            return new XmlSchemaExternalType(getSchemaValue(), getSchemaPath(), getInternalFragment());
+            return new XmlSchemaExternalType(node, getSchemaValue(), getSchemaPath(), getInternalFragment());
         }
         else
         {
-            return new JsonSchemaExternalType(getSchemaValue(), getSchemaPath(), getInternalFragment());
+            return new JsonSchemaExternalType(node, getSchemaValue(), getSchemaPath(), getInternalFragment());
         }
 
     }

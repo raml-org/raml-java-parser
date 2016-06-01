@@ -54,6 +54,7 @@
         "value": "use to query all orders of a user"
        },
        "displayName": "userId",
+       "enumValues": null,
        "example": {
         "annotations": [],
         "name": null,
@@ -65,7 +66,10 @@
         "value": "1964401a-a8b3-40c1-b86e-d8b9f75b5842"
        },
        "examples": [],
+       "maxLength": null,
+       "minLength": null,
        "name": "userId",
+       "pattern": null,
        "required": true,
        "xml": null
       },
@@ -77,6 +81,7 @@
         "value": "the amount of elements of each result page"
        },
        "displayName": "size",
+       "enumValues": [],
        "example": {
         "annotations": [],
         "name": null,
@@ -88,6 +93,10 @@
         "value": "10"
        },
        "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
        "name": "size",
        "required": false,
        "xml": null
@@ -100,6 +109,7 @@
         "value": "the page number"
        },
        "displayName": "page",
+       "enumValues": [],
        "example": {
         "annotations": [],
         "name": null,
@@ -111,6 +121,10 @@
         "value": "0"
        },
        "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
        "name": "page",
        "required": false,
        "xml": null
@@ -122,10 +136,13 @@
        "annotations": [],
        "body": [
         {
+         "additionalProperties": true,
          "allowedTargets": [],
          "annotations": [],
          "defaultValue": null,
          "description": null,
+         "discriminator": null,
+         "discriminatorValue": null,
          "displayName": "application/json",
          "example": null,
          "examples": [
@@ -395,7 +412,23 @@
            "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n},{\norder_id: ORDER-437542111,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-7,\nquantity: 2\n}]\n}]\n}"
           }
          ],
+         "maxProperties": null,
+         "minProperties": null,
          "name": "application/json",
+         "properties": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": "orders",
+           "example": null,
+           "examples": [],
+           "name": "orders",
+           "required": true,
+           "xml": null
+          }
+         ],
          "required": true,
          "xml": null
         }
@@ -444,50 +477,186 @@
    ],
    "types": [
     {
+     "additionalProperties": true,
      "allowedTargets": [],
      "annotations": [],
      "defaultValue": null,
      "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
      "displayName": "ProductItem",
      "example": null,
      "examples": [],
+     "maxProperties": null,
+     "minProperties": null,
      "name": "ProductItem",
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "product_id",
+       "example": null,
+       "examples": [],
+       "name": "product_id",
+       "required": true,
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "quantity",
+       "example": null,
+       "examples": [],
+       "name": "quantity",
+       "required": true,
+       "xml": null
+      }
+     ],
      "required": true,
      "xml": null
     },
     {
+     "additionalProperties": true,
      "allowedTargets": [],
      "annotations": [],
      "defaultValue": null,
      "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
      "displayName": "Order",
      "example": null,
      "examples": [],
+     "maxProperties": null,
+     "minProperties": null,
      "name": "Order",
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "order_id",
+       "example": null,
+       "examples": [],
+       "name": "order_id",
+       "required": true,
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "creation_date",
+       "example": null,
+       "examples": [],
+       "name": "creation_date",
+       "required": true,
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "items",
+       "example": null,
+       "examples": [],
+       "name": "items",
+       "required": true,
+       "xml": null
+      }
+     ],
      "required": true,
      "xml": null
     },
     {
+     "additionalProperties": true,
      "allowedTargets": [],
      "annotations": [],
      "defaultValue": null,
      "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
      "displayName": "Orders",
      "example": null,
      "examples": [],
+     "maxProperties": null,
+     "minProperties": null,
      "name": "Orders",
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "orders",
+       "example": null,
+       "examples": [],
+       "name": "orders",
+       "required": true,
+       "xml": null
+      }
+     ],
      "required": true,
      "xml": null
     },
     {
+     "additionalProperties": true,
      "allowedTargets": [],
      "annotations": [],
      "defaultValue": null,
      "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
      "displayName": "Inherit",
      "example": null,
      "examples": [],
+     "maxProperties": null,
+     "minProperties": null,
      "name": "Inherit",
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "order_id",
+       "example": null,
+       "examples": [],
+       "name": "order_id",
+       "required": true,
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "creation_date",
+       "example": null,
+       "examples": [],
+       "name": "creation_date",
+       "required": true,
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": "items",
+       "example": null,
+       "examples": [],
+       "name": "items",
+       "required": true,
+       "xml": null
+      }
+     ],
      "required": true,
      "xml": null
     }

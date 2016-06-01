@@ -25,8 +25,9 @@ public class JsonSchemaExternalType extends BaseType implements SchemaBasedResol
     private final String schemaPath;
     private final String internalFragment;
 
-    public JsonSchemaExternalType(String schemaValue, String schemaPath, String internalFragment)
+    public JsonSchemaExternalType(TypeDeclarationNode from, String schemaValue, String schemaPath, String internalFragment)
     {
+        super(from);
         this.schemaValue = schemaValue;
         this.schemaPath = schemaPath;
         this.internalFragment = internalFragment;
@@ -34,7 +35,7 @@ public class JsonSchemaExternalType extends BaseType implements SchemaBasedResol
 
     protected JsonSchemaExternalType copy()
     {
-        return new JsonSchemaExternalType(schemaValue, schemaPath, internalFragment);
+        return new JsonSchemaExternalType(getTypeDeclarationNode(), schemaValue, schemaPath, internalFragment);
     }
 
     @Override

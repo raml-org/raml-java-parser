@@ -26,8 +26,9 @@ public class NullResolvedType extends XmlFacetsCapableType
         super(declarationNode, xmlFacets);
     }
 
-    public NullResolvedType()
+    public NullResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     protected ResolvedType copy()

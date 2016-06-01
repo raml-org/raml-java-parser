@@ -17,11 +17,9 @@ package org.raml.v2.internal.impl.commons.model.type;
 
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.framework.model.ModelUtils;
@@ -33,17 +31,14 @@ import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
 import org.raml.v2.internal.utils.NodeSelector;
-import org.raml.v2.internal.utils.NodeUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
 
-public class TypeDeclaration<T extends ResolvedType> extends Annotable
+public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
 {
 
     private KeyValueNode node;
@@ -82,10 +77,11 @@ public class TypeDeclaration<T extends ResolvedType> extends Annotable
     {
         if (node.getValue() instanceof TypeDeclarationNode)
         {
-            final List<TypeExpressionNode> baseTypes = ((TypeDeclarationNode) node.getValue()).getBaseTypes();
+            final TypeDeclarationNode value = (TypeDeclarationNode) node.getValue();
+            final List<TypeExpressionNode> baseTypes = value.getBaseTypes();
             if (!baseTypes.isEmpty())
             {
-                final ResolvedType resolvedType = baseTypes.get(0).generateDefinition();
+                final ResolvedType resolvedType = baseTypes.get(0).generateDefinition(value);
                 if (resolvedType instanceof SchemaBasedResolvedType)
                 {
                     return ((SchemaBasedResolvedType) resolvedType).getSchemaValue();

@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 
 import javax.annotation.Nonnull;
 
@@ -37,5 +38,10 @@ public class TypeDeclarationField extends KeyValueNodeImpl
     public Node copy()
     {
         return new TypeDeclarationField(this);
+    }
+
+    public String getName()
+    {
+        return ((SimpleTypeNode) getKey()).getLiteralValue();
     }
 }

@@ -81,7 +81,7 @@ public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode,
         // First we inherit all base properties and merge with multiple inheritance
         for (TypeExpressionNode baseType : baseTypes)
         {
-            final ResolvedType baseTypeDef = baseType.generateDefinition();
+            final ResolvedType baseTypeDef = baseType.generateDefinition(this);
             if (result == null)
             {
                 result = baseTypeDef;

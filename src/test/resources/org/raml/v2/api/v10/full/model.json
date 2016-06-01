@@ -6,13 +6,18 @@
    "defaultValue": null,
    "description": null,
    "displayName": "basic",
+   "enumValues": null,
    "example": null,
    "examples": [],
+   "maxLength": null,
+   "minLength": null,
    "name": "basic",
+   "pattern": null,
    "required": true,
    "xml": null
   },
   {
+   "additionalProperties": true,
    "allowedTargets": [
     {
      "value": "API"
@@ -24,10 +29,42 @@
    "annotations": [],
    "defaultValue": null,
    "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
    "displayName": "complex",
    "example": null,
    "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
    "name": "complex",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "value": "where is hypermedia"
+     },
+     "displayName": "controls",
+     "example": null,
+     "examples": [],
+     "name": "controls",
+     "required": true,
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": "true",
+     "description": null,
+     "displayName": "permanentUri?",
+     "example": null,
+     "examples": [],
+     "name": "permanentUri",
+     "required": false,
+     "xml": null
+    }
+   ],
    "required": true,
    "xml": null
   }
@@ -152,6 +189,7 @@
     "value": "some description"
    },
    "displayName": "Param 1",
+   "enumValues": null,
    "example": {
     "annotations": [],
     "name": null,
@@ -163,7 +201,10 @@
     "value": "one"
    },
    "examples": [],
+   "maxLength": 10,
+   "minLength": null,
    "name": "param1",
+   "pattern": null,
    "required": true,
    "xml": null
   }
@@ -269,9 +310,13 @@
        "defaultValue": null,
        "description": null,
        "displayName": "one",
+       "enumValues": null,
        "example": null,
        "examples": [],
+       "maxLength": null,
+       "minLength": null,
        "name": "one",
+       "pattern": null,
        "required": true,
        "xml": null
       },
@@ -281,9 +326,13 @@
        "defaultValue": null,
        "description": null,
        "displayName": "The Second",
+       "enumValues": null,
        "example": null,
        "examples": [],
+       "maxLength": null,
+       "minLength": null,
        "name": "two",
+       "pattern": null,
        "required": true,
        "xml": null
       }
@@ -300,8 +349,13 @@
        "defaultValue": null,
        "description": null,
        "displayName": "The One",
+       "enumValues": [],
        "example": null,
        "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
        "name": "one",
        "required": true,
        "xml": null
@@ -312,9 +366,13 @@
        "defaultValue": null,
        "description": null,
        "displayName": "two",
+       "enumValues": null,
        "example": null,
        "examples": [],
+       "maxLength": null,
+       "minLength": null,
        "name": "two",
+       "pattern": null,
        "required": true,
        "xml": null
       }
@@ -337,9 +395,13 @@
             "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
            },
            "displayName": "Authorization",
+           "enumValues": null,
            "example": null,
            "examples": [],
+           "maxLength": null,
+           "minLength": null,
            "name": "Authorization",
+           "pattern": null,
            "required": true,
            "xml": null
           }
@@ -353,9 +415,13 @@
             "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
            },
            "displayName": "access_token",
+           "enumValues": null,
            "example": null,
            "examples": [],
+           "maxLength": null,
+           "minLength": null,
            "name": "access_token",
+           "pattern": null,
            "required": true,
            "xml": null
           }
@@ -422,10 +488,13 @@
      "annotations": [],
      "body": [
       {
+       "additionalProperties": true,
        "allowedTargets": [],
        "annotations": [],
        "defaultValue": null,
        "description": null,
+       "discriminator": null,
+       "discriminatorValue": null,
        "displayName": "application/json",
        "example": {
         "annotations": [],
@@ -438,7 +507,47 @@
         "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
        },
        "examples": [],
+       "maxProperties": null,
+       "minProperties": null,
        "name": "application/json",
+       "properties": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": "firstname",
+         "example": null,
+         "examples": [],
+         "name": "firstname",
+         "required": true,
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": "lastname",
+         "example": null,
+         "examples": [],
+         "name": "lastname",
+         "required": true,
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": "age",
+         "example": null,
+         "examples": [],
+         "name": "age",
+         "required": true,
+         "xml": null
+        }
+       ],
        "required": true,
        "xml": null
       },
@@ -473,6 +582,7 @@
        ],
        "name": "application/xml",
        "required": true,
+       "schemaContent": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n",
        "xml": null
       }
      ],
@@ -530,10 +640,13 @@
        "annotations": [],
        "body": [
         {
+         "additionalProperties": true,
          "allowedTargets": [],
          "annotations": [],
          "defaultValue": null,
          "description": null,
+         "discriminator": null,
+         "discriminatorValue": null,
          "displayName": "application/json",
          "example": {
           "annotations": [],
@@ -546,7 +659,47 @@
           "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
          },
          "examples": [],
+         "maxProperties": null,
+         "minProperties": null,
          "name": "application/json",
+         "properties": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": "firstname",
+           "example": null,
+           "examples": [],
+           "name": "firstname",
+           "required": true,
+           "xml": null
+          },
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": "lastname",
+           "example": null,
+           "examples": [],
+           "name": "lastname",
+           "required": true,
+           "xml": null
+          },
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": "age",
+           "example": null,
+           "examples": [],
+           "name": "age",
+           "required": true,
+           "xml": null
+          }
+         ],
          "required": true,
          "xml": null
         },
@@ -581,6 +734,7 @@
          ],
          "name": "application/xml",
          "required": true,
+         "schemaContent": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n",
          "xml": null
         }
        ],
@@ -595,9 +749,13 @@
          "defaultValue": null,
          "description": null,
          "displayName": "one",
+         "enumValues": null,
          "example": null,
          "examples": [],
+         "maxLength": null,
+         "minLength": null,
          "name": "one",
+         "pattern": null,
          "required": true,
          "xml": null
         },
@@ -607,9 +765,13 @@
          "defaultValue": null,
          "description": null,
          "displayName": "The Second",
+         "enumValues": null,
          "example": null,
          "examples": [],
+         "maxLength": null,
+         "minLength": null,
          "name": "two",
+         "pattern": null,
          "required": true,
          "xml": null
         }
@@ -662,9 +824,13 @@
             "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
            },
            "displayName": "Authorization",
+           "enumValues": null,
            "example": null,
            "examples": [],
+           "maxLength": null,
+           "minLength": null,
            "name": "Authorization",
+           "pattern": null,
            "required": true,
            "xml": null
           }
@@ -678,9 +844,13 @@
             "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
            },
            "displayName": "access_token",
+           "enumValues": null,
            "example": null,
            "examples": [],
+           "maxLength": null,
+           "minLength": null,
            "name": "access_token",
+           "pattern": null,
            "required": true,
            "xml": null
           }
@@ -819,9 +989,13 @@
         "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
        },
        "displayName": "Authorization",
+       "enumValues": null,
        "example": null,
        "examples": [],
+       "maxLength": null,
+       "minLength": null,
        "name": "Authorization",
+       "pattern": null,
        "required": true,
        "xml": null
       }
@@ -835,9 +1009,13 @@
         "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
        },
        "displayName": "access_token",
+       "enumValues": null,
        "example": null,
        "examples": [],
+       "maxLength": null,
+       "minLength": null,
        "name": "access_token",
+       "pattern": null,
        "required": true,
        "xml": null
       }
@@ -951,9 +1129,13 @@
        "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
       },
       "displayName": "Authorization",
+      "enumValues": null,
       "example": null,
       "examples": [],
+      "maxLength": null,
+      "minLength": null,
       "name": "Authorization",
+      "pattern": null,
       "required": true,
       "xml": null
      }
@@ -967,9 +1149,13 @@
        "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
       },
       "displayName": "access_token",
+      "enumValues": null,
       "example": null,
       "examples": [],
+      "maxLength": null,
+      "minLength": null,
       "name": "access_token",
+      "pattern": null,
       "required": true,
       "xml": null
      }
@@ -1075,10 +1261,13 @@
  ],
  "types": [
   {
+   "additionalProperties": true,
    "allowedTargets": [],
    "annotations": [],
    "defaultValue": null,
    "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
    "displayName": "User",
    "example": null,
    "examples": [
@@ -1165,7 +1354,47 @@
      "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
     }
    ],
+   "maxProperties": null,
+   "minProperties": null,
    "name": "User",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "firstname",
+     "example": null,
+     "examples": [],
+     "name": "firstname",
+     "required": true,
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "lastname",
+     "example": null,
+     "examples": [],
+     "name": "lastname",
+     "required": true,
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "age",
+     "example": null,
+     "examples": [],
+     "name": "age",
+     "required": true,
+     "xml": null
+    }
+   ],
    "required": true,
    "xml": null
   }

@@ -1,0 +1,150 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": "simple object",
+ "traits": [],
+ "types": [
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": "Person",
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "Person",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "name",
+     "example": null,
+     "examples": [],
+     "name": "name",
+     "required": true,
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "email",
+     "example": null,
+     "examples": [],
+     "name": "email",
+     "required": true,
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "age",
+     "example": null,
+     "examples": [],
+     "name": "age",
+     "required": true,
+     "xml": null
+    }
+   ],
+   "required": true,
+   "xml": null
+  },
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": "Robot",
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "Robot",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "name",
+     "example": null,
+     "examples": [],
+     "name": "name",
+     "required": true,
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "email",
+     "example": null,
+     "examples": [],
+     "name": "email",
+     "required": true,
+     "xml": null
+    }
+   ],
+   "required": true,
+   "xml": null
+  },
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": "Office",
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "Office",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": "workers",
+     "example": null,
+     "examples": [],
+     "name": "workers",
+     "required": true,
+     "xml": null
+    }
+   ],
+   "required": true,
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": null
+}

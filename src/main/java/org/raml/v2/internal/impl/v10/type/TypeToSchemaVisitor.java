@@ -51,6 +51,7 @@ import static org.raml.v2.internal.utils.ValueUtils.isEmpty;
 
 public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
 {
+    public static final long UNBONDED = Long.MAX_VALUE;
     private XmlSchemaCollection collection;
     private XmlSchema schema;
     private Stack<XmlSchemaElement> currentElement;
@@ -83,10 +84,13 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         final XmlSchemaType visit = resolvedType.visit(this);
         if (visit != null)
         {
-            schemaElement.setSchemaType(visit);
-            if (!empty)
+            if (visit.getQName() != null)
             {
                 schemaElement.setSchemaTypeName(visit.getQName());
+            }
+            else
+            {
+                schemaElement.setSchemaType(visit);
             }
         }
         currentElement.pop();
@@ -201,6 +205,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
             {
                 final XmlSchemaAny schemaAny = new XmlSchemaAny();
                 schemaAny.setMinOccurs(0);
+                schemaAny.setMaxOccurs(UNBONDED);
                 items.add(schemaAny);
             }
             return value;
@@ -308,7 +313,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         }
         else
         {
-            peek.setMaxOccurs(Long.MAX_VALUE);
+            peek.setMaxOccurs(UNBONDED);
         }
         return visit;
     }

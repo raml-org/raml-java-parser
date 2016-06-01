@@ -19,6 +19,9 @@ import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
 
+/**
+ * Binding implementation of {@link org.raml.v2.api.model.v10.datamodel.ArrayTypeDeclaration}
+ */
 public class ArrayTypeDeclaration extends TypeDeclaration<ArrayResolvedType>
 {
 

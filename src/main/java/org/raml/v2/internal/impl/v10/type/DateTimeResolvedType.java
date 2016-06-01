@@ -31,8 +31,9 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
         this.format = format;
     }
 
-    public DateTimeResolvedType()
+    public DateTimeResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     protected DateTimeResolvedType copy()

@@ -28,7 +28,8 @@ public interface TypeExpressionNode extends Node
     /**
      * Generates the definition that results of evaluating this expression
      * @return The type definition
+     * @param node
      */
     @Nullable
-    ResolvedType generateDefinition();
+    ResolvedType generateDefinition(TypeDeclarationNode node);
 }

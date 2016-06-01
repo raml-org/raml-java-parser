@@ -34,8 +34,9 @@ public class NumberResolvedType extends XmlFacetsCapableType
     private String format;
     private List<Number> enums = new ArrayList<>();
 
-    public NumberResolvedType()
+    public NumberResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     public NumberResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)

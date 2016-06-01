@@ -36,8 +36,9 @@ public class StringResolvedType extends XmlFacetsCapableType
     private String pattern;
     private List<String> enums;
 
-    public StringResolvedType()
+    public StringResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     public StringResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums)

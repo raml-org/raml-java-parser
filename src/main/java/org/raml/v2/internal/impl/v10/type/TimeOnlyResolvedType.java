@@ -26,8 +26,9 @@ public class TimeOnlyResolvedType extends XmlFacetsCapableType
         super(declarationNode, xmlFacets);
     }
 
-    public TimeOnlyResolvedType()
+    public TimeOnlyResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     protected TimeOnlyResolvedType copy()

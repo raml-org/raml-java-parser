@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: simple object
+types:
+  Person:
+    properties:
+      name: string
+      email:
+        type: string
+        pattern: ^.+@.+\..+$
+      age:
+        type: integer
+        minimum: 0
+  Robot:
+    properties:
+      name: string
+      email:
+        type: string
+        pattern: ^.+@.+\..+$
+  Office:
+    type: object
+    properties:
+      workers: Person | Robot

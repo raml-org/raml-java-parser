@@ -26,8 +26,9 @@ public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
         super(declarationNode, xmlFacets);
     }
 
-    public DateTimeOnlyResolvedType()
+    public DateTimeOnlyResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     protected DateTimeOnlyResolvedType copy()

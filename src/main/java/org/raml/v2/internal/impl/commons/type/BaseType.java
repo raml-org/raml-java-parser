@@ -28,9 +28,6 @@ public abstract class BaseType implements ResolvedType
         this.typeNode = typeNode;
     }
 
-    public BaseType()
-    {
-    }
 
     protected void setTypeNode(TypeDeclarationNode typeNode)
     {

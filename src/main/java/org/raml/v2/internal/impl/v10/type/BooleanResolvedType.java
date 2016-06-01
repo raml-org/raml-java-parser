@@ -26,8 +26,9 @@ public class BooleanResolvedType extends XmlFacetsCapableType
         super(declarationNode, xmlFacets);
     }
 
-    public BooleanResolvedType()
+    public BooleanResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     private BooleanResolvedType copy()

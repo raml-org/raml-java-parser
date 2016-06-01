@@ -29,8 +29,9 @@ public class UnionResolvedType implements ResolvedType
     private List<ResolvedType> of;
     private TypeDeclarationNode typeNode;
 
-    public UnionResolvedType(List<ResolvedType> of)
+    public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of)
     {
+        this.typeNode = typeNode;
         this.of = of;
     }
 
@@ -41,20 +42,19 @@ public class UnionResolvedType implements ResolvedType
 
     protected UnionResolvedType copy()
     {
-        return new UnionResolvedType(new ArrayList<>(of));
+        return new UnionResolvedType(typeNode, new ArrayList<>(of));
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        typeNode = from;
         final List<ResolvedType> result = new ArrayList<>();
         final List<ResolvedType> of = of();
         for (ResolvedType resolvedType : of)
         {
             result.add(resolvedType.overwriteFacets(from));
         }
-        return new UnionResolvedType(result);
+        return new UnionResolvedType(from, result);
     }
 
     @Override
@@ -100,6 +100,6 @@ public class UnionResolvedType implements ResolvedType
                 combination.add(localDefinition.mergeFacets(resolvedType));
             }
         }
-        return new UnionResolvedType(combination);
+        return new UnionResolvedType(typeNode, combination);
     }
 }

@@ -52,8 +52,9 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         this.properties = properties;
     }
 
-    public ObjectResolvedType()
+    public ObjectResolvedType(TypeDeclarationNode from)
     {
+        super(from);
     }
 
     protected ObjectResolvedType copy()

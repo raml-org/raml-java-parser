@@ -21,11 +21,15 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.BaseType;
 import org.raml.v2.internal.impl.v10.type.ObjectResolvedType;
 import org.raml.v2.internal.impl.v10.type.PropertyFacets;
+import org.raml.v2.internal.utils.ValueUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implementation binding of {@link org.raml.v2.api.model.v10.datamodel.ObjectTypeDeclaration}
+ */
 public class ObjectTypeDeclaration extends TypeDeclaration<ObjectResolvedType>
 {
 
@@ -41,8 +45,7 @@ public class ObjectTypeDeclaration extends TypeDeclaration<ObjectResolvedType>
         final Map<String, PropertyFacets> properties = getResolvedType().getProperties();
         for (PropertyFacets propertyFacets : properties.values())
         {
-            final TypeDeclarationNode typeDeclarationNode = ((BaseType) propertyFacets.getValueType()).getTypeDeclarationNode();
-            result.add(new TypeDeclarationModelFactory().create(typeDeclarationNode));
+            result.add(new TypeDeclarationModelFactory().create(propertyFacets.getValueType()));
         }
         return result;
     }
@@ -53,7 +56,6 @@ public class ObjectTypeDeclaration extends TypeDeclaration<ObjectResolvedType>
         return getResolvedType().getMinProperties();
     }
 
-
     public Integer maxProperties()
     {
         return getResolvedType().getMaxProperties();
@@ -61,7 +63,7 @@ public class ObjectTypeDeclaration extends TypeDeclaration<ObjectResolvedType>
 
     public Boolean additionalProperties()
     {
-        return getResolvedType().getAdditionalProperties();
+        return ValueUtils.asBoolean(getResolvedType().getAdditionalProperties(), true);
     }
 
 

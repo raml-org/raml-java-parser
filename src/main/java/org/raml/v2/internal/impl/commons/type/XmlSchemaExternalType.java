@@ -24,9 +24,9 @@ public class XmlSchemaExternalType extends BaseType implements SchemaBasedResolv
     private final String schemaPath;
     private final String internalFragment;
 
-    public XmlSchemaExternalType(String schemaValue, String schemaPath, String internalFragment)
+    public XmlSchemaExternalType(TypeDeclarationNode from, String schemaValue, String schemaPath, String internalFragment)
     {
-
+        super(from);
         this.schemaValue = schemaValue;
         this.schemaPath = schemaPath;
         this.internalFragment = internalFragment;
@@ -34,7 +34,7 @@ public class XmlSchemaExternalType extends BaseType implements SchemaBasedResolv
 
     protected XmlSchemaExternalType copy()
     {
-        return new XmlSchemaExternalType(schemaValue, schemaPath, internalFragment);
+        return new XmlSchemaExternalType(getTypeDeclarationNode(), schemaValue, schemaPath, internalFragment);
     }
 
     @Override
