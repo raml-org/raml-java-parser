@@ -13,17 +13,17 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.bodies;
-
-import org.raml.v2.api.model.v08.system.types.JSONSchemaString;
+package org.raml.v2.internal.impl.commons.model.type;
 
 
-public interface JSONBody extends BodyLike
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.impl.v10.type.BooleanResolvedType;
+
+public class BooleanTypeDeclaration extends TypeDeclaration<BooleanResolvedType>
 {
 
-    /**
-     * JSON Schema
-     **/
-    JSONSchemaString schema();
-
+    public BooleanTypeDeclaration(KeyValueNode node, BooleanResolvedType resolvedType)
+    {
+        super(node, resolvedType);
+    }
 }

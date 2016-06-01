@@ -13,7 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.model;
+package org.raml.v2.internal.impl.commons.model.type;
 
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -25,11 +25,15 @@ import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
 import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.framework.model.ModelUtils;
+import org.raml.v2.internal.impl.commons.model.Annotable;
+import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
 
@@ -39,14 +43,21 @@ import java.util.List;
 
 import static java.util.Collections.singletonList;
 
-public class TypeDeclaration extends Annotable
+public class TypeDeclaration<T extends ResolvedType> extends Annotable
 {
 
     private KeyValueNode node;
+    private T resolvedType;
 
-    public TypeDeclaration(KeyValueNode node)
+    public TypeDeclaration(KeyValueNode node, T resolvedType)
     {
         this.node = node;
+        this.resolvedType = resolvedType;
+    }
+
+    public T getResolvedType()
+    {
+        return resolvedType;
     }
 
     @Override
@@ -57,7 +68,14 @@ public class TypeDeclaration extends Annotable
 
     public String name()
     {
-        return ((StringNode) node.getKey()).getValue();
+        if (node instanceof PropertyNode)
+        {
+            return ((PropertyNode) node).getName();
+        }
+        else
+        {
+            return ((StringNode) node.getKey()).getValue();
+        }
     }
 
     public String schemaContent()
@@ -72,48 +90,9 @@ public class TypeDeclaration extends Annotable
                 {
                     return ((SchemaBasedResolvedType) resolvedType).getSchemaValue();
                 }
-
             }
         }
         return null;
-    }
-
-    public List<String> schema()
-    {
-        return selectStringList("schema");
-    }
-
-    protected List<String> selectStringList(String propertyName)
-    {
-        final Node schema = NodeSelector.selectFrom(propertyName, node.getValue());
-        if (schema instanceof ArrayNode)
-        {
-            final List<Node> children = schema.getChildren();
-            final List<String> result = new ArrayList<>();
-            for (Node child : children)
-            {
-                final Node rootSource = NodeUtils.getRootSource(child);
-                if (rootSource instanceof SimpleTypeNode)
-                {
-                    result.add(((SimpleTypeNode) rootSource).getLiteralValue());
-                }
-            }
-            return result;
-        }
-        else if (schema != null)
-        {
-            final Node rootSource = NodeUtils.getRootSource(schema);
-            if (rootSource instanceof SimpleTypeNode)
-            {
-                return singletonList(((SimpleTypeNode) rootSource).getLiteralValue());
-            }
-        }
-        return Collections.emptyList();
-    }
-
-    public List<String> type()
-    {
-        return selectStringList("type");
     }
 
     public List<RamlValidationResult> validate(String payload)
@@ -134,8 +113,14 @@ public class TypeDeclaration extends Annotable
 
     public Boolean required()
     {
-        Boolean required = ModelUtils.getSimpleValue("required", getNode());
-        return required == null ? true : required;
+        if (node instanceof PropertyNode)
+        {
+            return ((PropertyNode) node).isRequired();
+        }
+        else
+        {
+            return NodeSelector.selectType("required", getNode(), true);
+        }
     }
 
     public String defaultValue()

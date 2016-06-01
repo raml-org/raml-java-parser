@@ -13,17 +13,11 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.bodies;
-
-import org.raml.v2.api.model.v08.system.types.JSONSchemaString;
+package org.raml.v2.api.model.v08.system.types;
 
 
-public interface JSONBody extends BodyLike
+public interface JSONSchemaString extends SchemaString
 {
 
-    /**
-     * JSON Schema
-     **/
-    JSONSchemaString schema();
 
 }

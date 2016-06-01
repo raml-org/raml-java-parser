@@ -8,15 +8,9 @@
    "displayName": "basic",
    "example": null,
    "examples": [],
-   "fixedFacets": null,
-   "isAnnotation": false,
    "name": "basic",
    "required": true,
-   "schema": [],
-   "schemaContent": null,
-   "type": [
-    "string"
-   ]
+   "xml": null
   },
   {
    "allowedTargets": [
@@ -33,15 +27,9 @@
    "displayName": "complex",
    "example": null,
    "examples": [],
-   "fixedFacets": null,
-   "isAnnotation": false,
    "name": "complex",
    "required": true,
-   "schema": [],
-   "schemaContent": null,
-   "type": [
-    "object"
-   ]
+   "xml": null
   }
  ],
  "annotations": [
@@ -54,15 +42,9 @@
     "displayName": "basic",
     "example": null,
     "examples": [],
-    "fixedFacets": null,
-    "isAnnotation": false,
     "name": "basic",
     "required": true,
-    "schema": [],
-    "schemaContent": null,
-    "type": [
-     "string"
-    ]
+    "xml": null
    },
    "name": "(basic)",
    "structuredValue": {
@@ -87,15 +69,9 @@
     "displayName": "complex",
     "example": null,
     "examples": [],
-    "fixedFacets": null,
-    "isAnnotation": false,
     "name": "complex",
     "required": true,
-    "schema": [],
-    "schemaContent": null,
-    "type": [
-     "object"
-    ]
+    "xml": null
    },
    "name": "(complex)",
    "structuredValue": {
@@ -187,15 +163,9 @@
     "value": "one"
    },
    "examples": [],
-   "fixedFacets": null,
-   "isAnnotation": false,
    "name": "param1",
    "required": true,
-   "schema": [],
-   "schemaContent": null,
-   "type": [
-    "string"
-   ]
+   "xml": null
   }
  ],
  "documentation": [
@@ -226,9 +196,9 @@
  "ramlVersion": "1.0",
  "resourceTypes": [
   {
+   "description": null,
    "displayName": null,
    "name": "first",
-   "parametrizedProperties": null,
    "usage": "first usage"
   }
  ],
@@ -248,21 +218,11 @@
       "value": null
      },
      "trait": {
-      "annotations": [],
-      "body": [],
       "description": {
        "value": "method description"
       },
       "displayName": "uno",
-      "headers": [],
-      "is": [],
       "name": "traitOne",
-      "parametrizedProperties": null,
-      "protocols": [],
-      "queryParameters": [],
-      "queryString": null,
-      "responses": [],
-      "securedBy": [],
       "usage": "late night"
      }
     },
@@ -285,21 +245,11 @@
       "value": null
      },
      "trait": {
-      "annotations": [],
-      "body": [],
       "description": {
        "value": "<<text>>"
       },
       "displayName": "dos",
-      "headers": [],
-      "is": [],
       "name": "traitTwo",
-      "parametrizedProperties": null,
-      "protocols": [],
-      "queryParameters": [],
-      "queryString": null,
-      "responses": [],
-      "securedBy": [],
       "usage": null
      }
     }
@@ -321,15 +271,9 @@
        "displayName": "one",
        "example": null,
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "one",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "string"
-       ]
+       "xml": null
       },
       {
        "allowedTargets": [],
@@ -339,15 +283,9 @@
        "displayName": "The Second",
        "example": null,
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "two",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "string"
-       ]
+       "xml": null
       }
      ],
      "is": [],
@@ -364,15 +302,9 @@
        "displayName": "The One",
        "example": null,
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "one",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "number"
-       ]
+       "xml": null
       },
       {
        "allowedTargets": [],
@@ -382,15 +314,9 @@
        "displayName": "two",
        "example": null,
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "two",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "string"
-       ]
+       "xml": null
       }
      ],
      "queryString": null,
@@ -413,15 +339,9 @@
            "displayName": "Authorization",
            "example": null,
            "examples": [],
-           "fixedFacets": null,
-           "isAnnotation": false,
            "name": "Authorization",
            "required": true,
-           "schema": [],
-           "schemaContent": null,
-           "type": [
-            "string"
-           ]
+           "xml": null
           }
          ],
          "queryParameters": [
@@ -435,15 +355,9 @@
            "displayName": "access_token",
            "example": null,
            "examples": [],
-           "fixedFacets": null,
-           "isAnnotation": false,
            "name": "access_token",
            "required": true,
-           "schema": [],
-           "schemaContent": null,
-           "type": [
-            "string"
-           ]
+           "xml": null
           }
          ],
          "queryString": null,
@@ -524,15 +438,9 @@
         "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
        },
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "application/json",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "User"
-       ]
+       "xml": null
       },
       {
        "allowedTargets": [],
@@ -563,15 +471,9 @@
          "value": "<second/>\n"
         }
        ],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "application/xml",
        "required": true,
-       "schema": [
-        "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n"
-       ],
-       "schemaContent": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n",
-       "type": []
+       "xml": null
       }
      ],
      "description": {
@@ -599,21 +501,11 @@
         "value": null
        },
        "trait": {
-        "annotations": [],
-        "body": [],
         "description": {
          "value": "<<text>>"
         },
         "displayName": "dos",
-        "headers": [],
-        "is": [],
         "name": "traitTwo",
-        "parametrizedProperties": null,
-        "protocols": [],
-        "queryParameters": [],
-        "queryString": null,
-        "responses": [],
-        "securedBy": [],
         "usage": null
        }
       }
@@ -629,15 +521,9 @@
       "displayName": "queryString",
       "example": null,
       "examples": [],
-      "fixedFacets": null,
-      "isAnnotation": false,
       "name": "queryString",
       "required": true,
-      "schema": [],
-      "schemaContent": null,
-      "type": [
-       "object"
-      ]
+      "xml": null
      },
      "responses": [
       {
@@ -660,15 +546,9 @@
           "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
          },
          "examples": [],
-         "fixedFacets": null,
-         "isAnnotation": false,
          "name": "application/json",
          "required": true,
-         "schema": [],
-         "schemaContent": null,
-         "type": [
-          "User"
-         ]
+         "xml": null
         },
         {
          "allowedTargets": [],
@@ -699,15 +579,9 @@
            "value": "<second/>\n"
           }
          ],
-         "fixedFacets": null,
-         "isAnnotation": false,
          "name": "application/xml",
          "required": true,
-         "schema": [
-          "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n"
-         ],
-         "schemaContent": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <xsd:element name=\"first\" type=\"xsd:string\" />\n  <xsd:element name=\"second\" type=\"xsd:string\" />\n</xsd:schema>\n",
-         "type": []
+         "xml": null
         }
        ],
        "code": {
@@ -723,15 +597,9 @@
          "displayName": "one",
          "example": null,
          "examples": [],
-         "fixedFacets": null,
-         "isAnnotation": false,
          "name": "one",
          "required": true,
-         "schema": [],
-         "schemaContent": null,
-         "type": [
-          "string"
-         ]
+         "xml": null
         },
         {
          "allowedTargets": [],
@@ -741,15 +609,9 @@
          "displayName": "The Second",
          "example": null,
          "examples": [],
-         "fixedFacets": null,
-         "isAnnotation": false,
          "name": "two",
          "required": true,
-         "schema": [],
-         "schemaContent": null,
-         "type": [
-          "string"
-         ]
+         "xml": null
         }
        ]
       },
@@ -802,15 +664,9 @@
            "displayName": "Authorization",
            "example": null,
            "examples": [],
-           "fixedFacets": null,
-           "isAnnotation": false,
            "name": "Authorization",
            "required": true,
-           "schema": [],
-           "schemaContent": null,
-           "type": [
-            "string"
-           ]
+           "xml": null
           }
          ],
          "queryParameters": [
@@ -824,15 +680,9 @@
            "displayName": "access_token",
            "example": null,
            "examples": [],
-           "fixedFacets": null,
-           "isAnnotation": false,
            "name": "access_token",
            "required": true,
-           "schema": [],
-           "schemaContent": null,
-           "type": [
-            "string"
-           ]
+           "xml": null
           }
          ],
          "queryString": null,
@@ -938,9 +788,9 @@
    "type": {
     "name": "first",
     "resourceType": {
+     "description": null,
      "displayName": null,
      "name": "first",
-     "parametrizedProperties": null,
      "usage": "first usage"
     },
     "structuredValue": {
@@ -971,15 +821,9 @@
        "displayName": "Authorization",
        "example": null,
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "Authorization",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "string"
-       ]
+       "xml": null
       }
      ],
      "queryParameters": [
@@ -993,15 +837,9 @@
        "displayName": "access_token",
        "example": null,
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "access_token",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "string"
-       ]
+       "xml": null
       }
      ],
      "queryString": null,
@@ -1115,15 +953,9 @@
       "displayName": "Authorization",
       "example": null,
       "examples": [],
-      "fixedFacets": null,
-      "isAnnotation": false,
       "name": "Authorization",
       "required": true,
-      "schema": [],
-      "schemaContent": null,
-      "type": [
-       "string"
-      ]
+      "xml": null
      }
     ],
     "queryParameters": [
@@ -1137,15 +969,9 @@
       "displayName": "access_token",
       "example": null,
       "examples": [],
-      "fixedFacets": null,
-      "isAnnotation": false,
       "name": "access_token",
       "required": true,
-      "schema": [],
-      "schemaContent": null,
-      "type": [
-       "string"
-      ]
+      "xml": null
      }
     ],
     "queryString": null,
@@ -1231,39 +1057,19 @@
  "title": "api title",
  "traits": [
   {
-   "annotations": [],
-   "body": [],
    "description": {
     "value": "method description"
    },
    "displayName": "uno",
-   "headers": [],
-   "is": [],
    "name": "traitOne",
-   "parametrizedProperties": null,
-   "protocols": [],
-   "queryParameters": [],
-   "queryString": null,
-   "responses": [],
-   "securedBy": [],
    "usage": "late night"
   },
   {
-   "annotations": [],
-   "body": [],
    "description": {
     "value": "<<text>>"
    },
    "displayName": "dos",
-   "headers": [],
-   "is": [],
    "name": "traitTwo",
-   "parametrizedProperties": null,
-   "protocols": [],
-   "queryParameters": [],
-   "queryString": null,
-   "responses": [],
-   "securedBy": [],
    "usage": null
   }
  ],
@@ -1359,15 +1165,9 @@
      "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
     }
    ],
-   "fixedFacets": null,
-   "isAnnotation": false,
    "name": "User",
    "required": true,
-   "schema": [],
-   "schemaContent": null,
-   "type": [
-    "object"
-   ]
+   "xml": null
   }
  ],
  "uses": [],

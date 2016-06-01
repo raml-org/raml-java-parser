@@ -54,4 +54,7 @@ public interface ResolvedType
      */
     @Nullable
     String getTypeName();
+
+
+    TypeDeclarationNode getTypeDeclarationNode();
 }

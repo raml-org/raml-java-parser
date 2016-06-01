@@ -27,12 +27,11 @@ import java.lang.reflect.InvocationTargetException;
 public class ClassNodeModelFactory implements NodeModelFactory
 {
     private Class<? extends NodeModel> aClass;
-    private boolean polymorphic;
 
-    public ClassNodeModelFactory(Class<? extends NodeModel> aClass, boolean polymorphic)
+
+    public ClassNodeModelFactory(Class<? extends NodeModel> aClass)
     {
         this.aClass = aClass;
-        this.polymorphic = polymorphic;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ClassNodeModelFactory implements NodeModelFactory
     @Override
     public boolean polymorphic()
     {
-        return polymorphic;
+        return false;
     }
 
 
@@ -85,7 +84,7 @@ public class ClassNodeModelFactory implements NodeModelFactory
                 }
             }
         }
-        throw new RuntimeException("No constructor with a single Node type was found.");
+        throw new RuntimeException("No constructor with a single Node type was found for " + aClass.getName());
     }
 
 

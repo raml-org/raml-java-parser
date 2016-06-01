@@ -38,18 +38,7 @@ public interface ObjectTypeDeclaration extends TypeDeclaration
      **/
     Integer maxProperties();
 
-
-    /**
-     * JSON schema style syntax for declaring maps
-     **/
-    TypeDeclaration additionalProperties();
-
-
-    /**
-     * JSON schema style syntax for declaring key restricted maps
-     **/
-    List<TypeDeclaration> patternProperties();
-
+    Boolean additionalProperties();
 
     /**
      * Type property name to be used as discriminator, or boolean

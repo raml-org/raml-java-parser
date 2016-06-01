@@ -17,6 +17,8 @@ package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.framework.model.NodeModel;
 import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
+import org.raml.v2.internal.impl.commons.model.type.TypeDeclaration;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 
 public class AnnotationRef implements NodeModel
@@ -31,7 +33,7 @@ public class AnnotationRef implements NodeModel
 
     public TypeDeclaration annotation()
     {
-        return new TypeDeclaration(node.getAnnotationTypeNode());
+        return new TypeDeclarationModelFactory().create(node.getAnnotationTypeNode());
     }
 
     public String name()

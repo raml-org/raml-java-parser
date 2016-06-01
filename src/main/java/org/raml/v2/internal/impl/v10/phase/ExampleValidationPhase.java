@@ -16,7 +16,6 @@
 package org.raml.v2.internal.impl.v10.phase;
 
 import org.apache.ws.commons.schema.XmlSchema;
-import org.apache.ws.commons.schema.XmlSchemaElement;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
@@ -29,13 +28,11 @@ import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.AnyType;
+import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.utils.NodeUtils;
-import org.raml.v2.internal.utils.ValueUtils;
-import org.raml.v2.internal.utils.xml.XsdResourceResolver;
 import org.xml.sax.SAXException;
 
 import javax.annotation.Nullable;
@@ -86,7 +83,7 @@ public class ExampleValidationPhase implements Phase
     public Node validate(TypeDeclarationNode type, Node exampleValue)
     {
         final ResolvedType resolvedType = type.getResolvedType();
-        if (resolvedType instanceof AnyType) // If accepts any no need for validation
+        if (resolvedType instanceof AnyResolvedType) // If accepts any no need for validation
         {
             return null;
         }

@@ -22,7 +22,7 @@ Move error node factory to impl???
 Split beteween framework and implementations
 
 Model
-    Example is model as string what should we do with complex example written in Yaml???
+    Example is factory as string what should we do with complex example written in Yaml???
 
 
 

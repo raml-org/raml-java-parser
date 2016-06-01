@@ -36,78 +36,9 @@
         "value": null
        },
        "trait": {
-        "annotations": [],
-        "body": [],
         "description": null,
         "displayName": null,
-        "headers": [],
-        "is": [],
         "name": "paging",
-        "parametrizedProperties": null,
-        "protocols": [],
-        "queryParameters": [
-         {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": {
-           "value": "the amount of elements of each result page"
-          },
-          "displayName": null,
-          "example": {
-           "annotations": [],
-           "name": null,
-           "structuredValue": {
-            "isScalar": true,
-            "properties": [],
-            "value": 10
-           },
-           "value": "10"
-          },
-          "examples": [],
-          "fixedFacets": null,
-          "isAnnotation": false,
-          "name": "size",
-          "required": false,
-          "schema": [],
-          "schemaContent": null,
-          "type": [
-           "integer"
-          ]
-         },
-         {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": {
-           "value": "the page number"
-          },
-          "displayName": null,
-          "example": {
-           "annotations": [],
-           "name": null,
-           "structuredValue": {
-            "isScalar": true,
-            "properties": [],
-            "value": 0
-           },
-           "value": "0"
-          },
-          "examples": [],
-          "fixedFacets": null,
-          "isAnnotation": false,
-          "name": "page",
-          "required": false,
-          "schema": [],
-          "schemaContent": null,
-          "type": [
-           "integer"
-          ]
-         }
-        ],
-        "queryString": null,
-        "responses": [],
-        "securedBy": [],
         "usage": null
        }
       }
@@ -134,15 +65,9 @@
         "value": "1964401a-a8b3-40c1-b86e-d8b9f75b5842"
        },
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "userId",
        "required": true,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "string"
-       ]
+       "xml": null
       },
       {
        "allowedTargets": [],
@@ -163,15 +88,9 @@
         "value": "10"
        },
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "size",
        "required": false,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "integer"
-       ]
+       "xml": null
       },
       {
        "allowedTargets": [],
@@ -192,15 +111,9 @@
         "value": "0"
        },
        "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
        "name": "page",
        "required": false,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "integer"
-       ]
+       "xml": null
       }
      ],
      "queryString": null,
@@ -482,15 +395,9 @@
            "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n},{\norder_id: ORDER-437542111,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-7,\nquantity: 2\n}]\n}]\n}"
           }
          ],
-         "fixedFacets": null,
-         "isAnnotation": false,
          "name": "application/json",
          "required": true,
-         "schema": [],
-         "schemaContent": null,
-         "type": [
-          "assets.Orders"
-         ]
+         "xml": null
         }
        ],
        "code": {
@@ -529,78 +436,9 @@
    "securitySchemes": [],
    "traits": [
     {
-     "annotations": [],
-     "body": [],
      "description": null,
      "displayName": null,
-     "headers": [],
-     "is": [],
      "name": "paging",
-     "parametrizedProperties": null,
-     "protocols": [],
-     "queryParameters": [
-      {
-       "allowedTargets": [],
-       "annotations": [],
-       "defaultValue": null,
-       "description": {
-        "value": "the amount of elements of each result page"
-       },
-       "displayName": null,
-       "example": {
-        "annotations": [],
-        "name": null,
-        "structuredValue": {
-         "isScalar": true,
-         "properties": [],
-         "value": 10
-        },
-        "value": "10"
-       },
-       "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
-       "name": "size",
-       "required": false,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "integer"
-       ]
-      },
-      {
-       "allowedTargets": [],
-       "annotations": [],
-       "defaultValue": null,
-       "description": {
-        "value": "the page number"
-       },
-       "displayName": null,
-       "example": {
-        "annotations": [],
-        "name": null,
-        "structuredValue": {
-         "isScalar": true,
-         "properties": [],
-         "value": 0
-        },
-        "value": "0"
-       },
-       "examples": [],
-       "fixedFacets": null,
-       "isAnnotation": false,
-       "name": "page",
-       "required": false,
-       "schema": [],
-       "schemaContent": null,
-       "type": [
-        "integer"
-       ]
-      }
-     ],
-     "queryString": null,
-     "responses": [],
-     "securedBy": [],
      "usage": null
     }
    ],
@@ -613,15 +451,9 @@
      "displayName": "ProductItem",
      "example": null,
      "examples": [],
-     "fixedFacets": null,
-     "isAnnotation": false,
      "name": "ProductItem",
      "required": true,
-     "schema": [],
-     "schemaContent": null,
-     "type": [
-      "object"
-     ]
+     "xml": null
     },
     {
      "allowedTargets": [],
@@ -631,15 +463,9 @@
      "displayName": "Order",
      "example": null,
      "examples": [],
-     "fixedFacets": null,
-     "isAnnotation": false,
      "name": "Order",
      "required": true,
-     "schema": [],
-     "schemaContent": null,
-     "type": [
-      "object"
-     ]
+     "xml": null
     },
     {
      "allowedTargets": [],
@@ -649,15 +475,9 @@
      "displayName": "Orders",
      "example": null,
      "examples": [],
-     "fixedFacets": null,
-     "isAnnotation": false,
      "name": "Orders",
      "required": true,
-     "schema": [],
-     "schemaContent": null,
-     "type": [
-      "object"
-     ]
+     "xml": null
     },
     {
      "allowedTargets": [],
@@ -667,15 +487,9 @@
      "displayName": "Inherit",
      "example": null,
      "examples": [],
-     "fixedFacets": null,
-     "isAnnotation": false,
      "name": "Inherit",
      "required": true,
-     "schema": [],
-     "schemaContent": null,
-     "type": [
-      "Order"
-     ]
+     "xml": null
     }
    ],
    "usage": null,

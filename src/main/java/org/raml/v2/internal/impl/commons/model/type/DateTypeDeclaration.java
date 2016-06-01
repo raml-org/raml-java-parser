@@ -13,17 +13,16 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.bodies;
+package org.raml.v2.internal.impl.commons.model.type;
 
-import org.raml.v2.api.model.v08.system.types.JSONSchemaString;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.impl.v10.type.DateOnlyResolvedType;
 
-
-public interface JSONBody extends BodyLike
+public class DateTypeDeclaration extends TypeDeclaration
 {
 
-    /**
-     * JSON Schema
-     **/
-    JSONSchemaString schema();
-
+    public DateTypeDeclaration(KeyValueNode node, DateOnlyResolvedType dateOnlyTypeDefinition)
+    {
+        super(node, dateOnlyTypeDefinition);
+    }
 }

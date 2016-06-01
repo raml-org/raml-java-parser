@@ -13,31 +13,21 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.framework.model;
+package org.raml.v2.internal.impl.commons.model.type;
 
-import javax.annotation.Nullable;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.impl.v10.type.DateTimeResolvedType;
 
-public class ImplementsInterfaceBinding implements ModelBinding
+public class DateTimeTypeDeclaration extends TypeDeclaration<DateTimeResolvedType>
 {
 
-
-    private Class<?> anInterface;
-    private Class<? extends NodeModel> model;
-
-    public ImplementsInterfaceBinding(Class<?> anInterface, Class<? extends NodeModel> model)
+    public DateTimeTypeDeclaration(KeyValueNode node, DateTimeResolvedType dateTimeTypeDefinition)
     {
-        this.anInterface = anInterface;
-        this.model = model;
+        super(node, dateTimeTypeDefinition);
     }
 
-    @Nullable
-    @Override
-    public NodeModelFactory binding(Class<?> clazz)
+    public String format()
     {
-        if (anInterface.isAssignableFrom(clazz))
-        {
-            return new ClassNodeModelFactory(model, false);
-        }
-        return null;
+        return getResolvedType().getFormat();
     }
 }

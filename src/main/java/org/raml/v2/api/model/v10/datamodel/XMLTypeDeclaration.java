@@ -15,9 +15,12 @@
  */
 package org.raml.v2.api.model.v10.datamodel;
 
-
-public interface DateOnlyTypeDeclaration extends TypeDeclaration
+public interface XMLTypeDeclaration extends TypeDeclaration
 {
 
+    /**
+     * Returns schema/type content for the cases when schema is inlined
+     **/
+    String schemaContent();
 
 }

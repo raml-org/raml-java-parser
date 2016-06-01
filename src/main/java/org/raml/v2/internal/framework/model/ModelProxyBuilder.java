@@ -187,7 +187,17 @@ public class ModelProxyBuilder
             {
                 final NodeModelFactory nodeModelFactory = bindingConfiguration.bindingOf(returnClass);
                 final NodeModel nodeModel = nodeModelFactory.create(node);
-                return Proxy.newProxyInstance(returnClass.getClassLoader(), new Class[] {returnClass}, new SimpleProxy(nodeModel, bindingConfiguration));
+                final Class<?> proxyInterface;
+                if (nodeModelFactory.polymorphic())
+                {
+                    proxyInterface = bindingConfiguration.reverseBindingOf(nodeModel);
+                }
+                else
+                {
+                    proxyInterface = returnClass;
+                }
+
+                return Proxy.newProxyInstance(returnClass.getClassLoader(), new Class[] {proxyInterface}, new SimpleProxy(nodeModel, bindingConfiguration));
             }
         }
 

@@ -15,9 +15,9 @@
  */
 package org.raml.v2.api.model.v10.datamodel;
 
+import java.util.List;
 
 public interface UnionTypeDeclaration extends TypeDeclaration
 {
-
-
+    List<TypeDeclaration> of();
 }

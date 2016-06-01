@@ -36,7 +36,7 @@ public interface NumberTypeDeclaration extends TypeDeclaration
     /**
      * (Optional, applicable only for parameters of type string) The enum attribute provides an enumeration of the parameter's valid values. This MUST be an array. If the enum attribute is defined, API clients and servers MUST verify that a parameter's value matches a value in the enum array. If there is no matching value, the clients and servers MUST treat this as an error.
      **/
-    List<String> enumValues();
+    List<Number> enumValues();
 
 
     /**

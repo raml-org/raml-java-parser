@@ -43,7 +43,6 @@ public class NumberValueRule extends AbstractTypeRule
         return Collections.emptyList();
     }
 
-
     @Override
     public boolean matches(@Nonnull Node node)
     {

@@ -16,6 +16,7 @@
 package org.raml.v2.internal.framework.model;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,11 +26,13 @@ public class DefaultModelBindingConfiguration implements ModelBindingConfigurati
 {
 
     private List<ModelBinding> bindings;
+    private List<ModelReverseBinding> reverseBinding;
     private NodeModelFactory defaultBinding;
 
     public DefaultModelBindingConfiguration()
     {
         this.bindings = new ArrayList<>();
+        this.reverseBinding = new ArrayList<>();
     }
 
     @Nonnull
@@ -50,14 +53,23 @@ public class DefaultModelBindingConfiguration implements ModelBindingConfigurati
         }
         else
         {
-            throw new RuntimeException("No binding found for.");
+            throw new RuntimeException("No binding found for " + className);
         }
     }
 
+    @Nonnull
     @Override
     public Class<?> reverseBindingOf(NodeModel model)
     {
-        return null;
+        for (ModelReverseBinding modelReverseBinding : reverseBinding)
+        {
+            final Class<?> aClass = modelReverseBinding.reverseBindingOf(model);
+            if (aClass != null)
+            {
+                return aClass;
+            }
+        }
+        throw new RuntimeException("No reverse bind found for " + model.getClass());
     }
 
     public DefaultModelBindingConfiguration bindPackage(String basePackageName)
@@ -72,15 +84,27 @@ public class DefaultModelBindingConfiguration implements ModelBindingConfigurati
         return this;
     }
 
-    public DefaultModelBindingConfiguration bindInterfaceTo(Class<?> anInterface, Class<? extends NodeModel> model)
+    public DefaultModelBindingConfiguration bind(Class<?> anInterface, Class<? extends NodeModel> model)
     {
-        this.bindings.add(new ImplementsInterfaceBinding(anInterface, model));
+        this.bindings.add(new SimpleBinding(anInterface, new ClassNodeModelFactory(model)));
+        return this;
+    }
+
+    public DefaultModelBindingConfiguration bind(Class<?> clazz, NodeModelFactory factory)
+    {
+        this.bindings.add(new SimpleBinding(clazz, factory));
         return this;
     }
 
     public DefaultModelBindingConfiguration defaultTo(Class<? extends NodeModel> defaultClass)
     {
-        this.defaultBinding = new ClassNodeModelFactory(defaultClass, false);
+        this.defaultBinding = new ClassNodeModelFactory(defaultClass);
+        return this;
+    }
+
+    public DefaultModelBindingConfiguration reverseBindPackage(String basePackage)
+    {
+        this.reverseBinding.add(new PackageReverseBinding(basePackage));
         return this;
     }
 }

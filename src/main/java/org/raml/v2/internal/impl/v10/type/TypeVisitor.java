@@ -52,5 +52,5 @@ public interface TypeVisitor<T>
 
     T visitXml(XmlSchemaExternalType xmlTypeDefinition);
 
-    T visitAny(AnyType anyType);
+    T visitAny(AnyResolvedType anyResolvedType);
 }

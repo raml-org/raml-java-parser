@@ -339,7 +339,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
     }
 
     @Override
-    public XmlSchemaType visitAny(AnyType anyType)
+    public XmlSchemaType visitAny(AnyResolvedType anyResolvedType)
     {
         return null;
     }

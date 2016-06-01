@@ -34,7 +34,7 @@ public class PackageModelBinding implements ModelBinding
         try
         {
             final Class<?> aClass = Class.forName(packageName + "." + simpleName);
-            return new ClassNodeModelFactory((Class<? extends NodeModel>) aClass, false);
+            return new ClassNodeModelFactory((Class<? extends NodeModel>) aClass);
         }
         catch (ClassNotFoundException e)
         {

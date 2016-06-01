@@ -21,6 +21,7 @@ import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.internal.framework.model.DefaultModelBindingConfiguration;
 import org.raml.v2.internal.framework.model.ModelBindingConfiguration;
 import org.raml.v2.internal.framework.model.ModelProxyBuilder;
@@ -33,6 +34,7 @@ import org.raml.v2.internal.impl.commons.model.Api;
 import org.raml.v2.internal.impl.commons.model.DefaultModelElement;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
 import org.raml.v2.internal.impl.commons.model.StringType;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.v10.RamlFragment;
 import org.raml.v2.internal.utils.StreamUtils;
@@ -173,9 +175,11 @@ public class RamlModelBuilder
         final DefaultModelBindingConfiguration bindingConfiguration = new DefaultModelBindingConfiguration();
         bindingConfiguration.bindPackage(MODEL_PACKAGE);
         // Bind all StringTypes to the StringType implementation they are only marker interfaces
-        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v10.system.types.StringType.class, StringType.class);
-        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v10.system.types.ValueType.class, StringType.class);
+        bindingConfiguration.bind(org.raml.v2.api.model.v10.system.types.StringType.class, StringType.class);
+        bindingConfiguration.bind(org.raml.v2.api.model.v10.system.types.ValueType.class, StringType.class);
         bindingConfiguration.defaultTo(DefaultModelElement.class);
+        bindingConfiguration.bind(TypeDeclaration.class, new TypeDeclarationModelFactory());
+        bindingConfiguration.reverseBindPackage("org.raml.v2.api.model.v10.datamodel");
         return bindingConfiguration;
     }
 
@@ -183,8 +187,8 @@ public class RamlModelBuilder
     {
         final DefaultModelBindingConfiguration bindingConfiguration = new DefaultModelBindingConfiguration();
         bindingConfiguration.bindPackage(MODEL_PACKAGE);
-        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v08.system.types.StringType.class, StringType.class);
-        bindingConfiguration.bindInterfaceTo(org.raml.v2.api.model.v08.system.types.ValueType.class, StringType.class);
+        bindingConfiguration.bind(org.raml.v2.api.model.v08.system.types.StringType.class, StringType.class);
+        bindingConfiguration.bind(org.raml.v2.api.model.v08.system.types.ValueType.class, StringType.class);
         bindingConfiguration.defaultTo(DefaultModelElement.class);
         return bindingConfiguration;
     }

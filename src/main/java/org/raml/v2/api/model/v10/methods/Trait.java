@@ -15,27 +15,24 @@
  */
 package org.raml.v2.api.model.v10.methods;
 
-import org.raml.v2.api.model.v10.datamodel.TypeInstance;
+import org.raml.v2.api.model.v10.system.types.MarkdownString;
 
 
-public interface Trait extends MethodBase
+public interface Trait
 {
+
+    MarkdownString description();
+
+    String displayName();
 
     /**
      * Name of the trait
      **/
     String name();
 
-
     /**
      * Instructions on how and when the trait should be used.
      **/
     String usage();
-
-
-    /**
-     * Returns object representation of parametrized properties of the trait
-     **/
-    TypeInstance parametrizedProperties();
 
 }

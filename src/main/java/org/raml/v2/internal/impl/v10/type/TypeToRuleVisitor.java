@@ -289,7 +289,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     }
 
     @Override
-    public Rule visitAny(AnyType anyType)
+    public Rule visitAny(AnyResolvedType anyResolvedType)
     {
         return new AnyValueRule();
     }

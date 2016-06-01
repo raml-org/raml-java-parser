@@ -84,6 +84,12 @@ public class UnionResolvedType implements ResolvedType
         return typeNode != null ? typeNode.getTypeName() : null;
     }
 
+    @Override
+    public TypeDeclarationNode getTypeDeclarationNode()
+    {
+        return typeNode;
+    }
+
     protected ResolvedType mergeWith(List<ResolvedType> of)
     {
         final List<ResolvedType> combination = new ArrayList<>();

@@ -16,6 +16,7 @@
 package org.raml.v2.internal.framework.model;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Handles the binding between the model interface and NodeBaseModel implementation
@@ -31,10 +32,12 @@ public interface ModelBindingConfiguration
     NodeModelFactory bindingOf(Class<?> className);
 
     /**
-     * Returns the reverse binding of a model in a polymorphic scenario
+     * Returns the reverse binding of a model in a polymorphic scenario.
+     * Returns the interface class that binds to this implementation
      * {@link NodeModelFactory#polymorphic()}
      * @param model The implementation model
      * @return The interface class
      */
+    @Nonnull
     Class<?> reverseBindingOf(NodeModel model);
 }

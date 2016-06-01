@@ -13,11 +13,14 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.system.types;
+package org.raml.v2.api.model.v10.datamodel;
 
-
-public interface JSonSchemaString extends SchemaString
+public interface JSONTypeDeclaration extends TypeDeclaration
 {
 
+    /**
+     * Returns schema/type content for the cases when schema is inlined
+     **/
+    String schemaContent();
 
 }

@@ -13,17 +13,28 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.bodies;
+package org.raml.v2.internal.framework.model;
 
-import org.raml.v2.api.model.v08.system.types.JSONSchemaString;
-
-
-public interface JSONBody extends BodyLike
+public class PackageReverseBinding implements ModelReverseBinding
 {
+    private String basePackage;
 
-    /**
-     * JSON Schema
-     **/
-    JSONSchemaString schema();
+    public PackageReverseBinding(String basePackage)
+    {
+        this.basePackage = basePackage;
+    }
 
+    @Override
+    public Class<?> reverseBindingOf(NodeModel model)
+    {
+        try
+        {
+            return Class.forName(basePackage + "." + model.getClass().getSimpleName());
+        }
+        catch (ClassNotFoundException e)
+        {
+            return null;
+        }
+
+    }
 }

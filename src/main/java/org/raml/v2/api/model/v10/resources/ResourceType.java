@@ -15,8 +15,7 @@
  */
 package org.raml.v2.api.model.v10.resources;
 
-import org.raml.v2.api.model.v10.datamodel.TypeInstance;
-
+import org.raml.v2.api.model.v10.system.types.MarkdownString;
 
 public interface ResourceType
 {
@@ -39,9 +38,5 @@ public interface ResourceType
     String usage();
 
 
-    /**
-     * Returns object representation of parametrized properties of the resource type
-     **/
-    TypeInstance parametrizedProperties();
-
+    MarkdownString description();
 }

@@ -18,7 +18,7 @@ package org.raml.v2.internal.impl.v10.nodes;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.type.AnyType;
+import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
 import org.raml.v2.internal.impl.v10.type.BooleanResolvedType;
 import org.raml.v2.internal.impl.v10.type.DateOnlyResolvedType;
@@ -123,8 +123,8 @@ public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpr
         case NULL:
             return new NullResolvedType();
         case ANY:
-            return new AnyType();
+            return new AnyResolvedType();
         }
-        return new AnyType();
+        return new AnyResolvedType();
     }
 }

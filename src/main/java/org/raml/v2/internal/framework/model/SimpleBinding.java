@@ -13,17 +13,31 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v08.bodies;
+package org.raml.v2.internal.framework.model;
 
-import org.raml.v2.api.model.v08.system.types.JSONSchemaString;
+import javax.annotation.Nullable;
 
-
-public interface JSONBody extends BodyLike
+public class SimpleBinding implements ModelBinding
 {
 
-    /**
-     * JSON Schema
-     **/
-    JSONSchemaString schema();
 
+    private Class<?> anInterface;
+    private NodeModelFactory factory;
+
+    public SimpleBinding(Class<?> anInterface, NodeModelFactory factory)
+    {
+        this.anInterface = anInterface;
+        this.factory = factory;
+    }
+
+    @Nullable
+    @Override
+    public NodeModelFactory binding(Class<?> clazz)
+    {
+        if (anInterface.isAssignableFrom(clazz))
+        {
+            return factory;
+        }
+        return null;
+    }
 }

@@ -36,7 +36,7 @@ public class SimpleClassNameBinding implements ModelBinding
     {
         if (simpleNames.contains(clazz.getSimpleName()))
         {
-            return new ClassNodeModelFactory(model, false);
+            return new ClassNodeModelFactory(model);
         }
         return null;
     }

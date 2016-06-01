@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
+import org.raml.v2.internal.impl.commons.model.type.TypeDeclaration;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
-import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.utils.NodeSelector;
 
@@ -85,7 +86,7 @@ public class Resource extends Annotable
         {
             for (Node child : uriParamsNode.getChildren())
             {
-                result.add(new TypeDeclaration((KeyValueNode) child));
+                result.add(new TypeDeclarationModelFactory().create(child));
             }
         }
         return result;
