@@ -113,7 +113,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         if (stringTypeDefinition.getMaxLength() != null)
         {
             final XmlSchemaMaxLengthFacet maxLength = new XmlSchemaMaxLengthFacet();
-            maxLength.setValue(stringTypeDefinition.getMinLength());
+            maxLength.setValue(stringTypeDefinition.getMaxLength());
             content.getFacets().add(maxLength);
         }
 

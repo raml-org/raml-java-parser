@@ -86,4 +86,7 @@ public interface TypeDeclaration extends Annotable
 
     XMLFacetInfo xml();
 
+
+    String toXmlSchema();
+
 }

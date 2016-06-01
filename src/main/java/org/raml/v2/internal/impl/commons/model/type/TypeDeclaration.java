@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.model.type;
 
+import org.apache.ws.commons.schema.XmlSchema;
+import org.apache.ws.commons.schema.XmlSchemaElement;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
@@ -31,8 +33,11 @@ import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
+import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.utils.NodeSelector;
 
+import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
 
@@ -123,5 +128,19 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
     {
         Object defaultValue = ModelUtils.getSimpleValue("default", getNode());
         return defaultValue != null ? defaultValue.toString() : null;
+    }
+
+    public String toXmlSchema()
+    {
+        if (getResolvedType() instanceof SchemaBasedResolvedType || getResolvedType() instanceof AnyResolvedType)
+        {
+            return null;
+        }
+        final TypeToSchemaVisitor typeToSchemaVisitor = new TypeToSchemaVisitor();
+        typeToSchemaVisitor.transform(name(), getResolvedType());
+        final XmlSchema schema = typeToSchemaVisitor.getSchema();
+        final StringWriter writer = new StringWriter();
+        schema.write(writer);
+        return writer.toString();
     }
 }
