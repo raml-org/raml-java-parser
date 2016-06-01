@@ -12,7 +12,10 @@
  "schemas": [],
  "securedBy": [],
  "securitySchemes": [],
- "title": "simple object",
+ "title": {
+  "annotations": [],
+  "value": "simple object"
+ },
  "traits": [],
  "types": [
   {
@@ -23,7 +26,10 @@
    "description": null,
    "discriminator": null,
    "discriminatorValue": null,
-   "displayName": "Person",
+   "displayName": {
+    "annotations": [],
+    "value": "Person"
+   },
    "example": null,
    "examples": [],
    "maxProperties": null,
@@ -35,7 +41,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "name",
+     "displayName": {
+      "annotations": [],
+      "value": "name"
+     },
      "example": null,
      "examples": [],
      "name": "name",
@@ -48,7 +57,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "email",
+     "displayName": {
+      "annotations": [],
+      "value": "email"
+     },
      "example": null,
      "examples": [],
      "name": "email",
@@ -61,7 +73,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "age",
+     "displayName": {
+      "annotations": [],
+      "value": "age"
+     },
      "example": null,
      "examples": [],
      "name": "age",
@@ -82,7 +97,10 @@
    "description": null,
    "discriminator": null,
    "discriminatorValue": null,
-   "displayName": "Office",
+   "displayName": {
+    "annotations": [],
+    "value": "Office"
+   },
    "example": {
     "annotations": [],
     "name": null,
@@ -103,7 +121,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "name",
+     "displayName": {
+      "annotations": [],
+      "value": "name"
+     },
      "example": null,
      "examples": [],
      "name": "name",
@@ -116,7 +137,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "email",
+     "displayName": {
+      "annotations": [],
+      "value": "email"
+     },
      "example": null,
      "examples": [],
      "name": "email",
@@ -129,7 +153,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "age",
+     "displayName": {
+      "annotations": [],
+      "value": "age"
+     },
      "example": null,
      "examples": [],
      "name": "age",

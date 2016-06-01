@@ -1,5 +1,11 @@
 {
-    "title": "overlay",
-    "baseUri": "http://api.com/master",
-    "description": "some overlaid description"
+    "title": {
+        "value": "master"
+    },
+    "baseUri": {
+        "value": "http://api.com/master"
+    },
+    "description": {
+        "value": "some overlaid description"
+    }
 }

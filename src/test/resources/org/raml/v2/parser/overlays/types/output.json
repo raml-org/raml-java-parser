@@ -1,5 +1,7 @@
 {
-    "title": "master",
+    "title": {
+        "value": "master"
+    },
     "types": {
         "scalar": {
             "type": "string",
@@ -8,17 +10,23 @@
                 "second": "secondo",
                 "third": "terzo"
             },
-            "displayName": "scalar"
+            "displayName": {
+                "value": "scalar"
+            }
         },
         "object": {
             "properties": {
                 "lat": {
                     "type": "number",
-                    "displayName": "lat"
+                    "displayName": {
+                        "value": "lat"
+                    }
                 },
                 "long": {
                     "type": "number",
-                    "displayName": "long"
+                    "displayName": {
+                        "value": "long"
+                    }
                 }
             },
             "example": {
@@ -26,11 +34,15 @@
                 "long": "-58.4"
             },
             "type": "object",
-            "displayName": "object"
+            "displayName": {
+                "value": "object"
+            }
         },
         "another-scalar": {
             "type": "string",
-            "displayName": "another-scalar"
+            "displayName": {
+                "value": "another-scalar"
+            }
         }
     }
 }

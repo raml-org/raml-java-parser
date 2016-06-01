@@ -256,6 +256,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
         {
             Node resolvedNode = templateNode.execute(context);
             templateNode.replaceWith(resolvedNode);
+            resolvedNode.removeChildren();
         }
     }
 

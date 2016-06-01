@@ -1,6 +1,10 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "traits": {
         "secured": {
             "headers": {
@@ -13,7 +17,9 @@
     "resources": [
         {
             "relativeUri": "/users",
-            "displayName": "/users",
+            "displayName": {
+                "value": "/users"
+            },
             "methods": [
                 {
                     "method": "get",
@@ -22,11 +28,15 @@
                                 "header": "head"
                             }
                         }],
-                    "displayName": "get",
+                    "displayName": {
+                        "value": "get"
+                    },
                     "headers": {
                         "head": {
                             "type": "string",
-                            "displayName": "head"
+                            "displayName": {
+                                "value": "head"
+                            }
                         }
                     }
                 }

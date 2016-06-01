@@ -1,16 +1,24 @@
 {
-    "title": "master",
-    "baseUri": "http://api.com/master",
+    "title": {
+        "value": "master"
+    },
+    "baseUri": {
+        "value": "http://api.com/master"
+    },
     "types": {
         "User": {
             "properties": {
                 "name": {
                     "type": "string",
-                    "displayName": "name"
+                    "displayName": {
+                        "value": "name"
+                    }
                 },
                 "age?": {
                     "type": "integer",
-                    "displayName": "age?"
+                    "displayName": {
+                        "value": "age?"
+                    }
                 }
             },
             "examples": {
@@ -28,7 +36,9 @@
                 }
             },
             "type": "object",
-            "displayName": "User"
+            "displayName": {
+                "value": "User"
+            }
         }
     }
 }

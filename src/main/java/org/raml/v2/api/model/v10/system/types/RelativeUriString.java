@@ -16,7 +16,7 @@
 package org.raml.v2.api.model.v10.system.types;
 
 
-public interface RelativeUriString extends UriTemplate
+public interface RelativeUriString extends UriTemplate, StringType
 {
 
 

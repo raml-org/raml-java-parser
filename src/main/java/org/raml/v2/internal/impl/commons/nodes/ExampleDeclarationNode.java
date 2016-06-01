@@ -15,14 +15,14 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import javax.annotation.Nonnull;
+
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;
-
-import javax.annotation.Nonnull;
 
 public class ExampleDeclarationNode extends KeyValueNodeImpl implements OverlayableNode
 {

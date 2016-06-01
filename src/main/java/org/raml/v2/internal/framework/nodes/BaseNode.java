@@ -130,6 +130,16 @@ public abstract class BaseNode implements Node
     }
 
     @Override
+    public void removeChildren()
+    {
+        for (Node child : children)
+        {
+            child.setParent(null);
+        }
+        children.clear();
+    }
+
+    @Override
     public void setChild(int idx, Node newNode)
     {
         children.set(idx, newNode);

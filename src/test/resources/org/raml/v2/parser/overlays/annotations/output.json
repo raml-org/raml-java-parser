@@ -1,35 +1,49 @@
 {
-    "title": "master",
+    "title": {
+        "value": "master"
+    },
     "annotationTypes": {
         "scalar": {
             "type": "string",
-            "displayName": "scalar"
+            "displayName": {
+                "value": "scalar"
+            }
         },
         "object": {
             "properties": {
                 "lat": {
                     "type": "number",
-                    "displayName": "lat"
+                    "displayName": {
+                        "value": "lat"
+                    }
                 },
                 "long": {
                     "type": "number",
-                    "displayName": "long"
+                    "displayName": {
+                        "value": "long"
+                    }
                 }
             },
             "type": "object",
-            "displayName": "object"
+            "displayName": {
+                "value": "object"
+            }
         },
         "another-scalar": {
             "type": "string",
-            "displayName": "another-scalar"
+            "displayName": {
+                "value": "another-scalar"
+            }
         }
     },
     "resources": [
         {
             "relativeUri": "/home",
-            "displayName": "/home",
+            "displayName": {
+                "value": "/home"
+            },
             "annotations": {
-
+                
                 "object": {
                     "lat": "-34.6",
                     "long": "-58.4"
@@ -38,7 +52,7 @@
         }
     ],
     "annotations": {
-
+        
         "scalar": "plain",
         "another-scalar": "overlay"
     }

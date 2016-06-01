@@ -1,14 +1,22 @@
 {
-    "title": "hola",
+    "title": {
+        "value": "hola"
+    },
     "resources": [
         {
             "relativeUri": "/top",
-            "displayName": "/top",
+            "displayName": {
+                "value": "/top"
+            },
             "methods": [
                 {
                     "method": "get",
-                    "description": "get something",
-                    "displayName": "get"
+                    "description": {
+                        "value": "get something"
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
                 }
             ]
         }

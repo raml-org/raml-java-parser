@@ -16,13 +16,15 @@
 package org.raml.v2.api.model.v10.api;
 
 
+import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
+
 public interface Library extends LibraryBase
 {
 
     /**
      * contains description of why library exist
      **/
-    String usage();
+    AnnotableSimpleType<String> usage();
 
 
     /**

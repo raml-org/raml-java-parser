@@ -42,7 +42,7 @@ public class NodeSelector
      * <p><b>"name"</b> -> return the value of field with key that matches the specified name. <br/>
      * <b>..</b>        -> returns the parent <br/>
      * <b>*</b>         -> wild card selector <br/>
-     * <b>number</b>    -> returns the element at that index zero base index. The number should be bigger than zero</p><br/>
+     * <b>[number]</b>    -> returns the element at that index zero base index. The number should be equal or greater than zero</p><br/>
      *
      * @param path The path example schemas/foo
      * @param from The source where to query
@@ -150,6 +150,18 @@ public class NodeSelector
             else if (token.equals(PARENT_EXPR))
             {
                 currentNode = currentNode.getParent();
+            }
+            else if (token.matches("^\\[\\d+\\]$")) // child access by index
+            {
+                int index = Integer.parseInt(token.substring(1, token.length() - 1));
+                if (currentNode.getChildren().size() > index)
+                {
+                    currentNode = currentNode.getChildren().get(index);
+                }
+                else
+                {
+                    currentNode = null;
+                }
             }
             else if (currentNode instanceof ObjectNode)
             {

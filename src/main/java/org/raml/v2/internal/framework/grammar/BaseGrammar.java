@@ -240,8 +240,9 @@ public class BaseGrammar
     /**
      * Matches any scalar value e.g Number String boolean etc
      * @return The rule
+     * TODO revert ScalarTypeRule and use custom scalar
      */
-    public ScalarTypeRule scalarType()
+    public Rule scalarType()
     {
         return new ScalarTypeRule();
     }

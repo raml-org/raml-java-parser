@@ -17,8 +17,10 @@ package org.raml.v2.internal.impl.emitter.tck;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
@@ -81,6 +83,10 @@ public class TckEmitter
         else if (node instanceof SimpleTypeNode)
         {
             dumpString((SimpleTypeNode) node, dump);
+        }
+        else if (node instanceof ErrorNode)
+        {
+            throw new RuntimeException("Error node : " + ((ErrorNode) node).getErrorMessage());
         }
         else
         {

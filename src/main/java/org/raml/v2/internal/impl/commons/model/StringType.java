@@ -15,9 +15,14 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.raml.v2.api.model.v10.declarations.AnnotationRef;
+import org.raml.v2.internal.framework.model.NodeModel;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
-import org.raml.v2.internal.framework.model.NodeModel;
+
 
 public class StringType implements NodeModel
 {
@@ -38,4 +43,5 @@ public class StringType implements NodeModel
     {
         return value;
     }
+
 }

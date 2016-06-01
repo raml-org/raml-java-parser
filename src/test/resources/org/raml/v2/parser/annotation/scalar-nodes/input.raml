@@ -1,0 +1,26 @@
+#%RAML 1.0
+
+annotationTypes:
+  foo:
+    type: string
+
+title:
+    value: Illustrating annotations
+    (foo): annotated title
+
+description:
+    value: some description
+    (foo): annotated description
+
+version:
+    value: v1
+    (foo): annotated version
+
+baseUri:
+    value: http://localhost
+    (foo): annotated baseUri
+
+/resource:
+    displayName:
+        value: display name
+        (foo): annotated display name

@@ -1,6 +1,13 @@
 {
-    "title": "master",
-    "version": "v1",
-    "baseUri": "http://api.com/extended",
-    "protocols": ["HTTP", "HTTPS"]
+    "title": {
+        "value": "master"
+    },
+    "baseUri": {
+        "value": "http://api.com/extended"
+    },
+    "protocols": ["HTTP",
+"HTTPS"],
+    "version": {
+        "value": "v1"
+    }
 }

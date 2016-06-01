@@ -1,6 +1,10 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "traits": {
         "secured": {
             "protocols": ["HTTPS"]
@@ -9,13 +13,18 @@
     "resources": [
         {
             "relativeUri": "/users",
-            "displayName": "/users",
+            "displayName": {
+                "value": "/users"
+            },
             "methods": [
                 {
                     "method": "get",
                     "is": ["secured"],
-                    "protocols": ["HTTP", "HTTPS"],
-                    "displayName": "get"
+                    "protocols": ["HTTP",
+"HTTPS"],
+                    "displayName": {
+                        "value": "get"
+                    }
                 }
             ]
         }

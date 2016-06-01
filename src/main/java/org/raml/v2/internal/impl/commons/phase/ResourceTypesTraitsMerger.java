@@ -83,7 +83,7 @@ public class ResourceTypesTraitsMerger
             }
             if (!(child instanceof KeyValueNode))
             {
-                throw new RuntimeException("only expecting KeyValueNode");
+                throw new RuntimeException("Only expecting KeyValueNode and got " + child.getClass());
             }
 
             String key = ((KeyValueNode) child).getKey().toString();

@@ -1,27 +1,27 @@
 {
     "document": {
-        "title": "hola",
+        "title": {
+            "value": "hola"
+        },
         "resources": [
             {
-                "displayName": "/top",
+                "relativeUri": "/top",
+                "displayName": {
+                    "value": "/top"
+                },
                 "methods": [
                     {
-                        "displayName": "get",
-                        "description": "get something",
-                        "method": "get"
-                    }
-                ],
-                "relativeUri": "/top",
-                "__METADATA__": {
-                    "primitiveValuesMeta": {
+                        "method": "get",
+                        "description": {
+                            "value": "get something"
+                        },
                         "displayName": {
-                            "calculated": true
+                            "value": "get"
                         }
                     }
-                }
+                ]
             }
-        ],
-        "RAMLVersion": "RAML10"
+        ]
     },
     "errors": []
 }

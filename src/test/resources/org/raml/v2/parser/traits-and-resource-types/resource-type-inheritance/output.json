@@ -1,9 +1,15 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "resourceTypes": {
         "main": {
-            "usage": "how to use this resource type",
+            "usage": {
+                "value": "how to use this resource type"
+            },
             "type": "parent",
             "description": "this is the main type",
             "get": {
@@ -15,7 +21,9 @@
             }
         },
         "parent": {
-            "usage": "how to use parent resource type",
+            "usage": {
+                "value": "how to use parent resource type"
+            },
             "type": "grampa",
             "description": "this is the parent type",
             "get": {
@@ -27,7 +35,9 @@
             }
         },
         "grampa": {
-            "usage": "how to use grampa resource type",
+            "usage": {
+                "value": "how to use grampa resource type"
+            },
             "description": "this is the grampa type",
             "get": {
                 "headers": {
@@ -42,26 +52,38 @@
         {
             "relativeUri": "/users",
             "type": "main",
-            "displayName": "/users",
-            "description": "this is the main type",
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "this is the main type"
+            },
             "methods": [
                 {
                     "method": "get",
                     "headers": {
                         "main": {
                             "type": "string",
-                            "displayName": "main"
+                            "displayName": {
+                                "value": "main"
+                            }
                         },
                         "parent": {
                             "type": "string",
-                            "displayName": "parent"
+                            "displayName": {
+                                "value": "parent"
+                            }
                         },
                         "grampa": {
                             "type": "string",
-                            "displayName": "grampa"
+                            "displayName": {
+                                "value": "grampa"
+                            }
                         }
                     },
-                    "displayName": "get"
+                    "displayName": {
+                        "value": "get"
+                    }
                 }
             ]
         }

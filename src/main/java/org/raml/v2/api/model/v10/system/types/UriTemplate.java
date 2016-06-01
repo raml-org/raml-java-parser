@@ -16,7 +16,7 @@
 package org.raml.v2.api.model.v10.system.types;
 
 
-public interface UriTemplate extends StringType
+public interface UriTemplate
 {
 
 

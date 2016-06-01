@@ -51,8 +51,8 @@ public class AbsoluteIncludeTestCase
     private String getExpectedOutput()
     {
         return "{\n" +
-               "    \"title\": \"absolute include\",\n" +
-               "    \"description\": \"some description\"\n" +
+               "    \"title\": { \"value\": \"absolute include\" },\n" +
+               "    \"description\": { \"value\": \"some description\" }\n" +
                "}\n";
     }
 }

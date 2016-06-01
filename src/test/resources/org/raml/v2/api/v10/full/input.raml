@@ -1,5 +1,7 @@
 #%RAML 1.0
-title: api title
+title:
+    value: api title
+    (basic): title
 version: v1
 baseUri: http://base.uri/{version}/{param1}
 mediaType: application/json
@@ -15,7 +17,9 @@ baseUriParameters:
 
 documentation:
     - title: doc title 1
-      content: single line
+      content:
+        value: single line
+        (basic): first chapter
     - title: doc title 2
       content: |
            multi

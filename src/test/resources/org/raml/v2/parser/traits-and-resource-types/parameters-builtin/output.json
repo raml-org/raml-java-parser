@@ -1,6 +1,10 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "traits": {
         "builtin": {
             "description": "resourcePath <<resourcePath>> and resourcePathName <<resourcePathName>> and methodName <<methodName>>"
@@ -18,28 +22,44 @@
         {
             "relativeUri": "/users",
             "type": "builtin",
-            "displayName": "/users",
-            "description": "resourcePath /users and resourcePathName users",
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "resourcePath /users and resourcePathName users"
+            },
             "methods": [
                 {
                     "method": "get",
                     "is": ["builtin"],
-                    "displayName": "get",
-                    "description": "resourcePath /users and resourcePathName users and methodName get"
+                    "displayName": {
+                        "value": "get"
+                    },
+                    "description": {
+                        "value": "resourcePath /users and resourcePathName users and methodName get"
+                    }
                 }
             ],
             "resources": [
                 {
                     "relativeUri": "/{userId}",
                     "type": "builtin",
-                    "displayName": "/{userId}",
-                    "description": "resourcePath /users/{userId} and resourcePathName userId",
+                    "displayName": {
+                        "value": "/{userId}"
+                    },
+                    "description": {
+                        "value": "resourcePath /users/{userId} and resourcePathName userId"
+                    },
                     "methods": [
                         {
                             "method": "get",
                             "is": ["builtin"],
-                            "displayName": "get",
-                            "description": "resourcePath /users/{userId} and resourcePathName userId and methodName get"
+                            "displayName": {
+                                "value": "get"
+                            },
+                            "description": {
+                                "value": "resourcePath /users/{userId} and resourcePathName userId and methodName get"
+                            }
                         }
                     ]
                 }

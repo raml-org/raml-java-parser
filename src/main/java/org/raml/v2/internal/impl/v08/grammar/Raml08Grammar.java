@@ -202,7 +202,7 @@ public class Raml08Grammar extends BaseRamlGrammar
 
     protected Rule traitsValue()
     {
-        return anyOf(array(trait()), trait());
+        return anyOf(array(super.traitsValue()), super.traitsValue());
     }
 
     protected Rule resourceTypesValue()

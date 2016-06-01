@@ -15,15 +15,17 @@
  */
 package org.raml.v2.api.model.v10.methods;
 
+import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
 import org.raml.v2.api.model.v10.system.types.MarkdownString;
+import org.raml.v2.api.model.v10.system.types.StringType;
 
 
 public interface Trait
 {
 
-    MarkdownString description();
-
-    String displayName();
+    // MarkdownString description();
+    //
+    // AnnotableSimpleType<String> displayName();
 
     /**
      * Name of the trait
@@ -33,6 +35,6 @@ public interface Trait
     /**
      * Instructions on how and when the trait should be used.
      **/
-    String usage();
+    AnnotableSimpleType<String> usage();
 
 }

@@ -25,6 +25,7 @@ import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.ReferenceNode;
+import org.raml.v2.internal.utils.NodeSelector;
 
 public class ErrorNodeFactory
 {
@@ -223,6 +224,15 @@ public class ErrorNodeFactory
 
     public static ErrorNode createInvalidOverlayNode(Node overlayNode)
     {
-        return new ErrorNode("Invalid overlay node. Cannot override node: " + overlayNode.getParent().getChildren().get(0));
+        String label = NodeSelector.selectStringValue("../[0]", overlayNode);
+        if ("value".equals(label))
+        {
+            String parentKey = NodeSelector.selectStringValue("../../../[0]", overlayNode);
+            if (parentKey != null)
+            {
+                label = parentKey + "." + label;
+            }
+        }
+        return new ErrorNode("Invalid overlay node. Cannot override node: " + label);
     }
 }

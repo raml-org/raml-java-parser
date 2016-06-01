@@ -1,21 +1,37 @@
 {
-    "title": "master",
-    "documentation": [
-        {
-            "title": "master1",
-            "content": "lorem"
+    "title": {
+        "value": "master"
+    },
+    "documentation": [{
+            "title": {
+                "value": "master1"
+            },
+            "content": {
+                "value": "lorem"
+            }
         },
         {
-            "title": "master2",
-            "content": "lorem ipsum"
+            "title": {
+                "value": "master2"
+            },
+            "content": {
+                "value": "lorem ipsum"
+            }
         },
         {
-            "title": "overlay1",
-            "content": "lorem ipsum dolor"
+            "title": {
+                "value": "overlay1"
+            },
+            "content": {
+                "value": "lorem ipsum dolor"
+            }
         },
         {
-            "title": "overlay2",
-            "content": "lorem ipsum dolor sit"
-        }
-    ]
+            "title": {
+                "value": "overlay2"
+            },
+            "content": {
+                "value": "lorem ipsum dolor sit"
+            }
+        }]
 }

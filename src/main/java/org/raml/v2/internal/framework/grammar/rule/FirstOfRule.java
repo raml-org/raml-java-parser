@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
@@ -49,4 +50,14 @@ public class FirstOfRule extends AnyOfRule
         return Collections.emptyList();
     }
 
+    @Override
+    public Node apply(@Nonnull Node node)
+    {
+        Node apply = super.apply(node);
+        if (apply instanceof ErrorNode)
+        {
+            apply = rules.get(0).apply(node);
+        }
+        return apply;
+    }
 }

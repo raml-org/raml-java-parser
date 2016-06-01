@@ -1,9 +1,15 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "resourceTypes": {
         "main": {
-            "usage": "how to use this resource type",
+            "usage": {
+                "value": "how to use this resource type"
+            },
             "description": "this is the main type",
             "is": [{
                     "paged": {
@@ -49,8 +55,12 @@
                     "header2": "h2"
                 }
             },
-            "displayName": "/users",
-            "description": "this is the main type",
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "this is the main type"
+            },
             "is": [{
                     "paged": {
                         "header2": "h2"
@@ -67,18 +77,26 @@
                     "headers": {
                         "h1": {
                             "type": "string",
-                            "displayName": "h1"
+                            "displayName": {
+                                "value": "h1"
+                            }
                         },
                         "h3": {
                             "type": "string",
-                            "displayName": "h3"
+                            "displayName": {
+                                "value": "h3"
+                            }
                         },
                         "h2": {
                             "type": "integer",
-                            "displayName": "h2"
+                            "displayName": {
+                                "value": "h2"
+                            }
                         }
                     },
-                    "displayName": "get"
+                    "displayName": {
+                        "value": "get"
+                    }
                 }
             ]
         }

@@ -38,6 +38,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.dataprovider.TestDataProvider;
+import org.raml.v2.internal.framework.model.ModelUtils;
 
 @RunWith(Parameterized.class)
 public class ApiModelParserTestCase extends TestDataProvider
@@ -128,7 +129,7 @@ public class ApiModelParserTestCase extends TestDataProvider
         else
         {
             jsonWriter.beginObject();
-            final Method[] declaredMethods = ((Class<?>) definitionClass).getMethods();
+            final Method[] declaredMethods = ModelUtils.toClass(definitionClass).getMethods();
             Arrays.sort(declaredMethods, new Comparator<Method>()
             {
                 @Override

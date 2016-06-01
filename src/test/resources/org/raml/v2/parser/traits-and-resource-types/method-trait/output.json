@@ -1,9 +1,15 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "traits": {
         "secured": {
-            "usage": "Apply this to any method that needs to be secured",
+            "usage": {
+                "value": "Apply this to any method that needs to be secured"
+            },
             "description": "Some requests require authentication.",
             "headers": {
                 "access_token": {
@@ -18,20 +24,30 @@
     "resources": [
         {
             "relativeUri": "/users",
-            "displayName": "/users",
+            "displayName": {
+                "value": "/users"
+            },
             "methods": [
                 {
                     "method": "get",
                     "is": ["secured"],
-                    "displayName": "get",
-                    "description": "Some requests require authentication.",
+                    "displayName": {
+                        "value": "get"
+                    },
+                    "description": {
+                        "value": "Some requests require authentication."
+                    },
                     "headers": {
                         "access_token": {
                             "type": "string",
-                            "description": "Access Token",
+                            "description": {
+                                "value": "Access Token"
+                            },
                             "example": "5757gh76",
                             "required": true,
-                            "displayName": "access_token"
+                            "displayName": {
+                                "value": "access_token"
+                            }
                         }
                     }
                 }

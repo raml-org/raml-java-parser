@@ -2,6 +2,7 @@
  "annotationTypes": [],
  "annotations": [],
  "baseUri": {
+  "annotations": [],
   "value": "http://localhost:8081/api"
  },
  "baseUriParameters": [],
@@ -14,18 +15,26 @@
   {
    "annotations": [],
    "description": {
+    "annotations": [],
     "value": "Orders collection resource used to create new orders."
    },
-   "displayName": "Orders",
+   "displayName": {
+    "annotations": [],
+    "value": "Orders"
+   },
    "is": [],
    "methods": [
     {
      "annotations": [],
      "body": [],
      "description": {
+      "annotations": [],
       "value": "lists all orders of a specific user"
      },
-     "displayName": "get",
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
      "headers": [],
      "is": [
       {
@@ -36,8 +45,6 @@
         "value": null
        },
        "trait": {
-        "description": null,
-        "displayName": null,
         "name": "paging",
         "usage": null
        }
@@ -51,9 +58,13 @@
        "annotations": [],
        "defaultValue": null,
        "description": {
+        "annotations": [],
         "value": "use to query all orders of a user"
        },
-       "displayName": "userId",
+       "displayName": {
+        "annotations": [],
+        "value": "userId"
+       },
        "enumValues": null,
        "example": {
         "annotations": [],
@@ -79,9 +90,13 @@
        "annotations": [],
        "defaultValue": null,
        "description": {
+        "annotations": [],
         "value": "the amount of elements of each result page"
        },
-       "displayName": "size",
+       "displayName": {
+        "annotations": [],
+        "value": "size"
+       },
        "enumValues": [],
        "example": {
         "annotations": [],
@@ -108,9 +123,13 @@
        "annotations": [],
        "defaultValue": null,
        "description": {
+        "annotations": [],
         "value": "the page number"
        },
-       "displayName": "page",
+       "displayName": {
+        "annotations": [],
+        "value": "page"
+       },
        "enumValues": [],
        "example": {
         "annotations": [],
@@ -146,7 +165,10 @@
          "description": null,
          "discriminator": null,
          "discriminatorValue": null,
-         "displayName": "application/json",
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
          "example": null,
          "examples": [
           {
@@ -424,7 +446,10 @@
            "annotations": [],
            "defaultValue": null,
            "description": null,
-           "displayName": "orders",
+           "displayName": {
+            "annotations": [],
+            "value": "orders"
+           },
            "example": null,
            "examples": [],
            "name": "orders",
@@ -461,7 +486,10 @@
  "schemas": [],
  "securedBy": [],
  "securitySchemes": [],
- "title": "Mobile Order API",
+ "title": {
+  "annotations": [],
+  "value": "Mobile Order API"
+ },
  "traits": [],
  "types": [],
  "uses": [
@@ -474,8 +502,6 @@
    "securitySchemes": [],
    "traits": [
     {
-     "description": null,
-     "displayName": null,
      "name": "paging",
      "usage": null
     }
@@ -489,7 +515,10 @@
      "description": null,
      "discriminator": null,
      "discriminatorValue": null,
-     "displayName": "ProductItem",
+     "displayName": {
+      "annotations": [],
+      "value": "ProductItem"
+     },
      "example": null,
      "examples": [],
      "maxProperties": null,
@@ -501,7 +530,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "product_id",
+       "displayName": {
+        "annotations": [],
+        "value": "product_id"
+       },
        "example": null,
        "examples": [],
        "name": "product_id",
@@ -514,7 +546,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "quantity",
+       "displayName": {
+        "annotations": [],
+        "value": "quantity"
+       },
        "example": null,
        "examples": [],
        "name": "quantity",
@@ -535,7 +570,10 @@
      "description": null,
      "discriminator": null,
      "discriminatorValue": null,
-     "displayName": "Order",
+     "displayName": {
+      "annotations": [],
+      "value": "Order"
+     },
      "example": null,
      "examples": [],
      "maxProperties": null,
@@ -547,7 +585,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "order_id",
+       "displayName": {
+        "annotations": [],
+        "value": "order_id"
+       },
        "example": null,
        "examples": [],
        "name": "order_id",
@@ -560,7 +601,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "creation_date",
+       "displayName": {
+        "annotations": [],
+        "value": "creation_date"
+       },
        "example": null,
        "examples": [],
        "name": "creation_date",
@@ -573,7 +617,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "items",
+       "displayName": {
+        "annotations": [],
+        "value": "items"
+       },
        "example": null,
        "examples": [],
        "name": "items",
@@ -594,7 +641,10 @@
      "description": null,
      "discriminator": null,
      "discriminatorValue": null,
-     "displayName": "Orders",
+     "displayName": {
+      "annotations": [],
+      "value": "Orders"
+     },
      "example": null,
      "examples": [],
      "maxProperties": null,
@@ -606,7 +656,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "orders",
+       "displayName": {
+        "annotations": [],
+        "value": "orders"
+       },
        "example": null,
        "examples": [],
        "name": "orders",
@@ -627,7 +680,10 @@
      "description": null,
      "discriminator": null,
      "discriminatorValue": null,
-     "displayName": "Inherit",
+     "displayName": {
+      "annotations": [],
+      "value": "Inherit"
+     },
      "example": null,
      "examples": [],
      "maxProperties": null,
@@ -639,7 +695,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "order_id",
+       "displayName": {
+        "annotations": [],
+        "value": "order_id"
+       },
        "example": null,
        "examples": [],
        "name": "order_id",
@@ -652,7 +711,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "creation_date",
+       "displayName": {
+        "annotations": [],
+        "value": "creation_date"
+       },
        "example": null,
        "examples": [],
        "name": "creation_date",
@@ -665,7 +727,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "items",
+       "displayName": {
+        "annotations": [],
+        "value": "items"
+       },
        "example": null,
        "examples": [],
        "name": "items",
@@ -683,5 +748,8 @@
    "uses": []
   }
  ],
- "version": "1.0"
+ "version": {
+  "annotations": [],
+  "value": 1.0
+ }
 }

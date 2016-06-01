@@ -29,7 +29,6 @@ import org.raml.v2.internal.framework.grammar.rule.KeyValueRule;
 import org.raml.v2.internal.framework.grammar.rule.NodeFactory;
 import org.raml.v2.internal.framework.grammar.rule.NodeReferenceFactory;
 import org.raml.v2.internal.framework.grammar.rule.ObjectRule;
-import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
 import org.raml.v2.internal.framework.grammar.rule.RegexValueRule;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.grammar.rule.StringValueRule;
@@ -46,6 +45,7 @@ import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitRefNode;
+import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
 
 public abstract class BaseRamlGrammar extends BaseGrammar
 {
@@ -90,23 +90,23 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule baseUriField()
     {
-        return field(baseUriKey(), scalarType());
+        return field(baseUriKey(), ramlScalarValue());
     }
 
 
     protected KeyValueRule docTitleField()
     {
-        return requiredField(titleKey(), allOf(scalarType(), minLength(1)));
+        return requiredField(titleKey(), allOf(minLength(1), ramlScalarValue()));
     }
 
     protected KeyValueRule titleField()
     {
-        return requiredField(titleKey(), allOf(titleValue(), minLength(1)));
+        return requiredField(titleKey(), titleValue());
     }
 
     protected Rule titleValue()
     {
-        return scalarType();
+        return allOf(ramlScalarValue(), minLength(1));
     }
 
     protected KeyValueRule resourceField()
@@ -117,7 +117,12 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule versionField()
     {
-        return field(versionKey(), scalarType());
+        return field(versionKey(), ramlScalarValue());
+    }
+
+    protected Rule ramlScalarValue()
+    {
+        return scalarType();
     }
 
     protected KeyValueRule mediaTypeField()
@@ -129,6 +134,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     {
         // TODO fine grained matching supporting parameters
         return objectType()
+                           .with(usageField())
                            .with(field(regex("[^/].*"), any())); // match anything but nested resources
     }
 
@@ -143,7 +149,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     {
         return objectType()
                            .with(descriptionField())
-                           .with(field(displayNameKey(), scalarType()))
+                           .with(field(displayNameKey(), ramlScalarValue()))
                            .with(field(queryParametersKey(), parameters()))
                            .with(headersField())
                            .with(field(responseKey(), responses()))
@@ -170,7 +176,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule contentField()
     {
-        return requiredField(string("content"), scalarType());
+        return requiredField(string("content"), ramlScalarValue());
     }
 
 
@@ -219,28 +225,28 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     protected ObjectRule securitySchemeSettings()
     {
         return objectType()
-                           .with(field(string("requestTokenUri"), scalarType()))
-                           .with(field(string("tokenCredentialsUri"), scalarType()))
-                           .with(field(string("accessTokenUri"), scalarType()))
+                           .with(field(string("requestTokenUri"), ramlScalarValue()))
+                           .with(field(string("tokenCredentialsUri"), ramlScalarValue()))
+                           .with(field(string("accessTokenUri"), ramlScalarValue()))
                            .with(field(string("authorizationGrants"), array(scalarType())))
                            .with(field(string("scopes"), array(scalarType())));
     }
 
     // Traits
-    protected abstract Rule traitsValue();
+    protected Rule traitsValue()
+    {
+        return objectType()
+                           .with(
+                                   field(scalarType(), trait()).then(TraitNode.class)
+                           );
+    }
 
     public ObjectRule trait()
     {
-        return named("trait", new RuleFactory<ObjectRule>()
-        {
-            @Override
-            public ObjectRule create()
-            {
-                return objectType()
-                                   .with(field(scalarType(), any())
-                                                                   .then(TraitNode.class));
-            }
-        });
+        return objectType()
+                           .with(usageField())
+                           .with(field(scalarType(), any()));
+
     }
 
     // Resource Types
@@ -462,12 +468,12 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule descriptionValue()
     {
-        return scalarType();
+        return ramlScalarValue();
     }
 
     protected KeyValueRule displayNameField()
     {
-        return field(displayNameKey(), scalarType()).defaultValue(parentKey());
+        return field(displayNameKey(), ramlScalarValue()).defaultValue(parentKey());
     }
 
     protected KeyValueRule securedByField()
@@ -480,7 +486,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule usageField()
     {
-        return field(string("usage"), scalarType());
+        return field(string("usage"), ramlScalarValue());
     }
 
     protected KeyValueRule isField()

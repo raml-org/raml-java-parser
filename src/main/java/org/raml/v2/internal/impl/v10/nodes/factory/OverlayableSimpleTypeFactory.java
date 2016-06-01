@@ -18,14 +18,25 @@ package org.raml.v2.internal.impl.v10.nodes.factory;
 import javax.annotation.Nonnull;
 
 import org.raml.v2.internal.framework.grammar.rule.NodeFactory;
+import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.framework.nodes.StringNodeImpl;
+import org.raml.v2.internal.impl.commons.nodes.ObjectNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableNode;
+import org.raml.v2.internal.impl.commons.nodes.OverlayableObjectNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableStringNode;
 
 
 public class OverlayableSimpleTypeFactory implements NodeFactory
 {
+
+    private Boolean wrappInObject;
+
+    public OverlayableSimpleTypeFactory(Boolean wrappInObject)
+    {
+        this.wrappInObject = wrappInObject;
+    }
 
     @Override
     public Node create(@Nonnull Node currentNode, Object... args)
@@ -36,8 +47,18 @@ public class OverlayableSimpleTypeFactory implements NodeFactory
         }
         if (currentNode instanceof OverlayableNode)
         {
-            return currentNode; // already transformed
+            return currentNode;
         }
-        return new OverlayableStringNode(((SimpleTypeNode) currentNode).getLiteralValue());
+        if (wrappInObject)
+        {
+            ObjectNodeImpl result = new OverlayableObjectNodeImpl();
+            OverlayableStringNode overlayableStringNode = new OverlayableStringNode(((SimpleTypeNode) currentNode).getLiteralValue());
+            result.addChild(new KeyValueNodeImpl(new StringNodeImpl("value"), overlayableStringNode));
+            return result;
+        }
+        else
+        {
+            return new OverlayableStringNode(((SimpleTypeNode) currentNode).getLiteralValue());
+        }
     }
 }

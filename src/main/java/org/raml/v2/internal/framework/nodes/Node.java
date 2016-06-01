@@ -149,4 +149,5 @@ public interface Node
     NodeType getType();
 
 
+    void removeChildren();
 }

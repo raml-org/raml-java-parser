@@ -45,12 +45,14 @@ import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
+import org.raml.v2.internal.impl.v10.nodes.DisplayNameDefaultValue;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.OverlayableSimpleTypeFactory;
+import org.raml.v2.internal.impl.v10.nodes.factory.RamlScalarValueFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
 import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
@@ -94,7 +96,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected ObjectRule methodValue()
     {
         return super.methodValue()
-                    .with(field(queryStringKey(), anyOf(scalarType(), type())))
+                    .with(field(queryStringKey(), type()))
                     .with(annotationField());
     }
 
@@ -109,7 +111,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return super.securitySchemeSettings()
                     .with(field(string("signatures"), array(scalarType())))
-                    .with(field(string("authorizationUri"), scalarType()).requiredWhen(new AuthorizationUriRequiredField()));
+                    .with(field(string("authorizationUri"), ramlScalarValue()).requiredWhen(new AuthorizationUriRequiredField()));
     }
 
     @Override
@@ -698,10 +700,11 @@ public class Raml10Grammar extends BaseRamlGrammar
                "The \"types\" property allows for XML and JSON schemas.";
     }
 
-    protected Rule traitsValue()
+    protected KeyValueRule displayNameField()
     {
-        return trait();
+        return field(displayNameKey(), ramlScalarValue()).defaultValue(new DisplayNameDefaultValue());
     }
+
 
     protected Rule resourceTypesValue()
     {
@@ -716,13 +719,43 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected Rule descriptionValue()
     {
-        return super.descriptionValue().then(new OverlayableSimpleTypeFactory());
+        return firstOf(scalarType().then(new OverlayableSimpleTypeFactory(true)),
+                annotatedScalarType(scalarType().then(new OverlayableSimpleTypeFactory(false))));
+    }
+
+    protected KeyValueRule docTitleField()
+    {
+        return requiredField(titleKey(),
+                firstOf(
+                        allOf(minLength(1), ramlScalarValue()),
+                        annotatedScalarType(allOf(minLength(1), scalarType()))
+                ));
     }
 
     @Override
     protected Rule titleValue()
     {
-        return super.titleValue().then(new OverlayableSimpleTypeFactory());
+        return firstOf(
+                allOf(minLength(1), scalarType().then(new OverlayableSimpleTypeFactory(true))),
+                annotatedScalarType(allOf(minLength(1), scalarType().then(new OverlayableSimpleTypeFactory(false)))));
+    }
+
+    @Override
+    public Rule ramlScalarValue()
+    {
+        return firstOf(scalarType().then(new RamlScalarValueFactory()), annotatedScalarType());
+    }
+
+    protected Rule annotatedScalarType()
+    {
+        return annotatedScalarType(scalarType());
+    }
+
+    protected Rule annotatedScalarType(Rule customScalarRule)
+    {
+        return objectType()
+                           .with(field(string("value"), customScalarRule))
+                           .with(annotationField());
     }
 
 }

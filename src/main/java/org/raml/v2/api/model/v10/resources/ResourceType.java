@@ -15,7 +15,10 @@
  */
 package org.raml.v2.api.model.v10.resources;
 
+import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
 import org.raml.v2.api.model.v10.system.types.MarkdownString;
+import org.raml.v2.api.model.v10.system.types.StringType;
+
 
 public interface ResourceType
 {
@@ -23,7 +26,7 @@ public interface ResourceType
     /**
      * The displayName attribute specifies the resource type display name. It is a friendly name used only for  display or documentation purposes. If displayName is not specified, it defaults to the element's key (the name of the property itself).
      **/
-    String displayName();
+    // AnnotableSimpleType<String> displayName();
 
 
     /**
@@ -35,8 +38,8 @@ public interface ResourceType
     /**
      * Instructions on how and when the resource type should be used.
      **/
-    String usage();
+    AnnotableSimpleType<String> usage();
 
 
-    MarkdownString description();
+    // MarkdownString description();
 }

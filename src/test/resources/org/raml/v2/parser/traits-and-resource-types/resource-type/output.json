@@ -1,9 +1,15 @@
 {
-    "title": "Example API",
-    "version": "v1",
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
     "resourceTypes": {
         "collection": {
-            "usage": "how to use this resource type",
+            "usage": {
+                "value": "how to use this resource type"
+            },
             "description": "this is a collection type",
             "get": {
                 "headers": {
@@ -26,23 +32,33 @@
         {
             "relativeUri": "/users",
             "type": "collection",
-            "displayName": "/users",
-            "description": "this is a collection type",
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "this is a collection type"
+            },
             "methods": [
                 {
                     "method": "put",
                     "queryParameters": {
                         "long": {
                             "type": "integer",
-                            "displayName": "long"
+                            "displayName": {
+                                "value": "long"
+                            }
                         }
                     },
-                    "displayName": "put",
+                    "displayName": {
+                        "value": "put"
+                    },
                     "body": {
                         "text/plain": {
                             "example": "soul",
                             "type": "any",
-                            "displayName": "text/plain"
+                            "displayName": {
+                                "value": "text/plain"
+                            }
                         }
                     }
                 },
@@ -52,10 +68,14 @@
                         "lat": {
                             "type": "integer",
                             "example": 575,
-                            "displayName": "lat"
+                            "displayName": {
+                                "value": "lat"
+                            }
                         }
                     },
-                    "displayName": "get"
+                    "displayName": {
+                        "value": "get"
+                    }
                 }
             ]
         }

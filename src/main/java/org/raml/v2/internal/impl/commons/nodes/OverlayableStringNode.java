@@ -28,7 +28,7 @@ public class OverlayableStringNode extends StringNodeImpl implements Overlayable
         super(value);
     }
 
-    public OverlayableStringNode(StringNodeImpl node)
+    protected OverlayableStringNode(StringNodeImpl node)
     {
         super(node);
     }

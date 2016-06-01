@@ -5,7 +5,10 @@
    "annotations": [],
    "defaultValue": null,
    "description": null,
-   "displayName": "basic",
+   "displayName": {
+    "annotations": [],
+    "value": "basic"
+   },
    "enumValues": null,
    "example": null,
    "examples": [],
@@ -32,7 +35,10 @@
    "description": null,
    "discriminator": null,
    "discriminatorValue": null,
-   "displayName": "complex",
+   "displayName": {
+    "annotations": [],
+    "value": "complex"
+   },
    "example": null,
    "examples": [],
    "maxProperties": null,
@@ -44,9 +50,13 @@
      "annotations": [],
      "defaultValue": null,
      "description": {
+      "annotations": [],
       "value": "where is hypermedia"
      },
-     "displayName": "controls",
+     "displayName": {
+      "annotations": [],
+      "value": "controls"
+     },
      "example": null,
      "examples": [],
      "name": "controls",
@@ -59,7 +69,10 @@
      "annotations": [],
      "defaultValue": "true",
      "description": null,
-     "displayName": "permanentUri?",
+     "displayName": {
+      "annotations": [],
+      "value": "permanentUri?"
+     },
      "example": null,
      "examples": [],
      "name": "permanentUri",
@@ -80,7 +93,10 @@
     "annotations": [],
     "defaultValue": null,
     "description": null,
-    "displayName": "basic",
+    "displayName": {
+     "annotations": [],
+     "value": "basic"
+    },
     "example": null,
     "examples": [],
     "name": "basic",
@@ -108,7 +124,10 @@
     "annotations": [],
     "defaultValue": null,
     "description": null,
-    "displayName": "complex",
+    "displayName": {
+     "annotations": [],
+     "value": "complex"
+    },
     "example": null,
     "examples": [],
     "name": "complex",
@@ -184,6 +203,7 @@
   }
  ],
  "baseUri": {
+  "annotations": [],
   "value": "http://base.uri/{version}/{param1}"
  },
  "baseUriParameters": [
@@ -192,9 +212,13 @@
    "annotations": [],
    "defaultValue": null,
    "description": {
+    "annotations": [],
     "value": "some description"
    },
-   "displayName": "Param 1",
+   "displayName": {
+    "annotations": [],
+    "value": "Param 1"
+   },
    "enumValues": null,
    "example": {
     "annotations": [],
@@ -220,16 +244,49 @@
   {
    "annotations": [],
    "content": {
+    "annotations": [
+     {
+      "annotation": {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "basic"
+       },
+       "example": null,
+       "examples": [],
+       "name": "basic",
+       "required": true,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"basic\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      "name": "(basic)",
+      "structuredValue": {
+       "isScalar": true,
+       "properties": [],
+       "value": "first chapter"
+      }
+     }
+    ],
     "value": "single line"
    },
-   "title": "doc title 1"
+   "title": {
+    "annotations": [],
+    "value": "doc title 1"
+   }
   },
   {
    "annotations": [],
    "content": {
+    "annotations": [],
     "value": "multi\nline\n"
    },
-   "title": "doc title 2"
+   "title": {
+    "annotations": [],
+    "value": "doc title 2"
+   }
   }
  ],
  "mediaType": [
@@ -244,19 +301,24 @@
  "ramlVersion": "1.0",
  "resourceTypes": [
   {
-   "description": null,
-   "displayName": null,
    "name": "first",
-   "usage": "first usage"
+   "usage": {
+    "annotations": [],
+    "value": "first usage"
+   }
   }
  ],
  "resources": [
   {
    "annotations": [],
    "description": {
+    "annotations": [],
     "value": "top description"
    },
-   "displayName": "/top",
+   "displayName": {
+    "annotations": [],
+    "value": "/top"
+   },
    "is": [
     {
      "name": "traitOne",
@@ -266,12 +328,11 @@
       "value": null
      },
      "trait": {
-      "description": {
-       "value": "method description"
-      },
-      "displayName": "uno",
       "name": "traitOne",
-      "usage": "late night"
+      "usage": {
+       "annotations": [],
+       "value": "late night"
+      }
      }
     },
     {
@@ -293,10 +354,6 @@
       "value": null
      },
      "trait": {
-      "description": {
-       "value": "<<text>>"
-      },
-      "displayName": "dos",
       "name": "traitTwo",
       "usage": null
      }
@@ -307,16 +364,23 @@
      "annotations": [],
      "body": [],
      "description": {
+      "annotations": [],
       "value": "get something"
      },
-     "displayName": "get",
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
      "headers": [
       {
        "allowedTargets": [],
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "one",
+       "displayName": {
+        "annotations": [],
+        "value": "one"
+       },
        "enumValues": null,
        "example": null,
        "examples": [],
@@ -333,7 +397,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "The Second",
+       "displayName": {
+        "annotations": [],
+        "value": "The Second"
+       },
        "enumValues": null,
        "example": null,
        "examples": [],
@@ -357,7 +424,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "The One",
+       "displayName": {
+        "annotations": [],
+        "value": "The One"
+       },
        "enumValues": [],
        "example": null,
        "examples": [],
@@ -375,7 +445,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "two",
+       "displayName": {
+        "annotations": [],
+        "value": "two"
+       },
        "enumValues": null,
        "example": null,
        "examples": [],
@@ -403,9 +476,13 @@
            "annotations": [],
            "defaultValue": null,
            "description": {
+            "annotations": [],
             "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
            },
-           "displayName": "Authorization",
+           "displayName": {
+            "annotations": [],
+            "value": "Authorization"
+           },
            "enumValues": null,
            "example": null,
            "examples": [],
@@ -424,9 +501,13 @@
            "annotations": [],
            "defaultValue": null,
            "description": {
+            "annotations": [],
             "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
            },
-           "displayName": "access_token",
+           "displayName": {
+            "annotations": [],
+            "value": "access_token"
+           },
            "enumValues": null,
            "example": null,
            "examples": [],
@@ -448,6 +529,7 @@
             "value": "401"
            },
            "description": {
+            "annotations": [],
             "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
            },
            "headers": []
@@ -459,6 +541,7 @@
             "value": "403"
            },
            "description": {
+            "annotations": [],
             "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
            },
            "headers": []
@@ -466,12 +549,17 @@
          ]
         },
         "description": {
+         "annotations": [],
          "value": "oauth 2.0"
         },
-        "displayName": "OAuth2",
+        "displayName": {
+         "annotations": [],
+         "value": "OAuth2"
+        },
         "name": "oauth_2_0",
         "settings": {
          "accessTokenUri": {
+          "annotations": [],
           "value": "https://api.dropbox.com/1/oauth2/token"
          },
          "annotations": [],
@@ -480,6 +568,7 @@
           "refresh_token"
          ],
          "authorizationUri": {
+          "annotations": [],
           "value": "https://www.dropbox.com/1/oauth2/authorize"
          },
          "requestTokenUri": null,
@@ -508,7 +597,10 @@
        "description": null,
        "discriminator": null,
        "discriminatorValue": null,
-       "displayName": "application/json",
+       "displayName": {
+        "annotations": [],
+        "value": "application/json"
+       },
        "example": {
         "annotations": [],
         "name": null,
@@ -529,7 +621,10 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": "firstname",
+         "displayName": {
+          "annotations": [],
+          "value": "firstname"
+         },
          "example": null,
          "examples": [],
          "name": "firstname",
@@ -542,7 +637,10 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": "lastname",
+         "displayName": {
+          "annotations": [],
+          "value": "lastname"
+         },
          "example": null,
          "examples": [],
          "name": "lastname",
@@ -555,7 +653,10 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": "age",
+         "displayName": {
+          "annotations": [],
+          "value": "age"
+         },
          "example": null,
          "examples": [],
          "name": "age",
@@ -573,7 +674,10 @@
        "annotations": [],
        "defaultValue": null,
        "description": null,
-       "displayName": "application/xml",
+       "displayName": {
+        "annotations": [],
+        "value": "application/xml"
+       },
        "example": null,
        "examples": [
         {
@@ -605,9 +709,13 @@
       }
      ],
      "description": {
+      "annotations": [],
       "value": "post something"
      },
-     "displayName": "post",
+     "displayName": {
+      "annotations": [],
+      "value": "post"
+     },
      "headers": [],
      "is": [
       {
@@ -629,10 +737,6 @@
         "value": null
        },
        "trait": {
-        "description": {
-         "value": "<<text>>"
-        },
-        "displayName": "dos",
         "name": "traitTwo",
         "usage": null
        }
@@ -646,7 +750,10 @@
       "annotations": [],
       "defaultValue": null,
       "description": null,
-      "displayName": "queryString",
+      "displayName": {
+       "annotations": [],
+       "value": "queryString"
+      },
       "example": null,
       "examples": [],
       "name": "queryString",
@@ -666,7 +773,10 @@
          "description": null,
          "discriminator": null,
          "discriminatorValue": null,
-         "displayName": "application/json",
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
          "example": {
           "annotations": [],
           "name": null,
@@ -687,7 +797,10 @@
            "annotations": [],
            "defaultValue": null,
            "description": null,
-           "displayName": "firstname",
+           "displayName": {
+            "annotations": [],
+            "value": "firstname"
+           },
            "example": null,
            "examples": [],
            "name": "firstname",
@@ -700,7 +813,10 @@
            "annotations": [],
            "defaultValue": null,
            "description": null,
-           "displayName": "lastname",
+           "displayName": {
+            "annotations": [],
+            "value": "lastname"
+           },
            "example": null,
            "examples": [],
            "name": "lastname",
@@ -713,7 +829,10 @@
            "annotations": [],
            "defaultValue": null,
            "description": null,
-           "displayName": "age",
+           "displayName": {
+            "annotations": [],
+            "value": "age"
+           },
            "example": null,
            "examples": [],
            "name": "age",
@@ -731,7 +850,10 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": "application/xml",
+         "displayName": {
+          "annotations": [],
+          "value": "application/xml"
+         },
          "example": null,
          "examples": [
           {
@@ -772,7 +894,10 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": "one",
+         "displayName": {
+          "annotations": [],
+          "value": "one"
+         },
          "enumValues": null,
          "example": null,
          "examples": [],
@@ -789,7 +914,10 @@
          "annotations": [],
          "defaultValue": null,
          "description": null,
-         "displayName": "The Second",
+         "displayName": {
+          "annotations": [],
+          "value": "The Second"
+         },
          "enumValues": null,
          "example": null,
          "examples": [],
@@ -824,9 +952,13 @@
     {
      "annotations": [],
      "description": {
+      "annotations": [],
       "value": "child description"
      },
-     "displayName": "/child",
+     "displayName": {
+      "annotations": [],
+      "value": "/child"
+     },
      "is": [],
      "methods": [],
      "relativeUri": {
@@ -847,9 +979,13 @@
            "annotations": [],
            "defaultValue": null,
            "description": {
+            "annotations": [],
             "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
            },
-           "displayName": "Authorization",
+           "displayName": {
+            "annotations": [],
+            "value": "Authorization"
+           },
            "enumValues": null,
            "example": null,
            "examples": [],
@@ -868,9 +1004,13 @@
            "annotations": [],
            "defaultValue": null,
            "description": {
+            "annotations": [],
             "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
            },
-           "displayName": "access_token",
+           "displayName": {
+            "annotations": [],
+            "value": "access_token"
+           },
            "enumValues": null,
            "example": null,
            "examples": [],
@@ -892,6 +1032,7 @@
             "value": "401"
            },
            "description": {
+            "annotations": [],
             "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
            },
            "headers": []
@@ -903,6 +1044,7 @@
             "value": "403"
            },
            "description": {
+            "annotations": [],
             "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
            },
            "headers": []
@@ -910,12 +1052,17 @@
          ]
         },
         "description": {
+         "annotations": [],
          "value": "oauth 2.0"
         },
-        "displayName": "OAuth2",
+        "displayName": {
+         "annotations": [],
+         "value": "OAuth2"
+        },
         "name": "oauth_2_0",
         "settings": {
          "accessTokenUri": {
+          "annotations": [],
           "value": "https://api.dropbox.com/1/oauth2/token"
          },
          "annotations": [],
@@ -924,6 +1071,7 @@
           "refresh_token"
          ],
          "authorizationUri": {
+          "annotations": [],
           "value": "https://www.dropbox.com/1/oauth2/authorize"
          },
          "requestTokenUri": null,
@@ -945,18 +1093,24 @@
         "annotations": [],
         "describedBy": null,
         "description": {
+         "annotations": [],
          "value": "OAuth 1.0 continues to be supported"
         },
-        "displayName": "oauth_1_0",
+        "displayName": {
+         "annotations": [],
+         "value": "oauth_1_0"
+        },
         "name": "oauth_1_0",
         "settings": {
          "accessTokenUri": null,
          "annotations": [],
          "authorizationGrants": [],
          "authorizationUri": {
+          "annotations": [],
           "value": "https://www.dropbox.com/1/oauth/authorize"
          },
          "requestTokenUri": {
+          "annotations": [],
           "value": "https://api.dropbox.com/1/oauth/request_token"
          },
          "scopes": [],
@@ -965,6 +1119,7 @@
           "PLAINTEXT"
          ],
          "tokenCredentialsUri": {
+          "annotations": [],
           "value": "https://api.dropbox.com/1/oauth/access_token"
          }
         },
@@ -986,10 +1141,11 @@
    "type": {
     "name": "first",
     "resourceType": {
-     "description": null,
-     "displayName": null,
      "name": "first",
-     "usage": "first usage"
+     "usage": {
+      "annotations": [],
+      "value": "first usage"
+     }
     },
     "structuredValue": {
      "isScalar": false,
@@ -1014,9 +1170,13 @@
        "annotations": [],
        "defaultValue": null,
        "description": {
+        "annotations": [],
         "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
        },
-       "displayName": "Authorization",
+       "displayName": {
+        "annotations": [],
+        "value": "Authorization"
+       },
        "enumValues": null,
        "example": null,
        "examples": [],
@@ -1035,9 +1195,13 @@
        "annotations": [],
        "defaultValue": null,
        "description": {
+        "annotations": [],
         "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
        },
-       "displayName": "access_token",
+       "displayName": {
+        "annotations": [],
+        "value": "access_token"
+       },
        "enumValues": null,
        "example": null,
        "examples": [],
@@ -1059,6 +1223,7 @@
         "value": "401"
        },
        "description": {
+        "annotations": [],
         "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
        },
        "headers": []
@@ -1070,6 +1235,7 @@
         "value": "403"
        },
        "description": {
+        "annotations": [],
         "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
        },
        "headers": []
@@ -1077,12 +1243,17 @@
      ]
     },
     "description": {
+     "annotations": [],
      "value": "oauth 2.0"
     },
-    "displayName": "OAuth2",
+    "displayName": {
+     "annotations": [],
+     "value": "OAuth2"
+    },
     "name": "oauth_2_0",
     "settings": {
      "accessTokenUri": {
+      "annotations": [],
       "value": "https://api.dropbox.com/1/oauth2/token"
      },
      "annotations": [],
@@ -1091,6 +1262,7 @@
       "refresh_token"
      ],
      "authorizationUri": {
+      "annotations": [],
       "value": "https://www.dropbox.com/1/oauth2/authorize"
      },
      "requestTokenUri": null,
@@ -1112,18 +1284,24 @@
     "annotations": [],
     "describedBy": null,
     "description": {
+     "annotations": [],
      "value": "OAuth 1.0 continues to be supported"
     },
-    "displayName": "oauth_1_0",
+    "displayName": {
+     "annotations": [],
+     "value": "oauth_1_0"
+    },
     "name": "oauth_1_0",
     "settings": {
      "accessTokenUri": null,
      "annotations": [],
      "authorizationGrants": [],
      "authorizationUri": {
+      "annotations": [],
       "value": "https://www.dropbox.com/1/oauth/authorize"
      },
      "requestTokenUri": {
+      "annotations": [],
       "value": "https://api.dropbox.com/1/oauth/request_token"
      },
      "scopes": [],
@@ -1132,6 +1310,7 @@
       "PLAINTEXT"
      ],
      "tokenCredentialsUri": {
+      "annotations": [],
       "value": "https://api.dropbox.com/1/oauth/access_token"
      }
     },
@@ -1156,9 +1335,13 @@
       "annotations": [],
       "defaultValue": null,
       "description": {
+       "annotations": [],
        "value": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n"
       },
-      "displayName": "Authorization",
+      "displayName": {
+       "annotations": [],
+       "value": "Authorization"
+      },
       "enumValues": null,
       "example": null,
       "examples": [],
@@ -1177,9 +1360,13 @@
       "annotations": [],
       "defaultValue": null,
       "description": {
+       "annotations": [],
        "value": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n"
       },
-      "displayName": "access_token",
+      "displayName": {
+       "annotations": [],
+       "value": "access_token"
+      },
       "enumValues": null,
       "example": null,
       "examples": [],
@@ -1201,6 +1388,7 @@
        "value": "401"
       },
       "description": {
+       "annotations": [],
        "value": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
       },
       "headers": []
@@ -1212,6 +1400,7 @@
        "value": "403"
       },
       "description": {
+       "annotations": [],
        "value": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
       },
       "headers": []
@@ -1219,12 +1408,17 @@
     ]
    },
    "description": {
+    "annotations": [],
     "value": "oauth 2.0"
    },
-   "displayName": "OAuth2",
+   "displayName": {
+    "annotations": [],
+    "value": "OAuth2"
+   },
    "name": "oauth_2_0",
    "settings": {
     "accessTokenUri": {
+     "annotations": [],
      "value": "https://api.dropbox.com/1/oauth2/token"
     },
     "annotations": [],
@@ -1233,6 +1427,7 @@
      "refresh_token"
     ],
     "authorizationUri": {
+     "annotations": [],
      "value": "https://www.dropbox.com/1/oauth2/authorize"
     },
     "requestTokenUri": null,
@@ -1246,18 +1441,24 @@
    "annotations": [],
    "describedBy": null,
    "description": {
+    "annotations": [],
     "value": "OAuth 1.0 continues to be supported"
    },
-   "displayName": "oauth_1_0",
+   "displayName": {
+    "annotations": [],
+    "value": "oauth_1_0"
+   },
    "name": "oauth_1_0",
    "settings": {
     "accessTokenUri": null,
     "annotations": [],
     "authorizationGrants": [],
     "authorizationUri": {
+     "annotations": [],
      "value": "https://www.dropbox.com/1/oauth/authorize"
     },
     "requestTokenUri": {
+     "annotations": [],
      "value": "https://api.dropbox.com/1/oauth/request_token"
     },
     "scopes": [],
@@ -1266,27 +1467,51 @@
      "PLAINTEXT"
     ],
     "tokenCredentialsUri": {
+     "annotations": [],
      "value": "https://api.dropbox.com/1/oauth/access_token"
     }
    },
    "type": "OAuth 1.0"
   }
  ],
- "title": "api title",
+ "title": {
+  "annotations": [
+   {
+    "annotation": {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "basic"
+     },
+     "example": null,
+     "examples": [],
+     "name": "basic",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"basic\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    "name": "(basic)",
+    "structuredValue": {
+     "isScalar": true,
+     "properties": [],
+     "value": "title"
+    }
+   }
+  ],
+  "value": "api title"
+ },
  "traits": [
   {
-   "description": {
-    "value": "method description"
-   },
-   "displayName": "uno",
    "name": "traitOne",
-   "usage": "late night"
+   "usage": {
+    "annotations": [],
+    "value": "late night"
+   }
   },
   {
-   "description": {
-    "value": "<<text>>"
-   },
-   "displayName": "dos",
    "name": "traitTwo",
    "usage": null
   }
@@ -1300,7 +1525,10 @@
    "description": null,
    "discriminator": null,
    "discriminatorValue": null,
-   "displayName": "User",
+   "displayName": {
+    "annotations": [],
+    "value": "User"
+   },
    "example": null,
    "examples": [
     {
@@ -1395,7 +1623,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "firstname",
+     "displayName": {
+      "annotations": [],
+      "value": "firstname"
+     },
      "example": null,
      "examples": [],
      "name": "firstname",
@@ -1408,7 +1639,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "lastname",
+     "displayName": {
+      "annotations": [],
+      "value": "lastname"
+     },
      "example": null,
      "examples": [],
      "name": "lastname",
@@ -1421,7 +1655,10 @@
      "annotations": [],
      "defaultValue": null,
      "description": null,
-     "displayName": "age",
+     "displayName": {
+      "annotations": [],
+      "value": "age"
+     },
      "example": null,
      "examples": [],
      "name": "age",
@@ -1436,5 +1673,8 @@
   }
  ],
  "uses": [],
- "version": "v1"
+ "version": {
+  "annotations": [],
+  "value": "v1"
+ }
 }

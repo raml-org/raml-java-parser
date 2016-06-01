@@ -1,4 +1,4 @@
 RamlDocumentNode (Start: 11 , End: 18, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 17, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        ErrorNode: "Invalid type Null, expected String" (Start: 17 , End: 17, On: input.raml, Source: SYNullNode)
+        ErrorNode: "Expected min length 1" (Start: 17 , End: 17, On: input.raml, Source: SYNullNode)

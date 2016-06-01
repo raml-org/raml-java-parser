@@ -49,6 +49,7 @@ import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.utils.StreamUtils;
+import org.raml.v2.internal.utils.TreeDumper;
 
 public class Raml10Builder
 {
@@ -83,6 +84,15 @@ public class Raml10Builder
             {
                 Phase phase = phases.get(i);
                 rootNode = phase.apply(rootNode);
+                String dump = new TreeDumper().dump(rootNode);
+                if (Boolean.getBoolean("dump.phases"))
+                {
+                    System.out.println("===============================================================");
+                    System.out.println("After phase = " + i + " --- " + phase.getClass());
+                    System.out.println("---------------------------------------------------------------");
+                    System.out.println(dump);
+                    System.out.println("---------------------------------------------------------------");
+                }
                 List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
                 if (!errorNodes.isEmpty())
                 {

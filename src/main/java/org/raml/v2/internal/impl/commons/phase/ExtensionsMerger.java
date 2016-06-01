@@ -133,7 +133,8 @@ public class ExtensionsMerger
 
     private boolean isDefaultNode(Node node)
     {
-        return node.getStartPosition().getLine() == Position.UNKNOWN;
+        return node.getStartPosition().getLine() == Position.UNKNOWN
+               && node.getEndPosition().getLine() == Position.UNKNOWN;
     }
 
     private boolean overlayCheck(Node baseNode, Node overlayNode)

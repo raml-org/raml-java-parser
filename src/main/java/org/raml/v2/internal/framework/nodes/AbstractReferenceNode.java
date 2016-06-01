@@ -19,6 +19,7 @@ import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
 import org.raml.v2.internal.utils.NodeUtils;
 
 import javax.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,15 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
             for (Node node : parametersNode.getChildren())
             {
                 KeyValueNode keyValueNode = (KeyValueNode) node;
-                params.put(keyValueNode.getKey().toString(), keyValueNode.getValue().toString());
+                Node value = keyValueNode.getValue();
+                if (value instanceof SimpleTypeNode)
+                {
+                    params.put(((SimpleTypeNode) keyValueNode.getKey()).getLiteralValue(), ((SimpleTypeNode) value).getLiteralValue());
+                }
+                else
+                {
+                    throw new RuntimeException("Expecting SimpleTypeNode but got " + value.getClass());
+                }
             }
         }
         return params;

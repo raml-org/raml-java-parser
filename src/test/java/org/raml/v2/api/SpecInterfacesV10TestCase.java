@@ -49,6 +49,8 @@ import org.raml.v2.api.model.v10.security.SecurityScheme;
 import org.raml.v2.api.model.v10.security.SecuritySchemePart;
 import org.raml.v2.api.model.v10.security.SecuritySchemeRef;
 import org.raml.v2.api.model.v10.security.SecuritySchemeSettings;
+import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
+import org.raml.v2.api.model.v10.system.types.StringType;
 
 public class SpecInterfacesV10TestCase
 {
@@ -77,8 +79,10 @@ public class SpecInterfacesV10TestCase
 
     private void assertApi(Api api)
     {
-        assertThat(api.title(), is("api title"));
-        assertThat(api.version(), is("v1"));
+        assertThat(api.title().value(), is("api title"));
+        assertScalarAnnotation(api.title(), "title");
+        assertThat(api.version().value(), is("v1"));
+        assertThat(api.version().annotations(), hasSize(0));
         assertThat(api.baseUri().value(), is("http://base.uri/{version}/{param1}"));
         assertBaseUriParameters(api.baseUriParameters());
         assertThat(api.protocols().size(), is(2));
@@ -186,7 +190,7 @@ public class SpecInterfacesV10TestCase
     private void assertOauth1SecurityScheme(SecurityScheme oauth1)
     {
         assertThat(oauth1.name(), is("oauth_1_0"));
-        assertThat(oauth1.displayName(), is("oauth_1_0"));
+        assertThat(oauth1.displayName().value(), is("oauth_1_0"));
         assertThat(oauth1.description().value(), is("OAuth 1.0 continues to be supported"));
         assertThat(oauth1.type(), is("OAuth 1.0"));
 
@@ -204,7 +208,7 @@ public class SpecInterfacesV10TestCase
     private void assertOauth2SecurityScheme(SecurityScheme oauth2)
     {
         assertThat(oauth2.name(), is("oauth_2_0"));
-        assertThat(oauth2.displayName(), is("OAuth2"));
+        assertThat(oauth2.displayName().value(), is("OAuth2"));
         assertThat(oauth2.description().value(), is("oauth 2.0"));
         assertThat(oauth2.type(), is("OAuth 2.0"));
         SecuritySchemePart describedBy = oauth2.describedBy();
@@ -237,7 +241,7 @@ public class SpecInterfacesV10TestCase
         assertThat(baseUriParameters.size(), is(1));
         TypeDeclaration param1 = baseUriParameters.get(0);
         assertThat(param1.name(), is("param1"));
-        assertThat(param1.displayName(), is("Param 1"));
+        assertThat(param1.displayName().value(), is("Param 1"));
         assertThat(param1.description().value(), is("some description"));
         // assertThat(param1.type().get(0), is("string"));
         assertThat(param1.defaultValue(), nullValue());
@@ -256,24 +260,31 @@ public class SpecInterfacesV10TestCase
     private void assertDocumentation(List<DocumentationItem> documentation)
     {
         assertThat(documentation.size(), is(2));
-        assertThat(documentation.get(0).title(), is("doc title 1"));
+        assertThat(documentation.get(0).title().value(), is("doc title 1"));
         assertThat(documentation.get(0).content().value(), is("single line"));
-        assertThat(documentation.get(1).title(), is("doc title 2"));
+        assertThat(documentation.get(0).content().annotations(), hasSize(1));
+        assertScalarAnnotation(documentation.get(0).content(), "first chapter");
+        assertThat(documentation.get(1).title().value(), is("doc title 2"));
         assertThat(documentation.get(1).content().value(), is("multi\nline\n"));
+    }
+
+    private void assertScalarAnnotation(AnnotableSimpleType<String> scalar, String value)
+    {
+        assertThat(scalar.annotations().get(0).structuredValue().value().toString(), is(value));
     }
 
     private void assertTraits(List<Trait> traits)
     {
         assertThat(traits.size(), is(2));
-        assertThat(traits.get(0).displayName(), is("uno"));
-        assertThat(traits.get(0).description().value(), is("method description"));
-        assertThat(traits.get(0).usage(), is("late night"));
+        assertThat(traits.get(0).name(), is("traitOne"));
+        // assertThat(traits.get(0).description().value(), is("method description"));
+        assertThat(traits.get(0).usage().value(), is("late night"));
     }
 
     private void assertResourceTypes(List<ResourceType> resourceTypes)
     {
         assertThat(resourceTypes.size(), is(1));
-        assertThat(resourceTypes.get(0).usage(), is("first usage"));
+        assertThat(resourceTypes.get(0).usage().value(), is("first usage"));
     }
 
     private void assertResources(List<Resource> resources)
@@ -283,7 +294,7 @@ public class SpecInterfacesV10TestCase
         assertThat(top.relativeUri().value(), is("/top"));
         assertThat(top.resourcePath(), is("/top"));
         assertThat(top.description().value(), is("top description"));
-        assertThat(top.displayName(), is("/top"));
+        assertThat(top.displayName().value(), is("/top"));
         assertMethods(top.methods());
         assertTraitsRefs(top.is());
         assertResourceTypeRef(top.type());
@@ -300,14 +311,14 @@ public class SpecInterfacesV10TestCase
     private void assertResourceTypeRef(ResourceTypeRef resourceTypeRef)
     {
         assertThat(resourceTypeRef.name(), is("first"));
-        assertThat(resourceTypeRef.resourceType().usage(), is("first usage"));
+        assertThat(resourceTypeRef.resourceType().usage().value(), is("first usage"));
     }
 
     private void assertTraitsRefs(List<TraitRef> traitRefs)
     {
         assertThat(traitRefs.size(), is(2));
         assertThat(traitRefs.get(0).name(), is("traitOne"));
-        assertThat(traitRefs.get(0).trait().description().value(), is("method description"));
+        // assertThat(traitRefs.get(0).trait().description().value(), is("method description"));
 
         assertThat(traitRefs.get(1).name(), is("traitTwo"));
         TypeInstance param = traitRefs.get(1).structuredValue();
@@ -325,7 +336,7 @@ public class SpecInterfacesV10TestCase
         assertThat(get.method(), is("get"));
         assertThat(get.resource().relativeUri().value(), is("/top"));
         assertThat(get.description().value(), is("get something"));
-        assertThat(get.displayName(), is("get"));
+        assertThat(get.displayName().value(), is("get"));
         assertThat(get.protocols().size(), is(1));
         assertThat(get.protocols().get(0), is("HTTPS"));
         assertThat(get.securedBy().size(), is(1));
@@ -353,7 +364,7 @@ public class SpecInterfacesV10TestCase
     {
         assertThat(headers.size(), is(2));
         assertThat(headers.get(0).name(), is("one"));
-        assertThat(headers.get(1).displayName(), is("The Second"));
+        assertThat(headers.get(1).displayName().value(), is("The Second"));
     }
 
     private void assertResponses(List<Response> responses)
