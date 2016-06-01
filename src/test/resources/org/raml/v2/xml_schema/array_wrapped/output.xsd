@@ -1,0 +1,30 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.w3.org/2001/XMLSchema">
+    <element name="root" type="root"/>
+    <complexType name="root">
+        <choice>
+            <element name="name">
+                <simpleType>
+                    <restriction base="string"/>
+                </simpleType>
+            </element>
+            <element maxOccurs="unbounded" name="friends">
+                <complexType>
+                    <choice>
+                        <element name="Friend" type="Friend"/>
+                    </choice>
+                </complexType>
+            </element>
+            <any maxOccurs="unbounded" minOccurs="0"/>
+        </choice>
+    </complexType>
+    <complexType name="Friend">
+        <choice>
+            <element name="name">
+                <simpleType>
+                    <restriction base="string"/>
+                </simpleType>
+            </element>
+            <any maxOccurs="unbounded" minOccurs="0"/>
+        </choice>
+    </complexType>
+</schema>

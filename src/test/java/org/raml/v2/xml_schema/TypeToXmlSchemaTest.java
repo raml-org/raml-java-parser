@@ -83,8 +83,8 @@ public class TypeToXmlSchemaTest extends TestDataProvider
         final XmlSchema user = typeToSchemaVisitor.getSchema();
         final StringWriter writer = new StringWriter();
         user.write(writer);
-        final String actual = writer.toString();
-        final Diff diff = new Diff(actual, expected);
-        Assert.assertTrue("Expected : \n" + expected + "\nActual :\n" + actual + "\n" + diff.toString(), diff.identical());
+        dump = writer.toString();
+        final Diff diff = new Diff(dump, expected);
+        Assert.assertTrue("Expected : \n" + expected + "\nActual :\n" + dump + "\n" + diff.toString(), diff.identical());
     }
 }

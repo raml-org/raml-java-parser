@@ -295,7 +295,11 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
             // First uses the xml facet then the item name finally the field name or parent type name
             final String name = defaultTo(defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), itemType.getTypeName()), currentElement.peek().getName());
             final XmlSchemaElement transform = transform(name, itemType);
-            visit = transform.getSchemaType();
+            final XmlSchemaComplexType value = new XmlSchemaComplexType(schema, false);
+            final XmlSchemaChoice xmlSchemaSequence = new XmlSchemaChoice();
+            value.setParticle(xmlSchemaSequence);
+            xmlSchemaSequence.getItems().add(transform);
+            visit = value;
         }
         else
         {
