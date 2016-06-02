@@ -338,18 +338,33 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
     @Override
     public XmlSchemaType visitJson(JsonSchemaExternalType jsonTypeDefinition)
     {
-        return null;
+        return createAny();
     }
 
     @Override
     public XmlSchemaType visitXml(XmlSchemaExternalType xmlTypeDefinition)
     {
-        return null;
+        return createAny();
     }
 
     @Override
     public XmlSchemaType visitAny(AnyResolvedType anyResolvedType)
     {
-        return null;
+
+        return createAny();
+    }
+
+    @Nonnull
+    private XmlSchemaType createAny()
+    {
+        final XmlSchemaComplexType value = new XmlSchemaComplexType(schema, false);
+        final XmlSchemaChoice xmlSchemaSequence = new XmlSchemaChoice();
+        value.setParticle(xmlSchemaSequence);
+        final List<XmlSchemaChoiceMember> items = xmlSchemaSequence.getItems();
+        final XmlSchemaAny schemaAny = new XmlSchemaAny();
+        schemaAny.setMinOccurs(0);
+        schemaAny.setMaxOccurs(UNBOUNDED);
+        items.add(schemaAny);
+        return value;
     }
 }
