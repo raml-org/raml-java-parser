@@ -29,6 +29,11 @@ import org.raml.v2.internal.utils.SchemaGenerator;
 import org.xml.sax.SAXException;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import java.io.IOException;
@@ -91,20 +96,30 @@ public class XmlSchemaValidationRule extends Rule
         String value = ((SimpleTypeNode) node).getLiteralValue();
         try
         {
-            if (this.type != null && !value.trim().startsWith("<" + this.type))
+            if (this.type != null)
             {
-                return ErrorNodeFactory.createInvalidXmlExampleNode("Provided object is not of type " + this.type);
+                final QName rootElement = getRootElement(value);
+                if (rootElement != null && !rootElement.getLocalPart().equals(type))
+                {
+                    return ErrorNodeFactory.createInvalidXmlExampleNode("Provided object is not of type " + this.type);
+                }
             }
-            else
-            {
-                schema.newValidator().validate(new StreamSource(new StringReader(value)));
-            }
+            schema.newValidator().validate(new StreamSource(new StringReader(value)));
         }
-        catch (SAXException | IOException e)
+        catch (XMLStreamException | SAXException | IOException e)
         {
             return ErrorNodeFactory.createInvalidXmlExampleNode(e.getMessage());
         }
         return node;
+    }
+
+    @Nullable
+    public QName getRootElement(String xmlContent) throws XMLStreamException
+    {
+        XMLInputFactory f = XMLInputFactory.newInstance();
+        XMLStreamReader r = f.createXMLStreamReader(new StringReader(xmlContent));
+        r.nextTag();
+        return r.getName();
     }
 
     @Override
