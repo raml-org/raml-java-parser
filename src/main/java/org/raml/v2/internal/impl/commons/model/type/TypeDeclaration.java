@@ -15,33 +15,31 @@
  */
 package org.raml.v2.internal.impl.commons.model.type;
 
-import org.apache.ws.commons.schema.XmlSchema;
-import org.apache.ws.commons.schema.XmlSchemaElement;
-import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.internal.framework.nodes.ErrorNode;
-import org.raml.v2.internal.framework.nodes.KeyValueNode;
-import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.StringNode;
-import org.raml.v2.internal.framework.nodes.StringNodeImpl;
-import org.raml.v2.internal.framework.model.ModelUtils;
-import org.raml.v2.internal.impl.commons.model.Annotable;
-import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
-import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
-import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
-import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
-import org.raml.v2.internal.utils.NodeSelector;
+import static java.util.Collections.singletonList;
 
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.singletonList;
+import org.apache.ws.commons.schema.XmlSchema;
+import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.framework.model.ModelUtils;
+import org.raml.v2.internal.framework.nodes.ErrorNode;
+import org.raml.v2.internal.framework.nodes.KeyValueNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.StringNode;
+import org.raml.v2.internal.framework.nodes.StringNodeImpl;
+import org.raml.v2.internal.impl.commons.model.Annotable;
+import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
+import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
+import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
+import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
+import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
+import org.raml.v2.internal.utils.NodeSelector;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
 {
@@ -98,8 +96,8 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
 
     public List<RamlValidationResult> validate(String payload)
     {
-        final ResourceLoader resourceLoader = new DefaultResourceLoader();
         final TypeDeclarationNode node = (TypeDeclarationNode) getNode();
+        final ResourceLoader resourceLoader = node.getStartPosition().getResourceLoader();
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
         final Node validate = exampleValidationPhase.validate(node, new StringNodeImpl(payload));
         if (validate instanceof ErrorNode)

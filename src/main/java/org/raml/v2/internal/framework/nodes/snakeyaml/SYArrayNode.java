@@ -16,6 +16,7 @@
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.ArrayNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
@@ -28,14 +29,14 @@ import javax.annotation.Nonnull;
 public class SYArrayNode extends SYBaseRamlNode implements ArrayNode
 {
     // For copy
-    private SYArrayNode(SYArrayNode node, String resourcePath)
+    private SYArrayNode(SYArrayNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
-    public SYArrayNode(SequenceNode sequenceNode, String resourcePath)
+    public SYArrayNode(SequenceNode sequenceNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(sequenceNode, resourcePath);
+        super(sequenceNode, resourcePath, resourceLoader);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class SYArrayNode extends SYBaseRamlNode implements ArrayNode
     @Override
     public Node copy()
     {
-        return new SYArrayNode(this, getResourcePath());
+        return new SYArrayNode(this);
     }
 
     @Override

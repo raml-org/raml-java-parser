@@ -19,6 +19,7 @@ import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 import static org.yaml.snakeyaml.nodes.NodeId.sequence;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -31,10 +32,12 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class SYModelWrapper
 {
 
+    private ResourceLoader resourceLoader;
     private String resourcePath;
 
-    public SYModelWrapper(String resourcePath)
+    public SYModelWrapper(ResourceLoader resourceLoader, String resourcePath)
     {
+        this.resourceLoader = resourceLoader;
         this.resourcePath = resourcePath;
     }
 
@@ -75,7 +78,7 @@ public class SYModelWrapper
         {
             new MappingNodeMerger().merge(mappingNode);
         }
-        SYObjectNode mapping = new SYObjectNode(mappingNode, resourcePath);
+        SYObjectNode mapping = new SYObjectNode(mappingNode, resourceLoader, resourcePath);
         for (NodeTuple nodeTuple : mappingNode.getValue())
         {
             Node key = wrap(nodeTuple.getKeyNode());
@@ -92,19 +95,19 @@ public class SYModelWrapper
         final Tag tag = scalarNode.getTag();
         if (INCLUDE_TAG.equals(tag))
         {
-            return new SYIncludeNode(scalarNode, resourcePath);
+            return new SYIncludeNode(scalarNode, resourcePath, resourceLoader);
         }
         else if (Tag.NULL.equals(tag))
         {
-            return new SYNullNode(scalarNode, resourcePath);
+            return new SYNullNode(scalarNode, resourcePath, resourceLoader);
         }
         else if (Tag.FLOAT.equals(tag))
         {
-            return new SYFloatingNode(scalarNode, resourcePath);
+            return new SYFloatingNode(scalarNode, resourcePath, resourceLoader);
         }
         else if (Tag.INT.equals(tag))
         {
-            SYIntegerNode syIntegerNode = new SYIntegerNode(scalarNode, resourcePath);
+            SYIntegerNode syIntegerNode = new SYIntegerNode(scalarNode, resourcePath, resourceLoader);
             try
             {
                 syIntegerNode.getValue();
@@ -113,7 +116,7 @@ public class SYModelWrapper
             catch (NumberFormatException e)
             {
                 // wrap with string node if number is invalid e.g: 12:30:00
-                return new SYStringNode(scalarNode, resourcePath);
+                return new SYStringNode(scalarNode, resourcePath, resourceLoader);
             }
         }
         else
@@ -122,18 +125,18 @@ public class SYModelWrapper
             // We only use true or false as boolean possibilities for yaml 1.2 and not yes no.
             if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
             {
-                return new SYBooleanNode(scalarNode, resourcePath);
+                return new SYBooleanNode(scalarNode, resourcePath, resourceLoader);
             }
             else
             {
-                return new SYStringNode(scalarNode, resourcePath);
+                return new SYStringNode(scalarNode, resourcePath, resourceLoader);
             }
         }
     }
 
     private SYArrayNode wrap(SequenceNode sequenceNode)
     {
-        SYArrayNode sequence = new SYArrayNode(sequenceNode, resourcePath);
+        SYArrayNode sequence = new SYArrayNode(sequenceNode, resourcePath, resourceLoader);
         for (org.yaml.snakeyaml.nodes.Node node : sequenceNode.getValue())
         {
             sequence.addChild(wrap(node));

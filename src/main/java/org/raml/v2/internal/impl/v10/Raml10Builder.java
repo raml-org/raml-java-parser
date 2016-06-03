@@ -56,7 +56,7 @@ public class Raml10Builder
 
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = RamlNodeParser.parse(resourceLocation, stringContent);
+        Node rootNode = RamlNodeParser.parse(resourceLoader, resourceLocation, stringContent);
         if (rootNode == null)
         {
             return ErrorNodeFactory.createEmptyDocument();
@@ -85,14 +85,7 @@ public class Raml10Builder
                 Phase phase = phases.get(i);
                 rootNode = phase.apply(rootNode);
                 String dump = new TreeDumper().dump(rootNode);
-                if (Boolean.getBoolean("dump.phases"))
-                {
-                    System.out.println("===============================================================");
-                    System.out.println("After phase = " + i + " --- " + phase.getClass());
-                    System.out.println("---------------------------------------------------------------");
-                    System.out.println(dump);
-                    System.out.println("---------------------------------------------------------------");
-                }
+                checkDumpPhases(i, phase, dump);
                 List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
                 if (!errorNodes.isEmpty())
                 {
@@ -101,6 +94,18 @@ public class Raml10Builder
             }
         }
         return rootNode;
+    }
+
+    private void checkDumpPhases(int i, Phase phase, String dump)
+    {
+        if (Boolean.getBoolean("dump.phases"))
+        {
+            System.out.println("===============================================================");
+            System.out.println("After phase = " + i + " --- " + phase.getClass());
+            System.out.println("---------------------------------------------------------------");
+            System.out.println(dump);
+            System.out.println("---------------------------------------------------------------");
+        }
     }
 
     private Node applyExtension(Node extensionNode, ResourceLoader resourceLoader, String resourceLocation, RamlFragment fragment) throws IOException

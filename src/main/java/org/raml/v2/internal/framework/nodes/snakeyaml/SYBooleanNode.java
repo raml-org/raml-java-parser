@@ -17,6 +17,7 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.BooleanNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
@@ -25,14 +26,14 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
 public class SYBooleanNode extends SYBaseRamlNode implements BooleanNode
 {
 
-    public SYBooleanNode(SYBooleanNode node, String resourcePath)
+    public SYBooleanNode(SYBooleanNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
-    public SYBooleanNode(ScalarNode scalarNode, String resourcePath)
+    public SYBooleanNode(ScalarNode scalarNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(scalarNode, resourcePath);
+        super(scalarNode, resourcePath, resourceLoader);
     }
 
     public Boolean getValue()
@@ -51,7 +52,7 @@ public class SYBooleanNode extends SYBaseRamlNode implements BooleanNode
     @Override
     public Node copy()
     {
-        return new SYBooleanNode(this, getResourcePath());
+        return new SYBooleanNode(this);
     }
 
     @Override

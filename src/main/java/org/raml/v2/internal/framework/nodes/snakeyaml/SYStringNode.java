@@ -17,6 +17,7 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.StringNode;
@@ -26,15 +27,15 @@ public class SYStringNode extends SYBaseRamlNode implements StringNode
 {
 
     // For copy
-    protected SYStringNode(SYStringNode node, String resourcePath)
+    protected SYStringNode(SYStringNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
 
-    public SYStringNode(ScalarNode scalarNode, String resourcePath)
+    public SYStringNode(ScalarNode scalarNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(scalarNode, resourcePath);
+        super(scalarNode, resourcePath, resourceLoader);
     }
 
     public String getValue()
@@ -46,7 +47,7 @@ public class SYStringNode extends SYBaseRamlNode implements StringNode
     @Override
     public Node copy()
     {
-        return new SYStringNode(this, getResourcePath());
+        return new SYStringNode(this);
     }
 
     @Override

@@ -24,14 +24,14 @@ public abstract class AbstractPosition implements Position
     @Override
     public Position rightShift(int offset)
     {
-        return new DefaultPosition(getIndex() + offset, getLine(), getColumn() + offset, getPath());
+        return new DefaultPosition(getIndex() + offset, getLine(), getColumn() + offset, getPath(), getResourceLoader());
     }
 
     @Nonnull
     @Override
     public Position leftShift(int offset)
     {
-        return new DefaultPosition(getIndex() - offset, getLine(), getColumn() - offset, getPath());
+        return new DefaultPosition(getIndex() - offset, getLine(), getColumn() - offset, getPath(), getResourceLoader());
     }
 
     @Override

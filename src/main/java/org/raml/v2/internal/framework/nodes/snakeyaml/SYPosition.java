@@ -17,6 +17,7 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.AbstractPosition;
 import org.yaml.snakeyaml.error.Mark;
 
@@ -24,11 +25,13 @@ public class SYPosition extends AbstractPosition
 {
 
     private Mark mark;
+    private ResourceLoader resourceLoader;
     private String resourcePath;
 
-    public SYPosition(Mark mark, String resourcePath)
+    public SYPosition(Mark mark, ResourceLoader resourceLoader, String resourcePath)
     {
         this.mark = mark;
+        this.resourceLoader = resourceLoader;
         this.resourcePath = resourcePath;
     }
 
@@ -57,4 +60,9 @@ public class SYPosition extends AbstractPosition
         return resourcePath;
     }
 
+    @Nonnull
+    public ResourceLoader getResourceLoader()
+    {
+        return resourceLoader;
+    }
 }

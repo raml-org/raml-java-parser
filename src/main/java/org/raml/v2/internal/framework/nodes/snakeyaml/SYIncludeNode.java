@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
@@ -23,14 +24,14 @@ import javax.annotation.Nonnull;
 public class SYIncludeNode extends SYStringNode
 {
 
-    private SYIncludeNode(SYIncludeNode node, String resourcePath)
+    private SYIncludeNode(SYIncludeNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
-    public SYIncludeNode(ScalarNode scalarNode, String resourcePath)
+    public SYIncludeNode(ScalarNode scalarNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(scalarNode, resourcePath);
+        super(scalarNode, resourcePath, resourceLoader);
     }
 
     public String getIncludePath()
@@ -54,6 +55,6 @@ public class SYIncludeNode extends SYStringNode
     @Override
     public Node copy()
     {
-        return new SYIncludeNode(this, getResourcePath());
+        return new SYIncludeNode(this);
     }
 }

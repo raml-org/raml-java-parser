@@ -17,27 +17,28 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.NullNode;
 import org.yaml.snakeyaml.nodes.Node;
 
 public class SYNullNode extends SYBaseRamlNode implements NullNode
 {
-    public SYNullNode(SYNullNode node, String resourcePath)
+    public SYNullNode(SYNullNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
-    public SYNullNode(Node yamlNode, String resourcePath)
+    public SYNullNode(Node yamlNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(yamlNode, resourcePath);
+        super(yamlNode, resourcePath, resourceLoader);
     }
 
     @Nonnull
     @Override
     public org.raml.v2.internal.framework.nodes.Node copy()
     {
-        return new SYNullNode(this, getResourcePath());
+        return new SYNullNode(this);
     }
 
     @Override

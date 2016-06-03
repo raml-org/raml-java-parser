@@ -36,7 +36,7 @@ public class Raml08Builder
 
     public Node build(String stringContent, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = RamlNodeParser.parse(resourceLocation, stringContent);
+        Node rootNode = RamlNodeParser.parse(resourceLoader, resourceLocation, stringContent);
         final List<Phase> phases = createPhases(resourceLoader);
         for (int i = 0; i < phases.size(); i++)
         {

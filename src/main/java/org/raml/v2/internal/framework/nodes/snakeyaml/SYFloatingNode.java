@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.framework.nodes.snakeyaml;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.FloatingNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
@@ -26,14 +27,14 @@ import javax.annotation.Nonnull;
 
 public class SYFloatingNode extends SYBaseRamlNode implements FloatingNode
 {
-    public SYFloatingNode(SYFloatingNode node, String resourcePath)
+    public SYFloatingNode(SYFloatingNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
-    public SYFloatingNode(ScalarNode yamlNode, String resourcePath)
+    public SYFloatingNode(ScalarNode yamlNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(yamlNode, resourcePath);
+        super(yamlNode, resourcePath, resourceLoader);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class SYFloatingNode extends SYBaseRamlNode implements FloatingNode
     @Override
     public Node copy()
     {
-        return new SYFloatingNode(this, getResourcePath());
+        return new SYFloatingNode(this);
     }
 
     @Override

@@ -20,6 +20,8 @@ import java.io.StringReader;
 
 import javax.annotation.Nullable;
 
+import org.raml.v2.api.loader.DefaultResourceLoader;
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.DefaultPosition;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
@@ -32,7 +34,7 @@ public class RamlNodeParser
 
 
     @Nullable
-    public static Node parse(String resourcePath, Reader reader)
+    public static Node parse(ResourceLoader resourceLoader, String resourcePath, Reader reader)
     {
         try
         {
@@ -44,7 +46,7 @@ public class RamlNodeParser
             }
             else
             {
-                return new SYModelWrapper(resourcePath).wrap(composedNode);
+                return new SYModelWrapper(resourceLoader, resourcePath).wrap(composedNode);
             }
         }
         catch (final MarkedYAMLException e)
@@ -57,15 +59,15 @@ public class RamlNodeParser
     {
         final ErrorNode errorNode = new ErrorNode("Underlying error while parsing YAML syntax: '" + e.getMessage() + "'");
         final Mark problemMark = e.getProblemMark();
-        errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, ""));
-        errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), ""));
+        errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, "", new DefaultResourceLoader()));
+        errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), "", new DefaultResourceLoader()));
         return errorNode;
     }
 
     @Nullable
-    public static Node parse(String resourcePath, String content)
+    public static Node parse(ResourceLoader resourceLoader, String resourcePath, String content)
     {
-        return parse(resourcePath, new StringReader(content));
+        return parse(resourceLoader, resourcePath, new StringReader(content));
     }
 
 

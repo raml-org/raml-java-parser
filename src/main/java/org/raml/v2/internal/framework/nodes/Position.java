@@ -17,6 +17,8 @@ package org.raml.v2.internal.framework.nodes;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.ResourceLoader;
+
 /**
  * The position of a given node in a specific resource
  */
@@ -54,4 +56,7 @@ public interface Position
 
     @Nonnull
     Position leftShift(int offset);
+
+    @Nonnull
+    ResourceLoader getResourceLoader();
 }

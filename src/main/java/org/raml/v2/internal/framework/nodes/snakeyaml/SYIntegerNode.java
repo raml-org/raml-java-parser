@@ -17,6 +17,7 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.IntegerNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
@@ -26,14 +27,14 @@ public class SYIntegerNode extends SYBaseRamlNode implements IntegerNode
 {
 
     // For copy
-    private SYIntegerNode(SYIntegerNode node, String resourcePath)
+    private SYIntegerNode(SYIntegerNode node)
     {
-        super(node, resourcePath);
+        super(node);
     }
 
-    public SYIntegerNode(ScalarNode scalarNode, String resourcePath)
+    public SYIntegerNode(ScalarNode scalarNode, String resourcePath, ResourceLoader resourceLoader)
     {
-        super(scalarNode, resourcePath);
+        super(scalarNode, resourcePath, resourceLoader);
     }
 
     public Integer getValue()
@@ -56,7 +57,7 @@ public class SYIntegerNode extends SYBaseRamlNode implements IntegerNode
     @Override
     public Node copy()
     {
-        return new SYIntegerNode(this, getResourcePath());
+        return new SYIntegerNode(this);
     }
 
     @Override

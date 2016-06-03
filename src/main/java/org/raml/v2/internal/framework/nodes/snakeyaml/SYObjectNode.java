@@ -18,6 +18,7 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
@@ -26,15 +27,15 @@ import org.yaml.snakeyaml.nodes.MappingNode;
 public class SYObjectNode extends SYBaseRamlNode implements ObjectNode
 {
 
-    public SYObjectNode(MappingNode mappingNode, String resourcePath)
+    public SYObjectNode(MappingNode mappingNode, ResourceLoader resourceLoader, String resourcePath)
     {
-        super(mappingNode, resourcePath);
+        super(mappingNode, resourcePath, resourceLoader);
     }
 
     // For copy reasons
-    public SYObjectNode(SYBaseRamlNode baseRamlNode, String resourcePath)
+    public SYObjectNode(SYBaseRamlNode baseRamlNode)
     {
-        super(baseRamlNode, resourcePath);
+        super(baseRamlNode);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class SYObjectNode extends SYBaseRamlNode implements ObjectNode
     @Override
     public Node copy()
     {
-        return new SYObjectNode(this, getResourcePath());
+        return new SYObjectNode(this);
     }
 
     @Override

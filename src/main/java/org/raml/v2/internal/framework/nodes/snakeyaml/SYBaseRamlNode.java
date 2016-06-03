@@ -18,6 +18,7 @@ package org.raml.v2.internal.framework.nodes.snakeyaml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.nodes.BaseNode;
 import org.raml.v2.internal.framework.nodes.Position;
 import org.yaml.snakeyaml.nodes.Node;
@@ -28,18 +29,22 @@ public abstract class SYBaseRamlNode extends BaseNode
 
     private Node yamlNode;
     private String resourcePath;
+    private final ResourceLoader resourceLoader;
 
-    public SYBaseRamlNode(SYBaseRamlNode node, String resourcePath)
+    // For copy use cases
+    protected SYBaseRamlNode(SYBaseRamlNode node)
     {
         super(node);
         this.yamlNode = node.yamlNode;
-        this.resourcePath = resourcePath;
+        this.resourcePath = node.getResourcePath();
+        this.resourceLoader = node.getResourceLoader();
     }
 
-    public SYBaseRamlNode(Node yamlNode, String resourcePath)
+    public SYBaseRamlNode(Node yamlNode, String resourcePath, ResourceLoader resourceLoader)
     {
         this.yamlNode = yamlNode;
         this.resourcePath = resourcePath;
+        this.resourceLoader = resourceLoader;
     }
 
     protected Node getYamlNode()
@@ -56,14 +61,14 @@ public abstract class SYBaseRamlNode extends BaseNode
     @Override
     public Position getStartPosition()
     {
-        return new SYPosition(yamlNode.getStartMark(), resourcePath);
+        return new SYPosition(yamlNode.getStartMark(), resourceLoader, resourcePath);
     }
 
     @Nonnull
     @Override
     public Position getEndPosition()
     {
-        return new SYPosition(yamlNode.getEndMark(), resourcePath);
+        return new SYPosition(yamlNode.getEndMark(), resourceLoader, resourcePath);
     }
 
     @Nullable
@@ -76,4 +81,8 @@ public abstract class SYBaseRamlNode extends BaseNode
         return null;
     }
 
+    public ResourceLoader getResourceLoader()
+    {
+        return resourceLoader;
+    }
 }

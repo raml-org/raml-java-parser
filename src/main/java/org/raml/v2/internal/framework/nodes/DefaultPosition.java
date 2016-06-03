@@ -17,19 +17,24 @@ package org.raml.v2.internal.framework.nodes;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.api.loader.DefaultResourceLoader;
+import org.raml.v2.api.loader.ResourceLoader;
+
 public class DefaultPosition extends AbstractPosition
 {
     private int index;
     private int line;
     private int column;
     private String resource;
+    private ResourceLoader resourceLoader;
 
-    public DefaultPosition(int index, int line, int column, String resource)
+    public DefaultPosition(int index, int line, int column, String resource, ResourceLoader resourceLoader)
     {
         this.index = index;
         this.line = line;
         this.column = column;
         this.resource = resource;
+        this.resourceLoader = resourceLoader;
     }
 
     @Override
@@ -57,9 +62,15 @@ public class DefaultPosition extends AbstractPosition
         return resource;
     }
 
+    @Nonnull
+    @Override
+    public ResourceLoader getResourceLoader()
+    {
+        return resourceLoader;
+    }
 
     public static DefaultPosition emptyPosition()
     {
-        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, "[artificial node]");
+        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, "[artificial node]", new DefaultResourceLoader());
     }
 }

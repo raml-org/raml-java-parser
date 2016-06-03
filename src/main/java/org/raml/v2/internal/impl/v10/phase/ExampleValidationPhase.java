@@ -119,7 +119,7 @@ public class ExampleValidationPhase implements Phase
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
     {
         final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
-        final Node parse = RamlNodeParser.parse("", value);
+        final Node parse = RamlNodeParser.parse(resourceLoader, "", value);
         final Node apply = rule.apply(parse);
         final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
         if (apply instanceof ErrorNode || !errorNodeList.isEmpty())
