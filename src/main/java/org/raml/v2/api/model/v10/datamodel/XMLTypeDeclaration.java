@@ -15,12 +15,7 @@
  */
 package org.raml.v2.api.model.v10.datamodel;
 
-public interface XMLTypeDeclaration extends TypeDeclaration
+public interface XMLTypeDeclaration extends ExternalTypeDeclaration
 {
-
-    /**
-     * Returns schema/type content for the cases when schema is inlined
-     **/
-    String schemaContent();
 
 }
