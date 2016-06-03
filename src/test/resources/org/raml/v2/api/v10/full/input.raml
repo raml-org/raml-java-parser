@@ -41,6 +41,7 @@ types:
                 firstname: matt
                 lastname: murdock
                 age: 52
+
 traits:
     traitOne:
         displayName: uno
@@ -176,6 +177,8 @@ annotationTypes:
                 body: *bodyPost
                 headers: *headersGet
             400:
+                body:
+                    text/plain: ~
 
 
     /child:

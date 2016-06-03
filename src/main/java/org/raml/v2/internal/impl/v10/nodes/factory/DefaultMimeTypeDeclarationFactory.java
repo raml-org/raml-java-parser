@@ -15,24 +15,24 @@
  */
 package org.raml.v2.internal.impl.v10.nodes.factory;
 
+import javax.annotation.Nonnull;
+
 import org.raml.v2.internal.framework.grammar.rule.NodeFactory;
 import org.raml.v2.internal.framework.nodes.KeyValueNodeImpl;
+import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.TypeId;
 
-import javax.annotation.Nonnull;
-
-public class InlineTypeDeclarationFactory implements NodeFactory
+public class DefaultMimeTypeDeclarationFactory implements NodeFactory
 {
 
     @Override
     public Node create(@Nonnull Node currentNode, Object... args)
     {
         final TypeDeclarationNode node = new TypeDeclarationNode();
-        node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), currentNode.copy()));
+        node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), new NativeTypeExpressionNode(TypeId.ANY.getType())));
         return node;
     }
 

@@ -374,6 +374,11 @@ public class SpecInterfacesV10TestCase
         assertThat(response200.code().value(), is("200"));
         assertBody(response200.body());
         assertHeaders(response200.headers());
+
+        Response response400 = responses.get(1);
+        assertThat(response400.code().value(), is("400"));
+        assertThat(response400.body(), hasSize(1));
+        assertThat(response400.body().get(0).name(), is("text/plain"));
     }
 
     private void assertBody(List<TypeDeclaration> body)

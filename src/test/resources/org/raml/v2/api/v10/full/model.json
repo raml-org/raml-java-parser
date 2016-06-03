@@ -933,7 +933,24 @@
       },
       {
        "annotations": [],
-       "body": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "text/plain"
+         },
+         "example": null,
+         "examples": [],
+         "name": "text/plain",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
        "code": {
         "value": "400"
        },

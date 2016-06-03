@@ -50,6 +50,7 @@ import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
+import org.raml.v2.internal.impl.v10.nodes.factory.DefaultMimeTypeDeclarationFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.OverlayableSimpleTypeFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.RamlScalarValueFactory;
@@ -600,7 +601,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected Rule mimeType()
     {
-        return baseType(TypeId.ANY, "mimeType");
+        return anyOf(nullValue().then(new DefaultMimeTypeDeclarationFactory()), baseType(TypeId.ANY, "mimeType"));
     }
 
     protected Rule exampleValue()

@@ -132,7 +132,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
 
     public String toXmlSchema()
     {
-        if (getResolvedType() instanceof SchemaBasedResolvedType || getResolvedType() instanceof AnyResolvedType)
+        if (getResolvedType() instanceof SchemaBasedResolvedType || getResolvedType() instanceof AnyResolvedType || getResolvedType() == null)
         {
             return null;
         }
