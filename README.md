@@ -2,8 +2,7 @@
 
 See http://raml.org for more information about RAML.
 
-This parser is at a alpha state of development.
-You can check the [missing features](MISSING.md).
+This parser is in alpha state of development.
 
 
 ## Build
