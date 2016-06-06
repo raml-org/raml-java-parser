@@ -1,0 +1,4429 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "documentation": [],
+ "mediaType": [
+  {
+   "value": "application/json"
+  }
+ ],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "orders"
+   },
+   "is": [
+    {
+     "name": "orderby",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "orderby",
+      "usage": null
+     }
+    },
+    {
+     "name": "top",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "top",
+      "usage": null
+     }
+    },
+    {
+     "name": "skip",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "skip",
+      "usage": null
+     }
+    },
+    {
+     "name": "filter",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "filter",
+      "usage": null
+     }
+    },
+    {
+     "name": "expand",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "expand",
+      "usage": null
+     }
+    },
+    {
+     "name": "format",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "format",
+      "usage": null
+     }
+    },
+    {
+     "name": "select",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "select",
+      "usage": null
+     }
+    },
+    {
+     "name": "inlinecount",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "inlinecount",
+      "usage": null
+     }
+    }
+   ],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "annotations": [],
+      "value": "List of orders"
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
+     "headers": [],
+     "is": [],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Expression for determining what values are used to order the collection of Entries"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "orderby"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "orderby",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"orderby\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "top"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "top",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"top\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "skip"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "skip",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"skip\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "filter"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "filter",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "expand"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "expand",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "format"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "format",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "select"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "select",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that the response to the request includes a count of the number of Entries in the Collection"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "inlinecount"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "inlinecount",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"inlinecount\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    },
+    {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "annotations": [],
+      "value": "Create a new order"
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "post"
+     },
+     "headers": [],
+     "is": [],
+     "method": "post",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Expression for determining what values are used to order the collection of Entries"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "orderby"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "orderby",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"orderby\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "top"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "top",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"top\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "skip"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "skip",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"skip\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "filter"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "filter",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "expand"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "expand",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "format"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "format",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "select"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "select",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that the response to the request includes a count of the number of Entries in the Collection"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "inlinecount"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "inlinecount",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"inlinecount\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/orders"
+   },
+   "resourcePath": "/orders",
+   "resources": [
+    {
+     "annotations": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "order"
+     },
+     "is": [
+      {
+       "name": "filter",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "filter",
+        "usage": null
+       }
+      },
+      {
+       "name": "expand",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "expand",
+        "usage": null
+       }
+      },
+      {
+       "name": "format",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "format",
+        "usage": null
+       }
+      },
+      {
+       "name": "select",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "select",
+        "usage": null
+       }
+      }
+     ],
+     "methods": [
+      {
+       "annotations": [],
+       "body": [],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "get"
+       },
+       "headers": [],
+       "is": [],
+       "method": "get",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "200"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      },
+      {
+       "annotations": [],
+       "body": [],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "delete"
+       },
+       "headers": [],
+       "is": [],
+       "method": "delete",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "200"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      },
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "put"
+       },
+       "headers": [],
+       "is": [],
+       "method": "put",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "204"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      }
+     ],
+     "relativeUri": {
+      "value": "/orderId"
+     },
+     "resourcePath": "/orders/orderId",
+     "resources": [],
+     "securedBy": [],
+     "type": {
+      "name": "member",
+      "resourceType": {
+       "name": "member",
+       "usage": null
+      },
+      "structuredValue": {
+       "isScalar": false,
+       "properties": [
+        {
+         "isArray": false,
+         "name": "model",
+         "value": {
+          "isScalar": true,
+          "properties": [],
+          "value": "order"
+         },
+         "values": []
+        }
+       ],
+       "value": null
+      }
+     },
+     "uriParameters": []
+    }
+   ],
+   "securedBy": [],
+   "type": {
+    "name": "collection",
+    "resourceType": {
+     "name": "collection",
+     "usage": null
+    },
+    "structuredValue": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "model",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "order"
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    }
+   },
+   "uriParameters": []
+  },
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "customers"
+   },
+   "is": [
+    {
+     "name": "orderby",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "orderby",
+      "usage": null
+     }
+    },
+    {
+     "name": "top",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "top",
+      "usage": null
+     }
+    },
+    {
+     "name": "skip",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "skip",
+      "usage": null
+     }
+    },
+    {
+     "name": "filter",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "filter",
+      "usage": null
+     }
+    },
+    {
+     "name": "expand",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "expand",
+      "usage": null
+     }
+    },
+    {
+     "name": "format",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "format",
+      "usage": null
+     }
+    },
+    {
+     "name": "select",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "select",
+      "usage": null
+     }
+    },
+    {
+     "name": "inlinecount",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "inlinecount",
+      "usage": null
+     }
+    }
+   ],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "annotations": [],
+      "value": "List of customers"
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
+     "headers": [],
+     "is": [],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Expression for determining what values are used to order the collection of Entries"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "orderby"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "orderby",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"orderby\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "top"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "top",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"top\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "skip"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "skip",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"skip\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "filter"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "filter",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "expand"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "expand",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "format"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "format",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "select"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "select",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that the response to the request includes a count of the number of Entries in the Collection"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "inlinecount"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "inlinecount",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"inlinecount\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    },
+    {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "annotations": [],
+      "value": "Create a new customer"
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "post"
+     },
+     "headers": [],
+     "is": [],
+     "method": "post",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Expression for determining what values are used to order the collection of Entries"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "orderby"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "orderby",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"orderby\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "top"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "top",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"top\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "skip"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "skip",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"skip\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "filter"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "filter",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "expand"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "expand",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "format"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "format",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "select"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "select",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that the response to the request includes a count of the number of Entries in the Collection"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "inlinecount"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "inlinecount",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"inlinecount\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/customers"
+   },
+   "resourcePath": "/customers",
+   "resources": [
+    {
+     "annotations": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "customer"
+     },
+     "is": [
+      {
+       "name": "filter",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "filter",
+        "usage": null
+       }
+      },
+      {
+       "name": "expand",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "expand",
+        "usage": null
+       }
+      },
+      {
+       "name": "format",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "format",
+        "usage": null
+       }
+      },
+      {
+       "name": "select",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "select",
+        "usage": null
+       }
+      }
+     ],
+     "methods": [
+      {
+       "annotations": [],
+       "body": [],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "get"
+       },
+       "headers": [],
+       "is": [],
+       "method": "get",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "200"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      },
+      {
+       "annotations": [],
+       "body": [],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "delete"
+       },
+       "headers": [],
+       "is": [],
+       "method": "delete",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "200"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      },
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "put"
+       },
+       "headers": [],
+       "is": [],
+       "method": "put",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "204"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      }
+     ],
+     "relativeUri": {
+      "value": "/customerId"
+     },
+     "resourcePath": "/customers/customerId",
+     "resources": [],
+     "securedBy": [],
+     "type": {
+      "name": "member",
+      "resourceType": {
+       "name": "member",
+       "usage": null
+      },
+      "structuredValue": {
+       "isScalar": false,
+       "properties": [
+        {
+         "isArray": false,
+         "name": "model",
+         "value": {
+          "isScalar": true,
+          "properties": [],
+          "value": "customer"
+         },
+         "values": []
+        }
+       ],
+       "value": null
+      }
+     },
+     "uriParameters": []
+    }
+   ],
+   "securedBy": [],
+   "type": {
+    "name": "collection",
+    "resourceType": {
+     "name": "collection",
+     "usage": null
+    },
+    "structuredValue": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "model",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "customer"
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    }
+   },
+   "uriParameters": []
+  },
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "Weird-resource_NAMEs"
+   },
+   "is": [
+    {
+     "name": "orderby",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "orderby",
+      "usage": null
+     }
+    },
+    {
+     "name": "top",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "top",
+      "usage": null
+     }
+    },
+    {
+     "name": "skip",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "skip",
+      "usage": null
+     }
+    },
+    {
+     "name": "filter",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "filter",
+      "usage": null
+     }
+    },
+    {
+     "name": "expand",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "expand",
+      "usage": null
+     }
+    },
+    {
+     "name": "format",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "format",
+      "usage": null
+     }
+    },
+    {
+     "name": "select",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "select",
+      "usage": null
+     }
+    },
+    {
+     "name": "inlinecount",
+     "structuredValue": {
+      "isScalar": false,
+      "properties": [],
+      "value": null
+     },
+     "trait": {
+      "name": "inlinecount",
+      "usage": null
+     }
+    }
+   ],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "annotations": [],
+      "value": "List of Weird-resource_NAMEs"
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
+     "headers": [],
+     "is": [],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Expression for determining what values are used to order the collection of Entries"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "orderby"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "orderby",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"orderby\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "top"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "top",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"top\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "skip"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "skip",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"skip\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "filter"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "filter",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "expand"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "expand",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "format"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "format",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "select"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "select",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that the response to the request includes a count of the number of Entries in the Collection"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "inlinecount"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "inlinecount",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"inlinecount\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    },
+    {
+     "annotations": [],
+     "body": [],
+     "description": {
+      "annotations": [],
+      "value": "Create a new Weird-resource_NAME"
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "post"
+     },
+     "headers": [],
+     "is": [],
+     "method": "post",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Expression for determining what values are used to order the collection of Entries"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "orderby"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "orderby",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"orderby\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "top"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "top",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"top\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "skip"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "format": null,
+       "maximum": null,
+       "minimum": null,
+       "multipleOf": null,
+       "name": "skip",
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"skip\">\n        <simpleType/>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "filter"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "filter",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "expand"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "expand",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "format"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "format",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "select"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "select",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": {
+        "annotations": [],
+        "value": "Specifies that the response to the request includes a count of the number of Entries in the Collection"
+       },
+       "displayName": {
+        "annotations": [],
+        "value": "inlinecount"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "inlinecount",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"inlinecount\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/Weird-resource_NAMEs"
+   },
+   "resourcePath": "/Weird-resource_NAMEs",
+   "resources": [
+    {
+     "annotations": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "Weird-resource_NAME"
+     },
+     "is": [
+      {
+       "name": "filter",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "filter",
+        "usage": null
+       }
+      },
+      {
+       "name": "expand",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "expand",
+        "usage": null
+       }
+      },
+      {
+       "name": "format",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "format",
+        "usage": null
+       }
+      },
+      {
+       "name": "select",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "name": "select",
+        "usage": null
+       }
+      }
+     ],
+     "methods": [
+      {
+       "annotations": [],
+       "body": [],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "get"
+       },
+       "headers": [],
+       "is": [],
+       "method": "get",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "200"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      },
+      {
+       "annotations": [],
+       "body": [],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "delete"
+       },
+       "headers": [],
+       "is": [],
+       "method": "delete",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "200"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      },
+      {
+       "annotations": [],
+       "body": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "name": "application/json",
+         "required": true,
+         "toXmlSchema": null,
+         "xml": null
+        }
+       ],
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "put"
+       },
+       "headers": [],
+       "is": [],
+       "method": "put",
+       "protocols": [],
+       "queryParameters": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "filter"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "filter",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"filter\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline"
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "expand"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "expand",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"expand\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "format"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "format",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"format\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        },
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": {
+          "annotations": [],
+          "value": "Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option."
+         },
+         "displayName": {
+          "annotations": [],
+          "value": "select"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "select",
+         "pattern": null,
+         "required": false,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"select\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "xml": null
+        }
+       ],
+       "queryString": null,
+       "responses": [
+        {
+         "annotations": [],
+         "body": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "application/json"
+           },
+           "example": null,
+           "examples": [],
+           "name": "application/json",
+           "required": true,
+           "toXmlSchema": null,
+           "xml": null
+          }
+         ],
+         "code": {
+          "value": "204"
+         },
+         "description": null,
+         "headers": []
+        }
+       ],
+       "securedBy": []
+      }
+     ],
+     "relativeUri": {
+      "value": "/Weird-resource_NAMEId"
+     },
+     "resourcePath": "/Weird-resource_NAMEs/Weird-resource_NAMEId",
+     "resources": [],
+     "securedBy": [],
+     "type": {
+      "name": "member",
+      "resourceType": {
+       "name": "member",
+       "usage": null
+      },
+      "structuredValue": {
+       "isScalar": false,
+       "properties": [
+        {
+         "isArray": false,
+         "name": "model",
+         "value": {
+          "isScalar": true,
+          "properties": [],
+          "value": "Weird-resource_NAME"
+         },
+         "values": []
+        }
+       ],
+       "value": null
+      }
+     },
+     "uriParameters": []
+    }
+   ],
+   "securedBy": [],
+   "type": {
+    "name": "collection",
+    "resourceType": {
+     "name": "collection",
+     "usage": null
+    },
+    "structuredValue": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "model",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "Weird-resource_NAME"
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    }
+   },
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "Auto-generated RAML"
+ },
+ "traits": [],
+ "types": [
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [
+    {
+     "annotation": {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": {
+       "annotations": [],
+       "value": "The name of the Entity in the remote data source."
+      },
+      "displayName": {
+       "annotations": [],
+       "value": "remote"
+      },
+      "example": null,
+      "examples": [],
+      "name": "remote",
+      "required": true,
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "xml": null
+     },
+     "name": "(odata.remote)",
+     "structuredValue": {
+      "isScalar": true,
+      "properties": [],
+      "value": "Orders"
+     }
+    }
+   ],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
+    "annotations": [],
+    "value": "order"
+   },
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "order",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "OrderID"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": null,
+     "multipleOf": null,
+     "name": "OrderID",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"OrderID\">\n        <simpleType/>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "ShipName"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "ShipName",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"ShipName\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "ShipAddress"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "ShipAddress",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"ShipAddress\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"order\" type=\"order\"/>\n    <complexType name=\"order\">\n        <choice>\n            <element name=\"OrderID\">\n                <simpleType/>\n            </element>\n            <element name=\"ShipName\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"ShipAddress\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+   "xml": null
+  },
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [
+    {
+     "annotation": {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": {
+       "annotations": [],
+       "value": "The name of the Entity in the remote data source."
+      },
+      "displayName": {
+       "annotations": [],
+       "value": "remote"
+      },
+      "example": null,
+      "examples": [],
+      "name": "remote",
+      "required": true,
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "xml": null
+     },
+     "name": "(odata.remote)",
+     "structuredValue": {
+      "isScalar": true,
+      "properties": [],
+      "value": "Customers"
+     }
+    }
+   ],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
+    "annotations": [],
+    "value": "customer"
+   },
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "customer",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "CustomerID"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": null,
+     "multipleOf": null,
+     "name": "CustomerID",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"CustomerID\">\n        <simpleType/>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "CompanyName"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "CompanyName",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"CompanyName\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "ContactName"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "ContactName",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"ContactName\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": false
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "ContactTitle"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "ContactTitle",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"ContactTitle\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"customer\" type=\"customer\"/>\n    <complexType name=\"customer\">\n        <choice>\n            <element name=\"CustomerID\">\n                <simpleType/>\n            </element>\n            <element name=\"CompanyName\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"ContactName\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"ContactTitle\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+   "xml": null
+  },
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [
+    {
+     "annotation": {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": {
+       "annotations": [],
+       "value": "The name of the Entity in the remote data source."
+      },
+      "displayName": {
+       "annotations": [],
+       "value": "remote"
+      },
+      "example": null,
+      "examples": [],
+      "name": "remote",
+      "required": true,
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "xml": null
+     },
+     "name": "(odata.remote)",
+     "structuredValue": {
+      "isScalar": true,
+      "properties": [],
+      "value": "Weird-resource_NAME"
+     }
+    }
+   ],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
+    "annotations": [],
+    "value": "Weird-resource_NAME"
+   },
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "Weird-resource_NAME",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "just-A_key"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "just-A_key",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"just-A_key\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a nullable or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "nullable"
+        },
+        "example": null,
+        "examples": [],
+        "name": "nullable",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.nullable)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      },
+      {
+       "annotation": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": {
+         "annotations": [],
+         "value": "Defines whether a field is a key or not."
+        },
+        "displayName": {
+         "annotations": [],
+         "value": "key"
+        },
+        "example": null,
+        "examples": [],
+        "name": "key",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "xml": null
+       },
+       "name": "(odata.key)",
+       "structuredValue": {
+        "isScalar": true,
+        "properties": [],
+        "value": true
+       }
+      }
+     ],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "ANOTHER-strange_Key"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": null,
+     "multipleOf": null,
+     "name": "ANOTHER-strange_Key",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"ANOTHER-strange_Key\">\n        <simpleType/>\n    </element>\n</schema>\n",
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"Weird-resource_NAME\" type=\"Weird-resource_NAME\"/>\n    <complexType name=\"Weird-resource_NAME\">\n        <choice>\n            <element name=\"just-A_key\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"ANOTHER-strange_Key\">\n                <simpleType/>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+   "xml": null
+  }
+ ],
+ "uses": [
+  {
+   "annotationTypes": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "annotations": [],
+      "value": "The name of the Entity in the remote data source."
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "remote"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "remote",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "annotations": [],
+      "value": "Defines whether a field is a key or not."
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "key"
+     },
+     "example": null,
+     "examples": [],
+     "name": "key",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "annotations": [],
+      "value": "Defines whether a field is a nullable or not."
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "nullable"
+     },
+     "example": null,
+     "examples": [],
+     "name": "nullable",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "annotations": [],
+      "value": "Specifies the precision of a field. Only valid for date and numeric types."
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "precision"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": null,
+     "multipleOf": null,
+     "name": "precision",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"precision\">\n        <simpleType/>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "annotations": [],
+      "value": "Specifies the precision of a field. Only valid for numeric types."
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "scale"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": null,
+     "multipleOf": null,
+     "name": "scale",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"scale\">\n        <simpleType/>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": {
+      "annotations": [],
+      "value": "This is use to specify some OData types that are not present in RAML (Guid, Time and DateTimeOffset)."
+     },
+     "displayName": {
+      "annotations": [],
+      "value": "type"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "type",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"type\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    }
+   ],
+   "annotations": [],
+   "name": "odata",
+   "resourceTypes": [
+    {
+     "name": "collection",
+     "usage": null
+    },
+    {
+     "name": "member",
+     "usage": null
+    }
+   ],
+   "schemas": [],
+   "securitySchemes": [],
+   "traits": [
+    {
+     "name": "orderby",
+     "usage": null
+    },
+    {
+     "name": "top",
+     "usage": null
+    },
+    {
+     "name": "skip",
+     "usage": null
+    },
+    {
+     "name": "filter",
+     "usage": null
+    },
+    {
+     "name": "expand",
+     "usage": null
+    },
+    {
+     "name": "format",
+     "usage": null
+    },
+    {
+     "name": "select",
+     "usage": null
+    },
+    {
+     "name": "inlinecount",
+     "usage": null
+    }
+   ],
+   "types": [],
+   "usage": {
+    "annotations": [],
+    "value": "Use to define an OData Entity Model\n"
+   },
+   "uses": []
+  }
+ ],
+ "version": {
+  "annotations": [],
+  "value": 0.1
+ }
+}
