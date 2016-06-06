@@ -9,7 +9,7 @@
     "annotations": [],
     "value": "basic"
    },
-   "enumValues": null,
+   "enumValues": [],
    "example": null,
    "examples": [],
    "maxLength": null,
@@ -46,6 +46,7 @@
    "name": "complex",
    "properties": [
     {
+     "additionalProperties": true,
      "allowedTargets": [],
      "annotations": [],
      "defaultValue": null,
@@ -53,13 +54,94 @@
       "annotations": [],
       "value": "where is hypermedia"
      },
+     "discriminator": null,
+     "discriminatorValue": null,
      "displayName": {
       "annotations": [],
       "value": "controls"
      },
      "example": null,
      "examples": [],
+     "maxProperties": null,
+     "minProperties": null,
      "name": "controls",
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": "href",
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "url?"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "url",
+       "pattern": null,
+       "required": false,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"url\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "property"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "property",
+       "pattern": null,
+       "required": true,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"property\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "xml": null
+      },
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "names"
+       },
+       "example": null,
+       "examples": [],
+       "items": {
+        "allowedTargets": [],
+        "annotations": [],
+        "defaultValue": null,
+        "description": null,
+        "displayName": {
+         "annotations": [],
+         "value": "names"
+        },
+        "example": null,
+        "examples": [],
+        "name": "names",
+        "required": true,
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element maxOccurs=\"unbounded\" name=\"names\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+        "xml": null
+       },
+       "maxItems": null,
+       "minItems": null,
+       "name": "names",
+       "required": true,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element maxOccurs=\"unbounded\" name=\"names\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "uniqueItems": null,
+       "xml": null
+      }
+     ],
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"controls\">\n        <complexType>\n            <choice>\n                <element minOccurs=\"0\" name=\"url\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"property\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element maxOccurs=\"unbounded\" name=\"names\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n            </choice>\n        </complexType>\n    </element>\n</schema>\n",
      "xml": null
@@ -219,7 +301,7 @@
     "annotations": [],
     "value": "Param 1"
    },
-   "enumValues": null,
+   "enumValues": [],
    "example": {
     "annotations": [],
     "name": null,
@@ -381,7 +463,7 @@
         "annotations": [],
         "value": "one"
        },
-       "enumValues": null,
+       "enumValues": [],
        "example": null,
        "examples": [],
        "maxLength": null,
@@ -401,7 +483,7 @@
         "annotations": [],
         "value": "The Second"
        },
-       "enumValues": null,
+       "enumValues": [],
        "example": null,
        "examples": [],
        "maxLength": null,
@@ -449,7 +531,7 @@
         "annotations": [],
         "value": "two"
        },
-       "enumValues": null,
+       "enumValues": [],
        "example": null,
        "examples": [],
        "maxLength": null,
@@ -483,7 +565,7 @@
             "annotations": [],
             "value": "Authorization"
            },
-           "enumValues": null,
+           "enumValues": [],
            "example": null,
            "examples": [],
            "maxLength": null,
@@ -508,7 +590,7 @@
             "annotations": [],
             "value": "access_token"
            },
-           "enumValues": null,
+           "enumValues": [],
            "example": null,
            "examples": [],
            "maxLength": null,
@@ -625,9 +707,13 @@
           "annotations": [],
           "value": "firstname"
          },
+         "enumValues": [],
          "example": null,
          "examples": [],
+         "maxLength": null,
+         "minLength": null,
          "name": "firstname",
+         "pattern": null,
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "xml": null
@@ -641,9 +727,13 @@
           "annotations": [],
           "value": "lastname"
          },
+         "enumValues": [],
          "example": null,
          "examples": [],
+         "maxLength": null,
+         "minLength": null,
          "name": "lastname",
+         "pattern": null,
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "xml": null
@@ -657,8 +747,13 @@
           "annotations": [],
           "value": "age"
          },
+         "enumValues": [],
          "example": null,
          "examples": [],
+         "format": null,
+         "maximum": 144.0,
+         "minimum": 0.0,
+         "multipleOf": null,
          "name": "age",
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"age\">\n        <simpleType/>\n    </element>\n</schema>\n",
@@ -801,9 +896,13 @@
             "annotations": [],
             "value": "firstname"
            },
+           "enumValues": [],
            "example": null,
            "examples": [],
+           "maxLength": null,
+           "minLength": null,
            "name": "firstname",
+           "pattern": null,
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
            "xml": null
@@ -817,9 +916,13 @@
             "annotations": [],
             "value": "lastname"
            },
+           "enumValues": [],
            "example": null,
            "examples": [],
+           "maxLength": null,
+           "minLength": null,
            "name": "lastname",
+           "pattern": null,
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
            "xml": null
@@ -833,8 +936,13 @@
             "annotations": [],
             "value": "age"
            },
+           "enumValues": [],
            "example": null,
            "examples": [],
+           "format": null,
+           "maximum": 144.0,
+           "minimum": 0.0,
+           "multipleOf": null,
            "name": "age",
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"age\">\n        <simpleType/>\n    </element>\n</schema>\n",
@@ -898,7 +1006,7 @@
           "annotations": [],
           "value": "one"
          },
-         "enumValues": null,
+         "enumValues": [],
          "example": null,
          "examples": [],
          "maxLength": null,
@@ -918,7 +1026,7 @@
           "annotations": [],
           "value": "The Second"
          },
-         "enumValues": null,
+         "enumValues": [],
          "example": null,
          "examples": [],
          "maxLength": null,
@@ -1003,7 +1111,7 @@
             "annotations": [],
             "value": "Authorization"
            },
-           "enumValues": null,
+           "enumValues": [],
            "example": null,
            "examples": [],
            "maxLength": null,
@@ -1028,7 +1136,7 @@
             "annotations": [],
             "value": "access_token"
            },
-           "enumValues": null,
+           "enumValues": [],
            "example": null,
            "examples": [],
            "maxLength": null,
@@ -1194,7 +1302,7 @@
         "annotations": [],
         "value": "Authorization"
        },
-       "enumValues": null,
+       "enumValues": [],
        "example": null,
        "examples": [],
        "maxLength": null,
@@ -1219,7 +1327,7 @@
         "annotations": [],
         "value": "access_token"
        },
-       "enumValues": null,
+       "enumValues": [],
        "example": null,
        "examples": [],
        "maxLength": null,
@@ -1359,7 +1467,7 @@
        "annotations": [],
        "value": "Authorization"
       },
-      "enumValues": null,
+      "enumValues": [],
       "example": null,
       "examples": [],
       "maxLength": null,
@@ -1384,7 +1492,7 @@
        "annotations": [],
        "value": "access_token"
       },
-      "enumValues": null,
+      "enumValues": [],
       "example": null,
       "examples": [],
       "maxLength": null,
@@ -1644,9 +1752,13 @@
       "annotations": [],
       "value": "firstname"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "maxLength": null,
+     "minLength": null,
      "name": "firstname",
+     "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
      "xml": null
@@ -1660,9 +1772,13 @@
       "annotations": [],
       "value": "lastname"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "maxLength": null,
+     "minLength": null,
      "name": "lastname",
+     "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
      "xml": null
@@ -1676,8 +1792,13 @@
       "annotations": [],
       "value": "age"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "format": null,
+     "maximum": 144.0,
+     "minimum": 0.0,
+     "multipleOf": null,
      "name": "age",
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"age\">\n        <simpleType/>\n    </element>\n</schema>\n",
@@ -1686,6 +1807,180 @@
    ],
    "required": true,
    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"User\" type=\"User\"/>\n    <complexType name=\"User\">\n        <choice>\n            <element name=\"firstname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"lastname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"age\">\n                <simpleType/>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+   "xml": null
+  },
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
+    "annotations": [],
+    "value": "SuperUser"
+   },
+   "example": null,
+   "examples": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "SuperUser",
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "firstname"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "firstname",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "lastname"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "lastname",
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "age"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "format": null,
+     "maximum": 144.0,
+     "minimum": 0.0,
+     "multipleOf": null,
+     "name": "age",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"age\">\n        <simpleType/>\n    </element>\n</schema>\n",
+     "xml": null
+    },
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "skills"
+     },
+     "example": null,
+     "examples": [],
+     "items": {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "displayName": {
+       "annotations": [],
+       "value": "skills"
+      },
+      "example": null,
+      "examples": [],
+      "name": "skills",
+      "required": true,
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element maxOccurs=\"3\" name=\"skills\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "xml": null
+     },
+     "maxItems": 3,
+     "minItems": null,
+     "name": "skills",
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element maxOccurs=\"3\" name=\"skills\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "uniqueItems": null,
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"SuperUser\" type=\"SuperUser\"/>\n    <complexType name=\"SuperUser\">\n        <choice>\n            <element name=\"firstname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"lastname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"age\">\n                <simpleType/>\n            </element>\n            <element maxOccurs=\"3\" name=\"skills\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+   "xml": null
+  },
+  {
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "Users"
+   },
+   "example": null,
+   "examples": [],
+   "items": {
+    "allowedTargets": [],
+    "annotations": [],
+    "defaultValue": null,
+    "description": null,
+    "displayName": {
+     "annotations": [],
+     "value": "Users"
+    },
+    "example": null,
+    "examples": [],
+    "name": "Users",
+    "required": true,
+    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element maxOccurs=\"unbounded\" minOccurs=\"2\" name=\"Users\" type=\"User\"/>\n    <complexType name=\"User\">\n        <choice>\n            <element name=\"firstname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"lastname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"age\">\n                <simpleType/>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+    "xml": null
+   },
+   "maxItems": null,
+   "minItems": 2,
+   "name": "Users",
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element maxOccurs=\"unbounded\" minOccurs=\"2\" name=\"Users\" type=\"User\"/>\n    <complexType name=\"User\">\n        <choice>\n            <element name=\"firstname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"lastname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"age\">\n                <simpleType/>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\"/>\n        </choice>\n    </complexType>\n</schema>\n",
+   "uniqueItems": null,
+   "xml": null
+  },
+  {
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "nString"
+   },
+   "enumValues": [],
+   "example": null,
+   "examples": [],
+   "maxLength": 10,
+   "minLength": null,
+   "name": "nString",
+   "pattern": null,
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nString\">\n        <simpleType>\n            <restriction base=\"string\">\n                <maxLength value=\"10\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
    "xml": null
   }
  ],

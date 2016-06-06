@@ -31,7 +31,10 @@ types:
         properties:
             firstname: string
             lastname: string
-            age: number
+            age:
+                type: integer
+                minimum: 0
+                maximum: 144
         examples:
             batman:
                 firstname: bruce
@@ -41,6 +44,17 @@ types:
                 firstname: matt
                 lastname: murdock
                 age: 52
+    SuperUser:
+        type: User
+        properties:
+            skills:
+                type: string[]
+                maxItems: 3
+    Users:
+        type: User[]
+        minItems: 2
+    nString:
+        maxLength: 10
 
 traits:
     traitOne:

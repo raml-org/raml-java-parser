@@ -45,9 +45,13 @@
       "annotations": [],
       "value": "name"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "maxLength": null,
+     "minLength": null,
      "name": "name",
+     "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
      "xml": null
@@ -61,9 +65,13 @@
       "annotations": [],
       "value": "email"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "maxLength": null,
+     "minLength": null,
      "name": "email",
+     "pattern": "^.+@.+\\..+$",
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"email\">\n        <simpleType>\n            <restriction base=\"string\">\n                <pattern value=\"^.+@.+\\..+$\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
      "xml": null
@@ -77,8 +85,13 @@
       "annotations": [],
       "value": "age"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": 0.0,
+     "multipleOf": null,
      "name": "age",
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"age\">\n        <simpleType/>\n    </element>\n</schema>\n",
@@ -125,9 +138,13 @@
       "annotations": [],
       "value": "name"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "maxLength": null,
+     "minLength": null,
      "name": "name",
+     "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
      "xml": null
@@ -141,9 +158,13 @@
       "annotations": [],
       "value": "email"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "maxLength": null,
+     "minLength": null,
      "name": "email",
+     "pattern": "^.+@.+\\..+$",
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"email\">\n        <simpleType>\n            <restriction base=\"string\">\n                <pattern value=\"^.+@.+\\..+$\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
      "xml": null
@@ -157,8 +178,13 @@
       "annotations": [],
       "value": "age"
      },
+     "enumValues": [],
      "example": null,
      "examples": [],
+     "format": null,
+     "maximum": null,
+     "minimum": 0.0,
+     "multipleOf": null,
      "name": "age",
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"age\">\n        <simpleType/>\n    </element>\n</schema>\n",

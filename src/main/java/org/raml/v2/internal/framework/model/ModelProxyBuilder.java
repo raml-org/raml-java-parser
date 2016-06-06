@@ -15,14 +15,6 @@
  */
 package org.raml.v2.internal.framework.model;
 
-import org.raml.v2.internal.framework.nodes.ArrayNode;
-import org.raml.v2.internal.framework.nodes.Node;
-import org.raml.v2.internal.framework.nodes.ObjectNode;
-import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
-import org.raml.v2.internal.utils.NodeSelector;
-import org.raml.v2.internal.utils.NodeUtils;
-
-import javax.annotation.Nullable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,6 +23,15 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.framework.nodes.ArrayNode;
+import org.raml.v2.internal.framework.nodes.Node;
+import org.raml.v2.internal.framework.nodes.ObjectNode;
+import org.raml.v2.internal.framework.nodes.SimpleTypeNode;
+import org.raml.v2.internal.utils.NodeSelector;
+import org.raml.v2.internal.utils.NodeUtils;
 
 public class ModelProxyBuilder
 {
@@ -128,7 +129,9 @@ public class ModelProxyBuilder
             }
             else
             {
-                return Proxy.newProxyInstance(returnType.getClassLoader(), new Class[] {returnType}, new SimpleProxy((NodeModel) invoke, bindingConfiguration));
+                NodeModelFactory nodeModelFactory = bindingConfiguration.bindingOf(returnType);
+                Class<?> proxyInterface = nodeModelFactory.polymorphic() ? bindingConfiguration.reverseBindingOf((NodeModel) invoke) : returnType;
+                return Proxy.newProxyInstance(returnType.getClassLoader(), new Class[] {proxyInterface}, new SimpleProxy((NodeModel) invoke, bindingConfiguration));
             }
         }
 

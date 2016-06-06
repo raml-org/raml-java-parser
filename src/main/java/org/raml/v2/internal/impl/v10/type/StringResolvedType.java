@@ -34,7 +34,7 @@ public class StringResolvedType extends XmlFacetsCapableType
     private Integer minLength;
     private Integer maxLength;
     private String pattern;
-    private List<String> enums;
+    private List<String> enums = new ArrayList<>();
 
     public StringResolvedType(TypeDeclarationNode from)
     {

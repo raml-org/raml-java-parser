@@ -18,6 +18,7 @@ package org.raml.v2.api;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -33,7 +34,11 @@ import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.api.DocumentationItem;
 import org.raml.v2.api.model.v10.bodies.Response;
+import org.raml.v2.api.model.v10.datamodel.ArrayTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
+import org.raml.v2.api.model.v10.datamodel.IntegerTypeDeclaration;
+import org.raml.v2.api.model.v10.datamodel.ObjectTypeDeclaration;
+import org.raml.v2.api.model.v10.datamodel.StringTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.TypeInstance;
 import org.raml.v2.api.model.v10.datamodel.TypeInstanceProperty;
@@ -50,7 +55,6 @@ import org.raml.v2.api.model.v10.security.SecuritySchemePart;
 import org.raml.v2.api.model.v10.security.SecuritySchemeRef;
 import org.raml.v2.api.model.v10.security.SecuritySchemeSettings;
 import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
-import org.raml.v2.api.model.v10.system.types.StringType;
 
 public class SpecInterfacesV10TestCase
 {
@@ -106,10 +110,47 @@ public class SpecInterfacesV10TestCase
 
     private void assertTypes(List<TypeDeclaration> types)
     {
-        assertThat(types, hasSize(1));
-        TypeDeclaration user = types.get(0);
+        assertThat(types, hasSize(4));
+
+        // object type
+        ObjectTypeDeclaration user = (ObjectTypeDeclaration) types.get(0);
         assertThat(user.name(), is("User"));
+        assertThat(user.additionalProperties(), is(true));
+        assertThat(user.discriminator(), nullValue());
+        assertThat(user.discriminatorValue(), nullValue());
+        assertThat(user.maxProperties(), nullValue());
+        List<TypeDeclaration> properties = user.properties();
+        assertThat(properties, hasSize(3));
+        assertUserProperties(properties);
         assertUserExamples(user.examples());
+
+        // inherited object type
+        ObjectTypeDeclaration superUser = (ObjectTypeDeclaration) types.get(1);
+        assertThat(superUser.name(), is("SuperUser"));
+        properties = superUser.properties();
+        assertThat(properties, hasSize(4));
+        assertUserProperties(properties);
+        ArrayTypeDeclaration skills = (ArrayTypeDeclaration) properties.get(3);
+        assertThat(skills.maxItems(), is(3));
+        assertThat(superUser.examples(), hasSize(0));
+
+        // string type
+        StringTypeDeclaration nString = (StringTypeDeclaration) types.get(3);
+        assertThat(nString.maxLength(), is(10));
+        assertThat(nString.pattern(), nullValue());
+    }
+
+    private void assertUserProperties(List<TypeDeclaration> properties)
+    {
+        StringTypeDeclaration firstName = (StringTypeDeclaration) properties.get(0);
+        assertThat(firstName.name(), is("firstname"));
+        assertThat(firstName.enumValues(), hasSize(0));
+        assertThat(properties.get(1).name(), is("lastname"));
+        IntegerTypeDeclaration age = (IntegerTypeDeclaration) properties.get(2);
+        assertThat(age.name(), is("age"));
+        assertThat(age.minimum(), closeTo(0, 0.1));
+        assertThat(age.maximum(), closeTo(144, 0.1));
+        assertThat(age.enumValues(), hasSize(0));
     }
 
     private void assertUserExamples(List<ExampleSpec> examples)
