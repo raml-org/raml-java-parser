@@ -1,3 +1,13 @@
 #%RAML 1.0
 title: master test
 version: v1
+
+traits:
+    parametrized:
+        body:
+            application/json:
+                type: <<model>>
+
+/resource:
+    post:
+        is: { parametrized: { model: string } }

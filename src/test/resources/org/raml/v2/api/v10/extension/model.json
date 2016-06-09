@@ -8,7 +8,89 @@
   "protocols": [],
   "ramlVersion": "1.0",
   "resourceTypes": [],
-  "resources": [],
+  "resources": [
+    {
+      "annotations": [],
+      "description": null,
+      "displayName": {
+        "annotations": [],
+        "value": "/resource"
+      },
+      "is": [],
+      "methods": [
+        {
+          "annotations": [],
+          "body": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": {
+                "annotations": [],
+                "value": "application/json"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "application/json",
+              "pattern": null,
+              "required": true,
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"application/json\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "xml": null
+            }
+          ],
+          "description": null,
+          "displayName": {
+            "annotations": [],
+            "value": "post"
+          },
+          "headers": [],
+          "is": [
+            {
+              "name": "parametrized",
+              "structuredValue": {
+                "isScalar": false,
+                "properties": [
+                  {
+                    "isArray": false,
+                    "name": "model",
+                    "value": {
+                      "isScalar": true,
+                      "properties": [],
+                      "value": "string"
+                    },
+                    "values": []
+                  }
+                ],
+                "value": null
+              },
+              "trait": {
+                "name": "parametrized",
+                "usage": null
+              }
+            }
+          ],
+          "method": "post",
+          "protocols": [],
+          "queryParameters": [],
+          "queryString": null,
+          "responses": [],
+          "securedBy": []
+        }
+      ],
+      "relativeUri": {
+        "value": "/resource"
+      },
+      "resourcePath": "/resource",
+      "resources": [],
+      "securedBy": [],
+      "type": null,
+      "uriParameters": []
+    }
+  ],
   "schemas": [],
   "securedBy": [],
   "securitySchemes": [],
@@ -16,7 +98,12 @@
     "annotations": [],
     "value": "extension test"
   },
-  "traits": [],
+  "traits": [
+    {
+      "name": "parametrized",
+      "usage": null
+    }
+  ],
   "types": [],
   "uses": [],
   "version": {

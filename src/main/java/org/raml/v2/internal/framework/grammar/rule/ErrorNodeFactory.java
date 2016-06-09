@@ -217,9 +217,9 @@ public class ErrorNodeFactory
         return new ErrorNode("Reference to nonexistent resource type '" + resourceTypeReference.getRefName() + "'");
     }
 
-    public static ErrorNode createInvalidTypeExpressionSyntax(String message, int location)
+    public static ErrorNode createInvalidTypeExpressionSyntax(String message, String expression, int location)
     {
-        return new ErrorNode("Invalid type expression syntax. Caused by : " + message + " at character : " + location);
+        return new ErrorNode("Invalid type expression syntax: \"" + expression + "\". Caused by : " + message + " at character : " + location);
     }
 
     public static ErrorNode createInvalidOverlayNode(Node overlayNode)

@@ -45,7 +45,7 @@ public class TypeExpressionReferenceFactory implements NodeFactory
         }
         catch (TypeExpressionParsingException e)
         {
-            return ErrorNodeFactory.createInvalidTypeExpressionSyntax(e.getMessage(), e.getLocation());
+            return ErrorNodeFactory.createInvalidTypeExpressionSyntax(e.getMessage(), expression, e.getLocation());
         }
     }
 

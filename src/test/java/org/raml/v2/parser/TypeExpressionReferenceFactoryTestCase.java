@@ -151,37 +151,45 @@ public class TypeExpressionReferenceFactoryTestCase
     @Test
     public void UnbalancedParenthesis()
     {
-        final StringNodeImpl expression = new StringNodeImpl("(user | cat[]");
+        String invalidExpression = "(user | cat[]";
+        final StringNodeImpl expression = new StringNodeImpl(invalidExpression);
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new TreeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax. Caused by : Parenthesis are not correctly balanced. at character : 13\" (Start: -1 , End: -1)"));
+        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax: \"" + invalidExpression +
+                                        "\". Caused by : Parenthesis are not correctly balanced. at character : 13\" (Start: -1 , End: -1)"));
     }
 
 
     @Test
     public void BadArrayExpression()
     {
-        final StringNodeImpl expression = new StringNodeImpl("[]cat");
+        String invalidExpression = "[]cat";
+        final StringNodeImpl expression = new StringNodeImpl(invalidExpression);
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new TreeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax. Caused by : Expecting a type expression before [. at character : 0\" (Start: -1 , End: -1)"));
+        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax: \"" + invalidExpression +
+                                        "\". Caused by : Expecting a type expression before [. at character : 0\" (Start: -1 , End: -1)"));
     }
 
     @Test
     public void BadArrayExpression2()
     {
-        final StringNodeImpl expression = new StringNodeImpl("cat[]cat");
+        String invalidExpression = "cat[]cat";
+        final StringNodeImpl expression = new StringNodeImpl(invalidExpression);
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new TreeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax. Caused by : Invalid array type expression. at character : 8\" (Start: -1 , End: -1)"));
+        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax: \"" + invalidExpression +
+                                        "\". Caused by : Invalid array type expression. at character : 8\" (Start: -1 , End: -1)"));
     }
 
     @Test
     public void BadUnionType()
     {
-        final StringNodeImpl expression = new StringNodeImpl("a | ");
+        String invalidExpression = "a |";
+        final StringNodeImpl expression = new StringNodeImpl(invalidExpression);
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new TreeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax. Caused by : Invalid union type expression. at character : 3\" (Start: -1 , End: -1)"));
+        Assert.assertThat(dump, equalTo("ErrorNode: \"Invalid type expression syntax: \"" + invalidExpression +
+                                        "\". Caused by : Invalid union type expression. at character : 3\" (Start: -1 , End: -1)"));
     }
 }

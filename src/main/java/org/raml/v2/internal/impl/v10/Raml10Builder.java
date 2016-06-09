@@ -124,8 +124,13 @@ public class Raml10Builder
         if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
         {
             new ExtensionsMerger(fragment == Overlay).merge(baseNode, extensionNode);
-            List<Phase> phases = createPhases(resourceLoader, getFragment(baseContent));
-            baseNode = runPhases(baseNode, phases, Integer.MAX_VALUE);
+            if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
+            {
+                // verify resulting raml grammar
+                Raml10Grammar raml10Grammar = new Raml10Grammar();
+                GrammarPhase grammarPhase = new GrammarPhase(getFragment(baseContent).getRule(raml10Grammar));
+                baseNode = grammarPhase.apply(baseNode);
+            }
         }
         return baseNode;
     }
