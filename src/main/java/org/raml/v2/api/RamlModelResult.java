@@ -23,12 +23,14 @@ import javax.annotation.Nullable;
 
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
+import org.raml.v2.api.model.v10.api.Library;
+import org.raml.v2.internal.impl.v10.RamlFragment;
 
 /**
- * Represents the result of parsing a top level RAML descriptor.
+ * Represents the result of parsing a top level RAML descriptor or library.
  *
- * If there are no parsing errors, the <code>Api</code> model matching
- * the RAML version is available.
+ * If there are no parsing errors and the parsed RAML was a top level descriptor,
+ * the <code>Api</code> model matching the RAML version is available.
  *
  * If there are parsing errors, the list of errors is available.
  */
@@ -38,6 +40,7 @@ public class RamlModelResult
     private List<ValidationResult> validationResults = new ArrayList<>();
     private org.raml.v2.api.model.v10.api.Api apiV10;
     private org.raml.v2.api.model.v08.api.Api apiV08;
+    private Library library;
 
     RamlModelResult(List<ValidationResult> validationResults)
     {
@@ -66,6 +69,16 @@ public class RamlModelResult
         this.apiV08 = apiV08;
     }
 
+    RamlModelResult(Library library)
+    {
+        if (library == null)
+        {
+            throw new IllegalArgumentException("library cannot be null");
+        }
+        this.library = library;
+    }
+
+
     /**
      * @return true if any parsing error occurred
      */
@@ -74,13 +87,15 @@ public class RamlModelResult
         return !validationResults.isEmpty();
     }
 
+
     /**
      * @return true if a RAML 1.0 descriptor was parsed and there were no errors
      */
     public boolean isVersion10()
     {
-        return apiV10 != null;
+        return !hasErrors() && apiV08 == null;
     }
+
 
     /**
      * @return true if a RAML 0.8 descriptor was parsed and there were no errors
@@ -89,6 +104,7 @@ public class RamlModelResult
     {
         return apiV08 != null;
     }
+
 
     /**
      * @return the list of validation results if there were parsing errors
@@ -100,15 +116,17 @@ public class RamlModelResult
         return validationResults;
     }
 
+
     /**
      * @return the RAML Api v1.0 parsed without errors
-     *   or null if there were errors or the RAML version is not 1.0
+     *   or null if there were errors or the RAML version is not 1.0 or is not a top level RAML
      */
     @Nullable
     public Api getApiV10()
     {
         return apiV10;
     }
+
 
     /**
      * @return the RAML Api v0.8 parsed without errors
@@ -118,5 +136,39 @@ public class RamlModelResult
     public org.raml.v2.api.model.v08.api.Api getApiV08()
     {
         return apiV08;
+    }
+
+
+    /**
+     * @return the RAML Library v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a Library fragment
+     */
+    @Nullable
+    public Library getLibrary()
+    {
+        return library;
+    }
+
+
+    /**
+     * @return the RAML 1.0 fragment identifier or <code>null</code>
+     *   if the RAML has errors or is version 0.8
+     */
+    @Nullable
+    public RamlFragment getFragment()
+    {
+        if (hasErrors() || isVersion08())
+        {
+            return null;
+        }
+        if (getApiV10() != null)
+        {
+            return RamlFragment.Default;
+        }
+        if (getLibrary() != null)
+        {
+            return RamlFragment.Library;
+        }
+        throw new IllegalStateException("Fragment not yet supported");
     }
 }

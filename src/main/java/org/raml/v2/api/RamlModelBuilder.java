@@ -15,12 +15,22 @@
  */
 package org.raml.v2.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v10.api.Library;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.internal.framework.model.DefaultModelBindingConfiguration;
 import org.raml.v2.internal.framework.model.ModelBindingConfiguration;
@@ -38,14 +48,6 @@ import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFacto
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.v10.RamlFragment;
 import org.raml.v2.internal.utils.StreamUtils;
-
-import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Entry point class to parse top level RAML descriptors.
@@ -109,25 +111,24 @@ public class RamlModelBuilder
             return buildApi(ramlLocation);
         }
         Node ramlNode = builder.build(content, resourceLoader, ramlLocation);
-        if (!(ramlNode instanceof RamlDocumentNode))
-        {
-            try
-            {
-                RamlHeader ramlHeader = RamlHeader.parse(content);
-                if (ramlHeader.getVersion() == RamlVersion.RAML_10 && ramlHeader.getFragment() != RamlFragment.Default)
-                {
-                    return generateRamlApiResult("Raml file is not a root document.");
-                }
-            }
-            catch (RamlHeader.InvalidHeaderException e)
-            {
-                // ignore, already handled by builder
-            }
-        }
-        return generateRamlApiResult(ramlNode);
+        return generateRamlApiResult(ramlNode, getFragment(content));
     }
 
-    private RamlModelResult generateRamlApiResult(Node ramlNode)
+    private RamlFragment getFragment(String content)
+    {
+        try
+        {
+            RamlHeader ramlHeader = RamlHeader.parse(content);
+            return ramlHeader.getFragment();
+        }
+        catch (RamlHeader.InvalidHeaderException e)
+        {
+            // ignore, already handled by builder
+        }
+        return null;
+    }
+
+    private RamlModelResult generateRamlApiResult(Node ramlNode, RamlFragment fragment)
     {
         List<ValidationResult> validationResults = new ArrayList<>();
         if (ramlNode instanceof ErrorNode)
@@ -143,7 +144,7 @@ public class RamlModelBuilder
             }
             if (validationResults.isEmpty())
             {
-                return wrapTree((RamlDocumentNode) ramlNode);
+                return wrapTree(ramlNode, fragment);
             }
         }
         return new RamlModelResult(validationResults);
@@ -156,18 +157,24 @@ public class RamlModelBuilder
         return new RamlModelResult(validationResults);
     }
 
-    private RamlModelResult wrapTree(RamlDocumentNode ramlNode)
+    private RamlModelResult wrapTree(Node ramlNode, RamlFragment fragment)
     {
-        if (ramlNode.getVersion() == RamlVersion.RAML_10)
+        if (ramlNode instanceof RamlDocumentNode && ((RamlDocumentNode) ramlNode).getVersion() == RamlVersion.RAML_08)
         {
-            org.raml.v2.api.model.v10.api.Api apiV10 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v10.api.Api.class, new Api(ramlNode), createV10Binding());
-            return new RamlModelResult(apiV10);
-        }
-        else
-        {
-            org.raml.v2.api.model.v08.api.Api apiV08 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v08.api.Api.class, new Api(ramlNode), createV08Binding());
+            org.raml.v2.api.model.v08.api.Api apiV08 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v08.api.Api.class, new Api((RamlDocumentNode) ramlNode), createV08Binding());
             return new RamlModelResult(apiV08);
         }
+        if (ramlNode instanceof RamlDocumentNode)
+        {
+            org.raml.v2.api.model.v10.api.Api apiV10 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v10.api.Api.class, new Api((RamlDocumentNode) ramlNode), createV10Binding());
+            return new RamlModelResult(apiV10);
+        }
+        if (fragment == RamlFragment.Library)
+        {
+            Library library = ModelProxyBuilder.createModel(Library.class, new DefaultModelElement(ramlNode), createV10Binding());
+            return new RamlModelResult(library);
+        }
+        throw new IllegalStateException("Invalid ramlNode type (" + ramlNode.getClass().getSimpleName() + ") or fragment (" + fragment + ") combination");
     }
 
     private ModelBindingConfiguration createV10Binding()
