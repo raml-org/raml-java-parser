@@ -1,0 +1,26 @@
+{
+  "annotationTypes": [],
+  "annotations": [],
+  "baseUri": null,
+  "baseUriParameters": [],
+  "documentation": [],
+  "mediaType": [],
+  "protocols": [],
+  "ramlVersion": "1.0",
+  "resourceTypes": [],
+  "resources": [],
+  "schemas": [],
+  "securedBy": [],
+  "securitySchemes": [],
+  "title": {
+    "annotations": [],
+    "value": "extension test"
+  },
+  "traits": [],
+  "types": [],
+  "uses": [],
+  "version": {
+    "annotations": [],
+    "value": "v1"
+  }
+}

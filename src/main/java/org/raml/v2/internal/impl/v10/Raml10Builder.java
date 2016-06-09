@@ -48,6 +48,7 @@ import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
+import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.v2.internal.utils.TreeDumper;
 
@@ -111,7 +112,12 @@ public class Raml10Builder
     private Node applyExtension(Node extensionNode, ResourceLoader resourceLoader, String resourceLocation, RamlFragment fragment) throws IOException
     {
         StringNode baseRef = (StringNode) extensionNode.get("extends");
-        InputStream baseStream = resourceLoader.fetchResource(baseRef.getValue());
+        String baseLocation = ResourcePathUtils.toAbsoluteLocation(resourceLocation, baseRef.getValue());
+        InputStream baseStream = resourceLoader.fetchResource(baseLocation);
+        if (baseStream == null)
+        {
+            return ErrorNodeFactory.createBaseRamlNotFound(baseRef.getValue());
+        }
         String baseContent = StreamUtils.toString(baseStream);
         Node baseNode = new RamlBuilder().build(baseContent, resourceLoader, resourceLocation);
 

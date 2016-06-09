@@ -2,7 +2,7 @@ RamlDocumentNode (Start: 11 , End: 2059, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 29, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
         OverlayableObjectNodeImpl (Start: 18 , End: 29, On: input.raml, Source: SYStringNode)
-            KeyValueNodeImpl (Start: -1 , End: -1)
+            KeyValueNodeImpl (Start: 11 , End: 29, On: input.raml)
                 StringNodeImpl: "value" (Start: -1 , End: -1)
                 OverlayableStringNode: "Dropbox API" (Start: -1 , End: -1)
     KeyValueNodeImpl (Start: 30 , End: 40, On: input.raml)
@@ -26,7 +26,7 @@ RamlDocumentNode (Start: 11 , End: 2059, On: input.raml, Source: SYObjectNode)
                     KeyValueNodeImpl (Start: 124 , End: 215, On: input.raml)
                         SYStringNode: "description" (Start: 124 , End: 135, On: input.raml)
                         OverlayableObjectNodeImpl (Start: 137 , End: 215, On: input.raml, Source: SYStringNode)
-                            KeyValueNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: 124 , End: 215, On: input.raml)
                                 StringNodeImpl: "value" (Start: -1 , End: -1)
                                 OverlayableStringNode: "Dropbox supports OAuth 2.0 for authenticating all API requests.
 " (Start: -1 , End: -1)
@@ -45,7 +45,7 @@ RamlDocumentNode (Start: 11 , End: 2059, On: input.raml, Source: SYObjectNode)
                                             KeyValueNodeImpl (Start: 332 , End: 495, On: input.raml)
                                                 SYStringNode: "description" (Start: 332 , End: 343, On: input.raml)
                                                 OverlayableObjectNodeImpl (Start: 345 , End: 495, On: input.raml, Source: SYStringNode)
-                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: 332 , End: 495, On: input.raml)
                                                         StringNodeImpl: "value" (Start: -1 , End: -1)
                                                         OverlayableStringNode: "Used to send a valid OAuth 2 access token. Do not use
 with the "access_token" query string parameter.
@@ -68,7 +68,7 @@ with the "access_token" query string parameter.
                                             KeyValueNodeImpl (Start: 607 , End: 763, On: input.raml)
                                                 SYStringNode: "description" (Start: 607 , End: 618, On: input.raml)
                                                 OverlayableObjectNodeImpl (Start: 620 , End: 763, On: input.raml, Source: SYStringNode)
-                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: 607 , End: 763, On: input.raml)
                                                         StringNodeImpl: "value" (Start: -1 , End: -1)
                                                         OverlayableStringNode: "Used to send a valid OAuth 2 access token. Do not use together with
 the "Authorization" header
@@ -91,7 +91,7 @@ the "Authorization" header
                                             KeyValueNodeImpl (Start: 860 , End: 1090, On: input.raml)
                                                 SYStringNode: "description" (Start: 860 , End: 871, On: input.raml)
                                                 OverlayableObjectNodeImpl (Start: 873 , End: 1090, On: input.raml, Source: SYStringNode)
-                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: 860 , End: 1090, On: input.raml)
                                                         StringNodeImpl: "value" (Start: -1 , End: -1)
                                                         OverlayableStringNode: "Bad or expired token. This can happen if the user or Dropbox
 revoked or expired an access token. To fix, you should re-
@@ -109,7 +109,7 @@ authenticate the user.
                                             KeyValueNodeImpl (Start: 1131 , End: 1326, On: input.raml)
                                                 SYStringNode: "description" (Start: 1131 , End: 1142, On: input.raml)
                                                 OverlayableObjectNodeImpl (Start: 1144 , End: 1326, On: input.raml, Source: SYStringNode)
-                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: 1131 , End: 1326, On: input.raml)
                                                         StringNodeImpl: "value" (Start: -1 , End: -1)
                                                         OverlayableStringNode: "Bad OAuth request (wrong consumer key, bad nonce, expired
 timestamp...). Unfortunately, re-authenticating the user won't help here.
@@ -158,7 +158,7 @@ timestamp...). Unfortunately, re-authenticating the user won't help here.
                     KeyValueNodeImpl (Start: 1572 , End: 1689, On: input.raml)
                         SYStringNode: "description" (Start: 1572 , End: 1583, On: input.raml)
                         OverlayableObjectNodeImpl (Start: 1585 , End: 1689, On: input.raml, Source: SYStringNode)
-                            KeyValueNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: 1572 , End: 1689, On: input.raml)
                                 StringNodeImpl: "value" (Start: -1 , End: -1)
                                 OverlayableStringNode: "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
 " (Start: -1 , End: -1)

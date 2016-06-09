@@ -1,6 +1,6 @@
 {
     "title": {
-        "value": "master"
+        "value": "overlay"
     },
     "baseUri": {
         "value": "http://api.com/master"

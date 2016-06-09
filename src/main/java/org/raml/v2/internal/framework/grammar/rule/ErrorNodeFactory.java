@@ -235,4 +235,9 @@ public class ErrorNodeFactory
         }
         return new ErrorNode("Invalid overlay node. Cannot override node: " + label);
     }
+
+    public static Node createBaseRamlNotFound(String location)
+    {
+        return new ErrorNode("Base RAML not found: " + location);
+    }
 }

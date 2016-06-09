@@ -53,7 +53,13 @@ public class OverlayableSimpleTypeFactory implements NodeFactory
         {
             ObjectNodeImpl result = new OverlayableObjectNodeImpl();
             OverlayableStringNode overlayableStringNode = new OverlayableStringNode(((SimpleTypeNode) currentNode).getLiteralValue());
-            result.addChild(new KeyValueNodeImpl(new StringNodeImpl("value"), overlayableStringNode));
+            KeyValueNodeImpl keyValueNode = new KeyValueNodeImpl(new StringNodeImpl("value"), overlayableStringNode);
+            if (currentNode.getParent() != null)
+            {
+                keyValueNode.setStartPosition(currentNode.getParent().getStartPosition());
+                keyValueNode.setEndPosition(currentNode.getParent().getEndPosition());
+            }
+            result.addChild(keyValueNode);
             return result;
         }
         else
