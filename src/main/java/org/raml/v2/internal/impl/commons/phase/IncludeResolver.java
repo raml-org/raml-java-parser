@@ -28,7 +28,7 @@ import org.raml.v2.internal.framework.nodes.snakeyaml.RamlNodeParser;
 import org.raml.v2.internal.framework.nodes.snakeyaml.SYIncludeNode;
 import org.raml.v2.internal.framework.phase.Transformer;
 import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentNode;
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 

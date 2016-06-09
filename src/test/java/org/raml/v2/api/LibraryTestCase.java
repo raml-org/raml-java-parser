@@ -27,7 +27,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.raml.v2.api.model.v10.api.Library;
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.api.model.v10.RamlFragment;
 
 public class LibraryTestCase
 {

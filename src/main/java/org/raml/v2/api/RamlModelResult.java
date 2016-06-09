@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.api.Library;
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.api.model.v10.RamlFragment;
 
 /**
  * Represents the result of parsing a top level RAML descriptor or library.

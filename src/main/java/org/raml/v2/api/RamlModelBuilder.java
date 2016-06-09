@@ -46,7 +46,7 @@ import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
 import org.raml.v2.internal.impl.commons.model.StringType;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.utils.StreamUtils;
 
 /**

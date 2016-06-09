@@ -19,7 +19,7 @@ import org.raml.v2.internal.framework.nodes.AbstractRamlNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.NodeType;
 import org.raml.v2.internal.framework.nodes.ObjectNode;
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.utils.NodeSelector;
 import org.raml.v2.internal.utils.NodeUtils;

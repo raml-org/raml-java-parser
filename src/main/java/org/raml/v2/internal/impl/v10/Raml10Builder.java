@@ -17,8 +17,8 @@ package org.raml.v2.internal.impl.v10;
 
 import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
 import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
-import static org.raml.v2.internal.impl.v10.RamlFragment.Extension;
-import static org.raml.v2.internal.impl.v10.RamlFragment.Overlay;
+import static org.raml.v2.api.model.v10.RamlFragment.Extension;
+import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
@@ -127,19 +129,18 @@ public class Raml10Builder
             if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
             {
                 // verify resulting raml grammar
-                Raml10Grammar raml10Grammar = new Raml10Grammar();
-                GrammarPhase grammarPhase = new GrammarPhase(getFragment(baseContent).getRule(raml10Grammar));
+                GrammarPhase grammarPhase = new GrammarPhase(getFragmentRule(baseContent));
                 baseNode = grammarPhase.apply(baseNode);
             }
         }
         return baseNode;
     }
 
-    private RamlFragment getFragment(String content)
+    private Rule getFragmentRule(String content)
     {
         try
         {
-            return RamlHeader.parse(content).getFragment();
+            return RamlHeader.parse(content).getRule();
         }
         catch (RamlHeader.InvalidHeaderException e)
         {
@@ -156,9 +157,8 @@ public class Raml10Builder
         final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer(resourceLoader));
 
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem
-        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final GrammarPhase grammarPhase = new GrammarPhase(RamlHeader.getFragmentRule(fragment));
 
-        final GrammarPhase grammarPhase = new GrammarPhase(fragment.getRule(raml10Grammar));
         // Detect invalid references. Library resourceTypes and Traits. This point the nodes are good enough for Editors.
 
         // sugar
@@ -168,7 +168,7 @@ public class Raml10Builder
         final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformer());
 
         // Applies resourceTypes and Traits Library
-        final TransformationPhase resourcePhase = new TransformationPhase(new ResourceTypesTraitsTransformer(raml10Grammar));
+        final TransformationPhase resourcePhase = new TransformationPhase(new ResourceTypesTraitsTransformer(new Raml10Grammar()));
 
         // Run grammar again to re-validate tree
 

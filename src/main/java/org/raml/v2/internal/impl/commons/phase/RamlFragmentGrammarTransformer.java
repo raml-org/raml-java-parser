@@ -15,16 +15,16 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import static org.raml.v2.internal.utils.PhaseUtils.applyPhases;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.phase.TransformationPhase;
 import org.raml.v2.internal.framework.phase.Transformer;
+import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentNode;
-import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
-
-import static org.raml.v2.internal.utils.PhaseUtils.applyPhases;
 
 public class RamlFragmentGrammarTransformer implements Transformer
 {
@@ -46,7 +46,7 @@ public class RamlFragmentGrammarTransformer implements Transformer
     public Node transform(Node node)
     {
         final RamlTypedFragmentNode ramlTypedFragmentNode = (RamlTypedFragmentNode) node;
-        final Rule rule = ramlTypedFragmentNode.getFragment().getRule(new Raml10Grammar());
+        final Rule rule = RamlHeader.getFragmentRule(ramlTypedFragmentNode.getFragment());
         node = rule.apply(node);
         final Node apply = applyPhases(node, new TransformationPhase(new LibraryLinkingTransformation(resourceLoader)));
         if (apply instanceof RamlTypedFragmentNode)

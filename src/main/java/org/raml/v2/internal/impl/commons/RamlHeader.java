@@ -20,7 +20,12 @@ import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 
 import java.util.StringTokenizer;
 
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import javax.annotation.Nullable;
+
+import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.internal.framework.grammar.rule.Rule;
+import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 
 public class RamlHeader
 {
@@ -92,11 +97,52 @@ public class RamlHeader
         return version;
     }
 
+    @Nullable
     public RamlFragment getFragment()
     {
         return fragment;
     }
 
+    @Nullable
+    public Rule getRule()
+    {
+        if (getVersion() == RamlVersion.RAML_08)
+        {
+            return new Raml08Grammar().raml();
+        }
+        return getFragmentRule(fragment);
+    }
+
+    @Nullable
+    public static Rule getFragmentRule(RamlFragment fragment)
+    {
+        Raml10Grammar grammar = new Raml10Grammar();
+        switch (fragment)
+        {
+        case DocumentationItem:
+            return grammar.documentation()
+                          .with(0, grammar.usesField());
+        case DataType:
+            return grammar.explicitType().with(0, grammar.usesField());
+        case NamedExample:
+            return null;
+        case ResourceType:
+            return grammar.resourceType().with(0, grammar.usesField());
+        case Trait:
+            return grammar.trait().with(0, grammar.usesField());
+        case AnnotationTypeDeclaration:
+            return grammar.explicitType().with(0, grammar.usesField());
+        case Library:
+            return grammar.libraryValue();
+        case Overlay:
+        case Extension:
+            return grammar.extension();
+        case Default:
+            return grammar.raml();
+        default:
+            return null;
+        }
+    }
 
     public static class InvalidHeaderException extends Exception
     {

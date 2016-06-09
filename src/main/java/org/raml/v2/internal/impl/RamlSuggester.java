@@ -41,9 +41,6 @@ import org.raml.v2.internal.framework.suggester.RamlParsingContextType;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 import org.raml.v2.internal.framework.suggester.Suggestions;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.RamlVersion;
-import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
-import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.utils.Inflector;
 import org.raml.v2.internal.utils.NodeUtils;
 
@@ -512,14 +509,7 @@ public class RamlSuggester
         try
         {
             RamlHeader ramlHeader = RamlHeader.parse(stringContent);
-            if (RamlVersion.RAML_08 == ramlHeader.getVersion())
-            {
-                return new Raml08Grammar().raml();
-            }
-            if (ramlHeader.getFragment() != null)
-            {
-                return ramlHeader.getFragment().getRule(new Raml10Grammar());
-            }
+            return ramlHeader.getRule();
         }
         catch (RamlHeader.InvalidHeaderException e)
         {

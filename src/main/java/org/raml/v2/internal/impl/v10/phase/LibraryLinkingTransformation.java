@@ -21,7 +21,7 @@ import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.phase.Transformer;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
-import org.raml.v2.internal.impl.v10.RamlFragment;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
