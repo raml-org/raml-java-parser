@@ -1,0 +1,100 @@
+{
+  "title": {
+    "value": "extension test"
+  },
+  "version": {
+    "value": "v1"
+  },
+  "types": {
+    "User": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "displayName": {
+            "value": "name"
+          }
+        }
+      },
+      "type": "object",
+      "displayName": {
+        "value": "User"
+      }
+    }
+  },
+  "traits": {
+    "parametrized": {
+      "body": {
+        "application/json": {
+          "type": "<<model>>"
+        }
+      }
+    },
+    "dynamic": {
+      "body": {
+        "text/xml": {
+          "type": "<<model>>"
+        }
+      }
+    }
+  },
+  "resources": [
+    {
+      "relativeUri": "/resource",
+      "displayName": {
+        "value": "/resource"
+      },
+      "methods": [
+        {
+          "method": "post",
+          "is": [
+            {
+              "parametrized": {
+                "model": "User"
+              }
+            }
+          ],
+          "displayName": {
+            "value": "post"
+          },
+          "body": {
+            "application/json": {
+              "type": "User",
+              "displayName": {
+                "value": "application/json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "relativeUri": "/extended",
+      "displayName": {
+        "value": "/extended"
+      },
+      "methods": [
+        {
+          "method": "post",
+          "is": [
+            {
+              "dynamic": {
+                "model": "User"
+              }
+            }
+          ],
+          "displayName": {
+            "value": "post"
+          },
+          "body": {
+            "text/xml": {
+              "type": "User",
+              "displayName": {
+                "value": "text/xml"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

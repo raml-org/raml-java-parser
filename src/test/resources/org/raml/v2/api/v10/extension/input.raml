@@ -1,3 +1,13 @@
 #%RAML 1.0 Extension
 extends: master.raml
 title: extension test
+
+traits:
+    dynamic:
+        body:
+            text/xml:
+                type: <<model>>
+
+/extended:
+    post:
+        is: { dynamic: { model: User } }

@@ -15,10 +15,10 @@
  */
 package org.raml.v2.internal.impl.v10;
 
-import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
-import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
 import static org.raml.v2.api.model.v10.RamlFragment.Extension;
 import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
+import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
+import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +28,6 @@ import java.util.List;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.framework.grammar.rule.ErrorNodeFactory;
-import org.raml.v2.internal.framework.grammar.rule.Rule;
 import org.raml.v2.internal.framework.nodes.ErrorNode;
 import org.raml.v2.internal.framework.nodes.Node;
 import org.raml.v2.internal.framework.nodes.StringNode;
@@ -128,19 +127,19 @@ public class Raml10Builder
             new ExtensionsMerger(fragment == Overlay).merge(baseNode, extensionNode);
             if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
             {
-                // verify resulting raml grammar
-                GrammarPhase grammarPhase = new GrammarPhase(getFragmentRule(baseContent));
-                baseNode = grammarPhase.apply(baseNode);
+                // run all phases on merged document
+                List<Phase> phases = createPhases(resourceLoader, getFragment(baseContent));
+                baseNode = runPhases(baseNode, phases, Integer.MAX_VALUE);
             }
         }
         return baseNode;
     }
 
-    private Rule getFragmentRule(String content)
+    private RamlFragment getFragment(String content)
     {
         try
         {
-            return RamlHeader.parse(content).getRule();
+            return RamlHeader.parse(content).getFragment();
         }
         catch (RamlHeader.InvalidHeaderException e)
         {

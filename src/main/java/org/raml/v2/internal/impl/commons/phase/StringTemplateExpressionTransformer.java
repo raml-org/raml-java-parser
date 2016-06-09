@@ -44,6 +44,10 @@ public class StringTemplateExpressionTransformer implements Transformer
     @Override
     public Node transform(Node node)
     {
+        if (node instanceof StringTemplateNode)
+        {
+            return node;
+        }
         final String value = ((StringNode) node).getValue();
         final StringTemplateNode stringTemplateNode = new StringTemplateNode(value);
         final Matcher templateMatcher = templatePattern.matcher(value);

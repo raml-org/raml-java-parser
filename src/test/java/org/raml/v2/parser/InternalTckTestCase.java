@@ -67,7 +67,9 @@ public class InternalTckTestCase extends TestDataProvider
     @Parameterized.Parameters(name = "{2}")
     public static Collection<Object[]> data() throws URISyntaxException
     {
-        return getData(InternalTckTestCase.class.getResource("").toURI(), INPUT_FILE_NAME, OUTPUT_FILE_NAME);
+        Collection<Object[]> data = getData(InternalTckTestCase.class.getResource("").toURI(), INPUT_FILE_NAME, OUTPUT_FILE_NAME);
+        data.addAll(getData(InternalTckTestCase.class.getResource("../api").toURI(), INPUT_FILE_NAME, OUTPUT_FILE_NAME));
+        return data;
     }
 
 }

@@ -2,6 +2,11 @@
 title: master test
 version: v1
 
+types:
+    User:
+        properties:
+            name: string
+
 traits:
     parametrized:
         body:
@@ -10,4 +15,4 @@ traits:
 
 /resource:
     post:
-        is: { parametrized: { model: string } }
+        is: { parametrized: { model: User } }
