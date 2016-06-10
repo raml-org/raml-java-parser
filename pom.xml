@@ -10,6 +10,12 @@
         <module>raml-parser-2</module>
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <snakeyaml.version>1.15</snakeyaml.version>
+        <slf4j.version>1.7.14</slf4j.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -73,6 +79,7 @@
                 <version>0.5.2</version>
                 <configuration>
                     <configFile>${project.basedir}/../eclipse_formatter.xml</configFile>
+                    <lineEnding>KEEP</lineEnding>
                 </configuration>
                 <executions>
                     <execution>
