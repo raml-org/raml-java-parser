@@ -18,6 +18,7 @@ package org.raml.v2.parser;
 
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -25,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -32,6 +34,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.raml.v2.dataprovider.TestDataProvider;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.emitter.tck.TckEmitter;
@@ -59,6 +62,8 @@ public class InternalTckTestCase extends TestDataProvider
         final RamlBuilder builder = new RamlBuilder();
         final Node raml = builder.build(input);
         assertThat(raml, notNullValue());
+        List<ErrorNode> errorNodes = raml.findDescendantsWith(ErrorNode.class);
+        assertThat(errorNodes, hasSize(0));
         dump = new TckEmitter().dump(raml);
         expected = IOUtils.toString(new FileInputStream(this.expectedOutput));
         Assert.assertTrue(jsonEquals(dump, expected));

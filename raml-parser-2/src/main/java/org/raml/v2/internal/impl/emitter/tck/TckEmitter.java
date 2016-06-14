@@ -19,6 +19,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -84,6 +86,11 @@ public class TckEmitter
         {
             dumpString((SimpleTypeNode) node, dump);
         }
+        else if (node instanceof TypeExpressionNode)
+        {
+            // ignore
+            return;
+        }
         else if (node instanceof ErrorNode)
         {
             throw new RuntimeException("Error node : " + ((ErrorNode) node).getErrorMessage());
@@ -130,6 +137,11 @@ public class TckEmitter
 
         for (Node node : objectNode.getChildren())
         {
+            if (node instanceof LibraryRefNode)
+            {
+                // ignore
+                continue;
+            }
             if (!(node instanceof KeyValueNode))
             {
                 throw new RuntimeException("Expecting KeyValueNode got " + node + " on " + objectNode);
