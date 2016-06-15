@@ -249,6 +249,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
             maxLength.setValue(numberTypeDefinition.getMaximum());
             content.getFacets().add(maxLength);
         }
+        simpleType.setContent(content);
         return simpleType;
     }
 
