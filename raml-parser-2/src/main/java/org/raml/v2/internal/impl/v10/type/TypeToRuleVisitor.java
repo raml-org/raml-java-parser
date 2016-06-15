@@ -160,11 +160,19 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
                 final KeyValueRule keyValue;
                 final Rule value = generateRule(propertyValue.getValueType());
                 // If additional properties is set to false the pattern properties are ignored
-                if (propertyValue.isPatternProperty() && additionalProperties)
+                if (propertyValue.isPatternProperty())
                 {
-                    keyValue = patternProperty(propertyValue.getPatternRegex(), value);
-                    // We set to false as it should only validate the ones that matches the regex
-                    objectRule.additionalProperties(false);
+                    if (additionalProperties)
+                    {
+                        keyValue = patternProperty(propertyValue.getPatternRegex(), value);
+                        // We set to false as it should only validate the ones that matches the regex
+                        objectRule.additionalProperties(false);
+                        objectRule.with(keyValue);
+                    }
+                    else
+                    {
+                        // Ignoring pattern properties as additional properties is false
+                    }
                 }
                 else
                 {
@@ -174,8 +182,8 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
                     {
                         keyValue.required();
                     }
+                    objectRule.with(keyValue);
                 }
-                objectRule.with(keyValue);
             }
 
             final AllOfRule allOfRule = new AllOfRule(objectRule);

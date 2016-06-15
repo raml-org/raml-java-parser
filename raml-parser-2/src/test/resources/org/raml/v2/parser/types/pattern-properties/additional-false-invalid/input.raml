@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: API with additional properties in example
+types:
+  Person:
+    properties:
+      name:
+        type: string
+      age:
+        type: number
+        required: false
+      /^note\d+$/:
+        type: string
+    additionalProperties: false
+    example:
+     name: Bob
+     age: 15
+     note3: lala
