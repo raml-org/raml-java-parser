@@ -1,0 +1,13 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.w3.org/2001/XMLSchema">
+    <element name="root" type="root"/>
+    <complexType name="root">
+        <choice>
+            <element name="age">
+                <simpleType>
+                    <restriction base="double"/>
+                </simpleType>
+            </element>
+            <any maxOccurs="unbounded" minOccurs="0"/>
+        </choice>
+    </complexType>
+</schema>
