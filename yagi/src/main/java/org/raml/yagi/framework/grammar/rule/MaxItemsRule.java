@@ -15,28 +15,28 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
-import org.raml.yagi.framework.suggester.Suggestion;
-
-import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.Suggestion;
+
 public class MaxItemsRule extends Rule
 {
-    private int maxLength;
+    private int maxItems;
 
-    public MaxItemsRule(int maxLength)
+    public MaxItemsRule(int maxItems)
     {
-        this.maxLength = maxLength;
+        this.maxItems = maxItems;
     }
 
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node.getChildren().size() < maxLength;
+        return node.getChildren().size() <= maxItems;
     }
 
     @Nonnull
@@ -45,18 +45,18 @@ public class MaxItemsRule extends Rule
     {
         if (matches(node))
         {
-            return createNodeUsingFactory(node, ((StringNode) node).getValue());
+            return createNodeUsingFactory(node);
         }
         else
         {
-            return ErrorNodeFactory.createInvalidMaxItems(maxLength);
+            return ErrorNodeFactory.createInvalidMaxItems(maxItems);
         }
     }
 
     @Override
     public String getDescription()
     {
-        return "Max amount of items " + maxLength;
+        return "Max amount of items " + maxItems;
     }
 
     @Nonnull

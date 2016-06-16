@@ -15,8 +15,8 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
+import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.RamlParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
@@ -26,17 +26,17 @@ import java.util.List;
 
 public class MinItemsRule extends Rule
 {
-    private int minLength;
+    private int minItems;
 
-    public MinItemsRule(int minLength)
+    public MinItemsRule(int minItems)
     {
-        this.minLength = minLength;
+        this.minItems = minItems;
     }
 
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node.getChildren().size() > minLength;
+        return (node instanceof ArrayNode) && node.getChildren().size() >= minItems;
     }
 
     @Nonnull
@@ -45,18 +45,18 @@ public class MinItemsRule extends Rule
     {
         if (matches(node))
         {
-            return createNodeUsingFactory(node, ((StringNode) node).getValue());
+            return createNodeUsingFactory(node);
         }
         else
         {
-            return ErrorNodeFactory.createInvalidMinItems(minLength);
+            return ErrorNodeFactory.createInvalidMinItems(minItems);
         }
     }
 
     @Override
     public String getDescription()
     {
-        return "Min amount of items " + minLength;
+        return "Min amount of items " + minItems;
     }
 
     @Nonnull
