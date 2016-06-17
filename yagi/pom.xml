@@ -10,19 +10,6 @@
     <name>Yaml Grammar</name>
     <description>Grammar framework for yaml files</description>
 
-    <developers>
-        <developer>
-            <id>svacas</id>
-        </developer>
-    </developers>
-    <url>https://github.com/raml-org/raml-java-parser-2</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-
     <dependencies>
 
         <dependency>

@@ -1,8 +1,8 @@
-# Java RAML 1.0 Parser <sup>(alpha)</sup>
+# Java RAML 1.0 Parser <sup>(beta)</sup>
 
 See http://raml.org for more information about RAML.
 
-This parser is in alpha state of development.
+This parser is in beta state of development.
 
 
 ## Build

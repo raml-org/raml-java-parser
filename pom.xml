@@ -230,9 +230,9 @@
     </profiles>
 
     <scm>
-        <connection>scm:git:git://github.com:mulesoft-labs/rajapa.git</connection>
-        <developerConnection>scm:git:git@github.com:mulesoft-labs/rajapa.git</developerConnection>
-        <url>http://github.com/mulesoft-labs/rajapa</url>
+        <connection>scm:git:git://github.com:raml-org/raml-java-parser.git</connection>
+        <developerConnection>scm:git:git@github.com:raml-org/raml-java-parser.git</developerConnection>
+        <url>http://github.com/raml-org/raml-java-parser</url>
         <tag>HEAD</tag>
     </scm>
 
