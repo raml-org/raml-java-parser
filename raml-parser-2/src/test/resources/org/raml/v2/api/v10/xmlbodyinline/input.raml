@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: xml body inline
+/top:
+    get:
+        body:
+            application/xml:
+                properties:
+                  firstname: string
+                  lastname: string
+                  age:
+                      type: integer
+                      minimum: 0
+                      maximum: 144

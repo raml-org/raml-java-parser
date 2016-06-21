@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: xml body
+types:
+    User:
+        type: object
+        properties:
+            firstname: string
+            lastname: string
+            age:
+                type: integer
+                minimum: 0
+                maximum: 144
+        examples:
+            batman:
+                firstname: bruce
+                lastname: wayne
+                age: 77
+            daredevil:
+                firstname: matt
+                lastname: murdock
+                age: 52
+
+/top:
+    get:
+        body: &bodyPost
+            application/xml:
+                type: User
+                properties:
+                    address: string
+        responses:
+            200:
+                body: *bodyPost
