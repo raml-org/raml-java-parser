@@ -66,15 +66,22 @@ public class DiscriminatorBasedRule extends Rule
     public Node apply(@Nonnull Node node)
     {
         final SimpleTypeNode discriminatorValue = (SimpleTypeNode) node.get(discriminatorProperty);
-        final String literalValue = discriminatorValue.getLiteralValue();
-        Rule value = findType(literalValue);
-        if (value != null)
+        if (discriminatorValue == null)
         {
-            value.apply(node);
+            node.replaceWith(ErrorNodeFactory.createInvalidType("discriminator not specified"));
         }
         else
         {
-            node.replaceWith(ErrorNodeFactory.createInvalidType(literalValue));
+            final String literalValue = discriminatorValue.getLiteralValue();
+            Rule value = findType(literalValue);
+            if (value != null)
+            {
+                value.apply(node);
+            }
+            else
+            {
+                node.replaceWith(ErrorNodeFactory.createInvalidType(literalValue));
+            }
         }
         return node;
     }
