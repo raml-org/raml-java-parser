@@ -16,14 +16,15 @@
 package org.raml.yagi.framework.grammar.rule;
 
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
-import org.raml.yagi.framework.suggester.Suggestion;
-
-import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.Suggestion;
 
 public class MaxLengthRule extends Rule
 {
@@ -44,9 +45,9 @@ public class MaxLengthRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof StringNode)
+        if (node instanceof SimpleTypeNode)
         {
-            return ((StringNode) node).getValue().length() <= maxLength;
+            return ((SimpleTypeNode) node).getLiteralValue().length() <= maxLength;
         }
         return false;
     }
@@ -54,14 +55,11 @@ public class MaxLengthRule extends Rule
     @Override
     public Node apply(@Nonnull Node node)
     {
-        if (matches(node))
-        {
-            return createNodeUsingFactory(node, ((StringNode) node).getValue());
-        }
-        else
+        if (!matches(node))
         {
             return ErrorNodeFactory.createInvalidMaxLength(maxLength);
         }
+        return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }
 
 

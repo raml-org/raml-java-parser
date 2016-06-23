@@ -59,7 +59,7 @@ public class MinLengthRule extends Rule
         {
             return ErrorNodeFactory.createInvalidMinLength(minLength);
         }
-        return createNodeUsingFactory(node, ((StringNode) node).getValue());
+        return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }
 
     @Override
