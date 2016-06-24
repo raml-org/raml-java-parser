@@ -3464,7 +3464,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -3491,7 +3491,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3540,7 +3540,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3567,7 +3567,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -3615,7 +3615,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3642,7 +3642,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -3741,7 +3741,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -3768,7 +3768,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3817,7 +3817,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3844,7 +3844,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -3892,7 +3892,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3919,7 +3919,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -3967,7 +3967,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -3994,7 +3994,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -4093,7 +4093,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -4120,7 +4120,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -4168,7 +4168,7 @@
         "examples": [],
         "name": "nullable",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.nullable)",
@@ -4195,7 +4195,7 @@
         "examples": [],
         "name": "key",
         "required": true,
-        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
         "xml": null
        },
        "name": "(odata.key)",
@@ -4272,7 +4272,7 @@
      "examples": [],
      "name": "key",
      "required": true,
-     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"decimal\"/>\n</schema>\n",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"key\" type=\"boolean\"/>\n</schema>\n",
      "xml": null
     },
     {
@@ -4291,7 +4291,7 @@
      "examples": [],
      "name": "nullable",
      "required": true,
-     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"decimal\"/>\n</schema>\n",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"unqualified\" targetNamespace=\"http://www.w3.org/2001/XMLSchema\">\n    <element name=\"nullable\" type=\"boolean\"/>\n</schema>\n",
      "xml": null
     },
     {
