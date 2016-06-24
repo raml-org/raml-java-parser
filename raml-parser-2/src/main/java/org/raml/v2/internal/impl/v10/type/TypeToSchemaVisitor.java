@@ -215,7 +215,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
     @Override
     public XmlSchemaType visitBoolean(BooleanResolvedType booleanTypeDefinition)
     {
-        return collection.getTypeByQName(Constants.XSD_DECIMAL);
+        return collection.getTypeByQName(Constants.XSD_BOOLEAN);
     }
 
     @Override
