@@ -60,6 +60,12 @@ resourceTypes:
                 description: method override
                 type: boolean
         description: get something
+        queryParameters:
+            order:
+                type: string
+                default: asc
+                repeat: true
+                example: desc
     post:
         description: post something
         body: &bodyPost

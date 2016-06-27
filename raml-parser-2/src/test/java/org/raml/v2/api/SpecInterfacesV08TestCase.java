@@ -17,6 +17,7 @@ package org.raml.v2.api;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -138,11 +139,25 @@ public class SpecInterfacesV08TestCase
         assertThat(get.method(), is("get"));
         assertThat(get.resource().relativeUri().value(), is("/top"));
         assertMethodBaseUriParameters(get.baseUriParameters());
+        assertQueryParameters(get.queryParameters());
 
         Method post = methods.get(1);
         assertThat(post.method(), is("post"));
         assertBody(post.body());
         assertResponses(post.responses());
+    }
+
+    private void assertQueryParameters(List<Parameter> parameters)
+    {
+        assertThat(parameters, hasSize(1));
+        Parameter order = parameters.get(0);
+        assertThat(order.name(), is("order"));
+        assertThat(order.type(), is("string"));
+        assertThat(order.displayName(), is("order"));
+        assertThat(order.example(), is("desc"));
+        assertThat(order.defaultValue(), is("asc"));
+        assertThat(order.required(), is(false));
+        assertThat(order.repeat(), is(true));
     }
 
     private void assertMethodBaseUriParameters(List<Parameter> parameters)

@@ -19,6 +19,7 @@ import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.model.NodeModel;
+import org.raml.yagi.framework.util.NodeSelector;
 
 public class Parameter implements NodeModel
 {
@@ -39,6 +40,12 @@ public class Parameter implements NodeModel
     public String name()
     {
         return ((SimpleTypeNode) node.getKey()).getLiteralValue();
+    }
+
+    public String defaultValue()
+    {
+        Object defaultValue = NodeSelector.selectType("default", getNode(), null);
+        return defaultValue != null ? defaultValue.toString() : null;
     }
 
 }
