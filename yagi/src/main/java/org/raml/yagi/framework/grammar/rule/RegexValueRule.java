@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -45,7 +45,7 @@ public class RegexValueRule extends Rule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         if (StringUtils.isEmpty(suggestion))
         {

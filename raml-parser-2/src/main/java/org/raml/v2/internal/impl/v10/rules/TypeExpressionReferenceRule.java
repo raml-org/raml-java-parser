@@ -22,7 +22,7 @@ import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.TypeId;
@@ -66,7 +66,7 @@ public class TypeExpressionReferenceRule extends Rule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         final List<Suggestion> suggestions = new ArrayList<>(suggester.getSuggestions(node));
         final TypeId[] values = TypeId.values();

@@ -15,14 +15,14 @@
  */
 package org.raml.yagi.framework.suggester;
 
-public class RamlParsingContext
+public class ParsingContext
 {
 
-    private RamlParsingContextType contextType;
+    private ParsingContextType contextType;
     private String content;
     private int location;
 
-    public RamlParsingContext(RamlParsingContextType contextType, String content, int location)
+    public ParsingContext(ParsingContextType contextType, String content, int location)
     {
         this.contextType = contextType;
         this.content = content;
@@ -34,7 +34,7 @@ public class RamlParsingContext
         return content;
     }
 
-    public RamlParsingContextType getContextType()
+    public ParsingContextType getContextType()
     {
         return contextType;
     }

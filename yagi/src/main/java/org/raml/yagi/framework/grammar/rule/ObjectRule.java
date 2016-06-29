@@ -24,8 +24,8 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ObjectNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
-import org.raml.yagi.framework.suggester.RamlParsingContextType;
+import org.raml.yagi.framework.suggester.ParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContextType;
 import org.raml.yagi.framework.suggester.Suggestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +63,7 @@ public class ObjectRule extends Rule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         List<Suggestion> result = new ArrayList<>();
         final List<KeyValueRule> fieldRules = getAllFieldRules(node);
@@ -71,7 +71,7 @@ public class ObjectRule extends Rule
         {
             if (rule.repeated() || !matchesAny(rule, node.getChildren()))
             {
-                if (context.getContextType() == RamlParsingContextType.VALUE)
+                if (context.getContextType() == ParsingContextType.VALUE)
                 {
                     final List<Suggestion> keySuggestions = rule.getKeySuggestions(node, context);
                     final Node editing = NodeUtils.searchNodeAt(NodeUtils.traverseToRoot(node), context.getLocation());
@@ -299,7 +299,7 @@ public class ObjectRule extends Rule
     }
 
     @Override
-    public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
     {
         if (pathToRoot.isEmpty())
         {

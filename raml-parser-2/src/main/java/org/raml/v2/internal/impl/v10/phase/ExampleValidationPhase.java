@@ -22,7 +22,7 @@ import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.snakeyaml.RamlNodeParser;
+import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -118,7 +118,7 @@ public class ExampleValidationPhase implements Phase
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
     {
         final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
-        final Node parse = RamlNodeParser.parse(resourceLoader, "", value);
+        final Node parse = NodeParser.parse(resourceLoader, "", value);
         final Node apply = rule.apply(parse);
         final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
         if (apply instanceof ErrorNode || !errorNodeList.isEmpty())

@@ -27,7 +27,7 @@ import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.utils.JSonDumper;
@@ -60,7 +60,7 @@ public class JsonSchemaValidationRule extends Rule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         return Lists.newArrayList();
     }

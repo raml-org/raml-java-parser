@@ -20,7 +20,7 @@ import org.raml.yagi.framework.grammar.rule.ObjectRule;
 
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedReferenceNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -51,7 +51,7 @@ public class ParametrizedNodeReferenceRule extends ObjectRule
 
 
     @Override
-    public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
     {
         switch (pathToRoot.size())
         {
@@ -64,7 +64,7 @@ public class ParametrizedNodeReferenceRule extends ObjectRule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         if (hasOneKey(node))
         {

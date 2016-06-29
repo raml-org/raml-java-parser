@@ -18,7 +18,7 @@ package org.raml.yagi.framework.grammar.rule;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,7 @@ public class ScalarTypeRule extends AbstractTypeRule
 {
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         return Collections.emptyList();
     }

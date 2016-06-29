@@ -31,7 +31,7 @@ import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.snakeyaml.RamlNodeParser;
+import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.GrammarPhase;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.phase.TransformationPhase;
@@ -51,14 +51,14 @@ import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
-import org.raml.v2.internal.utils.TreeDumper;
+import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 
 public class Raml10Builder
 {
 
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = RamlNodeParser.parse(resourceLoader, resourceLocation, stringContent);
+        Node rootNode = NodeParser.parse(resourceLoader, resourceLocation, stringContent);
         if (rootNode == null)
         {
             return ErrorNodeFactory.createEmptyDocument();
@@ -86,7 +86,7 @@ public class Raml10Builder
             {
                 Phase phase = phases.get(i);
                 rootNode = phase.apply(rootNode);
-                String dump = new TreeDumper().dump(rootNode);
+                String dump = new RamlTreeNodeDumper().dump(rootNode);
                 checkDumpPhases(i, phase, dump);
                 List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
                 if (!errorNodes.isEmpty())

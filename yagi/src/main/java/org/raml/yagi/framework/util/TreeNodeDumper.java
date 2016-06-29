@@ -13,9 +13,7 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.utils;
-
-import java.util.Collection;
+package org.raml.yagi.framework.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -24,22 +22,25 @@ import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
+
+import java.util.Collection;
 
 
-public class TreeDumper
+public class TreeNodeDumper
 {
 
     private static final int TAB_SPACES = 4;
     protected StringBuilder dump;
     private int indent = 0;
 
-    private TreeDumper(StringBuilder dump)
+    private boolean dumpOn = true;
+
+    private TreeNodeDumper(StringBuilder dump)
     {
         this.dump = dump;
     }
 
-    public TreeDumper()
+    public TreeNodeDumper()
     {
         this(new StringBuilder());
     }
@@ -52,7 +53,7 @@ public class TreeDumper
         dump.append("Start: ").append(node.getStartPosition().getIndex());
         dump.append(" , End: ").append(node.getEndPosition().getIndex());
         if (node.getStartPosition().getIndex() != Position.UNKNOWN &&
-            node.getEndPosition().getIndex() != Position.UNKNOWN)
+            node.getEndPosition().getIndex() != Position.UNKNOWN && dumpOn)
         {
             dump.append(", On: ").append(node.getStartPosition().getPath());
         }
@@ -64,24 +65,26 @@ public class TreeDumper
         dump.append(")");
         dump.append("\n");
         indent();
-        for (Node child : getChildren(node))
-        {
-            dump(child);
-        }
-
-        if (node instanceof LibraryLinkNode)
-        {
-            final Node refNode = ((LibraryLinkNode) node).getRefNode();
-            if (refNode != null)
-            {
-                dump(refNode);
-            }
-        }
+        dumpChildren(node);
         dedent();
         return dump.toString();
     }
 
-    private Collection<Node> getChildren(Node node)
+    protected void dumpChildren(Node node)
+    {
+        for (Node child : getChildren(node))
+        {
+            dump(child);
+        }
+    }
+
+    public TreeNodeDumper dumpOn(boolean dumpOn)
+    {
+        this.dumpOn = dumpOn;
+        return this;
+    }
+
+    protected Collection<Node> getChildren(Node node)
     {
         return node.getChildren();
     }

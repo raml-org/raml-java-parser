@@ -24,7 +24,7 @@ import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.nodes.IncludeErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
-import org.raml.yagi.framework.nodes.snakeyaml.RamlNodeParser;
+import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.nodes.snakeyaml.SYIncludeNode;
 import org.raml.yagi.framework.phase.Transformer;
 import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentNode;
@@ -68,7 +68,7 @@ public class IncludeResolver implements Transformer
                 {
                     RamlHeader ramlHeader = RamlHeader.parse(includeContent);
                     final RamlFragment fragment = ramlHeader.getFragment();
-                    result = RamlNodeParser.parse(resourceLoader, resourcePath, includeContent);
+                    result = NodeParser.parse(resourceLoader, resourcePath, includeContent);
                     if (result != null && isTypedFragment(result, fragment))
                     {
                         final RamlTypedFragmentNode newNode = new RamlTypedFragmentNode(fragment);
@@ -79,7 +79,7 @@ public class IncludeResolver implements Transformer
                 catch (RamlHeader.InvalidHeaderException e)
                 {
                     // no valid header defined => !supportUses
-                    result = RamlNodeParser.parse(resourceLoader, resourcePath, includeContent);
+                    result = NodeParser.parse(resourceLoader, resourcePath, includeContent);
                 }
 
             }

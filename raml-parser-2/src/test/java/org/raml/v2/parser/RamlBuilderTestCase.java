@@ -36,7 +36,7 @@ import org.junit.runners.Parameterized;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.dataprovider.TestDataProvider;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.v2.internal.utils.TreeDumper;
+import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 
 @RunWith(Parameterized.class)
 public class RamlBuilderTestCase extends TestDataProvider
@@ -53,7 +53,7 @@ public class RamlBuilderTestCase extends TestDataProvider
         final RamlBuilder builder = new RamlBuilder();
         final Node raml = builder.build(input);
         assertThat(raml, notNullValue());
-        dump = new TreeDumper().dump(raml);
+        dump = new RamlTreeNodeDumper().dump(raml);
         expected = IOUtils.toString(new FileInputStream(this.expectedOutput));
         Assert.assertThat(dump, IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace(expected));
     }

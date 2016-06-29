@@ -16,7 +16,7 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -113,7 +113,7 @@ public abstract class Rule
      * @param context The parse context
      * @return The list of suggestions
      */
-    public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
     {
         if (!pathToRoot.isEmpty())
         {
@@ -132,5 +132,5 @@ public abstract class Rule
      * @return The list of suggestions for the specified rule
      */
     @Nonnull
-    public abstract List<Suggestion> getSuggestions(Node node, RamlParsingContext context);
+    public abstract List<Suggestion> getSuggestions(Node node, ParsingContext context);
 }

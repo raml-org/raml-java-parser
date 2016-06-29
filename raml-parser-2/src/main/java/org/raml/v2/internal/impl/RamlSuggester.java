@@ -36,8 +36,8 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
-import org.raml.yagi.framework.suggester.RamlParsingContextType;
+import org.raml.yagi.framework.suggester.ParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContextType;
 import org.raml.yagi.framework.suggester.Suggestion;
 import org.raml.yagi.framework.suggester.Suggestions;
 import org.raml.v2.internal.impl.commons.RamlHeader;
@@ -68,10 +68,10 @@ public class RamlSuggester
     public Suggestions suggestions(String document, int offset)
     {
         final List<Suggestion> result = new ArrayList<>();
-        final RamlParsingContext ramlParsingContext = getContext(document, offset);
-        final int location = ramlParsingContext.getLocation();
-        final String content = ramlParsingContext.getContent();
-        final List<Suggestion> suggestions = getSuggestions(ramlParsingContext, document, offset, location);
+        final ParsingContext parsingContext = getContext(document, offset);
+        final int location = parsingContext.getLocation();
+        final String content = parsingContext.getContent();
+        final List<Suggestion> suggestions = getSuggestions(parsingContext, document, offset, location);
         if (content.isEmpty())
         {
             result.addAll(suggestions);
@@ -91,7 +91,7 @@ public class RamlSuggester
 
     }
 
-    private List<Suggestion> getSuggestions(RamlParsingContext context, String document, int offset, int location)
+    private List<Suggestion> getSuggestions(ParsingContext context, String document, int offset, int location)
     {
         switch (context.getContextType())
         {
@@ -171,7 +171,7 @@ public class RamlSuggester
         return suggestions;
     }
 
-    private List<Suggestion> getSuggestionsAt(RamlParsingContext context, String document, int offset, int location)
+    private List<Suggestion> getSuggestionsAt(ParsingContext context, String document, int offset, int location)
     {
         final Node root = getRootNode(document, offset, location);
         Node node = org.raml.yagi.framework.util.NodeUtils.searchNodeAt(root, location);
@@ -252,7 +252,7 @@ public class RamlSuggester
         return header + footer;
     }
 
-    private List<Suggestion> getSuggestionByColumn(RamlParsingContext context, String document, int offset, int location)
+    private List<Suggestion> getSuggestionByColumn(ParsingContext context, String document, int offset, int location)
     {
         // // I don't care column number unless is an empty new line
         int columnNumber = getColumnNumber(document, offset);
@@ -315,15 +315,15 @@ public class RamlSuggester
     }
 
     @Nonnull
-    private RamlParsingContext getContext(String document, int offset)
+    private ParsingContext getContext(String document, int offset)
     {
         if (offset == -1 || getLineNumber(document, offset) == 0)
         {
             final String content = offset < 0 || document.isEmpty() ? "" : document.substring(0, offset + 1);
-            return new RamlParsingContext(RamlParsingContextType.HEADER, content, offset);
+            return new ParsingContext(ParsingContextType.HEADER, content, offset);
         }
 
-        RamlParsingContext context = null;
+        ParsingContext context = null;
         int location = offset;
         final StringBuilder content = new StringBuilder();
         while (location >= 0 && context == null)
@@ -332,13 +332,13 @@ public class RamlSuggester
             switch (character)
             {
             case ':':
-                context = new RamlParsingContext(RamlParsingContextType.VALUE, revertAndTrim(content), location + 1);
+                context = new ParsingContext(ParsingContextType.VALUE, revertAndTrim(content), location + 1);
                 break;
             case ',':
             case '[':
             case '{':
             case '-':
-                context = new RamlParsingContext(RamlParsingContextType.ITEM, revertAndTrim(content), location);
+                context = new ParsingContext(ParsingContextType.ITEM, revertAndTrim(content), location);
                 break;
             case '<':
                 if (location > 0)
@@ -350,15 +350,15 @@ public class RamlSuggester
                         final String[] split = contextContent.split("\\|");
                         if (split.length > 1)
                         {
-                            context = new RamlParsingContext(RamlParsingContextType.FUNCTION_CALL, split[split.length - 1].trim(), location);
+                            context = new ParsingContext(ParsingContextType.FUNCTION_CALL, split[split.length - 1].trim(), location);
                         }
                         else if (contextContent.endsWith("|"))
                         {
-                            context = new RamlParsingContext(RamlParsingContextType.FUNCTION_CALL, "", location);
+                            context = new ParsingContext(ParsingContextType.FUNCTION_CALL, "", location);
                         }
                         else
                         {
-                            context = new RamlParsingContext(RamlParsingContextType.STRING_TEMPLATE, contextContent, location);
+                            context = new ParsingContext(ParsingContextType.STRING_TEMPLATE, contextContent, location);
                         }
                         break;
                     }
@@ -366,10 +366,10 @@ public class RamlSuggester
                 content.append(character);
                 break;
             case '.':
-                context = new RamlParsingContext(RamlParsingContextType.LIBRARY_CALL, revertAndTrim(content), location);
+                context = new ParsingContext(ParsingContextType.LIBRARY_CALL, revertAndTrim(content), location);
                 break;
             case '\n':
-                context = new RamlParsingContext(RamlParsingContextType.ANY, revertAndTrim(content), location);
+                context = new ParsingContext(ParsingContextType.ANY, revertAndTrim(content), location);
                 break;
             default:
                 content.append(character);
@@ -379,7 +379,7 @@ public class RamlSuggester
 
         if (context == null)
         {
-            context = new RamlParsingContext(RamlParsingContextType.ANY, revertAndTrim(content), location);
+            context = new ParsingContext(ParsingContextType.ANY, revertAndTrim(content), location);
         }
 
         return context;

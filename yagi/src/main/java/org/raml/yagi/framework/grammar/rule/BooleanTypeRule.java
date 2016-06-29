@@ -20,7 +20,7 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -34,7 +34,7 @@ public class BooleanTypeRule extends AbstractTypeRule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         return Arrays.<Suggestion> asList(new DefaultSuggestion("true", "Boolean true", ""), new DefaultSuggestion("false", "Boolean false", ""));
     }

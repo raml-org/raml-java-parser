@@ -18,7 +18,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 import org.raml.yagi.framework.util.DateType;
 import org.raml.yagi.framework.util.DateUtils;
@@ -45,7 +45,7 @@ public class DateValueRule extends Rule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         return Collections.emptyList();
     }

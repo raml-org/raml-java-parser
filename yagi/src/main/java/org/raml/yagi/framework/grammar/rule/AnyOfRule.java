@@ -16,7 +16,7 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -56,7 +56,7 @@ public class AnyOfRule extends Rule
 
     @Override
     @Nonnull
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         final List<Suggestion> result = new ArrayList<>();
         for (Rule rule : rules)
@@ -126,7 +126,7 @@ public class AnyOfRule extends Rule
     }
 
     @Override
-    public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
     {
         if (!pathToRoot.isEmpty())
         {

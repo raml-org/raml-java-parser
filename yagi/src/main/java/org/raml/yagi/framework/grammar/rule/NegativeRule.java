@@ -16,7 +16,7 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -36,7 +36,7 @@ public class NegativeRule extends Rule
 
     @Override
     @Nonnull
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         return Collections.emptyList();
     }
@@ -73,7 +73,7 @@ public class NegativeRule extends Rule
     }
 
     @Override
-    public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
     {
         return Collections.emptyList();
     }

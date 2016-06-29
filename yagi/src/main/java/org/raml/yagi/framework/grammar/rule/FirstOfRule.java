@@ -17,7 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
@@ -37,7 +37,7 @@ public class FirstOfRule extends AnyOfRule
 
     @Override
     @Nonnull
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         for (Rule rule : rules)
         {

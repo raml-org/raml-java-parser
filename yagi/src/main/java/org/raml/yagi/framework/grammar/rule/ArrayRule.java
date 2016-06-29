@@ -19,8 +19,8 @@ package org.raml.yagi.framework.grammar.rule;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.suggester.RamlParsingContext;
-import org.raml.yagi.framework.suggester.RamlParsingContextType;
+import org.raml.yagi.framework.suggester.ParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContextType;
 import org.raml.yagi.framework.suggester.Suggestion;
 import org.raml.yagi.framework.util.NodeUtils;
 
@@ -41,7 +41,7 @@ public class ArrayRule extends Rule
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         final List<Suggestion> suggestions = of.getSuggestions(node, context);
         final List<Suggestion> result = new ArrayList<>();
@@ -51,7 +51,7 @@ public class ArrayRule extends Rule
             {
                 result.add(suggestion);
             }
-            else if (context.getContextType() == RamlParsingContextType.VALUE)
+            else if (context.getContextType() == ParsingContextType.VALUE)
             {
                 final String prefix = "\n" + NodeUtils.computeColumnForChild(node.getParent());
                 result.add(suggestion.withValue("- " + suggestion.getValue()).withPrefix(prefix));
@@ -65,7 +65,7 @@ public class ArrayRule extends Rule
     }
 
     @Override
-    public List<Suggestion> getSuggestions(List<Node> pathToRoot, RamlParsingContext context)
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
     {
         if (pathToRoot.isEmpty())
         {

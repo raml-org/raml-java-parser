@@ -29,7 +29,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 
-public class RamlNodeParser
+public class NodeParser
 {
 
 

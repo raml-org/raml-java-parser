@@ -13,9 +13,27 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.yagi.framework.suggester;
+package org.raml.v2.internal.utils;
 
-public enum RamlParsingContextType
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.util.TreeNodeDumper;
+
+
+public class RamlTreeNodeDumper extends TreeNodeDumper
 {
-    FUNCTION_CALL, LIBRARY_CALL, VALUE, ITEM, STRING_TEMPLATE, HEADER, ANY
+
+    protected void dumpChildren(Node node)
+    {
+        super.dumpChildren(node);
+
+        if (node instanceof LibraryLinkNode)
+        {
+            final Node refNode = ((LibraryLinkNode) node).getRefNode();
+            if (refNode != null)
+            {
+                dump(refNode);
+            }
+        }
+    }
 }

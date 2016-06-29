@@ -18,7 +18,7 @@ package org.raml.v2.internal.impl.v08;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.snakeyaml.RamlNodeParser;
+import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.GrammarPhase;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.phase.TransformationPhase;
@@ -36,7 +36,7 @@ public class Raml08Builder
 
     public Node build(String stringContent, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = RamlNodeParser.parse(resourceLoader, resourceLocation, stringContent);
+        Node rootNode = NodeParser.parse(resourceLoader, resourceLocation, stringContent);
         final List<Phase> phases = createPhases(resourceLoader);
         for (int i = 0; i < phases.size(); i++)
         {
