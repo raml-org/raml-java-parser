@@ -32,6 +32,7 @@ public class DefaultModelBindingConfiguration implements ModelBindingConfigurati
     {
         this.bindings = new ArrayList<>();
         this.reverseBinding = new ArrayList<>();
+        this.defaultBinding = new ClassNodeModelFactory(DefaultNodeBaseModel.class);
     }
 
     @Nonnull
