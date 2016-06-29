@@ -18,7 +18,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -37,6 +37,7 @@ public class RegexValueRule extends Rule
     private String description;
     private String suggestion;
     private String label;
+    private boolean fullMatch = true;
 
     public RegexValueRule(Pattern value)
     {
@@ -61,12 +62,12 @@ public class RegexValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode && getMatcher((StringNode) node).matches();
+        return node instanceof SimpleTypeNode && (fullMatch ? getMatcher((SimpleTypeNode) node).matches() : getMatcher((SimpleTypeNode) node).find());
     }
 
-    private Matcher getMatcher(StringNode node)
+    private Matcher getMatcher(SimpleTypeNode node)
     {
-        return value.matcher(node.getValue());
+        return value.matcher(node.getLiteralValue());
     }
 
     public RegexValueRule label(String value)
@@ -87,6 +88,12 @@ public class RegexValueRule extends Rule
         return this;
     }
 
+    public RegexValueRule fullMatch(boolean fullMatch)
+    {
+        this.fullMatch = fullMatch;
+        return this;
+    }
+
     @Override
     public Node apply(@Nonnull Node node)
     {
@@ -94,7 +101,7 @@ public class RegexValueRule extends Rule
         {
             return ErrorNodeFactory.createInvalidValue(node, String.valueOf(value));
         }
-        final Matcher matcher = getMatcher((StringNode) node);
+        final Matcher matcher = getMatcher((SimpleTypeNode) node);
         final int i = matcher.groupCount();
         final List<String> groups = new ArrayList<>();
         if (i > 0)

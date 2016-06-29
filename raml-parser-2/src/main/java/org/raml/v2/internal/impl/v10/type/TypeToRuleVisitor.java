@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.utils.BasicRuleFactory;
 import org.raml.yagi.framework.grammar.rule.AllOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyValueRule;
@@ -58,6 +59,7 @@ import java.util.regex.Pattern;
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
 import static org.raml.v2.internal.utils.BasicRuleFactory.patternProperty;
 import static org.raml.v2.internal.utils.BasicRuleFactory.property;
+import static org.raml.v2.internal.utils.BasicRuleFactory.regexValue;
 import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
 import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
 
@@ -164,7 +166,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
                 {
                     if (additionalProperties)
                     {
-                        keyValue = patternProperty(propertyValue.getPatternRegex(), value);
+                        keyValue = new KeyValueRule(regexValue(propertyValue.getPatternRegex()).fullMatch(false), value);
                         // We set to false as it should only validate the ones that matches the regex
                         objectRule.additionalProperties(false);
                         objectRule.with(keyValue);

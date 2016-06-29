@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: 22
+types:
+  Pet:
+    properties:
+      name: string
+  Person:
+    properties:
+      //: Pet
+  MapOfPerson:
+    properties:
+      //: Person
+annotationTypes:
+  hello:
+    properties:
+      persons: MapOfPerson
+(hello):
+   persons:
+     156798654:
+       Alice:
+         name: stringValue
