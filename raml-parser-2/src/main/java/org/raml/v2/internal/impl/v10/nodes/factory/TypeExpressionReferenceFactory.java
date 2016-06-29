@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.nodes.factory;
 
+import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
@@ -158,7 +159,13 @@ public class TypeExpressionReferenceFactory implements NodeFactory
 
     private void handleSimpleExpression(Node currentNode, StringCharacterIterator iter, Stack<TypeExpressionNode> expressions, StringBuilder simpleExpression)
     {
-        final String expressionString = simpleExpression.toString();
+        String expressionString = simpleExpression.toString();
+        boolean optionalType = false;
+        if (expressionString.endsWith("?"))
+        {
+            expressionString = expressionString.substring(0, expressionString.length() - 1);
+            optionalType = true;
+        }
 
         final Position startPosition = currentNode.getStartPosition().rightShift(iter.getIndex() - expressionString.length());
         final Position endPosition = currentNode.getStartPosition().rightShift(iter.getIndex());
@@ -170,14 +177,33 @@ public class TypeExpressionReferenceFactory implements NodeFactory
             item.setStartPosition(startPosition);
             item.setEndPosition(endPosition);
             expressions.push(item);
+            if (optionalType)
+            {
+                handleOptionalType(expressions);
+            }
         }
-        else if (simpleExpression.length() > 0)
+        else if (expressionString.length() > 0)
         {
             final NodeReferenceFactory nodeReferenceFactory = new NodeReferenceFactory(NamedTypeExpressionNode.class);
             final Node parse = nodeReferenceFactory.parse(currentNode, expressionString, iter.getIndex());
             expressions.push((TypeExpressionNode) parse);
+            if (optionalType)
+            {
+                handleOptionalType(expressions);
+            }
         }
         clear(simpleExpression);
+
+
+    }
+
+    private void handleOptionalType(Stack<TypeExpressionNode> expressions)
+    {
+        final TypeExpressionNode optionalOf = expressions.pop();
+        final UnionTypeExpressionNode optionalTypeExpression = new UnionTypeExpressionNode();
+        optionalTypeExpression.addChild(optionalOf);
+        optionalTypeExpression.addChild(new NativeTypeExpressionNode(TypeId.NULL.getType()));
+        expressions.push(optionalTypeExpression);
     }
 
     /**
