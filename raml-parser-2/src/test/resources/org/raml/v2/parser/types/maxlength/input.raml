@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Test API
+types:
+  MyType1:
+    properties:
+      lala: string
+    maxProperties: 7
+annotationTypes:
+  MyAnnotationType1:
+    properties:
+      pp: MyType1
+(MyAnnotationType1):
+      pp:
+        lala: lala
+        xx: "2"
+        xx2: "3"

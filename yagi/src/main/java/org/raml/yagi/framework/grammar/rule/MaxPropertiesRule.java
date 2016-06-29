@@ -45,7 +45,7 @@ public class MaxPropertiesRule extends Rule
     {
         if (matches(node))
         {
-            return createNodeUsingFactory(node, ((StringNode) node).getValue());
+            return createNodeUsingFactory(node);
         }
         else
         {
