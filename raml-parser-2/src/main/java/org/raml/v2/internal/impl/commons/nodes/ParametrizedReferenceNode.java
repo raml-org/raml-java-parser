@@ -15,29 +15,13 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import javax.annotation.Nonnull;
+import org.raml.yagi.framework.nodes.ObjectNode;
+import org.raml.yagi.framework.nodes.ReferenceNode;
 
-import org.raml.yagi.framework.nodes.Node;
+import java.util.Map;
 
-public class ParametrizedTraitRefNode extends BaseTraitRefNode implements ParametrizedReferenceNode
+public interface ParametrizedReferenceNode extends ReferenceNode, ObjectNode
 {
 
-    public ParametrizedTraitRefNode(ParametrizedTraitRefNode node)
-    {
-        super(node);
-    }
-
-    // Used by reflection
-    public ParametrizedTraitRefNode(String name)
-    {
-        super(name);
-    }
-
-    @Nonnull
-    @Override
-    public Node copy()
-    {
-        return new ParametrizedTraitRefNode(this);
-    }
-
+    Map<String, String> getParameters();
 }

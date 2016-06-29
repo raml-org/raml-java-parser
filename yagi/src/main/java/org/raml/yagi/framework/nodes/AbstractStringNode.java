@@ -13,31 +13,44 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.nodes;
+package org.raml.yagi.framework.nodes;
 
-import javax.annotation.Nonnull;
-
-import org.raml.yagi.framework.nodes.Node;
-
-public class ParametrizedTraitRefNode extends BaseTraitRefNode implements ParametrizedReferenceNode
+public abstract class AbstractStringNode extends AbstractRamlNode implements StringNode
 {
+    protected String value;
 
-    public ParametrizedTraitRefNode(ParametrizedTraitRefNode node)
+    public AbstractStringNode(String value)
+    {
+        this.value = value;
+    }
+
+    protected AbstractStringNode(AbstractStringNode node)
     {
         super(node);
+        this.value = node.value;
     }
 
-    // Used by reflection
-    public ParametrizedTraitRefNode(String name)
-    {
-        super(name);
-    }
-
-    @Nonnull
     @Override
-    public Node copy()
+    public String getValue()
     {
-        return new ParametrizedTraitRefNode(this);
+        return value;
     }
 
+    @Override
+    public String getLiteralValue()
+    {
+        return value;
+    }
+
+    @Override
+    public NodeType getType()
+    {
+        return NodeType.String;
+    }
+
+    @Override
+    public String toString()
+    {
+        return value;
+    }
 }

@@ -19,7 +19,7 @@ import org.raml.v2.internal.impl.commons.suggester.ReferenceSuggester;
 import org.raml.yagi.framework.grammar.rule.ObjectRule;
 
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.ParametrizedReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.ParametrizedReferenceNode;
 import org.raml.yagi.framework.suggester.RamlParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 

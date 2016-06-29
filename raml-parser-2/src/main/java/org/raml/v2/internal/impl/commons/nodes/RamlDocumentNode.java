@@ -18,22 +18,22 @@ package org.raml.v2.internal.impl.commons.nodes;
 import javax.annotation.Nonnull;
 
 import org.raml.v2.internal.impl.commons.RamlVersion;
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.ContextProviderNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.ObjectNode;
 
-public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode, ContextProviderNode
+public class RamlDocumentNode extends AbstractObjectNode implements ContextProviderNode
 {
-
     private RamlVersion version;
 
     public RamlDocumentNode()
     {
     }
 
-    public RamlDocumentNode(RamlDocumentNode node)
+    protected RamlDocumentNode(RamlDocumentNode node)
     {
         super(node);
     }
@@ -43,12 +43,6 @@ public class RamlDocumentNode extends AbstractRamlNode implements ObjectNode, Co
     public Node copy()
     {
         return new RamlDocumentNode(this);
-    }
-
-    @Override
-    public NodeType getType()
-    {
-        return NodeType.Object;
     }
 
     @Nonnull

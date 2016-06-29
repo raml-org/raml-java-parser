@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import org.raml.yagi.framework.nodes.AbstractStringNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.snakeyaml.SYIncludeNode;
@@ -26,7 +27,7 @@ import org.raml.v2.internal.utils.SchemaGenerator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class ExternalSchemaTypeExpressionNode extends StringNodeImpl implements TypeExpressionNode
+public class ExternalSchemaTypeExpressionNode extends AbstractStringNode implements TypeExpressionNode
 {
     public ExternalSchemaTypeExpressionNode(String value)
     {

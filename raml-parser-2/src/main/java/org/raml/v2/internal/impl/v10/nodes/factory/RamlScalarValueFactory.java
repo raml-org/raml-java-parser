@@ -22,7 +22,7 @@ import org.raml.yagi.framework.grammar.rule.NodeFactory;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
-import org.raml.v2.internal.impl.commons.nodes.ObjectNodeImpl;
+import org.raml.yagi.framework.nodes.ObjectNodeImpl;
 
 public class RamlScalarValueFactory implements NodeFactory
 {

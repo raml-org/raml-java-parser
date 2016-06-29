@@ -18,11 +18,12 @@ package org.raml.v2.internal.impl.v10.nodes.factory;
 import javax.annotation.Nonnull;
 
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
-import org.raml.v2.internal.impl.commons.nodes.ObjectNodeImpl;
+import org.raml.yagi.framework.nodes.ObjectNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableNode;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableObjectNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableStringNode;
@@ -51,7 +52,7 @@ public class OverlayableSimpleTypeFactory implements NodeFactory
         }
         if (wrappInObject)
         {
-            ObjectNodeImpl result = new OverlayableObjectNodeImpl();
+            AbstractObjectNode result = new OverlayableObjectNodeImpl();
             OverlayableStringNode overlayableStringNode = new OverlayableStringNode(((SimpleTypeNode) currentNode).getLiteralValue());
             KeyValueNodeImpl keyValueNode = new KeyValueNodeImpl(new StringNodeImpl("value"), overlayableStringNode);
             if (currentNode.getParent() != null)

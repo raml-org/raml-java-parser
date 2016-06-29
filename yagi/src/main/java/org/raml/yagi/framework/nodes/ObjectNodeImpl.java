@@ -13,17 +13,12 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.nodes;
+package org.raml.yagi.framework.nodes;
 
 
 import javax.annotation.Nonnull;
 
-import org.raml.yagi.framework.nodes.AbstractRamlNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.ObjectNode;
-
-public class ObjectNodeImpl extends AbstractRamlNode implements ObjectNode
+public class ObjectNodeImpl extends AbstractObjectNode implements ObjectNode
 {
 
     public ObjectNodeImpl()
@@ -42,9 +37,5 @@ public class ObjectNodeImpl extends AbstractRamlNode implements ObjectNode
         return new ObjectNodeImpl(this);
     }
 
-    @Override
-    public NodeType getType()
-    {
-        return NodeType.Object;
-    }
+
 }

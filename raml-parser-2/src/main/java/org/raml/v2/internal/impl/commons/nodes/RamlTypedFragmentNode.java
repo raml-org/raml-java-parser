@@ -15,18 +15,16 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import org.raml.yagi.framework.nodes.AbstractRamlNode;
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
 import org.raml.yagi.framework.nodes.ContextProviderNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
 
-public class RamlTypedFragmentNode extends AbstractRamlNode implements ObjectNode, LibraryNodeProvider, ContextProviderNode
+public class RamlTypedFragmentNode extends AbstractObjectNode implements LibraryNodeProvider, ContextProviderNode
 {
 
     private final RamlFragment fragment;
@@ -37,24 +35,18 @@ public class RamlTypedFragmentNode extends AbstractRamlNode implements ObjectNod
         this.fragment = fragment;
     }
 
-    private RamlTypedFragmentNode(RamlTypedFragmentNode node, Node libraryNode)
+    private RamlTypedFragmentNode(RamlTypedFragmentNode node)
     {
         super(node);
         this.fragment = node.getFragment();
-        this.libraryNode = libraryNode;
+        this.libraryNode = node.getLibraryNode();
     }
 
     @Nonnull
     @Override
     public Node copy()
     {
-        return new RamlTypedFragmentNode(this, libraryNode);
-    }
-
-    @Override
-    public NodeType getType()
-    {
-        return NodeType.Object;
+        return new RamlTypedFragmentNode(this);
     }
 
     @Nonnull

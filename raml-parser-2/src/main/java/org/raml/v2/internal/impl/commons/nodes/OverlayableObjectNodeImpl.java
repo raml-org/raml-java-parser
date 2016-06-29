@@ -18,10 +18,11 @@ package org.raml.v2.internal.impl.commons.nodes;
 
 import javax.annotation.Nonnull;
 
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.Node;
 
-public class OverlayableObjectNodeImpl extends ObjectNodeImpl implements OverlayableNode
+public class OverlayableObjectNodeImpl extends AbstractObjectNode implements OverlayableNode
 {
 
     public OverlayableObjectNodeImpl()

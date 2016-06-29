@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.raml.yagi.framework.nodes.AbstractStringNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.ExecutableNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
@@ -26,7 +27,7 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 
-public class StringTemplateNode extends StringNodeImpl implements ExecutableNode
+public class StringTemplateNode extends AbstractStringNode implements ExecutableNode
 {
 
     public StringTemplateNode(String value)

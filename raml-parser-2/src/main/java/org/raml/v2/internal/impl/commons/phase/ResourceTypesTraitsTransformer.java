@@ -23,7 +23,7 @@ import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.ParametrizedReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.ParametrizedReferenceNode;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYBaseRamlNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYNullNode;

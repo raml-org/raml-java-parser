@@ -23,7 +23,7 @@ import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
-import org.raml.v2.internal.impl.commons.nodes.ObjectNodeImpl;
+import org.raml.yagi.framework.nodes.ObjectNodeImpl;
 
 public class DisplayNameDefaultValue implements DefaultValue
 {

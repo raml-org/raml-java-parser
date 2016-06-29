@@ -15,10 +15,20 @@
  */
 package org.raml.yagi.framework.nodes;
 
-import java.util.Map;
-
-public interface ParametrizedReferenceNode extends ReferenceNode, ObjectNode
+public abstract class AbstractObjectNode extends AbstractRamlNode implements ObjectNode
 {
+    protected AbstractObjectNode(AbstractRamlNode node)
+    {
+        super(node);
+    }
 
-    Map<String, String> getParameters();
+    public AbstractObjectNode()
+    {
+    }
+
+    @Override
+    public NodeType getType()
+    {
+        return NodeType.Object;
+    }
 }

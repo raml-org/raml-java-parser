@@ -18,7 +18,6 @@ package org.raml.v2.internal.impl.commons.nodes;
 import javax.annotation.Nonnull;
 
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.ParametrizedReferenceNode;
 
 public class ParametrizedResourceTypeRefNode extends BaseResourceTypeRefNode implements ParametrizedReferenceNode
 {

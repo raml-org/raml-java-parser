@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.yagi.framework.nodes.AbstractStringNode;
 import org.raml.yagi.framework.nodes.ExecutableNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
 import org.raml.yagi.framework.nodes.Node;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.StringTokenizer;
 
-public class TemplateExpressionNode extends StringNodeImpl implements ExecutableNode
+public class TemplateExpressionNode extends AbstractStringNode implements ExecutableNode
 {
     public TemplateExpressionNode(@Nonnull String value)
     {

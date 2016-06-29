@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -29,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode, OverlayableNode
+public class TypeDeclarationNode extends AbstractObjectNode implements OverlayableNode
 {
 
     private ResolvedType resolvedType;
@@ -131,9 +132,4 @@ public class TypeDeclarationNode extends AbstractRamlNode implements ObjectNode,
         return new TypeDeclarationNode(this);
     }
 
-    @Override
-    public NodeType getType()
-    {
-        return NodeType.Object;
-    }
 }

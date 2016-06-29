@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.nodes;
 
+import org.raml.yagi.framework.nodes.AbstractStringNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -38,10 +39,10 @@ import org.raml.v2.internal.impl.v10.type.TypeId;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class NativeTypeExpressionNode extends StringNodeImpl implements TypeExpressionNode
+public class NativeTypeExpressionNode extends AbstractStringNode implements TypeExpressionNode
 {
 
-    public NativeTypeExpressionNode(StringNodeImpl node)
+    protected NativeTypeExpressionNode(NativeTypeExpressionNode node)
     {
         super(node);
     }

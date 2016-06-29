@@ -17,32 +17,17 @@ package org.raml.yagi.framework.nodes;
 
 import javax.annotation.Nonnull;
 
-public class StringNodeImpl extends AbstractRamlNode implements StringNode
+public class StringNodeImpl extends AbstractStringNode
 {
-
-    private String value;
 
     public StringNodeImpl(String value)
     {
-        this.value = value;
+        super(value);
     }
 
-    public StringNodeImpl(StringNodeImpl node)
+    protected StringNodeImpl(StringNodeImpl node)
     {
         super(node);
-        this.value = node.value;
-    }
-
-    @Override
-    public String getValue()
-    {
-        return value;
-    }
-
-    @Override
-    public String getLiteralValue()
-    {
-        return value;
     }
 
     @Nonnull
@@ -52,15 +37,4 @@ public class StringNodeImpl extends AbstractRamlNode implements StringNode
         return new StringNodeImpl(this);
     }
 
-    @Override
-    public NodeType getType()
-    {
-        return NodeType.String;
-    }
-
-    @Override
-    public String toString()
-    {
-        return value;
-    }
 }

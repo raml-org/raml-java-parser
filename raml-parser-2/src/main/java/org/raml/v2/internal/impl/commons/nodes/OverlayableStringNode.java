@@ -17,10 +17,11 @@ package org.raml.v2.internal.impl.commons.nodes;
 
 import javax.annotation.Nonnull;
 
+import org.raml.yagi.framework.nodes.AbstractStringNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 
-public class OverlayableStringNode extends StringNodeImpl implements OverlayableNode
+public class OverlayableStringNode extends AbstractStringNode implements OverlayableNode
 {
 
     public OverlayableStringNode(String value)
@@ -28,7 +29,7 @@ public class OverlayableStringNode extends StringNodeImpl implements Overlayable
         super(value);
     }
 
-    protected OverlayableStringNode(StringNodeImpl node)
+    protected OverlayableStringNode(AbstractStringNode node)
     {
         super(node);
     }
