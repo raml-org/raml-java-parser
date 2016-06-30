@@ -79,10 +79,19 @@ public class ObjectResolvedType extends XmlFacetsCapableType
             {
                 if (child instanceof PropertyNode)
                 {
-                    final PropertyNode propertyNode = (PropertyNode) child;
-                    final String name = propertyNode.getName();
-                    final PropertyFacets propertyDefinition = new PropertyFacets(propertyNode);
-                    result.getProperties().put(name, propertyDefinition);
+                    final PropertyNode property = (PropertyNode) child;
+                    final String name = property.getName();
+                    final PropertyFacets propertyDefinition = new PropertyFacets(property);
+                    final Map<String, PropertyFacets> resultProperties = result.getProperties();
+                    if (!resultProperties.containsKey(name))
+                    {
+                        resultProperties.put(name, propertyDefinition);
+                    }
+                    else
+                    {
+                        // If present in both merge facets of both types
+                        resultProperties.put(name, resultProperties.get(name).mergeFacets(propertyDefinition));
+                    }
                 }
             }
         }

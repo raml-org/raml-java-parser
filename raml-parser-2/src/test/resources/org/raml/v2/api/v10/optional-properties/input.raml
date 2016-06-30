@@ -1,0 +1,18 @@
+#%RAML 1.0
+
+title: test
+
+types:
+  PropertyType1:
+    type: string
+    minLength: 0
+  PropertyType2:
+    type: PropertyType1
+    maxLength: 5
+  Type1:
+    properties:
+      testProperty: PropertyType1
+  Type2:
+    type: Type1
+    properties:
+      testProperty?: PropertyType2
