@@ -15,6 +15,8 @@
  */
 package org.raml.v2.utils;
 
+import java.util.Locale;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
@@ -31,7 +33,7 @@ public class DateTest
         DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("YYYY-MM-DD");
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
         DateTimeFormatter dateTimeSecondFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss.SSS'Z'");
-        DateTimeFormatter rfc = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
+        DateTimeFormatter rfc = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz").withLocale(Locale.ENGLISH);
 
         Assert.assertNotNull(dateFormatter.parseLocalDate("2015-05-23"));
         Assert.assertNotNull(hourFormatter.parseLocalTime("12:30:00"));
