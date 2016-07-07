@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: API
+version: v2
+baseUri: https://app.com/api
+/location:
+  get:
+    queryString:
+      type: object
+      examples:
+        first:
+          content:
+            lat: 12
+            lon: 13
+    queryParameters:
+      id:

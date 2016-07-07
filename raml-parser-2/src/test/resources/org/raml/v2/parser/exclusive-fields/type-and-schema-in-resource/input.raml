@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: API
+version: v2
+baseUri: https://app.com/api
+/resource:
+  get:
+    responses:
+      200:
+        body:
+          application/json: # start type declaration
+            schema: # invalid as mutually exclusive with `type`
+            type: # invalid as mutually exclusive with `schema`

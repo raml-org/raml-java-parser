@@ -240,4 +240,9 @@ public class ErrorNodeFactory
     {
         return new ErrorNode("Base RAML not found: " + location);
     }
+
+    public static ErrorNode createExclusiveKeys(String firstRule, String secondRule)
+    {
+        return new ErrorNode(firstRule + " and " + secondRule + " are mutually exclusive.");
+    }
 }
