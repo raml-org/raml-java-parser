@@ -76,7 +76,7 @@ public class SpecInterfacesV10TestCase
         assertThat(annotationTypes.size(), is(2));
         TypeDeclaration basic = annotationTypes.get(0);
         assertThat(basic.name(), is("basic"));
-        // assertThat(basic.type().get(0), is("string"));
+        assertThat(basic.type(), is("string"));
         TypeDeclaration hipermedia = annotationTypes.get(1);
         assertThat(hipermedia.name(), is("complex"));
     }
@@ -127,11 +127,13 @@ public class SpecInterfacesV10TestCase
         // inherited object type
         ObjectTypeDeclaration superUser = (ObjectTypeDeclaration) types.get(1);
         assertThat(superUser.name(), is("SuperUser"));
+        assertThat(superUser.type(), is("User"));
         properties = superUser.properties();
         assertThat(properties, hasSize(4));
         assertUserProperties(properties);
         ArrayTypeDeclaration skills = (ArrayTypeDeclaration) properties.get(3);
         assertThat(skills.maxItems(), is(3));
+        assertThat(skills.type(), is("string[]"));
         assertThat(superUser.examples(), hasSize(0));
 
         // string type
@@ -184,7 +186,7 @@ public class SpecInterfacesV10TestCase
         TypeInstance basicValue = basic.structuredValue();
         assertTrue(basicValue.isScalar());
         assertThat(basicValue.value().toString(), is("sometimes"));
-        // assertThat(basic.annotation().type().get(0), is("string"));
+        assertThat(basic.annotation().type(), is("string"));
 
         TypeInstance complexValue = annotations.get(1).structuredValue();
         assertThat(complexValue.properties().size(), is(2));
@@ -257,12 +259,12 @@ public class SpecInterfacesV10TestCase
         List<TypeDeclaration> headers = describedBy.headers();
         assertThat(headers.size(), is(1));
         assertThat(headers.get(0).name(), is("Authorization"));
-        // assertThat(headers.get(0).schemaContent(), nullValue());
+        assertThat(headers.get(0).type(), is("string"));
 
         List<TypeDeclaration> queryParameters = describedBy.queryParameters();
         assertThat(queryParameters.size(), is(1));
         assertThat(queryParameters.get(0).name(), is("access_token"));
-        // assertThat(queryParameters.get(0).schemaContent(), nullValue());
+        assertThat(queryParameters.get(0).type(), is("string"));
 
         List<Response> responses = describedBy.responses();
         assertThat(responses.size(), is(2));
@@ -284,7 +286,7 @@ public class SpecInterfacesV10TestCase
         assertThat(param1.name(), is("param1"));
         assertThat(param1.displayName().value(), is("Param 1"));
         assertThat(param1.description().value(), is("some description"));
-        // assertThat(param1.type().get(0), is("string"));
+        assertThat(param1.type(), is("string"));
         assertThat(param1.defaultValue(), nullValue());
         assertBaseUriExample(param1.example());
         assertThat(param1.required(), is(true));
@@ -318,7 +320,6 @@ public class SpecInterfacesV10TestCase
     {
         assertThat(traits.size(), is(2));
         assertThat(traits.get(0).name(), is("traitOne"));
-        // assertThat(traits.get(0).description().value(), is("method description"));
         assertThat(traits.get(0).usage().value(), is("late night"));
     }
 
@@ -359,7 +360,6 @@ public class SpecInterfacesV10TestCase
     {
         assertThat(traitRefs.size(), is(2));
         assertThat(traitRefs.get(0).name(), is("traitOne"));
-        // assertThat(traitRefs.get(0).trait().description().value(), is("method description"));
 
         assertThat(traitRefs.get(1).name(), is("traitTwo"));
         TypeInstance param = traitRefs.get(1).structuredValue();
@@ -391,7 +391,7 @@ public class SpecInterfacesV10TestCase
         assertResponses(post.responses());
         assertThat(post.is().size(), is(1));
         assertThat(post.is().get(0).name(), is("traitTwo"));
-        // assertThat(post.queryString().type().get(0), is("object"));
+        assertThat(post.queryString().type(), is("object"));
     }
 
     private void assertQueryParameters(List<TypeDeclaration> queryParameters)
@@ -430,8 +430,7 @@ public class SpecInterfacesV10TestCase
         assertThat(appJson.name(), is("application/json"));
         String jsonExample = appJson.example().value();
         assertThat(jsonExample, containsString("\"firstname\": \"tato\""));
-        // assertThat(appJson.type().size(), is(1));
-        // assertThat(appJson.type().get(0), is("User"));
+        assertThat(appJson.type(), is("User"));
         List<ValidationResult> validationResults = appJson.validate(jsonExample);
         assertThat(validationResults.size(), is(0));
 
@@ -444,8 +443,7 @@ public class SpecInterfacesV10TestCase
                      "  <xsd:element name=\"first\" type=\"xsd:string\" />\n" +
                      "  <xsd:element name=\"second\" type=\"xsd:string\" />\n" +
                      "</xsd:schema>\n";
-        // assertThat(.schema().size(), is(1));
-        // assertThat(appXml.schema().get(0), is(xsd));
+        assertThat(appXml.type(), is(xsd));
         assertThat(((XMLTypeDeclaration) appXml).schemaContent(), is(xsd));
     }
 }

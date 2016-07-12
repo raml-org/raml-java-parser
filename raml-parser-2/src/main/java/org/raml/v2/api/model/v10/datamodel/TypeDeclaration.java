@@ -22,7 +22,6 @@ import org.raml.v2.api.model.v10.common.Annotable;
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
 import org.raml.v2.api.model.v10.system.types.MarkdownString;
-import org.raml.v2.api.model.v10.system.types.StringType;
 
 
 public interface TypeDeclaration extends Annotable
@@ -39,10 +38,16 @@ public interface TypeDeclaration extends Annotable
      **/
     AnnotableSimpleType<String> displayName();
 
+
+    /**
+     * A base type which the current type extends, or more generally a type expression.
+     **/
+    String type();
+
+
     /**
      * Provides default value for a property
      **/
-    // --def-system-mod--
     String defaultValue();
 
 
@@ -67,7 +72,6 @@ public interface TypeDeclaration extends Annotable
     /**
      * A longer, human-friendly description of the type
      **/
-    // --def-system-mod--
     MarkdownString description();
 
 

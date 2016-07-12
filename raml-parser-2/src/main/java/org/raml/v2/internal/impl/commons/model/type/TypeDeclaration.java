@@ -30,8 +30,11 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
+import org.raml.v2.internal.impl.v10.nodes.ArrayTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
+import org.raml.v2.internal.impl.v10.nodes.UnionTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
@@ -82,6 +85,51 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         {
             return ((StringNode) node.getKey()).getValue();
         }
+    }
+
+    public String type()
+    {
+        return getTypeExpression(getTypeNode());
+    }
+
+    private String getTypeExpression(Node typeNode)
+    {
+        if (typeNode instanceof NativeTypeExpressionNode)
+        {
+            return ((NativeTypeExpressionNode) typeNode).getValue();
+        }
+        if (typeNode instanceof NamedTypeExpressionNode)
+        {
+            return ((NamedTypeExpressionNode) typeNode).getRefName();
+        }
+        if (typeNode instanceof ArrayTypeExpressionNode)
+        {
+            String typeExpression = getTypeExpression(((ArrayTypeExpressionNode) typeNode).of());
+            return typeExpression != null ? typeExpression + "[]" : null;
+        }
+        if (typeNode instanceof UnionTypeExpressionNode)
+        {
+            String unionOperator = " | ";
+            StringBuilder result = new StringBuilder();
+            for (TypeExpressionNode typeExpressionNode : ((UnionTypeExpressionNode) typeNode).of())
+            {
+                String typeExpression = getTypeExpression(typeExpressionNode);
+                if (typeExpression != null)
+                {
+                    result.append(typeExpression).append(unionOperator);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return result.delete(result.length() - unionOperator.length(), result.length()).toString();
+        }
+        if (typeNode.getSource() instanceof StringNode)
+        {
+            return ((StringNode) typeNode.getSource()).getValue();
+        }
+        return null;
     }
 
     public String schemaContent()
