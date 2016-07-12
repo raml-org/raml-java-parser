@@ -73,7 +73,7 @@ public class StreamUtils
         }
     }
 
-    private static byte[] trimBom(byte[] content)
+    public static byte[] trimBom(byte[] content)
     {
         int bomSize = 0;
         if (content.length > 4)
