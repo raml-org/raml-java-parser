@@ -78,20 +78,6 @@ public class Resource extends Annotable
         return resultList;
     }
 
-    public List<TypeDeclaration> uriParameters()
-    {
-        ArrayList<TypeDeclaration> result = new ArrayList<>();
-        Node uriParamsNode = NodeSelector.selectFrom("uriParameters", node.getValue());
-        if (uriParamsNode != null)
-        {
-            for (Node child : uriParamsNode.getChildren())
-            {
-                result.add(new TypeDeclarationModelFactory().create(child));
-            }
-        }
-        return result;
-    }
-
     public Resource parentResource()
     {
         ResourceNode parent = node.getParentResourceNode();

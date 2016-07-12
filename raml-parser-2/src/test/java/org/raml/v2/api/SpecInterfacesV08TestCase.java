@@ -117,9 +117,14 @@ public class SpecInterfacesV08TestCase
         List<Resource> children = top.resources();
         assertThat(children.size(), is(1));
         Resource child = children.get(0);
-        assertThat(child.relativeUri().value(), is("/child"));
-        assertThat(child.resourcePath(), is("/top/child"));
+        assertThat(child.relativeUri().value(), is("/children"));
+        assertThat(child.resourcePath(), is("/top/children"));
         assertThat(child.parentResource().resourcePath(), is("/top"));
+
+        Resource childId = child.resources().get(0);
+        assertThat(childId.uriParameters(), hasSize(1));
+        assertThat(childId.uriParameters().get(0).name(), is("childId"));
+        assertThat(childId.uriParameters().get(0).type(), is("string"));
     }
 
     private void assertResourceBaseUriParameters(List<Parameter> parameters)

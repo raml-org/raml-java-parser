@@ -90,6 +90,10 @@ resourceTypes:
                 body: *bodyPost
             400:
 
-
-    /child:
+    /children:
         description: child description
+
+        /{childId}:
+            uriParameters:
+                childId:
+                    type: string
