@@ -124,9 +124,9 @@
     "structuredValue": {
      "isScalar": true,
      "properties": [],
-     "value": "{\n  \"name\": \"John\",\n  \"email\": \"john@raml.org\",\n  \"age\": 2,\n}\n"
+     "value": "{\n  \"name\": \"John\",\n  \"email\": \"john@raml.org\",\n  \"age\": 2\n}\n"
     },
-    "value": "{\n  \"name\": \"John\",\n  \"email\": \"john@raml.org\",\n  \"age\": 2,\n}\n"
+    "value": "{\n  \"name\": \"John\",\n  \"email\": \"john@raml.org\",\n  \"age\": 2\n}\n"
    },
    "examples": [],
    "maxProperties": null,

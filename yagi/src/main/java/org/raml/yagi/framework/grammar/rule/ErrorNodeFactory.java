@@ -15,6 +15,10 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.EmptyErrorNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -22,10 +26,6 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.util.NodeSelector;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
 
 public class ErrorNodeFactory
 {
