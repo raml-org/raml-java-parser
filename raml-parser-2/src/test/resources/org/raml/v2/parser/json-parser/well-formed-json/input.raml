@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: hello
+mediaType: application/json
+types:
+  MyType:
+    properties:
+      x: string
+
+/hello:
+  get:
+  post:
+    responses:
+      202:
+        body:
+          application/json:
+            type: object
+            properties:
+              key:
+                type: object
+                properties:
+                  x: string
+                example: |
+                  {
+                      "x": "lala",
+                      "complex" : {
+                          "array" : [ 1, { "name" : "Billy" }, null, 3.14],
+                          "object" : { "id" : 123, "names" : [ "Bob", "Bobby" ]  },
+                          "booleanValue": true,
+                          "fakeBoolean": "false",
+                          "otherArray" : [ 2.65, { "objectWithArray" : [ 1, 2, "three", null ] } ]
+                      }
+                  }
