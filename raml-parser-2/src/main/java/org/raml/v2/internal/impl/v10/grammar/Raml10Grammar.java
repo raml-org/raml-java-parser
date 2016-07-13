@@ -66,6 +66,8 @@ public class Raml10Grammar extends BaseRamlGrammar
     public static final String ANNOTATION_TYPES_KEY_NAME = "annotationTypes";
     public static final String DEFAULT_TYPE_RULE = "defaultTypeRule";
     public static final String PROPERTY_TYPE_RULE = "propertyTypeRule";
+    public static final String TYPES_FACET_TYPE = "type";
+    public static final String TYPES_FACET_SCHEMA = "schema";
 
     public ObjectRule untitledRaml()
     {
@@ -73,7 +75,8 @@ public class Raml10Grammar extends BaseRamlGrammar
                     .with(annotationTypesField())
                     .with(annotationField())
                     .with(typesField())
-                    .with(usesField());
+                    .with(usesField())
+                    .with(exclusiveKeys(TYPES_KEY_NAME, SCHEMAS_KEY_NAME));
     }
 
     @Override
@@ -98,13 +101,16 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return super.methodValue()
                     .with(field(queryStringKey(), type()))
+                    .with(exclusiveKeys(QUERY_STRING_KEY_NAME, QUERY_PARAMETERS_KEY_NAME))
                     .with(annotationField());
     }
 
     @Override
     protected ObjectRule securitySchemePart()
     {
-        return super.securitySchemePart().with(annotationField());
+        return super.securitySchemePart()
+                    .with(annotationField())
+                    .with(exclusiveKeys(QUERY_STRING_KEY_NAME, QUERY_PARAMETERS_KEY_NAME));
     }
 
     @Override
@@ -128,8 +134,8 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected StringValueRule typesKey()
     {
-        return string("types")
-                              .description("Declarations of (data) types for use within this API.");
+        return string(TYPES_KEY_NAME)
+                                                     .description("Declarations of (data) types for use within this API.");
     }
 
 
@@ -280,8 +286,9 @@ public class Raml10Grammar extends BaseRamlGrammar
                                            .with(facetsField())
                                            .with(exampleField())
                                            .with(examplesField())
+                                           .with(exclusiveKeys(TYPES_FACET_TYPE, TYPES_FACET_SCHEMA))
                                            .with(
-                                                   when(asList("type", "schema"),
+                                                   when(asList(TYPES_FACET_TYPE, TYPES_FACET_SCHEMA),
                                                            is(stringTypeLiteral())
                                                                                   .add(patternField())
                                                                                   .add(minLengthField())
@@ -546,7 +553,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private StringValueRule schemaKey()
     {
-        return string("schema");
+        return string(TYPES_FACET_SCHEMA);
     }
 
     private KeyValueRule xmlFacetField()

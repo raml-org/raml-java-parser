@@ -56,6 +56,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     public static final String TRAITS_KEY_NAME = "traits";
     public static final String TYPES_KEY_NAME = "types";
     public static final String SCHEMAS_KEY_NAME = "schemas";
+    public static final String QUERY_PARAMETERS_KEY_NAME = "queryParameters";
+    public static final String QUERY_STRING_KEY_NAME = "queryString";
     public static final String SECURITY_SCHEMES_KEY_NAME = "securitySchemes";
     public static final String MIME_TYPE_REGEX =
             "([\\w\\d\\.\\-\\_\\+]+|\\*)\\/([\\w\\d\\.\\-\\_\\+]+|\\*);?([\\w\\d\\.\\-\\_\\+]+=[\\w\\d\\.\\-\\_\\+]+)?(\\s+[\\w\\d\\.\\-\\_\\+]+=[\\w\\d\\.\\-\\_\\+]+)*";
@@ -320,16 +322,16 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected StringValueRule queryStringKey()
     {
-        return string("queryString")
-                                    .description("Specifies the query string needed by this method." +
-                                                 " Mutually exclusive with queryParameters.");
+        return string(QUERY_STRING_KEY_NAME)
+                                            .description("Specifies the query string needed by this method." +
+                                                         " Mutually exclusive with queryParameters.");
     }
 
     protected StringValueRule queryParametersKey()
     {
-        return string("queryParameters")
-                                        .description("Detailed information about any query parameters needed by this method. " +
-                                                     "Mutually exclusive with queryString.");
+        return string(QUERY_PARAMETERS_KEY_NAME)
+                                                .description("Detailed information about any query parameters needed by this method. " +
+                                                             "Mutually exclusive with queryString.");
     }
 
 

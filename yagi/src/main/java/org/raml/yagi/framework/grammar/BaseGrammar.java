@@ -25,6 +25,7 @@ import org.raml.yagi.framework.grammar.rule.ChildBasedConditionalRule;
 import org.raml.yagi.framework.grammar.rule.ConditionalRule;
 import org.raml.yagi.framework.grammar.rule.ConditionalRules;
 import org.raml.yagi.framework.grammar.rule.DefaultValue;
+import org.raml.yagi.framework.grammar.rule.ExclusiveKeys;
 import org.raml.yagi.framework.grammar.rule.FieldPresentRule;
 import org.raml.yagi.framework.grammar.rule.FirstOfRule;
 import org.raml.yagi.framework.grammar.rule.IntegerTypeRule;
@@ -403,5 +404,15 @@ public class BaseGrammar
     public DefaultValue parentKey()
     {
         return new ParentKeyDefaultValue();
+    }
+
+    /**
+     * Creates a new set of exclusive rules
+     * @param keys Each of the mutually exclusive rules
+     * @return The rule
+     */
+    public ExclusiveKeys exclusiveKeys(String... keys)
+    {
+        return new ExclusiveKeys(keys);
     }
 }

@@ -1,0 +1,53 @@
+RamlDocumentNode (Start: 11 , End: 360, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 28, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 28, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 28, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "Types 002." (Start: -1 , End: -1)
+    KeyValueNodeImpl (Start: 29 , End: 40, On: input.raml)
+        SYStringNode: "version" (Start: 29 , End: 36, On: input.raml)
+        ObjectNodeImpl (Start: 38 , End: 40, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 40)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "v1" (Start: 38 , End: 40, On: input.raml, Source: SYStringNode)
+    KeyValueNodeImpl (Start: 41 , End: 74, On: input.raml)
+        SYStringNode: "baseUri" (Start: 41 , End: 48, On: input.raml)
+        ObjectNodeImpl (Start: 50 , End: 74, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 74)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "https://example.com/raml" (Start: 50 , End: 74, On: input.raml, Source: SYStringNode)
+    KeyValueNodeImpl (Start: 75 , End: 217, On: input.raml)
+        SYStringNode: "types" (Start: 75 , End: 80, On: input.raml)
+        SYObjectNode (Start: 84 , End: 217, On: input.raml)
+            TypeDeclarationField (Start: 84 , End: 217, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "Player1" (Start: 84 , End: 91, On: input.raml)
+                TypeDeclarationNode (Start: 93 , End: 217, On: input.raml, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                        ExternalSchemaTypeExpressionNode: "{
+  "type": "object",
+  "properties": [
+    {
+      "name": "string"
+    }
+  ]
+}
+" (Start: -1 , End: -1, Source: ExternalSchemaTypeExpressionNode)
+    ErrorNode: "types and schemas are mutually exclusive." (Start: 217 , End: 360, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "schemas" (Start: 217 , End: 224, On: input.raml)
+        SYObjectNode (Start: 228 , End: 360, On: input.raml)
+            TypeDeclarationField (Start: 228 , End: 360, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "Player2" (Start: 228 , End: 235, On: input.raml)
+                TypeDeclarationNode (Start: 237 , End: 360, On: input.raml, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                        ExternalSchemaTypeExpressionNode: "{
+  "type": "object",
+  "properties": [
+    {
+      "name": "string"
+    }
+  ]
+}
+" (Start: -1 , End: -1, Source: ExternalSchemaTypeExpressionNode)

@@ -17,6 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.util.NodeUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -47,6 +48,7 @@ public class ObjectRule extends Rule
 
     private List<KeyValueRule> fields;
     private ConditionalRules conditionalRules;
+    private ExclusiveKeys exclusiveKeys;
     private boolean strict = false;
     private boolean allowsAdditionalProperties = false;
 
@@ -183,6 +185,7 @@ public class ObjectRule extends Rule
             }
 
             validateKeysUnique(node);
+            validateExclusiveKeys(node);
             return getResult(node);
         }
     }
@@ -209,6 +212,41 @@ public class ObjectRule extends Rule
             else if (!(child instanceof ErrorNode))
             {
                 logger.error("Child '" + child + "' not a key value node");
+            }
+        }
+    }
+
+    private void validateExclusiveKeys(final Node node)
+    {
+        if (exclusiveKeys != null)
+        {
+            boolean hasMatchedRule = false;
+            List<Node> children = node.getChildren();
+            List<String> keys = exclusiveKeys.getAllRules();
+
+            for (Node child : children)
+            {
+                for (String rule : keys)
+                {
+                    if (child instanceof KeyValueNode)
+                    {
+                        String key = ((KeyValueNodeImpl) child).getKey().toString();
+
+                        if (key.equals(rule))
+                        {
+                            if (!hasMatchedRule)
+                            {
+                                hasMatchedRule = true;
+                            }
+                            else
+                            {
+                                String firstRule = keys.get(0);
+                                String secondRule = keys.get(1);
+                                child.replaceWith(ErrorNodeFactory.createExclusiveKeys(firstRule, secondRule));
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -340,6 +378,17 @@ public class ObjectRule extends Rule
     public ObjectRule with(ConditionalRules conditional)
     {
         this.conditionalRules = conditional;
+        return this;
+    }
+
+    /**
+     * Defines the mutually exclusive fields
+     * @param exclusive The exclusive rules
+     * @return this
+     */
+    public ObjectRule with(ExclusiveKeys exclusive)
+    {
+        this.exclusiveKeys = exclusive;
         return this;
     }
 
