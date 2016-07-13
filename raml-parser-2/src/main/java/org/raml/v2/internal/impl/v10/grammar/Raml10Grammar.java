@@ -135,7 +135,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected StringValueRule typesKey()
     {
         return string(TYPES_KEY_NAME)
-                                                     .description("Declarations of (data) types for use within this API.");
+                                     .description("Declarations of (data) types for use within this API.");
     }
 
 
