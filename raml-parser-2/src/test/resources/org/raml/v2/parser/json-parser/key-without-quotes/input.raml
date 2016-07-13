@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: hello
+mediaType: application/json
+types:
+  MyType:
+    properties:
+      x: string
+
+/hello:
+  get:
+  post:
+    responses:
+      202:
+        body:
+          application/json:
+            type: object
+            properties:
+              key:
+                type: object
+                properties:
+                  x: string
+                example: |
+                  {
+                  x: "lala"
+                  }

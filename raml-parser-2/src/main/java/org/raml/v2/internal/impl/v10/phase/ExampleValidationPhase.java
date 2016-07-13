@@ -21,8 +21,9 @@ import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
+import org.raml.yagi.framework.nodes.jackson.JNodeParser;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -118,32 +119,42 @@ public class ExampleValidationPhase implements Phase
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
     {
         final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
-        final Node parse = NodeParser.parse(resourceLoader, "", value);
-        final Node apply = rule.apply(parse);
-        final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
-        if (apply instanceof ErrorNode || !errorNodeList.isEmpty())
+        final Node parse = JNodeParser.parse(resourceLoader, "", value);
+
+        if (parse.getType() != NodeType.Error)
         {
-            String errorMessage = "";
+            final Node apply = rule.apply(parse);
+            final List<ErrorNode> errorNodeList = apply.findDescendantsWith(ErrorNode.class);
+
             if (apply instanceof ErrorNode)
             {
-                errorMessage += "- " + ((ErrorNode) apply).getErrorMessage();
+                errorNodeList.add(0, (ErrorNode) apply);
             }
-            for (ErrorNode errorNode : errorNodeList)
+
+            if (!errorNodeList.isEmpty())
             {
-                if (errorMessage.isEmpty())
+                String errorMessage = "";
+                for (ErrorNode errorNode : errorNodeList)
                 {
-                    errorMessage = "- " + errorNode.getErrorMessage();
+                    if (errorMessage.isEmpty())
+                    {
+                        errorMessage = "- " + errorNode.getErrorMessage();
+                    }
+                    else
+                    {
+                        errorMessage += "\n" + "- " + errorNode.getErrorMessage();
+                    }
                 }
-                else
-                {
-                    errorMessage += "\n" + "- " + errorNode.getErrorMessage();
-                }
+                return ErrorNodeFactory.createInvalidJsonExampleNode(errorMessage);
             }
-            return ErrorNodeFactory.createInvalidJsonExampleNode(errorMessage);
+            else
+            {
+                return exampleValue;
+            }
         }
         else
         {
-            return exampleValue;
+            return parse;
         }
     }
 
