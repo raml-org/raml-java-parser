@@ -36,7 +36,7 @@ public class MinPropertiesRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node.getChildren().size() > minProperties;
+        return node.getChildren().size() >= minProperties;
     }
 
     @Nonnull
@@ -45,7 +45,7 @@ public class MinPropertiesRule extends Rule
     {
         if (matches(node))
         {
-            return createNodeUsingFactory(node, ((StringNode) node).getValue());
+            return createNodeUsingFactory(node);
         }
         else
         {
