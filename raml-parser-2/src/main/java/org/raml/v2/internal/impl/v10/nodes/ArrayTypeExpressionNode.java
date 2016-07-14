@@ -18,8 +18,10 @@ package org.raml.v2.internal.impl.v10.nodes;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
 import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 
@@ -90,7 +92,9 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
         final TypeExpressionNode of = of();
         if (of != null)
         {
-            return new ArrayResolvedType(node, of.generateDefinition(node));
+            final TypeDeclarationNode itemsTypeDeclarationNode = new InlineTypeDeclarationFactory().create(of);
+            itemsTypeDeclarationNode.setParent(node);
+            return new ArrayResolvedType(node, of.generateDefinition(itemsTypeDeclarationNode));
         }
         else
         {
