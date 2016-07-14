@@ -17,6 +17,9 @@ package org.raml.v2.internal.impl.commons.model.type;
 
 import static java.util.Collections.singletonList;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,11 +46,7 @@ import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.util.NodeSelector;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
 {
@@ -155,7 +154,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         final TypeDeclarationNode node = (TypeDeclarationNode) getNode();
         final ResourceLoader resourceLoader = node.getStartPosition().getResourceLoader();
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
-        final Node validate = exampleValidationPhase.validate(node, new StringNodeImpl(payload));
+        final Node validate = exampleValidationPhase.validate(node, payload);
         if (validate instanceof ErrorNode)
         {
             return singletonList(new RamlValidationResult((ErrorNode) validate));

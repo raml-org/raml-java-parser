@@ -23,7 +23,9 @@ import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
+import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -77,6 +79,17 @@ public class ExampleValidationPhase implements Phase
             }
         }
         return tree;
+    }
+
+    @Nullable
+    public Node validate(TypeDeclarationNode type, String exampleValue)
+    {
+        Node exampleValueNode = new StringNodeImpl(exampleValue);
+        if (!isJsonValue(exampleValue) && !isXmlValue(exampleValue))
+        {
+            exampleValueNode = NodeParser.parse(resourceLoader, "", exampleValue);
+        }
+        return validate(type, exampleValueNode);
     }
 
     @Nullable
