@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -79,6 +80,22 @@ public class SpecInterfacesV10TestCase
         assertThat(basic.type(), is("string"));
         TypeDeclaration hipermedia = annotationTypes.get(1);
         assertThat(hipermedia.name(), is("complex"));
+        assertThat(hipermedia, is(instanceOf(ObjectTypeDeclaration.class)));
+
+        ObjectTypeDeclaration object = (ObjectTypeDeclaration) hipermedia;
+
+        TypeDeclaration property = object.properties().get(0);
+        assertThat(property.name(), is("controls"));
+        assertThat(property, is(instanceOf(ObjectTypeDeclaration.class)));
+
+        ObjectTypeDeclaration object1 = (ObjectTypeDeclaration) property;
+
+        TypeDeclaration property1 = object1.properties().get(2);
+        assertThat(property1.name(), is("names"));
+        assertThat(property1, is(instanceOf(ArrayTypeDeclaration.class)));
+
+        ArrayTypeDeclaration array = (ArrayTypeDeclaration) property1;
+        assertThat(array.items(), is(instanceOf(StringTypeDeclaration.class)));
     }
 
     private void assertApi(Api api)
@@ -241,7 +258,6 @@ public class SpecInterfacesV10TestCase
         assertThat(settings.requestTokenUri().value(), is("https://api.dropbox.com/1/oauth/request_token"));
         assertThat(settings.authorizationUri().value(), is("https://www.dropbox.com/1/oauth/authorize"));
         assertThat(settings.tokenCredentialsUri().value(), is("https://api.dropbox.com/1/oauth/access_token"));
-
 
         assertThat(settings.signatures(), hasSize(2));
         assertThat(settings.signatures().get(0), is("HMAC-SHA1"));
@@ -439,11 +455,9 @@ public class SpecInterfacesV10TestCase
         assertThat(appXml.name(), is("application/xml"));
         assertThat(appXml.examples().size(), is(2));
         assertThat(appXml.examples().get(0).value(), is("<first/>\n"));
-        String xsd = "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n" +
-                     "<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
-                     "  <xsd:element name=\"first\" type=\"xsd:string\" />\n" +
-                     "  <xsd:element name=\"second\" type=\"xsd:string\" />\n" +
-                     "</xsd:schema>\n";
+        String xsd = "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n"
+                     + "<xsd:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" version=\"1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n"
+                     + "  <xsd:element name=\"first\" type=\"xsd:string\" />\n" + "  <xsd:element name=\"second\" type=\"xsd:string\" />\n" + "</xsd:schema>\n";
         assertThat(appXml.type(), is(xsd));
         assertThat(((XMLTypeDeclaration) appXml).schemaContent(), is(xsd));
     }

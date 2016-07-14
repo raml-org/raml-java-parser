@@ -27,7 +27,7 @@ public class InlineTypeDeclarationFactory implements NodeFactory
 {
 
     @Override
-    public Node create(@Nonnull Node currentNode, Object... args)
+    public TypeDeclarationNode create(@Nonnull Node currentNode, Object... args)
     {
         final TypeDeclarationNode node = new TypeDeclarationNode();
         node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), currentNode.copy()));
