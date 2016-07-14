@@ -36,7 +36,7 @@ public class BooleanTypeRule extends AbstractTypeRule
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
-        return Arrays.<Suggestion> asList(new DefaultSuggestion("true", "Boolean true", ""), new DefaultSuggestion("false", "Boolean false", ""));
+        return Arrays.<Suggestion> asList(new DefaultSuggestion("true", "Boolean true", "true"), new DefaultSuggestion("false", "Boolean false", "false"));
     }
 
     @Override

@@ -1,0 +1,11 @@
+[ {
+  "label" : "false",
+  "description" : "Boolean false",
+  "value" : "false",
+  "prefix" : ""
+}, {
+  "label" : "true",
+  "description" : "Boolean true",
+  "value" : "true",
+  "prefix" : ""
+} ]
