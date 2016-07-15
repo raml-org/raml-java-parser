@@ -32,6 +32,7 @@ import org.raml.yagi.framework.grammar.rule.MaxPropertiesRule;
 import org.raml.yagi.framework.grammar.rule.MaximumValueRule;
 import org.raml.yagi.framework.grammar.rule.MinItemsRule;
 import org.raml.yagi.framework.grammar.rule.MinLengthRule;
+import org.raml.yagi.framework.grammar.rule.MinPropertiesRule;
 import org.raml.yagi.framework.grammar.rule.MinimumValueRule;
 import org.raml.yagi.framework.grammar.rule.NullValueRule;
 import org.raml.yagi.framework.grammar.rule.NumberTypeRule;
@@ -197,7 +198,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 
             if (objectTypeDefinition.getMinProperties() != null)
             {
-                allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMinProperties()));
+                allOfRule.and(new MinPropertiesRule(objectTypeDefinition.getMinProperties()));
             }
 
             return allOfRule;

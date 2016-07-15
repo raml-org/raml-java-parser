@@ -16,7 +16,6 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
@@ -36,7 +35,7 @@ public class MaxPropertiesRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node.getChildren().size() < maxProperties;
+        return node.getChildren().size() <= maxProperties;
     }
 
     @Nonnull

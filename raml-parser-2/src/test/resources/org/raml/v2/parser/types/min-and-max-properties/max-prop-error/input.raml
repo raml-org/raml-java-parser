@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Initial_comments:
+    type: object
+    maxProperties: 2
+    properties:
+      comment_id?: number
+      initial_comments: string
+      author?: string
+    example:
+      initial_comments: mm
+      author: L
+      comment_id: 666
