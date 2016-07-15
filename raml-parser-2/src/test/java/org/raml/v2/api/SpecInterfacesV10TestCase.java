@@ -43,6 +43,7 @@ import org.raml.v2.api.model.v10.datamodel.StringTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.TypeInstance;
 import org.raml.v2.api.model.v10.datamodel.TypeInstanceProperty;
+import org.raml.v2.api.model.v10.datamodel.UnionTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.XMLTypeDeclaration;
 import org.raml.v2.api.model.v10.declarations.AnnotationRef;
 import org.raml.v2.api.model.v10.methods.Method;
@@ -415,7 +416,9 @@ public class SpecInterfacesV10TestCase
         assertThat(queryParameters.size(), is(2));
         assertThat(queryParameters.get(0).validate("10").size(), is(0));
         assertThat(queryParameters.get(0).validate("10feet").size(), is(1));
-        assertThat(queryParameters.get(1).validate("- a\n- b\n").size(), is(0));
+        ArrayTypeDeclaration arrayType = (ArrayTypeDeclaration) queryParameters.get(1);
+        assertThat(arrayType.validate("- a\n- 2\n").size(), is(0));
+        assertTrue(arrayType.items() instanceof UnionTypeDeclaration);
     }
 
     private void assertHeaders(List<TypeDeclaration> headers)

@@ -104,7 +104,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         if (typeNode instanceof ArrayTypeExpressionNode)
         {
             String typeExpression = getTypeExpression(((ArrayTypeExpressionNode) typeNode).of());
-            return typeExpression != null ? typeExpression + "[]" : null;
+            return typeExpression != null ? addParenthesesIfNeeded(typeExpression) + "[]" : null;
         }
         if (typeNode instanceof UnionTypeExpressionNode)
         {
@@ -115,7 +115,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
                 String typeExpression = getTypeExpression(typeExpressionNode);
                 if (typeExpression != null)
                 {
-                    result.append(typeExpression).append(unionOperator);
+                    result.append(addParenthesesIfNeeded(typeExpression)).append(unionOperator);
                 }
                 else
                 {
@@ -129,6 +129,15 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
             return ((StringNode) typeNode.getSource()).getValue();
         }
         return null;
+    }
+
+    private String addParenthesesIfNeeded(String typeExpression)
+    {
+        if (typeExpression.contains("|") || typeExpression.contains(","))
+        {
+            typeExpression = "(" + typeExpression + ")";
+        }
+        return typeExpression;
     }
 
     public String schemaContent()
