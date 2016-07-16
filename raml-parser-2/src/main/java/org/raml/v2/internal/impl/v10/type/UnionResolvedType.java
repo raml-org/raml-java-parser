@@ -17,6 +17,10 @@ package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.nodes.UnionTypeExpressionNode;
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.StringNodeImpl;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -31,7 +35,7 @@ public class UnionResolvedType implements ResolvedType
 
     public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of)
     {
-        this.typeNode = typeNode;
+        this.typeNode = findUnionExpressionType(typeNode, typeNode.getChildren());
         this.of = of;
     }
 
@@ -43,6 +47,35 @@ public class UnionResolvedType implements ResolvedType
     protected UnionResolvedType copy()
     {
         return new UnionResolvedType(typeNode, new ArrayList<>(of));
+    }
+
+    protected TypeDeclarationNode findUnionExpressionType(TypeDeclarationNode typeNode, List<Node> children)
+    {
+        UnionTypeExpressionNode foundUnion = null;
+        for (Node exp : children)
+        {
+            if (exp instanceof UnionTypeExpressionNode)
+                foundUnion = (UnionTypeExpressionNode) exp;
+        }
+        if (foundUnion != null)
+        {
+            TypeDeclarationNode cloned = (TypeDeclarationNode) typeNode.copy();
+            cloned.setParent(typeNode.getParent());
+            cloned.removeChildren();
+            KeyValueNodeImpl expressionNode = new KeyValueNodeImpl(new StringNodeImpl("type"), foundUnion);
+            cloned.addChild(expressionNode);
+            return cloned;
+        }
+        else
+        {
+            for (Node child : children)
+            {
+                TypeDeclarationNode tmp = findUnionExpressionType(typeNode, child.getChildren());
+                if (tmp != null)
+                    return tmp;
+            }
+            return null;
+        }
     }
 
     @Override
