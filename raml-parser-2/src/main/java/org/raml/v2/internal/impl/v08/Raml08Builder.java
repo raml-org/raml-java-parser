@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.v08;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
@@ -71,8 +72,11 @@ public class Raml08Builder
         // Applies resourceTypes and Traits Library
         final TransformationPhase third = new TransformationPhase(new ResourceTypesTraitsTransformer(raml08Grammar));
 
+        //
+        final TransformationPhase duplicatedPaths = new TransformationPhase(new DuplicatedPathsTransformer());
+
         // Schema Types example validation
-        return Arrays.asList(first, second, third);
+        return Arrays.asList(first, second, third, duplicatedPaths);
 
     }
 }

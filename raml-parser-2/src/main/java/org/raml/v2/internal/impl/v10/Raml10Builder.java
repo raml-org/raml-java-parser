@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -169,6 +170,8 @@ public class Raml10Builder
         // Applies resourceTypes and Traits Library
         final TransformationPhase resourcePhase = new TransformationPhase(new ResourceTypesTraitsTransformer(new Raml10Grammar()));
 
+        final TransformationPhase duplicatedPaths = new TransformationPhase(new DuplicatedPathsTransformer());
+
         // Run grammar again to re-validate tree
 
         final AnnotationValidationPhase annotationValidationPhase = new AnnotationValidationPhase(resourceLoader);
@@ -187,6 +190,7 @@ public class Raml10Builder
                 libraryLink,
                 referenceCheck,
                 resourcePhase,
+                duplicatedPaths,
                 annotationValidationPhase,
                 mediaTypeInjection,
                 grammarPhase,

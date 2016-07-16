@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: API
+
+baseUri: /some/base/uri
+
+/someChildUri:
+  get:
+    responses:
+      200:
+        body:
+          application/xml:
+            description: some very useful resource
+  /anotherChild:
+    put:
+      body:
+        application/json:
+          description: another very useful resource
+
+/someChildUri/anotherChild:
