@@ -1,0 +1,42 @@
+#%RAML 1.0
+title: parameters context
+uses:
+    a: liba.raml
+
+types:
+    monkey:
+        enum: [ kong, cheetah ]
+    cat:
+        enum: [ garfield, felix ]
+
+traits:
+    trait-root:
+        headers:
+            h-trait-root: string
+
+annotationTypes:
+    ann-root:
+        enum: [ root ]
+
+/user:
+    type:
+        a.rt-lib:
+            # types
+            model-root: monkey
+            example-root: kong
+            model-lib: bear
+            example-lib: yogi
+            model-both: cat
+            example-both-root: felix
+            model-both-lib-prefix: a.cat
+            example-both-lib: azrael
+
+            # traits
+            trait-root: trait-root
+            trait-lib: trait-lib
+            trait-lib-prefix: a.trait-lib-prefix
+
+            # annotations
+            ann-root: (ann-root)
+            ann-lib: (ann-lib)
+            ann-lib-prefix: (a.ann-lib)

@@ -22,10 +22,12 @@ public class ExecutionContext
 {
 
     private Map<String, String> parameters;
+    private Node contextNode;
 
-    public ExecutionContext(Map<String, String> parameters)
+    public ExecutionContext(Map<String, String> parameters, Node contextNode)
     {
         this.parameters = parameters;
+        this.contextNode = contextNode;
     }
 
     public void addVariable(String name, String value)
@@ -42,5 +44,10 @@ public class ExecutionContext
     public boolean containsVariable(String variable)
     {
         return parameters.containsKey(variable);
+    }
+
+    public Node getContextNode()
+    {
+        return contextNode;
     }
 }

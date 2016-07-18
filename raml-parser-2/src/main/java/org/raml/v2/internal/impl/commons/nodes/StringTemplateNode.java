@@ -25,7 +25,6 @@ import org.raml.yagi.framework.nodes.ExecutableNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.StringNodeImpl;
 
 public class StringTemplateNode extends AbstractStringNode implements ExecutableNode
 {
@@ -73,7 +72,7 @@ public class StringTemplateNode extends AbstractStringNode implements Executable
                 content.append(((StringNode) child).getValue());
             }
         }
-        return new StringNodeImpl(content.toString());
+        return new ContextAwareStringNodeImpl(content.toString(), context.getContextNode());
     }
 
     @Nonnull

@@ -15,6 +15,13 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -24,15 +31,11 @@ import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.util.NodeUtils;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public abstract class AbstractReferenceNode extends AbstractRamlNode implements ReferenceNode
 {
 
     private Node refNode;
+    private Node contextNode;
 
     public AbstractReferenceNode()
     {
@@ -57,8 +60,10 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
     @Nullable
     public abstract Node resolveReference();
 
-
-    public Node getRelativeNode()
+    /**
+     * @return the context node closest to the reference usage
+     */
+    private Node getRelativeNode()
     {
         if (!getChildren().isEmpty() && getChildren().get(0) instanceof ReferenceNode)
         {
@@ -68,6 +73,21 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
         {
             return NodeUtils.getContextNode(this);
         }
+    }
+
+    /**
+     * If the contextNode is set, returns a list of two context nodes
+     * using the relative node as a fallback context
+     */
+    protected List<Node> getContextNodes()
+    {
+        List<Node> contextNodes = new ArrayList<>();
+        contextNodes.add(getRelativeNode());
+        if (contextNode != null && contextNode != contextNodes.get(0))
+        {
+            contextNodes.add(0, contextNode);
+        }
+        return contextNodes;
     }
 
     @Override
@@ -114,4 +134,8 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
         return null;
     }
 
+    public void setContextNode(Node contextNode)
+    {
+        this.contextNode = contextNode;
+    }
 }

@@ -1,0 +1,43 @@
+#%RAML 1.0 Library
+
+types:
+    bear:
+        enum: [ yogi, pooh ]
+    cat:
+        enum: [ azrael, sylvester ]
+
+traits:
+    trait-lib:
+        headers:
+            h-trait-lib: string
+    trait-lib-prefix:
+        headers:
+            h-trait-lib-prefix: string
+
+annotationTypes:
+    ann-lib:
+        enum: [ lib ]
+
+resourceTypes:
+    rt-lib:
+        post:
+            is: [<<trait-root>>, <<trait-lib>>, <<trait-lib-prefix>>]
+            headers:
+                h-type-root:
+                    type: <<model-root>>
+                    example: <<example-root>>
+                h-type-lib:
+                    type: <<model-lib>>
+                    example: <<example-lib>>
+                h-type-both:
+                    type: <<model-both>>
+                    example: <<example-both-root>>
+                h-type-lib-prefix:
+                    type: <<model-both-lib-prefix>>
+                    example: <<example-both-lib>>
+                h-type-hardwired:
+                    type: cat
+                    example: sylvester
+            <<ann-root>>: root
+            <<ann-lib>>: lib
+            <<ann-lib-prefix>>: lib

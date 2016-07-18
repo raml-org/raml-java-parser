@@ -41,6 +41,7 @@ import org.raml.v2.internal.impl.commons.nodes.ResourceTypeNode;
 import org.raml.v2.internal.impl.commons.nodes.StringTemplateNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 import org.raml.yagi.framework.util.NodeSelector;
+import org.raml.yagi.framework.util.NodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -155,7 +156,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
         {
             parameters.putAll(((ParametrizedReferenceNode) resourceTypeReference).getParameters());
         }
-        resolveParameters(templateNode, parameters);
+        resolveParameters(templateNode, parameters, NodeUtils.getContextNode(baseResourceNode));
 
         // apply grammar phase to generate method nodes
         GrammarPhase grammarPhase = new GrammarPhase(ramlGrammar.resourceTypeParamsResolved());
@@ -235,7 +236,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
         {
             parameters.putAll(((ParametrizedReferenceNode) traitReference).getParameters());
         }
-        resolveParameters(copy, parameters);
+        resolveParameters(copy, parameters, NodeUtils.getContextNode(methodNode));
 
         // apply grammar phase to generate method nodes
         GrammarPhase validatePhase = new GrammarPhase(ramlGrammar.traitParamsResolved());
@@ -248,9 +249,9 @@ public class ResourceTypesTraitsTransformer implements Transformer
         merge(methodNode.getValue(), copy.getValue());
     }
 
-    private void resolveParameters(Node parameterizedNode, Map<String, String> parameters)
+    private void resolveParameters(Node parameterizedNode, Map<String, String> parameters, Node referenceContext)
     {
-        ExecutionContext context = new ExecutionContext(parameters);
+        ExecutionContext context = new ExecutionContext(parameters, referenceContext);
         List<StringTemplateNode> templateNodes = parameterizedNode.findDescendantsWith(StringTemplateNode.class);
         for (StringTemplateNode templateNode : templateNodes)
         {

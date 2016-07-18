@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.rule;
 
+import org.raml.v2.internal.impl.commons.nodes.AbstractReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.ContextAwareStringNodeImpl;
 import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
 import org.raml.yagi.framework.grammar.rule.ClassNodeFactory;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
@@ -73,6 +75,13 @@ public class NodeReferenceFactory implements NodeFactory
                 parent = libraryRefNode;
                 // The 1 is from the dot
                 currentShift -= 1;
+            }
+            if (i == 0)
+            {
+                if (currentNode instanceof ContextAwareStringNodeImpl && parent instanceof AbstractReferenceNode)
+                {
+                    ((AbstractReferenceNode) parent).setContextNode(((ContextAwareStringNodeImpl) currentNode).getReferenceContext());
+                }
             }
         }
         return result;

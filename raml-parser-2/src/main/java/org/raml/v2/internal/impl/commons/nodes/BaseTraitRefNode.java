@@ -46,16 +46,20 @@ public class BaseTraitRefNode extends AbstractReferenceNode
     @Override
     public TraitNode resolveReference()
     {
-        // We add the .. as the node selector selects the value and we want the key value pair
-        final Node resolve = NodeSelector.selectFrom(Raml10Grammar.TRAITS_KEY_NAME + "/*/" + getRefName() + "/..", getRelativeNode());
-        if (resolve instanceof TraitNode)
+        for (Node contextNode : getContextNodes())
         {
-            return (TraitNode) resolve;
+            // We add the .. as the node selector selects the value and we want the key value pair
+            final Node resolve = NodeSelector.selectFrom(Raml10Grammar.TRAITS_KEY_NAME + "/*/" + getRefName() + "/..", contextNode);
+            if (resolve instanceof TraitNode)
+            {
+                return (TraitNode) resolve;
+            }
+            if (resolve != null)
+            {
+                return null;
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Nonnull

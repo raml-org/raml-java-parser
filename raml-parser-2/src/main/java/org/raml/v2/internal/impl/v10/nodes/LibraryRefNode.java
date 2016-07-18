@@ -68,16 +68,28 @@ public class LibraryRefNode extends AbstractReferenceNode
     @Nullable
     protected Node selectLibraryLinkNode()
     {
-        final Node relativeNode = getRelativeNode();
-        if (relativeNode instanceof LibraryNodeProvider)
+        // final Node relativeNode = getRelativeNode();
+        for (Node contextNode : getContextNodes())
         {
-            final Node libraryNode = ((LibraryNodeProvider) relativeNode).getLibraryNode();
-            return NodeSelector.selectFrom(name, libraryNode);
+            if (contextNode instanceof LibraryNodeProvider)
+            {
+                final Node libraryNode = ((LibraryNodeProvider) contextNode).getLibraryNode();
+                Node node = NodeSelector.selectFrom(name, libraryNode);
+                if (node != null)
+                {
+                    return node;
+                }
+            }
+            else
+            {
+                Node node = NodeSelector.selectFrom(Raml10Grammar.USES_KEY_NAME + "/" + name, contextNode);
+                if (node != null)
+                {
+                    return node;
+                }
+            }
         }
-        else
-        {
-            return NodeSelector.selectFrom(Raml10Grammar.USES_KEY_NAME + "/" + name, relativeNode);
-        }
+        return null;
     }
 
     @Nonnull

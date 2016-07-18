@@ -51,15 +51,19 @@ public class AnnotationReferenceNode extends AbstractReferenceNode implements St
     @Override
     public AnnotationTypeNode resolveReference()
     {
-        final Node resolve = NodeSelector.selectFrom(Raml10Grammar.ANNOTATION_TYPES_KEY_NAME + "/*/" + getRefName() + "/..", getRelativeNode());
-        if (resolve instanceof AnnotationTypeNode)
+        for (Node contextNode : getContextNodes())
         {
-            return (AnnotationTypeNode) resolve;
+            final Node resolve = NodeSelector.selectFrom(Raml10Grammar.ANNOTATION_TYPES_KEY_NAME + "/*/" + getRefName() + "/..", contextNode);
+            if (resolve instanceof AnnotationTypeNode)
+            {
+                return (AnnotationTypeNode) resolve;
+            }
+            if (resolve != null)
+            {
+                return null;
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Nonnull

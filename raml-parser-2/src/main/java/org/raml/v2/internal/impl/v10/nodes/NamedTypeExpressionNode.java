@@ -45,21 +45,21 @@ public class NamedTypeExpressionNode extends AbstractReferenceNode implements Ty
     @Override
     public TypeDeclarationNode resolveReference()
     {
-        // We add the .. as the node selector selects the value and we want the key value pair
-        Node node = NodeSelector.selectFrom(Raml10Grammar.TYPES_KEY_NAME + "/" + getRefName(), getRelativeNode());
-        if (node == null)
+        for (Node contextNode : getContextNodes())
         {
-            // If is not defined in types we need to search in schemas
-            node = NodeSelector.selectFrom(Raml10Grammar.SCHEMAS_KEY_NAME + "/" + getRefName(), getRelativeNode());
+            // We add the .. as the node selector selects the value and we want the key value pair
+            Node node = NodeSelector.selectFrom(Raml10Grammar.TYPES_KEY_NAME + "/" + getRefName(), contextNode);
+            if (node == null)
+            {
+                // If is not defined in types we need to search in schemas
+                node = NodeSelector.selectFrom(Raml10Grammar.SCHEMAS_KEY_NAME + "/" + getRefName(), contextNode);
+            }
+            if (node instanceof TypeDeclarationNode)
+            {
+                return (TypeDeclarationNode) node;
+            }
         }
-        if (node instanceof TypeDeclarationNode)
-        {
-            return (TypeDeclarationNode) node;
-        }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Override

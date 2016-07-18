@@ -1,0 +1,35 @@
+#%RAML 1.0 Library
+
+types:
+    bear:
+        type: string
+        enum: [ yogi, pooh ]
+
+resourceTypes:
+    rt:
+        post:
+            headers:
+                ok-no-params:
+                    type: bear
+                    example: yogi
+                ok-example-param:
+                    type: bear
+                    example: <<example-ok>>
+                ok-type-param:
+                    type: <<model>>
+                    example: yogi
+                ok-all-params:
+                    type: <<model>>
+                    example: <<example-ok>>
+                broken-no-params:
+                    type: bear
+                    example: lotso
+                broken-example-param:
+                    type: bear
+                    example: <<example-broken>>
+                broken-type-param:
+                    type: <<model>>
+                    example: lotso
+                broken-all-params:
+                    type: <<model>>
+                    example: <<example-broken>>

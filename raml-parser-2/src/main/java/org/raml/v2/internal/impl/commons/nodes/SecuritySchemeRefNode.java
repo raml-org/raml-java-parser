@@ -45,16 +45,20 @@ public class SecuritySchemeRefNode extends AbstractReferenceNode
     @Override
     public SecuritySchemeNode resolveReference()
     {
-        // We add the .. as the node selector selects the value and we want the key value pair
-        final Node resolve = NodeSelector.selectFrom(Raml10Grammar.SECURITY_SCHEMES_KEY_NAME + "/*/" + getRefName() + "/..", getRelativeNode());
-        if (resolve instanceof SecuritySchemeNode)
+        for (Node contextNode : getContextNodes())
         {
-            return (SecuritySchemeNode) resolve;
+            // We add the .. as the node selector selects the value and we want the key value pair
+            final Node resolve = NodeSelector.selectFrom(Raml10Grammar.SECURITY_SCHEMES_KEY_NAME + "/*/" + getRefName() + "/..", contextNode);
+            if (resolve instanceof SecuritySchemeNode)
+            {
+                return (SecuritySchemeNode) resolve;
+            }
+            if (resolve != null)
+            {
+                return null;
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     @Nonnull
