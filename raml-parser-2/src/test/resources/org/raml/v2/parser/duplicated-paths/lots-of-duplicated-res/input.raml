@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: The API
+version: v1
+baseUri: https://api.theapi.com
+/tons:
+  displayName: Tons
+  /of:
+    displayName: Of
+    /api:
+      displayName: Api
+      /resources:
+        displayName: Resources
+      /this:
+        displayName: This
+        /is:
+          displayName: Is
+          /not:
+            displayName: Not
+            /duplicated:
+              displayName: Duplicated
+            /another:
+              displayName: Another
+          /resource:
+            displayName: Resource
+    /api/resources:
+      displayName: This is duplicated
+  /of/api:
+    displayName: More duplicated paths
+/this/is/not/duplicated:
+  displayName: Res
+/tons/of/api/resources/even:
+  displayName: Even
+  /more:
+    displayName: More
+  /and/more:
+    displayName: Yay
+  /and:
+    displayName: And
+    /more:
+      displayName: More dups
