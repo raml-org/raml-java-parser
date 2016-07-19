@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: Sample API
+types:
+  Person:
+    properties:
+      name: string
+      age: integer
+    additionalProperties:
+
+/res:
+  get:
+    body:
+      application/xml:
+        type: Person
+        example: |
+          <Person>
+            <name>max</name>
+            <age>22</age>
+          </Person>

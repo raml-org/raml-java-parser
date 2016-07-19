@@ -19,6 +19,7 @@ import com.google.common.collect.Lists;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
@@ -81,10 +82,10 @@ public class NodeSelector
 
     public static <T> T selectType(String path, Node from, T defaultValue)
     {
-        SimpleTypeNode<T> selectedNode = (SimpleTypeNode<T>) selectFrom(path, from);
-        if (selectedNode != null)
+        Node node = selectFrom(path, from);
+        if (node != null && !(node instanceof NullNode))
         {
-            return selectedNode.getValue();
+            return ((SimpleTypeNode<T>) node).getValue();
         }
         return defaultValue;
     }
