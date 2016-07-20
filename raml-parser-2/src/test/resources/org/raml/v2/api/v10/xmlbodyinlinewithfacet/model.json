@@ -109,11 +109,11 @@
        "type": "object",
        "xml": {
         "annotations": [],
-        "attribute": false,
+        "attribute": null,
         "name": "Homer",
         "namespace": null,
         "prefix": null,
-        "wrapped": false
+        "wrapped": null
        }
       }
      ],

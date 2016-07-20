@@ -11,8 +11,8 @@
    "displayName": "Param 1",
    "example": "one",
    "name": "param1",
-   "repeat": false,
-   "required": false,
+   "repeat": null,
+   "required": null,
    "type": "string"
   }
  ],
@@ -65,8 +65,8 @@
      "displayName": "param1",
      "example": null,
      "name": "param1",
-     "repeat": false,
-     "required": false,
+     "repeat": null,
+     "required": null,
      "type": "number"
     }
    ],
@@ -86,8 +86,8 @@
        "displayName": "param1",
        "example": null,
        "name": "param1",
-       "repeat": false,
-       "required": false,
+       "repeat": null,
+       "required": null,
        "type": "boolean"
       }
      ],
@@ -107,7 +107,7 @@
        "example": "desc",
        "name": "order",
        "repeat": true,
-       "required": false,
+       "required": null,
        "type": "string"
       }
      ],
@@ -149,8 +149,8 @@
          "displayName": "description",
          "example": null,
          "name": "description",
-         "repeat": false,
-         "required": false,
+         "repeat": null,
+         "required": null,
          "type": "string"
         },
         {
@@ -159,8 +159,8 @@
          "displayName": "image",
          "example": null,
          "name": "image",
-         "repeat": false,
-         "required": false,
+         "repeat": null,
+         "required": null,
          "type": "file"
         }
        ],
@@ -212,8 +212,8 @@
            "displayName": "description",
            "example": null,
            "name": "description",
-           "repeat": false,
-           "required": false,
+           "repeat": null,
+           "required": null,
            "type": "string"
           },
           {
@@ -222,8 +222,8 @@
            "displayName": "image",
            "example": null,
            "name": "image",
-           "repeat": false,
-           "required": false,
+           "repeat": null,
+           "required": null,
            "type": "file"
           }
          ],
@@ -288,8 +288,8 @@
          "displayName": "childId",
          "example": null,
          "name": "childId",
-         "repeat": false,
-         "required": false,
+         "repeat": null,
+         "required": null,
          "type": "string"
         }
        ]

@@ -18,9 +18,7 @@ package org.raml.v2.api;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -161,7 +159,7 @@ public class SpecInterfacesV08TestCase
         assertThat(order.displayName(), is("order"));
         assertThat(order.example(), is("desc"));
         assertThat(order.defaultValue(), is("asc"));
-        assertThat(order.required(), is(false));
+        assertNull(order.required());
         assertThat(order.repeat(), is(true));
     }
 
