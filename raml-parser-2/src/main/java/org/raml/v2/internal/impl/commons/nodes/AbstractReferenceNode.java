@@ -27,6 +27,7 @@ import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.util.NodeUtils;
@@ -106,10 +107,15 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
             for (Node node : parametersNode.getChildren())
             {
                 KeyValueNode keyValueNode = (KeyValueNode) node;
+                String paramName = ((SimpleTypeNode) keyValueNode.getKey()).getLiteralValue();
                 Node value = keyValueNode.getValue();
                 if (value instanceof SimpleTypeNode)
                 {
-                    params.put(((SimpleTypeNode) keyValueNode.getKey()).getLiteralValue(), ((SimpleTypeNode) value).getLiteralValue());
+                    params.put(paramName, ((SimpleTypeNode) value).getLiteralValue());
+                }
+                else if (value instanceof NullNode)
+                {
+                    params.put(paramName, "");
                 }
                 else
                 {
