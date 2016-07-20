@@ -201,7 +201,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            );
     }
 
-    protected Rule securityScheme()
+    protected ObjectRule securityScheme()
     {
         return objectType()
                            .with(descriptionField())
