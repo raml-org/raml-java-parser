@@ -15,22 +15,10 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
-
-import javax.annotation.Nullable;
-
 /**
- * Represents a type expression element it can be a union type a reference to another type an array type declaration
+ * Marker interface for scalar nodes that can be overridden by a trait or resource type
  */
-public interface TypeExpressionNode extends Node, SimpleTypeNode<String>
+public interface OverridableNode
 {
-    /**
-     * Generates the definition that results of evaluating this expression
-     * @return The type definition
-     * @param node
-     */
-    @Nullable
-    ResolvedType generateDefinition(TypeDeclarationNode node);
+
 }

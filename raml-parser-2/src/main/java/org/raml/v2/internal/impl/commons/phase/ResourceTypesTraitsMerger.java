@@ -18,10 +18,11 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import com.google.common.collect.ImmutableSet;
-
+import java.util.HashSet;
 import java.util.Set;
 
+import org.raml.v2.internal.impl.commons.nodes.OverridableNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -110,7 +111,15 @@ public class ResourceTypesTraitsMerger
             }
             else if (((KeyValueNode) child).getValue() instanceof SimpleTypeNode)
             {
-                logger.debug("Scalar key already exists '{}'", key);
+                if (node instanceof OverridableNode)
+                {
+                    logger.debug("Overriding scalar key '{}'", key);
+                    node.getParent().setChild(1, ((KeyValueNode) child).getValue());
+                }
+                else
+                {
+                    logger.debug("Scalar key already exists '{}'", key);
+                }
             }
             else
             {
@@ -122,7 +131,12 @@ public class ResourceTypesTraitsMerger
 
     private static boolean shouldIgnoreKey(KeyValueNode child)
     {
-        Set<String> ignoreSet = ImmutableSet.<String> builder().add("usage").add("type").build();
+        Set<String> ignoreSet = new HashSet<>();
+        ignoreSet.add("usage");
+        if (!(child.getParent() instanceof TypeDeclarationNode))
+        {
+            ignoreSet.add("type");
+        }
         String key = child.getKey().toString();
         return ignoreSet.contains(key);
     }

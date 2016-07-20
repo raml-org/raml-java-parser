@@ -51,7 +51,7 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("a.b.user[]");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode (Start: 11 , End: 21, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode: user[] (Start: 11 , End: 21, On: [artificial node])\n" +
                                         "    NamedTypeExpressionNode user -> {null} (Start: 11 , End: 19, On: [artificial node])\n" +
                                         "        LibraryRefNode b -> {null} (Start: 10 , End: 18, On: [artificial node])\n" +
                                         "            LibraryRefNode a -> {null} (Start: 8 , End: 16, On: [artificial node])"));
@@ -64,8 +64,8 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("a.b.user[][]");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode (Start: 11 , End: 23, On: [artificial node])\n" +
-                                        "    ArrayTypeExpressionNode (Start: 11 , End: 21, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode: user[][] (Start: 11 , End: 23, On: [artificial node])\n" +
+                                        "    ArrayTypeExpressionNode: user[] (Start: 11 , End: 21, On: [artificial node])\n" +
                                         "        NamedTypeExpressionNode user -> {null} (Start: 11 , End: 19, On: [artificial node])\n" +
                                         "            LibraryRefNode b -> {null} (Start: 10 , End: 18, On: [artificial node])\n" +
                                         "                LibraryRefNode a -> {null} (Start: 8 , End: 16, On: [artificial node])"));
@@ -77,7 +77,7 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("a.b.user | c.d.cat");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode (Start: 12 , End: 28, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode: user | cat (Start: 12 , End: 28, On: [artificial node])\n" +
                                         "    NamedTypeExpressionNode user -> {null} (Start: 12 , End: 20, On: [artificial node])\n" +
                                         "        LibraryRefNode b -> {null} (Start: 11 , End: 19, On: [artificial node])\n" +
                                         "            LibraryRefNode a -> {null} (Start: 9 , End: 17, On: [artificial node])\n" +
@@ -92,12 +92,12 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("a.b.user[] | cat[]");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode (Start: 11 , End: 20, On: [artificial node])\n" +
-                                        "    ArrayTypeExpressionNode (Start: 11 , End: 21, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode: user[] | cat[] (Start: 11 , End: 20, On: [artificial node])\n" +
+                                        "    ArrayTypeExpressionNode: user[] (Start: 11 , End: 21, On: [artificial node])\n" +
                                         "        NamedTypeExpressionNode user -> {null} (Start: 11 , End: 19, On: [artificial node])\n" +
                                         "            LibraryRefNode b -> {null} (Start: 10 , End: 18, On: [artificial node])\n" +
                                         "                LibraryRefNode a -> {null} (Start: 8 , End: 16, On: [artificial node])\n" +
-                                        "    ArrayTypeExpressionNode (Start: 15 , End: 20, On: [artificial node])\n" +
+                                        "    ArrayTypeExpressionNode: cat[] (Start: 15 , End: 20, On: [artificial node])\n" +
                                         "        NamedTypeExpressionNode cat -> {null} (Start: 15 , End: 18, On: [artificial node])"));
     }
 
@@ -107,9 +107,9 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("user | cat[] | hamster | fish");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode (Start: 4 , End: 32, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode: user | cat[] | hamster | fish (Start: 4 , End: 32, On: [artificial node])\n" +
                                         "    NamedTypeExpressionNode user -> {null} (Start: 4 , End: 8, On: [artificial node])\n" +
-                                        "    ArrayTypeExpressionNode (Start: 9 , End: 14, On: [artificial node])\n" +
+                                        "    ArrayTypeExpressionNode: cat[] (Start: 9 , End: 14, On: [artificial node])\n" +
                                         "        NamedTypeExpressionNode cat -> {null} (Start: 9 , End: 12, On: [artificial node])\n" +
                                         "    NamedTypeExpressionNode hamster -> {null} (Start: 22 , End: 29, On: [artificial node])\n" +
                                         "    NamedTypeExpressionNode fish -> {null} (Start: 28 , End: 32, On: [artificial node])"));
@@ -121,8 +121,8 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("(user | cat)[]");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode (Start: 5 , End: 15, On: [artificial node])\n" +
-                                        "    UnionTypeExpressionNode (Start: 5 , End: 13, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode: (user | cat)[] (Start: 5 , End: 15, On: [artificial node])\n" +
+                                        "    UnionTypeExpressionNode: user | cat (Start: 5 , End: 13, On: [artificial node])\n" +
                                         "        NamedTypeExpressionNode user -> {null} (Start: 5 , End: 9, On: [artificial node])\n" +
                                         "        NamedTypeExpressionNode cat -> {null} (Start: 10 , End: 13, On: [artificial node])"));
     }
@@ -133,7 +133,7 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("string[]");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode (Start: -1 , End: 7)\n" +
+        Assert.assertThat(dump, equalTo("ArrayTypeExpressionNode: string[] (Start: -1 , End: 7)\n" +
                                         "    NativeTypeExpressionNode: \"string\" (Start: -1 , End: 5)"));
     }
 
@@ -143,7 +143,7 @@ public class TypeExpressionReferenceFactoryTestCase
         final StringNodeImpl expression = new StringNodeImpl("string | Person");
         final Node user = new TypeExpressionReferenceFactory().create(expression, expression.getLiteralValue());
         final String dump = new RamlTreeNodeDumper().dump(user).trim();
-        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode (Start: 0 , End: 20, On: [artificial node])\n" +
+        Assert.assertThat(dump, equalTo("UnionTypeExpressionNode: string | Person (Start: 0 , End: 20, On: [artificial node])\n" +
                                         "    NativeTypeExpressionNode: \"string\" (Start: 0 , End: 6, On: [artificial node])\n" +
                                         "    NamedTypeExpressionNode Person -> {null} (Start: 14 , End: 20, On: [artificial node])"));
     }

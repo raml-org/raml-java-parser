@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.rules;
 
+import org.raml.v2.internal.impl.v10.nodes.OverridableNativeTypeExpressionNode;
 import org.raml.yagi.framework.grammar.rule.DefaultValue;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
@@ -35,6 +36,14 @@ public class TypeDefaultValue implements DefaultValue
     @Override
     public Node getDefaultValue(Node parent)
     {
-        return parent.get("properties") != null ? new NativeTypeExpressionNode(TypeId.OBJECT.getType()) : new NativeTypeExpressionNode(defaultType.getType());
+        if (parent.get("properties") != null)
+        {
+            return new NativeTypeExpressionNode(TypeId.OBJECT.getType());
+        }
+        if (defaultType == TypeId.ANY)
+        {
+            return new OverridableNativeTypeExpressionNode(defaultType.getType());
+        }
+        return new NativeTypeExpressionNode(defaultType.getType());
     }
 }

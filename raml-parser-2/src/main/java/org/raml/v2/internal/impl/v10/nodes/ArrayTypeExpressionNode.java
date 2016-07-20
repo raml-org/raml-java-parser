@@ -15,18 +15,17 @@
  */
 package org.raml.v2.internal.impl.v10.nodes;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
+import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
-import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
-import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExpressionNode
 {
@@ -101,4 +100,28 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
             return null;
         }
     }
+
+    @Override
+    public String getValue()
+    {
+        String typeExpression = of().getValue();
+        return typeExpression != null ? addParenthesesIfNeeded(typeExpression) + "[]" : null;
+
+    }
+
+    @Override
+    public String getLiteralValue()
+    {
+        return getValue();
+    }
+
+    static String addParenthesesIfNeeded(String typeExpression)
+    {
+        if (typeExpression.contains("|") || typeExpression.contains(","))
+        {
+            typeExpression = "(" + typeExpression + ")";
+        }
+        return typeExpression;
+    }
+
 }

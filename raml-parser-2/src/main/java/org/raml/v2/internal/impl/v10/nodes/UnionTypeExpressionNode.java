@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.nodes;
 
+import static org.raml.v2.internal.impl.v10.nodes.ArrayTypeExpressionNode.addParenthesesIfNeeded;
+
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
@@ -92,5 +94,31 @@ public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExp
             definitions.add(typeExpressionNode.generateDefinition(node));
         }
         return new UnionResolvedType(node, definitions);
+    }
+
+    @Override
+    public String getValue()
+    {
+        String unionOperator = " | ";
+        StringBuilder result = new StringBuilder();
+        for (TypeExpressionNode typeExpressionNode : of())
+        {
+            String typeExpression = typeExpressionNode.getValue();
+            if (typeExpression != null)
+            {
+                result.append(addParenthesesIfNeeded(typeExpression)).append(unionOperator);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        return result.delete(result.length() - unionOperator.length(), result.length()).toString();
+    }
+
+    @Override
+    public String getLiteralValue()
+    {
+        return getValue();
     }
 }

@@ -33,11 +33,8 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
-import org.raml.v2.internal.impl.v10.nodes.ArrayTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
-import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
-import org.raml.v2.internal.impl.v10.nodes.UnionTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
@@ -93,51 +90,15 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
 
     private String getTypeExpression(Node typeNode)
     {
-        if (typeNode instanceof NativeTypeExpressionNode)
+        if (typeNode instanceof TypeExpressionNode)
         {
-            return ((NativeTypeExpressionNode) typeNode).getValue();
-        }
-        if (typeNode instanceof NamedTypeExpressionNode)
-        {
-            return ((NamedTypeExpressionNode) typeNode).getRefName();
-        }
-        if (typeNode instanceof ArrayTypeExpressionNode)
-        {
-            String typeExpression = getTypeExpression(((ArrayTypeExpressionNode) typeNode).of());
-            return typeExpression != null ? addParenthesesIfNeeded(typeExpression) + "[]" : null;
-        }
-        if (typeNode instanceof UnionTypeExpressionNode)
-        {
-            String unionOperator = " | ";
-            StringBuilder result = new StringBuilder();
-            for (TypeExpressionNode typeExpressionNode : ((UnionTypeExpressionNode) typeNode).of())
-            {
-                String typeExpression = getTypeExpression(typeExpressionNode);
-                if (typeExpression != null)
-                {
-                    result.append(addParenthesesIfNeeded(typeExpression)).append(unionOperator);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            return result.delete(result.length() - unionOperator.length(), result.length()).toString();
+            return ((TypeExpressionNode) typeNode).getValue();
         }
         if (typeNode.getSource() instanceof StringNode)
         {
             return ((StringNode) typeNode.getSource()).getValue();
         }
         return null;
-    }
-
-    private String addParenthesesIfNeeded(String typeExpression)
-    {
-        if (typeExpression.contains("|") || typeExpression.contains(","))
-        {
-            typeExpression = "(" + typeExpression + ")";
-        }
-        return typeExpression;
     }
 
     public String schemaContent()

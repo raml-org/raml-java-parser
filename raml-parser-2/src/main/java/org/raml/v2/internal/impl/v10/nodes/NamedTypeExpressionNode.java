@@ -94,4 +94,16 @@ public class NamedTypeExpressionNode extends AbstractReferenceNode implements Ty
     {
         return getRefName();
     }
+
+    @Override
+    public String getValue()
+    {
+        return name;
+    }
+
+    @Override
+    public String getLiteralValue()
+    {
+        return name;
+    }
 }

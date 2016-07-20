@@ -48,7 +48,7 @@ example: bores
                                         SYStringNode: "pepe" (Start: 139 , End: 143, On: input.raml)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
-                                        NativeTypeExpressionNode: "any" (Start: -1 , End: -1)
+                                        OverridableNativeTypeExpressionNode: "any" (Start: -1 , End: -1)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                         ObjectNodeImpl (Start: -1 , End: -1)

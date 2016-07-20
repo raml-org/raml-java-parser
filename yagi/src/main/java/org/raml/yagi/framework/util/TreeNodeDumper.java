@@ -15,6 +15,8 @@
  */
 package org.raml.yagi.framework.util;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -22,8 +24,6 @@ import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
-
-import java.util.Collection;
 
 
 public class TreeNodeDumper
@@ -93,7 +93,11 @@ public class TreeNodeDumper
     {
 
         dump.append(node.getClass().getSimpleName());
-        if (node instanceof StringNode)
+        if (node instanceof ReferenceNode)
+        {
+            dumpReference((ReferenceNode) node);
+        }
+        else if (node instanceof StringNode)
         {
             dump.append(": \"").append(((StringNode) node).getValue()).append("\"");
         }
@@ -105,18 +109,19 @@ public class TreeNodeDumper
         {
             dump.append(": \"").append(((ErrorNode) node).getErrorMessage()).append("\"");
         }
-        else if (node instanceof ReferenceNode)
+    }
+
+    private void dumpReference(ReferenceNode node)
+    {
+        final ReferenceNode referenceNode = node;
+        final Node refNode = referenceNode.getRefNode();
+        dump.append(" ").append(referenceNode.getRefName()).append(" -> {").append(refNode == null ? "null" : refNode.getClass().getSimpleName());
+        if (refNode != null)
         {
-            final ReferenceNode referenceNode = (ReferenceNode) node;
-            final Node refNode = referenceNode.getRefNode();
-            dump.append(" ").append(referenceNode.getRefName()).append(" -> {").append(refNode == null ? "null" : refNode.getClass().getSimpleName());
-            if (refNode != null)
-            {
-                dump.append(" RefStart: ").append(refNode.getStartPosition().getIndex());
-                dump.append(" , RefEnd: ").append(refNode.getEndPosition().getIndex());
-            }
-            dump.append("}");
+            dump.append(" RefStart: ").append(refNode.getStartPosition().getIndex());
+            dump.append(" , RefEnd: ").append(refNode.getEndPosition().getIndex());
         }
+        dump.append("}");
     }
 
     protected void dedent()

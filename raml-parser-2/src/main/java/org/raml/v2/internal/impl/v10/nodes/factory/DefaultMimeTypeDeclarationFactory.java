@@ -17,13 +17,13 @@ package org.raml.v2.internal.impl.v10.nodes.factory;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.nodes.OverridableNativeTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
-import org.raml.v2.internal.impl.v10.type.TypeId;
 
 public class DefaultMimeTypeDeclarationFactory implements NodeFactory
 {
@@ -32,7 +32,7 @@ public class DefaultMimeTypeDeclarationFactory implements NodeFactory
     public Node create(@Nonnull Node currentNode, Object... args)
     {
         final TypeDeclarationNode node = new TypeDeclarationNode();
-        node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), new NativeTypeExpressionNode(TypeId.ANY.getType())));
+        node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), new OverridableNativeTypeExpressionNode(TypeId.ANY.getType())));
         return node;
     }
 

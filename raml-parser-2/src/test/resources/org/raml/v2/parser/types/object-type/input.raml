@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: API
+
+traits:
+  Trait1:
+    body:
+      application/json:
+        properties:
+            age: integer
+
+/resource:
+  is: [Trait1]
+  put:
+    body:
+      application/json:
+        example:
+          age: 10
