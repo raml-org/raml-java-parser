@@ -69,8 +69,8 @@ public class ApiModelParserTestCase extends TestDataProvider
         jsonWriter.setIndent(" ");
         dumpApiToJson(ramlModelResult, jsonWriter);
         dump = out.toString();
-        dump = StringUtils.replace(dump, "\\r\\n", "\\n"); //only for windows users
-        dump = StringUtils.replace(dump, "\\r", "\\n"); //only for mac users
+        dump = StringUtils.replace(dump, "\\r\\n", "\\n"); // only for windows users
+        dump = StringUtils.replace(dump, "\\r", "\\n"); // only for mac users
         expected = IOUtils.toString(new FileInputStream(expectedOutput), "UTF-8");
         Assert.assertTrue(jsonEquals(dump, expected));
     }
