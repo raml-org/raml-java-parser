@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +69,8 @@ public class ApiModelParserTestCase extends TestDataProvider
         jsonWriter.setIndent(" ");
         dumpApiToJson(ramlModelResult, jsonWriter);
         dump = out.toString();
+        dump = StringUtils.replace(dump, "\\r\\n", "\\n"); //only for windows users
+        dump = StringUtils.replace(dump, "\\r", "\\n"); //only for mac users
         expected = IOUtils.toString(new FileInputStream(expectedOutput), "UTF-8");
         Assert.assertTrue(jsonEquals(dump, expected));
     }
