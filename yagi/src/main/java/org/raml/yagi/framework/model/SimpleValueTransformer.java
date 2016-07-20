@@ -63,7 +63,7 @@ public enum SimpleValueTransformer
         {
             if (valueNode == null)
             {
-                return false;
+                return null;
             }
             if (valueNode instanceof BooleanNode)
             {
@@ -93,7 +93,7 @@ public enum SimpleValueTransformer
         {
             if (valueNode == null)
             {
-                return 0;
+                return null;
             }
             if (valueNode instanceof IntegerNode)
             {
@@ -123,7 +123,7 @@ public enum SimpleValueTransformer
         {
             if (valueNode == null)
             {
-                return 0.0f;
+                return null;
             }
             if (valueNode instanceof SimpleTypeNode)
             {
