@@ -64,7 +64,7 @@ public class ExampleValidationPhase implements Phase
         final List<ExampleDeclarationNode> descendantsWith = tree.findDescendantsWith(ExampleDeclarationNode.class);
         for (ExampleDeclarationNode exampleTypeNode : descendantsWith)
         {
-            if (!exampleTypeNode.isStrict())
+            if (exampleTypeNode.isStrict())
             {
                 final TypeDeclarationNode type = org.raml.yagi.framework.util.NodeUtils.getAncestor(exampleTypeNode, TypeDeclarationNode.class);
                 final Node exampleValue = exampleTypeNode.getExampleValue();

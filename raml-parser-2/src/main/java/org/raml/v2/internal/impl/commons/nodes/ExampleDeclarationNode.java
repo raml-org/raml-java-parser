@@ -85,11 +85,11 @@ public class ExampleDeclarationNode extends KeyValueNodeImpl implements Overlaya
         if (isExplicitExample())
         {
             final Boolean strict = NodeSelector.selectBooleanValue("strict", getValue());
-            return strict != null ? strict : false;
+            return strict != null ? strict : true;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
