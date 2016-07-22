@@ -176,16 +176,20 @@ RamlDocumentNode (Start: 11 , End: 758, On: input.raml, Source: SYObjectNode)
                                                 SYStringNode: "discriminator" (Start: 552 , End: 565, On: input.raml, Source: SYStringNode)
                     ExampleDeclarationNode (Start: 592 , End: 684, On: input.raml, Source: KeyValueNodeImpl)
                         SYStringNode: "example" (Start: 592 , End: 599, On: input.raml)
-                        SYObjectNode (Start: 607 , End: 684, On: input.raml)
+                        ErrorNode: "Invalid element {
+discriminator: HasHome Parrot,
+livesInside: a,
+feathers: colourful
+}." (Start: 607 , End: 684, On: input.raml, Source: SYObjectNode)
                             KeyValueNodeImpl (Start: 607 , End: 636, On: input.raml)
                                 SYStringNode: "discriminator" (Start: 607 , End: 620, On: input.raml)
                                 SYStringNode: "HasHome Parrot" (Start: 622 , End: 636, On: input.raml)
                             KeyValueNodeImpl (Start: 643 , End: 657, On: input.raml)
                                 SYStringNode: "livesInside" (Start: 643 , End: 654, On: input.raml)
-                                ErrorNode: "Invalid type String, expected Boolean" (Start: 656 , End: 657, On: input.raml, Source: SYStringNode)
+                                SYStringNode: "a" (Start: 656 , End: 657, On: input.raml)
                             KeyValueNodeImpl (Start: 664 , End: 683, On: input.raml)
                                 SYStringNode: "feathers" (Start: 664 , End: 672, On: input.raml)
-                                ErrorNode: "Expected max length 5" (Start: 674 , End: 683, On: input.raml, Source: SYStringNode)
+                                SYStringNode: "colourful" (Start: 674 , End: 683, On: input.raml)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                         ObjectNodeImpl (Start: -1 , End: -1)

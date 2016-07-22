@@ -34,10 +34,17 @@ public class ArrayRule extends Rule
 {
 
     private Rule of;
+    private boolean strict = false;
 
     public ArrayRule(Rule of)
     {
         this.of = of;
+    }
+
+    public ArrayRule(Rule of, boolean strict)
+    {
+        this.of = of;
+        this.strict = strict;
     }
 
     @Nonnull
@@ -92,7 +99,18 @@ public class ArrayRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof ArrayNode;
+        boolean matches = node instanceof ArrayNode;
+        if (matches && strict)
+        {
+            for (Node child : node.getChildren())
+            {
+                if (!of.matches(child))
+                {
+                    return false;
+                }
+            }
+        }
+        return matches;
     }
 
     @Override

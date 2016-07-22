@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: API
+
+types:
+  SimpleType1:
+    properties:
+      property1: string
+      property2: string
+
+  SimpleType2:
+    properties:
+      property1: number
+      property2: number
+
+  SimpleUnion:
+    type: SimpleType1 | SimpleType2
+
+  TypeWithUnionProps:
+    type: object
+    properties:
+      unionArray: SimpleUnion[]
+    example:
+      unionArray:
+        -
+          property1: 1
+          property2: 2
+        -
+          property1: 1
+          property2: 2

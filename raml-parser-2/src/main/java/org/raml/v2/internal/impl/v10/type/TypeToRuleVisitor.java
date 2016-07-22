@@ -79,7 +79,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         this.resourceLoader = resourceLoader;
     }
 
-    public Rule generateRule(ResolvedType items, boolean strict)
+    public Rule generateRule(ResolvedType items)
     {
         if (definitionRuleMap.containsKey(items))
         {
@@ -87,15 +87,10 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         }
         else
         {
-            this.strictMode = strict;
             return items.visit(this);
         }
     }
 
-    public Rule generateRule(ResolvedType items)
-    {
-        return generateRule(items, strictMode);
-    }
 
     @Override
     public Rule visitString(StringResolvedType stringTypeNode)
@@ -322,7 +317,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     public Rule visitArray(ArrayResolvedType arrayTypeDefinition)
     {
         final ResolvedType items = arrayTypeDefinition.getItems();
-        final AllOfRule rule = new AllOfRule(new ArrayRule(generateRule(items)));
+        final AllOfRule rule = new AllOfRule(new ArrayRule(generateRule(items), strictMode));
         registerRule(arrayTypeDefinition, rule);
         if (arrayTypeDefinition.getMaxItems() != null)
         {
@@ -345,10 +340,16 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     {
         final List<ResolvedType> of = unionTypeDefinition.of();
         final List<Rule> rules = new ArrayList<>();
+
+        boolean oldStrictMode = strictMode;
+        strictMode = true;
         for (ResolvedType resolvedType : of)
         {
-            rules.add(generateRule(resolvedType, true));
+
+            rules.add(generateRule(resolvedType));
         }
+        strictMode = oldStrictMode;
+
         return new AnyOfRule(rules);
     }
 

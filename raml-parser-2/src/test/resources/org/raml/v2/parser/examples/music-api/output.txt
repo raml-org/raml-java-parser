@@ -154,13 +154,16 @@ RamlDocumentNode (Start: 11 , End: 633, On: input.raml, Source: SYObjectNode)
                                                         KeyValueNodeImpl (Start: 339 , End: 576, On: songs-library.raml)
                                                             SYStringNode: "discography" (Start: 339 , End: 350, On: songs-library.raml)
                                                             SYArrayNode (Start: 364 , End: 576, On: songs-library.raml)
-                                                                SYObjectNode (Start: 366 , End: 448, On: songs-library.raml)
+                                                                ErrorNode: "Invalid array element {
+title: The Most Beautiful Girl in the World,
+length: 125
+}." (Start: 366 , End: 448, On: songs-library.raml, Source: SYObjectNode)
                                                                     KeyValueNodeImpl (Start: 366 , End: 409, On: songs-library.raml)
                                                                         SYStringNode: "title" (Start: 366 , End: 371, On: songs-library.raml)
                                                                         SYStringNode: "The Most Beautiful Girl in the World" (Start: 373 , End: 409, On: songs-library.raml)
                                                                     KeyValueNodeImpl (Start: 424 , End: 435, On: songs-library.raml)
                                                                         SYStringNode: "length" (Start: 424 , End: 430, On: songs-library.raml)
-                                                                        ErrorNode: "Expected a multiple of 100" (Start: 432 , End: 435, On: songs-library.raml, Source: SYIntegerNode)
+                                                                        SYIntegerNode: 125 (Start: 432 , End: 435, On: songs-library.raml)
                                                                 SYObjectNode (Start: 450 , End: 576, On: songs-library.raml)
                                                                     KeyValueNodeImpl (Start: 450 , End: 479, On: songs-library.raml)
                                                                         SYStringNode: "title" (Start: 450 , End: 455, On: songs-library.raml)

@@ -92,7 +92,7 @@ public class ObjectRule extends Rule
     {
         for (Node child : children)
         {
-            if (rule.matches(child))
+            if (rule.matches(child) && rule.getKeyRule().matches(child.getChildren().get(0)) && rule.getValueRule().matches(child.getChildren().get(1)))
             {
                 return true;
             }
