@@ -31,7 +31,11 @@ public class ConditionalRules
     private List<ConditionalRule> options;
     private DefaultValue defaultValue;
 
-
+    /**
+     * Creates a rule that depends on another rule on your grammar
+     * @param selectorExpression expression to obtain the node that will be used for the pattern matching
+     * @param cases Conditional cases
+     */
     public ConditionalRules(List<String> selectorExpression, ConditionalRule... cases)
     {
         this.selectorExpression = selectorExpression;
@@ -82,6 +86,10 @@ public class ConditionalRules
         return this;
     }
 
+    /**
+     * This method lets you use a value node to match the when clause when there is no other rule that matches.
+     * @param defaultValue value node.
+     */
     public ConditionalRules defaultValue(Node defaultValue)
     {
         this.defaultValue = new LiteralDefaultValue(defaultValue);
