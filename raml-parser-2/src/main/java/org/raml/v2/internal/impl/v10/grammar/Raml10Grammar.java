@@ -22,28 +22,21 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.raml.yagi.framework.grammar.RuleFactory;
-import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
-import org.raml.yagi.framework.grammar.rule.KeyValueRule;
-import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
-import org.raml.yagi.framework.grammar.rule.ObjectRule;
-import org.raml.yagi.framework.grammar.rule.RegexValueRule;
-import org.raml.yagi.framework.grammar.rule.ResourceRefRule;
-import org.raml.yagi.framework.grammar.rule.Rule;
-import org.raml.yagi.framework.grammar.rule.StringValueRule;
-import org.raml.yagi.framework.nodes.NullNodeImpl;
+import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
+import org.raml.v2.internal.impl.commons.nodes.DocumentationItemNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
+import org.raml.v2.internal.impl.commons.nodes.ResponseNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
 import org.raml.v2.internal.impl.v10.nodes.DisplayNameDefaultValue;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
@@ -58,6 +51,16 @@ import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactor
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
 import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
 import org.raml.v2.internal.impl.v10.type.TypeId;
+import org.raml.yagi.framework.grammar.RuleFactory;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
+import org.raml.yagi.framework.grammar.rule.KeyValueRule;
+import org.raml.yagi.framework.grammar.rule.ObjectRule;
+import org.raml.yagi.framework.grammar.rule.RegexValueRule;
+import org.raml.yagi.framework.grammar.rule.ResourceRefRule;
+import org.raml.yagi.framework.grammar.rule.Rule;
+import org.raml.yagi.framework.grammar.rule.StringValueRule;
+import org.raml.yagi.framework.nodes.NullNodeImpl;
 
 
 public class Raml10Grammar extends BaseRamlGrammar
@@ -126,6 +129,12 @@ public class Raml10Grammar extends BaseRamlGrammar
                     .with(field(string("signatures"), array(scalarType())))
                     .with(field(string("authorizationUri"), ramlScalarValue()).requiredWhen(new AuthorizationUriRequiredField()))
                     .with(annotationField());
+    }
+
+    @Override
+    protected KeyValueRule responseField()
+    {
+        return super.responseField().then(ResponseNode.class);
     }
 
     @Override
@@ -238,9 +247,18 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private KeyValueRule allowedTargetsField()
     {
-        return field(string("allowedTargets"), anyOf(scalarType(), array(scalarType())).then(new ArrayWrapperFactory()));
+        return field(string("allowedTargets"), anyOf(allowedTargetValues(), array(allowedTargetValues())).then(new ArrayWrapperFactory()));
     }
 
+    private Rule allowedTargetValues()
+    {
+        List<Rule> values = new ArrayList<>();
+        for (AnnotationTarget annotationTarget : AnnotationTarget.values())
+        {
+            values.add(string(annotationTarget.name()));
+        }
+        return anyOf(values);
+    }
 
     protected Rule types()
     {
@@ -771,6 +789,11 @@ public class Raml10Grammar extends BaseRamlGrammar
         return objectType()
                            .with(field(string("value"), customScalarRule))
                            .with(annotationField());
+    }
+
+    public ObjectRule documentation()
+    {
+        return super.documentation().with(annotationField()).then(DocumentationItemNode.class);
     }
 
 }

@@ -13,15 +13,21 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.utils;
+package org.raml.v2.internal.impl.commons.rule;
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.ContextProviderNode;
 
-import javax.annotation.Nonnull;
+import java.util.List;
 
-public class NodeUtils
+import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
+import org.raml.yagi.framework.nodes.ErrorNode;
+
+public class RamlErrorNodeFactory
 {
 
+
+    public static ErrorNode createInvalidAnnotationTarget(List<AnnotationTarget> allowedTargets, AnnotationTarget target)
+    {
+        return new ErrorNode("Annotation not allowed at target: " + target + ". Allowed targets are: " + allowedTargets);
+    }
 
 }

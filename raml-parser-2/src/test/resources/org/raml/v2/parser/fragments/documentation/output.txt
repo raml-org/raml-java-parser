@@ -1,4 +1,4 @@
-SYObjectNode (Start: 29 , End: 406, On: input.raml)
+DocumentationItemNode (Start: 29 , End: 406, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 29 , End: 40, On: input.raml)
         SYStringNode: "title" (Start: 29 , End: 34, On: input.raml)
         ObjectNodeImpl (Start: 36 , End: 40, On: input.raml, Source: SYStringNode)

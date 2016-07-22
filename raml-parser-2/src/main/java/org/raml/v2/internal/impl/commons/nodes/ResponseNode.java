@@ -13,25 +13,29 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v10.declarations;
+package org.raml.v2.internal.impl.commons.nodes;
 
-public enum AnnotationTarget
+import javax.annotation.Nonnull;
+
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.Node;
+
+public class ResponseNode extends KeyValueNodeImpl
 {
-    API,
-    DocumentationItem,
-    Resource,
-    Method,
-    Response,
-    RequestBody,
-    ResponseBody,
-    TypeDeclaration,
-    Example,
-    ResourceType,
-    Trait,
-    SecurityScheme,
-    SecuritySchemeSettings,
-    AnnotationType,
-    Library,
-    Overlay,
-    Extension
+
+    public ResponseNode()
+    {
+    }
+
+    public ResponseNode(ResponseNode node)
+    {
+        super(node);
+    }
+
+    @Nonnull
+    @Override
+    public Node copy()
+    {
+        return new ResponseNode(this);
+    }
 }

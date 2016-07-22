@@ -1,4 +1,9 @@
 [ {
+  "label" : "(Annotation)",
+  "description" : "Annotations to be applied to this API. Annotations are any property whose key begins with \"(\" and ends with \")\" and whose name (the part between the beginning and ending parentheses) is a declared annotation name..",
+  "value" : "- (<cursor>): ",
+  "prefix" : "\n  "
+}, {
   "label" : "Content",
   "description" : "Content of documentation section.",
   "value" : "- content: ",

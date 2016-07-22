@@ -18,8 +18,11 @@ package org.raml.v2.internal.impl.commons.nodes;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
+import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.StringNode;
 
 /**
  * An annotation usage
@@ -59,5 +62,66 @@ public class AnnotationNode extends KeyValueNodeImpl implements OverlayableNode
     public AnnotationReferenceNode getKey()
     {
         return (AnnotationReferenceNode) super.getKey();
+    }
+
+    public AnnotationTarget getTarget()
+    {
+        Node parent = getParent();
+        Node grampa = parent != null ? parent.getParent() : null;
+        if (parent instanceof RamlDocumentNode)
+        {
+            return AnnotationTarget.API;
+        }
+        if (parent instanceof DocumentationItemNode)
+        {
+            return AnnotationTarget.DocumentationItem;
+        }
+        if (grampa instanceof ResourceNode)
+        {
+            return AnnotationTarget.Resource;
+        }
+        if (grampa instanceof MethodNode)
+        {
+            return AnnotationTarget.Method;
+        }
+        if (grampa instanceof BodyNode)
+        {
+            if (grampa.findAncestorWith(ResponseNode.class) != null)
+            {
+                return AnnotationTarget.ResponseBody;
+            }
+            return AnnotationTarget.RequestBody;
+        }
+        if (parent instanceof TypeDeclarationNode)
+        {
+            return AnnotationTarget.TypeDeclaration;
+        }
+        if (grampa instanceof ResponseNode)
+        {
+            return AnnotationTarget.Response;
+        }
+        if (grampa instanceof SecuritySchemeNode)
+        {
+            return AnnotationTarget.SecurityScheme;
+        }
+        if (isSecuritySchemeSettings(grampa))
+        {
+            return AnnotationTarget.SecuritySchemeSettings;
+        }
+        return null;
+    }
+
+    private boolean isSecuritySchemeSettings(Node grampa)
+    {
+        boolean result = false;
+        if (grampa instanceof KeyValueNode)
+        {
+            Node key = ((KeyValueNode) grampa).getKey();
+            if (key instanceof StringNode && "settings".equals(((StringNode) key).getValue()))
+            {
+                result = grampa.findAncestorWith(SecuritySchemeNode.class) != null;
+            }
+        }
+        return result;
     }
 }

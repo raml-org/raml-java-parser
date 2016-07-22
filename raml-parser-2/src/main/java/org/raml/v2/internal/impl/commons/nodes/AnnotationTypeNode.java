@@ -15,11 +15,16 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
-
-import javax.annotation.Nonnull;
+import org.raml.yagi.framework.util.NodeSelector;
 
 public class AnnotationTypeNode extends KeyValueNodeImpl
 {
@@ -49,5 +54,16 @@ public class AnnotationTypeNode extends KeyValueNodeImpl
     public Node copy()
     {
         return new AnnotationTypeNode(this);
+    }
+
+    public List<AnnotationTarget> getAllowedTargets()
+    {
+        List<AnnotationTarget> targets = new ArrayList<>();
+        List<String> allowedTargets = NodeSelector.selectStringCollection("allowedTargets", getValue());
+        for (String allowedTarget : allowedTargets)
+        {
+            targets.add(AnnotationTarget.valueOf(allowedTarget));
+        }
+        return targets;
     }
 }

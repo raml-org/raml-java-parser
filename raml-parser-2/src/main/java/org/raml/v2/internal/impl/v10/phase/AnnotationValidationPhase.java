@@ -16,6 +16,8 @@
 package org.raml.v2.internal.impl.v10.phase;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
@@ -51,12 +53,38 @@ public class AnnotationValidationPhase implements Phase
             }
             else
             {
+                final Node annotationValue = annotation.getValue();
+
+                // check annotation target
+                List<AnnotationTarget> allowedTargets = annotationTypeNode.getAllowedTargets();
+                addTargetAliases(allowedTargets);
+                AnnotationTarget target = annotation.getTarget();
+                if (target != null && !allowedTargets.isEmpty() && !allowedTargets.contains(target))
+                {
+                    annotationValue.replaceWith(RamlErrorNodeFactory.createInvalidAnnotationTarget(allowedTargets, target));
+                }
+
+                // check annotation type
                 final TypeDeclarationNode typeNode = annotationTypeNode.getDeclaredType();
                 final Rule annotationRule = typeNode.getResolvedType().visit(new TypeToRuleVisitor(resourceLoader));
-                final Node annotationValue = annotation.getValue();
                 annotationValue.replaceWith(annotationRule.apply(annotationValue));
             }
         }
         return tree;
+    }
+
+    private void addTargetAliases(List<AnnotationTarget> allowedTargets)
+    {
+        if (allowedTargets.contains(AnnotationTarget.TypeDeclaration))
+        {
+            if (!allowedTargets.contains(AnnotationTarget.RequestBody))
+            {
+                allowedTargets.add(AnnotationTarget.RequestBody);
+            }
+            if (!allowedTargets.contains(AnnotationTarget.ResponseBody))
+            {
+                allowedTargets.add(AnnotationTarget.ResponseBody);
+            }
+        }
     }
 }

@@ -20,19 +20,6 @@ import com.google.common.collect.Sets;
 
 import javax.annotation.Nonnull;
 
-import org.raml.yagi.framework.grammar.BaseGrammar;
-import org.raml.yagi.framework.grammar.ExclusiveSiblingRule;
-import org.raml.yagi.framework.grammar.RuleFactory;
-import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
-import org.raml.yagi.framework.grammar.rule.KeyValueRule;
-import org.raml.yagi.framework.grammar.rule.NodeFactory;
-import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
-import org.raml.yagi.framework.grammar.rule.ObjectRule;
-import org.raml.yagi.framework.grammar.rule.RegexValueRule;
-import org.raml.yagi.framework.grammar.rule.Rule;
-import org.raml.yagi.framework.grammar.rule.StringValueRule;
-import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedResourceTypeRefNode;
@@ -45,8 +32,21 @@ import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitRefNode;
+import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceRule;
 import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
+import org.raml.yagi.framework.grammar.BaseGrammar;
+import org.raml.yagi.framework.grammar.ExclusiveSiblingRule;
+import org.raml.yagi.framework.grammar.RuleFactory;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
+import org.raml.yagi.framework.grammar.rule.KeyValueRule;
+import org.raml.yagi.framework.grammar.rule.NodeFactory;
+import org.raml.yagi.framework.grammar.rule.ObjectRule;
+import org.raml.yagi.framework.grammar.rule.RegexValueRule;
+import org.raml.yagi.framework.grammar.rule.Rule;
+import org.raml.yagi.framework.grammar.rule.StringValueRule;
+import org.raml.yagi.framework.nodes.Node;
 
 public abstract class BaseRamlGrammar extends BaseGrammar
 {
@@ -337,8 +337,12 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule responses()
     {
-        return objectType()
-                           .with(field(responseCodes(), response()));
+        return objectType().with(responseField());
+    }
+
+    protected KeyValueRule responseField()
+    {
+        return field(responseCodes(), response());
     }
 
     protected ObjectRule response()

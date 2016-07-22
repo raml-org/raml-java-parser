@@ -16,18 +16,20 @@
 package org.raml.yagi.framework.util;
 
 import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
-import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class NodeSelector
 {
@@ -90,6 +92,7 @@ public class NodeSelector
         return defaultValue;
     }
 
+    @Nonnull
     public static List<String> selectStringCollection(String path, Node from)
     {
         return selectCollection(path, from);
@@ -105,7 +108,7 @@ public class NodeSelector
             {
                 selectedValues.add(((SimpleTypeNode<T>) selectedNode).getValue());
             }
-            else if (selectedNode instanceof SYArrayNode)
+            else if (selectedNode instanceof ArrayNode)
             {
                 for (Node node : selectedNode.getChildren())
                 {

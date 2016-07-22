@@ -24,12 +24,8 @@
   {
    "additionalProperties": true,
    "allowedTargets": [
-    {
-     "value": "API"
-    },
-    {
-     "value": "Resource"
-    }
+    "API",
+    "Resource"
    ],
    "annotations": [],
    "defaultValue": null,
@@ -205,12 +201,8 @@
   {
    "annotation": {
     "allowedTargets": [
-     {
-      "value": "API"
-     },
-     {
-      "value": "Resource"
-     }
+     "API",
+     "Resource"
     ],
     "annotations": [],
     "defaultValue": null,

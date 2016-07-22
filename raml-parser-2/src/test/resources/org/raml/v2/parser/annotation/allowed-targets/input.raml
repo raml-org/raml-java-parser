@@ -2,24 +2,83 @@
 title: Illustrating allowed targets
 mediaType: application/json
 annotationTypes:
+  meta-api:
+    allowedTargets: API
+  meta-doc-item:
+    allowedTargets: DocumentationItem
+  meta-resource:
+    allowedTargets: Resource
+  meta-method:
+    allowedTargets: Method
+  meta-response:
+    allowedTargets: Response
+  meta-request-body:
+    allowedTargets: RequestBody
+  meta-response-body:
+    allowedTargets: ResponseBody
+  meta-type-declaration:
+    allowedTargets: TypeDeclaration
+  meta-security-scheme:
+    allowedTargets: SecurityScheme
+  meta-security-scheme-settings:
+    allowedTargets: SecuritySchemeSettings
+
   meta-resource-method:
     allowedTargets: [ Resource, Method ]
-  meta-data:
-    allowedTargets: TypeDeclaration
+
+documentation:
+    - title: head
+      content: content
+      (meta-doc-item): allowed in doc item
+      (meta-api): not allowed in doc item
+      (meta-resource-method): not allowed in doc item
+
 types:
   User:
     type: object
-    (meta-data): on an object; on a data type declaration
+    (meta-type-declaration): allowed on an object
     properties:
       name:
         type: string
-        (meta-data): on a string property
+        (meta-type-declaration): allowed on a string property
+
+securitySchemes:
+  oauth_1_0:
+    description: OAuth 1.0 continues to be supported
+    type: OAuth 1.0
+    (meta-security-scheme): allowed in security scheme
+    (meta-security-scheme-settings): not allowed in security scheme
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
+      (meta-security-scheme-settings): allowed in security scheme settings
+      (meta-security-scheme): not allowed in security scheme settings
+
 /users:
-  (meta-resource-method): on a resource
-  get:
-    (meta-resource-method): on a method
+  (meta-resource): allowed on a resource
+  (meta-method): not allowed on a resource
+  (meta-resource-method): allowed on a resource
+  post:
+    (meta-method): allowed on a method
+    (meta-resource): not allowed on a method
+    (meta-resource-method): allowed on a method
+    body:
+      type: User[]
+      (meta-request-body): allowed in a request body
+      (meta-type-declaration): allowed on a request body
+      (meta-response-body): not allowed in a request body
     responses:
       200:
+        (meta-response): allowed in response
+        (meta-response-body): not allowed in response
         body:
           type: User[]
-          (meta-data): on a body
+          (meta-type-declaration): allowed on a response body
+          (meta-response-body): allowed in response body
+          (meta-response): not allowed in response body
+
+(meta-api): allowed in api
+(meta-doc-item): not allowed in api
+(meta-resource-method): not allowed in api
