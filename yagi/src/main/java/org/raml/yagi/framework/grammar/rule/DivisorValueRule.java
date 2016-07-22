@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
+import static java.math.BigDecimal.ZERO;
+
 public class DivisorValueRule extends Rule
 {
 
@@ -55,8 +57,18 @@ public class DivisorValueRule extends Rule
             }
             return divisorValue.intValue() != 0 && ((IntegerNode) node).getValue() % divisorValue.intValue() == 0;
         }
-        return node instanceof FloatingNode && divisorValue.floatValue() != 0f &&
-               BigDecimal.ZERO.equals(((FloatingNode) node).getValue().divide(new BigDecimal(divisorValue.floatValue()), BigDecimal.ROUND_UNNECESSARY));
+        else if (node instanceof FloatingNode)
+        {
+            BigDecimal value = new BigDecimal(divisorValue.toString());
+
+            if (value.compareTo(ZERO) == 0 && ((FloatingNode) node).getValue().compareTo(ZERO) == 0)
+            {
+                return true;
+            }
+            return !(value.compareTo(ZERO) == 0) && (((FloatingNode) node).getValue().remainder(value).compareTo(ZERO) == 0);
+        }
+
+        return false;
     }
 
     @Override

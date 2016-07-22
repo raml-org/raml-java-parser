@@ -69,6 +69,11 @@ public class NodeSelector
         return selectType(path, from, null);
     }
 
+    @Nullable
+    public static Number selectNumberValue(String path, Node from)
+    {
+        return selectType(path, from, null);
+    }
 
     @Nullable
     public static Boolean selectBooleanValue(String path, Node from)

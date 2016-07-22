@@ -335,12 +335,18 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                  .add(itemsField())
                                                                                  .add(minItemsField())
                                                                                  .add(maxItemsField()),
+                                                           is(integerTypeLiteral())
+                                                                   .add(minimumField(integerType()))
+                                                                   .add(maximumField(integerType()))
+                                                                   .add(numberFormat())
+                                                                   .add(enumField())
+                                                                   .add(multipleOfField(integerType())),
                                                            is(numericTypeLiteral())
-                                                                                   .add(minimumField())
-                                                                                   .add(maximumField())
-                                                                                   .add(numberFormat())
-                                                                                   .add(enumField())
-                                                                                   .add(multipleOfField()),
+                                                                   .add(minimumField(numberType()))
+                                                                   .add(maximumField(numberType()))
+                                                                   .add(numberFormat())
+                                                                   .add(enumField())
+                                                                   .add(multipleOfField(numberType())),
                                                            is(fileTypeLiteral())
                                                                                 .add(fileTypesField())
                                                                                 .add(minLengthField())
@@ -363,10 +369,10 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(itemsField())
                                                                                   .add(minItemsField())
                                                                                   .add(maxItemsField())
-                                                                                  .add(minimumField())
-                                                                                  .add(maximumField())
+                                                                                  .add(minimumField(integerType()))
+                                                                                  .add(maximumField(integerType()))
                                                                                   .add(numberFormat())
-                                                                                  .add(multipleOfField())
+                                                                                  .add(multipleOfField(integerType()))
                                                                                   .add(fileTypesField())
                                                                                   .add(propertiesField())
                                                                                   .add(minPropertiesField())
@@ -448,9 +454,9 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                 .description("A list of valid content-type strings for the file. The file type */* MUST be a valid value.");
     }
 
-    protected KeyValueRule multipleOfField()
+    protected KeyValueRule multipleOfField(Rule rule)
     {
-        return field(string("multipleOf"), integerType())
+        return field(string("multipleOf"), rule)
                                                          .description(
                                                                  "A numeric instance is valid against \"multipleOf\" if the result of dividing the instance by this keyword's value is an integer.");
     }
@@ -462,15 +468,15 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                                                                                                                           "The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8");
     }
 
-    protected KeyValueRule maximumField()
+    protected KeyValueRule maximumField(Rule rule)
     {
-        return field(string("maximum"), integerType())
+        return field(string("maximum"), rule)
                                                       .description("The maximum value of the parameter. Applicable only to parameters of type number or integer.");
     }
 
-    protected KeyValueRule minimumField()
+    protected KeyValueRule minimumField(Rule rule)
     {
-        return field(string("minimum"), integerType())
+        return field(string("minimum"), rule)
                                                       .description("The minimum value of the parameter. Applicable only to parameters of type number or integer.");
     }
 

@@ -26,8 +26,8 @@ import static org.raml.yagi.framework.util.NodeSelector.selectStringCollection;
 public class FileResolvedType extends XmlFacetsCapableType
 {
 
-    private Number minLength;
-    private Number maxLength;
+    private Integer minLength;
+    private Integer maxLength;
     private List<String> fileTypes;
 
     public FileResolvedType(TypeDeclarationNode from)
@@ -35,7 +35,7 @@ public class FileResolvedType extends XmlFacetsCapableType
         super(from);
     }
 
-    public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minLength, Number maxLength, List<String> fileTypes)
+    public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes)
     {
         super(declarationNode, xmlFacets);
         this.minLength = minLength;
@@ -79,7 +79,7 @@ public class FileResolvedType extends XmlFacetsCapableType
         return visitor.visitFile(this);
     }
 
-    public Number getMinLength()
+    public Integer getMinLength()
     {
         return minLength;
     }
@@ -97,7 +97,7 @@ public class FileResolvedType extends XmlFacetsCapableType
         }
     }
 
-    public void setMinLength(Number minLength)
+    public void setMinLength(Integer minLength)
     {
         if (minLength != null)
         {
@@ -105,12 +105,12 @@ public class FileResolvedType extends XmlFacetsCapableType
         }
     }
 
-    public Number getMaxLength()
+    public Integer getMaxLength()
     {
         return maxLength;
     }
 
-    public void setMaxLength(Number maxLength)
+    public void setMaxLength(Integer maxLength)
     {
         if (maxLength != null)
         {
