@@ -19,6 +19,7 @@ package org.raml.yagi.framework.grammar.rule;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.NullNodeImpl;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.ParsingContextType;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -43,7 +44,10 @@ public class ArrayRule extends Rule
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
-        final List<Suggestion> suggestions = of.getSuggestions(node, context);
+        // Array does not have any children then we need to create a dummy one and inject into the tree
+        final NullNodeImpl nullNode = new NullNodeImpl();
+        node.addChild(nullNode);
+        final List<Suggestion> suggestions = of.getSuggestions(nullNode, context);
         final List<Suggestion> result = new ArrayList<>();
         for (Suggestion suggestion : suggestions)
         {

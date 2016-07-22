@@ -17,14 +17,8 @@ package org.raml.yagi.framework.grammar.rule;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.util.NodeUtils;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.NullNode;
-import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.ParsingContextType;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -68,7 +62,8 @@ public class ObjectRule extends Rule
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
         List<Suggestion> result = new ArrayList<>();
-        final List<KeyValueRule> fieldRules = getAllFieldRules(node);
+        // In cases where the node we are trying to suggest is a null node just return the known fields else try guessing the conditional ones
+        final List<KeyValueRule> fieldRules = node instanceof NullNode ? fields : getAllFieldRules(node);
         for (KeyValueRule rule : fieldRules)
         {
             if (rule.repeated() || !matchesAny(rule, node.getChildren()))
