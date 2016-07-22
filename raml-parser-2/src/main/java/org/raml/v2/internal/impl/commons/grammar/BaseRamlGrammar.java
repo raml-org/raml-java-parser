@@ -238,8 +238,13 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(string("requestTokenUri"), ramlScalarValue()))
                            .with(field(string("tokenCredentialsUri"), ramlScalarValue()))
                            .with(field(string("accessTokenUri"), ramlScalarValue()))
-                           .with(field(string("authorizationGrants"), array(scalarType())))
+                           .with(field(string("authorizationGrants"), array(authorizationGrantsValue())))
                            .with(field(string("scopes"), array(scalarType())));
+    }
+
+    protected Rule authorizationGrantsValue()
+    {
+        return scalarType();
     }
 
     // Traits

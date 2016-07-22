@@ -673,7 +673,7 @@
          "annotations": [],
          "authorizationGrants": [
           "authorization_code",
-          "refresh_token"
+          "implicit"
          ],
          "authorizationUri": {
           "annotations": [],
@@ -1235,7 +1235,7 @@
          "annotations": [],
          "authorizationGrants": [
           "authorization_code",
-          "refresh_token"
+          "implicit"
          ],
          "authorizationUri": {
           "annotations": [],
@@ -1428,7 +1428,7 @@
      "annotations": [],
      "authorizationGrants": [
       "authorization_code",
-      "refresh_token"
+      "implicit"
      ],
      "authorizationUri": {
       "annotations": [],
@@ -1595,7 +1595,7 @@
     "annotations": [],
     "authorizationGrants": [
      "authorization_code",
-     "refresh_token"
+     "implicit"
     ],
     "authorizationUri": {
      "annotations": [],

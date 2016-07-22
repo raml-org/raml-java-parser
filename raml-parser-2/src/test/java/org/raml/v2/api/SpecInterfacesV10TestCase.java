@@ -293,7 +293,7 @@ public class SpecInterfacesV10TestCase
         assertThat(settings.accessTokenUri().value(), is("https://api.dropbox.com/1/oauth2/token"));
         assertThat(settings.authorizationGrants().size(), is(2));
         assertThat(settings.authorizationGrants().get(0), is("authorization_code"));
-        assertThat(settings.authorizationGrants().get(1), is("refresh_token"));
+        assertThat(settings.authorizationGrants().get(1), is("implicit"));
     }
 
     private void assertBaseUriParameters(List<TypeDeclaration> baseUriParameters)

@@ -132,6 +132,17 @@ public class Raml10Grammar extends BaseRamlGrammar
     }
 
     @Override
+    protected Rule authorizationGrantsValue()
+    {
+        return anyOf(string("authorization_code"),
+                string("password"),
+                string("client_credentials"),
+                string("implicit"),
+                regex("urn:.*"),
+                regex("http://.*"));
+    }
+
+    @Override
     protected KeyValueRule responseField()
     {
         return super.responseField().then(ResponseNode.class);
