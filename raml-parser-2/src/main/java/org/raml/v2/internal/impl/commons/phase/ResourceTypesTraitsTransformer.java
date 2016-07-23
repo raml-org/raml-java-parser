@@ -230,6 +230,8 @@ public class ResourceTypesTraitsTransformer implements Transformer
         TraitNode copy = refNode.copy();
         copy.setParent(refNode.getParent());
 
+        replaceNullValueWithObject(copy);
+
         // generateDefinition parameters
         Map<String, String> parameters = getBuiltinTraitParameters(methodNode, baseResourceNode);
         if (traitReference instanceof ParametrizedReferenceNode)
