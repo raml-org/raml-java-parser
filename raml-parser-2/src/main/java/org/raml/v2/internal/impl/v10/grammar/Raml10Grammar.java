@@ -575,11 +575,12 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return field(
                 anyOf(typeKey(), schemaKey()),
-                anyOf(typeExpressionReference(), array(typeExpressionReference()))).defaultValue(new TypeDefaultValue(defaultType))
-                                                                                   .description(
-                                                                                           "A base type which the current type extends or just wraps."
-                                                                                                   +
-                                                                                                   " The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.");
+                anyOf(typeExpressionReference(), array(typeExpressionReference()), explicitType()))
+                                                                                                   .defaultValue(new TypeDefaultValue(defaultType))
+                                                                                                   .description(
+                                                                                                           "A base type which the current type extends or just wraps."
+                                                                                                                   +
+                                                                                                                   " The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.");
     }
 
     private KeyValueRule requiredField()
@@ -707,7 +708,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected ObjectRule properties()
     {
         return objectType()
-                           .with(propertyField());
+                           .with(propertyField()).named("Properties");
     }
 
     private KeyValueRule propertyField()
@@ -717,7 +718,8 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private ObjectRule propertyType()
     {
-        return baseType(TypeId.STRING, PROPERTY_TYPE_RULE, requiredField());
+        return baseType(TypeId.STRING, PROPERTY_TYPE_RULE, requiredField())
+                                                                           .named("PropertyTypeRule");
     }
 
     protected Rule objectTypeLiteral()

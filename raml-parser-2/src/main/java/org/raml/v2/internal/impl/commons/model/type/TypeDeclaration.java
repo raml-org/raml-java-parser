@@ -92,7 +92,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
     {
         if (typeNode instanceof TypeExpressionNode)
         {
-            return ((TypeExpressionNode) typeNode).getValue();
+            return ((TypeExpressionNode) typeNode).getTypeExpressionText();
         }
         if (typeNode.getSource() instanceof StringNode)
         {

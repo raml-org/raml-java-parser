@@ -15,22 +15,25 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
-
 import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.yagi.framework.nodes.Node;
 
 /**
  * Represents a type expression element it can be a union type a reference to another type an array type declaration
  */
-public interface TypeExpressionNode extends Node, SimpleTypeNode<String>
+public interface TypeExpressionNode extends Node
 {
+
     /**
      * Generates the definition that results of evaluating this expression
-     * @return The type definition
+     *
      * @param node
+     * @return The type definition
      */
     @Nullable
     ResolvedType generateDefinition(TypeDeclarationNode node);
+
+    String getTypeExpressionText();
 }

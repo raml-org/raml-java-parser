@@ -17,16 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import org.raml.yagi.framework.nodes.*;
-import org.raml.yagi.framework.util.NodeUtils;
-import org.raml.yagi.framework.suggester.ParsingContext;
-import org.raml.yagi.framework.suggester.ParsingContextType;
-import org.raml.yagi.framework.suggester.Suggestion;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,8 +27,26 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.KeyValueNode;
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.NullNode;
+import org.raml.yagi.framework.nodes.ObjectNode;
+import org.raml.yagi.framework.suggester.ParsingContext;
+import org.raml.yagi.framework.suggester.ParsingContextType;
+import org.raml.yagi.framework.suggester.Suggestion;
+import org.raml.yagi.framework.util.NodeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ObjectRule extends Rule
 {
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<KeyValueRule> fields;
@@ -45,6 +54,7 @@ public class ObjectRule extends Rule
     private ExclusiveKeys exclusiveKeys;
     private boolean strict = false;
     private boolean allowsAdditionalProperties = false;
+
 
     public ObjectRule()
     {
@@ -55,6 +65,12 @@ public class ObjectRule extends Rule
     {
         this();
         this.strict = strict;
+    }
+
+    public ObjectRule named(String ruleName)
+    {
+        super.named(ruleName);
+        return this;
     }
 
     @Nonnull
@@ -296,6 +312,7 @@ public class ObjectRule extends Rule
 
     /**
      * Adds a field to this object rule
+     *
      * @param field The field defined to this object
      * @return this
      */
@@ -307,6 +324,7 @@ public class ObjectRule extends Rule
 
     /**
      * Adds all a field to this object rule
+     *
      * @param fields The fields defined to this object
      * @return this
      */
@@ -321,6 +339,7 @@ public class ObjectRule extends Rule
 
     /**
      * Adds a field to this object rule at a given order
+     *
      * @param field The field defined to this object
      * @param index the index
      * @return this
@@ -367,6 +386,7 @@ public class ObjectRule extends Rule
     /**
      * Defines conditional fields based on a condition.
      * This fields are only valid if the specified condition is
+     *
      * @param conditional The conditional fields
      * @return this
      */
@@ -378,6 +398,7 @@ public class ObjectRule extends Rule
 
     /**
      * Defines the mutually exclusive fields
+     *
      * @param exclusive The exclusive rules
      * @return this
      */

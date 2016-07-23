@@ -15,22 +15,20 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import org.raml.yagi.framework.nodes.AbstractObjectNode;
-import org.raml.yagi.framework.nodes.AbstractRamlNode;
-import org.raml.yagi.framework.nodes.ArrayNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.ObjectNode;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeDeclarationNode extends AbstractObjectNode implements OverlayableNode
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
+import org.raml.yagi.framework.nodes.ArrayNode;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
+
+public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpressionNode, OverlayableNode
 {
 
     private ResolvedType resolvedType;
@@ -132,4 +130,16 @@ public class TypeDeclarationNode extends AbstractObjectNode implements Overlayab
         return new TypeDeclarationNode(this);
     }
 
+    @Nullable
+    @Override
+    public ResolvedType generateDefinition(TypeDeclarationNode node)
+    {
+        return resolveTypeDefinition();
+    }
+
+    @Override
+    public String getTypeExpressionText()
+    {
+        return getTypeName() + "_AnonymousType";
+    }
 }

@@ -28,10 +28,28 @@ public abstract class Rule
 {
     @Nullable
     private NodeFactory factory;
+    private String ruleName = getClass().getSimpleName();
 
     protected Rule()
     {
 
+    }
+
+    public Rule named(String ruleName)
+    {
+        this.ruleName = ruleName;
+        return this;
+    }
+
+    public String ruleName()
+    {
+        return ruleName;
+    }
+
+    @Override
+    public String toString()
+    {
+        return ruleName;
     }
 
     /**

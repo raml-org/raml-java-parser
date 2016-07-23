@@ -21,12 +21,13 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class NamedTypeExpressionNode extends AbstractReferenceNode implements TypeExpressionNode
+public class NamedTypeExpressionNode extends AbstractReferenceNode implements TypeExpressionNode, SimpleTypeNode<String>
 {
     private String name;
 
@@ -87,6 +88,12 @@ public class NamedTypeExpressionNode extends AbstractReferenceNode implements Ty
         {
             return null;
         }
+    }
+
+    @Override
+    public String getTypeExpressionText()
+    {
+        return getValue();
     }
 
     @Override

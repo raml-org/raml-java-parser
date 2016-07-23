@@ -25,13 +25,14 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExpressionNode
+public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExpressionNode, SimpleTypeNode<String>
 {
 
     public UnionTypeExpressionNode()
@@ -97,13 +98,19 @@ public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExp
     }
 
     @Override
+    public String getTypeExpressionText()
+    {
+        return getValue();
+    }
+
+    @Override
     public String getValue()
     {
         String unionOperator = " | ";
         StringBuilder result = new StringBuilder();
         for (TypeExpressionNode typeExpressionNode : of())
         {
-            String typeExpression = typeExpressionNode.getValue();
+            String typeExpression = typeExpressionNode.getTypeExpressionText();
             if (typeExpression != null)
             {
                 result.append(addParenthesesIfNeeded(typeExpression)).append(unionOperator);

@@ -26,8 +26,9 @@ import org.raml.v2.internal.impl.v10.type.ArrayResolvedType;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
-public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExpressionNode
+public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExpressionNode, SimpleTypeNode<String>
 {
 
     public ArrayTypeExpressionNode()
@@ -102,9 +103,15 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
     }
 
     @Override
+    public String getTypeExpressionText()
+    {
+        return getValue();
+    }
+
+    @Override
     public String getValue()
     {
-        String typeExpression = of().getValue();
+        String typeExpression = of().getTypeExpressionText();
         return typeExpression != null ? addParenthesesIfNeeded(typeExpression) + "[]" : null;
 
     }

@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.impl.commons.suggester.ReferenceSuggester;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
 import org.raml.yagi.framework.suggester.ParsingContext;
@@ -44,7 +45,8 @@ public class TypeExpressionReferenceRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode || node instanceof TypeExpressionNode;
+        // It should be a simple type expression if is an object type then it may be a TypeExpressionNode but it should not match here
+        return node instanceof SimpleTypeNode;
     }
 
     @Nonnull
