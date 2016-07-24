@@ -430,9 +430,9 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule numberFormat()
     {
-        return field(string("format"), anyOf(string("int32"), string("int64"), string("int"), string("long"), string("float"), string("float"), string("int16"), string("int8")))
-                                                                                                                                                                                 .description(
-                                                                                                                                                                                         "The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8");
+        return field(string("format"), anyOf(string("int32"), string("int64"), string("int"), string("long"), string("float"), string("double"), string("int16"), string("int8")))
+                                                                                                                                                                                  .description(
+                                                                                                                                                                                          "The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8");
     }
 
     protected KeyValueRule maximumField()
