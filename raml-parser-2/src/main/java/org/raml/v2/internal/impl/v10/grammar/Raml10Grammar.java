@@ -31,8 +31,6 @@ import org.raml.v2.internal.impl.commons.nodes.DocumentationItemNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
-import org.raml.v2.internal.impl.commons.nodes.MethodNode;
-import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.v2.internal.impl.commons.nodes.ResponseNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -91,8 +89,8 @@ public class Raml10Grammar extends BaseRamlGrammar
             public ObjectRule create()
             {
                 return baseResourceValue()
-                                          .with(field(anyMethod(), methodValue()).then(MethodNode.class))
-                                          .with(field(resourceKey(), resourceValue()).then(ResourceNode.class))
+                                          .with(methodField())
+                                          .with(resourceField())
                                           .with(annotationField());
             }
         });
@@ -748,7 +746,13 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule displayNameField()
     {
-        return field(displayNameKey(), ramlScalarValue()).defaultValue(new DisplayNameDefaultValue());
+        return field(displayNameKey(), overlayableRamlScalarValue()).defaultValue(new DisplayNameDefaultValue());
+    }
+
+    protected Rule overlayableRamlScalarValue()
+    {
+        return firstOf(scalarType().then(new OverlayableSimpleTypeFactory(true)),
+                annotatedScalarType(scalarType().then(new OverlayableSimpleTypeFactory(false))));
     }
 
 
@@ -765,8 +769,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected Rule descriptionValue()
     {
-        return firstOf(scalarType().then(new OverlayableSimpleTypeFactory(true)),
-                annotatedScalarType(scalarType().then(new OverlayableSimpleTypeFactory(false))));
+        return overlayableRamlScalarValue();
     }
 
     protected KeyValueRule docTitleField()

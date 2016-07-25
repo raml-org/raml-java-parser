@@ -27,7 +27,10 @@
                     },
                     "methods": [
                         {
-                            "method": "put"
+                            "method": "put",
+                            "displayName": {
+                                "value": "put"
+                            }
                         }
                     ]
                 }

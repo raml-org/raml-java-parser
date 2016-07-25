@@ -7,5 +7,21 @@
     },
     "description": {
         "value": "some overlaid description"
-    }
+    },
+    "resources": [
+        {
+            "relativeUri": "/master",
+            "displayName": {
+                "value": "overlaid display name"
+            },
+            "resources": [
+                {
+                    "relativeUri": "/child",
+                    "displayName": {
+                        "value": "child overlaid display name over default"
+                    }
+                }
+            ]
+        }
+    ]
 }

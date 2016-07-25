@@ -35,6 +35,7 @@ import org.raml.v2.internal.impl.commons.nodes.TraitRefNode;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceRule;
 import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
+import org.raml.v2.internal.impl.v10.nodes.factory.EmptyObjectNodeFactory;
 import org.raml.yagi.framework.grammar.BaseGrammar;
 import org.raml.yagi.framework.grammar.ExclusiveSiblingRule;
 import org.raml.yagi.framework.grammar.RuleFactory;
@@ -88,7 +89,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(protocolsField())
                            .with(mediaTypeField())
                            .with(securedByField().description("The security schemes that apply to every resource and method in the API."))
-                           .with(resourceField().then(ResourceNode.class))
+                           .with(resourceField())
                            .with(fieldWithRequiredValue(documentationKey(), documentations()))
                            .then(RamlDocumentNode.class);
     }
@@ -121,7 +122,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule resourceField()
     {
-        return field(resourceKey(), resourceValue());
+        return new KeyValueRule(resourceKey(), anyOf(resourceValue(), nullValue().then(new EmptyObjectNodeFactory()))).then(ResourceNode.class);
     }
 
 
@@ -280,10 +281,15 @@ public abstract class BaseRamlGrammar extends BaseGrammar
             public ObjectRule create()
             {
                 return baseResourceValue()
-                                          .with(field(anyMethod(), methodValue()).then(MethodNode.class))
-                                          .with(field(resourceKey(), resourceValue()).then(ResourceNode.class));
+                                          .with(methodField())
+                                          .with(resourceField());
             }
         });
+    }
+
+    protected KeyValueRule methodField()
+    {
+        return new KeyValueRule(anyMethod(), anyOf(methodValue(), nullValue().then(new EmptyObjectNodeFactory()))).then(MethodNode.class);
     }
 
     protected ObjectRule baseResourceValue()
@@ -306,7 +312,6 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     // Method
     protected ObjectRule methodValue()
     {
-        // TODO query string
         return objectType()
                            .with(descriptionField())
                            .with(displayNameField())

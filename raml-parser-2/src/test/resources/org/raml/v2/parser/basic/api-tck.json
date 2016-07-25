@@ -18,6 +18,20 @@
                         "displayName": {
                             "value": "get"
                         }
+                    },
+                    {
+                        "method": "post",
+                        "displayName": {
+                            "value": "post"
+                        }
+                    }
+                ],
+                "resources": [
+                    {
+                        "relativeUri": "/child",
+                        "displayName": {
+                            "value": "/child"
+                        }
                     }
                 ]
             }

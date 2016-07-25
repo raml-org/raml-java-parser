@@ -49,4 +49,4 @@ instance type (integer) does not match any allowed primitive type (allowed: ["st
                         ObjectNodeImpl (Start: -1 , End: -1)
                             KeyValueNodeImpl (Start: -1 , End: 49)
                                 StringNodeImpl: "value" (Start: -1 , End: -1)
-                                SYStringNode: "User" (Start: 45 , End: 49, On: input.raml, Source: SYStringNode)
+                                OverlayableStringNode: "User" (Start: 45 , End: 49, On: input.raml, Source: SYStringNode)
