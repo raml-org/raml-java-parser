@@ -57,9 +57,9 @@ public class NumberResolvedType extends XmlFacetsCapableType
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final NumberResolvedType result = copy();
-        result.setMinimum(NodeSelector.selectIntValue("minimum", from));
-        result.setMaximum(NodeSelector.selectIntValue("maximum", from));
-        result.setMultiple(NodeSelector.selectIntValue("multipleOf", from));
+        result.setMinimum(NodeSelector.selectNumberValue("minimum", from));
+        result.setMaximum(NodeSelector.selectNumberValue("maximum", from));
+        result.setMultiple(NodeSelector.selectNumberValue("multipleOf", from));
         result.setFormat(NodeSelector.selectStringValue("format", from));
         result.setEnums(getEnumValues(from));
         return overwriteFacets(result, from);
