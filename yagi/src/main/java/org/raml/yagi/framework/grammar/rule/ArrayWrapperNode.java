@@ -18,6 +18,7 @@ package org.raml.yagi.framework.grammar.rule;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.BaseNode;
 import org.raml.yagi.framework.nodes.DefaultPosition;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.Position;
@@ -54,8 +55,14 @@ public class ArrayWrapperNode extends BaseNode implements ArrayNode
     @Override
     public void setChild(int idx, Node newNode)
     {
-        // This is a wrapper so we add the child nodes to the wrapper valued
-        wrapped.setChild(idx, newNode);
+        if (newNode instanceof ErrorNode)
+        {
+            wrapped = newNode;
+        }
+        else
+        {
+            wrapped.setChild(idx, newNode);
+        }
     }
 
     @Override

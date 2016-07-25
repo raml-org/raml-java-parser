@@ -212,16 +212,6 @@ public class ErrorNodeFactory
         return new ErrorNode("The path " + path + " was already defined.");
     }
 
-    public static ErrorNode createNonexistentReferenceTraitError(ReferenceNode traitReference)
-    {
-        return new ErrorNode("Reference to nonexistent trait '" + traitReference.getRefName() + "'");
-    }
-
-    public static ErrorNode createNonexistentReferenceResourceTypeError(ReferenceNode resourceTypeReference)
-    {
-        return new ErrorNode("Reference to nonexistent resource type '" + resourceTypeReference.getRefName() + "'");
-    }
-
     public static ErrorNode createInvalidTypeExpressionSyntax(String message, String expression, int location)
     {
         return new ErrorNode("Invalid type expression syntax: \"" + expression + "\". Caused by : " + message + " at character : " + location);

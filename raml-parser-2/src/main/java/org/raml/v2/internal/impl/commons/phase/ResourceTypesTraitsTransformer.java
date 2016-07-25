@@ -18,32 +18,7 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.ExecutionContext;
-import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.nodes.ParametrizedReferenceNode;
-import org.raml.yagi.framework.nodes.ReferenceNode;
-import org.raml.yagi.framework.nodes.snakeyaml.SYBaseRamlNode;
-import org.raml.yagi.framework.nodes.snakeyaml.SYNullNode;
-import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
-import org.raml.yagi.framework.phase.GrammarPhase;
-import org.raml.yagi.framework.phase.Phase;
-import org.raml.yagi.framework.phase.TransformationPhase;
-import org.raml.yagi.framework.phase.Transformer;
-import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
-import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
-import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
-import org.raml.v2.internal.impl.commons.nodes.MethodNode;
-import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
-import org.raml.v2.internal.impl.commons.nodes.ResourceTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.StringTemplateNode;
-import org.raml.v2.internal.impl.commons.nodes.TraitNode;
-import org.raml.yagi.framework.util.NodeSelector;
-import org.raml.yagi.framework.util.NodeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsMerger.merge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +27,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsMerger.merge;
+import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
+import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
+import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
+import org.raml.v2.internal.impl.commons.nodes.MethodNode;
+import org.raml.v2.internal.impl.commons.nodes.ParametrizedReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
+import org.raml.v2.internal.impl.commons.nodes.ResourceTypeNode;
+import org.raml.v2.internal.impl.commons.nodes.StringTemplateNode;
+import org.raml.v2.internal.impl.commons.nodes.TraitNode;
+import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.ExecutionContext;
+import org.raml.yagi.framework.nodes.KeyValueNode;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
+import org.raml.yagi.framework.nodes.ReferenceNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYBaseRamlNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYNullNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
+import org.raml.yagi.framework.phase.GrammarPhase;
+import org.raml.yagi.framework.phase.Phase;
+import org.raml.yagi.framework.phase.TransformationPhase;
+import org.raml.yagi.framework.phase.Transformer;
+import org.raml.yagi.framework.util.NodeSelector;
+import org.raml.yagi.framework.util.NodeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ResourceTypesTraitsTransformer implements Transformer
 {
@@ -101,50 +101,25 @@ public class ResourceTypesTraitsTransformer implements Transformer
         final List<MethodNode> methodNodes = findMethodNodes(resourceNode);
         final List<ReferenceNode> resourceTraitRefs = findTraitReferences(resourceNode);
 
-        // we should validate resource level trait refs proactively as if we don't have any method they won't be validated
-        final List<ReferenceNode> presentResourceTraitRefs = validateAndFilterResourceLevelTraitRefs(resourceTraitRefs);
-
         for (MethodNode methodNode : methodNodes)
         {
             final List<ReferenceNode> traitRefs = findTraitReferences(methodNode);
-            traitRefs.addAll(presentResourceTraitRefs);
+            traitRefs.addAll(resourceTraitRefs);
             for (final ReferenceNode traitRef : traitRefs)
             {
-                final String traitLevel = presentResourceTraitRefs.contains(traitRef) ? "resource" : "method";
+                final String traitLevel = resourceTraitRefs.contains(traitRef) ? "resource" : "method";
                 logger.debug("applying {} level trait '{}' to '{}.{}'", traitLevel, traitRef.getRefName(), resourceNode.getKey(), methodNode.getName());
                 applyTrait(methodNode, traitRef, baseResourceNode);
             }
         }
     }
 
-    private List<ReferenceNode> validateAndFilterResourceLevelTraitRefs(final List<ReferenceNode> resourceTraitRefs)
-    {
-        // TODO this should not be required any more!!!! Now reference validator
-        // TODO - duplicated logic with validation from ResourceTypesTraitsTransformer#applyTrait -> unify :) - moliva - May 5, 2016
-        final ArrayList<ReferenceNode> presentTraitRefs = new ArrayList<>();
-        for (final ReferenceNode traitReference : resourceTraitRefs)
-        {
-            final Node refNode = traitReference.getRefNode();
-            if (refNode == null)
-            {
-                final ErrorNode errorNode = ErrorNodeFactory.createNonexistentReferenceTraitError(traitReference);
-                traitReference.replaceWith(errorNode);
-            }
-            else
-            {
-                presentTraitRefs.add(traitReference);
-            }
-        }
-        return presentTraitRefs;
-    }
-
     private void applyResourceType(KeyValueNode targetNode, ReferenceNode resourceTypeReference, ResourceNode baseResourceNode)
     {
         ResourceTypeNode refNode = (ResourceTypeNode) resourceTypeReference.getRefNode();
-        if (refNode == null)
+        if (refNode.getValue() instanceof NullNode)
         {
-            final ErrorNode errorNode = ErrorNodeFactory.createNonexistentReferenceResourceTypeError(resourceTypeReference);
-            resourceTypeReference.replaceWith(errorNode);
+            // empty resource type
             return;
         }
         ResourceTypeNode templateNode = refNode.copy();
@@ -220,10 +195,9 @@ public class ResourceTypesTraitsTransformer implements Transformer
     private void applyTrait(MethodNode methodNode, ReferenceNode traitReference, ResourceNode baseResourceNode)
     {
         TraitNode refNode = (TraitNode) traitReference.getRefNode();
-        if (refNode == null)
+        if (refNode.getValue() instanceof NullNode)
         {
-            final ErrorNode errorNode = ErrorNodeFactory.createNonexistentReferenceTraitError(traitReference);
-            traitReference.replaceWith(errorNode);
+            // empty trait
             return;
         }
 
