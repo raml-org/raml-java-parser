@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      age: integer
+/res:
+  get:
+    body:
+      application/xml:
+          type: root
+          example: |
+            <root>
+              <age>7</age>
+              <my-custom-xml>with-custom-value</my-custom-xml>
+            </root>

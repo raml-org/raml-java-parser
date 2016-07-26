@@ -1,13 +1,13 @@
-<schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.w3.org/2001/XMLSchema">
-    <element name="root" type="root"/>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://validationnamespace.raml.org" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://validationnamespace.raml.org">
+    <element name="root" type="tns:root"/>
     <complexType name="root">
-        <choice>
+        <sequence>
             <element name="age">
                 <simpleType>
                     <restriction base="integer"/>
                 </simpleType>
             </element>
-            <any maxOccurs="unbounded" minOccurs="0"/>
-        </choice>
+            <any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+        </sequence>
     </complexType>
 </schema>

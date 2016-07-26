@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: simple object
+types:
+  root: any
+/res:
+  get:
+    body:
+      application/xml:
+          type: root
+          example: |
+            <root>
+              <my-custom-xml>with-custom-value</my-custom-xml>
+            </root>

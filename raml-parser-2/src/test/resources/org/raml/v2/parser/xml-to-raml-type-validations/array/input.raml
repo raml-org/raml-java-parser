@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name: string
+      friends: Friend[]
+  Friend:
+    type: object
+    properties:
+      name: string
+/res:
+  get:
+    body:
+      application/xml:
+          type: root
+          example: |
+            <root>
+              <name>robert</name>
+              <friends>
+                <name>denerys</name>
+                <name>stannis</name>
+                <name>arya</name>
+                <my-custom-xml>with-custom-value</my-custom-xml>
+              </friends>
+              <my-custom-xml>with-custom-value</my-custom-xml>
+            </root>

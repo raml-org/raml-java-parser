@@ -1,8 +1,8 @@
-<schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.w3.org/2001/XMLSchema">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://validationnamespace.raml.org" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://validationnamespace.raml.org">
     <element name="root">
         <complexType>
             <choice>
-                <any maxOccurs="unbounded" minOccurs="0"/>
+                <any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
             </choice>
         </complexType>
     </element>

@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      name:
+        type: string
+        xml:
+          attribute: true # serialize it as an XML attribute
+          name: "fullname" # attribute should be called fullname
+/res:
+  get:
+    body:
+      application/xml:
+          type: root
+          example: |
+            <root fullname="robert">
+              <my-custom-xml>with-custom-value</my-custom-xml>
+            </root>
