@@ -22,17 +22,22 @@ import org.apache.ws.commons.schema.XmlSchemaChoice;
 import org.apache.ws.commons.schema.XmlSchemaChoiceMember;
 import org.apache.ws.commons.schema.XmlSchemaCollection;
 import org.apache.ws.commons.schema.XmlSchemaComplexType;
+import org.apache.ws.commons.schema.XmlSchemaContentProcessing;
 import org.apache.ws.commons.schema.XmlSchemaElement;
 import org.apache.ws.commons.schema.XmlSchemaEnumerationFacet;
+import org.apache.ws.commons.schema.XmlSchemaForm;
 import org.apache.ws.commons.schema.XmlSchemaMaxInclusiveFacet;
 import org.apache.ws.commons.schema.XmlSchemaMaxLengthFacet;
 import org.apache.ws.commons.schema.XmlSchemaMinInclusiveFacet;
 import org.apache.ws.commons.schema.XmlSchemaMinLengthFacet;
 import org.apache.ws.commons.schema.XmlSchemaPatternFacet;
+import org.apache.ws.commons.schema.XmlSchemaSequence;
+import org.apache.ws.commons.schema.XmlSchemaSequenceMember;
 import org.apache.ws.commons.schema.XmlSchemaSimpleType;
 import org.apache.ws.commons.schema.XmlSchemaSimpleTypeRestriction;
 import org.apache.ws.commons.schema.XmlSchemaType;
 import org.apache.ws.commons.schema.constants.Constants;
+import org.apache.ws.commons.schema.utils.NamespacePrefixList;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
@@ -52,6 +57,7 @@ import static org.raml.v2.internal.utils.ValueUtils.isEmpty;
 public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
 {
     public static final long UNBOUNDED = Long.MAX_VALUE;
+    private static final String DEFAULT_NAMESPACE = "http://validationnamespace.raml.org";
     private XmlSchemaCollection collection;
     private XmlSchema schema;
     private Stack<XmlSchemaElement> currentElement;
@@ -59,8 +65,6 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
 
     public TypeToSchemaVisitor()
     {
-        this.collection = new XmlSchemaCollection();
-        this.schema = new XmlSchema(XMLConstants.W3C_XML_SCHEMA_NS_URI, "raml-xsd", collection);
         this.currentElement = new Stack<>();
         this.types = new HashMap<>();
     }
@@ -72,12 +76,13 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
 
     public XmlSchemaElement transform(String name, ResolvedType resolvedType)
     {
+        initialize(resolvedType);
+        return doTransform(name, resolvedType);
+    }
+
+    private XmlSchemaElement doTransform(String name, ResolvedType resolvedType)
+    {
         final boolean empty = currentElement.isEmpty();
-        // We use namespace of this element
-        if (empty && resolvedType instanceof XmlFacetsCapableType && ((XmlFacetsCapableType) resolvedType).getXmlFacets().getNamespace() != null)
-        {
-            schema.setTargetNamespace(((XmlFacetsCapableType) resolvedType).getXmlFacets().getNamespace());
-        }
         final XmlSchemaElement schemaElement = new XmlSchemaElement(schema, empty);
         schemaElement.setName(name);
         currentElement.push(schemaElement);
@@ -95,6 +100,33 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         }
         currentElement.pop();
         return schemaElement;
+    }
+
+    public static String getTargetNamespace(ResolvedType resolvedType)
+    {
+        if (resolvedType instanceof XmlFacetsCapableType && ((XmlFacetsCapableType) resolvedType).getXmlFacets().getNamespace() != null)
+        {
+            return ((XmlFacetsCapableType) resolvedType).getXmlFacets().getNamespace();
+        }
+        else
+        {
+            return DEFAULT_NAMESPACE;
+        }
+    }
+
+    private void initialize(ResolvedType resolvedType)
+    {
+        collection = new XmlSchemaCollection();
+
+        final boolean empty = currentElement.isEmpty();
+        // We use namespace of this element
+        if (empty)
+        {
+            final String target = getTargetNamespace(resolvedType);
+            schema = new XmlSchema(target, "raml-xsd", collection);
+            schema.setTargetNamespace(target);
+        }
+        schema.setElementFormDefault(XmlSchemaForm.QUALIFIED);
     }
 
     @Override
@@ -157,8 +189,8 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
                 value.setName(typeName);
                 types.put(typeName, value);
             }
-            final XmlSchemaChoice xmlSchemaSequence = new XmlSchemaChoice();
-            final List<XmlSchemaChoiceMember> items = xmlSchemaSequence.getItems();
+            final XmlSchemaSequence xmlSchemaSequence = new XmlSchemaSequence();
+            final List<XmlSchemaSequenceMember> items = xmlSchemaSequence.getItems();
             value.setParticle(xmlSchemaSequence);
             final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
             for (PropertyFacets propertyDefinition : properties.values())
@@ -190,7 +222,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
                     }
                     else
                     {
-                        final XmlSchemaElement schemaElement = transform(name, valueResolvedType);
+                        final XmlSchemaElement schemaElement = doTransform(name, valueResolvedType);
                         if (!propertyDefinition.isRequired())
                         {
                             // Not required
@@ -206,6 +238,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
                 final XmlSchemaAny schemaAny = new XmlSchemaAny();
                 schemaAny.setMinOccurs(0);
                 schemaAny.setMaxOccurs(UNBOUNDED);
+                schemaAny.setProcessContent(XmlSchemaContentProcessing.SKIP);
                 items.add(schemaAny);
             }
             return value;
@@ -295,7 +328,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
             // This is for the inside element not the wrapped. So this one is the tag for the item type
             // First uses the xml facet then the item name finally the field name or parent type name
             final String name = defaultTo(defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), itemType.getTypeName()), currentElement.peek().getName());
-            final XmlSchemaElement transform = transform(name, itemType);
+            final XmlSchemaElement transform = doTransform(name, itemType);
             final XmlSchemaComplexType value = new XmlSchemaComplexType(schema, false);
             final XmlSchemaChoice xmlSchemaSequence = new XmlSchemaChoice();
             value.setParticle(xmlSchemaSequence);
@@ -365,6 +398,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         final XmlSchemaAny schemaAny = new XmlSchemaAny();
         schemaAny.setMinOccurs(0);
         schemaAny.setMaxOccurs(UNBOUNDED);
+        schemaAny.setProcessContent(XmlSchemaContentProcessing.SKIP);
         items.add(schemaAny);
         return value;
     }

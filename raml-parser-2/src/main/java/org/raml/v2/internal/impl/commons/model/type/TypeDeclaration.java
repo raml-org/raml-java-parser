@@ -167,7 +167,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         return writer.toString();
     }
 
-    private String rootElementName()
+    public String rootElementName()
     {
         if (resolvedType instanceof XmlFacetsCapableType)
         {

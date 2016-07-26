@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.v10.phase;
 
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -35,19 +36,24 @@ import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLFilterImpl;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
-
-import static org.raml.v2.internal.utils.ValueUtils.defaultTo;
 
 public class ExampleValidationPhase implements Phase
 {
@@ -175,15 +181,19 @@ public class ExampleValidationPhase implements Phase
     protected Node validateXml(TypeDeclarationNode type, ResolvedType resolvedType, String value)
     {
         final TypeToSchemaVisitor typeToSchemaVisitor = new TypeToSchemaVisitor();
-        typeToSchemaVisitor.transform(defaultTo(type.getTypeName(), "raml-root"), resolvedType);
+        typeToSchemaVisitor.transform(new TypeDeclarationModelFactory().create(type).rootElementName(), resolvedType);
         final XmlSchema schema = typeToSchemaVisitor.getSchema();
         final StringWriter xsd = new StringWriter();
         schema.write(xsd);
         try
         {
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            final Validator validator = factory.newSchema(new StreamSource(new StringReader(xsd.toString()))).newValidator();
-            validator.validate(new StreamSource(new StringReader(value)));
+            // final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            final SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/XML/XMLSchema/v1.1");
+            final Schema schema1 = factory.newSchema(new StreamSource(new StringReader(xsd.toString())));
+            final Validator validator = schema1.newValidator();
+            validator.validate(new SAXSource(
+                    new NamespaceFilter(XMLReaderFactory.createXMLReader(), TypeToSchemaVisitor.getTargetNamespace(resolvedType)),
+                    new InputSource(new StringReader(value))));
         }
         catch (IOException | SAXException e)
         {
@@ -205,5 +215,26 @@ public class ExampleValidationPhase implements Phase
     private boolean isExternalSchemaType(ResolvedType resolvedType)
     {
         return resolvedType instanceof XmlSchemaExternalType || resolvedType instanceof JsonSchemaExternalType;
+    }
+
+
+    private static class NamespaceFilter extends XMLFilterImpl
+    {
+
+        String requiredNamespace;
+
+        public NamespaceFilter(XMLReader parent, String requiredNamespace)
+        {
+            super(parent);
+            this.requiredNamespace = requiredNamespace;
+        }
+
+        @Override
+        public void startElement(String arg0, String arg1, String arg2, Attributes arg3) throws SAXException
+        {
+            if (!arg0.equals(requiredNamespace))
+                arg0 = requiredNamespace;
+            super.startElement(arg0, arg1, arg2, arg3);
+        }
     }
 }
