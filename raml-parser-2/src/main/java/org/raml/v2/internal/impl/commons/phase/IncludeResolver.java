@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.commons.phase;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.raml.yagi.framework.nodes.NullNodeImpl;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -91,7 +92,7 @@ public class IncludeResolver implements Transformer
 
             if (result == null)
             {
-                result = new IncludeErrorNode("Include file is empty: " + resourcePath);
+                result = new NullNodeImpl();
             }
 
             return result;
