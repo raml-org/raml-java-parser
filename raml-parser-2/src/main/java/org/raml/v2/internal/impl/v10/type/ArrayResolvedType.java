@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -82,6 +84,18 @@ public class ArrayResolvedType extends XmlFacetsCapableType
             result.setItems(((ArrayResolvedType) with).getItems());
         }
         return mergeFacets(result, with);
+    }
+
+    @Override
+    public ErrorNode validateFacets()
+    {
+        int min = minItems != null ? minItems : 0;
+        int max = maxItems != null ? maxItems : Integer.MAX_VALUE;
+        if (max < min)
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxItems must be greater than or equal to minItems");
+        }
+        return null;
     }
 
     @Override

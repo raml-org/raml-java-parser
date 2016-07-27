@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    MyFirstType:
+      type: string
+      minLength: 10
+      maxLength: 10
+    MySecondType:
+    # Invalid min and max length
+      type: MyFirstType
+      minLength: 20
+      maxLength: 10
+    MyThirdType:
+      type: MySecondType
+      maxLength: 30
+      example: "I am a valid example!"
+    MyFourthType:
+    # Invalid enum
+      type: MyThirdType
+      minLength: 15
+      enum: [ "Just a valid enum", "Not valid :(", "I am valid again" ]
+    MyFifthType:
+      type: string
+      minLength: -20
+      maxLength: 20

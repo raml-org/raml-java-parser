@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    valid:
+        type: integer
+        minimum: 20
+    invalid-range:
+        type: valid
+        minimum: 20
+        maximum: 15
+    object-range:
+        properties:
+            range-invalid: invalid-range
+            range-invalid-through-extension:
+                type: valid
+                maximum: 15
+    object-props1:
+        properties:
+            one:
+        minProperties: 2
+        maxProperties: 1

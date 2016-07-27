@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    BaseType:
+      type: integer
+    TypeWithMinimum:
+      type: BaseType
+      minimum: 10
+    TypeWithMaximum:
+      type: BaseType
+      maximum: 50
+    TypeWithMultiple:
+      type: BaseType
+      multipleOf: 5
+    SomeEnums:
+      type: BaseType
+      enums: [ 1, 4, -5 ]
+    MinEqualMax:
+      type: TypeWithMinimum
+      maximum: 10

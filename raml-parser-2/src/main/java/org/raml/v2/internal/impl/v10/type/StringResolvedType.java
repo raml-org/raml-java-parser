@@ -15,22 +15,28 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
+
 public class StringResolvedType extends XmlFacetsCapableType
 {
+    private static final int DEFAULT_MIN_LENGTH = 0;
+    private static final int DEFAULT_MAX_LENGTH = Integer.MAX_VALUE;
+
     private Integer minLength;
     private Integer maxLength;
     private String pattern;
@@ -96,6 +102,34 @@ public class StringResolvedType extends XmlFacetsCapableType
             result.setEnums(stringTypeDefinition.getEnums());
         }
         return mergeFacets(result, with);
+    }
+
+    @Override
+    public ErrorNode validateFacets()
+    {
+        int minimumLength = minLength != null ? minLength : DEFAULT_MIN_LENGTH;
+        int maximumLength = maxLength != null ? maxLength : DEFAULT_MAX_LENGTH;
+
+        // Validating conflicts between the length facets
+        if (maximumLength < minimumLength)
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(
+                    getTypeName(),
+                    "maxLength must be greater or equal than minLength");
+        }
+
+        // For each enum in the list, it must be between the range defined by minLength and maxLength
+        for (String thisEnum : enums)
+        {
+            if (thisEnum.length() < minimumLength || thisEnum.length() > maximumLength)
+            {
+                return RamlErrorNodeFactory.createInvalidFacet(
+                        getTypeName(),
+                        "enums must be between " + minimumLength + " and " + maximumLength + " characters");
+            }
+        }
+
+        return null;
     }
 
     @Override

@@ -15,16 +15,25 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import static java.math.BigDecimal.ONE;
+import static java.math.BigDecimal.ROUND_CEILING;
+import static java.math.BigDecimal.ROUND_DOWN;
+import static java.math.BigDecimal.ZERO;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.yagi.framework.util.NodeSelector;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NumberResolvedType extends XmlFacetsCapableType
 {
@@ -95,6 +104,70 @@ public class NumberResolvedType extends XmlFacetsCapableType
             result.setEnums(numberTypeDefinition.getEnums());
         }
         return mergeFacets(result, with);
+    }
+
+    @Override
+    public ErrorNode validateFacets()
+    {
+        BigDecimal min = minimum != null ? new BigDecimal(minimum.toString()) : new BigDecimal(Double.MIN_VALUE);
+        BigDecimal max = maximum != null ? new BigDecimal(maximum.toString()) : new BigDecimal(Double.MAX_VALUE);
+        BigDecimal mult = multiple != null ? new BigDecimal(multiple.toString()) : null;
+
+        // Checking conflicts between the minimum and maximum facets if both are set
+        if (max.compareTo(min) < 0)
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(
+                    getTypeName(),
+                    "maximum must be greater or equal than minimum");
+        }
+
+        // It must be at least one multiple of the number between the valid range
+        if (mult != null && !hasValidMultiplesInRange(min, max, mult))
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(
+                    getTypeName(),
+                    "It must be at least one multiple of " + mult + " in the given range");
+        }
+
+        // For each value in the list, it must be between minimum and maximum
+        for (Number thisEnum : enums)
+        {
+            BigDecimal value = new BigDecimal(thisEnum.toString());
+
+            if (value.compareTo(min) < 0 || value.compareTo(max) > 0)
+            {
+                return RamlErrorNodeFactory.createInvalidFacet(
+                        getTypeName(),
+                        "enums values must be between " + minimum + " and " + maximum);
+            }
+
+            if (mult != null && value.remainder(mult).compareTo(BigDecimal.ZERO) != 0)
+            {
+                return RamlErrorNodeFactory.createInvalidFacet(
+                        getTypeName(),
+                        "enums values must be all values multiple of " + mult);
+            }
+        }
+
+        return null;
+    }
+
+    private boolean hasValidMultiplesInRange(BigDecimal min, BigDecimal max, BigDecimal mult)
+    {
+        // Zero is multiple of every number
+        if (mult.compareTo(BigDecimal.ZERO) == 0)
+        {
+            return true;
+        }
+
+        BigDecimal divideMax = max.divide(mult, 0, ROUND_DOWN);
+        BigDecimal divideMin = min.divide(mult, 0, ROUND_CEILING);
+        BigDecimal subtract = divideMax.subtract(divideMin);
+        BigDecimal plusOne = subtract.add(ONE);
+        BigDecimal max0 = plusOne.max(ZERO);
+        BigDecimal numberOfMultiplesInRange = max0.setScale(0, ROUND_DOWN);
+
+        return numberOfMultiplesInRange.compareTo(ZERO) > 0;
     }
 
     @Override

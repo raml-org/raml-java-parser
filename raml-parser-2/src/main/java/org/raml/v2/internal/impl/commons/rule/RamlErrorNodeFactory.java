@@ -30,4 +30,14 @@ public class RamlErrorNodeFactory
         return new ErrorNode("Annotation not allowed at target: " + target + ". Allowed targets are: " + allowedTargets);
     }
 
+    public static ErrorNode createInvalidFacet(String type, String message)
+    {
+        String prefix = "Invalid facets";
+        if (type != null)
+        {
+            prefix += " for type " + type;
+        }
+        return new ErrorNode(prefix + ": " + message);
+    }
+
 }

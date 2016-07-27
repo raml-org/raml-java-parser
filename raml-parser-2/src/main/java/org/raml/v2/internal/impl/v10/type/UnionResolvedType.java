@@ -15,23 +15,22 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import static java.util.Collections.singletonList;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Collections.singletonList;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.BaseType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 
-public class UnionResolvedType implements ResolvedType
+public class UnionResolvedType extends BaseType
 {
     private List<ResolvedType> of;
-    private TypeDeclarationNode typeNode;
 
     public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of)
     {
-        this.typeNode = typeNode;
+        super(typeNode);
         this.of = of;
     }
 
@@ -42,7 +41,7 @@ public class UnionResolvedType implements ResolvedType
 
     protected UnionResolvedType copy()
     {
-        return new UnionResolvedType(typeNode, new ArrayList<>(of));
+        return new UnionResolvedType(getTypeDeclarationNode(), new ArrayList<>(of));
     }
 
     @Override
@@ -77,19 +76,6 @@ public class UnionResolvedType implements ResolvedType
         return visitor.visitUnion(this);
     }
 
-    @Nullable
-    @Override
-    public String getTypeName()
-    {
-        return typeNode != null ? typeNode.getTypeName() : null;
-    }
-
-    @Override
-    public TypeDeclarationNode getTypeDeclarationNode()
-    {
-        return typeNode;
-    }
-
     protected ResolvedType mergeWith(List<ResolvedType> of)
     {
         final List<ResolvedType> combination = new ArrayList<>();
@@ -100,6 +86,6 @@ public class UnionResolvedType implements ResolvedType
                 combination.add(localDefinition.mergeFacets(resolvedType));
             }
         }
-        return new UnionResolvedType(typeNode, combination);
+        return new UnionResolvedType(getTypeDeclarationNode(), combination);
     }
 }

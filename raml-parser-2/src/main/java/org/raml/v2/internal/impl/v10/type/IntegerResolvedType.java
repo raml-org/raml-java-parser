@@ -16,6 +16,8 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.yagi.framework.nodes.ErrorNode;
 
 public class IntegerResolvedType extends NumberResolvedType
 {
@@ -40,5 +42,63 @@ public class IntegerResolvedType extends NumberResolvedType
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitInteger(this);
+    }
+
+    @Override
+    public ErrorNode validateFacets()
+    {
+        int min = getMinimum() != null ? getMinimum().intValue() : Integer.MIN_VALUE;
+        int max = getMaximum() != null ? getMaximum().intValue() : Integer.MAX_VALUE;
+        int mult = getMultiple() != null ? getMultiple().intValue() : 1;
+
+        // Checking conflicts between the minimum and maximum facets
+        if (max < min)
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(
+                    getTypeName(),
+                    "maximum must be greater or equal than minimum");
+        }
+
+        // It must be at least one multiple of the number between the valid range
+        if (getMultiple() != null && !hasValidMultiplesInRange(min, max, mult))
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(
+                    getTypeName(),
+                    "It must be at least one multiple of " + mult + " in the given range");
+        }
+
+
+        // For each value in the list, it must be between minimum and maximum
+        for (Number thisEnum : getEnums())
+        {
+            int value = (int) thisEnum;
+            if (value < min || value > max)
+            {
+                return RamlErrorNodeFactory.createInvalidFacet(
+                        getTypeName(),
+                        "enums values must be between " + min + " and " + max);
+            }
+
+            if (value % mult != 0)
+            {
+                return RamlErrorNodeFactory.createInvalidFacet(
+                        getTypeName(),
+                        "enums values must have all values multiple of " + mult);
+            }
+        }
+
+        return null;
+    }
+
+    private boolean hasValidMultiplesInRange(double min, double max, double mult)
+    {
+        // Zero is multiple of every number
+        if (mult == 0)
+        {
+            return true;
+        }
+
+        double numberOfMultiplesInRange = Math.max(Math.floor(max / mult) - Math.ceil(min / mult) + 1, 0);
+        return numberOfMultiplesInRange > 0;
     }
 }

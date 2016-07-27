@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    DefaultMinLength:
+      type: string
+      maxLength: 20
+      example: "A good example"
+    DefaultMaxLength:
+      type: string
+      minLength: 10
+      examples:
+        one: "I cannot test the maxLength, it is too long."
+        two: "Bad"

@@ -13,44 +13,30 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.type;
+package org.raml.v2.internal.impl.commons.phase;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.phase.Transformer;
 
-import javax.annotation.Nullable;
-
-public abstract class BaseType implements ResolvedType
+public class FacetValidationTransformer implements Transformer
 {
-    private TypeDeclarationNode typeNode;
 
-    public BaseType(TypeDeclarationNode typeNode)
-    {
-        this.typeNode = typeNode;
-    }
-
-    protected void setTypeNode(TypeDeclarationNode typeNode)
-    {
-        this.typeNode = typeNode;
-    }
-
-    @Nullable
     @Override
-    public String getTypeName()
+    public boolean matches(Node node)
     {
-        return getTypeDeclarationNode() != null ? getTypeDeclarationNode().getTypeName() : null;
+        return node instanceof TypeDeclarationNode;
     }
 
     @Override
-    public TypeDeclarationNode getTypeDeclarationNode()
+    public Node transform(Node node)
     {
-        return typeNode;
-    }
+        final ResolvedType resolvedType = ((TypeDeclarationNode) node).getResolvedType();
+        ErrorNode errorNode = resolvedType.validateFacets();
 
-    @Override
-    public ErrorNode validateFacets()
-    {
-        return null;
+        return errorNode != null ? errorNode : node;
     }
 
 }

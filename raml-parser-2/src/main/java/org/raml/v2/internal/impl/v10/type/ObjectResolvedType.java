@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
@@ -126,6 +128,18 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         }
         return mergeFacets(result, with);
 
+    }
+
+    @Override
+    public ErrorNode validateFacets()
+    {
+        int min = minProperties != null ? minProperties : 0;
+        int max = maxProperties != null ? maxProperties : Integer.MAX_VALUE;
+        if (max < min)
+        {
+            return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxProperties must be greater than or equal to minProperties");
+        }
+        return null;
     }
 
     @Override

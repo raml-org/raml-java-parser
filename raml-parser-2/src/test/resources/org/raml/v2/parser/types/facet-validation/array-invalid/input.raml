@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Some API
+
+types:
+    valid:
+        type: integer
+        minimum: 20
+    array-range:
+        type: array
+        items:
+            type: valid
+            maximum: 15
+    array-count:
+        type: string[]
+        minItems: 3
+        maxItems: 2
