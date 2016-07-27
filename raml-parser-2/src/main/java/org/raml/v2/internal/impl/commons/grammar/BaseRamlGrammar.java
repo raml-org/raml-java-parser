@@ -101,7 +101,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule baseUriField()
     {
-        return field(baseUriKey(), ramlScalarValue());
+        return field(baseUriKey(), new UriTemplateValidationRule(ramlScalarValue()));
     }
 
 
@@ -541,14 +541,16 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     // Repeated keys
 
-    protected RegexValueRule resourceKey()
+    protected Rule resourceKey()
     {
-        return regex("/.*")
+        RegexValueRule rule = regex("/.*")
                            .label("/Resource")
                            .suggest("/<cursor>")
                            .description("The resources of the API, identified as relative URIs that begin with a slash (/). " +
                                         "Every property whose key begins with a slash (/), and is either at the root of the API definition " +
                                         "or is the child property of a resource property, is a resource property, e.g.: /users, /{groupId}, etc");
+
+        return new UriTemplateValidationRule(rule);
     }
 
     protected StringValueRule usesKey()

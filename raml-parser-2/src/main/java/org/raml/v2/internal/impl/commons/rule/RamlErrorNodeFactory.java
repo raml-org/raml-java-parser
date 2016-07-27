@@ -24,10 +24,14 @@ import org.raml.yagi.framework.nodes.ErrorNode;
 public class RamlErrorNodeFactory
 {
 
-
     public static ErrorNode createInvalidAnnotationTarget(List<AnnotationTarget> allowedTargets, AnnotationTarget target)
     {
         return new ErrorNode("Annotation not allowed at target: " + target + ". Allowed targets are: " + allowedTargets);
+    }
+
+    public static ErrorNode createInvalidUriTemplate()
+    {
+        return new ErrorNode("Invalid uri template syntax");
     }
 
     public static ErrorNode createInvalidFacet(String type, String message)
@@ -44,4 +48,5 @@ public class RamlErrorNodeFactory
     {
         return new ErrorNode("Required property " + property + " cannot be made optional");
     }
+
 }
