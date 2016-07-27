@@ -137,7 +137,8 @@ public class Raml10Grammar extends BaseRamlGrammar
                 string("client_credentials"),
                 string("implicit"),
                 regex("urn:.*"),
-                regex("http://.*"));
+                regex("http://.*"),
+                regex("https://.*"));
     }
 
     @Override
@@ -336,17 +337,17 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                  .add(minItemsField())
                                                                                  .add(maxItemsField()),
                                                            is(integerTypeLiteral())
-                                                                   .add(minimumField(integerType()))
-                                                                   .add(maximumField(integerType()))
-                                                                   .add(numberFormat())
-                                                                   .add(enumField())
-                                                                   .add(multipleOfField(integerType())),
+                                                                                   .add(minimumField(integerType()))
+                                                                                   .add(maximumField(integerType()))
+                                                                                   .add(numberFormat())
+                                                                                   .add(enumField())
+                                                                                   .add(multipleOfField(integerType())),
                                                            is(numericTypeLiteral())
-                                                                   .add(minimumField(numberType()))
-                                                                   .add(maximumField(numberType()))
-                                                                   .add(numberFormat())
-                                                                   .add(enumField())
-                                                                   .add(multipleOfField(numberType())),
+                                                                                   .add(minimumField(numberType()))
+                                                                                   .add(maximumField(numberType()))
+                                                                                   .add(numberFormat())
+                                                                                   .add(enumField())
+                                                                                   .add(multipleOfField(numberType())),
                                                            is(fileTypeLiteral())
                                                                                 .add(fileTypesField())
                                                                                 .add(minLengthField())
@@ -457,8 +458,8 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected KeyValueRule multipleOfField(Rule rule)
     {
         return field(string("multipleOf"), rule)
-                                                         .description(
-                                                                 "A numeric instance is valid against \"multipleOf\" if the result of dividing the instance by this keyword's value is an integer.");
+                                                .description(
+                                                        "A numeric instance is valid against \"multipleOf\" if the result of dividing the instance by this keyword's value is an integer.");
     }
 
     protected KeyValueRule numberFormat()
@@ -471,13 +472,13 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected KeyValueRule maximumField(Rule rule)
     {
         return field(string("maximum"), rule)
-                                                      .description("The maximum value of the parameter. Applicable only to parameters of type number or integer.");
+                                             .description("The maximum value of the parameter. Applicable only to parameters of type number or integer.");
     }
 
     protected KeyValueRule minimumField(Rule rule)
     {
         return field(string("minimum"), rule)
-                                                      .description("The minimum value of the parameter. Applicable only to parameters of type number or integer.");
+                                             .description("The minimum value of the parameter. Applicable only to parameters of type number or integer.");
     }
 
     protected KeyValueRule maxItemsField()
