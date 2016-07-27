@@ -138,7 +138,7 @@ public class SpecInterfacesV10TestCase
         assertThat(user.discriminatorValue(), nullValue());
         assertThat(user.maxProperties(), nullValue());
         List<TypeDeclaration> properties = user.properties();
-        assertThat(properties, hasSize(3));
+        assertThat(properties, hasSize(5));
         assertUserProperties(properties);
         assertUserExamples(user.examples());
 
@@ -147,9 +147,9 @@ public class SpecInterfacesV10TestCase
         assertThat(superUser.name(), is("SuperUser"));
         assertThat(superUser.type(), is("User"));
         properties = superUser.properties();
-        assertThat(properties, hasSize(4));
+        assertThat(properties, hasSize(6));
         assertUserProperties(properties);
-        ArrayTypeDeclaration skills = (ArrayTypeDeclaration) properties.get(3);
+        ArrayTypeDeclaration skills = (ArrayTypeDeclaration) properties.get(5);
         assertThat(skills.maxItems(), is(3));
         assertThat(skills.type(), is("string[]"));
         assertThat(superUser.examples(), hasSize(0));
@@ -175,11 +175,11 @@ public class SpecInterfacesV10TestCase
 
     private void assertUserExamples(List<ExampleSpec> examples)
     {
-        assertThat(examples, hasSize(2));
+        assertThat(examples, hasSize(3));
         ExampleSpec batman = examples.get(0);
         assertThat(batman.name(), is("batman"));
         List<TypeInstanceProperty> batmanProps = batman.structuredValue().properties();
-        assertThat(batmanProps, hasSize(3));
+        assertThat(batmanProps, hasSize(4));
         assertThat(batmanProps.get(0).name(), is("firstname"));
         assertTrue(batmanProps.get(0).value().isScalar());
         assertThat(batmanProps.get(0).value().value().toString(), is("bruce"));
@@ -189,6 +189,9 @@ public class SpecInterfacesV10TestCase
         assertThat(batmanProps.get(2).name(), is("age"));
         assertTrue(batmanProps.get(2).value().isScalar());
         assertThat(batmanProps.get(2).value().value().toString(), is("77"));
+        assertThat(batmanProps.get(3).name(), is("height"));
+        assertTrue(batmanProps.get(3).value().isScalar());
+        assertThat(batmanProps.get(3).value().value().toString(), is("1.82"));
 
         assertThat(examples.get(1).name(), is("daredevil"));
 

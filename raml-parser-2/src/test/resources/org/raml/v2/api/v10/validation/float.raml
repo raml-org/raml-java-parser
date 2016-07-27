@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Test API
+types:
+  floatType:
+    properties:
+      PriceFloat:
+        type: number
+        format: float
+/floatResource:
+  displayName: type
+  post:
+    body:
+      application/json:
+        type: floatType

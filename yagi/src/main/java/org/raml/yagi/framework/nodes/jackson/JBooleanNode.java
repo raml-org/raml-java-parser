@@ -38,8 +38,7 @@ public class JBooleanNode extends JBaseRamlNode implements BooleanNode
     @Override
     public Boolean getValue()
     {
-        final String value = (getJsonNode().textValue());
-        return Boolean.parseBoolean(value);
+        return getJsonNode().booleanValue();
     }
 
     @Override

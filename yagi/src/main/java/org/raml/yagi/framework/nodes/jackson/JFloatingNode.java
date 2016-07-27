@@ -16,13 +16,15 @@
 package org.raml.yagi.framework.nodes.jackson;
 
 import com.fasterxml.jackson.databind.node.NumericNode;
+
+import java.math.BigDecimal;
+
+import javax.annotation.Nonnull;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.nodes.FloatingNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
-
-import javax.annotation.Nonnull;
-import java.math.BigDecimal;
 
 public class JFloatingNode extends JBaseRamlNode implements FloatingNode
 {
@@ -40,8 +42,7 @@ public class JFloatingNode extends JBaseRamlNode implements FloatingNode
     @Override
     public BigDecimal getValue()
     {
-        final String value = getJsonNode().textValue();
-        return new BigDecimal(value);
+        return getJsonNode().decimalValue();
     }
 
     @Override
@@ -61,5 +62,11 @@ public class JFloatingNode extends JBaseRamlNode implements FloatingNode
     public NodeType getType()
     {
         return NodeType.Float;
+    }
+
+    @Override
+    public NumericNode getJsonNode()
+    {
+        return (NumericNode) super.getJsonNode();
     }
 }
