@@ -20,6 +20,7 @@ import org.raml.yagi.framework.nodes.BooleanNode;
 import org.raml.yagi.framework.nodes.IntegerNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.util.NodeUtils;
 
 public enum SimpleValueTransformer
 {
@@ -35,7 +36,7 @@ public enum SimpleValueTransformer
         @Override
         public String adaptTo(Node valueNode, Class<?> returnType)
         {
-            if (valueNode == null)
+            if (NodeUtils.isNull(valueNode))
             {
                 return null;
             }
@@ -61,7 +62,7 @@ public enum SimpleValueTransformer
         @Override
         public Boolean adaptTo(Node valueNode, Class<?> returnType)
         {
-            if (valueNode == null)
+            if (NodeUtils.isNull(valueNode))
             {
                 return null;
             }
@@ -91,7 +92,7 @@ public enum SimpleValueTransformer
         @Override
         public Integer adaptTo(Node valueNode, Class<?> returnType)
         {
-            if (valueNode == null)
+            if (NodeUtils.isNull(valueNode))
             {
                 return null;
             }
@@ -121,7 +122,7 @@ public enum SimpleValueTransformer
         @Override
         public Float adaptTo(Node valueNode, Class<?> returnType)
         {
-            if (valueNode == null)
+            if (NodeUtils.isNull(valueNode))
             {
                 return null;
             }
@@ -148,7 +149,7 @@ public enum SimpleValueTransformer
         @Override
         public Object adaptTo(Node valueNode, Class<?> returnType)
         {
-            if (valueNode == null)
+            if (NodeUtils.isNull(valueNode))
             {
                 return null;
             }
