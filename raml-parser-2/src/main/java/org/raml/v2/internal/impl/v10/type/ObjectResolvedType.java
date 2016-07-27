@@ -93,6 +93,10 @@ public class ObjectResolvedType extends XmlFacetsCapableType
                     {
                         // If present in both merge facets of both types
                         resultProperties.put(name, resultProperties.get(name).mergeFacets(propertyDefinition));
+                        if (propertyDefinition.getErrorNode() != null)
+                        {
+                            child.replaceWith(propertyDefinition.getErrorNode());
+                        }
                     }
                 }
             }

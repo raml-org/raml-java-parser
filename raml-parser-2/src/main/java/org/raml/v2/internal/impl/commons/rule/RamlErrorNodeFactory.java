@@ -40,4 +40,8 @@ public class RamlErrorNodeFactory
         return new ErrorNode(prefix + ": " + message);
     }
 
+    public static ErrorNode createInvalidRequiredFacet(String property)
+    {
+        return new ErrorNode("Required property " + property + " cannot be made optional");
+    }
 }

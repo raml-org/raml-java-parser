@@ -182,9 +182,7 @@ public class Raml10Builder
 
         // Schema Types example validation
 
-        final TransformationPhase schemaValidationPhase = new TransformationPhase(new SchemaValidationTransformer(resourceLoader));
-
-        final TransformationPhase facetValidationPhase = new TransformationPhase(new FacetValidationTransformer());
+        final TransformationPhase typeValidationPhase = new TransformationPhase(new SchemaValidationTransformer(resourceLoader), new FacetValidationTransformer());
 
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
 
@@ -198,8 +196,7 @@ public class Raml10Builder
                 annotationValidationPhase,
                 mediaTypeInjection,
                 grammarPhase,
-                schemaValidationPhase,
-                facetValidationPhase,
+                typeValidationPhase,
                 exampleValidationPhase);
 
     }

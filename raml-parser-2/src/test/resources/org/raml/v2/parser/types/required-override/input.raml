@@ -1,0 +1,13 @@
+#%RAML 1.0
+
+title: invalid required override
+
+types:
+  Type1:
+    properties:
+      p1: string
+      p2: string
+  Type2:
+    type: Type1
+    properties:
+      p2?: string
