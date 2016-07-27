@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Mulitple Inheritance using the types
+
+# Objective: This RAML illustrates an example of using multiple inheritance with the same types and facets applied
+# Expected result: no error
+
+# tags: multiple inheritance, types, facets
+
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 10
+  Number3: [ Number1, Number2]

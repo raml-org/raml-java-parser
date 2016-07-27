@@ -45,6 +45,7 @@ import org.raml.yagi.framework.grammar.rule.StringValueRule;
 
 import javax.annotation.Nullable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -413,6 +414,11 @@ public class BaseGrammar
      */
     public ExclusiveKeys exclusiveKeys(String... keys)
     {
-        return new ExclusiveKeys(keys);
+        List<Rule> rules = new ArrayList<>();
+        for (String key : keys)
+        {
+            rules.add(string(key));
+        }
+        return new ExclusiveKeys(rules);
     }
 }

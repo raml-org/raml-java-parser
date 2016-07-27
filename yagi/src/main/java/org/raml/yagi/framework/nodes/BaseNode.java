@@ -36,7 +36,7 @@ public abstract class BaseNode implements Node
 
     public BaseNode(BaseNode node)
     {
-        this.source = node;
+        setSource(node);
         for (Node child : node.children)
         {
             addChild(child.copy());
@@ -66,7 +66,6 @@ public abstract class BaseNode implements Node
     @Override
     public void removeChild(Node node)
     {
-        node.setParent(null);
         children.remove(node);
     }
 
@@ -114,13 +113,13 @@ public abstract class BaseNode implements Node
     {
         if (this != newNode)
         {
+            newNode.setSource(this);
             if (getParent() != null)
             {
                 // If it has a parent replace it and the same idx
                 int idx = getParent().getChildren().indexOf(this);
                 getParent().setChild(idx, newNode);
             }
-            newNode.setSource(this);
             for (Node child : getChildren())
             {
                 newNode.addChild(child);
@@ -131,7 +130,7 @@ public abstract class BaseNode implements Node
     @Override
     public void removeChildren()
     {
-        for (Node child : children)
+        for (Node child : new ArrayList<>(children))
         {
             child.setParent(null);
         }
@@ -155,6 +154,10 @@ public abstract class BaseNode implements Node
     @Override
     public void setParent(Node parent)
     {
+        if (this.parent != null)
+        {
+            this.parent.removeChild(this);
+        }
         this.parent = parent;
     }
 

@@ -21,9 +21,9 @@ import java.util.List;
 
 public class ExclusiveKeys
 {
-    protected List<String> keys;
+    protected List<Rule> keys;
 
-    public ExclusiveKeys(@Nonnull List<String> keys)
+    public ExclusiveKeys(@Nonnull List<Rule> keys)
     {
         if (keys.isEmpty())
         {
@@ -32,12 +32,12 @@ public class ExclusiveKeys
         this.keys = keys;
     }
 
-    public ExclusiveKeys(String... fields)
+    public ExclusiveKeys(Rule... fields)
     {
         this(Arrays.asList(fields));
     }
 
-    public List<String> getAllRules()
+    public List<Rule> getAllRules()
     {
         return keys;
     }

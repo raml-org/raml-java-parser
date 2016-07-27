@@ -128,13 +128,12 @@ public class KeyValueRule extends Rule
         {
             return getKeyRule().apply(node);
         }
-        final Node result = createNodeUsingFactory(node);
         final KeyValueNode keyValueNode = (KeyValueNode) node;
         final Node key = keyValueNode.getKey();
         key.replaceWith(getKeyRule().apply(key));
         final Node value = keyValueNode.getValue();
         value.replaceWith(getValueRule().apply(value));
-        return result;
+        return createNodeUsingFactory(keyValueNode);
     }
 
     @Override

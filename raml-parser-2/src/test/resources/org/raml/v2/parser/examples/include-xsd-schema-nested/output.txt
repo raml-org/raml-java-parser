@@ -71,9 +71,9 @@ good: <Person>
                             KeyValueNodeImpl (Start: 468 , End: 668, On: input.raml)
                                 SYStringNode: "application/json" (Start: 468 , End: 484, On: input.raml)
                                 TypeDeclarationNode (Start: 494 , End: 668, On: input.raml, Source: SYObjectNode)
-                                    KeyValueNodeImpl (Start: 494 , End: 508, On: input.raml)
+                                    KeyValueNodeImpl (Start: 494 , End: 504, On: input.raml)
                                         SYStringNode: "type" (Start: 494 , End: 498, On: input.raml)
-                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 55 , RefEnd: 437} (Start: 504 , End: 508, On: input.raml, Source: SYStringNode)
+                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 55 , RefEnd: 437} (Start: 500 , End: 504, On: input.raml, Source: SYStringNode)
                                     ExampleDeclarationNode (Start: 513 , End: 668, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 513 , End: 520, On: input.raml)
                                         SYStringNode: "<Person>

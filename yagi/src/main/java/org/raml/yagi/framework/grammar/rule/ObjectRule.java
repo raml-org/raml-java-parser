@@ -233,17 +233,17 @@ public class ObjectRule extends Rule
         {
             boolean hasMatchedRule = false;
             List<Node> children = node.getChildren();
-            List<String> keys = exclusiveKeys.getAllRules();
+            List<Rule> keys = exclusiveKeys.getAllRules();
 
             for (Node child : children)
             {
-                for (String rule : keys)
+                for (Rule rule : keys)
                 {
                     if (child instanceof KeyValueNode)
                     {
-                        String key = ((KeyValueNodeImpl) child).getKey().toString();
+                        Node key = ((KeyValueNodeImpl) child).getKey();
 
-                        if (key.equals(rule))
+                        if (rule.matches(key))
                         {
                             if (!hasMatchedRule)
                             {
@@ -251,9 +251,10 @@ public class ObjectRule extends Rule
                             }
                             else
                             {
-                                String firstRule = keys.get(0);
-                                String secondRule = keys.get(1);
+                                final String firstRule = keys.get(0).getDescription();
+                                final String secondRule = keys.get(1).getDescription();
                                 child.replaceWith(ErrorNodeFactory.createExclusiveKeys(firstRule, secondRule));
+                                break;
                             }
                         }
                     }

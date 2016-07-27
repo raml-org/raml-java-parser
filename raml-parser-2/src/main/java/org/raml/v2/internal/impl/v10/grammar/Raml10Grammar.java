@@ -292,7 +292,8 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected Rule inlineType()
     {
-        return typeExpressionReference().then(new InlineTypeDeclarationFactory());
+        return anyOf(typeExpressionReference(), array(typeExpressionReference()))
+                                                                                 .then(new InlineTypeDeclarationFactory());
     }
 
     public ObjectRule explicitType()

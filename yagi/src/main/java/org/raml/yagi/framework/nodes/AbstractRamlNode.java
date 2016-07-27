@@ -48,17 +48,25 @@ public abstract class AbstractRamlNode extends BaseNode
         this.startPosition = startPosition;
     }
 
+    @Override
+    public void setSource(Node source)
+    {
+        super.setSource(source);
+        this.endPosition = source.getEndPosition();
+        this.startPosition = source.getStartPosition();
+    }
+
     @Nonnull
     @Override
     public Position getEndPosition()
     {
-        return endPosition != null ? endPosition : getSource() != null ? getSource().getEndPosition() : DefaultPosition.emptyPosition();
+        return endPosition != null ? endPosition : DefaultPosition.emptyPosition();
     }
 
     @Nonnull
     @Override
     public Position getStartPosition()
     {
-        return startPosition != null ? startPosition : getSource() != null ? getSource().getStartPosition() : DefaultPosition.emptyPosition();
+        return startPosition != null ? startPosition : DefaultPosition.emptyPosition();
     }
 }

@@ -92,7 +92,7 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
         final TypeExpressionNode of = of();
         if (of != null)
         {
-            final TypeDeclarationNode itemsTypeDeclarationNode = new InlineTypeDeclarationFactory().create(of);
+            final TypeDeclarationNode itemsTypeDeclarationNode = new InlineTypeDeclarationFactory().create(of.copy());
             itemsTypeDeclarationNode.setParent(node);
             return new ArrayResolvedType(node, of.generateDefinition(itemsTypeDeclarationNode));
         }
@@ -111,7 +111,8 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
     @Override
     public String getValue()
     {
-        String typeExpression = of().getTypeExpressionText();
+        final TypeExpressionNode of = of();
+        String typeExpression = of != null ? of.getTypeExpressionText() : null;
         return typeExpression != null ? addParenthesesIfNeeded(typeExpression) + "[]" : null;
 
     }

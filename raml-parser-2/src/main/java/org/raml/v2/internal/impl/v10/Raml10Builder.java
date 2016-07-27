@@ -87,8 +87,8 @@ public class Raml10Builder
             {
                 Phase phase = phases.get(i);
                 rootNode = phase.apply(rootNode);
-                String dump = new RamlTreeNodeDumper().dump(rootNode);
-                checkDumpPhases(i, phase, dump);
+
+                checkDumpPhases(i, phase, rootNode);
                 List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
                 if (!errorNodes.isEmpty())
                 {
@@ -99,10 +99,11 @@ public class Raml10Builder
         return rootNode;
     }
 
-    private void checkDumpPhases(int i, Phase phase, String dump)
+    private void checkDumpPhases(int i, Phase phase, Node rootNode)
     {
         if (Boolean.getBoolean("dump.phases"))
         {
+            String dump = new RamlTreeNodeDumper().dump(rootNode);
             System.out.println("===============================================================");
             System.out.println("After phase = " + i + " --- " + phase.getClass());
             System.out.println("---------------------------------------------------------------");

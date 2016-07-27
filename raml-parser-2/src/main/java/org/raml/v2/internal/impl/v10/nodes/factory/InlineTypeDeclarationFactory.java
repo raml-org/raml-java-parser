@@ -31,6 +31,8 @@ public class InlineTypeDeclarationFactory implements NodeFactory
     {
         final TypeDeclarationNode node = new TypeDeclarationNode();
         node.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), currentNode.copy()));
+        // We remove the children as they where already copied
+        currentNode.removeChildren();
         return node;
     }
 

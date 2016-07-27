@@ -41,14 +41,42 @@ public class KeyValueNodeImpl extends BaseNode implements KeyValueNode
     @Override
     public Position getStartPosition()
     {
-        return startPosition == null ? getChildren().get(0).getStartPosition() : startPosition;
+        if (startPosition == null)
+        {
+            if (!getChildren().isEmpty())
+            {
+                return getChildren().get(0).getStartPosition();
+            }
+            else
+            {
+                return DefaultPosition.emptyPosition();
+            }
+        }
+        else
+        {
+            return startPosition;
+        }
     }
 
     @Nonnull
     @Override
     public Position getEndPosition()
     {
-        return endPosition == null ? getValue().getEndPosition() : endPosition;
+        if (endPosition == null)
+        {
+            if (getChildren().isEmpty())
+            {
+                return DefaultPosition.emptyPosition();
+            }
+            else
+            {
+                return getValue().getEndPosition();
+            }
+        }
+        else
+        {
+            return endPosition;
+        }
     }
 
     public void setStartPosition(Position startPosition)
