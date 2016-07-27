@@ -5,7 +5,9 @@ types:
     properties:
       name: string
       friends: Friend[]
+    additionalProperties: false
   Friend:
     type: object
     properties:
       name: string
+    additionalProperties: true

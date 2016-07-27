@@ -187,8 +187,7 @@ public class ExampleValidationPhase implements Phase
         schema.write(xsd);
         try
         {
-            // final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            final SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/XML/XMLSchema/v1.1");
+            final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             final Schema schema1 = factory.newSchema(new StreamSource(new StringReader(xsd.toString())));
             final Validator validator = schema1.newValidator();
             validator.validate(new SAXSource(

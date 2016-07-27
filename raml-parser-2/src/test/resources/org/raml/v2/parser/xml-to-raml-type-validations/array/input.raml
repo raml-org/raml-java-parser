@@ -5,10 +5,12 @@ types:
     properties:
       name: string
       friends: Friend[]
+    additionalProperties: false
   Friend:
     type: object
     properties:
       name: string
+    additionalProperties: true
 /res:
   get:
     body:
@@ -19,9 +21,12 @@ types:
               <name>robert</name>
               <friends>
                 <name>denerys</name>
+              </friends>
+              <friends>
                 <name>stannis</name>
+              </friends>
+              <friends>
                 <name>arya</name>
                 <my-custom-xml>with-custom-value</my-custom-xml>
               </friends>
-              <my-custom-xml>with-custom-value</my-custom-xml>
             </root>
