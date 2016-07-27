@@ -8,7 +8,6 @@
                 </simpleType>
             </element>
             <element maxOccurs="unbounded" name="friends" type="tns:Friend"/>
-            <any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
         </sequence>
     </complexType>
     <complexType name="Friend">

@@ -14,7 +14,6 @@
                     </choice>
                 </complexType>
             </element>
-            <any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
         </sequence>
     </complexType>
     <complexType name="Friend">
