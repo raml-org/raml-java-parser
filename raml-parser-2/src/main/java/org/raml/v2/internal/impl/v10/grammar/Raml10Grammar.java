@@ -735,7 +735,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule mediaTypeField()
     {
-        return field(mediaTypeKey(), anyOf(scalarType(), array(scalarType())));
+        return field(mediaTypeKey(), anyOf(mimeTypeRegex(), array(mimeTypeRegex())));
     }
 
     protected Rule schemasValue()
