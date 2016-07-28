@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: New API
+types:
+  Person:
+  Another:
+/list:
+  get:
+    body:
+      application/json: Person[]
+    responses:
+      200:
+        body:
+          application/json: Another[]

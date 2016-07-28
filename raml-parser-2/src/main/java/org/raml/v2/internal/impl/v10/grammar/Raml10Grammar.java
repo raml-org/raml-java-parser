@@ -651,7 +651,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected Rule mimeType()
     {
-        return anyOf(nullValue().then(new DefaultMimeTypeDeclarationFactory()), baseType(TypeId.ANY, "mimeType"));
+        return anyOf(nullValue().then(new DefaultMimeTypeDeclarationFactory()), anyOf(inlineType(), baseType(TypeId.ANY, "mimeType")));
     }
 
     protected Rule exampleValue()
