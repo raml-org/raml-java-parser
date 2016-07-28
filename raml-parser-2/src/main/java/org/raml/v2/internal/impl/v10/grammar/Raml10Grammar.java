@@ -137,7 +137,8 @@ public class Raml10Grammar extends BaseRamlGrammar
                 string("client_credentials"),
                 string("implicit"),
                 regex("urn:.*"),
-                regex("http://.*"));
+                regex("http://.*"),
+                regex("https://.*"));
     }
 
     @Override
