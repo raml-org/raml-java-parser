@@ -138,7 +138,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule mediaTypeField()
     {
-        return field(mediaTypeKey(), scalarType());
+        return field(mediaTypeKey(), mimeTypeRegex());
     }
 
     public ObjectRule resourceType()
