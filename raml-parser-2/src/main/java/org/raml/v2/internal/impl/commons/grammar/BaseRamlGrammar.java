@@ -202,7 +202,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            );
     }
 
-    protected ObjectRule securityScheme()
+    public ObjectRule securityScheme()
     {
         return objectType()
                            .with(descriptionField())
@@ -239,8 +239,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(string("requestTokenUri"), ramlScalarValue()))
                            .with(field(string("tokenCredentialsUri"), ramlScalarValue()))
                            .with(field(string("accessTokenUri"), ramlScalarValue()))
-                           .with(field(string("authorizationGrants"), array(authorizationGrantsValue())))
-                           .with(field(string("scopes"), array(scalarType())));
+                           .with(field(string("authorizationGrants"), anyOf(authorizationGrantsValue(), array(authorizationGrantsValue()))))
+                           .with(field(string("scopes"), anyOf(scalarType(), array(scalarType()))));
     }
 
     protected Rule authorizationGrantsValue()

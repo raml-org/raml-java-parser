@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.commons.model.factory;
 
 import org.raml.yagi.framework.model.NodeModelFactory;
 import org.raml.yagi.framework.nodes.KeyValueNode;
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.model.type.AnyTypeDeclaration;
 import org.raml.v2.internal.impl.commons.model.type.ArrayTypeDeclaration;
@@ -54,6 +55,7 @@ import org.raml.v2.internal.impl.v10.type.StringResolvedType;
 import org.raml.v2.internal.impl.v10.type.TimeOnlyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+import org.raml.yagi.framework.nodes.StringNodeImpl;
 
 public class TypeDeclarationModelFactory implements NodeModelFactory
 {
@@ -82,7 +84,11 @@ public class TypeDeclarationModelFactory implements NodeModelFactory
 
     private TypeDeclaration createTypeDeclaration(TypeDeclarationNode node, ResolvedType resolvedType)
     {
-        final KeyValueNode keyValueNode = node.findAncestorWith(KeyValueNode.class);
+        KeyValueNode keyValueNode = node.findAncestorWith(KeyValueNode.class);
+        if (keyValueNode == null)
+        {
+            keyValueNode = new KeyValueNodeImpl(new StringNodeImpl("__DataType_Fragment__"), node);
+        }
         return new NodeModelTypeFactory(keyValueNode).create(resolvedType);
     }
 

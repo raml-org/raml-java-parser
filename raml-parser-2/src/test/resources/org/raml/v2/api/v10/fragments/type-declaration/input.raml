@@ -1,0 +1,11 @@
+#%RAML 1.0 DataType
+uses:
+  lib: lib/lib.raml
+properties:
+  prop1: number
+  prop2: lib.ObjectType
+example:
+  prop1: 10
+  prop2:
+    objProp1: some
+    objProp2: 20

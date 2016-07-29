@@ -30,6 +30,7 @@ public enum RamlFragment
     Library,
     Overlay,
     Extension,
+    SecurityScheme,
     Default;
 
 

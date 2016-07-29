@@ -25,12 +25,19 @@ import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
 import org.raml.v2.api.model.v10.api.Library;
 import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
+import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
+import org.raml.v2.api.model.v10.methods.Trait;
+import org.raml.v2.api.model.v10.resources.ResourceType;
+import org.raml.v2.api.model.v10.security.SecurityScheme;
 
 /**
- * Represents the result of parsing a top level RAML descriptor or library.
+ * Represents the result of parsing a top level RAML descriptor or fragment.
  *
  * If there are no parsing errors and the parsed RAML was a top level descriptor,
  * the <code>Api</code> model matching the RAML version is available.
+ * If the parsed raml is 1.0 fragment and there are no errors, the corresponding
+ * fragment instance is available.
  *
  * If there are parsing errors, the list of errors is available.
  */
@@ -41,6 +48,11 @@ public class RamlModelResult
     private org.raml.v2.api.model.v10.api.Api apiV10;
     private org.raml.v2.api.model.v08.api.Api apiV08;
     private Library library;
+    private TypeDeclaration typeDeclaration;
+    private SecurityScheme securityScheme;
+    private Trait trait;
+    private ResourceType resourceType;
+    private ExampleSpec exampleSpec;
 
     RamlModelResult(List<ValidationResult> validationResults)
     {
@@ -76,6 +88,53 @@ public class RamlModelResult
             throw new IllegalArgumentException("library cannot be null");
         }
         this.library = library;
+    }
+
+    public RamlModelResult(TypeDeclaration typeDeclaration)
+    {
+        if (typeDeclaration == null)
+        {
+            throw new IllegalStateException("typeDeclaration cannot be null");
+        }
+        this.typeDeclaration = typeDeclaration;
+    }
+
+    public RamlModelResult(SecurityScheme securityScheme)
+    {
+        if (securityScheme == null)
+        {
+            throw new IllegalStateException("securityScheme cannot be null");
+        }
+        this.securityScheme = securityScheme;
+    }
+
+    public RamlModelResult(Trait trait)
+    {
+        if (trait == null)
+        {
+            throw new IllegalStateException("trait cannot be null");
+        }
+        this.trait = trait;
+    }
+
+
+    public RamlModelResult(ResourceType resourceType)
+    {
+        if (resourceType == null)
+        {
+            throw new IllegalStateException("resourceType cannot be null");
+        }
+        this.resourceType = resourceType;
+    }
+
+
+    public RamlModelResult(ExampleSpec exampleSpec)
+    {
+        if (exampleSpec == null)
+        {
+            throw new IllegalStateException("exampleSpec cannot be null");
+        }
+        this.exampleSpec = exampleSpec;
     }
 
 
@@ -151,6 +210,61 @@ public class RamlModelResult
 
 
     /**
+     * @return the RAML Data Type v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a Data Type fragment
+     */
+    @Nullable
+    public TypeDeclaration getTypeDeclaration()
+    {
+        return typeDeclaration;
+    }
+
+
+    /**
+     * @return the RAML Security Scheme v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a Security Scheme fragment
+     */
+    @Nullable
+    public SecurityScheme getSecurityScheme()
+    {
+        return securityScheme;
+    }
+
+
+    /**
+     * @return the RAML Trait v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a Trait fragment
+     */
+    @Nullable
+    public Trait getTrait()
+    {
+        return trait;
+    }
+
+
+    /**
+     * @return the RAML Trait v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a Trait fragment
+     */
+    @Nullable
+    public ResourceType getResourceType()
+    {
+        return resourceType;
+    }
+
+
+    /**
+     * @return the RAML NamedExample v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a NamedExample fragment
+     */
+    @Nullable
+    public ExampleSpec getExampleSpec()
+    {
+        return exampleSpec;
+    }
+
+
+    /**
      * @return the RAML 1.0 fragment identifier or <code>null</code>
      *   if the RAML has errors or is version 0.8
      */
@@ -168,6 +282,26 @@ public class RamlModelResult
         if (getLibrary() != null)
         {
             return RamlFragment.Library;
+        }
+        if (getTypeDeclaration() != null)
+        {
+            return RamlFragment.DataType;
+        }
+        if (getSecurityScheme() != null)
+        {
+            return RamlFragment.SecurityScheme;
+        }
+        if (getTrait() != null)
+        {
+            return RamlFragment.Trait;
+        }
+        if (getResourceType() != null)
+        {
+            return RamlFragment.ResourceType;
+        }
+        if (getExampleSpec() != null)
+        {
+            return RamlFragment.NamedExample;
         }
         throw new IllegalStateException("Fragment not yet supported");
     }

@@ -1,0 +1,8 @@
+{
+    "usage": {
+        "value": "trait fragment"
+    },
+    "headers": {
+        "TestHeader": "string"
+    }
+}

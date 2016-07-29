@@ -38,6 +38,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.api.model.v10.api.Library;
+import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
+import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
+import org.raml.v2.api.model.v10.methods.Trait;
+import org.raml.v2.api.model.v10.resources.ResourceType;
+import org.raml.v2.api.model.v10.security.SecurityScheme;
 import org.raml.v2.dataprovider.TestDataProvider;
 import org.raml.yagi.framework.model.ModelUtils;
 
@@ -79,7 +86,34 @@ public class ApiModelParserTestCase extends TestDataProvider
     {
         if (ramlModelResult.isVersion10())
         {
-            dumpToJson(org.raml.v2.api.model.v10.api.Api.class, ramlModelResult.getApiV10(), jsonWriter);
+            if (ramlModelResult.getFragment() == RamlFragment.Library)
+            {
+                dumpToJson(Library.class, ramlModelResult.getLibrary(), jsonWriter);
+            }
+            else if (ramlModelResult.getFragment() == RamlFragment.DataType)
+            {
+                dumpToJson(TypeDeclaration.class, ramlModelResult.getTypeDeclaration(), jsonWriter);
+            }
+            else if (ramlModelResult.getFragment() == RamlFragment.SecurityScheme)
+            {
+                dumpToJson(SecurityScheme.class, ramlModelResult.getSecurityScheme(), jsonWriter);
+            }
+            else if (ramlModelResult.getFragment() == RamlFragment.Trait)
+            {
+                dumpToJson(Trait.class, ramlModelResult.getTrait(), jsonWriter);
+            }
+            else if (ramlModelResult.getFragment() == RamlFragment.ResourceType)
+            {
+                dumpToJson(ResourceType.class, ramlModelResult.getResourceType(), jsonWriter);
+            }
+            else if (ramlModelResult.getFragment() == RamlFragment.NamedExample)
+            {
+                dumpToJson(ExampleSpec.class, ramlModelResult.getExampleSpec(), jsonWriter);
+            }
+            else
+            {
+                dumpToJson(org.raml.v2.api.model.v10.api.Api.class, ramlModelResult.getApiV10(), jsonWriter);
+            }
         }
         else
         {

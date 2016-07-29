@@ -30,13 +30,13 @@ import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.api.model.v10.api.Library;
+import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
-import org.raml.yagi.framework.model.DefaultModelBindingConfiguration;
-import org.raml.yagi.framework.model.ModelBindingConfiguration;
-import org.raml.yagi.framework.model.ModelProxyBuilder;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.Node;
+import org.raml.v2.api.model.v10.methods.Trait;
+import org.raml.v2.api.model.v10.resources.ResourceType;
+import org.raml.v2.api.model.v10.security.SecurityScheme;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.commons.RamlVersion;
@@ -46,8 +46,12 @@ import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
 import org.raml.v2.internal.impl.commons.model.StringType;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
-import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.utils.StreamUtils;
+import org.raml.yagi.framework.model.DefaultModelBindingConfiguration;
+import org.raml.yagi.framework.model.ModelBindingConfiguration;
+import org.raml.yagi.framework.model.ModelProxyBuilder;
+import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.Node;
 
 /**
  * Entry point class to parse top level RAML descriptors.
@@ -173,6 +177,31 @@ public class RamlModelBuilder
         {
             Library library = ModelProxyBuilder.createModel(Library.class, new DefaultModelElement(ramlNode), createV10Binding());
             return new RamlModelResult(library);
+        }
+        if (fragment == RamlFragment.DataType)
+        {
+            TypeDeclaration typeDeclaration = ModelProxyBuilder.createModel(TypeDeclaration.class, new TypeDeclarationModelFactory().create(ramlNode), createV10Binding());
+            return new RamlModelResult(typeDeclaration);
+        }
+        if (fragment == RamlFragment.SecurityScheme)
+        {
+            SecurityScheme securityScheme = ModelProxyBuilder.createModel(SecurityScheme.class, new DefaultModelElement(ramlNode), createV10Binding());
+            return new RamlModelResult(securityScheme);
+        }
+        if (fragment == RamlFragment.Trait)
+        {
+            Trait trait = ModelProxyBuilder.createModel(Trait.class, new DefaultModelElement(ramlNode), createV10Binding());
+            return new RamlModelResult(trait);
+        }
+        if (fragment == RamlFragment.ResourceType)
+        {
+            ResourceType resourceType = ModelProxyBuilder.createModel(ResourceType.class, new DefaultModelElement(ramlNode), createV10Binding());
+            return new RamlModelResult(resourceType);
+        }
+        if (fragment == RamlFragment.NamedExample)
+        {
+            ExampleSpec exampleSpec = ModelProxyBuilder.createModel(ExampleSpec.class, new DefaultModelElement(ramlNode), createV10Binding());
+            return new RamlModelResult(exampleSpec);
         }
         throw new IllegalStateException("Invalid ramlNode type (" + ramlNode.getClass().getSimpleName() + ") or fragment (" + fragment + ") combination");
     }

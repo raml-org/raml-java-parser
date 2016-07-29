@@ -1,0 +1,27 @@
+{
+    "uses": {
+        "lib": "lib/lib.raml"
+    },
+    "properties": {
+        "prop1": {
+            "type": "number",
+            "displayName": {
+                "value": "prop1"
+            }
+        },
+        "prop2": {
+            "type": "ObjectType",
+            "displayName": {
+                "value": "prop2"
+            }
+        }
+    },
+    "example": {
+        "prop1": 10,
+        "prop2": {
+            "objProp1": "some",
+            "objProp2": 20
+        }
+    },
+    "type": "object"
+}

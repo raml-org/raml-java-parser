@@ -107,7 +107,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     }
 
     @Override
-    protected ObjectRule securityScheme()
+    public ObjectRule securityScheme()
     {
         return super.securityScheme().with(annotationField());
     }
@@ -654,7 +654,7 @@ public class Raml10Grammar extends BaseRamlGrammar
         return anyOf(nullValue().then(new DefaultMimeTypeDeclarationFactory()), anyOf(inlineType(), baseType(TypeId.ANY, "mimeType")));
     }
 
-    protected Rule exampleValue()
+    public Rule exampleValue()
     {
         return anyOf(explicitExample(), any());
     }

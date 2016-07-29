@@ -1,0 +1,13 @@
+{
+    "type": "OAuth 2.0",
+    "settings": {
+        "authorizationUri": {
+            "value": "http://example.com"
+        },
+        "accessTokenUri": {
+            "value": "http://example.com"
+        },
+        "authorizationGrants": "http://example.com",
+        "scopes": "http://example.com"
+    }
+}

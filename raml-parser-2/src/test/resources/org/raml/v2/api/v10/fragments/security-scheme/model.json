@@ -1,0 +1,28 @@
+{
+  "annotations": [],
+  "describedBy": null,
+  "description": null,
+  "displayName": null,
+  "name": null,
+  "settings": {
+    "accessTokenUri": {
+      "annotations": [],
+      "value": "http://example.com"
+    },
+    "annotations": [],
+    "authorizationGrants": [
+      "http://example.com"
+    ],
+    "authorizationUri": {
+      "annotations": [],
+      "value": "http://example.com"
+    },
+    "requestTokenUri": null,
+    "scopes": [
+      "http://example.com"
+    ],
+    "signatures": [],
+    "tokenCredentialsUri": null
+  },
+  "type": "OAuth 2.0"
+}

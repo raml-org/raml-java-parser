@@ -1,0 +1,65 @@
+{
+ "allowedTargets": [],
+ "annotations": [],
+ "defaultValue": null,
+ "description": null,
+ "displayName": null,
+ "example": {
+  "annotations": [],
+  "name": null,
+  "structuredValue": {
+   "isScalar": false,
+   "properties": [
+    {
+     "isArray": false,
+     "name": "prop1",
+     "value": {
+      "isScalar": true,
+      "properties": [],
+      "value": 10
+     },
+     "values": []
+    },
+    {
+     "isArray": false,
+     "name": "prop2",
+     "value": {
+      "isScalar": false,
+      "properties": [
+       {
+        "isArray": false,
+        "name": "objProp1",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": "some"
+        },
+        "values": []
+       },
+       {
+        "isArray": false,
+        "name": "objProp2",
+        "value": {
+         "isScalar": true,
+         "properties": [],
+         "value": 20
+        },
+        "values": []
+       }
+      ],
+      "value": null
+     },
+     "values": []
+    }
+   ],
+   "value": null
+  },
+  "value": "{\nprop1: 10,\nprop2: {\nobjProp1: some,\nobjProp2: 20\n}\n}"
+ },
+ "examples": [],
+ "name": "__DataType_Fragment__",
+ "required": true,
+ "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"__DataType_Fragment__\">\n        <complexType>\n            <sequence>\n                <element name=\"prop1\">\n                    <simpleType>\n                        <restriction base=\"double\"/>\n                    </simpleType>\n                </element>\n                <element name=\"prop2\">\n                    <complexType>\n                        <sequence>\n                            <element name=\"objProp1\">\n                                <simpleType>\n                                    <restriction base=\"string\"/>\n                                </simpleType>\n                            </element>\n                            <element name=\"objProp2\">\n                                <simpleType>\n                                    <restriction base=\"double\"/>\n                                </simpleType>\n                            </element>\n                            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n                        </sequence>\n                    </complexType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+ "type": "object",
+ "xml": null
+}
