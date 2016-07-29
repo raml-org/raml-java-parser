@@ -7,11 +7,11 @@
                     <restriction base="string"/>
                 </simpleType>
             </element>
-            <element maxOccurs="unbounded" name="friends">
+            <element name="friends">
                 <complexType>
-                    <choice>
-                        <element name="Friend" type="tns:Friend"/>
-                    </choice>
+                    <sequence>
+                        <element name="Friend" maxOccurs="unbounded" type="tns:Friend"/>
+                    </sequence>
                 </complexType>
             </element>
         </sequence>
