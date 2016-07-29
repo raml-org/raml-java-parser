@@ -240,4 +240,5 @@ public class ErrorNodeFactory
     {
         return new ErrorNode(firstRule + " and " + secondRule + " are mutually exclusive.");
     }
+
 }
