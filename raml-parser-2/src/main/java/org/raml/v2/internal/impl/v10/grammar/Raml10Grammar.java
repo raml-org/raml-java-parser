@@ -52,6 +52,7 @@ import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.RuleFactory;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
+import org.raml.yagi.framework.grammar.rule.ConditionalRule;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
 import org.raml.yagi.framework.grammar.rule.ObjectRule;
 import org.raml.yagi.framework.grammar.rule.RegexValueRule;
@@ -654,24 +655,38 @@ public class Raml10Grammar extends BaseRamlGrammar
         return anyOf(nullValue().then(new DefaultMimeTypeDeclarationFactory()), anyOf(inlineType(), baseType(TypeId.ANY, "mimeType")));
     }
 
-    public Rule exampleValue()
+    protected Rule exampleValue()
     {
         return anyOf(explicitExample(), any());
     }
 
+    public Rule exampleFragment()
+    {
+        return anyOf(explicitExample(true), any());
+    }
+
     private ObjectRule explicitExample()
     {
+        return explicitExample(false);
+    }
+
+    private ObjectRule explicitExample(boolean isFragment)
+    {
+        ConditionalRule nestedValue = is(not(nullValue()))
+                                                          .add(displayNameField())
+                                                          .add(descriptionField())
+                                                          .add(annotationField())
+                                                          .add(field(string("value"), any()))
+                                                          .add(field(string("strict"), booleanType()));
+        if (isFragment)
+        {
+            nestedValue.add(usesField());
+        }
         return objectType()
                            .with(
                                    when("value",
-                                           is(not(nullValue()))
-                                                               .add(displayNameField())
-                                                               .add(descriptionField())
-                                                               .add(annotationField())
-                                                               .add(field(string("value"), any()))
-                                                               .add(field(string("strict"), booleanType())),
-                                           is(nullValue())
-                                                          .add(field(scalarType(), any()))
+                                           nestedValue,
+                                           is(nullValue()).add(field(scalarType(), any()))
                                    ).defaultValue(new NullNodeImpl())
                            );
     }

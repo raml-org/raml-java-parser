@@ -1,0 +1,21 @@
+{
+    "uses": {
+        "lib": "lib.raml"
+    },
+    "strict": true,
+    "displayName": {
+        "value": "MyExample"
+    },
+    "value": {
+        "property1": "string value",
+        "property2": 1
+    },
+    "annotations": {
+        
+        "lib.StringAnnotation": "stringAnnotationValue",
+        "lib.ObjectAnnotation": {
+            "p1": "stringValue",
+            "p2": 10
+        }
+    }
+}

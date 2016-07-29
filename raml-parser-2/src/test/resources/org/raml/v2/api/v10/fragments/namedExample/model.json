@@ -1,6 +1,31 @@
 {
  "annotations": [],
  "name": null,
- "structuredValue": null,
- "value": null
+ "structuredValue": {
+  "isScalar": false,
+  "properties": [
+   {
+    "isArray": false,
+    "name": "property1",
+    "value": {
+     "isScalar": true,
+     "properties": [],
+     "value": "string value"
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "property2",
+    "value": {
+     "isScalar": true,
+     "properties": [],
+     "value": 1
+    },
+    "values": []
+   }
+  ],
+  "value": null
+ },
+ "value": "{\nproperty1: string value,\nproperty2: 1\n}"
 }

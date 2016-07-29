@@ -1,0 +1,207 @@
+{
+ "annotations": [
+  {
+   "annotation": {
+    "allowedTargets": [],
+    "annotations": [],
+    "defaultValue": null,
+    "description": null,
+    "displayName": {
+     "annotations": [],
+     "value": "StringAnnotation"
+    },
+    "example": null,
+    "examples": [],
+    "name": "StringAnnotation",
+    "required": true,
+    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"StringAnnotation\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+    "type": "string",
+    "xml": null
+   },
+   "name": "(lib.StringAnnotation)",
+   "structuredValue": {
+    "isScalar": true,
+    "properties": [],
+    "value": "stringAnnotationValue"
+   }
+  },
+  {
+   "annotation": {
+    "allowedTargets": [],
+    "annotations": [],
+    "defaultValue": null,
+    "description": null,
+    "displayName": {
+     "annotations": [],
+     "value": "ObjectAnnotation"
+    },
+    "example": null,
+    "examples": [],
+    "name": "ObjectAnnotation",
+    "required": true,
+    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ObjectAnnotation\">\n        <complexType>\n            <sequence>\n                <element name=\"p1\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"p2\">\n                    <simpleType>\n                        <restriction base=\"double\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+    "type": "object",
+    "xml": null
+   },
+   "name": "(lib.ObjectAnnotation)",
+   "structuredValue": {
+    "isScalar": false,
+    "properties": [
+     {
+      "isArray": false,
+      "name": "p1",
+      "value": {
+       "isScalar": true,
+       "properties": [],
+       "value": "stringValue"
+      },
+      "values": []
+     },
+     {
+      "isArray": false,
+      "name": "p2",
+      "value": {
+       "isScalar": true,
+       "properties": [],
+       "value": 10
+      },
+      "values": []
+     }
+    ],
+    "value": null
+   }
+  }
+ ],
+ "name": null,
+ "structuredValue": {
+  "isScalar": false,
+  "properties": [
+   {
+    "isArray": false,
+    "name": "uses",
+    "value": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "lib",
+       "value": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "(lib.StringAnnotation)",
+    "value": {
+     "isScalar": true,
+     "properties": [],
+     "value": "stringAnnotationValue"
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "(lib.ObjectAnnotation)",
+    "value": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "p1",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "stringValue"
+       },
+       "values": []
+      },
+      {
+       "isArray": false,
+       "name": "p2",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": 10
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "strict",
+    "value": {
+     "isScalar": true,
+     "properties": [],
+     "value": true
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "displayName",
+    "value": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "value",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "MyExample"
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    },
+    "values": []
+   },
+   {
+    "isArray": false,
+    "name": "value",
+    "value": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "property1",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "string value"
+       },
+       "values": []
+      },
+      {
+       "isArray": false,
+       "name": "property2",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": 1
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    },
+    "values": []
+   }
+  ],
+  "value": null
+ },
+ "value": "{\nproperty1: string value,\nproperty2: 1\n}"
+}

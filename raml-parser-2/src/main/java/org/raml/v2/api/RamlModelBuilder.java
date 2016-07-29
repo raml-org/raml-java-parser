@@ -51,7 +51,10 @@ import org.raml.yagi.framework.model.DefaultModelBindingConfiguration;
 import org.raml.yagi.framework.model.ModelBindingConfiguration;
 import org.raml.yagi.framework.model.ModelProxyBuilder;
 import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.KeyValueNode;
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.StringNodeImpl;
 
 /**
  * Entry point class to parse top level RAML descriptors.
@@ -200,7 +203,11 @@ public class RamlModelBuilder
         }
         if (fragment == RamlFragment.NamedExample)
         {
-            ExampleSpec exampleSpec = ModelProxyBuilder.createModel(ExampleSpec.class, new DefaultModelElement(ramlNode), createV10Binding());
+            if (!(ramlNode instanceof KeyValueNode))
+            {
+                ramlNode = new KeyValueNodeImpl(new StringNodeImpl("__NamedExample_Fragment__"), ramlNode);
+            }
+            ExampleSpec exampleSpec = ModelProxyBuilder.createModel(ExampleSpec.class, new org.raml.v2.internal.impl.commons.model.ExampleSpec((KeyValueNode) ramlNode), createV10Binding());
             return new RamlModelResult(exampleSpec);
         }
         throw new IllegalStateException("Invalid ramlNode type (" + ramlNode.getClass().getSimpleName() + ") or fragment (" + fragment + ") combination");

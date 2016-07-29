@@ -125,7 +125,7 @@ public class RamlHeader
         case DataType:
             return grammar.explicitType().with(0, grammar.usesField());
         case NamedExample:
-            return grammar.exampleValue();
+            return grammar.exampleFragment();
         case ResourceType:
             return grammar.resourceType().with(0, grammar.usesField());
         case Trait:
