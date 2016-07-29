@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: External Types Invalid
+
+# Objective: This RAML illustrates an invalid example on extending a JSON schema defined type
+# Expected result: invalid use of type expression '[]' and as a property type
+
+# tags: schemas, invalid usage, extend, type expressions, types
+
+types:
+  Person:
+    type: !include person.json
+    description: this is a schema describing person
+  Board:
+    properties:
+      members: Person[] # invalid use of type expression '[]' and as a property type

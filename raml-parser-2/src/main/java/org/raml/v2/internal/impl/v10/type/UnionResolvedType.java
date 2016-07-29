@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.BaseType;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 
@@ -101,6 +103,14 @@ public class UnionResolvedType extends BaseType
             if (parent.findDescendantsWith(ErrorNode.class).isEmpty())
             {
                 resolvedType.validateState();
+            }
+        }
+
+        for (ResolvedType resolvedType : of)
+        {
+            if (resolvedType instanceof SchemaBasedResolvedType)
+            {
+                getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacet(resolvedType.getTypeName(), "union type can not be of an external type."));
             }
         }
     }
