@@ -15,11 +15,19 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 
 import java.util.List;
 
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_LENGTH_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_LENGTH_KEY_NAME;
 import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectStringCollection;
 
@@ -32,12 +40,12 @@ public class FileResolvedType extends XmlFacetsCapableType
 
     public FileResolvedType(TypeDeclarationNode from)
     {
-        super(from);
+        super(from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, FORMAT_KEY_NAME));
     }
 
-    public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes)
+    public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets);
+        super(declarationNode, xmlFacets, customFacets);
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.fileTypes = fileTypes;
@@ -45,16 +53,30 @@ public class FileResolvedType extends XmlFacetsCapableType
 
     protected FileResolvedType copy()
     {
-        return new FileResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minLength, maxLength, fileTypes);
+        return new FileResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minLength, maxLength, fileTypes, customFacets.copy());
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.fileTypesField())
+                                                   .add(raml10Grammar.minLengthField())
+                                                   .add(raml10Grammar.maxLengthField())
+                                                   .addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final FileResolvedType result = copy();
-        result.setMinLength(selectIntValue("minLength", from));
-        result.setMaxLength(selectIntValue("maxLength", from));
-        result.setFileTypes(selectStringCollection("fileTypes", from));
+        result.customFacets = customFacets.overwriteFacets(from);
+        result.setMinLength(selectIntValue(MIN_LENGTH_KEY_NAME, from));
+        result.setMaxLength(selectIntValue(MAX_LENGTH_KEY_NAME, from));
+        result.setFileTypes(selectStringCollection(FORMAT_KEY_NAME, from));
         return overwriteFacets(result, from);
     }
 
@@ -70,6 +92,7 @@ public class FileResolvedType extends XmlFacetsCapableType
             result.setMaxLength(fileTypeDefinition.getMaxLength());
             result.setFileTypes(fileTypeDefinition.getFileTypes());
         }
+        result.customFacets = result.customFacets.mergeWith(with.customFacets());
         return mergeFacets(result, with);
     }
 

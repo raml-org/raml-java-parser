@@ -1,0 +1,20 @@
+#%RAML 1.0
+
+title: Discriminator
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+  Employee:
+    type: Person
+    properties:
+      employeeId: string
+  User:
+    type: Person
+    properties:
+      userId: string
+
+  UserOrEmplo:
+   type: User | Employee
+   discriminator: isClever

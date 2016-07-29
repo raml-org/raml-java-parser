@@ -15,8 +15,14 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.api.model.v08.system.types.NumberType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 
 public class IntegerResolvedType extends NumberResolvedType
@@ -27,21 +33,42 @@ public class IntegerResolvedType extends NumberResolvedType
         super(from);
     }
 
-    public IntegerResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
+    public IntegerResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets copy)
     {
-        super(declarationNode, xmlFacets, minimum, maximum, multiple, format);
+        super(declarationNode, xmlFacets, minimum, maximum, multiple, format, copy);
     }
 
     @Override
     public NumberResolvedType copy()
     {
-        return new IntegerResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), getMinimum(), getMaximum(), getMultiple(), getFormat());
+        return new IntegerResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), getMinimum(), getMaximum(), getMultiple(), getFormat(), customFacets.copy());
     }
 
     @Override
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitInteger(this);
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.minimumField(raml10Grammar.integerType()))
+                                                   .add(raml10Grammar.maximumField(raml10Grammar.integerType()))
+                                                   .add(raml10Grammar.numberFormat())
+                                                   .add(raml10Grammar.enumField())
+                                                   .add(raml10Grammar.multipleOfField(raml10Grammar.integerType()))
+                                                   .addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
+    }
+
+    @Override
+    public boolean inheritsFrom(ResolvedType valueType)
+    {
+        return super.inheritsFrom(valueType) || valueType instanceof NumberType;
     }
 
     @Override

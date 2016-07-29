@@ -15,11 +15,9 @@
  */
 package org.raml.v2.internal.utils;
 
-import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.Phase;
-
-import java.util.List;
+import org.raml.yagi.framework.util.NodeUtils;
 
 public class PhaseUtils
 {
@@ -27,14 +25,12 @@ public class PhaseUtils
     public static Node applyPhases(Node node, Phase... phases)
     {
         Node result = node;
-        List<ErrorNode> errorNodes = node.findDescendantsWith(ErrorNode.class);
-        if (errorNodes.isEmpty())
+        if (!NodeUtils.isErrorResult(result))
         {
             for (Phase phase : phases)
             {
                 result = phase.apply(result);
-                errorNodes = node.findDescendantsWith(ErrorNode.class);
-                if (!errorNodes.isEmpty())
+                if (!NodeUtils.isErrorResult(result))
                 {
                     return result;
                 }

@@ -17,11 +17,13 @@ package org.raml.v2.internal.impl.v10.nodes;
 
 import javax.annotation.Nullable;
 
+import org.raml.v2.internal.impl.commons.nodes.OverlayableStringNode;
 import org.raml.yagi.framework.grammar.rule.DefaultValue;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.ObjectNodeImpl;
 
@@ -44,7 +46,18 @@ public class DisplayNameDefaultValue implements DefaultValue
         }
         final Node keyNode = ((KeyValueNode) grampa).getKey();
         final ObjectNodeImpl result = new ObjectNodeImpl();
-        result.addChild(new KeyValueNodeImpl(new StringNodeImpl("value"), keyNode.copy()));
-        return result;
+        if (keyNode instanceof SimpleTypeNode)
+        {
+            final String literalValue = ((SimpleTypeNode) keyNode).getLiteralValue();
+            final OverlayableStringNode displayName = new OverlayableStringNode(literalValue);
+            displayName.setSource(keyNode);
+            result.addChild(new KeyValueNodeImpl(new StringNodeImpl("value"), displayName));
+            return result;
+        }
+        else
+        {
+            return ErrorNodeFactory.createInvalidNode(keyNode);
+        }
+
     }
 }

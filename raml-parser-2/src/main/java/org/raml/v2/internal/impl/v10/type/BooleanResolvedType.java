@@ -15,37 +15,55 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+
+import java.util.List;
 
 public class BooleanResolvedType extends XmlFacetsCapableType
 {
 
-    public BooleanResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
+    public BooleanResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets);
+        super(declarationNode, xmlFacets, customFacets);
     }
 
     public BooleanResolvedType(TypeDeclarationNode from)
     {
-        super(from);
+        super(from, new ResolvedCustomFacets());
     }
 
     private BooleanResolvedType copy()
     {
-        return new BooleanResolvedType(getTypeDeclarationNode(), getXmlFacets().copy());
+        return new BooleanResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final AnyOfRule facetRule = new AnyOfRule().addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        return overwriteFacets(copy(), from);
+        final BooleanResolvedType copy = copy();
+        copy.customFacets = copy.customFacets().overwriteFacets(from);
+        return overwriteFacets(copy, from);
     }
 
     @Override
     public ResolvedType mergeFacets(ResolvedType with)
     {
-        return mergeFacets(copy(), with);
+        final BooleanResolvedType copy = copy();
+        copy.customFacets = copy.customFacets().mergeWith(with.customFacets());
+        return mergeFacets(copy, with);
     }
 
     @Override

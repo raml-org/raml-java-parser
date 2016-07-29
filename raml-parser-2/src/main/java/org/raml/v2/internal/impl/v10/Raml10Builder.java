@@ -31,7 +31,7 @@ import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
-import org.raml.v2.internal.impl.commons.phase.FacetValidationTransformer;
+import org.raml.v2.internal.impl.commons.phase.TypeValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.RamlFragmentGrammarTransformer;
 import org.raml.v2.internal.impl.commons.phase.ReferenceResolverTransformer;
@@ -181,8 +181,10 @@ public class Raml10Builder
         final MediaTypeInjectionPhase mediaTypeInjection = new MediaTypeInjectionPhase();
 
         // Schema Types example validation
+        final TransformationPhase schemaValidationPhase = new TransformationPhase(new SchemaValidationTransformer(resourceLoader));
 
-        final TransformationPhase typeValidationPhase = new TransformationPhase(new SchemaValidationTransformer(resourceLoader), new FacetValidationTransformer());
+        // Checks types consistency and custom facets
+        final TypeValidationPhase typeValidationPhase = new TypeValidationPhase();
 
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
 
@@ -196,6 +198,7 @@ public class Raml10Builder
                 annotationValidationPhase,
                 mediaTypeInjection,
                 grammarPhase,
+                schemaValidationPhase,
                 typeValidationPhase,
                 exampleValidationPhase);
 

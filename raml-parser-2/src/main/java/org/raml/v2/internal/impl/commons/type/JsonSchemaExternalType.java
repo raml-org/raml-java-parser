@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 
 public class JsonSchemaExternalType extends BaseType implements SchemaBasedResolvedType
@@ -27,7 +28,7 @@ public class JsonSchemaExternalType extends BaseType implements SchemaBasedResol
 
     public JsonSchemaExternalType(TypeDeclarationNode from, String schemaValue, String schemaPath, String internalFragment)
     {
-        super(from);
+        super(from, new ResolvedCustomFacets());
         this.schemaValue = schemaValue;
         this.schemaPath = schemaPath;
         this.internalFragment = internalFragment;
@@ -55,6 +56,12 @@ public class JsonSchemaExternalType extends BaseType implements SchemaBasedResol
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitJson(this);
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+
     }
 
     public String getSchemaValue()

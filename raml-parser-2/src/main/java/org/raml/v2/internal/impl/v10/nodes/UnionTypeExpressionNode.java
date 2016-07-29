@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.v10.nodes;
 
 import static org.raml.v2.internal.impl.v10.nodes.ArrayTypeExpressionNode.addParenthesesIfNeeded;
 
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
@@ -90,11 +91,18 @@ public class UnionTypeExpressionNode extends AbstractRamlNode implements TypeExp
     {
         final List<TypeExpressionNode> of = of();
         List<ResolvedType> definitions = new ArrayList<>();
+        ResolvedCustomFacets customFacets = new ResolvedCustomFacets();
         for (TypeExpressionNode typeExpressionNode : of)
         {
-            definitions.add(typeExpressionNode.generateDefinition(node));
+            final ResolvedType resolvedType = typeExpressionNode.generateDefinition(node);
+            if (resolvedType != null)
+            {
+                definitions.add(resolvedType);
+                customFacets = customFacets.mergeWith(resolvedType.customFacets());
+            }
         }
-        return new UnionResolvedType(node, definitions);
+
+        return new UnionResolvedType(node, definitions, customFacets);
     }
 
     @Override

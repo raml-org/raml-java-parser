@@ -19,14 +19,18 @@ import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 
 public class BodyNode extends KeyValueNodeImpl
 {
-
     public BodyNode()
     {
     }
 
-    public BodyNode(ResourceNode node)
+    BodyNode(KeyValueNodeImpl node)
     {
         super(node);
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return new BodyNode(this);
+    }
 }

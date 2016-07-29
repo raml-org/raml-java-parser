@@ -15,23 +15,37 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
+import org.raml.v2.api.model.v08.system.types.AnyType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.yagi.framework.nodes.ErrorNode;
 
 import javax.annotation.Nullable;
 
 public abstract class BaseType implements ResolvedType
 {
+    protected ResolvedCustomFacets customFacets;
     private TypeDeclarationNode typeNode;
 
-    public BaseType(TypeDeclarationNode typeNode)
+    public BaseType(TypeDeclarationNode typeNode, ResolvedCustomFacets customFacets)
     {
         this.typeNode = typeNode;
+        this.customFacets = customFacets;
     }
 
     protected void setTypeNode(TypeDeclarationNode typeNode)
     {
         this.typeNode = typeNode;
+    }
+
+    @Override
+    public ResolvedCustomFacets customFacets()
+    {
+        return customFacets;
+    }
+
+    @Override
+    public boolean inheritsFrom(ResolvedType valueType)
+    {
+        return valueType instanceof AnyType || getClass().equals(valueType.getClass());
     }
 
     @Nullable
@@ -47,10 +61,10 @@ public abstract class BaseType implements ResolvedType
         return typeNode;
     }
 
-    @Override
-    public ErrorNode validateFacets()
-    {
-        return null;
-    }
 
+    @Override
+    public void validateState()
+    {
+
+    }
 }

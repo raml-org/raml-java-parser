@@ -19,6 +19,10 @@ import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.ROUND_CEILING;
 import static java.math.BigDecimal.ROUND_DOWN;
 import static java.math.BigDecimal.ZERO;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAXIMUM_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MINIMUM_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MULTIPLE_OF_KEY_NAME;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,9 +30,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
@@ -45,12 +54,12 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
     public NumberResolvedType(TypeDeclarationNode from)
     {
-        super(from);
+        super(from, new ResolvedCustomFacets(MINIMUM_KEY_NAME, MAXIMUM_KEY_NAME, MULTIPLE_OF_KEY_NAME, FORMAT_KEY_NAME));
     }
 
-    public NumberResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format)
+    public NumberResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets);
+        super(declarationNode, xmlFacets, customFacets);
         this.minimum = minimum;
         this.maximum = maximum;
         this.multiple = multiple;
@@ -59,17 +68,33 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
     public NumberResolvedType copy()
     {
-        return new NumberResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minimum, maximum, multiple, format);
+        return new NumberResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minimum, maximum, multiple, format, customFacets.copy());
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.minimumField(raml10Grammar.numberType()))
+                                                   .add(raml10Grammar.maximumField(raml10Grammar.numberType()))
+                                                   .add(raml10Grammar.numberFormat())
+                                                   .add(raml10Grammar.enumField())
+                                                   .add(raml10Grammar.multipleOfField(raml10Grammar.numberType()))
+                                                   .addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final NumberResolvedType result = copy();
-        result.setMinimum(NodeSelector.selectNumberValue("minimum", from));
-        result.setMaximum(NodeSelector.selectNumberValue("maximum", from));
-        result.setMultiple(NodeSelector.selectNumberValue("multipleOf", from));
-        result.setFormat(NodeSelector.selectStringValue("format", from));
+        result.customFacets = customFacets.overwriteFacets(from);
+        result.setMinimum(NodeSelector.selectNumberValue(MINIMUM_KEY_NAME, from));
+        result.setMaximum(NodeSelector.selectNumberValue(MAXIMUM_KEY_NAME, from));
+        result.setMultiple(NodeSelector.selectNumberValue(MULTIPLE_OF_KEY_NAME, from));
+        result.setFormat(NodeSelector.selectStringValue(FORMAT_KEY_NAME, from));
         result.setEnums(getEnumValues(from));
         return overwriteFacets(result, from);
     }
@@ -103,10 +128,21 @@ public class NumberResolvedType extends XmlFacetsCapableType
             result.setFormat(numberTypeDefinition.getFormat());
             result.setEnums(numberTypeDefinition.getEnums());
         }
+        result.customFacets = result.customFacets.mergeWith(with.customFacets());
         return mergeFacets(result, with);
     }
 
     @Override
+    public void validateState()
+    {
+        super.validateState();
+        final ErrorNode errorNode = validateFacets();
+        if (errorNode != null)
+        {
+            getTypeDeclarationNode().replaceWith(errorNode);
+        }
+    }
+
     public ErrorNode validateFacets()
     {
         BigDecimal min = minimum != null ? new BigDecimal(minimum.toString()) : new BigDecimal(Double.MIN_VALUE);

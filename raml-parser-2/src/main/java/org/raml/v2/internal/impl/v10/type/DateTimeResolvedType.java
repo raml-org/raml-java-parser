@@ -15,9 +15,17 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 
+import java.util.List;
+
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
 import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
 
 public class DateTimeResolvedType extends XmlFacetsCapableType
@@ -25,27 +33,39 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
 
     private String format;
 
-    public DateTimeResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, String format)
+    public DateTimeResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, String format, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets);
+        super(declarationNode, xmlFacets, customFacets);
         this.format = format;
     }
 
     public DateTimeResolvedType(TypeDeclarationNode from)
     {
-        super(from);
+        super(from, new ResolvedCustomFacets(FORMAT_KEY_NAME));
     }
 
     protected DateTimeResolvedType copy()
     {
-        return new DateTimeResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), format);
+        return new DateTimeResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), format, customFacets.copy());
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.formatField())
+                                                   .addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final DateTimeResolvedType result = copy();
-        result.setFormat(selectStringValue("format", from));
+        result.setFormat(selectStringValue(FORMAT_KEY_NAME, from));
+        result.customFacets = customFacets.overwriteFacets(from);
         return overwriteFacets(result, from);
     }
 
@@ -57,6 +77,7 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
         {
             result.setFormat(((DateTimeResolvedType) with).getFormat());
         }
+        result.customFacets = result.customFacets.mergeWith(with.customFacets());
         return mergeFacets(result, with);
     }
 

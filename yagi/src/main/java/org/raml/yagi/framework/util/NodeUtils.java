@@ -49,6 +49,11 @@ public class NodeUtils
         return parent;
     }
 
+    public static boolean hasError(Node node)
+    {
+        return node instanceof ErrorNode || !node.findDescendantsWith(ErrorNode.class).isEmpty();
+    }
+
     @Nullable
     public static <T extends Node> T getAncestor(Node node, Class<T> ancestorType)
     {

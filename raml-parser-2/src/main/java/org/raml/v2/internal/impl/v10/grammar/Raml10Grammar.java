@@ -27,10 +27,12 @@ import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
+import org.raml.v2.internal.impl.commons.nodes.CustomFacetDefinitionNode;
 import org.raml.v2.internal.impl.commons.nodes.DocumentationItemNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.nodes.ResponseNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -70,6 +72,25 @@ public class Raml10Grammar extends BaseRamlGrammar
     public static final String PROPERTY_TYPE_RULE = "propertyTypeRule";
     public static final String TYPES_FACET_TYPE = "type";
     public static final String TYPES_FACET_SCHEMA = "schema";
+    public static final String MIN_ITEMS_KEY_NAME = "minItems";
+    public static final String MAX_ITEMS_KEY_NAME = "maxItems";
+    public static final String UNIQUE_ITEMS_KEY_NAME = "uniqueItems";
+    public static final String ITEMS_KEY_NAME = "items";
+    public static final String FILE_TYPES_KEY_NAME = "fileTypes";
+    public static final String MIN_LENGTH_KEY_NAME = "minLength";
+    public static final String MAX_LENGTH_KEY_NAME = "maxLength";
+    public static final String MINIMUM_KEY_NAME = "minimum";
+    public static final String MAXIMUM_KEY_NAME = "maximum";
+    public static final String FORMAT_KEY_NAME = "format";
+    public static final String ENUM_KEY_NAME = "enum";
+    public static final String MULTIPLE_OF_KEY_NAME = "multipleOf";
+    public static final String PROPERTIES_KEY_NAME = "properties";
+    public static final String MIN_PROPERTIES_KEY_NAME = "minProperties";
+    public static final String MAX_PROPERTIES_KEY_NAME = "maxProperties";
+    public static final String ADDITIONAL_PROPERTIES_KEY_NAME = "additionalProperties";
+    public static final String DISCRIMINATOR_KEY_NAME = "discriminator";
+    public static final String DISCRIMINATOR_VALUE_KEY_NAME = "discriminatorValue";
+    public static final String PATTERN_KEY_NAME = "pattern";
 
     public ObjectRule untitledRaml()
     {
@@ -383,7 +404,7 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(additionalPropertiesField())
                                                                                   .add(discriminatorField())
                                                                                   .add(discriminatorValueField())
-                                                                                  .add(field(facetRegex(), any()))
+                                                                                  .add(customFacetField())
                                                    ).defaultValue(new TypeDefaultValue(defaultType))
                                            ).withAll(additionalRules)
                                            .then(TypeDeclarationNode.class);
@@ -391,6 +412,11 @@ public class Raml10Grammar extends BaseRamlGrammar
 
                     }
                 });
+    }
+
+    private KeyValueRule customFacetField()
+    {
+        return field(facetRegex(), any()).then(FacetNode.class);
     }
 
     protected Rule builtinTypes()
@@ -404,137 +430,156 @@ public class Raml10Grammar extends BaseRamlGrammar
         return anyOf(typeNames);
     }
 
-    protected KeyValueRule discriminatorValueField()
+    public KeyValueRule discriminatorValueField()
     {
-        return field(string("discriminatorValue"), scalarType())
+        return field(string(DISCRIMINATOR_VALUE_KEY_NAME), scalarType())
+                                                                        .then(FacetNode.class)
+                                                                        .description(
+                                                                                "Identifies the declaring type."
+                                                                                        +
+                                                                                        " Requires including a discriminator facet in the type declaration."
+                                                                                        +
+                                                                                        " A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type."
+                                                                                        +
+                                                                                        " Inline type declarations are not supported.");
+    }
+
+    public KeyValueRule discriminatorField()
+    {
+        return field(string(DISCRIMINATOR_KEY_NAME), scalarType())
+                                                                  .then(FacetNode.class)
+                                                                  .description(
+                                                                          "Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance."
+                                                                                  +
+                                                                                  " The value must match the name of one of the declared properties of a type. " +
+                                                                                  "Unsupported practices are inline type declarations and using discriminator with non-scalar properties.");
+    }
+
+    public KeyValueRule additionalPropertiesField()
+    {
+        return field(string(ADDITIONAL_PROPERTIES_KEY_NAME), booleanType())
+                                                                           .then(FacetNode.class)
+                                                                           .description("A Boolean that indicates if an object instance has additional properties.");
+    }
+
+    public KeyValueRule maxPropertiesField()
+    {
+        return field(string(MAX_PROPERTIES_KEY_NAME), integerType())
+                                                                    .then(FacetNode.class)
+                                                                    .description("The maximum number of properties allowed for instances of this type.");
+    }
+
+    public KeyValueRule minPropertiesField()
+    {
+        return field(string(MIN_PROPERTIES_KEY_NAME), integerType())
+                                                                    .then(FacetNode.class)
+                                                                    .description("The minimum number of properties allowed for instances of this type.");
+    }
+
+    public KeyValueRule propertiesField()
+    {
+        return field(string(PROPERTIES_KEY_NAME), properties())
+                                                               .then(FacetNode.class)
+                                                               .description("The properties that instances of this type can or must have.");
+    }
+
+    public KeyValueRule fileTypesField()
+    {
+        return field(string(FILE_TYPES_KEY_NAME), any())
+                                                        .then(FacetNode.class)
+                                                        .description("A list of valid content-type strings for the file. The file type */* MUST be a valid value.");
+    }
+
+    public KeyValueRule multipleOfField(Rule rule)
+    {
+        return field(string(MULTIPLE_OF_KEY_NAME), rule)
+                                                        .then(FacetNode.class)
+                                                        .description(
+                                                                "A numeric instance is valid against \"multipleOf\" if the result of dividing the instance by this keyword's value is an integer.");
+    }
+
+    public KeyValueRule numberFormat()
+    {
+        return field(string(FORMAT_KEY_NAME), anyOf(string("int32"), string("int64"), string("int"), string("long"), string("float"), string("double"), string("int16"), string("int8")))
+                                                                                                                                                                                         .then(FacetNode.class)
+                                                                                                                                                                                         .description(
+                                                                                                                                                                                                 "The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8");
+    }
+
+    public KeyValueRule maximumField(Rule rule)
+    {
+        return field(string(MAXIMUM_KEY_NAME), rule)
+                                                    .then(FacetNode.class)
+                                                    .description("The maximum value of the parameter. Applicable only to parameters of type number or integer.");
+    }
+
+    public KeyValueRule minimumField(Rule rule)
+    {
+        return field(string(MINIMUM_KEY_NAME), rule)
+                                                    .then(FacetNode.class)
+                                                    .description("The minimum value of the parameter. Applicable only to parameters of type number or integer.");
+    }
+
+    public KeyValueRule maxItemsField()
+    {
+        return field(string(MAX_ITEMS_KEY_NAME), integerType())
+                                                               .then(FacetNode.class)
+                                                               .description("Maximum amount of items in array. Value MUST be equal to or greater than 0.");
+    }
+
+    public KeyValueRule minItemsField()
+    {
+        return field(string(MIN_ITEMS_KEY_NAME), integerType())
+                                                               .then(FacetNode.class)
+                                                               .description("Minimum amount of items in array. Value MUST be equal to or greater than 0.");
+    }
+
+    public KeyValueRule itemsField()
+    {
+        return field(string(ITEMS_KEY_NAME), typeRef())
+                                                       .then(FacetNode.class)
+                                                       .description(
+                                                               "Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline type declaration.");
+    }
+
+    public KeyValueRule uniqueItemsField()
+    {
+        return field(string(UNIQUE_ITEMS_KEY_NAME), booleanType())
+                                                                  .then(FacetNode.class)
+                                                                  .description("Boolean value that indicates if items in the array MUST be unique.");
+    }
+
+    public KeyValueRule formatField()
+    {
+        return field(string(FORMAT_KEY_NAME), anyOf(string("rfc3339"), string("rfc2616"))).then(FacetNode.class);
+    }
+
+    public KeyValueRule enumField()
+    {
+        return field(string(ENUM_KEY_NAME), array(scalarType()))
+                                                                .then(FacetNode.class)
                                                                 .description(
-                                                                        "Identifies the declaring type."
-                                                                                +
-                                                                                " Requires including a discriminator facet in the type declaration."
-                                                                                +
-                                                                                " A valid value is an actual value that might identify the type of an individual object and is unique in the hierarchy of the type."
-                                                                                +
-                                                                                " Inline type declarations are not supported.");
+                                                                        "Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.");
     }
 
-    protected KeyValueRule discriminatorField()
+    public KeyValueRule maxLengthField()
     {
-        return field(string("discriminator"), scalarType())
-                                                           .description(
-                                                                   "Determines the concrete type of an individual object at runtime when, for example, payloads contain ambiguous types due to unions or inheritance."
-                                                                           +
-                                                                           " The value must match the name of one of the declared properties of a type. " +
-                                                                           "Unsupported practices are inline type declarations and using discriminator with non-scalar properties.");
+        return field(string(MAX_LENGTH_KEY_NAME), integerType())
+                                                                .then(FacetNode.class)
+                                                                .description("Maximum length of the string. Value MUST be equal to or greater than 0.");
     }
 
-    protected KeyValueRule additionalPropertiesField()
+    public KeyValueRule minLengthField()
     {
-        return field(string("additionalProperties"), booleanType())
-                                                                   .description("A Boolean that indicates if an object instance has additional properties.");
+        return field(string(MIN_LENGTH_KEY_NAME), integerType()).then(FacetNode.class)
+                                                                .description("Minimum length of the string. Value MUST be equal to or greater than 0.");
     }
 
-    protected KeyValueRule maxPropertiesField()
+    public KeyValueRule patternField()
     {
-        return field(string("maxProperties"), integerType())
-                                                            .description("The maximum number of properties allowed for instances of this type.");
-    }
-
-    protected KeyValueRule minPropertiesField()
-    {
-        return field(string("minProperties"), integerType())
-                                                            .description("The minimum number of properties allowed for instances of this type.");
-    }
-
-    protected KeyValueRule propertiesField()
-    {
-        return field(string("properties"), properties())
-                                                        .description("The properties that instances of this type can or must have.");
-    }
-
-    protected KeyValueRule fileTypesField()
-    {
-        return field(string("fileTypes"), any())
-                                                .description("A list of valid content-type strings for the file. The file type */* MUST be a valid value.");
-    }
-
-    protected KeyValueRule multipleOfField(Rule rule)
-    {
-        return field(string("multipleOf"), rule)
-                                                .description(
-                                                        "A numeric instance is valid against \"multipleOf\" if the result of dividing the instance by this keyword's value is an integer.");
-    }
-
-    protected KeyValueRule numberFormat()
-    {
-        return field(string("format"), anyOf(string("int32"), string("int64"), string("int"), string("long"), string("float"), string("double"), string("int16"), string("int8")))
-                                                                                                                                                                                  .description(
-                                                                                                                                                                                          "The format of the value. The value MUST be one of the following: int32, int64, int, long, float, double, int16, int8");
-    }
-
-    protected KeyValueRule maximumField(Rule rule)
-    {
-        return field(string("maximum"), rule)
-                                             .description("The maximum value of the parameter. Applicable only to parameters of type number or integer.");
-    }
-
-    protected KeyValueRule minimumField(Rule rule)
-    {
-        return field(string("minimum"), rule)
-                                             .description("The minimum value of the parameter. Applicable only to parameters of type number or integer.");
-    }
-
-    protected KeyValueRule maxItemsField()
-    {
-        return field(string("maxItems"), integerType())
-                                                       .description("Maximum amount of items in array. Value MUST be equal to or greater than 0.");
-    }
-
-    protected KeyValueRule minItemsField()
-    {
-        return field(string("minItems"), integerType())
-                                                       .description("Minimum amount of items in array. Value MUST be equal to or greater than 0.");
-    }
-
-    protected KeyValueRule itemsField()
-    {
-        return field(string("items"), typeRef())
-                                                .description("Indicates the type all items in the array are inherited from. Can be a reference to an existing type or an inline type declaration.");
-    }
-
-    protected KeyValueRule uniqueItemsField()
-    {
-        return field(string("uniqueItems"), booleanType())
-                                                          .description("Boolean value that indicates if items in the array MUST be unique.");
-    }
-
-    protected KeyValueRule formatField()
-    {
-        return field(string("format"), anyOf(string("rfc3339"), string("rfc2616")));
-    }
-
-    protected KeyValueRule enumField()
-    {
-        return field(string("enum"), array(scalarType()))
-                                                         .description(
-                                                                 "Enumeration of possible values for this built-in scalar type. The value is an array containing representations of possible values, or a single value if there is only one possible value.");
-    }
-
-    protected KeyValueRule maxLengthField()
-    {
-        return field(string("maxLength"), integerType())
-                                                        .description("Maximum length of the string. Value MUST be equal to or greater than 0.");
-    }
-
-    protected KeyValueRule minLengthField()
-    {
-        return field(string("minLength"), integerType())
-                                                        .description("Minimum length of the string. Value MUST be equal to or greater than 0.");
-    }
-
-    protected KeyValueRule patternField()
-    {
-        return field(string("pattern"), scalarType())
-                                                     .description("Regular expression that this string should match.");
+        return field(string(PATTERN_KEY_NAME), scalarType())
+                                                            .then(FacetNode.class)
+                                                            .description("Regular expression that this string should match.");
     }
 
     protected KeyValueRule examplesField()
@@ -562,9 +607,10 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule facetsField()
     {
-        return field(string("facets"), objectType().with(field(facetRegex(), typeRef())))
-                                                                                         .description(
-                                                                                                 "A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section User-defined Facets for more information.");
+        return field(string("facets"), objectType()
+                                                   .with(field(facetRegex(), typeRef()).then(CustomFacetDefinitionNode.class)))
+                                                                                                                               .description(
+                                                                                                                                       "A map of additional, user-defined restrictions that will be inherited and applied by any extending subtype. See section User-defined Facets for more information.");
     }
 
     private RegexValueRule facetRegex()

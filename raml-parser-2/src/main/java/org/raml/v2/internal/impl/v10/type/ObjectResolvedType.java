@@ -15,17 +15,30 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.yagi.framework.util.NodeUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ADDITIONAL_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_VALUE_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.PROPERTIES_KEY_NAME;
 import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
@@ -40,11 +53,17 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
-    public ObjectResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minProperties, Integer maxProperties, Boolean additionalProperties, String discriminator,
+    public ObjectResolvedType(TypeDeclarationNode declarationNode,
+            XmlFacets xmlFacets,
+            Integer minProperties,
+            Integer maxProperties,
+            Boolean additionalProperties,
+            String discriminator,
             String discriminatorValue,
-            Map<String, PropertyFacets> properties)
+            Map<String, PropertyFacets> properties,
+            ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets);
+        super(declarationNode, xmlFacets, customFacets);
         this.minProperties = minProperties;
         this.maxProperties = maxProperties;
         this.additionalProperties = additionalProperties;
@@ -55,25 +74,34 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     public ObjectResolvedType(TypeDeclarationNode from)
     {
-        super(from);
+        super(from,
+                new ResolvedCustomFacets(MIN_PROPERTIES_KEY_NAME, MAX_PROPERTIES_KEY_NAME, ADDITIONAL_PROPERTIES_KEY_NAME, DISCRIMINATOR_KEY_NAME, DISCRIMINATOR_VALUE_KEY_NAME, PROPERTIES_KEY_NAME));
     }
 
     protected ObjectResolvedType copy()
     {
-        return new ObjectResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minProperties, maxProperties, additionalProperties, discriminator, discriminatorValue,
-                new LinkedHashMap<>(properties));
+        return new ObjectResolvedType(getTypeDeclarationNode(),
+                getXmlFacets().copy(),
+                minProperties,
+                maxProperties,
+                additionalProperties,
+                discriminator,
+                discriminatorValue,
+                new LinkedHashMap<>(properties),
+                customFacets.copy());
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final ObjectResolvedType result = copy();
-        result.setMinProperties(selectIntValue("minProperties", from));
-        result.setMaxProperties(selectIntValue("maxProperties", from));
-        result.setAdditionalProperties(selectBooleanValue("additionalProperties", from));
-        result.setDiscriminator(selectStringValue("discriminator", from));
-        result.setDiscriminatorValue(selectStringValue("discriminatorValue", from));
-        final Node properties = from.get("properties");
+        result.customFacets = customFacets.overwriteFacets(from);
+        result.setMinProperties(selectIntValue(MIN_PROPERTIES_KEY_NAME, from));
+        result.setMaxProperties(selectIntValue(MAX_PROPERTIES_KEY_NAME, from));
+        result.setAdditionalProperties(selectBooleanValue(ADDITIONAL_PROPERTIES_KEY_NAME, from));
+        result.setDiscriminator(selectStringValue(DISCRIMINATOR_KEY_NAME, from));
+        result.setDiscriminatorValue(selectStringValue(DISCRIMINATOR_VALUE_KEY_NAME, from));
+        final Node properties = from.get(PROPERTIES_KEY_NAME);
         if (properties != null)
         {
             final List<Node> children = properties.getChildren();
@@ -130,11 +158,64 @@ public class ObjectResolvedType extends XmlFacetsCapableType
                 }
             }
         }
+        result.customFacets = result.customFacets.mergeWith(with.customFacets());
         return mergeFacets(result, with);
 
     }
 
     @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+
+        customFacets.validate(from);
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.propertiesField())
+                                                   .add(raml10Grammar.minPropertiesField())
+                                                   .add(raml10Grammar.maxPropertiesField())
+                                                   .add(raml10Grammar.additionalPropertiesField())
+                                                   .addAll(customFacets.getRules());
+
+        if (from.getParent() instanceof TypeDeclarationField && from.getResolvedType() instanceof ObjectResolvedType)
+        {
+            facetRule.add(raml10Grammar.discriminatorField())
+                     .add(raml10Grammar.discriminatorValueField());
+        }
+
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
+        final Node properties = from.get(PROPERTIES_KEY_NAME);
+        if (properties != null)
+        {
+            final List<Node> children = properties.getChildren();
+            for (Node child : children)
+            {
+                if (child instanceof PropertyNode)
+                {
+                    final PropertyNode property = (PropertyNode) child;
+                    final String name = property.getName();
+                    if (this.properties.containsKey(name))
+                    {
+                        if (!property.getTypeDefinition().inheritsFrom(this.properties.get(name).getValueType()))
+                        {
+                            property.replaceWith(RamlErrorNodeFactory.createCanNotOverrideProperty(name));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void validateState()
+    {
+        super.validateState();
+        final ErrorNode errorNode = validateFacets();
+        if (errorNode != null)
+        {
+            getTypeDeclarationNode().replaceWith(errorNode);
+        }
+    }
+
     public ErrorNode validateFacets()
     {
         int min = minProperties != null ? minProperties : 0;
@@ -142,6 +223,21 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         if (max < min)
         {
             return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxProperties must be greater than or equal to minProperties");
+        }
+        for (PropertyFacets propertyFacets : properties.values())
+        {
+            if (propertyFacets.getValueType() instanceof SchemaBasedResolvedType)
+            {
+                return RamlErrorNodeFactory.createPropertyCanNotBeOfSchemaType(propertyFacets.getName());
+            }
+        }
+
+        if (discriminator != null)
+        {
+            if (this.properties.get(discriminator) == null)
+            {
+                return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "invalid discriminator value, property '" + discriminator + "' does not exists.");
+            }
         }
         return null;
     }

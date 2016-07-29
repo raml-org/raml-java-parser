@@ -17,21 +17,22 @@ package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.BaseType;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 
 public abstract class XmlFacetsCapableType extends BaseType implements ResolvedType
 {
     private XmlFacets xmlFacets;
 
-    public XmlFacetsCapableType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
+    public XmlFacetsCapableType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode);
+        super(declarationNode, customFacets);
         this.xmlFacets = xmlFacets;
     }
 
-    public XmlFacetsCapableType(TypeDeclarationNode typeNode)
+    public XmlFacetsCapableType(TypeDeclarationNode typeNode, ResolvedCustomFacets customFacets)
     {
-        super(typeNode);
+        super(typeNode, customFacets);
         this.xmlFacets = new XmlFacets();
     }
 

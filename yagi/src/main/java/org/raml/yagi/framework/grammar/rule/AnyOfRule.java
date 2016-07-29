@@ -37,11 +37,7 @@ public class AnyOfRule extends Rule
 
     public AnyOfRule(@Nonnull List<Rule> rules)
     {
-        if (rules.isEmpty())
-        {
-            throw new IllegalArgumentException("rules cannot be empty");
-        }
-        this.rules = rules;
+        this.rules = new ArrayList<>(rules);
     }
 
     public AnyOfRule(Rule... rules)
@@ -64,6 +60,12 @@ public class AnyOfRule extends Rule
             result.addAll(rule.getSuggestions(node, context));
         }
         return result;
+    }
+
+    public AnyOfRule add(Rule rule)
+    {
+        this.rules.add(rule);
+        return this;
     }
 
     @Nullable
@@ -154,5 +156,11 @@ public class AnyOfRule extends Rule
         {
             return Collections.emptyList();
         }
+    }
+
+    public AnyOfRule addAll(List<Rule> rules)
+    {
+        this.rules.addAll(rules);
+        return this;
     }
 }

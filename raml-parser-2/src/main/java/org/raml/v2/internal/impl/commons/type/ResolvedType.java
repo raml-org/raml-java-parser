@@ -15,10 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
+
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.type.TypeVisitor;
-import org.raml.yagi.framework.nodes.ErrorNode;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -42,12 +43,6 @@ public interface ResolvedType
     ResolvedType mergeFacets(ResolvedType with);
 
     /**
-     * Checks the consistency of the defined facets
-     * @return null if there are no inconsistencies or an ErrorNode otherwise
-     */
-    ErrorNode validateFacets();
-
-    /**
      * Dispatch the implementation to the visitor method
      * @param visitor The visitor
      * @param <T> The result type
@@ -63,5 +58,29 @@ public interface ResolvedType
     String getTypeName();
 
 
+    /**
+     * The type declaration node that define this type
+     * @return The node
+     */
     TypeDeclarationNode getTypeDeclarationNode();
+
+    /**
+     * Validate state consistency
+     */
+    void validateState();
+
+    /**
+     * Validate if this type can be overwritten by the specified node
+     * @param from The node to check with
+     */
+    void validateCanOverwriteWith(TypeDeclarationNode from);
+
+    /**
+     * Returns the custom facets definitions of this type
+     * @return The custom facets definition.
+     */
+    @Nonnull
+    ResolvedCustomFacets customFacets();
+
+    boolean inheritsFrom(ResolvedType valueType);
 }

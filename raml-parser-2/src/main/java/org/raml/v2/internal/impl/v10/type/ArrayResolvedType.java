@@ -15,13 +15,23 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
-import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
+import java.util.List;
+
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ITEMS_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_ITEMS_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_ITEMS_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.UNIQUE_ITEMS_KEY_NAME;
 import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 
@@ -32,44 +42,72 @@ public class ArrayResolvedType extends XmlFacetsCapableType
     private Integer minItems;
     private Integer maxItems;
 
-    public ArrayResolvedType(TypeDeclarationNode node, XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems)
+    public ArrayResolvedType(TypeDeclarationNode node, XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems, ResolvedCustomFacets customFacets)
     {
-        super(node, xmlFacets);
+        super(node, xmlFacets, customFacets);
         this.items = items;
         this.uniqueItems = uniqueItems;
         this.minItems = minItems;
         this.maxItems = maxItems;
     }
 
-    public ArrayResolvedType(TypeDeclarationNode node)
-    {
-        super(node);
-    }
-
     public ArrayResolvedType(TypeDeclarationNode node, ResolvedType items)
     {
-        super(node);
+        this(node);
         this.items = items;
+    }
+
+    public ArrayResolvedType(TypeDeclarationNode node)
+    {
+        super(node, new ResolvedCustomFacets(MIN_ITEMS_KEY_NAME, MAX_ITEMS_KEY_NAME, UNIQUE_ITEMS_KEY_NAME, ITEMS_KEY_NAME));
     }
 
     private ArrayResolvedType copy()
     {
-        return new ArrayResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), items, uniqueItems, minItems, maxItems);
+        return new ArrayResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), items, uniqueItems, minItems, maxItems, customFacets.copy());
+    }
+
+
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final Raml10Grammar grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(grammar.uniqueItemsField())
+                                                   .add(grammar.itemsField())
+                                                   .add(grammar.minItemsField())
+                                                   .add(grammar.maxItemsField())
+                                                   .addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
+
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
+        // Validate that is can be overwritten by
         final ArrayResolvedType result = copy();
-        result.setMinItems(selectIntValue("minItems", from));
-        result.setMaxItems(selectIntValue("maxItems", from));
-        result.setUniqueItems(selectBooleanValue("uniqueItems", from));
-        final Node items = NodeSelector.selectFrom("items", from);
+        result.customFacets = result.customFacets.overwriteFacets(from);
+        result.setMinItems(selectIntValue(MIN_ITEMS_KEY_NAME, from));
+        result.setMaxItems(selectIntValue(MAX_ITEMS_KEY_NAME, from));
+        result.setUniqueItems(selectBooleanValue(UNIQUE_ITEMS_KEY_NAME, from));
+        final Node items = NodeSelector.selectFrom(ITEMS_KEY_NAME, from);
         if (items != null && items instanceof TypeDeclarationNode)
         {
             result.setItems(((TypeDeclarationNode) items).getResolvedType());
         }
-        return overwriteFacets(result, from);
+        overwriteFacets(result, from);
+        return result;
+    }
+
+    public void validateState()
+    {
+        int min = minItems != null ? minItems : 0;
+        int max = maxItems != null ? maxItems : Integer.MAX_VALUE;
+        if (max < min)
+        {
+            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxItems must be greater than or equal to minItems"));
+        }
     }
 
     @Override
@@ -83,20 +121,10 @@ public class ArrayResolvedType extends XmlFacetsCapableType
             result.setUniqueItems(((ArrayResolvedType) with).getUniqueItems());
             result.setItems(((ArrayResolvedType) with).getItems());
         }
+        result.customFacets = result.customFacets.mergeWith(with.customFacets());
         return mergeFacets(result, with);
     }
 
-    @Override
-    public ErrorNode validateFacets()
-    {
-        int min = minItems != null ? minItems : 0;
-        int max = maxItems != null ? maxItems : Integer.MAX_VALUE;
-        if (max < min)
-        {
-            return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxItems must be greater than or equal to minItems");
-        }
-        return null;
-    }
 
     @Override
     public <T> T visit(TypeVisitor<T> visitor)

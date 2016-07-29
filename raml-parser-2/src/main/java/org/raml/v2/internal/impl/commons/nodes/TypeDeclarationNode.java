@@ -74,6 +74,18 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
 
     protected ResolvedType resolveTypeDefinition()
     {
+        ResolvedType result = resolveBaseType();
+
+        // After result base definition we overwrite with local definitions
+        if (result != null)
+        {
+            result = result.overwriteFacets(this);
+        }
+        return result;
+    }
+
+    private ResolvedType resolveBaseType()
+    {
         final List<TypeExpressionNode> baseTypes = getBaseTypes();
         ResolvedType result = null;
         // First we inherit all base properties and merge with multiple inheritance
@@ -97,12 +109,27 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
                 }
             }
         }
+        return result;
+    }
+
+    public void validateCanOverwrite()
+    {
+        ResolvedType result = resolveBaseType();
         // After result base definition we overwrite with local definitions
         if (result != null)
         {
-            result = result.overwriteFacets(this);
+            result.validateCanOverwriteWith(this);
         }
-        return result;
+    }
+
+    public void validateState()
+    {
+        getResolvedType().validateState();
+    }
+
+    public List<CustomFacetDefinitionNode> getCustomFacets()
+    {
+        return findDescendantsWith(CustomFacetDefinitionNode.class);
     }
 
     private Node getTypeValue()
@@ -141,5 +168,20 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
     public String getTypeExpressionText()
     {
         return getTypeName() + "_AnonymousType";
+    }
+
+    public List<FacetNode> getFacets()
+    {
+        final List<FacetNode> result = new ArrayList<>();
+
+        final List<Node> children = getChildren();
+        for (Node child : children)
+        {
+            if (child instanceof FacetNode)
+            {
+                result.add((FacetNode) child);
+            }
+        }
+        return result;
     }
 }

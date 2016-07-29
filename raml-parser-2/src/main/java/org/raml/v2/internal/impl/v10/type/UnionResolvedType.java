@@ -22,15 +22,18 @@ import java.util.List;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.BaseType;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.Node;
 
 public class UnionResolvedType extends BaseType
 {
     private List<ResolvedType> of;
 
-    public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of)
+    public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
     {
-        super(typeNode);
+        super(typeNode, customFacets);
         this.of = of;
     }
 
@@ -41,7 +44,7 @@ public class UnionResolvedType extends BaseType
 
     protected UnionResolvedType copy()
     {
-        return new UnionResolvedType(getTypeDeclarationNode(), new ArrayList<>(of));
+        return new UnionResolvedType(getTypeDeclarationNode(), new ArrayList<>(of), customFacets.copy());
     }
 
     @Override
@@ -53,7 +56,7 @@ public class UnionResolvedType extends BaseType
         {
             result.add(resolvedType.overwriteFacets(from));
         }
-        return new UnionResolvedType(from, result);
+        return new UnionResolvedType(from, result, customFacets.overwriteFacets(from));
     }
 
     @Override
@@ -76,16 +79,45 @@ public class UnionResolvedType extends BaseType
         return visitor.visitUnion(this);
     }
 
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        final Node parent = from.getParent();
+        for (ResolvedType resolvedType : of)
+        {
+            if (parent.findDescendantsWith(ErrorNode.class).isEmpty())
+            {
+                resolvedType.validateCanOverwriteWith(from);
+            }
+        }
+    }
+
+    @Override
+    public void validateState()
+    {
+        final Node parent = getTypeDeclarationNode().getParent();
+        for (ResolvedType resolvedType : of)
+        {
+            if (parent.findDescendantsWith(ErrorNode.class).isEmpty())
+            {
+                resolvedType.validateState();
+            }
+        }
+    }
+
     protected ResolvedType mergeWith(List<ResolvedType> of)
     {
         final List<ResolvedType> combination = new ArrayList<>();
+        ResolvedCustomFacets customFacets = this.customFacets.copy();
         for (ResolvedType localDefinition : of())
         {
             for (ResolvedType resolvedType : of)
             {
+                customFacets.mergeWith(resolvedType.customFacets());
                 combination.add(localDefinition.mergeFacets(resolvedType));
             }
         }
-        return new UnionResolvedType(getTypeDeclarationNode(), combination);
+
+        return new UnionResolvedType(getTypeDeclarationNode(), combination, customFacets);
     }
 }

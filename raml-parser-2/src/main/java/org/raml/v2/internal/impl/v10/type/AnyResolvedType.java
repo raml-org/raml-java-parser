@@ -16,41 +16,63 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 
 public class AnyResolvedType extends XmlFacetsCapableType
 {
 
-    public AnyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets)
+
+    public AnyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets);
+        super(declarationNode, xmlFacets, customFacets);
     }
 
     public AnyResolvedType(TypeDeclarationNode declarationNode)
     {
-        super(declarationNode);
+        super(declarationNode, new ResolvedCustomFacets());
     }
 
-    protected ResolvedType copy()
+    protected AnyResolvedType copy()
     {
-        return new AnyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy());
+        return new AnyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        return copy();
+        final AnyResolvedType copy = copy();
+        copy.customFacets = copy.customFacets.overwriteFacets(from);
+        return copy;
     }
 
     @Override
     public ResolvedType mergeFacets(ResolvedType with)
     {
-        return copy();
+        final AnyResolvedType copy = copy();
+        copy.customFacets = copy.customFacets.mergeWith(with.customFacets());
+        return copy;
     }
 
     @Override
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitAny(this);
+    }
+
+    @Override
+    public void validateCanOverwriteWith(TypeDeclarationNode from)
+    {
+        customFacets.validate(from);
+        final AnyOfRule facetRule = new AnyOfRule().addAll(customFacets.getRules());
+        TypesUtils.validateAllWith(facetRule, from.getFacets());
+    }
+
+    @Override
+    public boolean inheritsFrom(ResolvedType valueType)
+    {
+        return false;
     }
 }

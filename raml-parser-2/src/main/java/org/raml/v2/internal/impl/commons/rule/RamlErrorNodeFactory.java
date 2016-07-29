@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.Node;
 
 public class RamlErrorNodeFactory
 {
@@ -49,4 +50,23 @@ public class RamlErrorNodeFactory
         return new ErrorNode("Required property " + property + " cannot be made optional");
     }
 
+    public static ErrorNode createCanNotOverrideCustomFacet(String facetName, String typeName)
+    {
+        return new ErrorNode("Custom facet " + facetName + " can not be set as it is already defined by " + typeName + ".");
+    }
+
+    public static ErrorNode createCanNotOverrideNativeFacet(String facetName)
+    {
+        return new ErrorNode("Custom facet " + facetName + " can not be defined as is already defined by this type.");
+    }
+
+    public static ErrorNode createCanNotOverrideProperty(String propertyName)
+    {
+        return new ErrorNode("Property " + propertyName + " can not be overwritten .");
+    }
+
+    public static ErrorNode createPropertyCanNotBeOfSchemaType(String propertyName)
+    {
+        return new ErrorNode("Property  " + propertyName + " can not have a schema type.");
+    }
 }

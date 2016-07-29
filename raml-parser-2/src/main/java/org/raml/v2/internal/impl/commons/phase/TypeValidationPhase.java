@@ -19,24 +19,27 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.phase.Transformer;
+import org.raml.yagi.framework.util.NodeUtils;
 
-public class FacetValidationTransformer implements Transformer
+import java.util.List;
+
+public class TypeValidationPhase implements Phase
 {
 
     @Override
-    public boolean matches(Node node)
+    public Node apply(Node tree)
     {
-        return node instanceof TypeDeclarationNode;
+        final List<TypeDeclarationNode> descendantsWith = tree.findDescendantsWith(TypeDeclarationNode.class);
+        for (TypeDeclarationNode typeDeclarationNode : descendantsWith)
+        {
+            if (!NodeUtils.isErrorResult(typeDeclarationNode))
+            {
+                typeDeclarationNode.validateCanOverwrite();
+                typeDeclarationNode.validateState();
+            }
+        }
+        return tree;
     }
-
-    @Override
-    public Node transform(Node node)
-    {
-        final ResolvedType resolvedType = ((TypeDeclarationNode) node).getResolvedType();
-        ErrorNode errorNode = resolvedType.validateFacets();
-
-        return errorNode != null ? errorNode : node;
-    }
-
 }
