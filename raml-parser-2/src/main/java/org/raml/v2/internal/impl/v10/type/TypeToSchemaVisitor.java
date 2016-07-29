@@ -323,14 +323,28 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         final ResolvedType itemType = arrayTypeDefinition.getItems();
         final XmlSchemaType visit;
         final XmlFacets xmlFacets = arrayTypeDefinition.getXmlFacets();
+
+        final String xmlName;
+        if (itemType instanceof XmlFacetsCapableType)
+        {
+            xmlName = defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), itemType.getTypeName());
+        }
+        else
+        {
+            xmlName = itemType.getTypeName();
+        }
+
+        final String name = defaultTo(xmlName, currentElement.peek().getName());
+
         if (asBoolean(xmlFacets.getWrapped(), false))
         {
             // This is for the inside element not the wrapped. So this one is the tag for the item type
             // First uses the xml facet then the item name finally the field name or parent type name
-            final String name = defaultTo(defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), itemType.getTypeName()), currentElement.peek().getName());
             final XmlSchemaElement transform = doTransform(name, itemType);
+            addArrayCardinality(arrayTypeDefinition, transform);
+
             final XmlSchemaComplexType value = new XmlSchemaComplexType(schema, false);
-            final XmlSchemaChoice xmlSchemaSequence = new XmlSchemaChoice();
+            final XmlSchemaSequence xmlSchemaSequence = new XmlSchemaSequence();
             value.setParticle(xmlSchemaSequence);
             xmlSchemaSequence.getItems().add(transform);
             visit = value;
@@ -338,22 +352,30 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         else
         {
             visit = itemType.visit(this);
+
+            final XmlSchemaElement peek = currentElement.peek();
+            peek.setName(name); // override field name with type name in this case
+            addArrayCardinality(arrayTypeDefinition, peek);
         }
-        final XmlSchemaElement peek = currentElement.peek();
+
+        return visit;
+    }
+
+    private void addArrayCardinality(ArrayResolvedType arrayTypeDefinition, XmlSchemaElement transform)
+    {
         if (arrayTypeDefinition.getMinItems() != null)
         {
-            peek.setMinOccurs(arrayTypeDefinition.getMinItems());
+            transform.setMinOccurs(arrayTypeDefinition.getMinItems());
         }
 
         if (arrayTypeDefinition.getMaxItems() != null)
         {
-            peek.setMaxOccurs(arrayTypeDefinition.getMaxItems());
+            transform.setMaxOccurs(arrayTypeDefinition.getMaxItems());
         }
         else
         {
-            peek.setMaxOccurs(UNBOUNDED);
+            transform.setMaxOccurs(UNBOUNDED);
         }
-        return visit;
     }
 
     @Override
