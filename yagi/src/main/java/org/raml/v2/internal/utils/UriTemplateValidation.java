@@ -30,7 +30,7 @@ public class UriTemplateValidation
         {
             if (value.charAt(i) == OPEN_BRACE)
             {
-                if(characterStack.isEmpty())
+                if (characterStack.isEmpty())
                 {
                     characterStack.push(OPEN_BRACE);
                 }
@@ -43,8 +43,10 @@ public class UriTemplateValidation
             }
             else if (value.charAt(i) == CLOSE_BRACE)
             {
-                if (characterStack.isEmpty()) return false;
-                if (characterStack.pop() != OPEN_BRACE) return false;
+                if (characterStack.isEmpty())
+                    return false;
+                if (characterStack.pop() != OPEN_BRACE)
+                    return false;
             }
         }
 
