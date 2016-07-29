@@ -69,4 +69,9 @@ public class RamlErrorNodeFactory
     {
         return new ErrorNode("Property  " + propertyName + " can not have a schema type.");
     }
+
+    public static ErrorNode createRecurrentTypeDefinition(String typeName)
+    {
+        return new ErrorNode("Recurrent type definition : " + typeName + ".");
+    }
 }

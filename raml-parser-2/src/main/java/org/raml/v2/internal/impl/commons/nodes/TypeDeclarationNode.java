@@ -15,12 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
 import org.raml.yagi.framework.nodes.AbstractObjectNode;
@@ -28,10 +23,16 @@ import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpressionNode, OverlayableNode
 {
 
     private ResolvedType resolvedType;
+    private boolean resolvingType = false;
 
     public TypeDeclarationNode()
     {
@@ -55,24 +56,35 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
                 result.add((TypeExpressionNode) child);
             }
         }
-        else
+        else if (type != null)
         {
             result.add((TypeExpressionNode) type);
         }
         return result;
     }
 
+    @Nullable
     public ResolvedType getResolvedType()
     {
         // Cache it to support recursive definitions
         if (resolvedType == null)
         {
-            resolvedType = resolveTypeDefinition();
+            if (resolvingType)
+            {
+                this.replaceWith(RamlErrorNodeFactory.createRecurrentTypeDefinition(getTypeName()));
+                return null;
+            }
+            else
+            {
+                resolvingType = true;
+                resolvedType = resolveTypeDefinition();
+                resolvingType = false;
+            }
         }
         return resolvedType;
     }
 
-    protected ResolvedType resolveTypeDefinition()
+    private ResolvedType resolveTypeDefinition()
     {
         ResolvedType result = resolveBaseType();
 
@@ -124,7 +136,11 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
 
     public void validateState()
     {
-        getResolvedType().validateState();
+        final ResolvedType resolvedType = getResolvedType();
+        if (resolvedType != null)
+        {
+            resolvedType.validateState();
+        }
     }
 
     public List<CustomFacetDefinitionNode> getCustomFacets()
