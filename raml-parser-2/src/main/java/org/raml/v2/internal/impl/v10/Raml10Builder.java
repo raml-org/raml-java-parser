@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10;
 
+import static org.raml.v2.api.model.v10.RamlFragment.Default;
 import static org.raml.v2.api.model.v10.RamlFragment.Extension;
 import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
 import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
@@ -31,13 +32,13 @@ import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
-import org.raml.v2.internal.impl.commons.phase.TypeValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.RamlFragmentGrammarTransformer;
 import org.raml.v2.internal.impl.commons.phase.ReferenceResolverTransformer;
 import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.SchemaValidationTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
+import org.raml.v2.internal.impl.commons.phase.TypeValidationPhase;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
@@ -123,7 +124,7 @@ public class Raml10Builder
             return ErrorNodeFactory.createBaseRamlNotFound(baseRef.getValue());
         }
         String baseContent = StreamUtils.toString(baseStream);
-        Node baseNode = new RamlBuilder().build(baseContent, resourceLoader, resourceLocation);
+        Node baseNode = new RamlBuilder().build(baseContent, resourceLoader, baseLocation);
 
         if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
         {
@@ -131,24 +132,11 @@ public class Raml10Builder
             if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
             {
                 // run all phases on merged document
-                List<Phase> phases = createPhases(resourceLoader, getFragment(baseContent));
+                List<Phase> phases = createPhases(resourceLoader, Default);
                 baseNode = runPhases(baseNode, phases, Integer.MAX_VALUE);
             }
         }
         return baseNode;
-    }
-
-    private RamlFragment getFragment(String content)
-    {
-        try
-        {
-            return RamlHeader.parse(content).getFragment();
-        }
-        catch (RamlHeader.InvalidHeaderException e)
-        {
-            // already validated by builder
-            throw new RuntimeException("Unreachable code");
-        }
     }
 
     private List<Phase> createPhases(ResourceLoader resourceLoader, RamlFragment fragment)
