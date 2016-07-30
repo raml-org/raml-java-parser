@@ -20,7 +20,7 @@ public enum TypeId
 
     STRING("string"),
     ANY("any"),
-    NULL("null"),
+    NULL("nil"),
     NUMBER("number"),
     INTEGER("integer"),
     BOOLEAN("boolean"),

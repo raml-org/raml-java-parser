@@ -44,9 +44,9 @@
   "value" : "integer",
   "prefix" : ""
 }, {
-  "label" : "Null",
+  "label" : "Nil",
   "description" : "",
-  "value" : "null",
+  "value" : "nil",
   "prefix" : ""
 }, {
   "label" : "Number",
