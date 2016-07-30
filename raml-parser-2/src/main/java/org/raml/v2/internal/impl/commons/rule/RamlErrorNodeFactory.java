@@ -74,4 +74,9 @@ public class RamlErrorNodeFactory
     {
         return new ErrorNode("Recurrent type definition : " + typeName + ".");
     }
+
+    public static ErrorNode createInvalidLibraryChaining(String value)
+    {
+        return new ErrorNode("Library references cannot be chained: " + value);
+    }
 }

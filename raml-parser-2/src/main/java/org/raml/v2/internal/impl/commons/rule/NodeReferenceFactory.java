@@ -47,6 +47,10 @@ public class NodeReferenceFactory implements NodeFactory
     {
 
         final String[] parts = value.split("\\.");
+        if (parts.length > 2)
+        {
+            return RamlErrorNodeFactory.createInvalidLibraryChaining(value);
+        }
         Node result = null;
         Node parent = null;
         int currentShift = value.length();
