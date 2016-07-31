@@ -1,0 +1,15 @@
+#%RAML 1.0 Overlay
+extends: master.raml
+
+types:
+    scalar:
+        examples:
+            first: overlaid
+            third: terzo
+
+    object:
+        example:
+            lat: -34.6
+            long: -58.4
+
+    another-scalar: string

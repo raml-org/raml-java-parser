@@ -27,15 +27,18 @@ import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
+import org.raml.v2.internal.impl.commons.nodes.AnnotationTypesNode;
 import org.raml.v2.internal.impl.commons.nodes.CustomFacetDefinitionNode;
 import org.raml.v2.internal.impl.commons.nodes.DocumentationItemNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.ExamplesNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.nodes.ResponseNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypesNode;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
 import org.raml.v2.internal.impl.v10.nodes.DisplayNameDefaultValue;
@@ -177,7 +180,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule typesField()
     {
-        return field(typesKey(), types());
+        return field(typesKey(), types()).then(TypesNode.class);
     }
 
     protected StringValueRule typesKey()
@@ -258,7 +261,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule annotationTypesField()
     {
-        return field(annotationTypesKey(), annotationTypes());
+        return field(annotationTypesKey(), annotationTypes()).then(AnnotationTypesNode.class);
     }
 
     protected StringValueRule annotationTypesKey()
@@ -584,7 +587,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     protected KeyValueRule examplesField()
     {
-        return field(exclusiveWith("examples", "example"), examplesValue())
+        return field(exclusiveWith("examples", "example"), examplesValue()).then(ExamplesNode.class)
                                                                            .description(
                                                                                    "Examples of instances of this type."
                                                                                            +
@@ -797,6 +800,11 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected KeyValueRule mediaTypeField()
     {
         return field(mediaTypeKey(), anyOf(mimeTypeRegex(), array(mimeTypeRegex())));
+    }
+
+    protected KeyValueRule schemasField()
+    {
+        return field(schemasKey(), schemasValue()).then(TypesNode.class);
     }
 
     protected Rule schemasValue()

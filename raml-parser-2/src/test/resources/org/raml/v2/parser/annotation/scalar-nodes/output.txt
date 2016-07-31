@@ -1,5 +1,5 @@
 RamlDocumentNode (Start: 12 , End: 414, On: input.raml, Source: SYObjectNode)
-    KeyValueNodeImpl (Start: 12 , End: 54, On: input.raml)
+    AnnotationTypesNode (Start: 12 , End: 54, On: input.raml, Source: KeyValueNodeImpl)
         SYStringNode: "annotationTypes" (Start: 12 , End: 27, On: input.raml)
         SYObjectNode (Start: 31 , End: 54, On: input.raml)
             AnnotationTypeNode (Start: 31 , End: 54, On: input.raml, Source: KeyValueNodeImpl)

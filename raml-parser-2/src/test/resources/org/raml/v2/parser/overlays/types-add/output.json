@@ -1,0 +1,48 @@
+{
+    "title": {
+        "value": "master"
+    },
+    "types": {
+        "scalar": {
+            "type": "string",
+            "examples": {
+                "first": "overlaid",
+                "second": "secondo",
+                "third": "terzo"
+            },
+            "displayName": {
+                "value": "scalar"
+            }
+        },
+        "object": {
+            "properties": {
+                "lat": {
+                    "type": "number",
+                    "displayName": {
+                        "value": "lat"
+                    }
+                },
+                "long": {
+                    "type": "number",
+                    "displayName": {
+                        "value": "long"
+                    }
+                }
+            },
+            "example": {
+                "lat": "-34.6",
+                "long": "-58.4"
+            },
+            "type": "object",
+            "displayName": {
+                "value": "object"
+            }
+        },
+        "another-scalar": {
+            "type": "string",
+            "displayName": {
+                "value": "another-scalar"
+            }
+        }
+    }
+}

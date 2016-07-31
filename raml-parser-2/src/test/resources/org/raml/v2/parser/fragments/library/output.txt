@@ -6,7 +6,7 @@ SYObjectNode (Start: 19 , End: 273, On: input.raml)
                 StringNodeImpl: "value" (Start: -1 , End: -1)
                 SYStringNode: "Use to define some basic file-related constructs.
 " (Start: 26 , End: 80, On: input.raml, Source: SYStringNode)
-    KeyValueNodeImpl (Start: 80 , End: 176, On: input.raml)
+    TypesNode (Start: 80 , End: 176, On: input.raml, Source: KeyValueNodeImpl)
         SYStringNode: "types" (Start: 80 , End: 85, On: input.raml)
         SYObjectNode (Start: 89 , End: 176, On: input.raml)
             TypeDeclarationField (Start: 89 , End: 176, On: input.raml, Source: KeyValueNodeImpl)

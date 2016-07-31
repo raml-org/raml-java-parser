@@ -1,0 +1,14 @@
+#%RAML 1.0 Overlay
+title: Pet Shop Overlay
+extends: master.raml
+
+/resource:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            examples:
+              test:
+                value:
+                  name: 7

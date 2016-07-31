@@ -1,0 +1,46 @@
+{
+    "title": {
+        "value": "Pet Shop Overlay"
+    },
+    "resources": [
+        {
+            "relativeUri": "/resource",
+            "displayName": {
+                "value": "/resource"
+            },
+            "methods": [
+                {
+                    "method": "get",
+                    "responses": {
+                        "200": {
+                            "body": {
+                                "application/json": {
+                                    "type": "any",
+                                    "displayName": {
+                                        "value": "application/json"
+                                    },
+                                    "examples": {
+                                        "test": {
+                                            "value": {
+                                                "name": 7
+                                            },
+                                            "displayName": {
+                                                "value": "test"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "displayName": {
+                                "value": "200"
+                            }
+                        }
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
+                }
+            ]
+        }
+    ]
+}

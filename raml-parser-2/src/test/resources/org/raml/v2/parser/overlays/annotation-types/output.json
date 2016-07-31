@@ -1,0 +1,36 @@
+{
+    "title": {
+        "value": "master"
+    },
+    "annotationTypes": {
+        "overlay-scalar": {
+            "type": "nil",
+            "displayName": {
+                "value": "overlay-scalar"
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/home",
+            "displayName": {
+                "value": "/home"
+            },
+            "methods": [
+                {
+                    "method": "get",
+                    "description": {
+                        "value": "get something"
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
+                }
+            ]
+        }
+    ],
+    "annotations": {
+        
+        "overlay-scalar": {}
+    }
+}
