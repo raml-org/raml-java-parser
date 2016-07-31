@@ -16,38 +16,24 @@
 package org.raml.v2.internal.impl.commons.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 
-public class XmlSchemaExternalType extends BaseType implements SchemaBasedResolvedType
+public class XmlSchemaExternalType extends AbstractExternalType
 {
-    private final String schemaValue;
-    private final String schemaPath;
-    private final String internalFragment;
-
     public XmlSchemaExternalType(TypeDeclarationNode from, String schemaValue, String schemaPath, String internalFragment)
     {
-        super(from, new ResolvedCustomFacets());
-        this.schemaValue = schemaValue;
-        this.schemaPath = schemaPath;
-        this.internalFragment = internalFragment;
+        super(from, schemaValue, schemaPath, internalFragment);
     }
 
+    public XmlSchemaExternalType(XmlSchemaExternalType externalType)
+    {
+        super(externalType);
+    }
+
+    @Override
     protected XmlSchemaExternalType copy()
     {
-        return new XmlSchemaExternalType(getTypeDeclarationNode(), schemaValue, schemaPath, internalFragment);
-    }
-
-    @Override
-    public ResolvedType overwriteFacets(TypeDeclarationNode from)
-    {
-        return copy();
-    }
-
-    @Override
-    public ResolvedType mergeFacets(ResolvedType with)
-    {
-        return copy();
+        return new XmlSchemaExternalType(this);
     }
 
     @Override
@@ -56,24 +42,4 @@ public class XmlSchemaExternalType extends BaseType implements SchemaBasedResolv
         return visitor.visitXml(this);
     }
 
-    @Override
-    public void validateCanOverwriteWith(TypeDeclarationNode from)
-    {
-
-    }
-
-    public String getSchemaValue()
-    {
-        return schemaValue;
-    }
-
-    public String getSchemaPath()
-    {
-        return schemaPath;
-    }
-
-    public String getInternalFragment()
-    {
-        return internalFragment;
-    }
 }

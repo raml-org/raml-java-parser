@@ -27,7 +27,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
@@ -149,9 +148,9 @@ public class StringResolvedType extends XmlFacetsCapableType
         // Validating conflicts between the length facets
         if (maximumLength < minimumLength)
         {
-            return RamlErrorNodeFactory.createInvalidFacet(
+            return RamlErrorNodeFactory.createInvalidFacetState(
                     getTypeName(),
-                    "maxLength must be greater or equal than minLength");
+                    "maxLength must be greater than or equal to minLength");
         }
 
         // For each enum in the list, it must be between the range defined by minLength and maxLength
@@ -159,9 +158,9 @@ public class StringResolvedType extends XmlFacetsCapableType
         {
             if (thisEnum.length() < minimumLength || thisEnum.length() > maximumLength)
             {
-                return RamlErrorNodeFactory.createInvalidFacet(
+                return RamlErrorNodeFactory.createInvalidFacetState(
                         getTypeName(),
-                        "enums must be between " + minimumLength + " and " + maximumLength + " characters");
+                        "enum values must have between " + minimumLength + " and " + maximumLength + " characters");
             }
         }
 

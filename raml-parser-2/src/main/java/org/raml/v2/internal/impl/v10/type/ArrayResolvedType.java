@@ -15,7 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
@@ -26,8 +25,6 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.yagi.framework.util.NodeSelector;
-
-import java.util.List;
 
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ITEMS_KEY_NAME;
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_ITEMS_KEY_NAME;
@@ -107,12 +104,12 @@ public class ArrayResolvedType extends XmlFacetsCapableType
         int max = maxItems != null ? maxItems : Integer.MAX_VALUE;
         if (max < min)
         {
-            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxItems must be greater than or equal to minItems."));
+            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(getTypeName(), "maxItems must be greater than or equal to minItems."));
         }
 
         if (getItems() instanceof SchemaBasedResolvedType)
         {
-            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacet(getItems().getTypeName(), "array type can not be of an external type."));
+            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(getItems().getTypeName(), "array type cannot be of an external type."));
         }
     }
 

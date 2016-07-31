@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
 public class FacetNode extends KeyValueNodeImpl
 {
@@ -26,6 +27,15 @@ public class FacetNode extends KeyValueNodeImpl
     FacetNode(KeyValueNodeImpl node)
     {
         super(node);
+    }
+
+    public String getName()
+    {
+        if (getKey() instanceof SimpleTypeNode)
+        {
+            return ((SimpleTypeNode) getKey()).getLiteralValue();
+        }
+        throw new IllegalStateException("Invalid facet key node type: " + getKey().getClass().getSimpleName());
     }
 
     @Override

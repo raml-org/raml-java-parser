@@ -81,17 +81,16 @@ public class IntegerResolvedType extends NumberResolvedType
         // Checking conflicts between the minimum and maximum facets
         if (max < min)
         {
-            return RamlErrorNodeFactory.createInvalidFacet(
-                    getTypeName(),
-                    "maximum must be greater or equal than minimum");
+            return RamlErrorNodeFactory.createInvalidFacetState(
+                    getTypeName(), "maximum must be greater than or equal to minimum");
         }
 
         // It must be at least one multiple of the number between the valid range
         if (getMultiple() != null && !hasValidMultiplesInRange(min, max, mult))
         {
-            return RamlErrorNodeFactory.createInvalidFacet(
+            return RamlErrorNodeFactory.createInvalidFacetState(
                     getTypeName(),
-                    "It must be at least one multiple of " + mult + " in the given range");
+                    "There must be at least one multiple of " + mult + " in the given range");
         }
 
 
@@ -101,16 +100,16 @@ public class IntegerResolvedType extends NumberResolvedType
             int value = (int) thisEnum;
             if (value < min || value > max)
             {
-                return RamlErrorNodeFactory.createInvalidFacet(
+                return RamlErrorNodeFactory.createInvalidFacetState(
                         getTypeName(),
-                        "enums values must be between " + min + " and " + max);
+                        "enum values must be between " + min + " and " + max);
             }
 
             if (value % mult != 0)
             {
-                return RamlErrorNodeFactory.createInvalidFacet(
+                return RamlErrorNodeFactory.createInvalidFacetState(
                         getTypeName(),
-                        "enums values must have all values multiple of " + mult);
+                        "enum values must be multiple of " + mult);
             }
         }
 

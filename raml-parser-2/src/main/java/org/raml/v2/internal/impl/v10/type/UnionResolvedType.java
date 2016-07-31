@@ -110,7 +110,7 @@ public class UnionResolvedType extends BaseType
         {
             if (resolvedType instanceof SchemaBasedResolvedType)
             {
-                getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacet(resolvedType.getTypeName(), "union type can not be of an external type."));
+                getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(resolvedType.getTypeName(), "union type cannot be of an external type"));
             }
         }
     }

@@ -27,7 +27,6 @@ import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.util.NodeUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -222,7 +221,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         int max = maxProperties != null ? maxProperties : Integer.MAX_VALUE;
         if (max < min)
         {
-            return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "maxProperties must be greater than or equal to minProperties");
+            return RamlErrorNodeFactory.createInvalidFacetState(getTypeName(), "maxProperties must be greater than or equal to minProperties");
         }
         for (PropertyFacets propertyFacets : properties.values())
         {
@@ -236,7 +235,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         {
             if (this.properties.get(discriminator) == null)
             {
-                return RamlErrorNodeFactory.createInvalidFacet(getTypeName(), "invalid discriminator value, property '" + discriminator + "' does not exists.");
+                return RamlErrorNodeFactory.createInvalidFacetState(getTypeName(), "invalid discriminator value, property '" + discriminator + "' does not exist");
             }
         }
         return null;

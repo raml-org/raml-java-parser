@@ -19,8 +19,8 @@ package org.raml.v2.internal.impl.commons.rule;
 import java.util.List;
 
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
+import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.Node;
 
 public class RamlErrorNodeFactory
 {
@@ -35,7 +35,7 @@ public class RamlErrorNodeFactory
         return new ErrorNode("Invalid uri template syntax");
     }
 
-    public static ErrorNode createInvalidFacet(String type, String message)
+    public static ErrorNode createInvalidFacetState(String type, String message)
     {
         String prefix = "Invalid facets";
         if (type != null)
@@ -78,5 +78,10 @@ public class RamlErrorNodeFactory
     public static ErrorNode createInvalidLibraryChaining(String value)
     {
         return new ErrorNode("Library references cannot be chained: " + value);
+    }
+
+    public static ErrorNode createInvalidFacetForType(FacetNode facetNode, String typeName)
+    {
+        return new ErrorNode("Facet '" + facetNode.getName() + "' cannot be applied to " + typeName);
     }
 }

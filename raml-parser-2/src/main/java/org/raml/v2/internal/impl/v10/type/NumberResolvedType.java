@@ -30,7 +30,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
@@ -152,17 +151,17 @@ public class NumberResolvedType extends XmlFacetsCapableType
         // Checking conflicts between the minimum and maximum facets if both are set
         if (max.compareTo(min) < 0)
         {
-            return RamlErrorNodeFactory.createInvalidFacet(
+            return RamlErrorNodeFactory.createInvalidFacetState(
                     getTypeName(),
-                    "maximum must be greater or equal than minimum");
+                    "maximum must be greater than or equal to minimum");
         }
 
         // It must be at least one multiple of the number between the valid range
         if (mult != null && !hasValidMultiplesInRange(min, max, mult))
         {
-            return RamlErrorNodeFactory.createInvalidFacet(
+            return RamlErrorNodeFactory.createInvalidFacetState(
                     getTypeName(),
-                    "It must be at least one multiple of " + mult + " in the given range");
+                    "There must be at least one multiple of " + mult + " in the given range");
         }
 
         // For each value in the list, it must be between minimum and maximum
@@ -172,16 +171,16 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
             if (value.compareTo(min) < 0 || value.compareTo(max) > 0)
             {
-                return RamlErrorNodeFactory.createInvalidFacet(
+                return RamlErrorNodeFactory.createInvalidFacetState(
                         getTypeName(),
-                        "enums values must be between " + minimum + " and " + maximum);
+                        "enum values must be between " + minimum + " and " + maximum);
             }
 
             if (mult != null && value.remainder(mult).compareTo(BigDecimal.ZERO) != 0)
             {
-                return RamlErrorNodeFactory.createInvalidFacet(
+                return RamlErrorNodeFactory.createInvalidFacetState(
                         getTypeName(),
-                        "enums values must be all values multiple of " + mult);
+                        "enum values must be multiple of " + mult);
             }
         }
 

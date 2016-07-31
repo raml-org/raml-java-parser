@@ -1,0 +1,55 @@
+RamlDocumentNode (Start: 11 , End: 138, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 40, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 40, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 40, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "External Types Invalid" (Start: -1 , End: -1)
+    TypesNode (Start: 42 , End: 138, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 42 , End: 47, On: input.raml)
+        SYObjectNode (Start: 51 , End: 138, On: input.raml)
+            TypeDeclarationField (Start: 51 , End: 138, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "Person" (Start: 51 , End: 57, On: input.raml)
+                TypeDeclarationNode (Start: 63 , End: 138, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 63 , End: 89, On: input.raml)
+                        SYStringNode: "type" (Start: 63 , End: 67, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "{
+  "title": "Example Schema",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "age": {
+      "description": "Age in years",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": ["firstName", "lastName"]
+}
+" (Start: 69 , End: 89, On: input.raml, Source: StringNodeImpl)
+                    ErrorNode: "Facet 'properties' cannot be applied to JsonSchemaExternalType" (Start: 94 , End: 138, On: input.raml, Source: FacetNode)
+                        SYStringNode: "properties" (Start: 94 , End: 104, On: input.raml)
+                        SYObjectNode (Start: 122 , End: 138, On: input.raml)
+                            PropertyNode (Start: 122 , End: 137, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "single" (Start: 122 , End: 128, On: input.raml)
+                                TypeDeclarationNode (Start: 130 , End: 137, On: input.raml, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: -1 , End: 137)
+                                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                                        NativeTypeExpressionNode: "boolean" (Start: 130 , End: 137, On: input.raml, Source: NativeTypeExpressionNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: 128)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "single" (Start: 122 , End: 128, On: input.raml, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: 57)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "Person" (Start: 51 , End: 57, On: input.raml, Source: SYStringNode)

@@ -1,0 +1,8 @@
+#%RAML 1.0
+title: External Types Invalid
+
+types:
+  Person:
+    type: !include person.json
+    properties: # invalid
+      single: boolean
