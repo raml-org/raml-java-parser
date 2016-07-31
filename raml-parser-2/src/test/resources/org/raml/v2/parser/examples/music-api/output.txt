@@ -255,7 +255,7 @@ to any resources or HTTP methods.
                                                 OverlayableStringNode: "filter the songs by genre" (Start: -1 , End: -1)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "type" (Start: -1 , End: -1)
-                                        NativeTypeExpressionNode: "string" (Start: -1 , End: -1)
+                                        OverridableNativeTypeExpressionNode: "string" (Start: -1 , End: -1)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                         ObjectNodeImpl (Start: -1 , End: -1)

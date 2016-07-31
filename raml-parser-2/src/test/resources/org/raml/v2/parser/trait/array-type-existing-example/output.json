@@ -1,0 +1,78 @@
+{
+    "title": {
+        "value": "Example with headers"
+    },
+    "traits": {
+        "chargeable": {
+            "headers": {
+                "X-Dept": {
+                    "type": "array",
+                    "description": "A department code to be charged.\nMultiple of such headers are allowed.\n",
+                    "items": {
+                        "pattern": "^\\d+\\-\\w+$",
+                        "example": "230-OCTO"
+                    }
+                }
+            }
+        },
+        "traceable": {
+            "headers": {
+                "X-Tracker": {
+                    "description": "A code to track API calls end to end",
+                    "pattern": "^\\w{16}$",
+                    "example": "abcdefghijklmnop"
+                }
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "displayName": {
+                "value": "/users"
+            },
+            "methods": [
+                {
+                    "method": "get",
+                    "is": ["chargeable",
+"traceable"],
+                    "headers": {
+                        "X-Dept": {
+                            "example": ["18-FINANCE",
+"200-MISC"],
+                            "type": "array",
+                            "displayName": {
+                                "value": "X-Dept"
+                            },
+                            "description": {
+                                "value": "A department code to be charged.\nMultiple of such headers are allowed.\n"
+                            },
+                            "items": {
+                                "pattern": "^\\d+\\-\\w+$",
+                                "example": "230-OCTO",
+                                "type": "string",
+                                "displayName": {
+                                    "value": "items"
+                                }
+                            }
+                        },
+                        "X-Tracker": {
+                            "example": "gfr456d03ygh38s2",
+                            "type": "string",
+                            "displayName": {
+                                "value": "X-Tracker"
+                            },
+                            "description": {
+                                "value": "A code to track API calls end to end"
+                            },
+                            "pattern": "^\\w{16}$"
+                        }
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
+                }
+            ]
+        }
+    ]
+}

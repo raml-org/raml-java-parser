@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: Example with headers
+traits:
+  chargeable:
+    headers:
+      X-Dept:
+        type: array
+        description: |
+          A department code to be charged.
+          Multiple of such headers are allowed.
+        items:
+          pattern: ^\d+\-\w+$
+          example: 230-OCTO
+  traceable:
+    headers:
+      X-Tracker:
+        description: A code to track API calls end to end
+        pattern: ^\w{16}$
+        example: abcdefghijklmnop
+/users:
+  get:
+    is: [ chargeable, traceable ]
+    headers:
+      X-Dept:
+        example: [ 18-FINANCE, 200-MISC ]
+      X-Tracker:
+        example: gfr456d03ygh38s2
