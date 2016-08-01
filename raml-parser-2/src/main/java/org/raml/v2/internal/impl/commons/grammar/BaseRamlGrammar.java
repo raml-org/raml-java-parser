@@ -182,7 +182,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                 // And any value can be parametrized of any known key
                 if (input instanceof ObjectRule)
                 {
-                    ((ObjectRule) input).with(fieldParametrizedKey());
+                    ((ObjectRule) input).with(0, fieldParametrizedKey());
                 }
                 else if (input instanceof KeyValueRule)
                 {
