@@ -19,6 +19,7 @@ import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.Position;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
@@ -157,7 +158,7 @@ public class TypeExpressionReferenceFactory implements NodeFactory
         return result;
     }
 
-    private void handleSimpleExpression(Node currentNode, StringCharacterIterator iter, Stack<TypeExpressionNode> expressions, StringBuilder simpleExpression)
+    private void handleSimpleExpression(Node currentNode, StringCharacterIterator iter, Stack<TypeExpressionNode> expressions, StringBuilder simpleExpression) throws TypeExpressionParsingException
     {
         String expressionString = simpleExpression.toString();
         boolean optionalType = false;
@@ -186,6 +187,10 @@ public class TypeExpressionReferenceFactory implements NodeFactory
         {
             final NodeReferenceFactory nodeReferenceFactory = new NodeReferenceFactory(NamedTypeExpressionNode.class);
             final Node parse = nodeReferenceFactory.parse(currentNode, expressionString, iter.getIndex());
+            if (parse instanceof ErrorNode)
+            {
+                throw new TypeExpressionParsingException(((ErrorNode) parse).getErrorMessage(), currentNode.getStartPosition().getIndex());
+            }
             expressions.push((TypeExpressionNode) parse);
             if (optionalType)
             {

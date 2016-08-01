@@ -48,6 +48,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.singletonList;
@@ -111,6 +112,30 @@ public class BaseGrammar
             this.nextRuleName = name;
             return ruleFactory.create();
         }
+    }
+
+
+    /**
+     * Returns rule created by the callable that runs a new separate context.
+     * @param callable The callable to execute in a new context
+     * @param <T> The type of rule it returns
+     * @return The rule
+     */
+    public <T extends Rule> T inNewContext(Callable<T> callable)
+    {
+        final GrammarContext oldContext = this.context;
+        this.context = new GrammarContext();
+        final T result;
+        try
+        {
+            result = callable.call();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+        this.context = oldContext;
+        return result;
     }
 
 
@@ -241,7 +266,6 @@ public class BaseGrammar
     /**
      * Matches any scalar value e.g Number String boolean etc
      * @return The rule
-     * TODO revert ScalarTypeRule and use custom scalar
      */
     public Rule scalarType()
     {
@@ -284,6 +308,16 @@ public class BaseGrammar
     public RegexValueRule regex(String pattern)
     {
         return new RegexValueRule(Pattern.compile(pattern));
+    }
+
+    /**
+     * Matches any value that is accepted by the regex pattern
+     * @param pattern The pattern
+     * @return The rule
+     */
+    public RegexValueRule regex(Pattern pattern)
+    {
+        return new RegexValueRule(pattern);
     }
 
     /**

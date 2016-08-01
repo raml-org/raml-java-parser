@@ -106,7 +106,14 @@ public class RegexValueRule extends Rule
         final List<String> groups = new ArrayList<>();
         if (i > 0)
         {
-            matcher.matches();
+            if (fullMatch)
+            {
+                matcher.matches();
+            }
+            else
+            {
+                matcher.find();
+            }
         }
         for (int j = 1; j <= i; j++)
         {

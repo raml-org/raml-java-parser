@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.v10.nodes.factory;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.impl.commons.nodes.StringTemplateNode;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
 import org.raml.yagi.framework.nodes.AbstractObjectNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
@@ -42,6 +43,12 @@ public class OverlayableSimpleTypeFactory implements NodeFactory
     @Override
     public Node create(@Nonnull Node currentNode, Object... args)
     {
+        // If it is a template expression node we shouldn't apply this
+        if (currentNode instanceof StringTemplateNode)
+        {
+            return currentNode;
+        }
+
         if (!(currentNode instanceof SimpleTypeNode))
         {
             throw new IllegalStateException("Factory incompatible with node of type " + currentNode.getClass().getSimpleName());

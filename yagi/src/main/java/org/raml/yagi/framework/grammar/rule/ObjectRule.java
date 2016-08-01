@@ -50,6 +50,7 @@ public class ObjectRule extends Rule
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<KeyValueRule> fields;
+    @Nullable
     private ConditionalRules conditionalRules;
     private ExclusiveKeys exclusiveKeys;
     private boolean strict = false;
@@ -59,6 +60,18 @@ public class ObjectRule extends Rule
     public ObjectRule()
     {
         this.fields = new ArrayList<>();
+    }
+
+    @Override
+    public List<? extends Rule> getChildren()
+    {
+        final ArrayList<Rule> children = new ArrayList<>();
+        children.addAll(fields);
+        if (conditionalRules != null)
+        {
+            children.addAll(conditionalRules.getChildren());
+        }
+        return children;
     }
 
     public ObjectRule(boolean strict)

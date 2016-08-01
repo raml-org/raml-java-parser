@@ -20,6 +20,7 @@ import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -63,6 +64,16 @@ public class ConditionalRules
         }
 
         return Collections.emptyList();
+    }
+
+    public List<? extends Rule> getChildren()
+    {
+        final ArrayList<Rule> result = new ArrayList<>();
+        for (ConditionalRule option : options)
+        {
+            result.addAll(new ArrayList<>(option.getRules()));
+        }
+        return result;
     }
 
     @Nullable

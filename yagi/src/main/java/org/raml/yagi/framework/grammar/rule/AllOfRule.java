@@ -70,6 +70,12 @@ public class AllOfRule extends Rule
     }
 
     @Override
+    public List<Rule> getChildren()
+    {
+        return rules;
+    }
+
+    @Override
     public boolean matches(@Nonnull Node node)
     {
         for (Rule rule : rules)

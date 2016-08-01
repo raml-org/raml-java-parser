@@ -69,8 +69,9 @@ public class ResourceTypesTraitsTransformer implements Transformer
     @Override
     public boolean matches(Node node)
     {
-        return node instanceof BaseTraitRefNode ||
-               node instanceof BaseResourceTypeRefNode;
+        return (node instanceof BaseTraitRefNode ||
+               node instanceof BaseResourceTypeRefNode) &&
+               node.findAncestorWith(ResourceNode.class) != null;
     }
 
     @Override

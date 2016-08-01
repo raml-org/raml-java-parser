@@ -15,28 +15,31 @@
  */
 package org.raml.v2.internal.utils;
 
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.util.NodeUtils;
 
-public class PhaseUtils
-{
+import java.util.List;
 
-    public static Node applyPhases(Node node, Phase... phases)
+public class RamlNodeUtils
+{
+    public static boolean isErrorResult(Node node)
     {
-        Node result = node;
-        if (!RamlNodeUtils.isErrorResult(result))
+        if (NodeUtils.isErrorResult(node))
         {
-            for (Phase phase : phases)
+            return true;
+        }
+        else if (node != null)
+        {
+            final List<LibraryLinkNode> descendantsWith = node.findDescendantsWith(LibraryLinkNode.class);
+            for (LibraryLinkNode libraryLinkNode : descendantsWith)
             {
-                result = phase.apply(result);
-                if (!RamlNodeUtils.isErrorResult(result))
+                if (isErrorResult(libraryLinkNode.getRefNode()))
                 {
-                    return result;
+                    return true;
                 }
             }
         }
-        return result;
-
+        return false;
     }
 }

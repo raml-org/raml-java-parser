@@ -15,10 +15,12 @@
  */
 package org.raml.v2.internal.impl.commons.grammar;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
@@ -36,10 +38,13 @@ import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceRule;
 import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
 import org.raml.v2.internal.impl.v10.nodes.factory.EmptyObjectNodeFactory;
+import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.yagi.framework.grammar.BaseGrammar;
 import org.raml.yagi.framework.grammar.ExclusiveSiblingRule;
 import org.raml.yagi.framework.grammar.RuleFactory;
+import org.raml.yagi.framework.grammar.RuleTraverser;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+import org.raml.yagi.framework.grammar.rule.ArrayRule;
 import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
@@ -48,6 +53,10 @@ import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringValueRule;
 import org.raml.yagi.framework.nodes.Node;
+
+import java.util.concurrent.Callable;
+
+import static org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer.TEMPLATE_PATTERN;
 
 public abstract class BaseRamlGrammar extends BaseGrammar
 {
@@ -143,17 +152,70 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     public ObjectRule resourceType()
     {
-        // TODO fine grained matching supporting parameters
-        return objectType()
-                           .with(usageField())
-                           .with(field(regex("[^/].*"), any())); // match anything but nested resources
+        final ObjectRule resourceType = inNewContext(new Callable<ObjectRule>()
+        {
+
+            @Override
+            public ObjectRule call()
+            {
+                return new RuleTraverser().traverse(baseResourceValue().with(field(anyResourceTypeMethod(), methodValue())), ruleParameterModifier());
+            }
+        });
+        return resourceType
+                           .with(0, usageField()); // match anything but nested resources
     }
 
-    public Rule resourceTypeParamsResolved()
+    /**
+     * Returns a function that modifies a rule to support parameter
+     * @return The function that injects the parameters
+     */
+    private Function<Rule, Boolean> ruleParameterModifier()
+    {
+        return new Function<Rule, Boolean>()
+        {
+            @Nullable
+            @Override
+            public Boolean apply(@Nonnull Rule input)
+            {
+                // We should change that any object now should have a parametrized key value pair
+                // This mean that any key can be parametrized and we don't know anything about the value
+                // And any value can be parametrized of any known key
+                if (input instanceof ObjectRule)
+                {
+                    ((ObjectRule) input).with(fieldParametrizedKey());
+                }
+                else if (input instanceof KeyValueRule)
+                {
+                    final KeyValueRule keyValueRule = (KeyValueRule) input;
+                    keyValueRule.setValueRule(anyOf(parametrizedValueRule(), keyValueRule.getValueRule()));
+                    keyValueRule.cleanDefaultValue();
+                }
+                else if (input instanceof ArrayRule)
+                {
+                    final ArrayRule arrayRule = (ArrayRule) input;
+                    arrayRule.of(anyOf(parametrizedValueRule(), arrayRule.of()));
+                }
+                // We keep reference factories so that we can validate reference consistency
+                if (!isReferenceFactory(input) && input.getFactory() != null)
+                {
+                    input.cleanFactory();
+                }
+                return true;
+            }
+        };
+    }
+
+    private boolean isReferenceFactory(@Nonnull Rule input)
+    {
+        return input.getFactory() instanceof NodeReferenceFactory || input.getFactory() instanceof TypeExpressionReferenceFactory;
+    }
+
+    public ObjectRule resourceTypeParamsResolved()
     {
         return baseResourceValue()
                                   .with(usageField())
-                                  .with(field(anyResourceTypeMethod(), methodValue()).then(MethodNode.class));
+                                  .with(field(anyResourceTypeMethod(), methodValue())
+                                                                                     .then(MethodNode.class));
     }
 
     public Rule traitParamsResolved()
@@ -161,9 +223,9 @@ public abstract class BaseRamlGrammar extends BaseGrammar
         return objectType()
                            .with(descriptionField())
                            .with(field(displayNameKey(), ramlScalarValue()))
-                           .with(field(queryParametersKey(), parameters()))
+                           .with(queryParametersField())
                            .with(headersField())
-                           .with(field(responseKey(), responses()))
+                           .with(responsesField())
                            .with(bodyField())
                            .with(protocolsField().description("A method can override the protocols specified in the resource or at the API root, by employing this property."))
                            .with(isField().description("A list of the traits to apply to this method."))
@@ -229,8 +291,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(displayNameField())
                            .with(descriptionField())
                            .with(field(headersKey(), parameters()))
-                           .with(field(queryParametersKey(), parameters()))
-                           .with(field(responseKey(), responses()));
+                           .with(queryParametersField())
+                           .with(responsesField());
     }
 
     protected ObjectRule securitySchemeSettings()
@@ -259,10 +321,27 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     public ObjectRule trait()
     {
-        return objectType()
-                           .with(usageField())
-                           .with(field(scalarType(), any()));
+        final ObjectRule trait = inNewContext(new Callable<ObjectRule>()
+        {
 
+            @Override
+            public ObjectRule call()
+            {
+                return new RuleTraverser().traverse(methodValue(), ruleParameterModifier());
+            }
+        });
+        return trait
+                    .with(0, usageField());
+    }
+
+    private RegexValueRule parametrizedValueRule()
+    {
+        return regex(TEMPLATE_PATTERN).fullMatch(false);
+    }
+
+    private KeyValueRule fieldParametrizedKey()
+    {
+        return field(parametrizedValueRule(), any());
     }
 
     // Resource Types
@@ -315,13 +394,23 @@ public abstract class BaseRamlGrammar extends BaseGrammar
         return objectType()
                            .with(descriptionField())
                            .with(displayNameField())
-                           .with(field(queryParametersKey(), parameters()))
+                           .with(queryParametersField())
                            .with(headersField())
-                           .with(field(responseKey(), responses()))
+                           .with(responsesField())
                            .with(bodyField())
                            .with(protocolsField().description("A method can override the protocols specified in the resource or at the API root, by employing this property."))
                            .with(isField().description("A list of the traits to apply to this method."))
                            .with(securedByField().description("The security schemes that apply to this method."));
+    }
+
+    private KeyValueRule queryParametersField()
+    {
+        return field(queryParametersKey(), parameters());
+    }
+
+    private KeyValueRule responsesField()
+    {
+        return field(responseKey(), responses());
     }
 
     protected StringValueRule responseKey()

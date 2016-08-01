@@ -53,6 +53,12 @@ public class ChildBasedConditionalRule extends Rule
     }
 
     @Override
+    public List<? extends Rule> getChildren()
+    {
+        return Collections.singletonList(delegate);
+    }
+
+    @Override
     public boolean matches(@Nonnull Node node)
     {
         List<Node> children = node.getChildren();

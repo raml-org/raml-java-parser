@@ -1,0 +1,16 @@
+#%RAML 1.0 ResourceType
+# Invalid RAML Fragment
+
+# Objective: The following example is not valid because chaining namespaces is not allowed.
+# Expected result: error message that indicates that chaining namespaces is not allowed
+
+# tags: annotations
+uses:
+  files: libraries/files.raml
+get:
+  is: [ files.drm ]
+  responses:
+    200:
+      body:
+        application/json:
+          type: files.file-type.File # invalid - no chaining allowed

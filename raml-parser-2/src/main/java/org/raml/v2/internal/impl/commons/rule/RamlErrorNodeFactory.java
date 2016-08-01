@@ -16,11 +16,11 @@
 package org.raml.v2.internal.impl.commons.rule;
 
 
-import java.util.List;
-
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
+
+import java.util.List;
 
 public class RamlErrorNodeFactory
 {

@@ -26,13 +26,14 @@ import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class KeyValueRule extends Rule
 {
 
-    private final Rule keyRule;
-    private final Rule valueRule;
+    private Rule keyRule;
+    private Rule valueRule;
     private String description;
 
     private RequiredField requiredField;
@@ -82,6 +83,11 @@ public class KeyValueRule extends Rule
         }
     }
 
+    @Override
+    public List<? extends Rule> getChildren()
+    {
+        return Arrays.asList(getKeyRule(), getValueRule());
+    }
 
     public KeyValueRule description(String description)
     {
@@ -109,6 +115,16 @@ public class KeyValueRule extends Rule
     public Rule getValueRule()
     {
         return valueRule;
+    }
+
+    public void setValueRule(Rule valueRule)
+    {
+        this.valueRule = valueRule;
+    }
+
+    public void setKeyRule(Rule keyRule)
+    {
+        this.keyRule = keyRule;
     }
 
     public KeyValueRule then(Class<? extends Node> clazz)
@@ -159,6 +175,12 @@ public class KeyValueRule extends Rule
     public boolean isRequired(Node parent)
     {
         return requiredField != null && requiredField.isRequiredField(parent);
+    }
+
+    public KeyValueRule cleanDefaultValue()
+    {
+        this.defaultValue = null;
+        return this;
     }
 
     @Nonnull

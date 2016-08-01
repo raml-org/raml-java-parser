@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 public class StringTemplateExpressionTransformer implements Transformer
 {
-    static Pattern templatePattern = Pattern.compile("<<(.+?)>>");
+    public static Pattern TEMPLATE_PATTERN = Pattern.compile("<<(.+?)>>");
 
     @Override
     public boolean matches(Node node)
@@ -36,7 +36,7 @@ public class StringTemplateExpressionTransformer implements Transformer
         if (node instanceof StringNode)
         {
             final String value = ((StringNode) node).getValue();
-            return templatePattern.matcher(value).find();
+            return TEMPLATE_PATTERN.matcher(value).find();
         }
         return false;
     }
@@ -50,7 +50,7 @@ public class StringTemplateExpressionTransformer implements Transformer
         }
         final String value = ((StringNode) node).getValue();
         final StringTemplateNode stringTemplateNode = new StringTemplateNode(value);
-        final Matcher templateMatcher = templatePattern.matcher(value);
+        final Matcher templateMatcher = TEMPLATE_PATTERN.matcher(value);
         final Position startPosition = node.getStartPosition();
         // The previous template expression end position.
         int previousEndPosition = 0;

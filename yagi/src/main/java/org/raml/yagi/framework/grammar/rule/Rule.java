@@ -15,12 +15,14 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
+import org.raml.yagi.framework.grammar.BaseGrammar;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +34,24 @@ public abstract class Rule
 
     protected Rule()
     {
+        if (Boolean.getBoolean("yagui.rule.debug"))
+        {
+            final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+            for (StackTraceElement stackTraceElement : stackTrace)
+            {
+                final String className = stackTraceElement.getClassName();
+                if (className.contains("Grammar") && !className.endsWith(BaseGrammar.class.getSimpleName()))
+                {
+                    ruleName = stackTraceElement.getMethodName();
+                    break;
+                }
+            }
+        }
+    }
 
+    public List<? extends Rule> getChildren()
+    {
+        return Collections.emptyList();
     }
 
     public Rule named(String ruleName)
@@ -82,7 +101,7 @@ public abstract class Rule
     public abstract String getDescription();
 
     @Nullable
-    private NodeFactory getFactory()
+    public NodeFactory getFactory()
     {
         return factory;
     }
@@ -122,6 +141,12 @@ public abstract class Rule
     public Rule then(NodeFactory factory)
     {
         this.factory = factory;
+        return this;
+    }
+
+    public Rule cleanFactory()
+    {
+        this.factory = null;
         return this;
     }
 

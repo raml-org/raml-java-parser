@@ -13,30 +13,35 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.utils;
+package org.raml.yagi.framework.grammar;
 
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.phase.Phase;
-import org.raml.yagi.framework.util.NodeUtils;
+import com.google.common.base.Function;
+import org.raml.yagi.framework.grammar.rule.Rule;
 
-public class PhaseUtils
+import java.util.HashSet;
+import java.util.Set;
+
+public class RuleTraverser
 {
 
-    public static Node applyPhases(Node node, Phase... phases)
+    private Set<Rule> visitedRules = new HashSet<>();
+
+    public <T extends Rule> T traverse(T rule, Function<Rule, Boolean> callable)
     {
-        Node result = node;
-        if (!RamlNodeUtils.isErrorResult(result))
+        visitedRules.add(rule);
+        final Boolean apply = callable.apply(rule);
+        if (apply != null && apply)
         {
-            for (Phase phase : phases)
+            for (Rule child : rule.getChildren())
             {
-                result = phase.apply(result);
-                if (!RamlNodeUtils.isErrorResult(result))
+                if (!visitedRules.contains(child))
                 {
-                    return result;
+                    traverse(child, callable);
                 }
             }
         }
-        return result;
 
+        return rule;
     }
+
 }

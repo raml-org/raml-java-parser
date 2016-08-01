@@ -15,17 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10;
 
-import static org.raml.v2.api.model.v10.RamlFragment.Default;
-import static org.raml.v2.api.model.v10.RamlFragment.Extension;
-import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
-import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
-import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.RamlBuilder;
@@ -44,6 +33,7 @@ import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
+import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
@@ -55,6 +45,17 @@ import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.GrammarPhase;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.phase.TransformationPhase;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.raml.v2.api.model.v10.RamlFragment.Default;
+import static org.raml.v2.api.model.v10.RamlFragment.Extension;
+import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
+import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
+import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
 
 public class Raml10Builder
 {
@@ -91,8 +92,7 @@ public class Raml10Builder
                 rootNode = phase.apply(rootNode);
 
                 checkDumpPhases(i, phase, rootNode);
-                List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
-                if (!errorNodes.isEmpty())
+                if (RamlNodeUtils.isErrorResult(rootNode))
                 {
                     break;
                 }

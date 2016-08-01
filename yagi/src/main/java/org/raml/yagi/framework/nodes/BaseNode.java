@@ -37,7 +37,8 @@ public abstract class BaseNode implements Node
     public BaseNode(BaseNode node)
     {
         setSource(node);
-        for (Node child : node.children)
+        final List<Node> children = new ArrayList<>(node.children);
+        for (Node child : children)
         {
             addChild(child.copy());
         }

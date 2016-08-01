@@ -47,6 +47,16 @@ public class ArrayRule extends Rule
         this.strict = strict;
     }
 
+    public Rule of()
+    {
+        return of;
+    }
+
+    public void of(Rule of)
+    {
+        this.of = of;
+    }
+
     @Nonnull
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
@@ -95,6 +105,12 @@ public class ArrayRule extends Rule
         }
     }
 
+
+    @Override
+    public List<Rule> getChildren()
+    {
+        return Collections.singletonList(of);
+    }
 
     @Override
     public boolean matches(@Nonnull Node node)
