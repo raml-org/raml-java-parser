@@ -14,7 +14,7 @@
                 "value": "scalar"
             }
         },
-        "object": {
+        "location": {
             "properties": {
                 "lat": {
                     "type": "number",
@@ -35,7 +35,7 @@
             },
             "type": "object",
             "displayName": {
-                "value": "object"
+                "value": "location"
             }
         },
         "another-scalar": {

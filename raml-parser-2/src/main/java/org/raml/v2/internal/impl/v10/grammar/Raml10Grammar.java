@@ -309,7 +309,17 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected Rule types()
     {
         return objectType()
-                           .with(field(scalarType(), type()).then(TypeDeclarationField.class));
+                           .with(field(ramlTypeKey(), type()).then(TypeDeclarationField.class));
+    }
+
+    protected Rule ramlTypeKey()
+    {
+        List<Rule> types = new ArrayList<>();
+        for (TypeId typeId : TypeId.values())
+        {
+            types.add(string(typeId.getType()));
+        }
+        return not(anyOf(types));
     }
 
     protected Rule parameter()
