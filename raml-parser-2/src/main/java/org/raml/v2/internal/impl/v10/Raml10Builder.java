@@ -28,6 +28,7 @@ import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.SchemaValidationTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.commons.phase.TypeValidationPhase;
+import org.raml.v2.internal.impl.commons.phase.UnusedParametersTransformer;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
@@ -162,6 +163,9 @@ public class Raml10Builder
 
         final TransformationPhase duplicatedPaths = new TransformationPhase(new DuplicatedPathsTransformer());
 
+        // Check unused uri parameters
+        final TransformationPhase checkUnusedParameters = new TransformationPhase(new UnusedParametersTransformer());
+
         // Run grammar again to re-validate tree
 
         final AnnotationValidationPhase annotationValidationPhase = new AnnotationValidationPhase(resourceLoader);
@@ -183,6 +187,7 @@ public class Raml10Builder
                 referenceCheck,
                 resourcePhase,
                 duplicatedPaths,
+                checkUnusedParameters,
                 annotationValidationPhase,
                 mediaTypeInjection,
                 grammarPhase,

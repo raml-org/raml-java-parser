@@ -19,6 +19,7 @@ package org.raml.v2.internal.impl.commons.rule;
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.Node;
 
 import java.util.List;
 
@@ -83,5 +84,10 @@ public class RamlErrorNodeFactory
     public static ErrorNode createInvalidFacetForType(FacetNode facetNode, String typeName)
     {
         return new ErrorNode("Facet '" + facetNode.getName() + "' cannot be applied to " + typeName);
+    }
+
+    public static ErrorNode createUnusedUriParameter(String parameterName)
+    {
+        return new ErrorNode("Unused uri parameter '" + parameterName + "'");
     }
 }

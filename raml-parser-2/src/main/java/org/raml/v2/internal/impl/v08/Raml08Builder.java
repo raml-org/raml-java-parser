@@ -15,22 +15,22 @@
  */
 package org.raml.v2.internal.impl.v08;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
+import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
+import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
+import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
+import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.GrammarPhase;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.phase.TransformationPhase;
-import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
-import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
-import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
-import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class Raml08Builder
 {
@@ -72,7 +72,7 @@ public class Raml08Builder
         // Applies resourceTypes and Traits Library
         final TransformationPhase third = new TransformationPhase(new ResourceTypesTraitsTransformer(raml08Grammar));
 
-        //
+        // Check duplicate paths
         final TransformationPhase duplicatedPaths = new TransformationPhase(new DuplicatedPathsTransformer());
 
         // Schema Types example validation
