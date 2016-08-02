@@ -53,14 +53,14 @@ public class ObjectResolvedType extends XmlFacetsCapableType
     private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
     public ObjectResolvedType(TypeDeclarationNode declarationNode,
-            XmlFacets xmlFacets,
-            Integer minProperties,
-            Integer maxProperties,
-            Boolean additionalProperties,
-            String discriminator,
-            String discriminatorValue,
-            Map<String, PropertyFacets> properties,
-            ResolvedCustomFacets customFacets)
+                              XmlFacets xmlFacets,
+                              Integer minProperties,
+                              Integer maxProperties,
+                              Boolean additionalProperties,
+                              String discriminator,
+                              String discriminatorValue,
+                              Map<String, PropertyFacets> properties,
+                              ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
         this.minProperties = minProperties;
@@ -88,6 +88,33 @@ public class ObjectResolvedType extends XmlFacetsCapableType
                 discriminatorValue,
                 new LinkedHashMap<>(properties),
                 customFacets.copy());
+    }
+
+    @Override
+    public boolean inheritsFrom(ResolvedType valueType)
+    {
+        final boolean inheritsFrom = super.inheritsFrom(valueType);
+        if (inheritsFrom && (valueType instanceof ObjectResolvedType))
+        {
+            final Map<String, PropertyFacets> properties = ((ObjectResolvedType) valueType).getProperties();
+            for (PropertyFacets propertyFacet : properties.values())
+            {
+                final PropertyFacets matchedProperty = this.properties.get(propertyFacet.getName());
+                if (matchedProperty != null)
+                {
+                    if (!matchedProperty.getValueType().inheritsFrom(propertyFacet.getValueType()))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+        }
+        return inheritsFrom;
     }
 
     @Override
@@ -169,11 +196,11 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         customFacets.validate(from);
         final Raml10Grammar raml10Grammar = new Raml10Grammar();
         final AnyOfRule facetRule = new AnyOfRule()
-                                                   .add(raml10Grammar.propertiesField())
-                                                   .add(raml10Grammar.minPropertiesField())
-                                                   .add(raml10Grammar.maxPropertiesField())
-                                                   .add(raml10Grammar.additionalPropertiesField())
-                                                   .addAll(customFacets.getRules());
+                .add(raml10Grammar.propertiesField())
+                .add(raml10Grammar.minPropertiesField())
+                .add(raml10Grammar.maxPropertiesField())
+                .add(raml10Grammar.additionalPropertiesField())
+                .addAll(customFacets.getRules());
 
         if (from.getParent() instanceof TypeDeclarationField && from.getResolvedType() instanceof ObjectResolvedType)
         {
