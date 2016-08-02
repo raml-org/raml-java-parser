@@ -154,18 +154,22 @@ public class ExtensionsMerger
         {
             return true;
         }
-        if (isUsageNode(node))
+        if (isNode(node, "uses"))
+        {
+            return true;
+        }
+        if (isNode(node, "usage"))
         {
             return true;
         }
         return false;
     }
 
-    private boolean isUsageNode(Node node)
+    private boolean isNode(Node node, String keyName)
     {
         Node keyNode = ((KeyValueNode) node).getKey();
-        String key = keyNode.toString();
-        return "usage".equals(key) && (node.getParent() instanceof RamlDocumentNode);
+        String key = ((SimpleTypeNode) keyNode).getLiteralValue();
+        return keyName.equals(key) && (node.getParent() instanceof RamlDocumentNode);
     }
 
 }

@@ -15,6 +15,20 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ADDITIONAL_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_VALUE_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.PROPERTIES_KEY_NAME;
+import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
+import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
+import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
@@ -28,20 +42,6 @@ import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ADDITIONAL_PROPERTIES_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_VALUE_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_PROPERTIES_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_PROPERTIES_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.PROPERTIES_KEY_NAME;
-import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
-import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
-import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
-
 public class ObjectResolvedType extends XmlFacetsCapableType
 {
     private Integer minProperties;
@@ -53,14 +53,14 @@ public class ObjectResolvedType extends XmlFacetsCapableType
     private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
     public ObjectResolvedType(TypeDeclarationNode declarationNode,
-                              XmlFacets xmlFacets,
-                              Integer minProperties,
-                              Integer maxProperties,
-                              Boolean additionalProperties,
-                              String discriminator,
-                              String discriminatorValue,
-                              Map<String, PropertyFacets> properties,
-                              ResolvedCustomFacets customFacets)
+            XmlFacets xmlFacets,
+            Integer minProperties,
+            Integer maxProperties,
+            Boolean additionalProperties,
+            String discriminator,
+            String discriminatorValue,
+            Map<String, PropertyFacets> properties,
+            ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
         this.minProperties = minProperties;
@@ -196,11 +196,11 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         customFacets.validate(from);
         final Raml10Grammar raml10Grammar = new Raml10Grammar();
         final AnyOfRule facetRule = new AnyOfRule()
-                .add(raml10Grammar.propertiesField())
-                .add(raml10Grammar.minPropertiesField())
-                .add(raml10Grammar.maxPropertiesField())
-                .add(raml10Grammar.additionalPropertiesField())
-                .addAll(customFacets.getRules());
+                                                   .add(raml10Grammar.propertiesField())
+                                                   .add(raml10Grammar.minPropertiesField())
+                                                   .add(raml10Grammar.maxPropertiesField())
+                                                   .add(raml10Grammar.additionalPropertiesField())
+                                                   .addAll(customFacets.getRules());
 
         if (from.getParent() instanceof TypeDeclarationField && from.getResolvedType() instanceof ObjectResolvedType)
         {

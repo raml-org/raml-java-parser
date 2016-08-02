@@ -15,6 +15,17 @@
  */
 package org.raml.v2.internal.impl.v10;
 
+import static org.raml.v2.api.model.v10.RamlFragment.Default;
+import static org.raml.v2.api.model.v10.RamlFragment.Extension;
+import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
+import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
+import static org.raml.v2.internal.impl.RamlBuilder.LIBRARY_LINK_PHASE;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.RamlBuilder;
@@ -47,17 +58,6 @@ import org.raml.yagi.framework.phase.GrammarPhase;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.phase.TransformationPhase;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.raml.v2.api.model.v10.RamlFragment.Default;
-import static org.raml.v2.api.model.v10.RamlFragment.Extension;
-import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
-import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
-import static org.raml.v2.internal.impl.RamlBuilder.GRAMMAR_PHASE;
-
 public class Raml10Builder
 {
 
@@ -72,7 +72,7 @@ public class Raml10Builder
         if ((fragment == Extension || fragment == Overlay) && maxPhaseNumber > FIRST_PHASE)
         {
             applyExtension = true;
-            maxPhaseNumber = GRAMMAR_PHASE;
+            maxPhaseNumber = LIBRARY_LINK_PHASE;
         }
         final List<Phase> phases = createPhases(resourceLoader, fragment);
         rootNode = runPhases(rootNode, phases, maxPhaseNumber);
