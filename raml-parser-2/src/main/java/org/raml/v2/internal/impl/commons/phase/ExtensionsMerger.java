@@ -18,6 +18,7 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -140,21 +141,34 @@ public class ExtensionsMerger
     private boolean overlayCheck(Node baseNode, Node overlayNode)
     {
         boolean check = true;
-        if (overlay && !((overlayNode instanceof OverlayableNode) || (overlayNode.getParent() instanceof OverlayableNode)))
+        if (overlay)
         {
-            baseNode.replaceWith(ErrorNodeFactory.createInvalidOverlayNode(overlayNode));
-            check = false;
+            if (!isLibraryNode(overlayNode) && !((overlayNode instanceof OverlayableNode) || (overlayNode.getParent() instanceof OverlayableNode)))
+            {
+                baseNode.replaceWith(ErrorNodeFactory.createInvalidOverlayNode(overlayNode));
+                check = false;
+            }
         }
         return check;
+    }
+
+    private boolean isLibraryNode(Node overlayNode)
+    {
+        boolean isLibrary = false;
+        if (overlayNode instanceof LibraryLinkNode)
+        {
+            isLibrary = true;
+        }
+        else if (overlayNode.getParent() instanceof KeyValueNode)
+        {
+            isLibrary = isNode(overlayNode.getParent(), "uses");
+        }
+        return isLibrary;
     }
 
     private boolean shouldIgnoreNode(Node node)
     {
         if (node instanceof ExtendsNode)
-        {
-            return true;
-        }
-        if (isNode(node, "uses"))
         {
             return true;
         }

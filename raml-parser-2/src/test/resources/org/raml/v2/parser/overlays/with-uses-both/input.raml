@@ -1,0 +1,12 @@
+#%RAML 1.0 Overlay
+title: Slave RAML
+extends: master.raml
+uses:
+  decls: lib.raml
+
+/elements:
+  get:
+    description: |
+      describing your method here
+    #lets add some annotation
+    (decls.important):
