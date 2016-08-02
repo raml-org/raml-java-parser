@@ -38,6 +38,7 @@ public class KeyValueRule extends Rule
 
     private RequiredField requiredField;
     private DefaultValue defaultValue;
+    private boolean matchValue = false;
 
     public KeyValueRule(Rule keyRule, Rule valueRule)
     {
@@ -99,7 +100,26 @@ public class KeyValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof KeyValueNode && getKeyRule().matches(((KeyValueNode) node).getKey());
+        if (node instanceof KeyValueNode)
+        {
+            final KeyValueNode keyValueNode = (KeyValueNode) node;
+            final boolean matches = getKeyRule().matches(keyValueNode.getKey());
+            return matches && (!matchValue || getValueRule().matches(keyValueNode.getValue()));
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Marks this rule to accept only when it matches they key and also the value
+     * @return This rule with this new behaviour
+     */
+    public KeyValueRule matchValue()
+    {
+        matchValue = true;
+        return this;
     }
 
     public boolean repeated()
