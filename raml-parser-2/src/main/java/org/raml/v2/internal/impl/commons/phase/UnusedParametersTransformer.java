@@ -22,10 +22,10 @@ import java.util.regex.Pattern;
 
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
-import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.nodes.WarningMessageAnnotation;
 import org.raml.yagi.framework.phase.Transformer;
 import org.raml.yagi.framework.util.NodeSelector;
 
@@ -71,7 +71,7 @@ public class UnusedParametersTransformer implements Transformer
                 String parameterName = ((SimpleTypeNode) ((KeyValueNode) child).getKey()).getLiteralValue();
                 if (!templates.contains(parameterName))
                 {
-                    child.replaceWith(RamlErrorNodeFactory.createUnusedUriParameter(parameterName));
+                    child.annotate(new WarningMessageAnnotation("Unused uri parameter '" + parameterName + "'"));
                 }
             }
         }

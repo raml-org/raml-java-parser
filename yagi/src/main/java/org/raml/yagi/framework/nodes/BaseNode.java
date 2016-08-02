@@ -20,6 +20,7 @@ import org.raml.yagi.framework.util.NodeSelector;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +30,8 @@ public abstract class BaseNode implements Node
     private Node source;
     private Node parent;
     protected List<Node> children = new ArrayList<>();
+
+    private List<NodeAnnotation> annotations = new ArrayList<>();
 
     public BaseNode()
     {
@@ -42,6 +45,18 @@ public abstract class BaseNode implements Node
         {
             addChild(child.copy());
         }
+    }
+
+    @Override
+    public void annotate(NodeAnnotation annotation)
+    {
+        this.annotations.add(annotation);
+    }
+
+    @Override
+    public Collection<NodeAnnotation> annotations()
+    {
+        return this.annotations;
     }
 
     @Override

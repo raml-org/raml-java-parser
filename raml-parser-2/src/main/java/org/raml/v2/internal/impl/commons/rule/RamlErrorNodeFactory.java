@@ -86,8 +86,4 @@ public class RamlErrorNodeFactory
         return new ErrorNode("Facet '" + facetNode.getName() + "' cannot be applied to " + typeName);
     }
 
-    public static ErrorNode createUnusedUriParameter(String parameterName)
-    {
-        return new ErrorNode("Unused uri parameter '" + parameterName + "'");
-    }
 }

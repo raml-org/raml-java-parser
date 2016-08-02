@@ -15,6 +15,7 @@
  */
 package org.raml.yagi.framework.nodes;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -148,6 +149,20 @@ public interface Node
      */
     NodeType getType();
 
-
+    /**
+     * Removes all the children of this given node.
+     */
     void removeChildren();
+
+    /**
+     * Adds an annotation to this node
+     * @param annotation The annotation
+     */
+    void annotate(NodeAnnotation annotation);
+
+    /**
+     * Returns all the annotations of this node
+     * @return All the annotations
+     */
+    Collection<NodeAnnotation> annotations();
 }
