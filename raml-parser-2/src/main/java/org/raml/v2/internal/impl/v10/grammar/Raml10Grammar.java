@@ -148,10 +148,21 @@ public class Raml10Grammar extends BaseRamlGrammar
     @Override
     protected ObjectRule securitySchemeSettings()
     {
-        return super.securitySchemeSettings()
-                    .with(field(string("signatures"), array(scalarType())))
-                    .with(field(string("authorizationUri"), ramlScalarValue()).requiredWhen(new AuthorizationUriRequiredField()))
-                    .with(annotationField());
+        return objectType()
+                           .with(annotationField())
+                           .with(
+                                   when("../../type",
+                                           is(string(OAUTH_1_0))
+                                                                .add(requiredField(string("requestTokenUri"), ramlScalarValue()))
+                                                                .add(requiredField(string("authorizationUri"), ramlScalarValue()))
+                                                                .add(requiredField(string("tokenCredentialsUri"), ramlScalarValue()))
+                                                                .add(field(string("signatures"), array(scalarType()))),
+                                           is(string(OAUTH_2_0))
+                                                                .add(field(string("authorizationUri"), ramlScalarValue()).requiredWhen(new AuthorizationUriRequiredField()))
+                                                                .add(requiredField(string("accessTokenUri"), ramlScalarValue()))
+                                                                .add(requiredField(string("authorizationGrants"), anyOf(authorizationGrantsValue(), array(authorizationGrantsValue()))))
+                                                                .add(field(string("scopes"), anyOf(scalarType(), array(scalarType()))))
+                                   ));
     }
 
     @Override

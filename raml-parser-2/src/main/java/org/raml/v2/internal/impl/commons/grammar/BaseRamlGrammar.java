@@ -15,9 +15,13 @@
  */
 package org.raml.v2.internal.impl.commons.grammar;
 
+import static org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer.TEMPLATE_PATTERN;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
+
+import java.util.concurrent.Callable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,10 +58,6 @@ import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringValueRule;
 import org.raml.yagi.framework.nodes.Node;
 
-import java.util.concurrent.Callable;
-
-import static org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer.TEMPLATE_PATTERN;
-
 public abstract class BaseRamlGrammar extends BaseGrammar
 {
 
@@ -71,6 +71,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     public static final String SECURITY_SCHEMES_KEY_NAME = "securitySchemes";
     public static final String MIME_TYPE_REGEX =
             "([\\w\\d\\.\\-\\_\\+]+|\\*)\\/([\\w\\d\\.\\-\\_\\+]+|\\*);?([\\w\\d\\.\\-\\_\\+]+=[\\w\\d\\.\\-\\_\\+]+)?(\\s+[\\w\\d\\.\\-\\_\\+]+=[\\w\\d\\.\\-\\_\\+]+)*";
+    public static final String OAUTH_1_0 = "OAuth 1.0";
+    public static final String OAUTH_2_0 = "OAuth 2.0";
 
     public ObjectRule raml()
     {
@@ -271,8 +273,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(
                                    securitySchemeTypeKey(),
                                    anyOf(
-                                           string("OAuth 1.0").description("The API's authentication uses OAuth 1.0 as described in RFC5849 [RFC5849]"),
-                                           string("OAuth 2.0").description("The API's authentication uses OAuth 2.0 as described in RFC6749 [RFC6749]"),
+                                           string(OAUTH_1_0).description("The API's authentication uses OAuth 1.0 as described in RFC5849 [RFC5849]"),
+                                           string(OAUTH_2_0).description("The API's authentication uses OAuth 2.0 as described in RFC6749 [RFC6749]"),
                                            string("Basic Authentication").description(
                                                    "The API's authentication uses Basic Authentication as described in RFC2617 [RFC2617]"),
                                            string("Digest Authentication").description(
@@ -282,7 +284,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                                    )))
                            .with(displayNameField())
                            .with(field(string("describedBy"), securitySchemePart()))
-                           .with(field(string("settings"), securitySchemeSettings()));
+                           .with(when("type", is(anyOf(string(OAUTH_1_0), string(OAUTH_2_0))).add(requiredField(string("settings"), securitySchemeSettings()))));
     }
 
     protected ObjectRule securitySchemePart()
