@@ -58,7 +58,7 @@ public class TemplateExpressionNode extends AbstractStringNode implements Execut
             final String token = expressionTokens.nextToken().trim();
             if (context.containsVariable(token))
             {
-                result = context.getVariable(token);
+                result = context.getVariable(token).copy();
             }
             else
             {

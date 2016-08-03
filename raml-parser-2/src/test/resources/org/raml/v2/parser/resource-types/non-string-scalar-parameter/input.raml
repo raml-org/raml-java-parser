@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: Infer Level
+
+types:
+  level:
+    type: integer
+    minimum: 0
+    maximum: 100
+    format: int
+
+resourceTypes:
+  collection-item:
+    description: Entity representing a <<resourcePathName|!singularize>>
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<resourcePathName|!singularize>>
+              example: <<member>>
+    put:
+      body:
+        application/json:
+          type: <<resourcePathName|!singularize>>
+          example: <<member>>
+
+/levels:
+  /{level}:
+    type:
+      collection-item:
+        member: 80
+    get:
+
