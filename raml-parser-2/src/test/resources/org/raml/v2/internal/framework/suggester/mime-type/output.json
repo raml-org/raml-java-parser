@@ -1,0 +1,11 @@
+[ {
+  "label" : "application/json",
+  "description" : null,
+  "value" : "application/json: ",
+  "prefix" : ""
+}, {
+  "label" : "application/xml",
+  "description" : null,
+  "value" : "application/xml: ",
+  "prefix" : ""
+} ]

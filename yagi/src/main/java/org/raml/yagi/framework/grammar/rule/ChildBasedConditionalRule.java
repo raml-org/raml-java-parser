@@ -21,6 +21,7 @@ import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,17 +40,24 @@ public class ChildBasedConditionalRule extends Rule
         this.delegate = delegate;
     }
 
+    @Override
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
+    {
+        if (discriminator.matches(pathToRoot.get(0)))
+        {
+            return delegate.getSuggestions(pathToRoot, context);
+        }
+        else
+        {
+            return Collections.emptyList();
+        }
+    }
+
     @Nonnull
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
-        List<Node> children = node.getChildren();
-        if (children.isEmpty() || discriminator.matches(children.get(0)))
-        {
-            return delegate.getSuggestions(node, context);
-        }
-
-        return Collections.emptyList();
+        return delegate.getSuggestions(node, context);
     }
 
     @Override

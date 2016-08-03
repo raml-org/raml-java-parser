@@ -474,7 +474,9 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     public RegexValueRule mimeTypeRegex()
     {
-        return regex(MIME_TYPE_REGEX);
+        return regex(MIME_TYPE_REGEX)
+                                     .suggest("application/json")
+                                     .suggest("application/xml");
     }
 
     protected abstract Rule mimeType();

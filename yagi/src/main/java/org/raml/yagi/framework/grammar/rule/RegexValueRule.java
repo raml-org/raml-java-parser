@@ -35,7 +35,7 @@ public class RegexValueRule extends Rule
 
     private Pattern value;
     private String description;
-    private String suggestion;
+    private List<String> suggestions = new ArrayList<>();
     private String label;
     private boolean fullMatch = true;
 
@@ -48,13 +48,23 @@ public class RegexValueRule extends Rule
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
     {
-        if (StringUtils.isEmpty(suggestion))
+        if (suggestions.isEmpty())
         {
             return Collections.emptyList();
         }
         else
         {
-            return Collections.<Suggestion> singletonList(new DefaultSuggestion(suggestion, description, label));
+            List<Suggestion> result = new ArrayList<>();
+            for (String suggestion : suggestions)
+            {
+                String label = this.label;
+                if (StringUtils.isBlank(label))
+                {
+                    label = suggestion;
+                }
+                result.add(new DefaultSuggestion(suggestion, description, label));
+            }
+            return result;
         }
     }
 
@@ -78,7 +88,7 @@ public class RegexValueRule extends Rule
 
     public RegexValueRule suggest(String value)
     {
-        this.suggestion = value;
+        this.suggestions.add(value);
         return this;
     }
 

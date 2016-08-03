@@ -21,6 +21,7 @@ import org.raml.yagi.framework.suggester.Suggestion;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,6 +39,13 @@ public class FieldPresentRule extends Rule
         this.selector = selector;
         this.delegate = then;
     }
+
+    @Override
+    public List<Suggestion> getSuggestions(List<Node> pathToRoot, ParsingContext context)
+    {
+        return delegate.getSuggestions(pathToRoot, context);
+    }
+
 
     @Nonnull
     @Override

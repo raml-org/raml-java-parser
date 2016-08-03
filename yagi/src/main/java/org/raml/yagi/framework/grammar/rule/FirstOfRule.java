@@ -46,7 +46,7 @@ public class FirstOfRule extends AnyOfRule
                 return rule.getSuggestions(node, context);
             }
         }
-        return Collections.emptyList();
+        return rules.get(0).getSuggestions(node, context);
     }
 
     @Override
