@@ -624,7 +624,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule anyTypeReference(String referenceKey, Class<? extends Node> simpleClass, Class<? extends Node> parametrisedClass)
     {
-        final KeyValueRule paramsRule = field(scalarType(), scalarType());
+        final KeyValueRule paramsRule = field(scalarType(), any());
         final KeyValueRule typeWithParams = field(scalarType(), objectType().with(paramsRule));
         final NodeFactory factory = new NodeReferenceFactory(simpleClass);
         final NodeFactory parametrisedFactory = new NodeReferenceFactory(parametrisedClass);

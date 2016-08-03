@@ -20,6 +20,8 @@ import org.raml.yagi.framework.nodes.AbstractStringNode;
 import org.raml.yagi.framework.nodes.ExecutableNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.v2.internal.utils.Inflector;
 
@@ -50,7 +52,7 @@ public class TemplateExpressionNode extends AbstractStringNode implements Execut
     public Node execute(ExecutionContext context)
     {
         final StringTokenizer expressionTokens = getExpressionTokens();
-        String result = null;
+        Node result = null;
         if (expressionTokens.hasMoreTokens())
         {
             final String token = expressionTokens.nextToken().trim();
@@ -65,13 +67,17 @@ public class TemplateExpressionNode extends AbstractStringNode implements Execut
         }
         while (expressionTokens.hasMoreTokens())
         {
+            if (!(result instanceof SimpleTypeNode))
+            {
+                return ErrorNodeFactory.createInvalidType(result, NodeType.String);
+            }
             final String token = expressionTokens.nextToken().trim();
             if (token.startsWith("!"))
             {
                 try
                 {
                     Method method = Inflector.class.getMethod(token.substring(1), String.class);
-                    result = String.valueOf(method.invoke(null, result));
+                    result = new StringNodeImpl(String.valueOf(method.invoke(null, ((SimpleTypeNode) result).getLiteralValue())));
                 }
                 catch (Exception e)
                 {
@@ -84,7 +90,7 @@ public class TemplateExpressionNode extends AbstractStringNode implements Execut
             }
         }
 
-        return new StringNodeImpl(result);
+        return result;
 
     }
 

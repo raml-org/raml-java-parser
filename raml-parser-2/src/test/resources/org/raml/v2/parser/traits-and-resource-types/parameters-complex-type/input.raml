@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: TCK test. Trait 002
+version: v1
+baseUri: http://api.samplehost.com
+traits:
+  trait1:
+    queryParameters:
+      param1: <<type1>>
+    body: <<body1>>
+/resource:
+  get:
+    is:
+      - trait1:
+          type1: number
+          body1:
+            application/json:
+              example: |
+                {
+                  "prop": "value"
+                }

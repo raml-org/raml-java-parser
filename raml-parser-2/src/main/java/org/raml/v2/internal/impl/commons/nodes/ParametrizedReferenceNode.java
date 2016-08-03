@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 
@@ -23,5 +24,5 @@ import java.util.Map;
 public interface ParametrizedReferenceNode extends ReferenceNode, ObjectNode
 {
 
-    Map<String, String> getParameters();
+    Map<String, Node> getParameters();
 }

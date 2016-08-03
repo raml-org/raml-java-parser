@@ -42,6 +42,7 @@ import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ReferenceNode;
+import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.snakeyaml.SYBaseRamlNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYNullNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
@@ -127,7 +128,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
         templateNode.setParent(refNode.getParent());
 
         // generateDefinition parameters
-        Map<String, String> parameters = getBuiltinResourceTypeParameters(baseResourceNode);
+        Map<String, Node> parameters = getBuiltinResourceTypeParameters(baseResourceNode);
         if (resourceTypeReference instanceof ParametrizedReferenceNode)
         {
             parameters.putAll(((ParametrizedReferenceNode) resourceTypeReference).getParameters());
@@ -178,18 +179,18 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
     }
 
-    private Map<String, String> getBuiltinResourceTypeParameters(ResourceNode resourceNode)
+    private Map<String, Node> getBuiltinResourceTypeParameters(ResourceNode resourceNode)
     {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("resourcePathName", resourceNode.getResourcePathName());
-        parameters.put("resourcePath", resourceNode.getResourcePath());
+        Map<String, Node> parameters = new HashMap<>();
+        parameters.put("resourcePathName", new StringNodeImpl(resourceNode.getResourcePathName()));
+        parameters.put("resourcePath", new StringNodeImpl(resourceNode.getResourcePath()));
         return parameters;
     }
 
-    private Map<String, String> getBuiltinTraitParameters(MethodNode methodNode, ResourceNode resourceNode)
+    private Map<String, Node> getBuiltinTraitParameters(MethodNode methodNode, ResourceNode resourceNode)
     {
-        Map<String, String> parameters = getBuiltinResourceTypeParameters(resourceNode);
-        parameters.put("methodName", methodNode.getName());
+        Map<String, Node> parameters = getBuiltinResourceTypeParameters(resourceNode);
+        parameters.put("methodName", new StringNodeImpl(methodNode.getName()));
         return parameters;
     }
 
@@ -208,7 +209,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
         replaceNullValueWithObject(copy);
 
         // generateDefinition parameters
-        Map<String, String> parameters = getBuiltinTraitParameters(methodNode, baseResourceNode);
+        Map<String, Node> parameters = getBuiltinTraitParameters(methodNode, baseResourceNode);
         if (traitReference instanceof ParametrizedReferenceNode)
         {
             parameters.putAll(((ParametrizedReferenceNode) traitReference).getParameters());
@@ -226,15 +227,15 @@ public class ResourceTypesTraitsTransformer implements Transformer
         merge(methodNode.getValue(), copy.getValue());
     }
 
-    private void resolveParameters(Node parameterizedNode, Map<String, String> parameters, Node referenceContext)
+    private void resolveParameters(Node parameterizedNode, Map<String, Node> parameters, Node referenceContext)
     {
         ExecutionContext context = new ExecutionContext(parameters, referenceContext);
         List<StringTemplateNode> templateNodes = parameterizedNode.findDescendantsWith(StringTemplateNode.class);
         for (StringTemplateNode templateNode : templateNodes)
         {
             Node resolvedNode = templateNode.execute(context);
-            templateNode.replaceWith(resolvedNode);
-            resolvedNode.removeChildren();
+            templateNode.replaceTree(resolvedNode);
+
         }
     }
 

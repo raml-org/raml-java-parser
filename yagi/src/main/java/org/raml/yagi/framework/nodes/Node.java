@@ -165,4 +165,10 @@ public interface Node
      * @return All the annotations
      */
     Collection<NodeAnnotation> annotations();
+
+    /**
+     * Replace this subtree with the given one. Current children are not going to be transferred to the new one
+     * @param newSubTree The new subtree
+     */
+    void replaceTree(Node newSubTree);
 }

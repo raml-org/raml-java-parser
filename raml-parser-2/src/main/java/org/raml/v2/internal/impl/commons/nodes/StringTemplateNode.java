@@ -15,16 +15,18 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
+import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.AbstractStringNode;
-import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.ExecutableNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StringTemplateNode extends AbstractStringNode implements ExecutableNode
 {
@@ -51,28 +53,49 @@ public class StringTemplateNode extends AbstractStringNode implements Executable
 
     public Node execute(ExecutionContext context)
     {
-        final List<Node> children = getChildren();
-        StringBuilder content = new StringBuilder();
+        final List<Node> executedNodes = executeNodes(context, getChildren());
+        return resolveTemplate(context, executedNodes);
+    }
+
+    private Node resolveTemplate(ExecutionContext context, List<Node> executedNodes)
+    {
+        if (executedNodes.size() == 1 && !(executedNodes.get(0) instanceof SimpleTypeNode))
+        {
+            return executedNodes.get(0);
+        }
+        else
+        {
+            final StringBuilder content = new StringBuilder();
+            for (Node executedNode : executedNodes)
+            {
+                if (executedNode instanceof SimpleTypeNode)
+                {
+                    content.append(((SimpleTypeNode) executedNode).getLiteralValue());
+                }
+                else
+                {
+                    return ErrorNodeFactory.createInvalidType(executedNode, NodeType.String);
+                }
+            }
+            return new ContextAwareStringNodeImpl(content.toString(), context.getContextNode());
+        }
+    }
+
+    private List<Node> executeNodes(ExecutionContext context, List<Node> children)
+    {
+        List<Node> executedNodes = new ArrayList<>();
         for (Node child : children)
         {
             if (child instanceof ExecutableNode)
             {
-                final Node result = ((ExecutableNode) child).execute(context);
-                if (result instanceof ErrorNode)
-                {
-                    return result;
-                }
-                else
-                {
-                    content.append(((StringNode) result).getValue());
-                }
+                executedNodes.add(((ExecutableNode) child).execute(context));
             }
             else
             {
-                content.append(((StringNode) child).getValue());
+                executedNodes.add(child);
             }
         }
-        return new ContextAwareStringNodeImpl(content.toString(), context.getContextNode());
+        return executedNodes;
     }
 
     @Nonnull

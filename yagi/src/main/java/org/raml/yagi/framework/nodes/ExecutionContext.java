@@ -21,22 +21,22 @@ import java.util.Map;
 public class ExecutionContext
 {
 
-    private Map<String, String> parameters;
+    private Map<String, Node> parameters;
     private Node contextNode;
 
-    public ExecutionContext(Map<String, String> parameters, Node contextNode)
+    public ExecutionContext(Map<String, Node> parameters, Node contextNode)
     {
         this.parameters = parameters;
         this.contextNode = contextNode;
     }
 
-    public void addVariable(String name, String value)
+    public void addVariable(String name, Node value)
     {
         parameters.put(name, value);
     }
 
     @Nullable
-    public String getVariable(String name)
+    public Node getVariable(String name)
     {
         return parameters.get(name);
     }

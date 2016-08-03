@@ -97,9 +97,9 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
         return NodeType.Reference;
     }
 
-    public Map<String, String> getParameters()
+    public Map<String, Node> getParameters()
     {
-        Map<String, String> params = new HashMap<>();
+        Map<String, Node> params = new HashMap<>();
 
         Node parametersNode = getParametersNode();
         if (parametersNode != null)
@@ -109,18 +109,8 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
                 KeyValueNode keyValueNode = (KeyValueNode) node;
                 String paramName = ((SimpleTypeNode) keyValueNode.getKey()).getLiteralValue();
                 Node value = keyValueNode.getValue();
-                if (value instanceof SimpleTypeNode)
-                {
-                    params.put(paramName, ((SimpleTypeNode) value).getLiteralValue());
-                }
-                else if (value instanceof NullNode)
-                {
-                    params.put(paramName, "");
-                }
-                else
-                {
-                    throw new RuntimeException("Expecting SimpleTypeNode but got " + value.getClass());
-                }
+                params.put(paramName, value.copy());
+
             }
         }
         return params;

@@ -129,16 +129,30 @@ public abstract class BaseNode implements Node
     {
         if (this != newNode)
         {
-            newNode.setSource(this);
+            replaceTree(newNode);
+            for (Node child : getChildren())
+            {
+                newNode.addChild(child);
+            }
+        }
+    }
+
+    @Override
+    public void replaceTree(Node newSubTree)
+    {
+        if (this != newSubTree)
+        {
+            newSubTree.setSource(this);
             if (getParent() != null)
             {
                 // If it has a parent replace it and the same idx
                 int idx = getParent().getChildren().indexOf(this);
-                getParent().setChild(idx, newNode);
-            }
-            for (Node child : getChildren())
-            {
-                newNode.addChild(child);
+                if (idx == -1)
+                {
+                    // Bastard as it has a parent but is not recognized by him ;)
+                    throw new RuntimeException("Trying to replace a bastard child node " + this + " on parent " + getParent() + ".");
+                }
+                getParent().setChild(idx, newSubTree);
             }
         }
     }
