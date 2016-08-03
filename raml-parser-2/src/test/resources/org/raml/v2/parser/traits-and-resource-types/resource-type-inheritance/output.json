@@ -11,7 +11,9 @@
                 "value": "how to use this resource type"
             },
             "type": "parent",
-            "description": "this is the main type",
+            "description": {
+                "value": "this is the main type"
+            },
             "get": {
                 "headers": {
                     "main": {
@@ -25,7 +27,9 @@
                 "value": "how to use parent resource type"
             },
             "type": "grampa",
-            "description": "this is the parent type",
+            "description": {
+                "value": "this is the parent type"
+            },
             "get": {
                 "headers": {
                     "parent": {
@@ -38,7 +42,9 @@
             "usage": {
                 "value": "how to use grampa resource type"
             },
-            "description": "this is the grampa type",
+            "description": {
+                "value": "this is the grampa type"
+            },
             "get": {
                 "headers": {
                     "grampa": {

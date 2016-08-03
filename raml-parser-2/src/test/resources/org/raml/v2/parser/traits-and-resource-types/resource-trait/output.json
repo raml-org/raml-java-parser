@@ -10,11 +10,15 @@
             "usage": {
                 "value": "Apply this to any method that needs to be secured"
             },
-            "description": "Some requests require authentication.",
+            "description": {
+                "value": "Some requests require authentication."
+            },
             "headers": {
                 "access_token": {
                     "type": "string",
-                    "description": "Access Token",
+                    "description": {
+                        "value": "Access Token"
+                    },
                     "example": "5757gh76",
                     "required": true
                 }

@@ -455,7 +455,7 @@
      },
      "displayName": {
       "annotations": [],
-      "value": "get"
+      "value": "uno"
      },
      "headers": [
       {
@@ -879,7 +879,7 @@
      },
      "displayName": {
       "annotations": [],
-      "value": "post"
+      "value": "dos"
      },
      "headers": [],
      "is": [

@@ -397,7 +397,7 @@ public class SpecInterfacesV10TestCase
         assertThat(get.method(), is("get"));
         assertThat(get.resource().relativeUri().value(), is("/top"));
         assertThat(get.description().value(), is("get something"));
-        assertThat(get.displayName().value(), is("get"));
+        assertThat(get.displayName().value(), is("uno"));
         assertThat(get.protocols().size(), is(1));
         assertThat(get.protocols().get(0), is("HTTPS"));
         assertThat(get.securedBy().size(), is(1));

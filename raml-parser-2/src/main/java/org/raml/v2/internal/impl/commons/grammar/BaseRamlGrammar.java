@@ -42,6 +42,7 @@ import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceRule;
 import org.raml.v2.internal.impl.commons.rule.ParametrizedNodeReferenceRule;
 import org.raml.v2.internal.impl.v10.nodes.factory.EmptyObjectNodeFactory;
+import org.raml.v2.internal.impl.v10.nodes.factory.OverlayableSimpleTypeFactory;
 import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.yagi.framework.grammar.BaseGrammar;
 import org.raml.yagi.framework.grammar.ExclusiveSiblingRule;
@@ -198,13 +199,19 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                     arrayRule.of(anyOf(parametrizedValueRule(), arrayRule.of()));
                 }
                 // We keep reference factories so that we can validate reference consistency
-                if (!isReferenceFactory(input) && input.getFactory() != null)
+                // and we keep overlay factories so traits/rt can be overlaid
+                if (!isReferenceFactory(input) && !isOverlayFactory(input) && input.getFactory() != null)
                 {
                     input.cleanFactory();
                 }
                 return true;
             }
         };
+    }
+
+    private boolean isOverlayFactory(Rule input)
+    {
+        return input.getFactory() instanceof OverlayableSimpleTypeFactory;
     }
 
     private boolean isReferenceFactory(@Nonnull Rule input)

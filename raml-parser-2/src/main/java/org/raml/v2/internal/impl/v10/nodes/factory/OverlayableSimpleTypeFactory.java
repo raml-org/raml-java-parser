@@ -61,6 +61,8 @@ public class OverlayableSimpleTypeFactory implements NodeFactory
         {
             AbstractObjectNode result = new OverlayableObjectNodeImpl();
             OverlayableStringNode overlayableStringNode = new OverlayableStringNode(((SimpleTypeNode) currentNode).getLiteralValue());
+            overlayableStringNode.setStartPosition(currentNode.getStartPosition());
+            overlayableStringNode.setEndPosition(currentNode.getEndPosition());
             KeyValueNodeImpl keyValueNode = new KeyValueNodeImpl(new StringNodeImpl("value"), overlayableStringNode);
             if (currentNode.getParent() != null)
             {

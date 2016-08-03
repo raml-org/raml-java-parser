@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Pet shop
+
+traits:
+   FilterableByPrice:
+      queryParameters:
+        priceLessThen?:
+          type: number
+        priceMoreThen?:
+          type: number
+      headers:

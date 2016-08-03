@@ -18,19 +18,21 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import static org.raml.yagi.framework.nodes.DefaultPosition.isDefaultNode;
+
+import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
+import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
+import org.raml.v2.internal.impl.commons.nodes.OverlayableNode;
+import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ObjectNode;
-import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
-import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
-import org.raml.v2.internal.impl.commons.nodes.OverlayableNode;
-import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.yagi.framework.util.NodeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,24 +134,32 @@ public class ExtensionsMerger
         }
     }
 
-    private boolean isDefaultNode(Node node)
-    {
-        return node.getStartPosition().getLine() == Position.UNKNOWN
-               && node.getEndPosition().getLine() == Position.UNKNOWN;
-    }
-
     private boolean overlayCheck(Node baseNode, Node overlayNode)
     {
         boolean check = true;
         if (overlay)
         {
-            if (!isLibraryNode(overlayNode) && !((overlayNode instanceof OverlayableNode) || (overlayNode.getParent() instanceof OverlayableNode)))
+            if (!isLibraryNode(overlayNode) && !isOverlayableNode(overlayNode))
             {
                 baseNode.replaceWith(ErrorNodeFactory.createInvalidOverlayNode(overlayNode));
                 check = false;
             }
         }
         return check;
+    }
+
+    private boolean isOverlayableNode(Node overlayNode)
+    {
+        Node parent = overlayNode.getParent();
+        if ((overlayNode instanceof OverlayableNode) || (parent instanceof OverlayableNode))
+        {
+            return true;
+        }
+        if (parent instanceof KeyValueNode && ((KeyValueNode) parent).getKey() instanceof AnnotationReferenceNode)
+        {
+            return true;
+        }
+        return false;
     }
 
     private boolean isLibraryNode(Node overlayNode)

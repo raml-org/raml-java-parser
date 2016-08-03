@@ -151,7 +151,7 @@ public class LeaguesV10TestCase
     {
         assertThat(methods.size(), is(2));
         Method get = methods.get(0);
-        assertThat(get.displayName().value(), is("get"));
+        assertThat(get.displayName().value(), is("taxed trait"));
         assertThat(get.method(), is("get"));
         assertThat(get.resource().relativeUri().value(), is("/leagues"));
 

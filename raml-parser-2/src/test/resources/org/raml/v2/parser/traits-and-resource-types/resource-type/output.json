@@ -10,7 +10,9 @@
             "usage": {
                 "value": "how to use this resource type"
             },
-            "description": "this is a collection type",
+            "description": {
+                "value": "this is a collection type"
+            },
             "get": {
                 "headers": {
                     "lat": {

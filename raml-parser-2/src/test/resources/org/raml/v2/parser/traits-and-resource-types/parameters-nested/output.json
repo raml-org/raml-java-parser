@@ -10,7 +10,9 @@
             "usage": {
                 "value": "how to use this resource type"
             },
-            "description": "this is the main type",
+            "description": {
+                "value": "this is the main type"
+            },
             "is": [{
                     "paged": {
                         "header2": "<<header2>>"

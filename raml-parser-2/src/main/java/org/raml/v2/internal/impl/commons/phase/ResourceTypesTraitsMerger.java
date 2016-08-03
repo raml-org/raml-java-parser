@@ -18,6 +18,8 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import static org.raml.yagi.framework.nodes.DefaultPosition.isDefaultNode;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,6 +102,7 @@ public class ResourceTypesTraitsMerger
                 key = key.substring(0, key.length() - 1);
             }
             Node node = NodeSelector.selectFrom(NodeSelector.encodePath(key), baseNode);
+            Node childValue = ((KeyValueNode) child).getValue();
             if (node == null && optional)
             {
                 logger.debug("Ignoring optional key {}", key);
@@ -109,12 +112,17 @@ public class ResourceTypesTraitsMerger
                 logger.debug("Adding key '{}'", key);
                 baseNode.addChild(child);
             }
-            else if (((KeyValueNode) child).getValue() instanceof SimpleTypeNode)
+            else if (childValue instanceof SimpleTypeNode)
             {
-                if (node instanceof OverridableNode)
+                if (isDefaultNode(node) && !isDefaultNode(childValue))
+                {
+                    logger.debug("Overriding default key '{}'", key);
+                    node.getParent().setChild(1, childValue);
+                }
+                else if (node instanceof OverridableNode)
                 {
                     logger.debug("Overriding scalar key '{}'", key);
-                    node.getParent().setChild(1, ((KeyValueNode) child).getValue());
+                    node.getParent().setChild(1, childValue);
                 }
                 else
                 {
@@ -124,7 +132,7 @@ public class ResourceTypesTraitsMerger
             else
             {
                 logger.debug("Merging values '{}' and '{}'", node.getParent(), child);
-                merge(node, ((KeyValueNode) child).getValue());
+                merge(node, childValue);
             }
         }
     }

@@ -22,6 +22,8 @@ import org.raml.v2.api.loader.ResourceLoader;
 
 public class DefaultPosition extends AbstractPosition
 {
+
+    public static final String ARTIFICIAL_NODE = "[artificial node]";
     private int index;
     private int line;
     private int column;
@@ -71,6 +73,16 @@ public class DefaultPosition extends AbstractPosition
 
     public static DefaultPosition emptyPosition()
     {
-        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, "[artificial node]", new DefaultResourceLoader());
+        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, ARTIFICIAL_NODE, new DefaultResourceLoader());
     }
+
+    public static boolean isDefaultNode(Node node)
+    {
+        return node.getStartPosition().getLine() == Position.UNKNOWN
+               && ARTIFICIAL_NODE.equals(node.getStartPosition().getPath())
+               && node.getEndPosition().getLine() == Position.UNKNOWN
+               && ARTIFICIAL_NODE.equals(node.getEndPosition().getPath());
+    }
+
+
 }

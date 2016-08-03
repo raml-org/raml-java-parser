@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableStringNode;
 import org.raml.yagi.framework.grammar.rule.DefaultValue;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.yagi.framework.nodes.DefaultPosition;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
@@ -51,6 +52,8 @@ public class DisplayNameDefaultValue implements DefaultValue
             final String literalValue = ((SimpleTypeNode) keyNode).getLiteralValue();
             final OverlayableStringNode displayName = new OverlayableStringNode(literalValue);
             displayName.setSource(keyNode);
+            displayName.setStartPosition(DefaultPosition.emptyPosition());
+            displayName.setEndPosition(DefaultPosition.emptyPosition());
             result.addChild(new KeyValueNodeImpl(new StringNodeImpl("value"), displayName));
             return result;
         }
