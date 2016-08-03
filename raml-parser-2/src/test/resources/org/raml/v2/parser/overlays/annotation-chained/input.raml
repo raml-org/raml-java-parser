@@ -1,0 +1,12 @@
+#%RAML 1.0 Overlay
+title: Overlay 2
+extends: overlay.raml
+
+uses:
+  lib:  lib.raml
+
+/servers:
+  (lib.TestAnnotationType): "TestAnnotationType2"
+  (lib.AnotherAnnotationType):
+    firstProp: "firstProp2"
+    secondProp: 101

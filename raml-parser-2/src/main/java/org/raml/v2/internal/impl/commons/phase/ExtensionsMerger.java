@@ -31,6 +31,7 @@ import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.util.NodeSelector;
@@ -99,6 +100,14 @@ public class ExtensionsMerger
                 overlayCheck(valueNode, valueNode);
                 logger.debug("Adding key '{}'", key);
                 baseNode.addChild(child);
+            }
+            else if (valueNode instanceof NullNode)
+            {
+                logger.debug("Ignoring null value for key '{}'", key);
+            }
+            else if (valueNode instanceof LibraryLinkNode)
+            {
+                logger.debug("Ignoring already defined library '{}'", key);
             }
             else if (child instanceof AnnotationNode)
             {
