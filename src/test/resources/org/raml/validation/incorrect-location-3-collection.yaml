@@ -1,0 +1,5 @@
+responses:
+  200:
+    body:
+      application/json:
+        schema: <<resourcePathName>>

@@ -17,6 +17,7 @@ package org.raml.parser.rule;
 
 import static org.raml.parser.rule.ValidationResult.UNKNOWN;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
+import static org.raml.parser.tagresolver.CompoundIncludeResolver.INCLUDE_COMPOUND_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.IncludeScalarNode;
 
@@ -42,6 +43,7 @@ import org.raml.parser.ResolveResourceException;
 import org.raml.parser.XsdResourceResolver;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.loader.ResourceLoaderAware;
+import org.raml.parser.tagresolver.CompoundIncludeResolver;
 import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.utils.NodeUtils;
@@ -82,6 +84,16 @@ public class SchemaRule extends SimpleRule implements ContextPathAware, Resource
             {
                 globaSchemaIncludeInfo = new IncludeInfo(schemaNode.getTag());
                 actualContextPath = new ContextPath(globaSchemaIncludeInfo);
+            }
+            else if (schemaNode.getTag().startsWith(INCLUDE_COMPOUND_APPLIED_TAG))
+            {
+                List<IncludeInfo> appliedIncludeTags = CompoundIncludeResolver.unmarshall(schemaNode.getTag());
+                actualContextPath = new ContextPath();
+                for (IncludeInfo info : appliedIncludeTags)
+                {
+                    actualContextPath.push(info);
+                }
+                globaSchemaIncludeInfo = appliedIncludeTags.get(appliedIncludeTags.size() - 1);
             }
         }
         if (value == null || NodeUtils.isNonStringTag(schemaNode.getTag()))

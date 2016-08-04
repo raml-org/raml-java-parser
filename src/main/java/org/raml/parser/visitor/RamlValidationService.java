@@ -22,6 +22,7 @@ import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.NodeRuleFactory;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.CompoundIncludeResolver;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.PojoValidatorTagResolver;
 import org.raml.parser.tagresolver.TagResolver;
@@ -39,6 +40,7 @@ public class RamlValidationService extends YamlValidationService
     {
         TagResolver[] defaultResolvers = new TagResolver[] {
                 new IncludeResolver(),
+                new CompoundIncludeResolver(),
                 new PojoValidatorTagResolver()
         };
         return (TagResolver[]) ArrayUtils.addAll(defaultResolvers, tagResolvers);
