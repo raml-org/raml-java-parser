@@ -32,6 +32,7 @@ import org.raml.model.parameter.UriParameter;
 import org.raml.parser.builder.NodeBuilder;
 import org.raml.parser.loader.DefaultResourceLoader;
 import org.raml.parser.loader.ResourceLoader;
+import org.raml.parser.tagresolver.CompoundIncludeResolver;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.tagresolver.JacksonTagResolver;
 import org.raml.parser.tagresolver.JaxbTagResolver;
@@ -58,6 +59,7 @@ public class RamlDocumentBuilder extends YamlDocumentBuilder<Raml>
     {
         TagResolver[] defaultResolvers = new TagResolver[] {
                 new IncludeResolver(),
+                new CompoundIncludeResolver(),
                 new JacksonTagResolver(),
                 new JaxbTagResolver()
         };

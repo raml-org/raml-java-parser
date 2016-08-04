@@ -17,8 +17,10 @@ package org.raml.parser.visitor;
 
 import static org.raml.parser.rule.ValidationMessage.NON_SCALAR_KEY_MESSAGE;
 import static org.raml.parser.rule.ValidationResult.createErrorResult;
+import static org.raml.parser.tagresolver.CompoundIncludeResolver.INCLUDE_COMPOUND_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_TAG;
+import static org.raml.parser.tagresolver.IncludeResolver.SEPARATOR;
 import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 import static org.yaml.snakeyaml.nodes.NodeId.scalar;
 import static org.yaml.snakeyaml.nodes.NodeId.sequence;
@@ -40,6 +42,7 @@ import org.raml.model.ActionType;
 import org.raml.model.Resource;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.CompoundIncludeResolver;
 import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.utils.Inflector;
@@ -167,10 +170,33 @@ public class TemplateResolver
                     traitsMap.put(templateKey, (MappingNode) templateValue);
                 }
                 prunedTemplates.add(getFakeTemplateNode(tuple.getKeyNode()));
+                updateIncludeTag(templateValue, templateSequence.getTag());
             }
         }
         templateSequence.getValue().clear();
         templateSequence.getValue().addAll(prunedTemplates);
+    }
+
+    private void updateIncludeTag(Node templateValue, Tag parentTag)
+    {
+        if (parentTag.startsWith(INCLUDE_APPLIED_TAG))
+        {
+            Tag currentTag = templateValue.getTag();
+            if (currentTag.startsWith(INCLUDE_APPLIED_TAG))
+            {
+                String parentTagValue = parentTag.getValue();
+                String currentTagValue = currentTag.getValue();
+
+                templateValue.setTag(new Tag(INCLUDE_COMPOUND_APPLIED_TAG //
+                                             + parentTagValue.length() + SEPARATOR + parentTagValue //
+                                             + SEPARATOR //
+                                             + currentTagValue.length() + SEPARATOR + currentTagValue));
+            }
+            else
+            {
+                templateValue.setTag(parentTag);
+            }
+        }
     }
 
     private Node resolveInclude(Node node)
@@ -809,7 +835,7 @@ public class TemplateResolver
         MergeContext(Class<?> keyNodeType, Tag templateInclude)
         {
             this.keyNodeType = keyNodeType;
-            if (templateInclude != null && templateInclude.startsWith(INCLUDE_APPLIED_TAG))
+            if (templateInclude != null && (templateInclude.startsWith(INCLUDE_APPLIED_TAG) || templateInclude.startsWith(INCLUDE_COMPOUND_APPLIED_TAG)))
             {
                 this.templateInclude = templateInclude;
             }

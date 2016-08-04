@@ -1,0 +1,8 @@
+#%RAML 0.8
+title:     error with locations
+
+traits: !include incorrect-location-3-traits.yaml
+
+/files:
+  get:
+    is: [ collection ]

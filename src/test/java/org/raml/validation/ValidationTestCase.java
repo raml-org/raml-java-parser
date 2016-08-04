@@ -294,4 +294,70 @@ public class ValidationTestCase extends AbstractRamlTestCase
         List<ValidationResult> validationResults = validateRaml(raml, "");
         assertThat(validationResults.size(), is(0));
     }
+
+    @Test
+    public void includedArrayOfIncludesMustReportErrorsInCorrectLocations()
+    {
+        String resource = "org/raml/validation/incorrect-location-api.raml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+
+        ValidationResult validationResult = validationResults.get(0);
+        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting 'null', 'true', 'false' or NaN"));
+        assertThat(validationResult.getLine(), is(6));
+
+        ContextPath includeContext = validationResult.getIncludeContext();
+        assertThat(includeContext.size(), is(3));
+
+        IncludeInfo includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("incorrect-location-collection.yaml"));
+        assertThat(includeInfo.getLine() + 1, is(1));
+
+        includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("incorrect-location-resource-types.yaml"));
+        assertThat(includeInfo.getLine() + 1, is(4));
+    }
+    
+    @Test
+    public void inlineArrayOfIncludesMustReportErrorsInCorrectLocations()
+    {
+        String resource = "org/raml/validation/incorrect-location-2-api.raml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+        
+        ValidationResult validationResult = validationResults.get(0);
+        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting 'null', 'true', 'false' or NaN"));
+        assertThat(validationResult.getLine(), is(6));
+        
+        ContextPath includeContext = validationResult.getIncludeContext();
+        assertThat(includeContext.size(), is(2));
+        
+        IncludeInfo includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("incorrect-location-2-collection.yaml"));
+        assertThat(includeInfo.getLine() + 1, is(5));
+    }
+
+    @Test
+    public void includedArrayOfIncludesMustReportErrorsInCorrectLocationsForTraits()
+    {
+        String resource = "org/raml/validation/incorrect-location-3-api.raml";
+        List<ValidationResult> validationResults = validateRaml(resource);
+        assertThat(validationResults.size(), is(1));
+
+        ValidationResult validationResult = validationResults.get(0);
+        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting 'null', 'true', 'false' or NaN"));
+        assertThat(validationResult.getLine(), is(5));
+
+        ContextPath includeContext = validationResult.getIncludeContext();
+        assertThat(includeContext.size(), is(3));
+
+        IncludeInfo includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("incorrect-location-3-collection.yaml"));
+        assertThat(includeInfo.getLine() + 1, is(1));
+
+        includeInfo = includeContext.pop();
+        assertThat(includeInfo.getIncludeName(), containsString("incorrect-location-3-traits.yaml"));
+        assertThat(includeInfo.getLine() + 1, is(4));
+    }
+
 }
