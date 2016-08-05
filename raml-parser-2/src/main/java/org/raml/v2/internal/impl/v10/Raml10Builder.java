@@ -76,7 +76,7 @@ public class Raml10Builder
         }
         final List<Phase> phases = createPhases(resourceLoader, fragment);
         rootNode = runPhases(rootNode, phases, maxPhaseNumber);
-        if (applyExtension && rootNode.findDescendantsWith(ErrorNode.class).isEmpty())
+        if (applyExtension && !RamlNodeUtils.isErrorResult(rootNode))
         {
             rootNode = applyExtension(rootNode, resourceLoader, resourceLocation, fragment);
         }
@@ -127,10 +127,10 @@ public class Raml10Builder
         String baseContent = StreamUtils.toString(baseStream);
         Node baseNode = new RamlBuilder().build(baseContent, resourceLoader, baseLocation);
 
-        if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
+        if (!RamlNodeUtils.isErrorResult(baseNode))
         {
             new ExtensionsMerger(fragment == Overlay).merge(baseNode, extensionNode);
-            if (baseNode.findDescendantsWith(ErrorNode.class).isEmpty())
+            if (!RamlNodeUtils.isErrorResult(baseNode))
             {
                 // run all phases on merged document
                 List<Phase> phases = createPhases(resourceLoader, Default);

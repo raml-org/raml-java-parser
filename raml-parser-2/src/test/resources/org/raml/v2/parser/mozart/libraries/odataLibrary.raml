@@ -1,0 +1,71 @@
+#%RAML 1.0 Library
+usage: |
+  Use to define an OData Entity Model
+annotationTypes:
+  remote:
+    description: The name of the Entity in the remote data source.
+    type: string
+  key:
+    description: Defines whether a field is a key or not.
+    type: boolean
+  nullable:
+    description: Defines whether a field is a nullable or not.
+    type: boolean
+  precision:
+    description: Specifies the precision of a field. Only valid for date and numeric types.
+    type: integer
+  scale:
+    description: Specifies the precision of a field. Only valid for numeric types.
+    type: integer
+  type:
+    description: This is use to specify some OData types that are not present in RAML (Guid, Time and DateTimeOffset).
+    type: string
+traits:
+  top:
+    queryParameters:
+      top:
+        description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
+        type: number
+        required: false
+  orderby:
+    queryParameters:
+      orderby:
+        description: Expression for determining what values are used to order the collection of Entries
+        type: string
+        required: false
+  skip:
+    queryParameters:
+      skip:
+        description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
+        type: number
+        required: false
+  filter:
+    queryParameters:
+      filter:
+        description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
+        type: string
+        required: false
+  expand:
+    queryParameters:
+      expand:
+        description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
+        type: string
+        required: false
+  format:
+    queryParameters:
+      format:
+        description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
+        type: string
+        required: false
+  select:
+    queryParameters:
+      select:
+        description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
+        type: string
+        required: false
+  inlinecount:
+    queryParameters:
+      inlinecount:
+        description: Specifies that the response to the request includes a count of the number of Entries in the Collection
+        type: string
+        required: false

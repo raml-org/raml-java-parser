@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.impl.emitter.tck.TckEmitter;
+import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.Position;

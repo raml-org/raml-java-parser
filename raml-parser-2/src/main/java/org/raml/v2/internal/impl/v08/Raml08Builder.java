@@ -26,6 +26,7 @@ import org.raml.v2.internal.impl.commons.phase.RemoveTopLevelSequencesTransforme
 import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
@@ -46,8 +47,7 @@ public class Raml08Builder
             {
                 Phase phase = phases.get(i);
                 rootNode = phase.apply(rootNode);
-                List<ErrorNode> errorNodes = rootNode.findDescendantsWith(ErrorNode.class);
-                if (!errorNodes.isEmpty())
+                if (RamlNodeUtils.isErrorResult(rootNode))
                 {
                     return rootNode;
                 }

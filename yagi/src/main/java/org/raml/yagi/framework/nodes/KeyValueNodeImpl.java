@@ -43,13 +43,13 @@ public class KeyValueNodeImpl extends BaseNode implements KeyValueNode
     {
         if (startPosition == null)
         {
-            if (!getChildren().isEmpty())
+            if (getChildren().size() != 2)
             {
-                return getChildren().get(0).getStartPosition();
+                return DefaultPosition.emptyPosition();
             }
             else
             {
-                return DefaultPosition.emptyPosition();
+                return getChildren().get(0).getStartPosition();
             }
         }
         else
@@ -64,7 +64,7 @@ public class KeyValueNodeImpl extends BaseNode implements KeyValueNode
     {
         if (endPosition == null)
         {
-            if (getChildren().isEmpty())
+            if (getChildren().size() != 2)
             {
                 return DefaultPosition.emptyPosition();
             }

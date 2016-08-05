@@ -46,6 +46,7 @@ import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
 import org.raml.v2.internal.impl.commons.model.StringType;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
+import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.model.DefaultModelBindingConfiguration;
 import org.raml.yagi.framework.model.ModelBindingConfiguration;
@@ -138,21 +139,14 @@ public class RamlModelBuilder
     private RamlModelResult generateRamlApiResult(Node ramlNode, RamlFragment fragment)
     {
         List<ValidationResult> validationResults = new ArrayList<>();
-        if (ramlNode instanceof ErrorNode)
+        List<ErrorNode> errors = RamlNodeUtils.getErrors(ramlNode);
+        for (ErrorNode errorNode : errors)
         {
-            validationResults.add(new RamlValidationResult((ErrorNode) ramlNode));
+            validationResults.add(new RamlValidationResult(errorNode));
         }
-        else
+        if (validationResults.isEmpty())
         {
-            List<ErrorNode> errors = ramlNode.findDescendantsWith(ErrorNode.class);
-            for (ErrorNode errorNode : errors)
-            {
-                validationResults.add(new RamlValidationResult(errorNode));
-            }
-            if (validationResults.isEmpty())
-            {
-                return wrapTree(ramlNode, fragment);
-            }
+            return wrapTree(ramlNode, fragment);
         }
         return new RamlModelResult(validationResults);
     }

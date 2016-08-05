@@ -16,9 +16,11 @@
 package org.raml.v2.internal.utils;
 
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.util.NodeUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RamlNodeUtils
@@ -41,5 +43,28 @@ public class RamlNodeUtils
             }
         }
         return false;
+    }
+
+
+    public static List<ErrorNode> getErrors(Node node)
+    {
+        List<ErrorNode> result = new ArrayList<>();
+        if (node != null)
+        {
+            if (node instanceof ErrorNode)
+            {
+                result.add((ErrorNode) result);
+            }
+
+            result.addAll(node.findDescendantsWith(ErrorNode.class));
+
+
+            final List<LibraryLinkNode> descendantsWith = node.findDescendantsWith(LibraryLinkNode.class);
+            for (LibraryLinkNode libraryLinkNode : descendantsWith)
+            {
+                result.addAll(getErrors(libraryLinkNode.getRefNode()));
+            }
+        }
+        return result;
     }
 }
