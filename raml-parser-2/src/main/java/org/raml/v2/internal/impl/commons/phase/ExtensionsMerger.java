@@ -22,6 +22,7 @@ import static org.raml.yagi.framework.nodes.DefaultPosition.isDefaultNode;
 
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.DocumentationItemNode;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
 import org.raml.v2.internal.impl.commons.nodes.OverlayableNode;
@@ -148,7 +149,7 @@ public class ExtensionsMerger
         boolean check = true;
         if (overlay)
         {
-            if (!isLibraryNode(overlayNode) && !isOverlayableNode(overlayNode))
+            if (!isOverlayableNode(overlayNode))
             {
                 baseNode.replaceWith(ErrorNodeFactory.createInvalidOverlayNode(overlayNode));
                 check = false;
@@ -164,7 +165,18 @@ public class ExtensionsMerger
         {
             return true;
         }
+        // annotations
         if (parent instanceof KeyValueNode && ((KeyValueNode) parent).getKey() instanceof AnnotationReferenceNode)
+        {
+            return true;
+        }
+        // libraries
+        if (isLibraryNode(overlayNode))
+        {
+            return true;
+        }
+        // documentation
+        if (!overlayNode.getChildren().isEmpty() && (overlayNode.getChildren().get(0) instanceof DocumentationItemNode))
         {
             return true;
         }

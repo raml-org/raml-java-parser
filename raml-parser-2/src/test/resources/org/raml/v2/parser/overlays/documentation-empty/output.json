@@ -1,0 +1,21 @@
+{
+    "title": {
+        "value": "master"
+    },
+    "documentation": [{
+            "title": {
+                "value": "overlay1"
+            },
+            "content": {
+                "value": "lorem ipsum dolor"
+            }
+        },
+        {
+            "title": {
+                "value": "overlay2"
+            },
+            "content": {
+                "value": "lorem ipsum dolor sit"
+            }
+        }]
+}
