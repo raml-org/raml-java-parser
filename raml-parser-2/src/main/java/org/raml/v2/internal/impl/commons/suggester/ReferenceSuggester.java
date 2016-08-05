@@ -90,14 +90,14 @@ public class ReferenceSuggester
             {
                 final String value = child.getChildren().get(0).toString();
                 final Node grandchild = child.getChildren().get(1);
-                
+
                 if (grandchild instanceof ArrayNode) // in case of a multiple inherited type
                 {
                     final List<Node> referenceNodes = grandchild.getChildren();
                     for (Node referenceNode : referenceNodes)
                     {
                         collectReferenceNodeSuggestions(result, value, referenceNode);
-                    }   
+                    }
                 }
                 else
                 {
@@ -107,14 +107,19 @@ public class ReferenceSuggester
         }
     }
 
-    private void collectReferenceNodeSuggestions(List<Suggestion> result, String value, Node grandchild) {
+    private void collectReferenceNodeSuggestions(List<Suggestion> result, String value, Node grandchild)
+    {
         final Node description = NodeSelector.selectFrom("usage", grandchild);
         String descriptionText = "";
-        if (description != null) {
+        if (description != null)
+        {
             descriptionText = description.toString();
-        } else {
+        }
+        else
+        {
             final Node usage = NodeSelector.selectFrom("description", grandchild);
-            if (usage != null) {
+            if (usage != null)
+            {
                 descriptionText = usage.toString();
             }
         }
