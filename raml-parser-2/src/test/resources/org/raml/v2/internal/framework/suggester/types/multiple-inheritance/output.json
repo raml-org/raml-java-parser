@@ -1,0 +1,81 @@
+[ {
+  "label" : "Animal",
+  "description" : "",
+  "value" : "Animal",
+  "prefix" : ""
+}, {
+  "label" : "Any",
+  "description" : "",
+  "value" : "any",
+  "prefix" : ""
+}, {
+  "label" : "Array",
+  "description" : "",
+  "value" : "array",
+  "prefix" : ""
+}, {
+  "label" : "Boolean",
+  "description" : "",
+  "value" : "boolean",
+  "prefix" : ""
+}, {
+  "label" : "Cat",
+  "description" : "",
+  "value" : "Cat",
+  "prefix" : ""
+}, {
+  "label" : "Date-only",
+  "description" : "",
+  "value" : "date-only",
+  "prefix" : ""
+}, {
+  "label" : "Datetime",
+  "description" : "",
+  "value" : "datetime",
+  "prefix" : ""
+}, {
+  "label" : "Datetime-only",
+  "description" : "",
+  "value" : "datetime-only",
+  "prefix" : ""
+}, {
+  "label" : "File",
+  "description" : "",
+  "value" : "file",
+  "prefix" : ""
+}, {
+  "label" : "Integer",
+  "description" : "",
+  "value" : "integer",
+  "prefix" : ""
+}, {
+  "label" : "NewType",
+  "description" : "",
+  "value" : "NewType",
+  "prefix" : ""
+}, {
+  "label" : "Nil",
+  "description" : "",
+  "value" : "nil",
+  "prefix" : ""
+}, {
+  "label" : "Number",
+  "description" : "",
+  "value" : "number",
+  "prefix" : ""
+}, {
+  "label" : "Object",
+  "description" : "",
+  "value" : "object",
+  "prefix" : ""
+}, {
+  "label" : "String",
+  "description" : "",
+  "value" : "string",
+  "prefix" : ""
+}, {
+  "label" : "Time-only",
+  "description" : "",
+  "value" : "time-only",
+  "prefix" : ""
+} ]
