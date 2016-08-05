@@ -89,22 +89,35 @@ public class ReferenceSuggester
             if (!child.getChildren().isEmpty())
             {
                 final String value = child.getChildren().get(0).toString();
-                final Node description = NodeSelector.selectFrom("usage", child.getChildren().get(1));
-                String descriptionText = "";
-                if (description != null)
+                final Node grandchild = child.getChildren().get(1);
+                
+                if (grandchild instanceof ArrayNode) // in case of a multiple inherited type
                 {
-                    descriptionText = description.toString();
+                    final List<Node> referenceNodes = grandchild.getChildren();
+                    for (Node referenceNode : referenceNodes)
+                    {
+                        collectReferenceNodeSuggestions(result, value, referenceNode);
+                    }   
                 }
                 else
                 {
-                    final Node usage = NodeSelector.selectFrom("description", child.getChildren().get(1));
-                    if (usage != null)
-                    {
-                        descriptionText = usage.toString();
-                    }
+                    collectReferenceNodeSuggestions(result, value, grandchild);
                 }
-                result.add(new DefaultSuggestion(value, descriptionText, value));
             }
         }
+    }
+
+    private void collectReferenceNodeSuggestions(List<Suggestion> result, String value, Node grandchild) {
+        final Node description = NodeSelector.selectFrom("usage", grandchild);
+        String descriptionText = "";
+        if (description != null) {
+            descriptionText = description.toString();
+        } else {
+            final Node usage = NodeSelector.selectFrom("description", grandchild);
+            if (usage != null) {
+                descriptionText = usage.toString();
+            }
+        }
+        result.add(new DefaultSuggestion(value, descriptionText, value));
     }
 }
