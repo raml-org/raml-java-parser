@@ -1,0 +1,215 @@
+{
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": null,
+ "protocols": [],
+ "ramlVersion": "0.8",
+ "resourceTypes": [
+  {
+   "baseUriParameters": [],
+   "description": null,
+   "displayName": null,
+   "is": [],
+   "methods": [],
+   "name": "first",
+   "parametrizedProperties": null,
+   "securedBy": [],
+   "type": null,
+   "uriParameters": [],
+   "usage": "first usage"
+  },
+  {
+   "baseUriParameters": [],
+   "description": null,
+   "displayName": null,
+   "is": [],
+   "methods": [],
+   "name": "second",
+   "parametrizedProperties": null,
+   "securedBy": [],
+   "type": null,
+   "uriParameters": [],
+   "usage": "second usage"
+  },
+  {
+   "baseUriParameters": [],
+   "description": null,
+   "displayName": null,
+   "is": [],
+   "methods": [],
+   "name": "third",
+   "parametrizedProperties": null,
+   "securedBy": [],
+   "type": null,
+   "uriParameters": [],
+   "usage": "third usage"
+  }
+ ],
+ "resources": [
+  {
+   "baseUriParameters": [],
+   "description": null,
+   "displayName": "/top",
+   "is": [],
+   "methods": [
+    {
+     "baseUriParameters": [],
+     "body": [],
+     "description": {
+      "value": "method description from trait one"
+     },
+     "headers": [],
+     "is": [
+      {
+       "name": "one",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "baseUriParameters": [],
+        "body": [],
+        "description": {
+         "value": "method description from trait one"
+        },
+        "headers": [],
+        "name": "one",
+        "parametrizedProperties": null,
+        "protocols": [],
+        "queryParameters": [],
+        "responses": [],
+        "securedBy": [],
+        "usage": null
+       }
+      },
+      {
+       "name": "two",
+       "structuredValue": {
+        "isScalar": false,
+        "properties": [],
+        "value": null
+       },
+       "trait": {
+        "baseUriParameters": [],
+        "body": [],
+        "description": {
+         "value": "method description from trait two"
+        },
+        "headers": [],
+        "name": "two",
+        "parametrizedProperties": null,
+        "protocols": [],
+        "queryParameters": [],
+        "responses": [],
+        "securedBy": [],
+        "usage": null
+       }
+      }
+     ],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [],
+     "responses": [],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/top"
+   },
+   "resourcePath": "/top",
+   "resources": [],
+   "securedBy": [],
+   "type": {
+    "name": "third",
+    "resourceType": {
+     "baseUriParameters": [],
+     "description": null,
+     "displayName": null,
+     "is": [],
+     "methods": [],
+     "name": "third",
+     "parametrizedProperties": null,
+     "securedBy": [],
+     "type": null,
+     "uriParameters": [],
+     "usage": "third usage"
+    },
+    "structuredValue": {
+     "isScalar": false,
+     "properties": [],
+     "value": null
+    }
+   },
+   "uriParameters": []
+  }
+ ],
+ "schemas": [
+  {
+   "key": "UserJson",
+   "value": {
+    "value": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
+   }
+  },
+  {
+   "key": "UserXml",
+   "value": {
+    "value": "# TODO provide proper xml schema\n"
+   }
+  }
+ ],
+ "securedBy": [],
+ "securitySchemes": [
+  {
+   "describedBy": null,
+   "description": null,
+   "name": "one",
+   "settings": null,
+   "type": "Basic Authentication"
+  },
+  {
+   "describedBy": null,
+   "description": null,
+   "name": "two",
+   "settings": null,
+   "type": "Digest Authentication"
+  }
+ ],
+ "title": "api title",
+ "traits": [
+  {
+   "baseUriParameters": [],
+   "body": [],
+   "description": {
+    "value": "method description from trait one"
+   },
+   "headers": [],
+   "name": "one",
+   "parametrizedProperties": null,
+   "protocols": [],
+   "queryParameters": [],
+   "responses": [],
+   "securedBy": [],
+   "usage": null
+  },
+  {
+   "baseUriParameters": [],
+   "body": [],
+   "description": {
+    "value": "method description from trait two"
+   },
+   "headers": [],
+   "name": "two",
+   "parametrizedProperties": null,
+   "protocols": [],
+   "queryParameters": [],
+   "responses": [],
+   "securedBy": [],
+   "usage": null
+  }
+ ],
+ "uriParameters": [],
+ "version": null
+}

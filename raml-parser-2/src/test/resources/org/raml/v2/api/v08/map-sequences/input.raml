@@ -1,0 +1,46 @@
+#%RAML 0.8
+title: api title
+
+schemas:
+    -
+        UserJson: |
+          {
+             "$schema": "http://json-schema.org/draft-04/schema",
+             "type": "object",
+             "properties": {
+               "firstname":  { "type": "string" },
+               "lastname":  { "type": "string" },
+               "age":  { "type": "integer" }
+             },
+             "required": [ "firstname", "lastname" ]
+          }
+
+        UserXml: |
+          # TODO provide proper xml schema
+
+traits:
+    - one:
+        description: method description from trait one
+    - two:
+        description: method description from trait two
+
+resourceTypes:
+    - first:
+        usage: first usage
+    -
+        second:
+            usage: second usage
+        third:
+            usage: third usage
+
+securitySchemes:
+    - one:
+        type: Basic Authentication
+      two:
+        type: Digest Authentication
+
+/top:
+    type: third
+    get:
+        is: [one, two]
+

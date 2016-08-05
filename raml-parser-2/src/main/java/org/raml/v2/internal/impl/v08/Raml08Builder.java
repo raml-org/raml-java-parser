@@ -22,6 +22,7 @@ import java.util.List;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
+import org.raml.v2.internal.impl.commons.phase.RemoveTopLevelSequencesTransformer;
 import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
@@ -58,25 +59,24 @@ public class Raml08Builder
 
     private List<Phase> createPhases(ResourceLoader resourceLoader)
     {
-        // The first phase expands the includes.
-        final TransformationPhase first = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
-        // Overlays and extensions.
+        // The first phase expands the includes and detects trait/RT parameters
+        final TransformationPhase includesAndParmeters = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
+
+        // Flatten top level map sequences into maps
+        final TransformationPhase removeSequences = new TransformationPhase(new RemoveTopLevelSequencesTransformer());
 
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem
         Raml08Grammar raml08Grammar = new Raml08Grammar();
-        final GrammarPhase second = new GrammarPhase(raml08Grammar.raml());
-        // Detect invalid references. Library resourceTypes and Traits. This point the nodes are good enough for Editors.
-
-        // Normalize resources and detects duplicated ones and more than one use of url parameters. ???
+        final GrammarPhase grammar = new GrammarPhase(raml08Grammar.raml());
 
         // Applies resourceTypes and Traits Library
-        final TransformationPhase third = new TransformationPhase(new ResourceTypesTraitsTransformer(raml08Grammar));
+        final TransformationPhase traitsAndResourceTypes = new TransformationPhase(new ResourceTypesTraitsTransformer(raml08Grammar));
 
         // Check duplicate paths
-        final TransformationPhase duplicatedPaths = new TransformationPhase(new DuplicatedPathsTransformer());
+        final TransformationPhase duplicatePaths = new TransformationPhase(new DuplicatedPathsTransformer());
 
         // Schema Types example validation
-        return Arrays.asList(first, second, third, duplicatedPaths);
+        return Arrays.asList(includesAndParmeters, grammar, removeSequences, traitsAndResourceTypes, duplicatePaths);
 
     }
 }
