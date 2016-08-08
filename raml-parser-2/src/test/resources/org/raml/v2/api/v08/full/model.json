@@ -9,10 +9,14 @@
     "value": "some description"
    },
    "displayName": "Param 1",
+   "enumValues": [],
    "example": "one",
+   "maxLength": 10,
+   "minLength": null,
    "name": "param1",
+   "pattern": null,
    "repeat": null,
-   "required": null,
+   "required": false,
    "type": "string"
   }
  ],
@@ -64,9 +68,11 @@
      },
      "displayName": "param1",
      "example": null,
+     "maximum": null,
+     "minimum": null,
      "name": "param1",
      "repeat": null,
-     "required": null,
+     "required": false,
      "type": "number"
     }
    ],
@@ -87,7 +93,7 @@
        "example": null,
        "name": "param1",
        "repeat": null,
-       "required": null,
+       "required": false,
        "type": "boolean"
       }
      ],
@@ -104,10 +110,14 @@
        "defaultValue": "asc",
        "description": null,
        "displayName": "order",
+       "enumValues": [],
        "example": "desc",
+       "maxLength": 4,
+       "minLength": null,
        "name": "order",
+       "pattern": null,
        "repeat": true,
-       "required": null,
+       "required": false,
        "type": "string"
       }
      ],
@@ -147,10 +157,14 @@
          "defaultValue": null,
          "description": null,
          "displayName": "description",
+         "enumValues": [],
          "example": null,
+         "maxLength": null,
+         "minLength": null,
          "name": "description",
+         "pattern": null,
          "repeat": null,
-         "required": null,
+         "required": false,
          "type": "string"
         },
         {
@@ -160,7 +174,7 @@
          "example": null,
          "name": "image",
          "repeat": null,
-         "required": null,
+         "required": false,
          "type": "file"
         }
        ],
@@ -210,10 +224,14 @@
            "defaultValue": null,
            "description": null,
            "displayName": "description",
+           "enumValues": [],
            "example": null,
+           "maxLength": null,
+           "minLength": null,
            "name": "description",
+           "pattern": null,
            "repeat": null,
-           "required": null,
+           "required": false,
            "type": "string"
           },
           {
@@ -223,7 +241,7 @@
            "example": null,
            "name": "image",
            "repeat": null,
-           "required": null,
+           "required": false,
            "type": "file"
           }
          ],
@@ -286,10 +304,14 @@
          "defaultValue": null,
          "description": null,
          "displayName": "childId",
+         "enumValues": [],
          "example": null,
+         "maxLength": null,
+         "minLength": null,
          "name": "childId",
+         "pattern": null,
          "repeat": null,
-         "required": null,
+         "required": true,
          "type": "string"
         }
        ]

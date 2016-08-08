@@ -15,9 +15,12 @@
  */
 package org.raml.v2.internal.utils;
 
+import org.raml.v2.internal.impl.commons.RamlVersion;
+import org.raml.v2.internal.impl.commons.nodes.RamlVersionAnnotation;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NodeAnnotation;
 import org.raml.yagi.framework.util.NodeUtils;
 
 import java.util.ArrayList;
@@ -66,5 +69,24 @@ public class RamlNodeUtils
             }
         }
         return result;
+    }
+
+    public static RamlVersion getVersion(Node node)
+    {
+        while (true)
+        {
+            for (NodeAnnotation annotation : node.annotations())
+            {
+                if (annotation instanceof RamlVersionAnnotation)
+                {
+                    return ((RamlVersionAnnotation) annotation).getVersion();
+                }
+            }
+            node = node.getParent();
+            if (node == null)
+            {
+                throw new RuntimeException("Raml Version not specified.");
+            }
+        }
     }
 }

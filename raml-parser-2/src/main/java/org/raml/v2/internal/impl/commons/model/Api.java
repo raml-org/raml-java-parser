@@ -15,12 +15,14 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
+import org.raml.yagi.framework.nodes.Node;
 
 public class Api extends Annotable
 {
@@ -54,7 +56,7 @@ public class Api extends Annotable
 
     public String ramlVersion()
     {
-        return node.getVersion().value();
+        return getVersion(node).value();
     }
 
 }

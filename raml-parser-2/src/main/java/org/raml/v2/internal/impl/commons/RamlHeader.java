@@ -146,6 +146,12 @@ public class RamlHeader
         }
     }
 
+    @Override
+    public String toString()
+    {
+        return RAML_HEADER_PREFIX + " " + version.value() + (fragment != null ? (" " + fragment) : "");
+    }
+
     public static class InvalidHeaderException extends Exception
     {
 

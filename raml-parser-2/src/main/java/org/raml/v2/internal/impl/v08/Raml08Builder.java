@@ -15,11 +15,14 @@
  */
 package org.raml.v2.internal.impl.v08;
 
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_08;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.commons.nodes.RamlVersionAnnotation;
 import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
 import org.raml.v2.internal.impl.commons.phase.RemoveTopLevelSequencesTransformer;
@@ -27,7 +30,6 @@ import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
 import org.raml.v2.internal.utils.RamlNodeUtils;
-import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.GrammarPhase;
@@ -53,6 +55,7 @@ public class Raml08Builder
                 }
             }
         }
+        rootNode.annotate(new RamlVersionAnnotation(RAML_08));
         return rootNode;
     }
 

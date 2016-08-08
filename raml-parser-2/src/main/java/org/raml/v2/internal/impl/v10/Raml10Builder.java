@@ -20,6 +20,7 @@ import static org.raml.v2.api.model.v10.RamlFragment.Extension;
 import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
 import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
 import static org.raml.v2.internal.impl.RamlBuilder.LIBRARY_LINK_PHASE;
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,7 @@ import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
+import org.raml.v2.internal.impl.commons.nodes.RamlVersionAnnotation;
 import org.raml.v2.internal.impl.commons.phase.DuplicatedPathsTransformer;
 import org.raml.v2.internal.impl.commons.phase.ExtensionsMerger;
 import org.raml.v2.internal.impl.commons.phase.IncludeResolver;
@@ -50,7 +52,6 @@ import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
-import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
@@ -80,6 +81,7 @@ public class Raml10Builder
         {
             rootNode = applyExtension(rootNode, resourceLoader, resourceLocation, fragment);
         }
+        rootNode.annotate(new RamlVersionAnnotation(RAML_10));
         return rootNode;
     }
 

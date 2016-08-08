@@ -15,14 +15,15 @@
  */
 package org.raml.yagi.framework.nodes;
 
-import org.raml.yagi.framework.util.NodeSelector;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class BaseNode implements Node
 {
@@ -45,6 +46,7 @@ public abstract class BaseNode implements Node
         {
             addChild(child.copy());
         }
+        annotations = new ArrayList<>(node.annotations);
     }
 
     @Override

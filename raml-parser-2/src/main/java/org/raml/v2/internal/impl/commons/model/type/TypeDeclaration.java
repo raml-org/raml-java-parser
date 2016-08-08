@@ -16,6 +16,8 @@
 package org.raml.v2.internal.impl.commons.model.type;
 
 import static java.util.Collections.singletonList;
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
+import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -143,8 +145,20 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         }
         else
         {
-            return NodeSelector.selectType("required", getNode(), true);
+            // in Raml 1.0 parameters are required by default
+            // in Raml 0.8 parameters are optional by default except for uri parameters
+            if (getVersion(getNode()) == RAML_10 || isUriParameter(getNode()))
+            {
+                return NodeSelector.selectType("required", getNode(), true);
+            }
+            return NodeSelector.selectType("required", getNode(), false);
         }
+    }
+
+    private boolean isUriParameter(Node node)
+    {
+        Node ancestor = NodeSelector.selectFrom("../../../../uriParameters", node);
+        return ancestor != null;
     }
 
     public String defaultValue()

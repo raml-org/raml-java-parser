@@ -32,6 +32,7 @@ import org.raml.v2.api.model.v08.bodies.Response;
 import org.raml.v2.api.model.v08.methods.Method;
 import org.raml.v2.api.model.v08.methods.Trait;
 import org.raml.v2.api.model.v08.parameters.Parameter;
+import org.raml.v2.api.model.v08.parameters.StringTypeDeclaration;
 import org.raml.v2.api.model.v08.resources.Resource;
 import org.raml.v2.api.model.v08.resources.ResourceType;
 
@@ -123,6 +124,7 @@ public class SpecInterfacesV08TestCase
         assertThat(childId.uriParameters(), hasSize(1));
         assertThat(childId.uriParameters().get(0).name(), is("childId"));
         assertThat(childId.uriParameters().get(0).type(), is("string"));
+        assertThat(childId.uriParameters().get(0).required(), is(true));
     }
 
     private void assertResourceBaseUriParameters(List<Parameter> parameters)
@@ -159,8 +161,10 @@ public class SpecInterfacesV08TestCase
         assertThat(order.displayName(), is("order"));
         assertThat(order.example(), is("desc"));
         assertThat(order.defaultValue(), is("asc"));
-        assertNull(order.required());
+        assertThat(order.required(), is(false));
         assertThat(order.repeat(), is(true));
+        assertTrue(order instanceof StringTypeDeclaration);
+        assertThat(((StringTypeDeclaration) order).maxLength(), is(4));
     }
 
     private void assertMethodBaseUriParameters(List<Parameter> parameters)

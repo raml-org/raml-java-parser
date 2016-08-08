@@ -28,12 +28,11 @@ import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
-import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.v08.Raml08Builder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
+import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.yagi.framework.nodes.Node;
 
 /**
  * RamlBuilder create a Node representation of your raml.
@@ -113,10 +112,6 @@ public class RamlBuilder
             else
             {
                 result = new Raml08Builder().build(stringContent, resourceLoader, resourceLocation, maxPhaseNumber);
-            }
-            if (result instanceof RamlDocumentNode)
-            {
-                ((RamlDocumentNode) result).setVersion(ramlHeader.getVersion());
             }
             return result;
         }

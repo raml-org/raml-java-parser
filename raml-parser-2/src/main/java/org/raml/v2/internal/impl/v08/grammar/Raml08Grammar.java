@@ -17,14 +17,16 @@ package org.raml.v2.internal.impl.v08.grammar;
 
 import javax.annotation.Nonnull;
 
+import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v08.nodes.DefaultParameterTypeValueNode;
+import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
+import org.raml.yagi.framework.grammar.rule.NodeFactory;
 import org.raml.yagi.framework.grammar.rule.ObjectRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringValueRule;
-import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
-import org.raml.v2.internal.impl.v08.nodes.DefaultParameterTypeValueNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 
 public class Raml08Grammar extends BaseRamlGrammar
 {
@@ -170,7 +172,32 @@ public class Raml08Grammar extends BaseRamlGrammar
 
     private Rule typeOptions()
     {
-        return anyOf(stringTypeLiteral(), numericTypeLiteral(), string("date"), fileTypeLiteral(), string("boolean"));
+        AnyOfRule anyOfRule = anyOf(stringTypeLiteral(), numericTypeLiteral(), string("date"), fileTypeLiteral(), string("boolean"));
+        applyThen(anyOfRule, TypeExpressionReferenceFactory.class);
+        return anyOfRule;
+
+    }
+
+    private void applyThen(AnyOfRule anyOf, Class<? extends NodeFactory> factoryClass)
+    {
+        for (Rule rule : anyOf.getRules())
+        {
+            if (rule instanceof AnyOfRule)
+            {
+                applyThen((AnyOfRule) rule, factoryClass);
+            }
+            else
+            {
+                try
+                {
+                    rule.then(factoryClass.newInstance());
+                }
+                catch (Exception e)
+                {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     private StringValueRule fileTypeLiteral()

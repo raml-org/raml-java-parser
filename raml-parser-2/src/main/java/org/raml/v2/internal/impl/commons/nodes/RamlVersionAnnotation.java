@@ -15,34 +15,21 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import javax.annotation.Nonnull;
+import org.raml.v2.internal.impl.commons.RamlVersion;
+import org.raml.yagi.framework.nodes.NodeAnnotation;
 
-import org.raml.yagi.framework.nodes.AbstractObjectNode;
-import org.raml.yagi.framework.nodes.ContextProviderNode;
-import org.raml.yagi.framework.nodes.Node;
 
-public class RamlDocumentNode extends AbstractObjectNode implements ContextProviderNode
+public class RamlVersionAnnotation implements NodeAnnotation
 {
-    public RamlDocumentNode()
+    private RamlVersion version;
+
+    public RamlVersionAnnotation(RamlVersion version)
     {
+        this.version = version;
     }
 
-    protected RamlDocumentNode(RamlDocumentNode node)
+    public RamlVersion getVersion()
     {
-        super(node);
-    }
-
-    @Nonnull
-    @Override
-    public Node copy()
-    {
-        return new RamlDocumentNode(this);
-    }
-
-    @Nonnull
-    @Override
-    public Node getContextNode()
-    {
-        return this;
+        return version;
     }
 }

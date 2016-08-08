@@ -348,7 +348,7 @@ public class Raml10Grammar extends BaseRamlGrammar
         return baseType(TypeId.STRING, DEFAULT_TYPE_RULE);
     }
 
-    private ObjectRule baseType(final TypeId defaultType, final String ruleName, final KeyValueRule... additionalRules)
+    private ObjectRule baseType(final TypeId defaultType, final String ruleName)
     {
         return named(ruleName,
                 new RuleFactory<ObjectRule>()
@@ -364,7 +364,7 @@ public class Raml10Grammar extends BaseRamlGrammar
                                            .with(usageField())
                                            .with(annotationField())
                                            .with(defaultField())
-                                           .with(requiredField())
+                                           .with(requiredTypeField())
                                            .with(facetsField())
                                            .with(exampleField())
                                            .with(examplesField())
@@ -430,8 +430,7 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(discriminatorValueField().matchValue())
                                                                                   .add(customFacetField().matchValue())
                                                    ).defaultValue(new TypeDefaultValue(defaultType))
-                                           ).withAll(additionalRules)
-                                           .then(TypeDeclarationNode.class);
+                                           ).then(TypeDeclarationNode.class);
 
 
                     }
@@ -660,7 +659,7 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                                                    " The value of a type node MUST be either a) the name of a user-defined type or b) the name of a built-in RAML data type (object, array, or one of the scalar types) or c) an inline type declaration.");
     }
 
-    private KeyValueRule requiredField()
+    private KeyValueRule requiredTypeField()
     {
         return field(string("required"), booleanType());
     }
@@ -809,8 +808,7 @@ public class Raml10Grammar extends BaseRamlGrammar
 
     private ObjectRule propertyType()
     {
-        return baseType(TypeId.STRING, PROPERTY_TYPE_RULE, requiredField())
-                                                                           .named("PropertyTypeRule");
+        return baseType(TypeId.STRING, PROPERTY_TYPE_RULE).named("PropertyTypeRule");
     }
 
     protected Rule objectTypeLiteral()

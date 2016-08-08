@@ -15,6 +15,9 @@
  */
 package org.raml.v2.api;
 
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_08;
+import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +33,7 @@ import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
+import org.raml.v2.api.model.v08.parameters.Parameter;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.api.model.v10.api.Library;
 import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
@@ -39,7 +43,6 @@ import org.raml.v2.api.model.v10.resources.ResourceType;
 import org.raml.v2.api.model.v10.security.SecurityScheme;
 import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.RamlVersion;
 import org.raml.v2.internal.impl.commons.model.Api;
 import org.raml.v2.internal.impl.commons.model.DefaultModelElement;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
@@ -160,7 +163,7 @@ public class RamlModelBuilder
 
     private RamlModelResult wrapTree(Node ramlNode, RamlFragment fragment)
     {
-        if (ramlNode instanceof RamlDocumentNode && ((RamlDocumentNode) ramlNode).getVersion() == RamlVersion.RAML_08)
+        if (ramlNode instanceof RamlDocumentNode && getVersion(ramlNode) == RAML_08)
         {
             org.raml.v2.api.model.v08.api.Api apiV08 = ModelProxyBuilder.createModel(org.raml.v2.api.model.v08.api.Api.class, new Api((RamlDocumentNode) ramlNode), createV08Binding());
             return new RamlModelResult(apiV08);
@@ -226,6 +229,8 @@ public class RamlModelBuilder
         bindingConfiguration.bindPackage(MODEL_PACKAGE);
         bindingConfiguration.bind(org.raml.v2.api.model.v08.system.types.StringType.class, StringType.class);
         bindingConfiguration.bind(org.raml.v2.api.model.v08.system.types.ValueType.class, StringType.class);
+        bindingConfiguration.bind(Parameter.class, new TypeDeclarationModelFactory());
+        bindingConfiguration.reverseBindPackage("org.raml.v2.api.model.v08.parameters");
         bindingConfiguration.defaultTo(DefaultModelElement.class);
         return bindingConfiguration;
     }
