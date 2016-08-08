@@ -21,6 +21,8 @@ import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v08.nodes.DefaultParameterTypeValueNode;
 import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
+import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
+import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
 import org.raml.yagi.framework.grammar.rule.NodeFactory;
@@ -75,7 +77,7 @@ public class Raml08Grammar extends BaseRamlGrammar
     protected Rule parameter()
     {
         return objectType()
-                           .with(field(typeKey(), typeOptions()))
+                           .with(typeField())
                            .with(displayNameField())
                            .with(descriptionField())
                            .with(exampleField())
@@ -168,6 +170,11 @@ public class Raml08Grammar extends BaseRamlGrammar
                                                      .description("The pattern attribute is a regular expression that a parameter of type string MUST match. " +
                                                                   "Regular expressions MUST follow the regular expression specification from ECMA 262/Perl 5. " +
                                                                   "The pattern MAY be enclosed in double quotes for readability and clarity.");
+    }
+
+    private KeyValueRule typeField()
+    {
+        return field(typeKey(), typeOptions()).defaultValue(new TypeDefaultValue(TypeId.STRING));
     }
 
     private Rule typeOptions()
