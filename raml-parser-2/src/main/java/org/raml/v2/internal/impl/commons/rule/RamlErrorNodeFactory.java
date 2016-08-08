@@ -86,4 +86,9 @@ public class RamlErrorNodeFactory
         return new ErrorNode("Facet '" + facetNode.getName() + "' cannot be applied to " + typeName);
     }
 
+    public static Node createInvalidFormatValue(String value, String format)
+    {
+        return new ErrorNode(value + " is not a valid " + format + " value");
+    }
+
 }

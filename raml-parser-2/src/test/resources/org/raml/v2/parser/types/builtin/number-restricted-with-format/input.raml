@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Test API
+types:
+  orders:
+    properties:
+      Priority:
+        type: number
+        format: int16
+/resource:
+  post:
+    body:
+      application/json:
+        type: orders
+        example:
+          Priority: 3.5
