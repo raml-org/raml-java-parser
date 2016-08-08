@@ -48,32 +48,32 @@ public class RamlErrorNodeFactory
 
     public static ErrorNode createInvalidRequiredFacet(String property)
     {
-        return new ErrorNode("Required property " + property + " cannot be made optional");
+        return new ErrorNode("Required property '" + property + "' cannot be made optional");
     }
 
     public static ErrorNode createCanNotOverrideCustomFacet(String facetName, String typeName)
     {
-        return new ErrorNode("Custom facet " + facetName + " can not be set as it is already defined by " + typeName + ".");
+        return new ErrorNode("Custom facet '" + facetName + "' cannot be set as it is already defined by " + typeName + ".");
     }
 
     public static ErrorNode createCanNotOverrideNativeFacet(String facetName)
     {
-        return new ErrorNode("Custom facet " + facetName + " can not be defined as is already defined by this type.");
+        return new ErrorNode("Custom facet '" + facetName + "' cannot be defined as is already defined by this type.");
     }
 
     public static ErrorNode createCanNotOverrideProperty(String propertyName)
     {
-        return new ErrorNode("Property " + propertyName + " can not be overwritten .");
+        return new ErrorNode("Property '" + propertyName + "' cannot be overwritten.");
     }
 
     public static ErrorNode createPropertyCanNotBeOfSchemaType(String propertyName)
     {
-        return new ErrorNode("Property  " + propertyName + " can not have a schema type.");
+        return new ErrorNode("Property '" + propertyName + "' cannot have a schema type.");
     }
 
     public static ErrorNode createRecurrentTypeDefinition(String typeName)
     {
-        return new ErrorNode("Recurrent type definition : " + typeName + ".");
+        return new ErrorNode("Recurrent type definition: " + typeName + ".");
     }
 
     public static ErrorNode createInvalidLibraryChaining(String value)

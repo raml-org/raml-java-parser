@@ -86,6 +86,12 @@ public class NumberResolvedType extends XmlFacetsCapableType
     }
 
     @Override
+    public boolean doAccept(ResolvedType valueType)
+    {
+        return valueType instanceof NumberResolvedType;
+    }
+
+    @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final NumberResolvedType result = copy();

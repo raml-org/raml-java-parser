@@ -15,13 +15,16 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
-import org.raml.v2.api.model.v08.system.types.AnyType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+
 public abstract class BaseType implements ResolvedType
 {
+
     protected ResolvedCustomFacets customFacets;
     private TypeDeclarationNode typeNode;
 
@@ -43,9 +46,30 @@ public abstract class BaseType implements ResolvedType
     }
 
     @Override
-    public boolean inheritsFrom(ResolvedType valueType)
+    public final boolean accepts(ResolvedType valueType)
     {
-        return valueType instanceof AnyType || getClass().equals(valueType.getClass());
+        if (valueType instanceof UnionResolvedType)
+        {
+            List<ResolvedType> toAcceptOptions = ((UnionResolvedType) valueType).of();
+            for (ResolvedType toAcceptOption : toAcceptOptions)
+            {
+                if (!doAccept(toAcceptOption))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else
+        {
+            return doAccept(valueType);
+        }
+    }
+
+    public boolean doAccept(ResolvedType resolvedType)
+    {
+        // Only accepts my types
+        return this.getClass().equals(resolvedType.getClass());
     }
 
     @Nullable

@@ -31,6 +31,7 @@ import org.raml.yagi.framework.nodes.Node;
 
 public class UnionResolvedType extends BaseType
 {
+
     private List<ResolvedType> of;
 
     public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
@@ -73,6 +74,19 @@ public class UnionResolvedType extends BaseType
         {
             return mergeWith(singletonList(with));
         }
+    }
+
+    @Override
+    public boolean doAccept(ResolvedType valueType)
+    {
+        for (ResolvedType resolvedType : of)
+        {
+            if (resolvedType.accepts(valueType))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

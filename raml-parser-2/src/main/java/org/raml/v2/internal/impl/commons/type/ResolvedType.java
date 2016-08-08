@@ -82,5 +82,5 @@ public interface ResolvedType
     @Nonnull
     ResolvedCustomFacets customFacets();
 
-    boolean inheritsFrom(ResolvedType valueType);
+    boolean accepts(ResolvedType valueType);
 }

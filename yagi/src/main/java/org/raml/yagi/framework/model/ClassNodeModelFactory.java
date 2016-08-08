@@ -15,11 +15,11 @@
  */
 package org.raml.yagi.framework.model;
 
-import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.Node;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+
+import org.raml.yagi.framework.nodes.KeyValueNode;
+import org.raml.yagi.framework.nodes.Node;
 
 /**
  * Class based factory
@@ -43,7 +43,7 @@ public class ClassNodeModelFactory implements NodeModelFactory
         {
             if (KeyValueNode.class.isAssignableFrom(nodeConstructor.getParameterTypes()[0]))
             {
-                // If constructor expects a key value pair we try the current not or the parent.
+                // If constructor expects a key value pair we try the current node or the parent.
                 if (node instanceof KeyValueNode)
                 {
                     return (NodeModel) nodeConstructor.newInstance(node);

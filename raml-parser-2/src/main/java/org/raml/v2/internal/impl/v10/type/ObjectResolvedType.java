@@ -91,18 +91,18 @@ public class ObjectResolvedType extends XmlFacetsCapableType
     }
 
     @Override
-    public boolean inheritsFrom(ResolvedType valueType)
+    public boolean doAccept(ResolvedType valueType)
     {
-        final boolean inheritsFrom = super.inheritsFrom(valueType);
+        final boolean inheritsFrom = super.doAccept(valueType);
         if (inheritsFrom && (valueType instanceof ObjectResolvedType))
         {
-            final Map<String, PropertyFacets> properties = ((ObjectResolvedType) valueType).getProperties();
-            for (PropertyFacets propertyFacet : properties.values())
+            final Map<String, PropertyFacets> properties = getProperties();
+            for (PropertyFacets myProperty : properties.values())
             {
-                final PropertyFacets matchedProperty = this.properties.get(propertyFacet.getName());
+                final PropertyFacets matchedProperty = ((ObjectResolvedType) valueType).getProperties().get(myProperty.getName());
                 if (matchedProperty != null)
                 {
-                    if (!matchedProperty.getValueType().inheritsFrom(propertyFacet.getValueType()))
+                    if (!myProperty.getValueType().accepts(matchedProperty.getValueType()))
                     {
                         return false;
                     }
@@ -221,7 +221,8 @@ public class ObjectResolvedType extends XmlFacetsCapableType
                     final String name = property.getName();
                     if (this.properties.containsKey(name))
                     {
-                        if (!property.getTypeDefinition().inheritsFrom(this.properties.get(name).getValueType()))
+                        PropertyFacets myProperty = this.properties.get(name);
+                        if (!myProperty.getValueType().accepts(property.getTypeDefinition()))
                         {
                             property.replaceWith(RamlErrorNodeFactory.createCanNotOverrideProperty(name));
                         }

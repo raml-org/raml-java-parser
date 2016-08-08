@@ -57,6 +57,12 @@ public class AnyResolvedType extends XmlFacetsCapableType
     }
 
     @Override
+    public boolean doAccept(ResolvedType valueType)
+    {
+        return true;
+    }
+
+    @Override
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitAny(this);
@@ -70,9 +76,4 @@ public class AnyResolvedType extends XmlFacetsCapableType
         TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
-    @Override
-    public boolean inheritsFrom(ResolvedType valueType)
-    {
-        return false;
-    }
 }

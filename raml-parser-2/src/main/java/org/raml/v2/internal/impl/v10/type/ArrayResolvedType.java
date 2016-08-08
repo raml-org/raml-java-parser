@@ -35,6 +35,7 @@ import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 
 public class ArrayResolvedType extends XmlFacetsCapableType
 {
+
     private ResolvedType items;
     private Boolean uniqueItems;
     private Integer minItems;
@@ -96,6 +97,19 @@ public class ArrayResolvedType extends XmlFacetsCapableType
         }
         overwriteFacets(result, from);
         return result;
+    }
+
+    @Override
+    public boolean doAccept(ResolvedType resolvedType)
+    {
+        if (resolvedType instanceof ArrayResolvedType)
+        {
+            return items.accepts(((ArrayResolvedType) resolvedType).getItems());
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void validateState()
