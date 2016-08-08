@@ -56,7 +56,7 @@ public class RamlNodeUtils
         {
             if (node instanceof ErrorNode)
             {
-                result.add((ErrorNode) result);
+                result.add((ErrorNode) node);
             }
 
             result.addAll(node.findDescendantsWith(ErrorNode.class));

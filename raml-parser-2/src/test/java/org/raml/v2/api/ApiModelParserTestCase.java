@@ -70,16 +70,35 @@ public class ApiModelParserTestCase extends TestDataProvider
 
         final RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         final List<ValidationResult> validationResults = ramlModelResult.getValidationResults();
-        Assert.assertTrue("Raml has error " + validationResults.toString(), validationResults.isEmpty());
         final StringWriter out = new StringWriter();
         final JsonWriter jsonWriter = new JsonWriter(out);
         jsonWriter.setIndent(" ");
-        dumpApiToJson(ramlModelResult, jsonWriter);
+        if (validationResults.isEmpty())
+        {
+            dumpApiToJson(ramlModelResult, jsonWriter);
+        }
+        else
+        {
+            dumpApiErrorsToJson(validationResults, jsonWriter);
+        }
         dump = out.toString();
         dump = StringUtils.replace(dump, "\\r\\n", "\\n"); // only for windows users
         dump = StringUtils.replace(dump, "\\r", "\\n"); // only for mac users
         expected = IOUtils.toString(new FileInputStream(expectedOutput), "UTF-8");
         Assert.assertTrue(jsonEquals(dump, expected));
+    }
+
+    private void dumpApiErrorsToJson(List<ValidationResult> validationResults, JsonWriter jsonWriter) throws IOException
+    {
+        jsonWriter.beginObject();
+        jsonWriter.name("errors");
+        jsonWriter.beginArray();
+        for (ValidationResult error : validationResults)
+        {
+            jsonWriter.value(error.getMessage());
+        }
+        jsonWriter.endArray();
+        jsonWriter.endObject();
     }
 
     private void dumpApiToJson(RamlModelResult ramlModelResult, JsonWriter jsonWriter) throws Exception
