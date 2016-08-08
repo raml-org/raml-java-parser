@@ -19,23 +19,25 @@ import javax.annotation.Nonnull;
 
 import org.raml.yagi.framework.nodes.Node;
 
-public class SecuritySchemeRefNode extends BaseSecuritySchemeRefNode
+public class ParametrizedSecuritySchemeRefNode extends BaseSecuritySchemeRefNode implements ParametrizedReferenceNode
 {
-    public SecuritySchemeRefNode(String name)
-    {
-        super(name);
-    }
 
-    // copy constructor
-    protected SecuritySchemeRefNode(SecuritySchemeRefNode node)
+    public ParametrizedSecuritySchemeRefNode(ParametrizedSecuritySchemeRefNode node)
     {
         super(node);
+    }
+
+    // Used by reflection
+    public ParametrizedSecuritySchemeRefNode(String name)
+    {
+        super(name);
     }
 
     @Nonnull
     @Override
     public Node copy()
     {
-        return new SecuritySchemeRefNode(this);
+        return new ParametrizedSecuritySchemeRefNode(this);
     }
+
 }

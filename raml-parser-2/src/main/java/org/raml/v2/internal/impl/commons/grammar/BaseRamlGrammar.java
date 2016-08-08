@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedResourceTypeRefNode;
+import org.raml.v2.internal.impl.commons.nodes.ParametrizedSecuritySchemeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedTraitRefNode;
 import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
@@ -602,10 +603,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected KeyValueRule securedByField()
     {
-        AnyOfRule securedBy = anyOf(nullValue(), scalarType().then(new NodeReferenceFactory(SecuritySchemeRefNode.class)), any());
-        return field(securedByKey(),
-                anyOf(array(securedBy), securedBy)
-                                                  .then(new ArrayWrapperFactory()));
+        Rule securitySchemeRef = anyOf(nullValue(), anyTypeReference(SECURITY_SCHEMES_KEY_NAME, SecuritySchemeRefNode.class, ParametrizedSecuritySchemeRefNode.class));
+        return field(securedByKey(), anyOf(securitySchemeRef, array(securitySchemeRef)).then(new ArrayWrapperFactory()));
     }
 
     protected KeyValueRule usageField()

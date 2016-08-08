@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: Instagram API
+securitySchemes:
+    oauth_2_0:
+        description: |
+          Instagram's API uses the OAuth 2.0 protocol for simple, but effective
+          authentication and authorization. The one thing to keep in mind is tha
+          all requests to the API must be made over SSL (https:// not http://)
+        type: OAuth 2.0
+        describedBy:
+          queryParameters:
+            access_token:
+              description: |
+                Used to send a valid OAuth 2 access token. Do not use together with
+                the "Authorization" header
+        settings:
+          authorizationUri: https://api.instagram.com/oauth/authorize
+          accessTokenUri: https://api.instagram.com/oauth/access_token
+          authorizationGrants: [ password ]
+          scopes:
+            - basic
+            - comments
+            - relationships
+            - likes
+
+/users:
+  get:
+    securedBy:
+        - oauth_2_0:
+            scopes: [relationships]

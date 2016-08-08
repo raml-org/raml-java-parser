@@ -15,22 +15,22 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import org.raml.yagi.framework.model.NodeModel;
+import org.raml.v2.internal.impl.commons.nodes.BaseSecuritySchemeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
-import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeRefNode;
+import org.raml.yagi.framework.model.NodeModel;
 
 public class SecuritySchemeRef implements NodeModel
 {
 
-    private SecuritySchemeRefNode node;
+    private BaseSecuritySchemeRefNode node;
 
-    public SecuritySchemeRef(SecuritySchemeRefNode node)
+    public SecuritySchemeRef(BaseSecuritySchemeRefNode node)
     {
         this.node = node;
     }
 
     @Override
-    public SecuritySchemeRefNode getNode()
+    public BaseSecuritySchemeRefNode getNode()
     {
         return node;
     }
