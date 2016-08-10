@@ -70,10 +70,14 @@ public class YamlValidationService
     public List<ValidationResult> validate(String resourceLocation)
     {
         InputStream resourceStream = resourceLoader.fetchResource(resourceLocation);
+
         if (resourceStream == null)
         {
-            throw new ResourceNotFoundException(resourceLocation);
+            List<ValidationResult> results = new ArrayList<ValidationResult>();
+            results.add(ValidationResult.createErrorResult("RAML resource not found"));
+            return results;
         }
+
         return validate(resourceStream, resourceLocation);
     }
 
