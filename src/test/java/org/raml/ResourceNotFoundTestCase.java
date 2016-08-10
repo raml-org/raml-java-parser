@@ -18,6 +18,12 @@ package org.raml;
 import org.junit.Test;
 import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.loader.ResourceNotFoundException;
+import org.raml.parser.rule.ValidationResult;
+
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ResourceNotFoundTestCase extends AbstractRamlTestCase
 {
@@ -28,10 +34,12 @@ public class ResourceNotFoundTestCase extends AbstractRamlTestCase
         parseRaml("invalid/raml/resource.raml");
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void resourceNotFoundOnValidation()
     {
-        validateRaml("invalid/raml/resource.raml");
+        List<ValidationResult> results = validateRaml("invalid/raml/resource.raml");
+        assertThat(results.size(), is(1));
+        assertThat(results.get(0).getMessage(), is("RAML resource not found"));
     }
 
 }
