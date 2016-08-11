@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.raml.parser.loader.ResourceLoader;
-import org.raml.parser.loader.ResourceNotFoundException;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.TagResolver;
 import org.raml.parser.utils.StreamUtils;
@@ -70,25 +69,36 @@ public class YamlValidationService
     public List<ValidationResult> validate(String resourceLocation)
     {
         InputStream resourceStream = resourceLoader.fetchResource(resourceLocation);
-        if (resourceStream == null)
-        {
-            throw new ResourceNotFoundException(resourceLocation);
-        }
         return validate(resourceStream, resourceLocation);
     }
 
     public List<ValidationResult> validate(String content, String resourceLocation)
     {
+        if (content == null)
+        {
+            return createResourceNotFoundValidationError();
+        }
+
         return validate(new StringReader(content), resourceLocation);
     }
 
     public List<ValidationResult> validate(InputStream content, String resourceLocation)
     {
+        if (content == null)
+        {
+            return createResourceNotFoundValidationError();
+        }
+
         return validate(StreamUtils.reader(content), resourceLocation);
     }
 
     public List<ValidationResult> validate(Reader content, String resourceLocation)
     {
+        if (content == null)
+        {
+            return createResourceNotFoundValidationError();
+        }
+
         long startTime = currentTimeMillis();
 
         try
@@ -136,7 +146,19 @@ public class YamlValidationService
     @Deprecated
     public List<ValidationResult> validate(InputStream content)
     {
+        if (content == null)
+        {
+            return createResourceNotFoundValidationError();
+        }
+
         return validate(StreamUtils.reader(content));
+    }
+
+    private List<ValidationResult> createResourceNotFoundValidationError()
+    {
+        List<ValidationResult> results = new ArrayList<ValidationResult>();
+        results.add(ValidationResult.createErrorResult("RAML resource not found"));
+        return results;
     }
 
     protected List<ValidationResult> preValidation(MappingNode root)
