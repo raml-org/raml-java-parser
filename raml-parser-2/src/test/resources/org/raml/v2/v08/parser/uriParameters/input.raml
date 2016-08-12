@@ -1,0 +1,27 @@
+#%RAML 0.8
+title: AccuWeather API
+version: v1
+baseUri: http://{apiDomain}.accuweather.com
+baseUriParameters: 
+  apiDomain: 
+    description: |
+      The sub-domain at which the API is accessible. Use apidev.accuweather.com for development purposes only and api.accuweather.com for production purposes only
+    enum: [ api , apidev ]
+resourceTypes:
+    accessibleResource:
+       uriParameters:
+          period:
+            displayName: period
+            required: true
+            enum:
+              - 12hour
+              - 1hour
+              - 72hour
+              - 240hour
+              - 120hour
+              - 24hour
+
+/forecasts/{version}: 
+  /hourly/{period}/{locationKey}{mediaTypeExtension}: 
+    displayName: Hourly forecasts by location key
+    type: accessibleResource
