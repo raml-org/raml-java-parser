@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -233,7 +233,7 @@
         <connection>scm:git:git://github.com:raml-org/raml-java-parser.git</connection>
         <developerConnection>scm:git:git@github.com:raml-org/raml-java-parser.git</developerConnection>
         <url>http://github.com/raml-org/raml-java-parser</url>
-        <tag>1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
