@@ -123,7 +123,7 @@ public class SYModelWrapper
         {
             final String value = scalarNode.getValue();
             // We only use true or false as boolean possibilities for yaml 1.2 and not yes no.
-            if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false"))
+            if (Tag.BOOL.equals(tag) && (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")))
             {
                 return new SYBooleanNode(scalarNode, resourcePath, resourceLoader);
             }

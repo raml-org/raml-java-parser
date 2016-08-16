@@ -36,7 +36,7 @@ import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
 
 public class StringResolvedType extends XmlFacetsCapableType
@@ -92,7 +92,7 @@ public class StringResolvedType extends XmlFacetsCapableType
         {
             for (Node node : values.getChildren())
             {
-                enumValues.add(((StringNode) node).getValue());
+                enumValues.add(((SimpleTypeNode) node).getLiteralValue());
             }
         }
         return enumValues;
