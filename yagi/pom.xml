@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.raml</groupId>
         <artifactId>raml-parser-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>yagi</artifactId>
     <packaging>jar</packaging>
