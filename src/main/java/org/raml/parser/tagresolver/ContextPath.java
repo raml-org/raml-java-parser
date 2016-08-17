@@ -15,7 +15,6 @@
  */
 package org.raml.parser.tagresolver;
 
-import static java.io.File.separator;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -74,7 +73,7 @@ public class ContextPath
 
     private String getPartentPath()
     {
-        int idx = includeStack.peek().getIncludeName().lastIndexOf(separator) + 1;
+        int idx = includeStack.peek().getIncludeName().lastIndexOf("/") + 1;
         return includeStack.peek().getIncludeName().substring(0, idx);
     }
 
