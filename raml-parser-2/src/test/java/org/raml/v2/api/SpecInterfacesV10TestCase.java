@@ -102,6 +102,7 @@ public class SpecInterfacesV10TestCase
     private void assertApi(Api api)
     {
         assertThat(api.title().value(), is("api title"));
+        assertThat(api.description().value(), is("api description"));
         assertScalarAnnotation(api.title(), "title");
         assertThat(api.version().value(), is("v1"));
         assertThat(api.version().annotations(), hasSize(0));

@@ -6,6 +6,7 @@
   "value": "http://localhost:8081/api"
  },
  "baseUriParameters": [],
+ "description": null,
  "documentation": [],
  "mediaType": [],
  "protocols": [],

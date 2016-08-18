@@ -325,6 +325,10 @@
    "xml": null
   }
  ],
+ "description": {
+  "annotations": [],
+  "value": "api description"
+ },
  "documentation": [
   {
    "annotations": [],

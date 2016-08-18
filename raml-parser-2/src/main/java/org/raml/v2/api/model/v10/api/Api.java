@@ -16,13 +16,14 @@
 package org.raml.v2.api.model.v10.api;
 
 import java.util.List;
+
 import org.raml.v2.api.model.v10.bodies.MimeType;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.resources.Resource;
 import org.raml.v2.api.model.v10.security.SecuritySchemeRef;
 import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
 import org.raml.v2.api.model.v10.system.types.FullUriTemplateString;
-import org.raml.v2.api.model.v10.system.types.StringType;
+import org.raml.v2.api.model.v10.system.types.MarkdownString;
 
 
 public interface Api extends LibraryBase
@@ -32,6 +33,12 @@ public interface Api extends LibraryBase
      * Short plain-text label for the API
      **/
     AnnotableSimpleType<String> title();
+
+
+    /**
+     * Longer description for the API. May be formatted using markdown.
+     **/
+    MarkdownString description();
 
 
     /**
