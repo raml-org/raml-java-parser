@@ -1,0 +1,11 @@
+#%RAML 1.0
+
+title: My API title
+securitySchemes:
+  oauth_2_0:
+    displayName: OAuth2
+    description: oauth 2.0
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, implicit ]

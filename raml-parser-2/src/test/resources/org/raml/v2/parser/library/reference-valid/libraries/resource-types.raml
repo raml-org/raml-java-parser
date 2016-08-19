@@ -2,7 +2,12 @@
 
 securitySchemes:
     oauth_2_0:
+        type: OAuth 2.0
         description: OAuth 2.0 for authenticating all API requests.
+        settings:
+          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+          accessTokenUri: https://api.dropbox.com/1/oauth2/token
+          authorizationGrants: [ authorization_code, implicit ]
 
 resourceTypes:
   base:

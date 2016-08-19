@@ -278,7 +278,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     {
         return objectType()
                            .with(descriptionField())
-                           .with(field(
+                           .with(requiredField(
                                    securitySchemeTypeKey(),
                                    anyOf(
                                            string(OAUTH_1_0).description("The API's authentication uses OAuth 1.0 as described in RFC5849 [RFC5849]"),
