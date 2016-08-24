@@ -137,7 +137,7 @@
        "schema": {
         "value": "UserJson"
        },
-       "schemaContent": null
+       "schemaContent": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
       },
       {
        "description": null,
@@ -147,7 +147,7 @@
        "schema": {
         "value": "UserXml"
        },
-       "schemaContent": null
+       "schemaContent": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
       },
       {
        "description": null,
@@ -181,6 +181,16 @@
        "name": "multipart/form-data",
        "schema": null,
        "schemaContent": null
+      },
+      {
+       "description": null,
+       "example": null,
+       "formParameters": [],
+       "name": "application/vnd.inline+json",
+       "schema": {
+        "value": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+       },
+       "schemaContent": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
       }
      ],
      "description": {
@@ -204,7 +214,7 @@
          "schema": {
           "value": "UserJson"
          },
-         "schemaContent": null
+         "schemaContent": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
         },
         {
          "description": null,
@@ -214,7 +224,7 @@
          "schema": {
           "value": "UserXml"
          },
-         "schemaContent": null
+         "schemaContent": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
         },
         {
          "description": null,
@@ -248,6 +258,16 @@
          "name": "multipart/form-data",
          "schema": null,
          "schemaContent": null
+        },
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [],
+         "name": "application/vnd.inline+json",
+         "schema": {
+          "value": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+         },
+         "schemaContent": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
         }
        ],
        "code": {
@@ -357,7 +377,7 @@
   {
    "key": "UserXml",
    "value": {
-    "value": "# TODO provide proper xml schema\n"
+    "value": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
    }
   }
  ],
