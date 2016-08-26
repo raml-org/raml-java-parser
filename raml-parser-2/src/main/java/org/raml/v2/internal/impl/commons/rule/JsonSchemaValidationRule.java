@@ -105,7 +105,7 @@ public class JsonSchemaValidationRule extends Rule
                 while (iterator.hasNext())
                 {
                     ProcessingMessage next = iterator.next();
-                    errors.add(next.getMessage());
+                    errors.add(next.toString());
                 }
                 return ErrorNodeFactory.createInvalidJsonExampleNode("{\n" + Joiner.on(",\n").join(errors) + "\n}");
             }

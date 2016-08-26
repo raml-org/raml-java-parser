@@ -50,8 +50,24 @@ RamlDocumentNode (Start: 11 , End: 422, On: input.raml, Source: SYObjectNode)
                             ExampleDeclarationNode (Start: 185 , End: 260, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "bad" (Start: 185 , End: 188, On: input.raml)
                                 ErrorNode: "Error validating JSON. Error: {
-instance type (string) does not match any allowed primitive type (allowed: ["integer"]),
-instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+,
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/name"}
+    instance: {"pointer":"/name"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
 }" (Start: 190 , End: 260, On: input.raml, Source: SYStringNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
@@ -77,8 +93,24 @@ instance type (integer) does not match any allowed primitive type (allowed: ["st
                                     ExampleDeclarationNode (Start: 336 , End: 422, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 336 , End: 343, On: input.raml)
                                         ErrorNode: "Error validating JSON. Error: {
-instance type (string) does not match any allowed primitive type (allowed: ["integer"]),
-instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+,
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/name"}
+    instance: {"pointer":"/name"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
 }" (Start: 345 , End: 422, On: input.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)

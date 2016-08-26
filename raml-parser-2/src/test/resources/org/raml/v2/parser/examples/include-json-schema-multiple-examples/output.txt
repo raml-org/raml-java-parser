@@ -38,8 +38,24 @@ RamlDocumentNode (Start: 11 , End: 255, On: input.raml, Source: SYObjectNode)
                             ExampleDeclarationNode (Start: 100 , End: 175, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "bob" (Start: 100 , End: 103, On: input.raml)
                                 ErrorNode: "Error validating JSON. Error: {
-instance type (string) does not match any allowed primitive type (allowed: ["integer"]),
-instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/age"}
+    instance: {"pointer":"/age"}
+    domain: "validation"
+    keyword: "type"
+    found: "string"
+    expected: ["integer"]
+,
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"#","pointer":"/properties/name"}
+    instance: {"pointer":"/name"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
 }" (Start: 105 , End: 175, On: input.raml, Source: SYStringNode)
                             ExampleDeclarationNode (Start: 181 , End: 255, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "marley" (Start: 181 , End: 187, On: input.raml)
