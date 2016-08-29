@@ -186,16 +186,26 @@ public class SpecInterfacesV08TestCase
 
     private void assertBody(List<BodyLike> body)
     {
-        assertThat(body.size(), is(3));
+        assertThat(body.size(), is(4));
 
         BodyLike appJson = body.get(0);
         assertThat(appJson.name(), is("application/json"));
         assertThat(appJson.example().value(), containsString("\"firstname\": \"tato\""));
         assertThat(appJson.schema().value(), is("UserJson"));
+        assertThat(appJson.schemaContent(), containsString("\"firstname\":  { \"type\": \"string\" }"));
+
+        BodyLike xml = body.get(1);
+        assertThat(xml.name(), is("application/xml"));
+        assertThat(xml.schema().value(), is("UserXml"));
+        assertThat(xml.schemaContent(), containsString("<xs:element type=\"xs:string\" name=\"input\"/>"));
 
         BodyLike multipart = body.get(2);
         assertThat(multipart.formParameters().size(), is(2));
         assertThat(multipart.formParameters().get(0).name(), is("description"));
 
+        BodyLike vndJson = body.get(3);
+        assertThat(vndJson.name(), is("application/vnd.inline+json"));
+        assertThat(vndJson.schema().value(), containsString("\"input\": {"));
+        assertThat(vndJson.schemaContent(), containsString("\"input\": {"));
     }
 }

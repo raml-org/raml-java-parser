@@ -19,6 +19,7 @@ import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.model.NodeModel;
+import org.raml.yagi.framework.util.NodeSelector;
 
 public class BodyLike implements NodeModel
 {
@@ -39,6 +40,26 @@ public class BodyLike implements NodeModel
     public String name()
     {
         return ((StringNode) node.getKey()).getValue();
+    }
+
+    public String schemaContent()
+    {
+        String schema = NodeSelector.selectStringValue("schema", getNode());
+
+        // For an inline schema
+        if (schema == null || schema.startsWith("{") || schema.startsWith("<"))
+        {
+            return schema;
+        }
+
+        // For an schema reference,
+        Node rootRamlSchema = NodeSelector.selectFrom("/schemas/" + schema, getNode());
+        if (rootRamlSchema instanceof StringNode)
+        {
+            return ((StringNode) rootRamlSchema).getValue();
+        }
+
+        return null;
     }
 
 }
