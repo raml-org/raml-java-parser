@@ -142,6 +142,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return super.securitySchemePart()
                     .with(annotationField())
+                    .with(field(queryStringKey(), type()))
                     .with(exclusiveKeys(QUERY_STRING_KEY_NAME, QUERY_PARAMETERS_KEY_NAME));
     }
 

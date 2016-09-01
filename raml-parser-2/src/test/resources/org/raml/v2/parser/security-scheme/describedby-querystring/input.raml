@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Api
+
+securitySchemes:
+  custom_with_query_param:
+    type: x-custom
+    describedBy:
+      queryString:
+        properties:
+          authQueryParam: string
