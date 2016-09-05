@@ -1,0 +1,4 @@
+get:
+  headers: !include common/headers.yaml
+  responses:
+    200:

@@ -40,6 +40,7 @@ import org.raml.model.ActionType;
 import org.raml.model.Resource;
 import org.raml.parser.loader.ResourceLoader;
 import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.tagresolver.ContextPathAware;
 import org.raml.parser.tagresolver.IncludeResolver;
 import org.raml.parser.utils.Inflector;
@@ -175,8 +176,22 @@ public class TemplateResolver
 
     private Node resolveInclude(Node node)
     {
+        return resolveInclude(node, null);
+    }
+
+    private Node resolveInclude(Node node, Tag tag)
+    {
         if (node.getNodeId() == scalar && node.getTag().equals(INCLUDE_TAG))
         {
+            if (tag != null && tag.startsWith(INCLUDE_APPLIED_TAG))
+            {
+                // for multiple levels of includes in the same template recalculate path using
+                //  parent include applied tag path
+                ScalarNode scalarNode = (ScalarNode) node;
+                String parentPath = includeResolver.getContextPath().resolveRelativePath(tag);
+                String includePathRecalculated = ContextPath.getPartentPath(parentPath) + scalarNode.getValue();
+                node = new ScalarNode(scalarNode.getTag(), includePathRecalculated, node.getStartMark(), node.getEndMark(), scalarNode.getStyle());
+            }
             return includeResolver.resolve(node, resourceLoader, nodeNandler);
         }
         return node;
@@ -697,7 +712,16 @@ public class TemplateResolver
                     String baseKey = getMatchingKey(baseTupleMap, templateKey);
                     if (baseKey == null)
                     {
-                        baseNode.getValue().add(context.tagInclude(templateTuple));
+                        MergeContext nestedContext = context;
+                        Node templateValueNode = resolveInclude(templateTuple.getValueNode(), context.templateInclude);
+                        if (templateValueNode != templateTuple.getValueNode())
+                        {
+                            // when there are two consecutive levels of includes (parent and child)
+                            //  tag children with the more specific include paths
+                            templateTuple = new NodeTuple(templateTuple.getKeyNode(), templateValueNode);
+                            nestedContext = new MergeContext(Object.class, templateValueNode.getTag());
+                        }
+                        baseNode.getValue().add(nestedContext.tagInclude(templateTuple));
                     }
                     else
                     {

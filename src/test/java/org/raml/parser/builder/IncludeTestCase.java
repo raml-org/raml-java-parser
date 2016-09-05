@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.raml.model.ActionType.GET;
@@ -28,12 +29,15 @@ import static org.raml.model.ParamType.BOOLEAN;
 import static org.raml.model.ParamType.INTEGER;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
+import org.raml.model.parameter.Header;
 import org.raml.parser.rule.ValidationResult;
 
 public class IncludeTestCase extends AbstractRamlTestCase
@@ -201,6 +205,16 @@ public class IncludeTestCase extends AbstractRamlTestCase
     {
         String ramlSource = "org/raml/include/include-resource-type-nested-optional.yaml";
         validateRamlNoErrors(ramlSource);
+    }
+
+    @Test
+    public void includeResourceTypeConsecutiveIncludes()
+    {
+        String ramlSource = "org/raml/include/include-resource-type-consecutive.raml";
+        Raml raml = parseRaml(ramlSource);
+        Map<String, Header> headers = raml.getResource("/songs").getAction(ActionType.GET).getHeaders();
+        assertNotNull(headers);
+        assertThat(headers.size(), is(1));
     }
 
     @Test

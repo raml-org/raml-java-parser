@@ -15,6 +15,8 @@
  */
 package org.raml.parser.tagresolver;
 
+import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -71,10 +73,43 @@ public class ContextPath
         return resolveAbsolutePath(relativeFile, getPartentPath());
     }
 
+    /**
+     * Calculates the relative path of an include applied tag with respect
+     *  to the current context
+     *
+     *  e.g.:
+     *    context: a/b/c/x.raml
+     *    tag:     a/b/c/d/y.raml
+     *    result:  d/y.raml
+     *
+     * @param tag include applied tag
+     * @return the relative path part of the tag
+     */
+    public String resolveRelativePath(Tag tag)
+    {
+        if (tag == null || !tag.startsWith(INCLUDE_APPLIED_TAG))
+        {
+            throw new IllegalArgumentException("Tag must be an include applied");
+        }
+        String partentPath = getPartentPath();
+        String includePath = new IncludeInfo(tag).getIncludeName();
+
+        if (includePath.startsWith(partentPath))
+        {
+            includePath = includePath.substring(partentPath.length());
+        }
+        return includePath;
+    }
+
+    public static String getPartentPath(String path)
+    {
+        int idx = path.lastIndexOf("/") + 1;
+        return path.substring(0, idx);
+    }
+
     private String getPartentPath()
     {
-        int idx = includeStack.peek().getIncludeName().lastIndexOf("/") + 1;
-        return includeStack.peek().getIncludeName().substring(0, idx);
+        return getPartentPath(includeStack.peek().getIncludeName());
     }
 
     public IncludeInfo peek()

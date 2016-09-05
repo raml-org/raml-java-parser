@@ -1,0 +1,8 @@
+#%RAML 0.8
+title: Sample API
+resourceTypes:
+  - readonly: !include resourcetypes/readonly-resource.yaml
+
+/songs:
+  type: readonly
+  get:
