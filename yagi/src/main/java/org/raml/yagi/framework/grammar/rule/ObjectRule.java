@@ -95,7 +95,7 @@ public class ObjectRule extends Rule
         final List<KeyValueRule> fieldRules = node instanceof NullNode ? fields : getAllFieldRules(node);
         for (KeyValueRule rule : fieldRules)
         {
-            if (rule.repeated() || !matchesAny(rule, node.getChildren()))
+            if (rule.repeated() || findMatchingNode(rule, node.getChildren()) == null)
             {
                 if (context.getContextType() == ParsingContextType.VALUE)
                 {
@@ -117,16 +117,18 @@ public class ObjectRule extends Rule
         return result;
     }
 
-    private boolean matchesAny(KeyValueRule rule, List<Node> children)
+    @Nullable
+    private Node findMatchingNode(KeyValueRule rule, List<Node> children)
     {
         for (Node child : children)
         {
-            if (rule.matches(child) && rule.getKeyRule().matches(child.getChildren().get(0)) && rule.getValueRule().matches(child.getChildren().get(1)))
+            if (rule.matches(child) && matchesKey(child, rule) && matchesValue(child, rule))
             {
-                return true;
+                return child;
             }
         }
-        return false;
+
+        return null;
     }
 
     @Override
@@ -147,12 +149,65 @@ public class ObjectRule extends Rule
     {
         List<Node> children = node.getChildren();
         final List<KeyValueRule> allFieldRules = getAllFieldRules(node);
-        boolean matches = true;
+
+        Set<Node> unmatchedChildren = new HashSet<>(children);
+
         for (KeyValueRule rule : allFieldRules)
         {
-            matches &= !rule.isRequired(node) || matchesAny(rule, children);
+            // If the key is required, but it does not match any rule
+            if (rule.isRequired(node) && !unmatchedChildren.remove(findMatchingNode(rule, children)))
+            {
+                return false;
+            }
         }
-        return matches;
+
+        // All children that are not required and additional properties will be in unmatchedChildren
+        for (Node child : unmatchedChildren)
+        {
+            // If it matches the key, but does not match the rule
+            if (childMatchesAnyKey(child, allFieldRules) && !childMatchesAnyRule(child, allFieldRules))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean childMatchesAnyKey(Node child, List<KeyValueRule> allFieldRules)
+    {
+        for (KeyValueRule rule : allFieldRules)
+        {
+            if (matchesKey(child, rule))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean childMatchesAnyRule(Node child, List<KeyValueRule> allFieldRules)
+    {
+        for (KeyValueRule rule : allFieldRules)
+        {
+            if (rule.matches(child) && matchesKey(child, rule) && matchesValue(child, rule))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean matchesKey(Node child, KeyValueRule rule)
+    {
+        return rule.getKeyRule().matches(child.getChildren().get(0));
+    }
+
+    private boolean matchesValue(Node child, KeyValueRule rule)
+    {
+        return rule.getValueRule().matches(child.getChildren().get(1));
     }
 
     @Nonnull
