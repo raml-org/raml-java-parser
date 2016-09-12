@@ -41,3 +41,28 @@ else
 
 }
 ```
+
+## Contribution guidelines
+
+### Contributor’s Agreement
+
+To contribute source code to this repository, please read our [contributor's agreement](http://www.mulesoft.org/legal/contributor-agreement.html), and then execute it by running this notebook and following the instructions: https://api-notebook.anypoint.mulesoft.com/notebooks/#380297ed0e474010ff43
+
+### Pull requests are always welcome
+
+We are always thrilled to receive pull requests, and do our best to process them as fast as possible. Not sure if that typo is worth a pull request? Do it! We will appreciate it.
+
+If your pull request is not accepted on the first try, don't be discouraged! If there's a problem with the implementation, hopefully you received feedback on what to improve.
+
+### Create issues...
+
+Any significant improvement should be documented as [a GitHub issue](https://github.com/raml-org/raml-java-parser/issues) before anybody
+starts working on it.
+
+### ...but check for existing issues first!
+
+Please take a moment to check that an issue doesn't already exist documenting your bug report or improvement proposal. If it does, it never hurts to thumb up the original post or add "I have this problem too". This will help prioritize the most common problems and requests.
+
+### Merge approval
+
+The maintainers will review your pull request and, if approved, will merge into the main repo. Commits get approval based on the conventions outlined in the previous section. For example, new features without additional tests will be not approved.
