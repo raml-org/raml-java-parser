@@ -17,14 +17,15 @@ package org.raml.yagi.framework.util;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 public class DateUtils
 {
-    private static DateTimeFormatter hourFormatter = DateTimeFormat.forPattern("HH:mm:ss");
-    private static DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("YYYY-MM-DD");
-    private static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
-    private static DateTimeFormatter dateTimeSecondFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss.SSS'Z'");
+    private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
+    private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD");
+    private static DateTimeFormatter dateTimeOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
+    private static DateTimeFormatter rfc3339Formatter = ISODateTimeFormat.dateTimeParser();
 
     public static boolean isValidDate(String date, DateType format, String rfc)
     {
@@ -33,13 +34,13 @@ public class DateUtils
             switch (format)
             {
             case date_only:
-                dateFormatter.parseLocalDate(date);
+                dateOnlyFormatter.parseLocalDate(date);
                 break;
             case time_only:
-                hourFormatter.parseLocalTime(date);
+                timeOnlyFormatter.parseLocalTime(date);
                 break;
             case datetime_only:
-                dateTimeFormatter.parseLocalDateTime(date);
+                dateTimeOnlyFormatter.parseLocalDateTime(date);
                 break;
             case datetime:
                 if (rfc != null && "rfc2616".equals(rfc))
@@ -49,7 +50,7 @@ public class DateUtils
                 }
                 else
                 {
-                    dateTimeSecondFormatter.parseLocalDateTime(date);
+                    rfc3339Formatter.parseLocalDateTime(date);
                     break;
                 }
             default:

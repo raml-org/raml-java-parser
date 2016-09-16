@@ -22,6 +22,13 @@ types:
       good: 2016-02-28T16:41:41.090Z
       bad: 2016-13-34T27:65:65.0901Z
     format: rfc3339 # the default, so no need to specify
+  updated:
+    type: datetime
+    examples:
+      good: 2016-02-28T16:41:41Z # secfrac is optional
+      good2: 2016-02-28T16:41:41-08:30 # valid offset
+      bad: 2016-02-28T16:41:41+8:30 # invalid offset
+    format: rfc3339 # the default, so no need to specify
   If-Modified-Since:
     type: datetime
     examples:
