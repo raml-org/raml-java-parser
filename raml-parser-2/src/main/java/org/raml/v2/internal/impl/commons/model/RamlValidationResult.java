@@ -22,18 +22,19 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
 {
 
     private String message;
+    private String errorPath;
     private Position start;
     private Position end;
 
     public RamlValidationResult(String message)
     {
-
         this.message = message;
     }
 
     public RamlValidationResult(ErrorNode errorNode)
     {
         this.message = errorNode.getErrorMessage();
+        this.errorPath = errorNode.getPath();
         this.start = errorNode.getStartPosition();
         this.end = errorNode.getEndPosition();
     }
@@ -42,6 +43,12 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
     public String getMessage()
     {
         return message;
+    }
+
+    @Override
+    public String getPath()
+    {
+        return errorPath;
     }
 
     @Override
@@ -59,4 +66,5 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
         }
         return builder.toString();
     }
+
 }

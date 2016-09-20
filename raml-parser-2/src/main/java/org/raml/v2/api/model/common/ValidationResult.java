@@ -19,4 +19,6 @@ public interface ValidationResult
 {
 
     String getMessage();
+
+    String getPath();
 }
