@@ -1,0 +1,37 @@
+#%RAML 1.0
+title: Toto API
+
+types:
+ FirstOption:
+   properties:
+     theProperty?:
+       enum: [a,b]
+     mandatory: string
+ SecondOption:
+   properties:
+     theProperty?:
+       enum: [c,d]
+     mandatory: string
+ Item:
+   properties:
+     testProperty:
+       type: (FirstOption | SecondOption)[]
+   example:
+     testProperty:
+       - theProperty: a
+         mandatory: lalala
+       - theProperty: c
+         mandatory: lalala
+       - theProperty: e
+         mandatory: lalala
+       - theProperty: a
+         mandatory: 123
+       - theProperty: c
+         mandatory: 123
+       - theProperty: a
+         mandatory: lalala
+         additional: 1234
+       - mandatory: lalala
+       - mandatory: 1234
+       - theProperty: a
+       - theProperty: c
