@@ -24,11 +24,12 @@ public class DefaultPosition extends AbstractPosition
 {
 
     public static final String ARTIFICIAL_NODE = "[artificial node]";
-    private int index;
-    private int line;
-    private int column;
-    private String resource;
-    private ResourceLoader resourceLoader;
+    private final int index;
+    private final int line;
+    private final int column;
+    private final String resource;
+    private final ResourceLoader resourceLoader;
+    private String includedResourceUri;
 
     public DefaultPosition(int index, int line, int column, String resource, ResourceLoader resourceLoader)
     {
@@ -62,6 +63,17 @@ public class DefaultPosition extends AbstractPosition
     public String getPath()
     {
         return resource;
+    }
+
+    public String getIncludedResourceUri()
+    {
+        return includedResourceUri;
+    }
+
+    @Override
+    public void setIncludedResourceUri(String includedResourceURI)
+    {
+        this.includedResourceUri = includedResourceURI;
     }
 
     @Nonnull

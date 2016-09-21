@@ -1,0 +1,14 @@
+{
+  "firstName": "Iron",
+  "lastName": "Man",
+  "friends": [
+    {
+      "name": "Thor",
+      "hatesYou": true
+    },
+    {
+      "name": "Coulson",
+      "hatesYou": false
+    }
+  ]
+}

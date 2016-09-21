@@ -23,7 +23,9 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FileResourceLoader implements ResourceLoader
+import javax.annotation.Nullable;
+
+public class FileResourceLoader implements ResourceLoaderExtended
 {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -40,7 +42,7 @@ public class FileResourceLoader implements ResourceLoader
     }
 
     @Override
-    public InputStream fetchResource(String resourceName)
+    public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
         File includedFile = new File(resourceName);
         if (!includedFile.isAbsolute())
@@ -56,6 +58,11 @@ public class FileResourceLoader implements ResourceLoader
         try
         {
             inputStream = new FileInputStream(includedFile);
+
+            if (callback != null)
+            {
+                callback.onResourceFound(includedFile.toURI());
+            }
         }
         catch (FileNotFoundException e)
         {
@@ -64,4 +71,10 @@ public class FileResourceLoader implements ResourceLoader
         return inputStream;
     }
 
+    @Nullable
+    @Override
+    public InputStream fetchResource(String resourceName)
+    {
+        return fetchResource(resourceName, null);
+    }
 }

@@ -16,6 +16,7 @@
 package org.raml.yagi.framework.nodes;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.raml.v2.api.loader.ResourceLoader;
 
@@ -50,6 +51,19 @@ public interface Position
      */
     @Nonnull
     String getPath();
+
+    /**
+     * Returns the resource URI of the current position
+     * @return The resource URI if it is included, null if not
+     */
+    @Nullable
+    String getIncludedResourceUri();
+
+    /**
+     * Sets the URI of the resource in the current position
+     * @param includedResourceURI The resource URI
+     */
+    void setIncludedResourceUri(String includedResourceURI);
 
     @Nonnull
     Position rightShift(int offset);

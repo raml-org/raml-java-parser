@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Staff API
+version: v1-dev
+
+types:
+  User:
+    schema: !include user.json
+
+/{staffId}:
+    get:
+      responses:
+        "200":
+          body:
+            application/json:
+              type: User
+              example: !include example.json

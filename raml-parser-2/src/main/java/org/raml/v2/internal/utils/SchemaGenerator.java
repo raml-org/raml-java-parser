@@ -23,12 +23,16 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
 import org.raml.v2.internal.utils.xml.XsdResourceResolver;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
@@ -47,6 +51,8 @@ public class SchemaGenerator
 
     public static JsonSchema generateJsonSchema(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException
     {
+        String includedResourceUri = resolveResourceUriIfIncluded(jsonTypeDefinition);
+
         JsonNode jsonSchema = JsonLoader.fromString(jsonTypeDefinition.getSchemaValue());
         JsonSchemaFactory factory = JsonSchemaFactory.newBuilder().freeze();
         if (jsonTypeDefinition.getInternalFragment() != null)
@@ -55,8 +61,50 @@ public class SchemaGenerator
         }
         else
         {
-            return factory.getJsonSchema(jsonSchema);
+            if (includedResourceUri != null)
+            {
+                return factory.getJsonSchema(includedResourceUri);
+            }
+            else
+            {
+                return factory.getJsonSchema(jsonSchema);
+            }
+
         }
+    }
+
+    private static String resolveResourceUriIfIncluded(JsonSchemaExternalType jsonTypeDefinition)
+    {
+        // Getting the type holding the schema
+        TypeDeclarationNode typeDeclarationNode = jsonTypeDefinition.getTypeDeclarationNode();
+
+        // Inside the type declaration, we find the node containing the schema itself
+        List<ExternalSchemaTypeExpressionNode> schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);
+        if (schemas.size() > 0)
+        {
+            return schemas.get(0).getStartPosition().getIncludedResourceUri();
+        }
+        else
+        {
+            // If the array is empty, then it must be a reference to a previously defined type
+            List<NamedTypeExpressionNode> refNode = typeDeclarationNode.findDescendantsWith(NamedTypeExpressionNode.class);
+
+            if (refNode.size() > 0)
+            {
+                // If refNodes is not empty, then we obtain that type
+                typeDeclarationNode = refNode.get(0).resolveReference();
+                if (typeDeclarationNode != null)
+                {
+                    schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);
+                    if (schemas.size() > 0)
+                    {
+                        return schemas.get(0).getStartPosition().getIncludedResourceUri();
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
 

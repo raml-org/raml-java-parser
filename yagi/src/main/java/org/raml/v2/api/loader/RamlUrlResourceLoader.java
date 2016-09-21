@@ -15,18 +15,20 @@
  */
 package org.raml.v2.api.loader;
 
+import javax.annotation.Nullable;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RamlUrlResourceLoader implements ResourceLoader
+public class RamlUrlResourceLoader implements ResourceLoaderExtended
 {
     public static final String APPLICATION_RAML = "application/raml+yaml";
 
     @Override
-    public InputStream fetchResource(String resourceName)
+    public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
         InputStream inputStream = null;
         try
@@ -35,13 +37,28 @@ public class RamlUrlResourceLoader implements ResourceLoader
             URLConnection connection = url.openConnection();
             connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
             inputStream = new BufferedInputStream(connection.getInputStream());
+
+            if (callback != null)
+            {
+                callback.onResourceFound(url.toURI());
+            }
         }
         catch (IOException e)
         {
             // ignore on resource not found
         }
+        catch (URISyntaxException e)
+        {
+            // Ignore
+        }
         return inputStream;
 
     }
 
+    @Nullable
+    @Override
+    public InputStream fetchResource(String resourceName)
+    {
+        return fetchResource(resourceName, null);
+    }
 }

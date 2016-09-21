@@ -1,0 +1,118 @@
+RamlDocumentNode (Start: 11 , End: 261, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 27, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 27, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 27, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "Staff API" (Start: 18 , End: 27, On: input.raml)
+    KeyValueNodeImpl (Start: 28 , End: 43, On: input.raml)
+        SYStringNode: "version" (Start: 28 , End: 35, On: input.raml)
+        ObjectNodeImpl (Start: 37 , End: 43, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 43)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "v1-dev" (Start: 37 , End: 43, On: input.raml, Source: SYStringNode)
+    TypesNode (Start: 45 , End: 92, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 45 , End: 50, On: input.raml)
+        SYObjectNode (Start: 54 , End: 92, On: input.raml)
+            TypeDeclarationField (Start: 54 , End: 92, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "User" (Start: 54 , End: 58, On: input.raml)
+                TypeDeclarationNode (Start: 64 , End: 92, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 64 , End: 90, On: input.raml)
+                        SYStringNode: "schema" (Start: 64 , End: 70, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Example Schema",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "age": {
+      "description": "Age in years",
+      "type": "integer",
+      "minimum": 0
+    },
+    "friends": {
+      "description": "A list of friends",
+      "type": "array",
+      "items": {
+        "$ref": "friends.json#/definitions/person"
+      }
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName",
+    "friends"
+  ]
+}" (Start: 72 , End: 90, On: input.raml, Source: StringNodeImpl)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "User" (Start: -1 , End: -1, Source: SYStringNode)
+    ResourceNode (Start: 92 , End: 261, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "/{staffId}" (Start: 92 , End: 102, On: input.raml)
+        SYObjectNode (Start: 108 , End: 261, On: input.raml)
+            MethodNode (Start: 108 , End: 261, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "get" (Start: 108 , End: 111, On: input.raml)
+                SYObjectNode (Start: 119 , End: 261, On: input.raml)
+                    KeyValueNodeImpl (Start: 119 , End: 261, On: input.raml)
+                        SYStringNode: "responses" (Start: 119 , End: 128, On: input.raml)
+                        SYObjectNode (Start: 138 , End: 261, On: input.raml)
+                            ResponseNode (Start: 138 , End: 261, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "200" (Start: 138 , End: 143, On: input.raml)
+                                SYObjectNode (Start: 155 , End: 261, On: input.raml)
+                                    BodyNode (Start: 155 , End: 261, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYStringNode: "body" (Start: 155 , End: 159, On: input.raml)
+                                        SYObjectNode (Start: 173 , End: 261, On: input.raml)
+                                            KeyValueNodeImpl (Start: 173 , End: 261, On: input.raml)
+                                                SYStringNode: "application/json" (Start: 173 , End: 189, On: input.raml)
+                                                TypeDeclarationNode (Start: 205 , End: 261, On: input.raml, Source: SYObjectNode)
+                                                    KeyValueNodeImpl (Start: 205 , End: 215, On: input.raml)
+                                                        SYStringNode: "type" (Start: 205 , End: 209, On: input.raml)
+                                                        NamedTypeExpressionNode User -> {TypeDeclarationNode RefStart: 64 , RefEnd: 92} (Start: 211 , End: 215, On: input.raml, Source: SYStringNode)
+                                                    ExampleDeclarationNode (Start: 230 , End: 260, On: input.raml, Source: KeyValueNodeImpl)
+                                                        SYStringNode: "example" (Start: 230 , End: 237, On: input.raml)
+                                                        StringNodeImpl: "{
+  "firstName": "Iron",
+  "lastName": "Man",
+  "friends": [
+    {
+      "name": "Thor",
+      "hatesYou": true
+    },
+    {
+      "name": "Coulson",
+      "hatesYou": false
+    }
+  ]
+}" (Start: 239 , End: 260, On: input.raml, Source: SYIncludeNode)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "get" (Start: -1 , End: -1, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                ObjectNodeImpl (Start: -1 , End: -1)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                        OverlayableStringNode: "/{staffId}" (Start: -1 , End: -1, Source: SYStringNode)
