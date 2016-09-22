@@ -16,12 +16,13 @@
 package org.raml.yagi.framework.nodes.snakeyaml;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.yagi.framework.nodes.IncludeNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 import javax.annotation.Nonnull;
 
-public class SYIncludeNode extends SYStringNode
+public class SYIncludeNode extends SYStringNode implements IncludeNode
 {
 
     private SYIncludeNode(SYIncludeNode node)
@@ -34,11 +35,13 @@ public class SYIncludeNode extends SYStringNode
         super(scalarNode, resourcePath, resourceLoader);
     }
 
+    @Override
     public String getIncludePath()
     {
         return getValue();
     }
 
+    @Override
     public String getIncludedType()
     {
         String parts[];

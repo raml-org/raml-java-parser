@@ -15,19 +15,41 @@
  */
 package org.raml.v2.api.loader;
 
+import javax.annotation.Nullable;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 
-public class ClassPathResourceLoader implements ResourceLoader
+public class ClassPathResourceLoader implements ResourceLoaderExtended
 {
 
+    @Nullable
     @Override
-    public InputStream fetchResource(String resourceName)
+    public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
         if (inputStream == null)
         {
             inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
         }
+
+        if (callback != null && inputStream != null)
+        {
+            try
+            {
+                callback.onResourceFound(Thread.currentThread().getContextClassLoader().getResource(resourceName).toURI());
+            }
+            catch (URISyntaxException e)
+            {
+                // Ignore
+            }
+        }
+
         return inputStream;
+    }
+
+    @Override
+    public InputStream fetchResource(String resourceName)
+    {
+        return fetchResource(resourceName, null);
     }
 }

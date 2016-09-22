@@ -52,8 +52,33 @@ public abstract class AbstractRamlNode extends BaseNode
     public void setSource(Node source)
     {
         super.setSource(source);
-        this.endPosition = source.getEndPosition();
-        this.startPosition = source.getStartPosition();
+        updatePosition(source);
+    }
+
+    private void updatePosition(Node source)
+    {
+        // Gets the position of the source node
+        Position sourceStartPosition = source.getStartPosition();
+        Position sourceEndPosition = source.getEndPosition();
+
+        // If it is a SYIncludeNode, the current node holds the URI of the resource loaded,
+        // we must not replace the current node's position with the source's one without saving the URI
+        if (source instanceof IncludeNode)
+        {
+            // Propagate resourceURI already calculated by the include resolver
+            // and stored in an artificial node
+            String resourceURI = null;
+            if (startPosition != null)
+            {
+                resourceURI = startPosition.getIncludedResourceUri();
+            }
+
+            sourceStartPosition.setIncludedResourceUri(resourceURI);
+            sourceEndPosition.setIncludedResourceUri(resourceURI);
+        }
+
+        this.endPosition = sourceEndPosition;
+        this.startPosition = sourceStartPosition;
     }
 
     @Nonnull

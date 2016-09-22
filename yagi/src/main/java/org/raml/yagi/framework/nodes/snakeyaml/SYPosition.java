@@ -27,6 +27,7 @@ public class SYPosition extends AbstractPosition
     private Mark mark;
     private ResourceLoader resourceLoader;
     private String resourcePath;
+    private String includedResourceURI;
 
     public SYPosition(Mark mark, ResourceLoader resourceLoader, String resourcePath)
     {
@@ -58,6 +59,18 @@ public class SYPosition extends AbstractPosition
     public String getPath()
     {
         return resourcePath;
+    }
+
+    @Override
+    public String getIncludedResourceUri()
+    {
+        return includedResourceURI;
+    }
+
+    @Override
+    public void setIncludedResourceUri(String includedResourceURI)
+    {
+        this.includedResourceURI = includedResourceURI;
     }
 
     @Nonnull

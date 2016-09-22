@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Users API
+version: v1-dev
+
+/{staffId}:
+    get:
+      responses:
+        "200":
+          body:
+            application/json:
+              type: !include user.json
+              example: !include example.json

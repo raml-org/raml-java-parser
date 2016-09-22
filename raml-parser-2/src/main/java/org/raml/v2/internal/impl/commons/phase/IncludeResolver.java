@@ -15,15 +15,20 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 
+import org.apache.commons.io.IOUtils;
+import org.raml.v2.api.loader.ResourceLoaderExtended;
+import org.raml.v2.api.loader.ResourceUriCallback;
+import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.NullNodeImpl;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.nodes.IncludeErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.nodes.snakeyaml.SYIncludeNode;
@@ -34,10 +39,11 @@ import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 
 
-public class IncludeResolver implements Transformer
+public class IncludeResolver implements Transformer, ResourceUriCallback
 {
 
     private final ResourceLoader resourceLoader;
+    private String includedResourceUri;
 
     public IncludeResolver(ResourceLoader resourceLoader)
     {
@@ -55,8 +61,19 @@ public class IncludeResolver implements Transformer
     {
         final SYIncludeNode includeNode = (SYIncludeNode) node;
         String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getPath(), includeNode.getIncludePath());
-        try (InputStream inputStream = resourceLoader.fetchResource(resourcePath))
+        InputStream inputStream = null;
+
+        try
         {
+            if (resourceLoader instanceof ResourceLoaderExtended)
+            {
+                inputStream = ((ResourceLoaderExtended) resourceLoader).fetchResource(resourcePath, this);
+            }
+            else
+            {
+                inputStream = resourceLoader.fetchResource(resourcePath);
+            }
+
             if (inputStream == null)
             {
                 return new IncludeErrorNode("Include cannot be resolved: " + resourcePath);
@@ -88,6 +105,7 @@ public class IncludeResolver implements Transformer
             // scalar value
             {
                 result = new StringNodeImpl(includeContent);
+                setTempPositionWithResourceUri(result);
             }
 
             if (result == null)
@@ -97,10 +115,23 @@ public class IncludeResolver implements Transformer
 
             return result;
         }
-        catch (IOException e)
+        finally
         {
-            return new IncludeErrorNode(String.format("Include cannot be resolved: %s. (%s)", resourcePath, e.getMessage()));
+            IOUtils.closeQuietly(inputStream);
         }
+    }
+
+    private void setTempPositionWithResourceUri(Node result)
+    {
+        // Position is always null, so it is generated on the fly
+        Position startPosition = result.getStartPosition();
+        Position endPosition = result.getEndPosition();
+
+        startPosition.setIncludedResourceUri(includedResourceUri);
+        endPosition.setIncludedResourceUri(includedResourceUri);
+
+        ((AbstractRamlNode) result).setStartPosition(startPosition);
+        ((AbstractRamlNode) result).setEndPosition(endPosition);
     }
 
     private boolean isTypedFragment(Node result, RamlFragment fragment)
@@ -109,4 +140,9 @@ public class IncludeResolver implements Transformer
     }
 
 
+    @Override
+    public void onResourceFound(URI resourceURI)
+    {
+        this.includedResourceUri = resourceURI.toString();
+    }
 }

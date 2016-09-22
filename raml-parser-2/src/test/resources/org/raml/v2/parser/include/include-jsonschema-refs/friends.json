@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "person": {
+      "type": "object",
+      "properties": {
+        "hatesYou": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hatesYou",
+        "name"
+      ]
+    }
+  }
+}
