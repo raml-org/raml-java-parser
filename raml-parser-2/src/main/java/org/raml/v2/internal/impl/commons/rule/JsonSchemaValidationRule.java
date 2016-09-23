@@ -15,8 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.rule;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
@@ -37,6 +37,8 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
+import static org.raml.yagi.framework.nodes.jackson.JsonUtils.parseJson;
 
 /**
  * Validates a string node content with the specified json schema
@@ -96,7 +98,8 @@ public class JsonSchemaValidationRule extends Rule
                 return ErrorNodeFactory.createInvalidJsonExampleNode("Source example is not valid: " + node);
             }
 
-            JsonNode json = JsonLoader.fromString(value);
+            JsonNode json = parseJson(value);
+
             ProcessingReport report = schema.validate(json);
             if (!report.isSuccess())
             {
@@ -109,6 +112,10 @@ public class JsonSchemaValidationRule extends Rule
                 }
                 return ErrorNodeFactory.createInvalidJsonExampleNode("{\n" + Joiner.on(",\n").join(errors) + "\n}");
             }
+        }
+        catch (JsonParseException e)
+        {
+            return ErrorNodeFactory.createInvalidJsonExampleNode(e.getOriginalMessage());
         }
         catch (IOException | ProcessingException e)
         {

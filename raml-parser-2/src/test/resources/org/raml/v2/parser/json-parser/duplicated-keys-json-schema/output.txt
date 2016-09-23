@@ -1,0 +1,41 @@
+RamlDocumentNode (Start: 11 , End: 104, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 22, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 22, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 22, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "Test" (Start: 18 , End: 22, On: input.raml)
+    TypesNode (Start: 24 , End: 104, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 24 , End: 29, On: input.raml)
+        SYObjectNode (Start: 33 , End: 104, On: input.raml)
+            TypeDeclarationField (Start: 33 , End: 104, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "User" (Start: 33 , End: 37, On: input.raml)
+                TypeDeclarationNode (Start: 43 , End: 104, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 43 , End: 69, On: input.raml)
+                        SYStringNode: "schema" (Start: 43 , End: 49, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "name": {
+      "id": "http://jsonschema.net/name",
+      "type": "string"
+    },
+    "age": {
+      "id": "http://jsonschema.net/age",
+      "type": "integer"
+    }
+  },
+  "required": ["age"]
+}
+" (Start: 51 , End: 69, On: input.raml, Source: StringNodeImpl)
+                    ExampleDeclarationNode (Start: 74 , End: 104, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "example" (Start: 74 , End: 81, On: input.raml)
+                        ErrorNode: "Error validating JSON. Error: Duplicate field 'age'" (Start: 83 , End: 104, On: input.raml, Source: StringNodeImpl)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "User" (Start: -1 , End: -1, Source: SYStringNode)

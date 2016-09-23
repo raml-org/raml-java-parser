@@ -18,7 +18,6 @@ package org.raml.yagi.framework.nodes.jackson;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -29,6 +28,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
+import static org.raml.yagi.framework.nodes.jackson.JsonUtils.parseJson;
+
 public class JNodeParser
 {
 
@@ -37,9 +38,7 @@ public class JNodeParser
     {
         try
         {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode rootNode = mapper.readValue(reader, JsonNode.class);
-
+            JsonNode rootNode = parseJson(reader);
             return new JModelWrapper(resourceLoader, resourcePath).wrap(rootNode);
         }
         catch (JsonMappingException | JsonParseException e)
