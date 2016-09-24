@@ -34,15 +34,12 @@ import java.util.Set;
 public class LibraryLinkingTransformation implements Transformer
 {
 
-    private static final ThreadLocal<Set<String>> absoluteLocations = new ThreadLocal<>();
-    static {
-        absoluteLocations.set(new HashSet<String>());
-    }
+    private final Raml10Builder builder;
+    private final ResourceLoader resourceLoader;
 
-    private ResourceLoader resourceLoader;
-
-    public LibraryLinkingTransformation(ResourceLoader resourceLoader)
+    public LibraryLinkingTransformation(Raml10Builder builder, ResourceLoader resourceLoader)
     {
+        this.builder = builder;
         this.resourceLoader = resourceLoader;
     }
 
@@ -59,10 +56,8 @@ public class LibraryLinkingTransformation implements Transformer
         final String baseLocation = linkNode.getStartPosition().getPath();
         final String refName = linkNode.getRefName();
         final String absoluteLocation = ResourcePathUtils.toAbsoluteLocation(baseLocation, refName);
-        final String currentFile = node.getRootNode().getStartPosition().getPath();
         try
         {
-            absoluteLocations.get().add(currentFile);
             try (InputStream inputStream = resourceLoader.fetchResource(absoluteLocation))
             {
                 if (inputStream == null)
@@ -70,27 +65,14 @@ public class LibraryLinkingTransformation implements Transformer
                     return new IncludeErrorNode("Library cannot be resolved: " + absoluteLocation);
                 }
                 final String content = StreamUtils.toString(inputStream);
-                if ( absoluteLocations.get().add(absoluteLocation) ) {
-                    try {
-                        absoluteLocations.get().add(absoluteLocation);
-                        final Node libraryReference = new Raml10Builder()
-                                .build(content, RamlFragment.Library, resourceLoader, absoluteLocation, RamlBuilder.ALL_PHASES);
-                        linkNode.setLibraryReference(libraryReference);
-                    } finally {
-                        absoluteLocations.get().remove(absoluteLocation);
-                    }
-                } else {
-                    return new IncludeErrorNode("Cyclic dependency in file " + currentFile + " using " + absoluteLocation);
-                }
+                final Node libraryReference = builder
+                                                     .build(content, RamlFragment.Library, resourceLoader, absoluteLocation, RamlBuilder.ALL_PHASES);
+                linkNode.setLibraryReference(libraryReference);
             }
         }
         catch (IOException e)
         {
             return new IncludeErrorNode(String.format("Library cannot be resolved: %s. (%s)", absoluteLocation, e.getMessage()));
-        }
-        finally
-        {
-            absoluteLocations.get().remove(currentFile);
         }
 
         return linkNode;

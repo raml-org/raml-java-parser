@@ -25,7 +25,9 @@ import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
@@ -52,6 +54,7 @@ import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.yagi.framework.nodes.IncludeErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
@@ -62,27 +65,43 @@ import org.raml.yagi.framework.phase.TransformationPhase;
 public class Raml10Builder
 {
 
+    private final Set<String> openedFiles = new HashSet<>();
+
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        Node rootNode = NodeParser.parse(resourceLoader, resourceLocation, stringContent);
-        if (rootNode == null)
+        if (openedFiles.contains(resourceLocation))
         {
-            return ErrorNodeFactory.createEmptyDocument();
+
+            return new IncludeErrorNode("Cyclic dependency loading file: " + resourceLocation);
         }
-        boolean applyExtension = false;
-        if ((fragment == Extension || fragment == Overlay) && maxPhaseNumber > FIRST_PHASE)
+
+        try
         {
-            applyExtension = true;
-            maxPhaseNumber = LIBRARY_LINK_PHASE;
+            openedFiles.add(resourceLocation);
+            Node rootNode = NodeParser.parse(resourceLoader, resourceLocation, stringContent);
+            if (rootNode == null)
+            {
+                return ErrorNodeFactory.createEmptyDocument();
+            }
+            boolean applyExtension = false;
+            if ((fragment == Extension || fragment == Overlay) && maxPhaseNumber > FIRST_PHASE)
+            {
+                applyExtension = true;
+                maxPhaseNumber = LIBRARY_LINK_PHASE;
+            }
+            final List<Phase> phases = createPhases(resourceLoader, fragment);
+            rootNode = runPhases(rootNode, phases, maxPhaseNumber);
+            if (applyExtension && !RamlNodeUtils.isErrorResult(rootNode))
+            {
+                rootNode = applyExtension(rootNode, resourceLoader, resourceLocation, fragment);
+            }
+            rootNode.annotate(new RamlVersionAnnotation(RAML_10));
+            return rootNode;
         }
-        final List<Phase> phases = createPhases(resourceLoader, fragment);
-        rootNode = runPhases(rootNode, phases, maxPhaseNumber);
-        if (applyExtension && !RamlNodeUtils.isErrorResult(rootNode))
+        finally
         {
-            rootNode = applyExtension(rootNode, resourceLoader, resourceLocation, fragment);
+            openedFiles.remove(resourceLocation);
         }
-        rootNode.annotate(new RamlVersionAnnotation(RAML_10));
-        return rootNode;
     }
 
     private Node runPhases(Node rootNode, List<Phase> phases, int maxPhaseNumber)
@@ -147,7 +166,7 @@ public class Raml10Builder
         // The first phase expands the includes.
         final TransformationPhase includePhase = new TransformationPhase(new IncludeResolver(resourceLoader), new StringTemplateExpressionTransformer());
 
-        final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer(resourceLoader));
+        final TransformationPhase ramlFragmentsValidator = new TransformationPhase(new RamlFragmentGrammarTransformer(this, resourceLoader));
 
         // Runs Schema. Applies the Raml rules and changes each node for a more specific. Annotations Library TypeSystem
         final GrammarPhase grammarPhase = new GrammarPhase(RamlHeader.getFragmentRule(fragment));
@@ -156,7 +175,7 @@ public class Raml10Builder
 
         // sugar
         // Normalize resources and detects duplicated ones and more than one use of url parameters. ???
-        final TransformationPhase libraryLink = new TransformationPhase(new LibraryLinkingTransformation(resourceLoader));
+        final TransformationPhase libraryLink = new TransformationPhase(new LibraryLinkingTransformation(this, resourceLoader));
 
         final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformer());
 

@@ -52,7 +52,7 @@ public class LibraryTestCase
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         assertTrue(ramlModelResult.hasErrors());
         assertTrue(ramlModelResult.getValidationResults().size() == 1);
-        assertEquals("Cyclic dependency in file src/test/resources/org/raml/v2/api/v10/cyclic-uses/file2.raml using src/test/resources/org/raml/v2/api/v10/cyclic-uses/file1.raml", ramlModelResult.getValidationResults().get(0).getMessage());
+        assertEquals("Cyclic dependency loading file: src/test/resources/org/raml/v2/api/v10/cyclic-uses/file1.raml", ramlModelResult.getValidationResults().get(0).getMessage());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class LibraryTestCase
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         assertTrue(ramlModelResult.hasErrors());
         assertTrue(ramlModelResult.getValidationResults().size() == 1);
-        assertEquals("Cyclic dependency in file src/test/resources/org/raml/v2/api/v10/cyclic-uses/file3.raml using src/test/resources/org/raml/v2/api/v10/cyclic-uses/file3.raml", ramlModelResult.getValidationResults().get(0).getMessage());
+        assertEquals("Cyclic dependency loading file: src/test/resources/org/raml/v2/api/v10/cyclic-uses/file3.raml", ramlModelResult.getValidationResults().get(0).getMessage());
     }
 
 }
