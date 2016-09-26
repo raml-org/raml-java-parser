@@ -18,9 +18,7 @@ package org.raml.v2.api;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,5 +44,26 @@ public class LibraryTestCase
         assertThat(library.traits(), hasSize(1));
     }
 
+    @Test
+    public void cyclicLibraryDependency() throws IOException
+    {
+        File input = new File("src/test/resources/org/raml/v2/api/v10/cyclic-uses/file1.raml");
+        assertTrue(input.isFile());
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
+        assertTrue(ramlModelResult.hasErrors());
+        assertTrue(ramlModelResult.getValidationResults().size() == 1);
+        assertEquals("Cyclic dependency loading file: src/test/resources/org/raml/v2/api/v10/cyclic-uses/file1.raml", ramlModelResult.getValidationResults().get(0).getMessage());
+    }
+
+    @Test
+    public void selfCyclic() throws IOException
+    {
+        File input = new File("src/test/resources/org/raml/v2/api/v10/cyclic-uses/file3.raml");
+        assertTrue(input.isFile());
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
+        assertTrue(ramlModelResult.hasErrors());
+        assertTrue(ramlModelResult.getValidationResults().size() == 1);
+        assertEquals("Cyclic dependency loading file: src/test/resources/org/raml/v2/api/v10/cyclic-uses/file3.raml", ramlModelResult.getValidationResults().get(0).getMessage());
+    }
 
 }

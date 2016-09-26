@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.commons.phase;
 import static org.raml.v2.internal.utils.PhaseUtils.applyPhases;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.v10.Raml10Builder;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.TransformationPhase;
@@ -29,10 +30,12 @@ import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 public class RamlFragmentGrammarTransformer implements Transformer
 {
 
-    private ResourceLoader resourceLoader;
+    private final Raml10Builder builder;
+    private final ResourceLoader resourceLoader;
 
-    public RamlFragmentGrammarTransformer(ResourceLoader resourceLoader)
+    public RamlFragmentGrammarTransformer(Raml10Builder builder, ResourceLoader resourceLoader)
     {
+        this.builder = builder;
         this.resourceLoader = resourceLoader;
     }
 
@@ -48,7 +51,7 @@ public class RamlFragmentGrammarTransformer implements Transformer
         final RamlTypedFragmentNode ramlTypedFragmentNode = (RamlTypedFragmentNode) node;
         final Rule rule = RamlHeader.getFragmentRule(ramlTypedFragmentNode.getFragment());
         node = rule.apply(node);
-        final Node apply = applyPhases(node, new TransformationPhase(new LibraryLinkingTransformation(resourceLoader)));
+        final Node apply = applyPhases(node, new TransformationPhase(new LibraryLinkingTransformation(builder, resourceLoader)));
         if (apply instanceof RamlTypedFragmentNode)
         {
             // Hack!!!!

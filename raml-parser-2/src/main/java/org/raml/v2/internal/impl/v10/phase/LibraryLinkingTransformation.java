@@ -28,14 +28,18 @@ import org.raml.yagi.framework.phase.Transformer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LibraryLinkingTransformation implements Transformer
 {
 
-    private ResourceLoader resourceLoader;
+    private final Raml10Builder builder;
+    private final ResourceLoader resourceLoader;
 
-    public LibraryLinkingTransformation(ResourceLoader resourceLoader)
+    public LibraryLinkingTransformation(Raml10Builder builder, ResourceLoader resourceLoader)
     {
+        this.builder = builder;
         this.resourceLoader = resourceLoader;
     }
 
@@ -61,7 +65,8 @@ public class LibraryLinkingTransformation implements Transformer
                     return new IncludeErrorNode("Library cannot be resolved: " + absoluteLocation);
                 }
                 final String content = StreamUtils.toString(inputStream);
-                final Node libraryReference = new Raml10Builder().build(content, RamlFragment.Library, resourceLoader, absoluteLocation, RamlBuilder.ALL_PHASES);
+                final Node libraryReference = builder
+                                                     .build(content, RamlFragment.Library, resourceLoader, absoluteLocation, RamlBuilder.ALL_PHASES);
                 linkNode.setLibraryReference(libraryReference);
             }
         }
