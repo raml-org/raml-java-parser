@@ -23,14 +23,13 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -89,6 +88,42 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
     {
         return getTypeExpression(getTypeNode());
     }
+
+    public List<TypeDeclaration> parentTypes() {
+
+        List<TypeDeclaration> nodes =  new ArrayList<>();
+        Set<String> parentNames = new HashSet<>();
+        Node parents =  resolvedType.getTypeDeclarationNode().get("type");
+        if ( parents == null) {
+
+           return nodes;
+        }
+
+        List<Node> parentTypeNodes = parents.getChildren();
+        for (Node parentTypeNode : parentTypeNodes) {
+            NamedTypeExpressionNode parent = (NamedTypeExpressionNode) parentTypeNode;
+            parentNames.add(parent.getValue());
+        }
+
+        Node nn = node.getRootNode().get("types");
+        if ( nn == null ) {
+            return nodes;
+        }
+
+        TypeDeclarationModelFactory factory = new TypeDeclarationModelFactory();
+        List<TypeDeclarationNode> typeDeclarationNodes = nn.findDescendantsWith(TypeDeclarationNode.class);
+        for (TypeDeclarationNode declarationNode : typeDeclarationNodes) {
+
+            if ( parentNames.contains(declarationNode.getTypeName()) ) {
+
+                TypeDeclaration decl = factory.create(declarationNode);
+                nodes.add(decl);
+            }
+        }
+
+        return nodes;
+    }
+
 
     private String getTypeExpression(Node typeNode)
     {
