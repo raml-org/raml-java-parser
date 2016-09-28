@@ -58,7 +58,7 @@ public class NodeSelector
         }
         else
         {
-            final String[] tokens = path.split("(?<!\\\\)/");
+            final String[] tokens = path.split("(?<!\\\\)/"); // matches a slash not preceded by a backslash
             return selectFrom(Arrays.asList(tokens), from);
         }
     }
