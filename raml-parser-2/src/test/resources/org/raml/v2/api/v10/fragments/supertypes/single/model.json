@@ -1,0 +1,80 @@
+{
+  "annotationTypes": [],
+  "annotations": [],
+  "name": null,
+  "resourceTypes": [],
+  "schemas": [],
+  "securitySchemes": [],
+  "traits": [],
+  "types": [
+    {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": "hello",
+      "description": null,
+      "displayName": {
+        "annotations": [],
+        "value": "A"
+      },
+      "enumValues": [],
+      "example": null,
+      "examples": [],
+      "maxLength": null,
+      "minLength": null,
+      "name": "A",
+      "parentTypes": [],
+      "pattern": null,
+      "required": true,
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"A\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "type": "string",
+      "xml": null
+    },
+    {
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "displayName": {
+        "annotations": [],
+        "value": "C"
+      },
+      "enumValues": [],
+      "example": null,
+      "examples": [],
+      "maxLength": null,
+      "minLength": null,
+      "name": "C",
+      "parentTypes": [
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": "hello",
+          "description": null,
+          "displayName": {
+            "annotations": [],
+            "value": "A"
+          },
+          "enumValues": [],
+          "example": null,
+          "examples": [],
+          "maxLength": null,
+          "minLength": null,
+          "name": "A",
+          "parentTypes": [],
+          "pattern": null,
+          "required": true,
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"A\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+          "type": "string",
+          "xml": null
+        }
+      ],
+      "pattern": null,
+      "required": true,
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"C\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+      "type": "A",
+      "xml": null
+    }
+  ],
+  "usage": null,
+  "uses": []
+}

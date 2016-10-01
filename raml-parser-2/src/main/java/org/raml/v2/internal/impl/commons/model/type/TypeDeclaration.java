@@ -35,15 +35,13 @@ import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
@@ -89,41 +87,29 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         return getTypeExpression(getTypeNode());
     }
 
-    public List<TypeDeclaration> parentTypes() {
+    public List<TypeDeclaration<?>> parentTypes() {
 
-        List<TypeDeclaration> nodes =  new ArrayList<>();
-        Set<String> parentNames = new HashSet<>();
-        Node parents =  resolvedType.getTypeDeclarationNode().get("type");
-        if ( parents == null) {
+        List<TypeDeclaration<?>> result = new ArrayList<>();
 
-           return nodes;
-        }
+        Node typeNode = getTypeNode();
+        if (typeNode instanceof ArrayNode) {
+            List<Node> children = typeNode.getChildren();
 
-        List<Node> parentTypeNodes = parents.getChildren();
-        for (Node parentTypeNode : parentTypeNodes) {
-            NamedTypeExpressionNode parent = (NamedTypeExpressionNode) parentTypeNode;
-            parentNames.add(parent.getValue());
-        }
-
-        Node nn = node.getRootNode().get("types");
-        if ( nn == null ) {
-            return nodes;
-        }
-
-        TypeDeclarationModelFactory factory = new TypeDeclarationModelFactory();
-        List<TypeDeclarationNode> typeDeclarationNodes = nn.findDescendantsWith(TypeDeclarationNode.class);
-        for (TypeDeclarationNode declarationNode : typeDeclarationNodes) {
-
-            if ( parentNames.contains(declarationNode.getTypeName()) ) {
-
-                TypeDeclaration decl = factory.create(declarationNode);
-                nodes.add(decl);
+            for (Node child : children) {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode)child).getRefNode()));
+            }
+        } else {
+            if ( typeNode instanceof NamedTypeExpressionNode ) {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode)typeNode).getRefNode()));
             }
         }
 
-        return nodes;
+        return result;
     }
 
+    private TypeDeclaration<?> toTypeDeclaration(Node typeNode){
+        return new TypeDeclarationModelFactory().create(typeNode);
+    }
 
     private String getTypeExpression(Node typeNode)
     {

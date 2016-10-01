@@ -39,6 +39,183 @@
        "maxProperties": null,
        "minProperties": null,
        "name": "application/xml",
+       "parentTypes": [
+        {
+         "additionalProperties": true,
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "discriminator": null,
+         "discriminatorValue": null,
+         "displayName": {
+          "annotations": [],
+          "value": "User"
+         },
+         "example": null,
+         "examples": [
+          {
+           "annotations": [],
+           "name": "batman",
+           "structuredValue": {
+            "isScalar": false,
+            "properties": [
+             {
+              "isArray": false,
+              "name": "firstname",
+              "value": {
+               "isScalar": true,
+               "properties": [],
+               "value": "bruce"
+              },
+              "values": []
+             },
+             {
+              "isArray": false,
+              "name": "lastname",
+              "value": {
+               "isScalar": true,
+               "properties": [],
+               "value": "wayne"
+              },
+              "values": []
+             },
+             {
+              "isArray": false,
+              "name": "age",
+              "value": {
+               "isScalar": true,
+               "properties": [],
+               "value": 77
+              },
+              "values": []
+             }
+            ],
+            "value": null
+           },
+           "value": "{\nfirstname: bruce,\nlastname: wayne,\nage: 77\n}"
+          },
+          {
+           "annotations": [],
+           "name": "daredevil",
+           "structuredValue": {
+            "isScalar": false,
+            "properties": [
+             {
+              "isArray": false,
+              "name": "firstname",
+              "value": {
+               "isScalar": true,
+               "properties": [],
+               "value": "matt"
+              },
+              "values": []
+             },
+             {
+              "isArray": false,
+              "name": "lastname",
+              "value": {
+               "isScalar": true,
+               "properties": [],
+               "value": "murdock"
+              },
+              "values": []
+             },
+             {
+              "isArray": false,
+              "name": "age",
+              "value": {
+               "isScalar": true,
+               "properties": [],
+               "value": 52
+              },
+              "values": []
+             }
+            ],
+            "value": null
+           },
+           "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
+          }
+         ],
+         "maxProperties": null,
+         "minProperties": null,
+         "name": "User",
+         "parentTypes": [],
+         "properties": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "firstname"
+           },
+           "enumValues": [],
+           "example": null,
+           "examples": [],
+           "maxLength": null,
+           "minLength": null,
+           "name": "firstname",
+           "parentTypes": [],
+           "pattern": null,
+           "required": true,
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+           "type": "string",
+           "xml": null
+          },
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "lastname"
+           },
+           "enumValues": [],
+           "example": null,
+           "examples": [],
+           "maxLength": null,
+           "minLength": null,
+           "name": "lastname",
+           "parentTypes": [],
+           "pattern": null,
+           "required": true,
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+           "type": "string",
+           "xml": null
+          },
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "age"
+           },
+           "enumValues": [],
+           "example": null,
+           "examples": [],
+           "format": null,
+           "maximum": 144.0,
+           "minimum": 0.0,
+           "multipleOf": null,
+           "name": "age",
+           "parentTypes": [],
+           "required": true,
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"age\">\n        <simpleType>\n            <restriction base=\"integer\">\n                <minInclusive value=\"0\"/>\n                <maxInclusive value=\"144\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+           "type": "integer",
+           "xml": null
+          }
+         ],
+         "required": true,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"User\" type=\"tns:User\"/>\n    <complexType name=\"User\">\n        <sequence>\n            <element name=\"firstname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"lastname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"age\">\n                <simpleType>\n                    <restriction base=\"integer\">\n                        <minInclusive value=\"0\"/>\n                        <maxInclusive value=\"144\"/>\n                    </restriction>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+         "type": "object",
+         "xml": null
+        }
+       ],
        "properties": [
         {
          "allowedTargets": [],
@@ -55,6 +232,7 @@
          "maxLength": null,
          "minLength": null,
          "name": "firstname",
+         "parentTypes": [],
          "pattern": null,
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -76,6 +254,7 @@
          "maxLength": null,
          "minLength": null,
          "name": "lastname",
+         "parentTypes": [],
          "pattern": null,
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -99,6 +278,7 @@
          "minimum": 0.0,
          "multipleOf": null,
          "name": "age",
+         "parentTypes": [],
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"age\">\n        <simpleType>\n            <restriction base=\"integer\">\n                <minInclusive value=\"0\"/>\n                <maxInclusive value=\"144\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": "integer",
@@ -119,6 +299,7 @@
          "maxLength": null,
          "minLength": null,
          "name": "address",
+         "parentTypes": [],
          "pattern": null,
          "required": true,
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"address\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -164,6 +345,183 @@
          "maxProperties": null,
          "minProperties": null,
          "name": "application/xml",
+         "parentTypes": [
+          {
+           "additionalProperties": true,
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "discriminator": null,
+           "discriminatorValue": null,
+           "displayName": {
+            "annotations": [],
+            "value": "User"
+           },
+           "example": null,
+           "examples": [
+            {
+             "annotations": [],
+             "name": "batman",
+             "structuredValue": {
+              "isScalar": false,
+              "properties": [
+               {
+                "isArray": false,
+                "name": "firstname",
+                "value": {
+                 "isScalar": true,
+                 "properties": [],
+                 "value": "bruce"
+                },
+                "values": []
+               },
+               {
+                "isArray": false,
+                "name": "lastname",
+                "value": {
+                 "isScalar": true,
+                 "properties": [],
+                 "value": "wayne"
+                },
+                "values": []
+               },
+               {
+                "isArray": false,
+                "name": "age",
+                "value": {
+                 "isScalar": true,
+                 "properties": [],
+                 "value": 77
+                },
+                "values": []
+               }
+              ],
+              "value": null
+             },
+             "value": "{\nfirstname: bruce,\nlastname: wayne,\nage: 77\n}"
+            },
+            {
+             "annotations": [],
+             "name": "daredevil",
+             "structuredValue": {
+              "isScalar": false,
+              "properties": [
+               {
+                "isArray": false,
+                "name": "firstname",
+                "value": {
+                 "isScalar": true,
+                 "properties": [],
+                 "value": "matt"
+                },
+                "values": []
+               },
+               {
+                "isArray": false,
+                "name": "lastname",
+                "value": {
+                 "isScalar": true,
+                 "properties": [],
+                 "value": "murdock"
+                },
+                "values": []
+               },
+               {
+                "isArray": false,
+                "name": "age",
+                "value": {
+                 "isScalar": true,
+                 "properties": [],
+                 "value": 52
+                },
+                "values": []
+               }
+              ],
+              "value": null
+             },
+             "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
+            }
+           ],
+           "maxProperties": null,
+           "minProperties": null,
+           "name": "User",
+           "parentTypes": [],
+           "properties": [
+            {
+             "allowedTargets": [],
+             "annotations": [],
+             "defaultValue": null,
+             "description": null,
+             "displayName": {
+              "annotations": [],
+              "value": "firstname"
+             },
+             "enumValues": [],
+             "example": null,
+             "examples": [],
+             "maxLength": null,
+             "minLength": null,
+             "name": "firstname",
+             "parentTypes": [],
+             "pattern": null,
+             "required": true,
+             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+             "type": "string",
+             "xml": null
+            },
+            {
+             "allowedTargets": [],
+             "annotations": [],
+             "defaultValue": null,
+             "description": null,
+             "displayName": {
+              "annotations": [],
+              "value": "lastname"
+             },
+             "enumValues": [],
+             "example": null,
+             "examples": [],
+             "maxLength": null,
+             "minLength": null,
+             "name": "lastname",
+             "parentTypes": [],
+             "pattern": null,
+             "required": true,
+             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+             "type": "string",
+             "xml": null
+            },
+            {
+             "allowedTargets": [],
+             "annotations": [],
+             "defaultValue": null,
+             "description": null,
+             "displayName": {
+              "annotations": [],
+              "value": "age"
+             },
+             "enumValues": [],
+             "example": null,
+             "examples": [],
+             "format": null,
+             "maximum": 144.0,
+             "minimum": 0.0,
+             "multipleOf": null,
+             "name": "age",
+             "parentTypes": [],
+             "required": true,
+             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"age\">\n        <simpleType>\n            <restriction base=\"integer\">\n                <minInclusive value=\"0\"/>\n                <maxInclusive value=\"144\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+             "type": "integer",
+             "xml": null
+            }
+           ],
+           "required": true,
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"User\" type=\"tns:User\"/>\n    <complexType name=\"User\">\n        <sequence>\n            <element name=\"firstname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"lastname\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"age\">\n                <simpleType>\n                    <restriction base=\"integer\">\n                        <minInclusive value=\"0\"/>\n                        <maxInclusive value=\"144\"/>\n                    </restriction>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+           "type": "object",
+           "xml": null
+          }
+         ],
          "properties": [
           {
            "allowedTargets": [],
@@ -180,6 +538,7 @@
            "maxLength": null,
            "minLength": null,
            "name": "firstname",
+           "parentTypes": [],
            "pattern": null,
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -201,6 +560,7 @@
            "maxLength": null,
            "minLength": null,
            "name": "lastname",
+           "parentTypes": [],
            "pattern": null,
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -224,6 +584,7 @@
            "minimum": 0.0,
            "multipleOf": null,
            "name": "age",
+           "parentTypes": [],
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"age\">\n        <simpleType>\n            <restriction base=\"integer\">\n                <minInclusive value=\"0\"/>\n                <maxInclusive value=\"144\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
            "type": "integer",
@@ -244,6 +605,7 @@
            "maxLength": null,
            "minLength": null,
            "name": "address",
+           "parentTypes": [],
            "pattern": null,
            "required": true,
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"address\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -386,6 +748,7 @@
    "maxProperties": null,
    "minProperties": null,
    "name": "User",
+   "parentTypes": [],
    "properties": [
     {
      "allowedTargets": [],
@@ -402,6 +765,7 @@
      "maxLength": null,
      "minLength": null,
      "name": "firstname",
+     "parentTypes": [],
      "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"firstname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -423,6 +787,7 @@
      "maxLength": null,
      "minLength": null,
      "name": "lastname",
+     "parentTypes": [],
      "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"lastname\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -446,6 +811,7 @@
      "minimum": 0.0,
      "multipleOf": null,
      "name": "age",
+     "parentTypes": [],
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"age\">\n        <simpleType>\n            <restriction base=\"integer\">\n                <minInclusive value=\"0\"/>\n                <maxInclusive value=\"144\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
      "type": "integer",
