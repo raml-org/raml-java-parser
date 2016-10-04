@@ -16,7 +16,7 @@
 package org.raml.v2.api.model.v10.api;
 
 
-import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
+import org.raml.v2.api.model.v10.system.types.AnnotableStringType;
 
 public interface Library extends LibraryBase
 {
@@ -24,7 +24,7 @@ public interface Library extends LibraryBase
     /**
      * contains description of why library exist
      **/
-    AnnotableSimpleType<String> usage();
+    AnnotableStringType usage();
 
 
     /**

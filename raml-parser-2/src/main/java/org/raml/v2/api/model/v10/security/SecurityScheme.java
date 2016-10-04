@@ -16,9 +16,8 @@
 package org.raml.v2.api.model.v10.security;
 
 import org.raml.v2.api.model.v10.common.Annotable;
-import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
 import org.raml.v2.api.model.v10.system.types.MarkdownString;
-import org.raml.v2.api.model.v10.system.types.StringType;
+import org.raml.v2.api.model.v10.system.types.AnnotableStringType;
 
 
 public interface SecurityScheme extends Annotable
@@ -51,7 +50,7 @@ public interface SecurityScheme extends Annotable
     /**
      * The displayName attribute specifies the security scheme display name. It is a friendly name used only for  display or documentation purposes. If displayName is not specified, it defaults to the element's key (the name of the property itself).
      **/
-    AnnotableSimpleType<String> displayName();
+    AnnotableStringType displayName();
 
 
     /**

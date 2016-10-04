@@ -13,24 +13,11 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.api.model.v10.api;
+package org.raml.v2.api.model.v10.system.types;
 
-import org.raml.v2.api.model.v10.common.Annotable;
-import org.raml.v2.api.model.v10.system.types.MarkdownString;
-import org.raml.v2.api.model.v10.system.types.AnnotableStringType;
 
-public interface DocumentationItem extends Annotable
+public interface AnnotableStringType extends AnnotableSimpleType<String>
 {
-
-    /**
-     * Title of documentation section
-     **/
-    AnnotableStringType title();
-
-
-    /**
-     * Content of documentation section
-     **/
-    MarkdownString content();
-
+    @Override
+    String value();
 }
