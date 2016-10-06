@@ -17,12 +17,11 @@ package org.raml.v2.internal.impl.v10.nodes;
 
 import javax.annotation.Nonnull;
 
-import org.raml.yagi.framework.nodes.BooleanNode;
+import org.raml.v2.internal.impl.commons.nodes.PropertyUtils;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
 
 public class PropertyNode extends KeyValueNodeImpl
 {
@@ -38,28 +37,12 @@ public class PropertyNode extends KeyValueNodeImpl
 
     public String getName()
     {
-        final StringNode key = (StringNode) getKey();
-        final String keyValue = key.getValue();
-        if (getRequiredNode() == null)
-        {
-            // If required field is set then the ? should be ignored
-            return keyValue.endsWith("?") ? keyValue.substring(0, keyValue.length() - 1) : keyValue;
-        }
-        else
-        {
-            return keyValue;
-        }
-    }
-
-    private Node getRequiredNode()
-    {
-        return getValue().get("required");
+        return PropertyUtils.getName(this);
     }
 
     public boolean isRequired()
     {
-        final StringNode key = (StringNode) getKey();
-        return getRequiredNode() instanceof BooleanNode ? ((BooleanNode) getRequiredNode()).getValue() : !key.getValue().endsWith("?");
+        return PropertyUtils.isRequired(this);
     }
 
     public ResolvedType getTypeDefinition()

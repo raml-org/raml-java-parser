@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
@@ -131,7 +132,7 @@ public class SpecInterfacesV10TestCase
 
     private void assertTypes(List<TypeDeclaration> types)
     {
-        assertThat(types, hasSize(6));
+        assertThat(types, hasSize(7));
 
         // object type
         ObjectTypeDeclaration user = (ObjectTypeDeclaration) types.get(0);
@@ -161,6 +162,31 @@ public class SpecInterfacesV10TestCase
         StringTypeDeclaration nString = (StringTypeDeclaration) types.get(3);
         assertThat(nString.maxLength(), is(10));
         assertThat(nString.pattern(), nullValue());
+
+        // Type with custom facets
+        TypeDeclaration myType = types.get(6);
+        MatcherAssert.assertThat(myType.name(), is("TypeWithCustomFacets"));
+
+        List<TypeDeclaration> facets = myType.facets();
+        TypeDeclaration facet1 = facets.get(0);
+        MatcherAssert.assertThat(facet1.name(), is("facet1"));
+        MatcherAssert.assertThat(facet1.type(), is("integer"));
+        MatcherAssert.assertThat(facet1.required(), is(false));
+
+        TypeDeclaration facet2 = facets.get(1);
+        MatcherAssert.assertThat(facet2.name(), is("facet2"));
+        MatcherAssert.assertThat(facet2.type(), is("integer"));
+        MatcherAssert.assertThat(facet2.required(), is(false));
+
+        TypeDeclaration facet3 = facets.get(2);
+        MatcherAssert.assertThat(facet3.name(), is("facet3?"));
+        MatcherAssert.assertThat(facet3.type(), is("integer"));
+        MatcherAssert.assertThat(facet3.required(), is(true));
+
+        TypeDeclaration facet4 = facets.get(3);
+        MatcherAssert.assertThat(facet4.name(), is("facet4?"));
+        MatcherAssert.assertThat(facet4.type(), is("integer"));
+        MatcherAssert.assertThat(facet4.required(), is(false));
     }
 
     private void assertUserProperties(List<TypeDeclaration> properties)

@@ -23,13 +23,13 @@ public class BodyNode extends KeyValueNodeImpl
     {
     }
 
-    BodyNode(KeyValueNodeImpl node)
+    BodyNode(BodyNode node)
     {
         super(node);
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException
+    public BodyNode copy()
     {
         return new BodyNode(this);
     }

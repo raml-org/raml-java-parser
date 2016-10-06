@@ -90,6 +90,12 @@ public interface TypeDeclaration extends Annotable
     List<ValidationResult> validate(String payload);
 
 
+    /**
+     * Gets the list of user-defined facets
+     */
+    List<TypeDeclaration> facets();
+
+
     XMLFacetInfo xml();
 
 
