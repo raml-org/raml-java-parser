@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertFalse;
@@ -430,6 +431,9 @@ public class SpecInterfacesV10TestCase
     {
         assertThat(headers.size(), is(2));
         assertThat(headers.get(0).name(), is("one"));
+        assertThat(headers.get(0).validate("ten"), empty());
+        assertThat(headers.get(0).validate("10"), empty());
+        assertThat(headers.get(0).validate("{}"), empty());
         assertThat(headers.get(1).displayName().value(), is("The Second"));
     }
 
