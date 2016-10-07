@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.commons.rule;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.github.fge.jsonschema.core.report.LogLevel;
 import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
@@ -39,6 +40,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.raml.yagi.framework.nodes.jackson.JsonUtils.parseJson;
+import static com.github.fge.jsonschema.core.report.LogLevel.ERROR;
+import static com.github.fge.jsonschema.core.report.LogLevel.WARNING;
 import static java.io.File.separator;
 
 /**
@@ -46,6 +49,9 @@ import static java.io.File.separator;
  */
 public class JsonSchemaValidationRule extends Rule
 {
+    public static final String JSON_SCHEMA_FAIL_ON_WARNING_KEY = "raml.json_schema.fail_on_warning";
+    private final boolean FAIL_ON_WARNING = Boolean.valueOf(
+                                                   System.getProperty(JSON_SCHEMA_FAIL_ON_WARNING_KEY, "false"));
 
     private JsonSchema schema;
 
@@ -102,15 +108,21 @@ public class JsonSchemaValidationRule extends Rule
             JsonNode json = parseJson(value);
 
             ProcessingReport report = schema.validate(json);
-            if (!report.isSuccess())
+            Iterator<ProcessingMessage> iterator = report.iterator();
+            List<String> errors = Lists.newArrayList();
+            while (iterator.hasNext())
             {
-                Iterator<ProcessingMessage> iterator = report.iterator();
-                List<String> errors = Lists.newArrayList();
-                while (iterator.hasNext())
+                ProcessingMessage next = iterator.next();
+                LogLevel logLevel = next.getLogLevel();
+
+                if (logLevel.equals(ERROR) || (logLevel.equals(WARNING) && FAIL_ON_WARNING))
                 {
-                    ProcessingMessage next = iterator.next();
                     errors.add(processErrorMessage(next.toString()));
                 }
+            }
+
+            if (!errors.isEmpty())
+            {
                 return ErrorNodeFactory.createInvalidJsonExampleNode("{\n" + Joiner.on(",\n").join(errors) + "\n}");
             }
         }
