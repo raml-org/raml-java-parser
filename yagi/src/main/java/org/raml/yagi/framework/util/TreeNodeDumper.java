@@ -107,35 +107,7 @@ public class TreeNodeDumper
         }
         else if (node instanceof ErrorNode)
         {
-            String message = getOrProcessErrorMessage((ErrorNode) node);
-            dump.append(": \"").append(message).append("\"");
-        }
-    }
-
-    private String getOrProcessErrorMessage(ErrorNode node)
-    {
-        final String SCHEMA_TEXT = "schema: {\"loadingURI\":\"";
-        final String POINTER_TEXT = "\"pointer\":\"";
-
-        String message = node.getErrorMessage();
-        int startOfSchema = message.indexOf(SCHEMA_TEXT);
-
-        // If it is true is because JSON Schema Validator prints its error
-        if (startOfSchema >= 0)
-        {
-            int startOfPointer = message.indexOf(POINTER_TEXT);
-            String completeUri = message.substring(startOfSchema + SCHEMA_TEXT.length(), startOfPointer - 2);
-
-            // Finding the start of the ref symbol
-            int refIndex = completeUri.indexOf("#");
-            String reducedSchemaURI = completeUri.substring(refIndex);
-
-            // Replacing the complete URI with the reduced one
-            return message.replace(completeUri, reducedSchemaURI);
-        }
-        else
-        {
-            return node.getErrorMessage();
+            dump.append(": \"").append(((ErrorNode) node).getErrorMessage()).append("\"");
         }
     }
 

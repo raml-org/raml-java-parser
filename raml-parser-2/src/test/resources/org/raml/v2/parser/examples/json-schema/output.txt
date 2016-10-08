@@ -28,9 +28,7 @@ RamlDocumentNode (Start: 11 , End: 474, On: input.raml, Source: SYObjectNode)
                                                         SYObjectNode (Start: 146 , End: 190, On: input.raml)
                                                             ExampleDeclarationNode (Start: 146 , End: 190, On: input.raml, Source: KeyValueNodeImpl)
                                                                 SYStringNode: "example1" (Start: 146 , End: 154, On: input.raml)
-                                                                ErrorNode: "Error validating JSON. Error: Invalid json content : {
-name: SyNullNode
-}" (Start: 172 , End: 190, On: input.raml, Source: SYObjectNode)
+                                                                ErrorNode: "Error validating JSON. Error: Unrecognized token 'SyNullNode': was expecting ('true', 'false' or 'null')" (Start: 172 , End: 190, On: input.raml, Source: SYObjectNode)
                                                                     KeyValueNodeImpl (Start: 172 , End: 177, On: input.raml)
                                                                         SYStringNode: "name" (Start: 172 , End: 176, On: input.raml)
                                                                         SYNullNode (Start: 177 , End: 177, On: input.raml)

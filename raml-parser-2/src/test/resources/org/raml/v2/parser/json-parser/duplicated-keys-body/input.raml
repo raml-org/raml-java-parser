@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Test
+
+/resource:
+    get:
+      responses:
+        "200":
+          body:
+            application/json:
+              type: object
+              properties:
+                name: string
+                age: integer
+              example: !include example.json

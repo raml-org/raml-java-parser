@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.assertFalse;
@@ -56,7 +57,7 @@ import org.raml.v2.api.model.v10.security.SecurityScheme;
 import org.raml.v2.api.model.v10.security.SecuritySchemePart;
 import org.raml.v2.api.model.v10.security.SecuritySchemeRef;
 import org.raml.v2.api.model.v10.security.SecuritySchemeSettings;
-import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
+import org.raml.v2.api.model.v10.system.types.AnnotableStringType;
 
 public class SpecInterfacesV10TestCase
 {
@@ -104,7 +105,8 @@ public class SpecInterfacesV10TestCase
         assertThat(api.title().value(), is("api title"));
         assertThat(api.description().value(), is("api description"));
         assertScalarAnnotation(api.title(), "title");
-        assertThat(api.version().value(), is("v1"));
+        assertThat(api.version().value(), is("1.0"));
+        assertThat(api.version().value(), instanceOf(String.class));
         assertThat(api.version().annotations(), hasSize(0));
         assertThat(api.baseUri().value(), is("http://base.uri/{version}/{param1}"));
         assertBaseUriParameters(api.baseUriParameters());
@@ -332,7 +334,7 @@ public class SpecInterfacesV10TestCase
         assertThat(documentation.get(1).content().value(), is("multi\nline\n"));
     }
 
-    private void assertScalarAnnotation(AnnotableSimpleType<String> scalar, String value)
+    private void assertScalarAnnotation(AnnotableStringType scalar, String value)
     {
         assertThat(scalar.annotations().get(0).structuredValue().value().toString(), is(value));
     }
@@ -429,6 +431,9 @@ public class SpecInterfacesV10TestCase
     {
         assertThat(headers.size(), is(2));
         assertThat(headers.get(0).name(), is("one"));
+        assertThat(headers.get(0).validate("ten"), empty());
+        assertThat(headers.get(0).validate("10"), empty());
+        assertThat(headers.get(0).validate("{}"), empty());
         assertThat(headers.get(1).displayName().value(), is("The Second"));
     }
 

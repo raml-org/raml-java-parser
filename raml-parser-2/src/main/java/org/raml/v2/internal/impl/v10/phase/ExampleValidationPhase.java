@@ -15,9 +15,31 @@
  */
 package org.raml.v2.internal.impl.v10.phase;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.List;
+
+import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
+import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
+import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
+import org.raml.v2.internal.impl.v10.type.StringResolvedType;
+import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -28,32 +50,12 @@ import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.Phase;
-import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
-import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
-import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import javax.annotation.Nullable;
-import javax.xml.XMLConstants;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.List;
 
 public class ExampleValidationPhase implements Phase
 {
@@ -91,8 +93,9 @@ public class ExampleValidationPhase implements Phase
     public Node validate(TypeDeclarationNode type, String exampleValue)
     {
         Node exampleValueNode = new StringNodeImpl(exampleValue);
-        if (!isJsonValue(exampleValue) && !isXmlValue(exampleValue))
+        if (!(type.getResolvedType() instanceof StringResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
         {
+            // parse as yaml except for string, json and xml types
             exampleValueNode = NodeParser.parse(resourceLoader, "", exampleValue);
         }
         return validate(type, exampleValueNode);
@@ -106,7 +109,7 @@ public class ExampleValidationPhase implements Phase
         {
             return null;
         }
-        if (exampleValue instanceof StringNode && !isExternalSchemaType(resolvedType))
+        if (exampleValue instanceof StringNode && !(resolvedType instanceof StringResolvedType) && !isExternalSchemaType(resolvedType))
         {
             final String value = ((StringNode) exampleValue).getValue();
             if (isXmlValue(value))
@@ -117,22 +120,13 @@ public class ExampleValidationPhase implements Phase
             {
                 return validateJson(exampleValue, resolvedType, value);
             }
-            else
-            {
-                final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
-                return rule.apply(exampleValue);
-            }
         }
-        else if (exampleValue != null)
+        if (exampleValue != null)
         {
             final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
-            return rule.apply(exampleValue);
+            return rule != null ? rule.apply(exampleValue) : null;
         }
-        else
-        {
-            return null;
-        }
-
+        return null;
     }
 
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)

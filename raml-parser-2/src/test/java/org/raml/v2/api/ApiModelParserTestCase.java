@@ -26,9 +26,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -186,6 +188,8 @@ public class ApiModelParserTestCase extends TestDataProvider
         {
             jsonWriter.beginObject();
             final Method[] declaredMethods = ModelUtils.toClass(definitionClass).getMethods();
+            HashMap<String, Class<?>[]> methodsMap = new HashMap<String, Class<?>[]>();
+
             Arrays.sort(declaredMethods, new Comparator<Method>()
             {
                 @Override
@@ -196,13 +200,20 @@ public class ApiModelParserTestCase extends TestDataProvider
             });
             for (Method declaredMethod : declaredMethods)
             {
-                if (declaredMethod.getParameterTypes().length == 0)
+                String name = declaredMethod.getName();
+                Class<?>[] parameters = declaredMethod.getParameterTypes();
+
+                // If Map#put() returns null, the function has not been processed yet
+                if (methodsMap.put(name, parameters) == null)
                 {
-                    if (!isRecursiveMethod(declaredMethod))
+                    if (parameters.length == 0)
                     {
-                        final Object methodResult = declaredMethod.invoke(value);
-                        jsonWriter.name(declaredMethod.getName());
-                        dumpToJson(declaredMethod.getGenericReturnType(), methodResult, jsonWriter);
+                        if (!isRecursiveMethod(declaredMethod))
+                        {
+                            final Object methodResult = declaredMethod.invoke(value);
+                            jsonWriter.name(name);
+                            dumpToJson(declaredMethod.getGenericReturnType(), methodResult, jsonWriter);
+                        }
                     }
                 }
             }

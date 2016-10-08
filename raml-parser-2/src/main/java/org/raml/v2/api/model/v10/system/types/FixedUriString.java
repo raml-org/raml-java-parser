@@ -16,7 +16,7 @@
 package org.raml.v2.api.model.v10.system.types;
 
 
-public interface FixedUriString extends AnnotableSimpleType<String>
+public interface FixedUriString extends AnnotableStringType
 {
 
 

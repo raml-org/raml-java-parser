@@ -19,9 +19,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
+import org.raml.v2.api.model.v10.system.types.AnnotableStringType;
 import org.raml.v2.api.model.v10.system.types.RelativeUriString;
-import org.raml.v2.api.model.v10.system.types.StringType;
 
 
 public interface Resource extends ResourceBase
@@ -36,7 +35,7 @@ public interface Resource extends ResourceBase
     /**
      * The displayName attribute specifies the resource display name. It is a friendly name used only for  display or documentation purposes. If displayName is not specified, it defaults to the element's key (the name of the property itself).
      **/
-    AnnotableSimpleType<String> displayName();
+    AnnotableStringType displayName();
 
 
     /**

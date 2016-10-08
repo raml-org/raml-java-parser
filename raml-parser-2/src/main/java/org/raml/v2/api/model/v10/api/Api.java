@@ -21,9 +21,9 @@ import org.raml.v2.api.model.v10.bodies.MimeType;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.resources.Resource;
 import org.raml.v2.api.model.v10.security.SecuritySchemeRef;
-import org.raml.v2.api.model.v10.system.types.AnnotableSimpleType;
 import org.raml.v2.api.model.v10.system.types.FullUriTemplateString;
 import org.raml.v2.api.model.v10.system.types.MarkdownString;
+import org.raml.v2.api.model.v10.system.types.AnnotableStringType;
 
 
 public interface Api extends LibraryBase
@@ -32,7 +32,7 @@ public interface Api extends LibraryBase
     /**
      * Short plain-text label for the API
      **/
-    AnnotableSimpleType<String> title();
+    AnnotableStringType title();
 
 
     /**
@@ -44,7 +44,7 @@ public interface Api extends LibraryBase
     /**
      * The version of the API, e.g. 'v1'
      **/
-    AnnotableSimpleType<String> version();
+    AnnotableStringType version();
 
 
     /**
