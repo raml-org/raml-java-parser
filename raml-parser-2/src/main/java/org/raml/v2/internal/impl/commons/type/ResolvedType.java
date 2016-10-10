@@ -70,6 +70,11 @@ public interface ResolvedType
     void validateState();
 
     /**
+     *
+     */
+    void validateHierarchy();
+
+    /**
      * Validate if this type can be overwritten by the specified node
      * @param from The node to check with
      */

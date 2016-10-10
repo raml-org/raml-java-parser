@@ -143,6 +143,15 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
         }
     }
 
+    public void validateHierarchy()
+    {
+        final ResolvedType resolvedType = getResolvedType();
+        if (resolvedType != null)
+        {
+            resolvedType.validateHierarchy();
+        }
+    }
+
     public List<CustomFacetDefinitionNode> getCustomFacets()
     {
         return findDescendantsWith(CustomFacetDefinitionNode.class);

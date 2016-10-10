@@ -15,12 +15,21 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+import org.raml.yagi.framework.nodes.ErrorNode;
 
 public abstract class BaseType implements ResolvedType
 {
@@ -90,5 +99,96 @@ public abstract class BaseType implements ResolvedType
     public void validateState()
     {
 
+    }
+
+    @Override
+    public void validateHierarchy()
+    {
+
+        Map<TypeExpressionNode, Set<String>> parentTypes = new HashMap<>();
+
+        TypeDeclarationNode typeDeclarationNode = this.getTypeDeclarationNode();
+        if (typeDeclarationNode.getBaseTypes().size() > 1)
+        {
+
+            for (TypeExpressionNode typeExpressionNode : typeDeclarationNode.getBaseTypes())
+            {
+
+                Set<String> nativeBaseTypes = getNativeBaseTypes(typeExpressionNode);
+                parentTypes.put(typeExpressionNode, nativeBaseTypes);
+            }
+
+            Set<String> types = new HashSet<>();
+            for (Set<String> typesPerParentType : parentTypes.values())
+            {
+                types.addAll(typesPerParentType);
+            }
+
+            if (types.size() <= 1)
+            {
+                return;
+            }
+
+            getTypeDeclarationNode().replaceWith(new ErrorNode(typeDeclarationNode.getTypeName() + " contains incompatible parent types: " + buildErrorFromMap(parentTypes)));
+        }
+    }
+
+    private String buildErrorFromMap(Map<TypeExpressionNode, Set<String>> parentTypes)
+    {
+
+        StringBuilder buffer = new StringBuilder();
+        for (TypeExpressionNode typeExpressionNode : parentTypes.keySet())
+        {
+
+            buffer.append(typeExpressionNode.getTypeExpressionText());
+            if (typeExpressionNode instanceof NativeTypeExpressionNode)
+            {
+                buffer.append(" is a base type ");
+                continue;
+            }
+            else
+            {
+                buffer.append(" is extending ");
+            }
+            buffer.append(parentTypes.get(typeExpressionNode));
+            buffer.append(" ");
+        }
+
+        return buffer.toString();
+    }
+
+    private Set<String> getNativeBaseTypes(TypeExpressionNode typeExpressionNode)
+    {
+
+        Set<String> nativeBaseTypes = new HashSet<>();
+
+        if (typeExpressionNode instanceof NamedTypeExpressionNode)
+        {
+
+            NamedTypeExpressionNode namedTypeExpressionNode = (NamedTypeExpressionNode) typeExpressionNode;
+            TypeDeclarationNode tdn = (TypeDeclarationNode) namedTypeExpressionNode.getRefNode();
+            if (tdn == null)
+            {
+                return nativeBaseTypes;
+            }
+
+            for (TypeExpressionNode expressionNode : tdn.getBaseTypes())
+            {
+
+                nativeBaseTypes.addAll(getNativeBaseTypes(expressionNode));
+            }
+
+        }
+        else
+        {
+
+            if (typeExpressionNode instanceof NativeTypeExpressionNode)
+            {
+
+                nativeBaseTypes.add(typeExpressionNode.getTypeExpressionText());
+            }
+        }
+
+        return nativeBaseTypes;
     }
 }

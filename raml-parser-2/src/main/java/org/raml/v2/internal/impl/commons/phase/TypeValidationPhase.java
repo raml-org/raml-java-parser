@@ -38,6 +38,7 @@ public class TypeValidationPhase implements Phase
             {
                 typeDeclarationNode.validateCanOverwrite();
                 typeDeclarationNode.validateState();
+                typeDeclarationNode.validateHierarchy();
             }
         }
         return tree;
