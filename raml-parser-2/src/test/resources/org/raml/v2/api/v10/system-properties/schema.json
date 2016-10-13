@@ -1,0 +1,19 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"numberOfPeople": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 90
+		},
+		"startDate": {
+			"type": "string",
+			"format": "date"
+		}
+	},
+	"required": [
+		"numberOfPeople",
+		"startDate"
+	]
+}

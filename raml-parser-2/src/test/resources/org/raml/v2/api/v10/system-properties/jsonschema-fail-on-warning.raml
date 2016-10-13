@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Test API
+version: 1.0
+
+/subscription:
+  post:
+    body:
+      application/json:
+        schema: !include schema.json
+        example: !include example.json
