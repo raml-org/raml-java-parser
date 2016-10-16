@@ -23,7 +23,10 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -87,27 +90,34 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         return getTypeExpression(getTypeNode());
     }
 
-    public List<TypeDeclaration<?>> parentTypes() {
+    public List<TypeDeclaration<?>> parentTypes()
+    {
 
         List<TypeDeclaration<?>> result = new ArrayList<>();
 
         Node typeNode = getTypeNode();
-        if (typeNode instanceof ArrayNode) {
+        if (typeNode instanceof ArrayNode)
+        {
             List<Node> children = typeNode.getChildren();
 
-            for (Node child : children) {
-                result.add(toTypeDeclaration(((NamedTypeExpressionNode)child).getRefNode()));
+            for (Node child : children)
+            {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode) child).getRefNode()));
             }
-        } else {
-            if ( typeNode instanceof NamedTypeExpressionNode ) {
-                result.add(toTypeDeclaration(((NamedTypeExpressionNode)typeNode).getRefNode()));
+        }
+        else
+        {
+            if (typeNode instanceof NamedTypeExpressionNode)
+            {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode) typeNode).getRefNode()));
             }
         }
 
         return result;
     }
 
-    private TypeDeclaration<?> toTypeDeclaration(Node typeNode){
+    private TypeDeclaration<?> toTypeDeclaration(Node typeNode)
+    {
         return new TypeDeclarationModelFactory().create(typeNode);
     }
 
