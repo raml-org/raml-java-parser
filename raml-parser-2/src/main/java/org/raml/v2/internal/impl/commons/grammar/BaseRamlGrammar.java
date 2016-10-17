@@ -392,12 +392,6 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(uriParametersKey(), parameters()));
     }
 
-    protected Rule schemas()
-    {
-        return objectType()
-                           .with(field(scalarType(), scalarType()));
-    }
-
     // Method
     protected ObjectRule methodValue()
     {

@@ -16,11 +16,15 @@
 package org.raml.v2.internal.impl.v08.grammar;
 
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
+import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
 import org.raml.v2.internal.impl.v08.nodes.DefaultParameterTypeValueNode;
 import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
+import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
+import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
 import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
@@ -38,14 +42,32 @@ public class Raml08Grammar extends BaseRamlGrammar
     protected ObjectRule mimeType()
     {
         return objectType()
-                           .with(field(string("schema"), scalarType()))
+                           .with(field(string("schema"), schemaOrReference()))
                            .with(field(string("formParameters"), formParameters()))
-                           .with(field(string("example"), scalarType()));
+                           .with(field(string("example"), scalarType()))
+                           .then(TypeDeclarationNode.class);
     }
 
     protected Rule formParameters()
     {
         return objectType().with(field(scalarType(), anyOf(parameter(), array(parameter()))));
+    }
+
+    private AnyOfRule schemaOrReference()
+    {
+        return anyOf(explicitSchema(), new TypeExpressionReferenceRule().then(new TypeExpressionReferenceFactory()));
+    }
+
+    private Rule explicitSchema()
+    {
+        return new SchemaDeclarationRule().then(ExternalSchemaTypeExpressionNode.class);
+    }
+
+    protected Rule schemas()
+    {
+        return objectType()
+                           .with(field(scalarType(), explicitSchema()))
+                           .then(TypeDeclarationNode.class);
     }
 
     @Override

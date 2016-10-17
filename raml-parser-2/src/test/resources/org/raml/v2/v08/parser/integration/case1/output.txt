@@ -89,10 +89,10 @@ eiusmod tempor incididunt ut labore et dolore magna...
     KeyValueNodeImpl (Start: 675 , End: 1560, On: input.raml)
         SYStringNode: "schemas" (Start: 675 , End: 682, On: input.raml)
         SYArrayNode (Start: 688 , End: 1560, On: input.raml)
-            SYObjectNode (Start: 690 , End: 1038, On: input.raml)
+            TypeDeclarationNode (Start: 690 , End: 1038, On: input.raml, Source: SYObjectNode)
                 KeyValueNodeImpl (Start: 690 , End: 1034, On: input.raml)
                     SYStringNode: "league-json" (Start: 690 , End: 701, On: input.raml)
-                    SYStringNode: "{
+                    ExternalSchemaTypeExpressionNode: "{
     "title": "League Schema",
     "type": "object",
     "properties": {
@@ -105,11 +105,11 @@ eiusmod tempor incididunt ut labore et dolore magna...
         }
     }
 }
-" (Start: 703 , End: 1034, On: input.raml)
-            SYObjectNode (Start: 1040 , End: 1560, On: input.raml)
+" (Start: 703 , End: 1034, On: input.raml, Source: SYStringNode)
+            TypeDeclarationNode (Start: 1040 , End: 1560, On: input.raml, Source: SYObjectNode)
                 KeyValueNodeImpl (Start: 1040 , End: 1560, On: input.raml)
                     SYStringNode: "league-xml" (Start: 1040 , End: 1050, On: input.raml)
-                    SYStringNode: "<?xml version="1.0" encoding="ISO-8859-1" ?>
+                    ExternalSchemaTypeExpressionNode: "<?xml version="1.0" encoding="ISO-8859-1" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
  elementFormDefault="qualified" xmlns="http://mulesoft.com/schemas/soccer"
  targetNamespace="http://mulesoft.com/schemas/soccer">
@@ -121,7 +121,7 @@ eiusmod tempor incididunt ut labore et dolore magna...
   </xs:complexType>
 </xs:element>
 </xs:schema>
-" (Start: 1052 , End: 1560, On: input.raml)
+" (Start: 1052 , End: 1560, On: input.raml, Source: SYStringNode)
     KeyValueNodeImpl (Start: 1560 , End: 3463, On: input.raml)
         SYStringNode: "securitySchemes" (Start: 1560 , End: 1575, On: input.raml)
         SYArrayNode (Start: 1581 , End: 3463, On: input.raml)
@@ -459,10 +459,10 @@ timestamp...). Unfortunately, re-authenticating the user won't help here.
                                 SYNullNode (Start: 4808 , End: 4814, On: input.raml)
                             KeyValueNodeImpl (Start: 4827 , End: 5380, On: input.raml)
                                 SYStringNode: "application/json" (Start: 4827 , End: 4843, On: input.raml)
-                                SYObjectNode (Start: 4861 , End: 5380, On: input.raml)
+                                TypeDeclarationNode (Start: 4861 , End: 5380, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 4861 , End: 5321, On: input.raml)
                                         SYStringNode: "schema" (Start: 4861 , End: 4867, On: input.raml)
-                                        SYStringNode: "{
+                                        ExternalSchemaTypeExpressionNode: "{
      "$schema": "http://json-schema.org/draft-03/schema",
      "properties": {
          "input": {
@@ -473,13 +473,13 @@ timestamp...). Unfortunately, re-authenticating the user won't help here.
      "required": false,
      "type": "object"
 }
-" (Start: 4869 , End: 5321, On: input.raml)
+" (Start: 4869 , End: 5321, On: input.raml, Source: SYStringNode)
                                     KeyValueNodeImpl (Start: 5337 , End: 5367, On: input.raml)
                                         SYStringNode: "example" (Start: 5337 , End: 5344, On: input.raml)
                                         SYStringNode: "{ "input": "hola" }" (Start: 5346 , End: 5367, On: input.raml)
                             KeyValueNodeImpl (Start: 5380 , End: 5926, On: input.raml)
                                 SYStringNode: "multipart/form-data" (Start: 5380 , End: 5399, On: input.raml)
-                                SYObjectNode (Start: 5417 , End: 5926, On: input.raml)
+                                TypeDeclarationNode (Start: 5417 , End: 5926, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 5417 , End: 5926, On: input.raml)
                                         SYStringNode: "formParameters" (Start: 5417 , End: 5431, On: input.raml)
                                         SYObjectNode (Start: 5453 , End: 5926, On: input.raml)
@@ -553,7 +553,7 @@ enum: Array[one,two,three]
                                         SYObjectNode (Start: 6316 , End: 6430, On: input.raml)
                                             KeyValueNodeImpl (Start: 6316 , End: 6399, On: input.raml)
                                                 SYStringNode: "text/xml" (Start: 6316 , End: 6324, On: input.raml)
-                                                SYObjectNode (Start: 6350 , End: 6399, On: input.raml)
+                                                TypeDeclarationNode (Start: 6350 , End: 6399, On: input.raml, Source: SYObjectNode)
                                                     KeyValueNodeImpl (Start: 6350 , End: 6378, On: input.raml)
                                                         SYStringNode: "example" (Start: 6350 , End: 6357, On: input.raml)
                                                         SYStringNode: "<root>none</root>" (Start: 6359 , End: 6378, On: input.raml)
@@ -595,7 +595,7 @@ enum: Array[one,two,three]
                                         SYObjectNode (Start: 6185 , End: 6269, On: input.raml)
                                             KeyValueNodeImpl (Start: 6185 , End: 6269, On: input.raml)
                                                 SYStringNode: "application/json" (Start: 6185 , End: 6201, On: input.raml)
-                                                SYObjectNode (Start: 6227 , End: 6269, On: input.raml)
+                                                TypeDeclarationNode (Start: 6227 , End: 6269, On: input.raml, Source: SYObjectNode)
                                                     KeyValueNodeImpl (Start: 6227 , End: 6256, On: input.raml)
                                                         SYStringNode: "example" (Start: 6227 , End: 6234, On: input.raml)
                                                         SYStringNode: "{ "key": "value" }" (Start: 6236 , End: 6256, On: input.raml)

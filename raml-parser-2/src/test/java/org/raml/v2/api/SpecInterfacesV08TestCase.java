@@ -119,6 +119,10 @@ public class SpecInterfacesV08TestCase
         assertThat(child.relativeUri().value(), is("/children"));
         assertThat(child.resourcePath(), is("/top/children"));
         assertThat(child.parentResource().resourcePath(), is("/top"));
+        BodyLike childrenBody = children.get(0).methods().get(0).body().get(0);
+        assertThat(childrenBody.name(), is("application/json"));
+        assertThat(childrenBody.schemaContent(), containsString("\"firstname\":  { \"type\": \"string\" }"));
+        assertThat(childrenBody.schema().value(), is("UserJson"));
 
         Resource childId = child.resources().get(0);
         assertThat(childId.uriParameters(), hasSize(1));

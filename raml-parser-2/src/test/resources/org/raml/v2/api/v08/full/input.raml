@@ -114,7 +114,9 @@ resourceTypes:
 
     /children:
         description: child description
-
+        post:
+            body:
+                schema: UserJson
         /{childId}:
             uriParameters:
                 childId:

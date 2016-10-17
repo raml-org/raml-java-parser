@@ -300,7 +300,31 @@
      },
      "displayName": "/children",
      "is": [],
-     "methods": [],
+     "methods": [
+      {
+       "baseUriParameters": [],
+       "body": [
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [],
+         "name": "application/json",
+         "schema": {
+          "value": "UserJson"
+         },
+         "schemaContent": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
+        }
+       ],
+       "description": null,
+       "headers": [],
+       "is": [],
+       "method": "post",
+       "protocols": [],
+       "queryParameters": [],
+       "responses": [],
+       "securedBy": []
+      }
+     ],
      "relativeUri": {
       "value": "/children"
      },

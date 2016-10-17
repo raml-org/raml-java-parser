@@ -50,7 +50,7 @@ but each call is popped off the queue at a rate of one per second.
                                         SYObjectNode (Start: 746 , End: 1261, On: input.raml)
                                             KeyValueNodeImpl (Start: 746 , End: 1261, On: input.raml)
                                                 SYStringNode: "application/x-www-form-urlencoded" (Start: 746 , End: 779, On: input.raml)
-                                                SYObjectNode (Start: 794 , End: 1261, On: input.raml)
+                                                TypeDeclarationNode (Start: 794 , End: 1261, On: input.raml, Source: SYObjectNode)
                                                     KeyValueNodeImpl (Start: 794 , End: 1261, On: input.raml)
                                                         SYStringNode: "formParameters" (Start: 794 , End: 808, On: input.raml)
                                                         SYObjectNode (Start: 825 , End: 1261, On: input.raml)

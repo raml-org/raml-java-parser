@@ -156,7 +156,7 @@
   {
    "key": "UserXml",
    "value": {
-    "value": "# TODO provide proper xml schema\n"
+    "value": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
    }
   }
  ],

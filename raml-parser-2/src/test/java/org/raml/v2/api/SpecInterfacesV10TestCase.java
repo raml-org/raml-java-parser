@@ -131,7 +131,7 @@ public class SpecInterfacesV10TestCase
 
     private void assertTypes(List<TypeDeclaration> types)
     {
-        assertThat(types, hasSize(4));
+        assertThat(types, hasSize(6));
 
         // object type
         ObjectTypeDeclaration user = (ObjectTypeDeclaration) types.get(0);
@@ -371,6 +371,9 @@ public class SpecInterfacesV10TestCase
         assertThat(child.resourcePath(), is("/top/child"));
         assertThat(child.parentResource().resourcePath(), is("/top"));
         assertSecuredBy(child.securedBy());
+        TypeDeclaration typeDeclaration = child.methods().get(0).body().get(0);
+        assertThat(typeDeclaration.name(), is("application/json"));
+        assertThat(typeDeclaration.type(), is("UserJson"));
     }
 
     private void assertResourceTypeRef(ResourceTypeRef resourceTypeRef)
