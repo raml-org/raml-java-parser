@@ -108,7 +108,7 @@ public class SpecInterfacesV10TestCase
         assertThat(api.version().value(), is("1.0"));
         assertThat(api.version().value(), instanceOf(String.class));
         assertThat(api.version().annotations(), hasSize(0));
-        assertThat(api.baseUri().value(), is("http://base.uri/{version}/{param1}"));
+        assertThat(api.baseUri().value(), is("http://base.uri/{version}/{param1}/{param2}/{param3}/{param4}"));
         assertBaseUriParameters(api.baseUriParameters());
         assertThat(api.protocols().size(), is(2));
         assertThat(api.protocols().get(0), is("HTTP"));
@@ -304,13 +304,29 @@ public class SpecInterfacesV10TestCase
 
     private void assertBaseUriParameters(List<TypeDeclaration> baseUriParameters)
     {
-        assertThat(baseUriParameters.size(), is(1));
+        assertThat(baseUriParameters.size(), is(4));
         TypeDeclaration param1 = baseUriParameters.get(0);
         assertThat(param1.name(), is("param1"));
         assertThat(param1.displayName().value(), is("Param 1"));
         assertThat(param1.description().value(), is("some description"));
         assertThat(param1.type(), is("string"));
         assertThat(param1.defaultValue(), nullValue());
+
+        TypeDeclaration param2 = baseUriParameters.get(1);
+        assertThat(param2.name(), is("param2"));
+        assertThat(param2.required(), is(false));
+        assertThat(param2.type(), is("string"));
+
+        TypeDeclaration param3 = baseUriParameters.get(2);
+        assertThat(param3.name(), is("param3?"));
+        assertThat(param3.required(), is(true));
+        assertThat(param3.type(), is("string"));
+
+        TypeDeclaration param4 = baseUriParameters.get(3);
+        assertThat(param4.name(), is("param4?"));
+        assertThat(param4.required(), is(false));
+        assertThat(param4.type(), is("string"));
+
         assertBaseUriExample(param1.example());
         assertThat(param1.required(), is(true));
 
@@ -367,9 +383,13 @@ public class SpecInterfacesV10TestCase
         List<Resource> children = top.resources();
         assertThat(children.size(), is(1));
         Resource child = children.get(0);
-        assertThat(child.relativeUri().value(), is("/child"));
-        assertThat(child.resourcePath(), is("/top/child"));
+        assertThat(child.relativeUri().value(), is("/child/{childId}"));
+        assertThat(child.resourcePath(), is("/top/child/{childId}"));
         assertThat(child.parentResource().resourcePath(), is("/top"));
+        assertThat(child.uriParameters().get(0).name(), is("childId"));
+        assertThat(child.uriParameters().get(0).required(), is(false));
+        assertThat(child.uriParameters().get(1).name(), is("childId2?"));
+        assertThat(child.uriParameters().get(1).required(), is(true));
         assertSecuredBy(child.securedBy());
         TypeDeclaration typeDeclaration = child.methods().get(0).body().get(0);
         assertThat(typeDeclaration.name(), is("application/json"));
@@ -422,12 +442,28 @@ public class SpecInterfacesV10TestCase
 
     private void assertQueryParameters(List<TypeDeclaration> queryParameters)
     {
-        assertThat(queryParameters.size(), is(2));
+        assertThat(queryParameters.size(), is(6));
         assertThat(queryParameters.get(0).validate("10").size(), is(0));
         assertThat(queryParameters.get(0).validate("10feet").size(), is(1));
         ArrayTypeDeclaration arrayType = (ArrayTypeDeclaration) queryParameters.get(1);
         assertThat(arrayType.validate("- a\n- 2\n").size(), is(0));
         assertTrue(arrayType.items() instanceof UnionTypeDeclaration);
+
+        assertThat(queryParameters.get(2).name(), is("three"));
+        assertThat(queryParameters.get(2).type(), is("integer"));
+        assertThat(queryParameters.get(2).required(), is(false));
+
+        assertThat(queryParameters.get(3).name(), is("four"));
+        assertThat(queryParameters.get(3).type(), is("integer"));
+        assertThat(queryParameters.get(3).required(), is(false));
+
+        assertThat(queryParameters.get(4).name(), is("five?"));
+        assertThat(queryParameters.get(4).type(), is("string"));
+        assertThat(queryParameters.get(4).required(), is(true));
+
+        assertThat(queryParameters.get(5).name(), is("six?"));
+        assertThat(queryParameters.get(5).type(), is("string"));
+        assertThat(queryParameters.get(5).required(), is(false));
     }
 
     private void assertHeaders(List<TypeDeclaration> headers)

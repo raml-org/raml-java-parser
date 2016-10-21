@@ -4,7 +4,7 @@ title:
     (basic): title
 description: api description
 version: 1.0
-baseUri: http://base.uri/{version}/{param1}
+baseUri: http://base.uri/{version}/{param1}/{param2}/{param3}/{param4}
 mediaType: application/json
 protocols: [HTTP, HTTPS]
 
@@ -15,6 +15,14 @@ baseUriParameters:
         type: string
         maxLength: 10
         example: one
+    param2?:
+        type: string
+    param3?:
+        type: string
+        required: true
+    param4?:
+        type: string
+        required: false
 
 documentation:
     - title: doc title 1
@@ -186,6 +194,15 @@ annotationTypes:
                 type: number
             two:
                 type: (string|number)[]
+            three?: integer
+            four?:
+                type: integer
+            five?:
+                type: string
+                required: true
+            six?:
+                type: string
+                required: false
         headers: &headersGet
             one:
             two:
@@ -229,9 +246,14 @@ annotationTypes:
                     text/plain: ~
 
 
-    /child:
+    /child/{childId}:
         securedBy: [oauth_2_0, oauth_1_0, null]
         description: child description
+        uriParameters:
+            childId?:
+                type: integer
+            childId2?:
+                required: true
         post:
             body:
                 schema: UserJson

@@ -802,6 +802,12 @@ public class Raml10Grammar extends BaseRamlGrammar
                            .with(propertyField()).named("Properties");
     }
 
+    @Override
+    protected Rule parameters()
+    {
+        return properties();
+    }
+
     private KeyValueRule propertyField()
     {
         return field(scalarType(), anyOf(inlineType(), propertyType())).then(PropertyNode.class);
