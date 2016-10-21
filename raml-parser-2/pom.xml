@@ -27,6 +27,7 @@
                                     <goal>shade</goal>
                                 </goals>
                                 <configuration>
+                                    <finalName>${project.artifactId}-${project.version}-full</finalName>
                                     <transformers>
                                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                             <mainClass>org.raml.v2.internal.impl.RamlValidator</mainClass>
