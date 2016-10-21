@@ -21,7 +21,6 @@ import org.raml.yagi.framework.grammar.rule.KeyValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringValueRule;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
 public class CustomFacetDefinitionNode extends KeyValueNodeImpl
 {
@@ -41,7 +40,12 @@ public class CustomFacetDefinitionNode extends KeyValueNodeImpl
 
     public String getFacetName()
     {
-        return ((SimpleTypeNode) getKey()).getLiteralValue();
+        return PropertyUtils.getName(this);
+    }
+
+    public boolean isRequired()
+    {
+        return PropertyUtils.isRequired(this);
     }
 
     public KeyValueRule getFacetRule()

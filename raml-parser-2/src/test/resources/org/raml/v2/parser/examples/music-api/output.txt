@@ -238,7 +238,7 @@ to any resources or HTTP methods.
                     KeyValueNodeImpl (Start: 292 , End: 371, On: input.raml)
                         SYStringNode: "queryParameters" (Start: 292 , End: 307, On: input.raml)
                         SYObjectNode (Start: 315 , End: 371, On: input.raml)
-                            KeyValueNodeImpl (Start: 315 , End: 371, On: input.raml)
+                            PropertyNode (Start: 315 , End: 371, On: input.raml, Source: KeyValueNodeImpl)
                                 SYStringNode: "genre" (Start: 315 , End: 320, On: input.raml)
                                 TypeDeclarationNode (Start: 330 , End: 371, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 330 , End: 368, On: input.raml)
