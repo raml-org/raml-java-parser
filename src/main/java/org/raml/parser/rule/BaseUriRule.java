@@ -15,8 +15,6 @@
  */
 package org.raml.parser.rule;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +22,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.raml.parser.utils.UriTemplateValidation;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 public class BaseUriRule extends SimpleRule
@@ -84,15 +83,12 @@ public class BaseUriRule extends SimpleRule
 
     private boolean isValid(String value)
     {
-        try
-        {
-            new URL(value);
-            return true;
-        }
-        catch (MalformedURLException e)
+        if(value.length() == 0)
         {
             return false;
         }
+
+        return UriTemplateValidation.isBalanced(value);
     }
 
     public SimpleRule getVersionRule()
