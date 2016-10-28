@@ -23,6 +23,13 @@ See http://raml.org for more information about RAML.
 
 ```java -jar raml-parser-2-{version}.jar raml-file ...```
 
+### Raml Java Parser JVM Arguments
+In order to provide more flexibility, users can set different system properties when parsing different RAML files. Here we list all the system properties you can use right now:
+
+Argument | Description | Default Value
+-------- | ----------- | -------------
+```yagi.json_duplicate_keys_detection``` | Setting it to true will make the parser fail if any JSON example contains duplicated keys | ```true```
+```raml.json_schema.fail_on_warning``` | Setting it to true will make the parser fail if any example validated against a particular Json Schema throws a warning message | ```false```
 
 ## Usage
 
