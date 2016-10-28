@@ -1,0 +1,60 @@
+{
+ "baseUri": {
+  "value": "http://some.raml/v1"
+ },
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": null,
+ "protocols": [],
+ "ramlVersion": "0.8",
+ "resourceTypes": [],
+ "resources": [
+  {
+   "baseUriParameters": [],
+   "description": null,
+   "displayName": "/type",
+   "is": [],
+   "methods": [
+    {
+     "baseUriParameters": [],
+     "body": [],
+     "description": null,
+     "headers": [],
+     "is": [],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "defaultValue": null,
+       "description": null,
+       "displayName": "date",
+       "example": null,
+       "name": "date",
+       "repeat": null,
+       "required": false,
+       "type": "date"
+      }
+     ],
+     "responses": [],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/type"
+   },
+   "resourcePath": "/type",
+   "resources": [],
+   "securedBy": [],
+   "type": null,
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": "type",
+ "traits": [],
+ "uriParameters": [],
+ "version": null
+}

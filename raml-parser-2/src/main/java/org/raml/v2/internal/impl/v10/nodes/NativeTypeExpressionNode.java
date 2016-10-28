@@ -79,6 +79,10 @@ public class NativeTypeExpressionNode extends AbstractStringNode implements Type
 
     public static TypeId getType(String type)
     {
+        if ("date".equals(type))
+        {
+            type = "date-only"; // bridge 0.8 and 1.0 date type
+        }
         for (TypeId builtInScalarType : TypeId.values())
         {
             if (builtInScalarType.getType().equals(type))
