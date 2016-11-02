@@ -24,7 +24,7 @@ public class FacetNode extends KeyValueNodeImpl
     {
     }
 
-    FacetNode(KeyValueNodeImpl node)
+    FacetNode(FacetNode node)
     {
         super(node);
     }
@@ -39,7 +39,7 @@ public class FacetNode extends KeyValueNodeImpl
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException
+    public FacetNode copy()
     {
         return new FacetNode(this);
     }

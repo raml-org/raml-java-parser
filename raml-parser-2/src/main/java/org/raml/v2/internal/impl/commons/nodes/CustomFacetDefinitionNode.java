@@ -16,19 +16,19 @@
 package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.v2.api.loader.DefaultResourceLoader;
+import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringValueRule;
-import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 
-public class CustomFacetDefinitionNode extends KeyValueNodeImpl
+public class CustomFacetDefinitionNode extends PropertyNode
 {
     public CustomFacetDefinitionNode()
     {
     }
 
-    CustomFacetDefinitionNode(KeyValueNodeImpl node)
+    CustomFacetDefinitionNode(CustomFacetDefinitionNode node)
     {
         super(node);
     }
@@ -56,7 +56,7 @@ public class CustomFacetDefinitionNode extends KeyValueNodeImpl
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException
+    public CustomFacetDefinitionNode copy()
     {
         return new CustomFacetDefinitionNode(this);
     }

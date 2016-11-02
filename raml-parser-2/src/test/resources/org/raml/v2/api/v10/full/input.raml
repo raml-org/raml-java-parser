@@ -96,6 +96,18 @@ types:
            </xs:complexType>
          </xs:element>
         </xs:schema>
+    TypeWithCustomFacets:
+        type: string
+        facets:
+            facet1?: integer
+            facet2?:
+                type: integer
+            facet3?:
+                type: integer
+                required: true
+            facet4?:
+                type: integer
+                required: false
 
 traits:
     traitOne:
