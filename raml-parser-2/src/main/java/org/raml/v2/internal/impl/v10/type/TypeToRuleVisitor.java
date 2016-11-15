@@ -208,7 +208,13 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     @Override
     public Rule visitBoolean(BooleanResolvedType booleanTypeDefinition)
     {
-        return new BooleanTypeRule();
+        final AllOfRule typeRule = new AllOfRule(new BooleanTypeRule());
+        if (booleanTypeDefinition.getEnums() != null && !booleanTypeDefinition.getEnums().isEmpty())
+        {
+            typeRule.and(new AnyOfRule(new ArrayList<>(getStringRules(booleanTypeDefinition.getEnums()))));
+        }
+
+        return typeRule;
     }
 
     @Override
