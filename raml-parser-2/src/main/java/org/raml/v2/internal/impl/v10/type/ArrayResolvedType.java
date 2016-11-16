@@ -34,6 +34,7 @@ import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.UNIQUE_ITEMS_K
 import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ArrayResolvedType extends XmlFacetsCapableType
@@ -152,8 +153,14 @@ public class ArrayResolvedType extends XmlFacetsCapableType
         return visitor.visitArray(this);
     }
 
+    @Nonnull
     public ResolvedType getItems()
     {
+        if (items == null)
+        {
+            // If array is not typed (either through 'items' or an expression) then items in the array can be anything
+            items = new AnyResolvedType(getTypeDeclarationNode());
+        }
         return items;
     }
 
