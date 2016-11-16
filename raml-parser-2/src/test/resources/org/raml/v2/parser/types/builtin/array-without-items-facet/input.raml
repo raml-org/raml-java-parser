@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: array error
+version: v1
+types:
+    DummyObject:
+      type: object
+      properties:
+        id: integer
+        dummyList:
+          type: array
+
+/send:
+  post:
+    body:
+      application/json:
+        type: DummyObject
+        examples:
+          one:
+            id: 1
+            dummyList:
+              - "Some string"
+              - 314
+              - 3.14
+              - {"hello" : "world"}
+              - ["this", "is", "other", "array", 34, 3.14]
+              - (string | number)
+          two: {"id":2, "dummyList":["Some string", 314, 3.14, {"hello" : "world"}, ["this", "is", "other", "array", 34, 3.14]]}

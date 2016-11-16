@@ -319,7 +319,14 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     @Override
     public Rule visitArray(ArrayResolvedType arrayTypeDefinition)
     {
-        final ResolvedType items = arrayTypeDefinition.getItems();
+        ResolvedType items = arrayTypeDefinition.getItems();
+
+        if (items == null)
+        {
+            // If 'items' facet is not explicitly defined, by default items in the array can be anything
+            items = new AnyResolvedType(arrayTypeDefinition.getTypeDeclarationNode());
+        }
+
         final AllOfRule rule = new AllOfRule(new ArrayRule(generateRule(items), strictMode));
         registerRule(arrayTypeDefinition, rule);
         if (arrayTypeDefinition.getMaxItems() != null)
