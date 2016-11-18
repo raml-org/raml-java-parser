@@ -13,22 +13,24 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.phase;
+package org.raml.v2.internal.impl.v08.phase;
 
+import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
+import org.raml.v2.internal.impl.commons.nodes.BaseSecuritySchemeRefNode;
+import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.phase.Transformer;
 
 
-public class ReferenceResolverTransformer implements Transformer
+public class ReferenceResolverTransformerV08 implements Transformer
 {
-
-
     @Override
     public boolean matches(Node node)
     {
-        return node instanceof ReferenceNode;
+        return (node instanceof BaseSecuritySchemeRefNode ||
+                node instanceof BaseTraitRefNode || node instanceof BaseResourceTypeRefNode);
     }
 
     @Override

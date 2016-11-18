@@ -1,0 +1,11 @@
+#%RAML 0.8
+title: Security Scheme invalid ref
+version: v1
+securedBy: [b]
+
+/sec:
+  securedBy: [c]
+  post:
+    securedBy: [d]
+    responses:
+      200:
