@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.api.Api;
+import org.raml.v2.api.model.v10.api.DocumentationItem;
 import org.raml.v2.api.model.v10.api.Library;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
@@ -53,6 +54,7 @@ public class RamlModelResult
     private Trait trait;
     private ResourceType resourceType;
     private ExampleSpec exampleSpec;
+    private DocumentationItem documentationItem;
 
     RamlModelResult(List<ValidationResult> validationResults)
     {
@@ -106,6 +108,15 @@ public class RamlModelResult
             throw new IllegalStateException("securityScheme cannot be null");
         }
         this.securityScheme = securityScheme;
+    }
+
+    public RamlModelResult(DocumentationItem documentationItem)
+    {
+        if (documentationItem == null)
+        {
+            throw new IllegalStateException("documentationItem cannot be null");
+        }
+        this.documentationItem = documentationItem;
     }
 
     public RamlModelResult(Trait trait)
@@ -243,8 +254,8 @@ public class RamlModelResult
 
 
     /**
-     * @return the RAML Trait v1.0 parsed without errors
-     *   or null if there were errors or the RAML is not a Trait fragment
+     * @return the RAML ResourceType v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a ResourceType fragment
      */
     @Nullable
     public ResourceType getResourceType()
@@ -261,6 +272,16 @@ public class RamlModelResult
     public ExampleSpec getExampleSpec()
     {
         return exampleSpec;
+    }
+
+    /**
+     * @return the RAML DocumentationItem v1.0 parsed without errors
+     *   or null if there were errors or the RAML is not a DocumentationItem fragment
+     */
+    @Nullable
+    public DocumentationItem getDocumentationItem()
+    {
+        return documentationItem;
     }
 
 
@@ -302,6 +323,10 @@ public class RamlModelResult
         if (getExampleSpec() != null)
         {
             return RamlFragment.NamedExample;
+        }
+        if (getDocumentationItem() != null)
+        {
+            return RamlFragment.DocumentationItem;
         }
         throw new IllegalStateException("Fragment not yet supported");
     }

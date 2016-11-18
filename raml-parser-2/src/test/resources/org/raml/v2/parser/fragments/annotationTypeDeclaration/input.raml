@@ -1,0 +1,22 @@
+#%RAML 1.0 AnnotationTypeDeclaration
+
+displayName: Method handler function path
+properties:
+  path:
+    type: string
+    description: |
+      A string that is passed to the pathResolver function in order to return
+      a route handler function.
+    examples:
+      example1:
+        description: |
+          A relative file that export a default function
+        value: './folderrfolder/file.js'
+      example2:
+        description: |
+          Dot separated path to method
+        value: 'server.controllers.user.findUser'
+  config?:
+    type: object
+    description: |
+      Config object will be passed as the first parameter to the controller on every call

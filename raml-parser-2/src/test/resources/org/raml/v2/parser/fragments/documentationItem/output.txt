@@ -1,0 +1,16 @@
+DocumentationItemNode (Start: 31 , End: 356, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 31 , End: 46, On: input.raml)
+        SYStringNode: "title" (Start: 31 , End: 36, On: input.raml)
+        ObjectNodeImpl (Start: 38 , End: 46, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 46)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "Security" (Start: 38 , End: 46, On: input.raml, Source: SYStringNode)
+    KeyValueNodeImpl (Start: 49 , End: 356, On: input.raml)
+        SYStringNode: "content" (Start: 49 , End: 56, On: input.raml)
+        ObjectNodeImpl (Start: 58 , End: 356, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 356)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "# Policy
+
+Though the API does not implement any authentication / authorisation logic itself, it is dependent on the user details which the Ping Federate Token enforcement policy leaves in context so as to correlate the personal calls mentioned in the section on Resource Hierarchy above.
+" (Start: 58 , End: 356, On: input.raml, Source: SYStringNode)

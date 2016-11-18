@@ -35,6 +35,7 @@ import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v08.parameters.Parameter;
 import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.api.model.v10.api.DocumentationItem;
 import org.raml.v2.api.model.v10.api.Library;
 import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
@@ -178,10 +179,15 @@ public class RamlModelBuilder
             Library library = ModelProxyBuilder.createModel(Library.class, new DefaultModelElement(ramlNode), createV10Binding());
             return new RamlModelResult(library);
         }
-        if (fragment == RamlFragment.DataType)
+        if (fragment == RamlFragment.DataType || fragment == RamlFragment.AnnotationTypeDeclaration)
         {
             TypeDeclaration typeDeclaration = ModelProxyBuilder.createModel(TypeDeclaration.class, new TypeDeclarationModelFactory().create(ramlNode), createV10Binding());
             return new RamlModelResult(typeDeclaration);
+        }
+        if (fragment == RamlFragment.DocumentationItem)
+        {
+            DocumentationItem documentationItem = ModelProxyBuilder.createModel(DocumentationItem.class, new DefaultModelElement(ramlNode), createV10Binding());
+            return new RamlModelResult(documentationItem);
         }
         if (fragment == RamlFragment.SecurityScheme)
         {
