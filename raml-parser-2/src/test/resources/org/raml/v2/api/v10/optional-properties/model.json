@@ -35,6 +35,7 @@
    "maxLength": null,
    "minLength": 0,
    "name": "PropertyType1",
+   "parentTypes": [],
    "pattern": null,
    "required": true,
    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"PropertyType1\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -57,6 +58,30 @@
    "maxLength": 5,
    "minLength": 0,
    "name": "PropertyType2",
+   "parentTypes": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "PropertyType1"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "maxLength": null,
+     "minLength": 0,
+     "name": "PropertyType1",
+     "parentTypes": [],
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"PropertyType1\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+     "type": "string",
+     "xml": null
+    }
+   ],
    "pattern": null,
    "required": true,
    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"PropertyType2\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n                <maxLength value=\"5\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -81,6 +106,7 @@
    "maxProperties": null,
    "minProperties": null,
    "name": "Type1",
+   "parentTypes": [],
    "properties": [
     {
      "allowedTargets": [],
@@ -98,6 +124,30 @@
      "maxLength": null,
      "minLength": 0,
      "name": "testProperty",
+     "parentTypes": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "PropertyType1"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": 0,
+       "name": "PropertyType1",
+       "parentTypes": [],
+       "pattern": null,
+       "required": true,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"PropertyType1\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "string",
+       "xml": null
+      }
+     ],
      "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"testProperty\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
@@ -128,6 +178,78 @@
    "maxProperties": null,
    "minProperties": null,
    "name": "Type2",
+   "parentTypes": [
+    {
+     "additionalProperties": true,
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
+     "displayName": {
+      "annotations": [],
+      "value": "Type1"
+     },
+     "example": null,
+     "examples": [],
+     "maxProperties": null,
+     "minProperties": null,
+     "name": "Type1",
+     "parentTypes": [],
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "testProperty"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": 0,
+       "name": "testProperty",
+       "parentTypes": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "PropertyType1"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "maxLength": null,
+         "minLength": 0,
+         "name": "PropertyType1",
+         "parentTypes": [],
+         "pattern": null,
+         "required": true,
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"PropertyType1\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+         "type": "string",
+         "xml": null
+        }
+       ],
+       "pattern": null,
+       "required": true,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"testProperty\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "PropertyType1",
+       "xml": null
+      }
+     ],
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Type1\" type=\"tns:Type1\"/>\n    <complexType name=\"Type1\">\n        <sequence>\n            <element name=\"testProperty\">\n                <simpleType>\n                    <restriction base=\"string\">\n                        <minLength value=\"0\"/>\n                    </restriction>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+     "type": "object",
+     "xml": null
+    }
+   ],
    "properties": [
     {
      "allowedTargets": [],
@@ -145,6 +267,30 @@
      "maxLength": 5,
      "minLength": 0,
      "name": "testProperty",
+     "parentTypes": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "PropertyType1"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "maxLength": null,
+       "minLength": 0,
+       "name": "PropertyType1",
+       "parentTypes": [],
+       "pattern": null,
+       "required": true,
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"PropertyType1\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "string",
+       "xml": null
+      }
+     ],
      "pattern": null,
      "required": true,
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"testProperty\">\n        <simpleType>\n            <restriction base=\"string\">\n                <minLength value=\"0\"/>\n                <maxLength value=\"5\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",

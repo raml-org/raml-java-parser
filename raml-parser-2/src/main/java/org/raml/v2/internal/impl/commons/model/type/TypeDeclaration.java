@@ -23,6 +23,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -31,20 +32,19 @@ import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
@@ -88,6 +88,37 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
     public String type()
     {
         return getTypeExpression(getTypeNode());
+    }
+
+    public List<TypeDeclaration<?>> parentTypes()
+    {
+
+        List<TypeDeclaration<?>> result = new ArrayList<>();
+
+        Node typeNode = getTypeNode();
+        if (typeNode instanceof ArrayNode)
+        {
+            List<Node> children = typeNode.getChildren();
+
+            for (Node child : children)
+            {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode) child).getRefNode()));
+            }
+        }
+        else
+        {
+            if (typeNode instanceof NamedTypeExpressionNode)
+            {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode) typeNode).getRefNode()));
+            }
+        }
+
+        return result;
+    }
+
+    private TypeDeclaration<?> toTypeDeclaration(Node typeNode)
+    {
+        return new TypeDeclarationModelFactory().create(typeNode);
     }
 
     private String getTypeExpression(Node typeNode)
