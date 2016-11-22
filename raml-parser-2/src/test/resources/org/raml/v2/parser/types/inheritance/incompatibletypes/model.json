@@ -1,0 +1,5 @@
+{
+ "errors": [
+  "HomeAnimal contains incompatible parent types: Cat is extending [object] Dog is extending [string] "
+ ]
+}
