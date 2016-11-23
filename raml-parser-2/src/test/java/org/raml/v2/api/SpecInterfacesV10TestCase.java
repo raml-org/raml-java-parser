@@ -39,6 +39,7 @@ import org.raml.v2.api.model.v10.api.DocumentationItem;
 import org.raml.v2.api.model.v10.bodies.Response;
 import org.raml.v2.api.model.v10.datamodel.ArrayTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.ExampleSpec;
+import org.raml.v2.api.model.v10.datamodel.ExternalTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.IntegerTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.ObjectTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.StringTypeDeclaration;
@@ -145,6 +146,10 @@ public class SpecInterfacesV10TestCase
         assertThat(properties, hasSize(5));
         assertUserProperties(properties);
         assertUserExamples(user.examples());
+        List<TypeDeclaration> parentTypesUser = user.parentTypes();
+        assertThat(parentTypesUser, hasSize(1));
+        assertThat(parentTypesUser.get(0).name(), is("object"));
+        assertThat(parentTypesUser.get(0).parentTypes(), hasSize(0));
 
         // inherited object type
         ObjectTypeDeclaration superUser = (ObjectTypeDeclaration) types.get(1);
@@ -157,11 +162,29 @@ public class SpecInterfacesV10TestCase
         assertThat(skills.maxItems(), is(3));
         assertThat(skills.type(), is("string[]"));
         assertThat(superUser.examples(), hasSize(0));
+        List<TypeDeclaration> parentTypesSuperUser = superUser.parentTypes();
+        assertThat(parentTypesSuperUser, hasSize(1));
+        assertThat(parentTypesSuperUser.get(0).name(), is("User"));
+        List<TypeDeclaration> parentTypesSuperUserUser = parentTypesSuperUser.get(0).parentTypes();
+        assertThat(parentTypesSuperUserUser, hasSize(1));
+        assertThat(parentTypesSuperUserUser.get(0).name(), is("object"));
+        assertThat(parentTypesSuperUserUser.get(0).parentTypes(), hasSize(0));
 
         // string type
         StringTypeDeclaration nString = (StringTypeDeclaration) types.get(3);
         assertThat(nString.maxLength(), is(10));
         assertThat(nString.pattern(), nullValue());
+        List<TypeDeclaration> parentTypesString = nString.parentTypes();
+        assertThat(parentTypesString, hasSize(1));
+        assertThat(parentTypesString.get(0).name(), is("string"));
+        assertThat(parentTypesString.get(0).parentTypes(), hasSize(0));
+
+        // json schema type
+        ExternalTypeDeclaration jsonSchema = (ExternalTypeDeclaration) types.get(4);
+        List<TypeDeclaration> parentTypesJson = jsonSchema.parentTypes();
+        assertThat(parentTypesJson, hasSize(1));
+        assertThat(parentTypesJson.get(0).name(), nullValue());
+        assertThat(parentTypesJson.get(0).parentTypes(), hasSize(0));
 
         // Type with custom facets
         TypeDeclaration myType = types.get(6);

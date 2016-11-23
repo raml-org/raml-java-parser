@@ -29,8 +29,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -52,7 +55,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
-    public ObjectResolvedType(TypeDeclarationNode declarationNode,
+    public ObjectResolvedType(TypeExpressionNode declarationNode,
             XmlFacets xmlFacets,
             Integer minProperties,
             Integer maxProperties,
@@ -71,7 +74,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         this.properties = properties;
     }
 
-    public ObjectResolvedType(TypeDeclarationNode from)
+    public ObjectResolvedType(TypeExpressionNode from)
     {
         super(from,
                 new ResolvedCustomFacets(MIN_PROPERTIES_KEY_NAME, MAX_PROPERTIES_KEY_NAME, ADDITIONAL_PROPERTIES_KEY_NAME, DISCRIMINATOR_KEY_NAME, DISCRIMINATOR_VALUE_KEY_NAME, PROPERTIES_KEY_NAME));
@@ -352,4 +355,12 @@ public class ObjectResolvedType extends XmlFacetsCapableType
             this.properties = properties;
         }
     }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.OBJECT.getType();
+    }
+
 }

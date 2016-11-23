@@ -224,8 +224,7 @@ public class ApiModelParserTestCase extends TestDataProvider
 
     private boolean isRecursiveMethod(Method declaredMethod)
     {
-        return declaredMethod.getName().startsWith("parent")
-               ||
+        return (declaredMethod.getName().startsWith("parent") && !declaredMethod.getName().startsWith("parentTypes")) ||
                (declaredMethod.getDeclaringClass().getSimpleName().equals("Method") && declaredMethod.getName().equals("resource"));
     }
 

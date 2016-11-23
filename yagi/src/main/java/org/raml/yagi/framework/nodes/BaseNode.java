@@ -152,7 +152,7 @@ public abstract class BaseNode implements Node
                 if (idx == -1)
                 {
                     // Bastard as it has a parent but is not recognized by him ;)
-                    throw new RuntimeException("Trying to replace a bastard child node " + this + " on parent " + getParent() + ".");
+                    throw new RuntimeException("Trying to replace a bastard child node " + this.getClass().getSimpleName() + " on parent " + getParent() + ".");
                 }
                 getParent().setChild(idx, newSubTree);
             }

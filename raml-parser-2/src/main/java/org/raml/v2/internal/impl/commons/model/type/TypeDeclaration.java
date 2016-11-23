@@ -23,14 +23,19 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
+import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
+import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -41,6 +46,7 @@ import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
+import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -79,15 +85,26 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         {
             return ((PropertyNode) node).getName();
         }
-        else
+
+        String keyValue = ((StringNode) node.getKey()).getValue();
+        Node parentTypeNode = node.getValue();
+        if (node.getParent() instanceof TypeDeclarationNode && parentTypeNode instanceof TypeExpressionNode)
         {
-            return ((StringNode) node.getKey()).getValue();
+            // getting name of parent type
+            if (parentTypeNode instanceof ExternalSchemaTypeExpressionNode)
+            {
+                return null;
+            }
+            return ((TypeExpressionNode) parentTypeNode).getTypeExpressionText();
         }
+        return keyValue;
     }
 
+    @Nullable
     public String type()
     {
-        return getTypeExpression(getTypeNode());
+        Node typeNode = getTypeNode();
+        return typeNode != null ? getTypeExpression(typeNode) : null;
     }
 
     private String getTypeExpression(Node typeNode)
@@ -103,6 +120,40 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         return null;
     }
 
+    public List<TypeDeclaration<?>> parentTypes()
+    {
+        List<TypeDeclaration<?>> result = new ArrayList<>();
+        Node typeNode = getTypeNode();
+        if (typeNode instanceof ArrayNode)
+        {
+            List<Node> children = typeNode.getChildren();
+            for (Node child : children)
+            {
+                result.add(toTypeDeclaration(((NamedTypeExpressionNode) child).getRefNode()));
+            }
+        }
+        else if (typeNode instanceof TypeExpressionNode)
+        {
+            ResolvedType type = ((TypeExpressionNode) typeNode).generateDefinition();
+            if (type != null)
+            {
+                result.add(toTypeDeclaration(type));
+            }
+        }
+
+        return result;
+    }
+
+    private TypeDeclaration<?> toTypeDeclaration(ResolvedType type)
+    {
+        return new TypeDeclarationModelFactory().create(type);
+    }
+
+    private TypeDeclaration<?> toTypeDeclaration(Node typeNode)
+    {
+        return new TypeDeclarationModelFactory().create(typeNode);
+    }
+
     public String schemaContent()
     {
         if (node.getValue() instanceof TypeDeclarationNode)
@@ -111,7 +162,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
             final List<TypeExpressionNode> baseTypes = value.getBaseTypes();
             if (!baseTypes.isEmpty())
             {
-                final ResolvedType resolvedType = baseTypes.get(0).generateDefinition(value);
+                final ResolvedType resolvedType = baseTypes.get(0).generateDefinition();
                 if (resolvedType instanceof SchemaBasedResolvedType)
                 {
                     return ((SchemaBasedResolvedType) resolvedType).getSchemaValue();
@@ -215,6 +266,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         }
     }
 
+    @Nullable
     private Node getTypeNode()
     {
         final Node value = node.getValue();
@@ -232,7 +284,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
     /**
      * True if the node is a global named type declaration as opposed to an inline/anonymous declaration. This is computed based on the parent of the current type declaration node, i.e.
      * if its parent is one of the global named type declaration nodes possible.
-     * 
+     *
      * @return <code>true</code> if the node is a global named type declaration as opposed to an inline/anonymous declaration, <code>false</code> otherwise
      */
     private boolean isGlobalNamedTypeDeclarationNode()
@@ -254,7 +306,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
     /**
      * True if the node is a local named type declaration as opposed to an inline/anonymous declaration. This is computed based on the parent of the current type declaration node, i.e.
      * if its parent is one of the local named type declaration nodes possible.
-     * 
+     *
      * @return <code>true</code> if the node is a local named type declaration as opposed to an inline/anonymous declaration, <code>false</code> otherwise
      */
     private boolean isLocalNamedTypeDeclarationNode()
@@ -263,7 +315,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
         // tries to get the grandparent of the current node to retrieve the same node based on the known local named declaration node names
         final Node baseNode = parent.getParent().getParent();
 
-        return Iterables.any(LOCAL_NAMED_TYPE_DECLARATION_NODE_NAMES, new Predicate<String>()
+        return baseNode != null && Iterables.any(LOCAL_NAMED_TYPE_DECLARATION_NODE_NAMES, new Predicate<String>()
         {
 
             @Override

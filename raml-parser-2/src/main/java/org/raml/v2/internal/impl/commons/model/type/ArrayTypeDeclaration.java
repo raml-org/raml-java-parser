@@ -39,7 +39,7 @@ public class ArrayTypeDeclaration extends TypeDeclaration<ArrayResolvedType>
 
     public TypeDeclaration<?> items()
     {
-        return new TypeDeclarationModelFactory().create(getResolvedType().getItems().getTypeDeclarationNode());
+        return new TypeDeclarationModelFactory().create(getResolvedType().getItems());
     }
 
 

@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.raml.v2.internal.impl.commons.nodes.FacetNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 
 public abstract class AbstractExternalType extends BaseType implements SchemaBasedResolvedType
@@ -28,7 +29,7 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
     private final String schemaPath;
     private final String internalFragment;
 
-    public AbstractExternalType(TypeDeclarationNode from, String schemaValue, String schemaPath, String internalFragment)
+    public AbstractExternalType(TypeExpressionNode from, String schemaValue, String schemaPath, String internalFragment)
     {
         super(from, new ResolvedCustomFacets());
         this.schemaValue = schemaValue;
@@ -46,7 +47,6 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
     @Override
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
-        setTypeNode(from);
         return copy();
     }
 

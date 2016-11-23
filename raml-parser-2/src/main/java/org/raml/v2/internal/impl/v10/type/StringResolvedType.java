@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -50,12 +51,12 @@ public class StringResolvedType extends XmlFacetsCapableType
     private List<String> enums = new ArrayList<>();
 
 
-    public StringResolvedType(TypeDeclarationNode from)
+    public StringResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, PATTERN_KEY_NAME));
     }
 
-    public StringResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums, ResolvedCustomFacets customFacets)
+    public StringResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
         this.minLength = minLength;
@@ -171,6 +172,13 @@ public class StringResolvedType extends XmlFacetsCapableType
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitString(this);
+    }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.STRING.getType();
     }
 
     private void setPattern(String pattern)

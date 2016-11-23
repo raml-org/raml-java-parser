@@ -15,7 +15,10 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import javax.annotation.Nullable;
+
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
@@ -24,12 +27,12 @@ import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 public class DateOnlyResolvedType extends XmlFacetsCapableType
 {
 
-    public DateOnlyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public DateOnlyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
     }
 
-    public DateOnlyResolvedType(TypeDeclarationNode from)
+    public DateOnlyResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets());
     }
@@ -50,7 +53,7 @@ public class DateOnlyResolvedType extends XmlFacetsCapableType
         return overwriteFacets(copy, from);
     }
 
-    private DateOnlyResolvedType copy()
+    protected DateOnlyResolvedType copy()
     {
         return new DateOnlyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
     }
@@ -67,5 +70,12 @@ public class DateOnlyResolvedType extends XmlFacetsCapableType
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitDate(this);
+    }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.DATE_ONLY.getType();
     }
 }

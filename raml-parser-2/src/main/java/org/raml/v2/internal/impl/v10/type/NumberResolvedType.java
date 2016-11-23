@@ -29,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -51,12 +53,12 @@ public class NumberResolvedType extends XmlFacetsCapableType
     private String format;
     private List<Number> enums = new ArrayList<>();
 
-    public NumberResolvedType(TypeDeclarationNode from)
+    public NumberResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets(MINIMUM_KEY_NAME, MAXIMUM_KEY_NAME, MULTIPLE_OF_KEY_NAME, FORMAT_KEY_NAME));
     }
 
-    public NumberResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets customFacets)
+    public NumberResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
         this.minimum = minimum;
@@ -282,4 +284,12 @@ public class NumberResolvedType extends XmlFacetsCapableType
             this.format = format;
         }
     }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.NUMBER.getType();
+    }
+
 }

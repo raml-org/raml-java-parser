@@ -87,14 +87,14 @@ public class ArrayTypeExpressionNode extends AbstractRamlNode implements TypeExp
 
     @Override
     @Nullable
-    public ResolvedType generateDefinition(TypeDeclarationNode node)
+    public ResolvedType generateDefinition()
     {
         final TypeExpressionNode of = of();
         if (of != null)
         {
             final TypeDeclarationNode itemsTypeDeclarationNode = new InlineTypeDeclarationFactory().create(of.copy());
-            itemsTypeDeclarationNode.setParent(node);
-            return new ArrayResolvedType(node, of.generateDefinition(itemsTypeDeclarationNode));
+            itemsTypeDeclarationNode.setParent(this);
+            return new ArrayResolvedType(this, of.generateDefinition());
         }
         else
         {

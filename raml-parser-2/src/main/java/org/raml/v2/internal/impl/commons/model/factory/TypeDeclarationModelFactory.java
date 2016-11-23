@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.model.factory;
 
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.yagi.framework.model.NodeModelFactory;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
@@ -82,7 +83,7 @@ public class TypeDeclarationModelFactory implements NodeModelFactory
         }
     }
 
-    private TypeDeclaration createTypeDeclaration(TypeDeclarationNode node, ResolvedType resolvedType)
+    public TypeDeclaration createTypeDeclaration(TypeExpressionNode node, ResolvedType resolvedType)
     {
         KeyValueNode keyValueNode = node.findAncestorWith(KeyValueNode.class);
         if (keyValueNode == null)

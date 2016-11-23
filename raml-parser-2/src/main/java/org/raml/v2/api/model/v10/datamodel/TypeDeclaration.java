@@ -46,6 +46,12 @@ public interface TypeDeclaration extends Annotable
 
 
     /**
+     * The list of inherited types
+     */
+    List<TypeDeclaration> parentTypes();
+
+
+    /**
      * Provides default value for a property
      **/
     String defaultValue();

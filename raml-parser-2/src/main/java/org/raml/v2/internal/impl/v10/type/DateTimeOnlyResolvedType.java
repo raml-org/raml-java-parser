@@ -15,23 +15,23 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 
-import java.util.List;
-
 public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
 {
-    public DateTimeOnlyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public DateTimeOnlyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
     }
 
-    public DateTimeOnlyResolvedType(TypeDeclarationNode from)
+    public DateTimeOnlyResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets());
     }
@@ -71,5 +71,10 @@ public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
         return visitor.visitDateTimeOnly(this);
     }
 
-
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.DATE_TIME_ONLY.getType();
+    }
 }

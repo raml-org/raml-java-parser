@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
@@ -25,12 +26,12 @@ public class AnyResolvedType extends XmlFacetsCapableType
 {
 
 
-    public AnyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public AnyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
     }
 
-    public AnyResolvedType(TypeDeclarationNode declarationNode)
+    public AnyResolvedType(TypeExpressionNode declarationNode)
     {
         super(declarationNode, new ResolvedCustomFacets());
     }

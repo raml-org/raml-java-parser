@@ -15,13 +15,13 @@
  */
 package org.raml.v2.internal.impl.commons.type;
 
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 
 public class JsonSchemaExternalType extends AbstractExternalType
 {
 
-    public JsonSchemaExternalType(TypeDeclarationNode from, String schemaValue, String schemaPath, String internalFragment)
+    public JsonSchemaExternalType(TypeExpressionNode from, String schemaValue, String schemaPath, String internalFragment)
     {
         super(from, schemaValue, schemaPath, internalFragment);
     }

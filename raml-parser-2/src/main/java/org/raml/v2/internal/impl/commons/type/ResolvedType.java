@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.commons.type;
 
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.TypeVisitor;
 
 import javax.annotation.Nonnull;
@@ -42,6 +43,8 @@ public interface ResolvedType
      */
     ResolvedType mergeFacets(ResolvedType with);
 
+    ResolvedType setTypeNode(TypeExpressionNode typeNode);
+
     /**
      * Dispatch the implementation to the visitor method
      * @param visitor The visitor
@@ -57,12 +60,20 @@ public interface ResolvedType
     @Nullable
     String getTypeName();
 
+    /**
+     * Returns the builtin type name.
+     *  returns null for builtin types without explicit names
+     *   (xsd, json schema, any, unions)
+     * @return The builtin type name
+     */
+    @Nullable
+    String getBuiltinTypeName();
 
     /**
      * The type declaration node that define this type
      * @return The node
      */
-    TypeDeclarationNode getTypeDeclarationNode();
+    TypeExpressionNode getTypeDeclarationNode();
 
     /**
      * Validate state consistency

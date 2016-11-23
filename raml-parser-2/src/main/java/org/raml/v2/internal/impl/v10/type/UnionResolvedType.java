@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.BaseType;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
@@ -34,7 +35,7 @@ public class UnionResolvedType extends BaseType
 
     private List<ResolvedType> of;
 
-    public UnionResolvedType(TypeDeclarationNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
+    public UnionResolvedType(TypeExpressionNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
     {
         super(typeNode, customFacets);
         this.of = of;

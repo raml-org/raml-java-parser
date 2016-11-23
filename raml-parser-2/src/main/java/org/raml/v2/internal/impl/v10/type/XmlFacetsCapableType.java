@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.v10.type;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.BaseType;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -24,13 +25,13 @@ public abstract class XmlFacetsCapableType extends BaseType implements ResolvedT
 {
     private XmlFacets xmlFacets;
 
-    public XmlFacetsCapableType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public XmlFacetsCapableType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, customFacets);
         this.xmlFacets = xmlFacets;
     }
 
-    public XmlFacetsCapableType(TypeDeclarationNode typeNode, ResolvedCustomFacets customFacets)
+    public XmlFacetsCapableType(TypeExpressionNode typeNode, ResolvedCustomFacets customFacets)
     {
         super(typeNode, customFacets);
         this.xmlFacets = new XmlFacets();
@@ -38,7 +39,6 @@ public abstract class XmlFacetsCapableType extends BaseType implements ResolvedT
 
     protected XmlFacetsCapableType overwriteFacets(XmlFacetsCapableType on, TypeDeclarationNode from)
     {
-        on.setTypeNode(from);
         on.setXmlFacets(on.getXmlFacets().overwriteFacets(from));
         return on;
     }

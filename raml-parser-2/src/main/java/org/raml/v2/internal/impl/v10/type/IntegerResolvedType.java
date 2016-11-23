@@ -15,7 +15,10 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import javax.annotation.Nullable;
+
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
@@ -26,12 +29,12 @@ import org.raml.yagi.framework.nodes.ErrorNode;
 public class IntegerResolvedType extends NumberResolvedType
 {
 
-    public IntegerResolvedType(TypeDeclarationNode from)
+    public IntegerResolvedType(TypeExpressionNode from)
     {
         super(from);
     }
 
-    public IntegerResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets copy)
+    public IntegerResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets copy)
     {
         super(declarationNode, xmlFacets, minimum, maximum, multiple, format, copy);
     }
@@ -119,4 +122,12 @@ public class IntegerResolvedType extends NumberResolvedType
         double numberOfMultiplesInRange = Math.max(Math.floor(max / mult) - Math.ceil(min / mult) + 1, 0);
         return numberOfMultiplesInRange > 0;
     }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.INTEGER.getType();
+    }
+
 }

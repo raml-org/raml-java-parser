@@ -78,7 +78,7 @@ public class NamedTypeExpressionNode extends AbstractReferenceNode implements Ty
 
     @Nullable
     @Override
-    public ResolvedType generateDefinition(TypeDeclarationNode node)
+    public ResolvedType generateDefinition()
     {
         if (getRefNode() != null)
         {

@@ -15,7 +15,27 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.raml.v2.internal.utils.BasicRuleFactory.property;
+import static org.raml.v2.internal.utils.BasicRuleFactory.regexValue;
+import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
+import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.commons.rule.JsonSchemaValidationRule;
+import org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule;
+import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
+import org.raml.v2.internal.impl.v10.rules.DiscriminatorBasedRule;
+import org.raml.v2.internal.impl.v10.rules.FormatValueRule;
 import org.raml.yagi.framework.grammar.rule.AllOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyValueRule;
@@ -23,7 +43,6 @@ import org.raml.yagi.framework.grammar.rule.ArrayRule;
 import org.raml.yagi.framework.grammar.rule.BooleanTypeRule;
 import org.raml.yagi.framework.grammar.rule.DateValueRule;
 import org.raml.yagi.framework.grammar.rule.DivisorValueRule;
-import org.raml.v2.internal.impl.v10.rules.FormatValueRule;
 import org.raml.yagi.framework.grammar.rule.IntegerTypeRule;
 import org.raml.yagi.framework.grammar.rule.KeyValueRule;
 import org.raml.yagi.framework.grammar.rule.MaxItemsRule;
@@ -42,26 +61,7 @@ import org.raml.yagi.framework.grammar.rule.RangeValueRule;
 import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringTypeRule;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.rule.JsonSchemaValidationRule;
-import org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule;
-import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
-import org.raml.v2.internal.impl.v10.rules.DiscriminatorBasedRule;
 import org.raml.yagi.framework.util.DateType;
-
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import static org.apache.commons.lang.StringUtils.isNotEmpty;
-import static org.raml.v2.internal.utils.BasicRuleFactory.property;
-import static org.raml.v2.internal.utils.BasicRuleFactory.regexValue;
-import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
-import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
 
 public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
@@ -141,7 +141,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         if (!resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
         {
             resolvingDiscriminator = false;
-            final TypeDeclarationNode typeDeclarationNode = objectTypeDefinition.getTypeDeclarationNode();
+            final TypeExpressionNode typeDeclarationNode = objectTypeDefinition.getTypeDeclarationNode();
             return new DiscriminatorBasedRule(this, typeDeclarationNode.getRootNode(), objectTypeDefinition.getDiscriminator());
         }
         else

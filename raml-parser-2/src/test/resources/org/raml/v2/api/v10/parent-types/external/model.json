@@ -1,0 +1,170 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": {
+  "annotations": [],
+  "value": "api description"
+ },
+ "documentation": [],
+ "mediaType": [
+  {
+   "value": "application/json"
+  }
+ ],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "/top"
+   },
+   "is": [],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "body"
+       },
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "name": "application/json",
+       "parentTypes": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "UserJson"
+         },
+         "example": null,
+         "examples": [],
+         "facets": [],
+         "name": "UserJson",
+         "parentTypes": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": null,
+           "example": null,
+           "examples": [],
+           "facets": [],
+           "name": null,
+           "parentTypes": [],
+           "required": true,
+           "schemaContent": null,
+           "toXmlSchema": null,
+           "type": null,
+           "xml": null
+          }
+         ],
+         "required": true,
+         "schemaContent": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+         "toXmlSchema": null,
+         "type": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+         "xml": null
+        }
+       ],
+       "required": true,
+       "schemaContent": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+       "toXmlSchema": null,
+       "type": "UserJson",
+       "xml": null
+      }
+     ],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "post"
+     },
+     "headers": [],
+     "is": [],
+     "method": "post",
+     "protocols": [],
+     "queryParameters": [],
+     "queryString": null,
+     "responses": [],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/top"
+   },
+   "resourcePath": "/top",
+   "resources": [],
+   "securedBy": [],
+   "type": null,
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "api title"
+ },
+ "traits": [],
+ "types": [
+  {
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "UserJson"
+   },
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "name": "UserJson",
+   "parentTypes": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": null,
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "name": null,
+     "parentTypes": [],
+     "required": true,
+     "schemaContent": null,
+     "toXmlSchema": null,
+     "type": null,
+     "xml": null
+    }
+   ],
+   "required": true,
+   "schemaContent": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+   "toXmlSchema": null,
+   "type": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": {
+  "annotations": [],
+  "value": "1.0"
+ }
+}

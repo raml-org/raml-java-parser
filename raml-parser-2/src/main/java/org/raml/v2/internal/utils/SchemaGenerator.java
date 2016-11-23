@@ -30,13 +30,13 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
-import org.raml.v2.internal.utils.xml.XsdResourceResolver;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
+import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.utils.xml.XsdResourceResolver;
 import org.xml.sax.SAXException;
 
 public class SchemaGenerator
@@ -76,7 +76,7 @@ public class SchemaGenerator
     private static String resolveResourceUriIfIncluded(JsonSchemaExternalType jsonTypeDefinition)
     {
         // Getting the type holding the schema
-        TypeDeclarationNode typeDeclarationNode = jsonTypeDefinition.getTypeDeclarationNode();
+        TypeExpressionNode typeDeclarationNode = jsonTypeDefinition.getTypeDeclarationNode();
 
         // Inside the type declaration, we find the node containing the schema itself
         List<ExternalSchemaTypeExpressionNode> schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);

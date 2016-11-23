@@ -29,11 +29,10 @@ public interface TypeExpressionNode extends Node
     /**
      * Generates the definition that results of evaluating this expression
      *
-     * @param node
      * @return The type definition
      */
     @Nullable
-    ResolvedType generateDefinition(TypeDeclarationNode node);
+    ResolvedType generateDefinition();
 
     String getTypeExpressionText();
 }

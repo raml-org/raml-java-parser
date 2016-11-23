@@ -83,15 +83,15 @@ public class ExternalSchemaTypeExpressionNode extends AbstractStringNode impleme
 
     @Nullable
     @Override
-    public ResolvedType generateDefinition(TypeDeclarationNode node)
+    public ResolvedType generateDefinition()
     {
         if (isXmlSchema())
         {
-            return new XmlSchemaExternalType(node, getSchemaValue(), getSchemaPath(), getInternalFragment());
+            return new XmlSchemaExternalType(this, getSchemaValue(), getSchemaPath(), getInternalFragment());
         }
         else
         {
-            return new JsonSchemaExternalType(node, getSchemaValue(), getSchemaPath(), getInternalFragment());
+            return new JsonSchemaExternalType(this, getSchemaValue(), getSchemaPath(), getInternalFragment());
         }
 
     }

@@ -1,0 +1,69 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "parent types"
+ },
+ "traits": [],
+ "types": [
+  {
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "StringType"
+   },
+   "enumValues": [],
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "maxLength": null,
+   "minLength": null,
+   "name": "StringType",
+   "parentTypes": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": null,
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "string",
+     "parentTypes": [],
+     "pattern": null,
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "type": null,
+     "xml": null
+    }
+   ],
+   "pattern": null,
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"StringType\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+   "type": "string",
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": null
+}

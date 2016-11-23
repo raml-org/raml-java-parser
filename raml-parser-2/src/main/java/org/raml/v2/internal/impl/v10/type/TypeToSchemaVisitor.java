@@ -15,6 +15,18 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
+import static org.raml.v2.internal.utils.ValueUtils.defaultTo;
+import static org.raml.v2.internal.utils.ValueUtils.isEmpty;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+import javax.annotation.Nonnull;
+import javax.xml.namespace.QName;
+
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaAny;
 import org.apache.ws.commons.schema.XmlSchemaAttribute;
@@ -37,22 +49,9 @@ import org.apache.ws.commons.schema.XmlSchemaSimpleType;
 import org.apache.ws.commons.schema.XmlSchemaSimpleTypeRestriction;
 import org.apache.ws.commons.schema.XmlSchemaType;
 import org.apache.ws.commons.schema.constants.Constants;
-import org.apache.ws.commons.schema.utils.NamespacePrefixList;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
-
-import javax.annotation.Nonnull;
-import javax.xml.XMLConstants;
-import javax.xml.namespace.QName;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
-import static org.raml.v2.internal.utils.ValueUtils.defaultTo;
-import static org.raml.v2.internal.utils.ValueUtils.isEmpty;
 
 public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
 {
@@ -174,7 +173,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
     @Override
     public XmlSchemaType visitObject(ObjectResolvedType objectTypeDefinition)
     {
-        final String typeName = objectTypeDefinition.getTypeName();
+        final String typeName = getTypeName(objectTypeDefinition);
         if (typeName != null && types.containsKey(typeName))
         {
             // With this we support recursive structures
@@ -243,6 +242,20 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
             }
             return value;
         }
+    }
+
+    private String getTypeName(ResolvedType resolvedType)
+    {
+        String typeName = resolvedType.getTypeName();
+        for (TypeId typeId : TypeId.values())
+        {
+            // return null for base types
+            if (typeId.getType().equals(typeName))
+            {
+                return null;
+            }
+        }
+        return typeName;
     }
 
     @Override
@@ -327,11 +340,11 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
         final String xmlName;
         if (itemType instanceof XmlFacetsCapableType)
         {
-            xmlName = defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), itemType.getTypeName());
+            xmlName = defaultTo(((XmlFacetsCapableType) itemType).getXmlFacets().getName(), getTypeName(itemType));
         }
         else
         {
-            xmlName = itemType.getTypeName();
+            xmlName = getTypeName(itemType);
         }
 
         final String name = defaultTo(xmlName, currentElement.peek().getName());

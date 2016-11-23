@@ -15,25 +15,25 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-
-import java.util.List;
 
 public class TimeOnlyResolvedType extends XmlFacetsCapableType
 {
 
 
-    public TimeOnlyResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public TimeOnlyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
     }
 
-    public TimeOnlyResolvedType(TypeDeclarationNode from)
+    public TimeOnlyResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets());
     }
@@ -72,4 +72,12 @@ public class TimeOnlyResolvedType extends XmlFacetsCapableType
         final AnyOfRule facetRule = new AnyOfRule().addAll(customFacets.getRules());
         TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.TIME_ONLY.getType();
+    }
+
 }

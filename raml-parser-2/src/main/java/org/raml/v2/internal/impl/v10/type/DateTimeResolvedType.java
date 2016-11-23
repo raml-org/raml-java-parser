@@ -15,31 +15,31 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
+import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
+
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-
-import java.util.List;
-
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
-import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
 
 public class DateTimeResolvedType extends XmlFacetsCapableType
 {
 
     private String format;
 
-    public DateTimeResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, String format, ResolvedCustomFacets customFacets)
+    public DateTimeResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, String format, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
         this.format = format;
     }
 
-    public DateTimeResolvedType(TypeDeclarationNode from)
+    public DateTimeResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets(FORMAT_KEY_NAME));
     }
@@ -99,4 +99,12 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
             this.format = format;
         }
     }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.DATE_TIME.getType();
+    }
+
 }

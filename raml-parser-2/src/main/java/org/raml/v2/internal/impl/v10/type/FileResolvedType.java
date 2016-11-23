@@ -15,21 +15,23 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
-import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
-import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
-import org.raml.v2.internal.impl.v10.rules.TypesUtils;
-import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-
-import java.util.List;
-
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_LENGTH_KEY_NAME;
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_LENGTH_KEY_NAME;
 import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
 import static org.raml.yagi.framework.util.NodeSelector.selectStringCollection;
+
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
+import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.rules.TypesUtils;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 
 public class FileResolvedType extends XmlFacetsCapableType
 {
@@ -38,12 +40,12 @@ public class FileResolvedType extends XmlFacetsCapableType
     private Integer maxLength;
     private List<String> fileTypes;
 
-    public FileResolvedType(TypeDeclarationNode from)
+    public FileResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, FORMAT_KEY_NAME));
     }
 
-    public FileResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes, ResolvedCustomFacets customFacets)
+    public FileResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
         this.minLength = minLength;
@@ -140,4 +142,12 @@ public class FileResolvedType extends XmlFacetsCapableType
             this.maxLength = maxLength;
         }
     }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.FILE.getType();
+    }
+
 }

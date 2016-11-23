@@ -20,24 +20,29 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
 
 public abstract class BaseType implements ResolvedType
 {
 
     protected ResolvedCustomFacets customFacets;
-    private TypeDeclarationNode typeNode;
+    private TypeExpressionNode typeNode;
 
-    public BaseType(TypeDeclarationNode typeNode, ResolvedCustomFacets customFacets)
+    public BaseType(TypeExpressionNode typeNode, ResolvedCustomFacets customFacets)
     {
         this.typeNode = typeNode;
         this.customFacets = customFacets;
     }
 
-    protected void setTypeNode(TypeDeclarationNode typeNode)
+    public ResolvedType setTypeNode(TypeExpressionNode typeNode)
     {
-        this.typeNode = typeNode;
+        BaseType copy = copy();
+        copy.typeNode = typeNode;
+        return copy;
     }
+
+    protected abstract BaseType copy();
 
     @Override
     public ResolvedCustomFacets customFacets()
@@ -76,11 +81,18 @@ public abstract class BaseType implements ResolvedType
     @Override
     public String getTypeName()
     {
-        return getTypeDeclarationNode() != null ? getTypeDeclarationNode().getTypeName() : null;
+        return getTypeDeclarationNode() instanceof TypeDeclarationNode ? ((TypeDeclarationNode) getTypeDeclarationNode()).getTypeName() : null;
+    }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return null;
     }
 
     @Override
-    public TypeDeclarationNode getTypeDeclarationNode()
+    public TypeExpressionNode getTypeDeclarationNode()
     {
         return typeNode;
     }

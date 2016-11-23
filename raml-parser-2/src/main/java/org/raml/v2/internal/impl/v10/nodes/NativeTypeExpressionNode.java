@@ -18,7 +18,6 @@ package org.raml.v2.internal.impl.v10.nodes;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
@@ -95,7 +94,7 @@ public class NativeTypeExpressionNode extends AbstractStringNode implements Type
 
     @Nullable
     @Override
-    public ResolvedType generateDefinition(TypeDeclarationNode node)
+    public ResolvedType generateDefinition()
     {
         final TypeId typeId = getType(getLiteralValue());
         if (typeId == null)
@@ -105,33 +104,33 @@ public class NativeTypeExpressionNode extends AbstractStringNode implements Type
         switch (typeId)
         {
         case STRING:
-            return new StringResolvedType(node);
+            return new StringResolvedType(this);
         case NUMBER:
-            return new NumberResolvedType(node);
+            return new NumberResolvedType(this);
         case INTEGER:
-            return new IntegerResolvedType(node);
+            return new IntegerResolvedType(this);
         case BOOLEAN:
-            return new BooleanResolvedType(node);
+            return new BooleanResolvedType(this);
         case DATE_ONLY:
-            return new DateOnlyResolvedType(node);
+            return new DateOnlyResolvedType(this);
         case TIME_ONLY:
-            return new TimeOnlyResolvedType(node);
+            return new TimeOnlyResolvedType(this);
         case DATE_TIME_ONLY:
-            return new DateTimeOnlyResolvedType(node);
+            return new DateTimeOnlyResolvedType(this);
         case DATE_TIME:
-            return new DateTimeResolvedType(node);
+            return new DateTimeResolvedType(this);
         case FILE:
-            return new FileResolvedType(node);
+            return new FileResolvedType(this);
         case OBJECT:
-            return new ObjectResolvedType(node);
+            return new ObjectResolvedType(this);
         case ARRAY:
-            return new ArrayResolvedType(node);
+            return new ArrayResolvedType(this);
         case NULL:
-            return new NullResolvedType(node);
+            return new NullResolvedType(this);
         case ANY:
-            return new AnyResolvedType(node);
+            return new AnyResolvedType(this);
         }
-        return new AnyResolvedType(node);
+        return new AnyResolvedType(this);
     }
 
     @Override

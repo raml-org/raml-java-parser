@@ -15,7 +15,10 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import javax.annotation.Nullable;
+
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
@@ -24,12 +27,12 @@ import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 public class NullResolvedType extends XmlFacetsCapableType
 {
 
-    public NullResolvedType(TypeDeclarationNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public NullResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
         super(declarationNode, xmlFacets, customFacets);
     }
 
-    public NullResolvedType(TypeDeclarationNode from)
+    public NullResolvedType(TypeExpressionNode from)
     {
         super(from, new ResolvedCustomFacets());
 
@@ -60,6 +63,13 @@ public class NullResolvedType extends XmlFacetsCapableType
     public <T> T visit(TypeVisitor<T> visitor)
     {
         return visitor.visitNull(this);
+    }
+
+    @Nullable
+    @Override
+    public String getBuiltinTypeName()
+    {
+        return TypeId.NULL.getType();
     }
 
     @Override

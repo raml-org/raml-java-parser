@@ -21,7 +21,6 @@ import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.Transformer;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
@@ -54,7 +53,7 @@ public class SchemaValidationTransformer implements Transformer
         ExternalSchemaTypeExpressionNode schema = (ExternalSchemaTypeExpressionNode) node;
         try
         {
-            final ResolvedType resolvedType = schema.generateDefinition(schema.findAncestorWith(TypeDeclarationNode.class));
+            final ResolvedType resolvedType = schema.generateDefinition();
             if (resolvedType instanceof XmlSchemaExternalType)
             {
                 SchemaGenerator.generateXmlSchema(resourceLoader, (XmlSchemaExternalType) resolvedType);

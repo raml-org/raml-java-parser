@@ -15,6 +15,12 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
@@ -23,11 +29,10 @@ import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Represents a node that declares an explicit type.
+ * It's itself a TypeExpressionNode to allow inline inheritance of types.
+ */
 public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpressionNode, OverlayableNode
 {
 
@@ -103,7 +108,7 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
         // First we inherit all base properties and merge with multiple inheritance
         for (TypeExpressionNode baseType : baseTypes)
         {
-            final ResolvedType baseTypeDef = baseType.generateDefinition(this);
+            final ResolvedType baseTypeDef = baseType.generateDefinition();
             if (result == null)
             {
                 result = baseTypeDef;
@@ -120,6 +125,11 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
                     result = result.mergeFacets(baseTypeDef);
                 }
             }
+        }
+        if (result != null)
+        {
+            // The final resolved type should point to this node and not the the inherited one
+            result = result.setTypeNode(this);
         }
         return result;
     }
@@ -162,7 +172,7 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
         }
         else
         {
-            return null;
+            return getResolvedType() != null ? getResolvedType().getBuiltinTypeName() : null;
         }
     }
 
@@ -175,7 +185,7 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
 
     @Nullable
     @Override
-    public ResolvedType generateDefinition(TypeDeclarationNode node)
+    public ResolvedType generateDefinition()
     {
         return resolveTypeDefinition();
     }
@@ -183,7 +193,7 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
     @Override
     public String getTypeExpressionText()
     {
-        return getTypeName() + "_AnonymousType";
+        return getTypeName();
     }
 
     public List<FacetNode> getFacets()
