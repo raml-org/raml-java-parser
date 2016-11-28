@@ -78,27 +78,36 @@ public class SchemaGenerator
         // Getting the type holding the schema
         TypeExpressionNode typeDeclarationNode = jsonTypeDefinition.getTypeDeclarationNode();
 
-        // Inside the type declaration, we find the node containing the schema itself
-        List<ExternalSchemaTypeExpressionNode> schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);
-        if (schemas.size() > 0)
+        if (typeDeclarationNode instanceof ExternalSchemaTypeExpressionNode)
         {
-            return schemas.get(0).getStartPosition().getIncludedResourceUri();
+            ExternalSchemaTypeExpressionNode schema = (ExternalSchemaTypeExpressionNode) typeDeclarationNode;
+
+            return schema.getStartPosition().getIncludedResourceUri();
         }
         else
         {
-            // If the array is empty, then it must be a reference to a previously defined type
-            List<NamedTypeExpressionNode> refNode = typeDeclarationNode.findDescendantsWith(NamedTypeExpressionNode.class);
-
-            if (refNode.size() > 0)
+            // Inside the type declaration, we find the node containing the schema itself
+            List<ExternalSchemaTypeExpressionNode> schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);
+            if (schemas.size() > 0)
             {
-                // If refNodes is not empty, then we obtain that type
-                typeDeclarationNode = refNode.get(0).resolveReference();
-                if (typeDeclarationNode != null)
+                return schemas.get(0).getStartPosition().getIncludedResourceUri();
+            }
+            else
+            {
+                // If the array is empty, then it must be a reference to a previously defined type
+                List<NamedTypeExpressionNode> refNode = typeDeclarationNode.findDescendantsWith(NamedTypeExpressionNode.class);
+
+                if (refNode.size() > 0)
                 {
-                    schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);
-                    if (schemas.size() > 0)
+                    // If refNodes is not empty, then we obtain that type
+                    typeDeclarationNode = refNode.get(0).resolveReference();
+                    if (typeDeclarationNode != null)
                     {
-                        return schemas.get(0).getStartPosition().getIncludedResourceUri();
+                        schemas = typeDeclarationNode.findDescendantsWith(ExternalSchemaTypeExpressionNode.class);
+                        if (schemas.size() > 0)
+                        {
+                            return schemas.get(0).getStartPosition().getIncludedResourceUri();
+                        }
                     }
                 }
             }
