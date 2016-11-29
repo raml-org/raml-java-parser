@@ -1,3 +1,18 @@
+/*
+ * Copyright 2013 (c) MuleSoft, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
 package org.raml.v2.internal.utils;
 
 
@@ -23,16 +38,19 @@ import java.util.Collection;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class SchemaGeneratorTest extends TestDataProvider {
-    private static final String SCHEMA_PATH = "schema.json";
-    private static final String EXAMPLE_PATH = "input.json";
+public class SchemaGeneratorTest extends TestDataProvider
+{
+    private static final String SCHEMA_FILE_NAME = "schema.json";
+    private static final String EXAMPLE_FILE_NAME = "input.json";
 
-    public SchemaGeneratorTest(File input, File expectedOutput, String name) {
+    public SchemaGeneratorTest(File input, File expectedOutput, String name)
+    {
         super(input, expectedOutput, name);
     }
 
     @Test
-    public void verifyJson() throws IOException, ProcessingException {
+    public void verifyJson() throws IOException, ProcessingException
+    {
         String content = IOUtils.toString(input.toURI());
         ExternalSchemaTypeExpressionNode node = new ExternalSchemaTypeExpressionNode(content);
         Position position = Mockito.mock(Position.class);
@@ -49,7 +67,8 @@ public class SchemaGeneratorTest extends TestDataProvider {
     }
 
     @Parameterized.Parameters(name = "{2}")
-    public static Collection<Object[]> getData() throws URISyntaxException {
-        return getData(SchemaGeneratorTest.class.getResource("").toURI(), SCHEMA_PATH, EXAMPLE_PATH);
+    public static Collection<Object[]> getData() throws URISyntaxException
+    {
+        return getData(SchemaGeneratorTest.class.getResource("").toURI(), SCHEMA_FILE_NAME, EXAMPLE_FILE_NAME);
     }
 }
