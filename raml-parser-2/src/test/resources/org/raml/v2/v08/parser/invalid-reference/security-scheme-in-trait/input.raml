@@ -1,0 +1,10 @@
+#%RAML 0.8
+title: Security Scheme invalid Ref in trait
+
+traits:
+    sec:
+        securedBy: [notdefined]
+
+/sec:
+  post:
+    is: [sec]

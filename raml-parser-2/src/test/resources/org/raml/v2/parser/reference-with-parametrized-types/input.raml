@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: Security Scheme invalid ref in trait
+
+securitySchemes:
+    ssone:
+        type: x-bosta
+
+traits:
+    secOk:
+        <<field>>: [ssone]
+    secBroken:
+        <<field>>: [undefined]
+    secMaybeBroken:
+        securedBy: [<<ssname>>]
+
+/sec:
+  get:
+    is:
+        - secOk:
+            field: securedBy # should pass
+  post:
+    is:
+        - secBroken:
+            field: securedBy # should fail
+  put:
+    is:
+        - secMaybeBroken:
+            ssname: ssone # should pass
+  delete:
+    is:
+        - secMaybeBroken:
+            ssname: undefined # should fail

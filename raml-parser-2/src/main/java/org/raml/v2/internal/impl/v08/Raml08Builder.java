@@ -30,6 +30,7 @@ import org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsTransformer;
 import org.raml.v2.internal.impl.commons.phase.SchemaValidationTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.impl.v08.phase.ReferenceResolverTransformerV08;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.Node;
@@ -74,6 +75,8 @@ public class Raml08Builder
         Raml08Grammar raml08Grammar = new Raml08Grammar();
         final GrammarPhase grammar = new GrammarPhase(raml08Grammar.raml());
 
+        final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformerV08());
+
         // Applies resourceTypes and Traits Library
         final TransformationPhase traitsAndResourceTypes = new TransformationPhase(new ResourceTypesTraitsTransformer(raml08Grammar));
 
@@ -87,7 +90,7 @@ public class Raml08Builder
         final TransformationPhase schemaValidationPhase = new TransformationPhase(new SchemaValidationTransformer(resourceLoader));
 
         // Schema Types example validation
-        return Arrays.asList(includesAndParmeters, grammar, removeSequences, traitsAndResourceTypes, duplicatePaths, mediaTypeInjection, schemaValidationPhase);
+        return Arrays.asList(includesAndParmeters, grammar, removeSequences, referenceCheck, traitsAndResourceTypes, duplicatePaths, mediaTypeInjection, schemaValidationPhase);
 
     }
 }

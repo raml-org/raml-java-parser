@@ -36,6 +36,9 @@ import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceTypeNode;
 import org.raml.v2.internal.impl.commons.nodes.StringTemplateNode;
 import org.raml.v2.internal.impl.commons.nodes.TraitNode;
+import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.impl.v08.phase.ReferenceResolverTransformerV08;
+import org.raml.v2.internal.impl.v10.phase.ReferenceResolverTransformer;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.ExecutionContext;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -218,8 +221,17 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
         // apply grammar phase to generate method nodes
         GrammarPhase validatePhase = new GrammarPhase(ramlGrammar.traitParamsResolved());
+
         // generateDefinition references
-        TransformationPhase referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
+        TransformationPhase referenceResolution;
+        if (ramlGrammar instanceof Raml08Grammar)
+        {
+            referenceResolution = new TransformationPhase(new ReferenceResolverTransformerV08());
+        }
+        else
+        {
+            referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
+        }
         // resolves types
         applyPhases(copy, validatePhase, referenceResolution);
 
