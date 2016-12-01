@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.io.IOUtils;
 import org.mozilla.universalchardet.UniversalDetector;
@@ -71,6 +72,20 @@ public class StreamUtils
         {
             IOUtils.closeQuietly(stream);
         }
+    }
+
+    public static String trimBom(String content)
+    {
+        String trimmed = content;
+        try
+        {
+            trimmed = new String(trimBom(content.getBytes("utf-8")), "utf-8");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            // use original string;
+        }
+        return trimmed;
     }
 
     public static byte[] trimBom(byte[] content)
