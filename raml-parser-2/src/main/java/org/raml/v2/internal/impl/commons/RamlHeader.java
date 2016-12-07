@@ -23,9 +23,10 @@ import java.util.StringTokenizer;
 import javax.annotation.Nullable;
 
 import org.raml.v2.api.model.v10.RamlFragment;
-import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.utils.StreamUtils;
+import org.raml.yagi.framework.grammar.rule.Rule;
 
 public class RamlHeader
 {
@@ -48,7 +49,7 @@ public class RamlHeader
 
     public static RamlHeader parse(String stringContent) throws InvalidHeaderException
     {
-        final StringTokenizer lines = new StringTokenizer(stringContent, "\n");
+        final StringTokenizer lines = new StringTokenizer(StreamUtils.trimBom(stringContent), "\n");
         if (lines.hasMoreElements())
         {
             final String header = lines.nextToken().trim();

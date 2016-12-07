@@ -1,0 +1,7 @@
+RamlDocumentNode (Start: 11 , End: 36, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 35, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 35, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "UTF-32BE with BOM" (Start: 18 , End: 35, On: input.raml)
