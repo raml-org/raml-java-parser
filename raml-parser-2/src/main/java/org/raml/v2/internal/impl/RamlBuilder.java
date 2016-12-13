@@ -105,6 +105,10 @@ public class RamlBuilder
         try
         {
             final String stringContent = IOUtils.toString(content);
+
+            // In order to be consistent between different OS, we normalize the resource location
+            resourceLocation = normalizeResourceLocation(resourceLocation);
+
             RamlHeader ramlHeader = RamlHeader.parse(stringContent);
             Node result;
             if (RAML_10 == ramlHeader.getVersion())
@@ -141,6 +145,11 @@ public class RamlBuilder
         {
             IOUtils.closeQuietly(content);
         }
+    }
+
+    private String normalizeResourceLocation(String resourceLocation)
+    {
+        return resourceLocation.replace("\\", "/");
     }
 
     public ResourceLoader getResourceLoader()
