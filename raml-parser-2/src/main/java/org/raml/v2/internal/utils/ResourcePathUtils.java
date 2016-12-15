@@ -22,6 +22,7 @@ public class ResourcePathUtils
 
     /**
     * Returns the absolute resource location using the basePath
+    * basePath and relativePath must have forward slashes(/) as path separators.
     * @param basePath The base path of the relative path
     * @param relativePath the relative path
     * @return The Absolute path
