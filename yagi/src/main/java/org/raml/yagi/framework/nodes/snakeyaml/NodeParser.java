@@ -29,6 +29,10 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
 
+import static org.apache.commons.io.IOUtils.LINE_SEPARATOR_UNIX;
+import static org.apache.commons.io.IOUtils.LINE_SEPARATOR_WINDOWS;
+import static org.apache.commons.lang.SystemUtils.IS_OS_WINDOWS;
+
 public class NodeParser
 {
 
@@ -67,6 +71,11 @@ public class NodeParser
     @Nullable
     public static Node parse(ResourceLoader resourceLoader, String resourcePath, String content)
     {
+        if (IS_OS_WINDOWS)
+        {
+            content = content.replace(LINE_SEPARATOR_WINDOWS, LINE_SEPARATOR_UNIX);
+        }
+
         return parse(resourceLoader, resourcePath, new StringReader(content));
     }
 

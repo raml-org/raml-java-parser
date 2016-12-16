@@ -42,7 +42,7 @@ import java.util.List;
 import static org.raml.yagi.framework.nodes.jackson.JsonUtils.parseJson;
 import static com.github.fge.jsonschema.core.report.LogLevel.ERROR;
 import static com.github.fge.jsonschema.core.report.LogLevel.WARNING;
-import static java.io.File.separator;
+import static org.apache.commons.io.IOUtils.DIR_SEPARATOR_UNIX;
 
 /**
  * Validates a string node content with the specified json schema
@@ -158,7 +158,7 @@ public class JsonSchemaValidationRule extends Rule
 
             // Finding the filename: It begins after the last '/' in the uri.
             // If there is no '/', we display the entire processingMessage
-            String reducedSchemaURI = completeUri.substring(completeUri.lastIndexOf(separator) + 1);
+            String reducedSchemaURI = completeUri.substring(completeUri.lastIndexOf(DIR_SEPARATOR_UNIX) + 1);
 
             // Replacing the complete URI with the reduced one
             return processingMessage.replace(completeUri, reducedSchemaURI);

@@ -34,6 +34,8 @@ import org.raml.v2.internal.impl.RamlSuggester;
 import org.raml.v2.dataprovider.TestDataProvider;
 import org.raml.yagi.framework.suggester.Suggestion;
 
+import static org.apache.commons.lang.SystemUtils.IS_OS_WINDOWS;
+
 @RunWith(Parameterized.class)
 public class SuggesterTestCase extends TestDataProvider
 {
@@ -51,7 +53,13 @@ public class SuggesterTestCase extends TestDataProvider
     public void verifySuggestion() throws IOException
     {
         final RamlSuggester ramlSuggester = new RamlSuggester();
-        final String content = IOUtils.toString(new FileInputStream(input), "UTF-8");
+        String content = IOUtils.toString(new FileInputStream(input), "UTF-8");
+
+        if (IS_OS_WINDOWS)
+        {
+            content = content.replace(IOUtils.LINE_SEPARATOR_WINDOWS, IOUtils.LINE_SEPARATOR_UNIX);
+        }
+
         final int offset = content.indexOf(CURSOR_KEYWORD);
         final String document = content.substring(0, offset) + content.substring(offset + CURSOR_KEYWORD.length());
         final List<Suggestion> suggestions = ramlSuggester.suggestions(document, offset - 1).getSuggestions();
