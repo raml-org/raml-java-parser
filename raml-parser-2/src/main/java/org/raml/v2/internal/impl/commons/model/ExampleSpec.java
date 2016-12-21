@@ -21,14 +21,11 @@ import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
 
-public class ExampleSpec extends Annotable
+public class ExampleSpec extends Annotable<KeyValueNode>
 {
-
-    private KeyValueNode node;
-
     public ExampleSpec(KeyValueNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     public String value()

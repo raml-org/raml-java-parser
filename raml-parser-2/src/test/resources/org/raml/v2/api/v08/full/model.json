@@ -382,11 +382,7 @@
      "uriParameters": [],
      "usage": "first usage"
     },
-    "structuredValue": {
-     "isScalar": false,
-     "properties": [],
-     "value": null
-    }
+    "structuredValue": null
    },
    "uriParameters": []
   }

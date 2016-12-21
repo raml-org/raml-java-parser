@@ -18,20 +18,18 @@ package org.raml.v2.internal.impl.commons.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.model.NodeModel;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
-public class TypeInstanceProperty implements NodeModel
+public class TypeInstanceProperty extends AbstractNodeModel<KeyValueNode>
 {
-
-    private KeyValueNode node;
-
     public TypeInstanceProperty(KeyValueNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     public String name()

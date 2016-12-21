@@ -813,11 +813,7 @@
    "is": [
     {
      "name": "traitOne",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "traitOne",
       "usage": {
@@ -1424,11 +1420,7 @@
         },
         "type": "OAuth 2.0"
        },
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       }
+       "structuredValue": null
       }
      ]
     },
@@ -3286,11 +3278,7 @@
         },
         "type": "OAuth 2.0"
        },
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       }
+       "structuredValue": null
       },
       {
        "name": "oauth_1_0",
@@ -3330,11 +3318,7 @@
         },
         "type": "OAuth 1.0"
        },
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       }
+       "structuredValue": null
       },
       null
      ],
@@ -3443,11 +3427,7 @@
       "value": "first usage"
      }
     },
-    "structuredValue": {
-     "isScalar": false,
-     "properties": [],
-     "value": null
-    }
+    "structuredValue": null
    },
    "uriParameters": []
   }
@@ -3616,11 +3596,7 @@
     },
     "type": "OAuth 2.0"
    },
-   "structuredValue": {
-    "isScalar": false,
-    "properties": [],
-    "value": null
-   }
+   "structuredValue": null
   },
   {
    "name": "oauth_1_0",
@@ -3660,11 +3636,7 @@
     },
     "type": "OAuth 1.0"
    },
-   "structuredValue": {
-    "isScalar": false,
-    "properties": [],
-    "value": null
-   }
+   "structuredValue": null
   },
   null
  ],

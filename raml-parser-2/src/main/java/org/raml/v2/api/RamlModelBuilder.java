@@ -181,7 +181,9 @@ public class RamlModelBuilder
         }
         if (fragment == RamlFragment.DataType || fragment == RamlFragment.AnnotationTypeDeclaration)
         {
-            TypeDeclaration typeDeclaration = ModelProxyBuilder.createModel(TypeDeclaration.class, new TypeDeclarationModelFactory().create(ramlNode), createV10Binding());
+            final org.raml.v2.internal.impl.commons.model.type.TypeDeclaration delegateNode = new TypeDeclarationModelFactory().create(ramlNode);
+            final ModelBindingConfiguration v10Binding = createV10Binding();
+            TypeDeclaration typeDeclaration = ModelProxyBuilder.createModel((Class<TypeDeclaration>) v10Binding.reverseBindingOf(delegateNode), delegateNode, v10Binding);
             return new RamlModelResult(typeDeclaration);
         }
         if (fragment == RamlFragment.DocumentationItem)

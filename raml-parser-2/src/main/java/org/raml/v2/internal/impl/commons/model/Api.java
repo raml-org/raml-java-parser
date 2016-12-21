@@ -24,14 +24,11 @@ import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.yagi.framework.nodes.Node;
 
-public class Api extends Annotable
+public class Api extends Annotable<RamlDocumentNode>
 {
-
-    private RamlDocumentNode node;
-
     public Api(RamlDocumentNode delegateNode)
     {
-        node = delegateNode;
+        super(delegateNode);
     }
 
     @Override

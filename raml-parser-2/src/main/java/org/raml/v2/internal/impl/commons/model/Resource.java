@@ -26,14 +26,11 @@ import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.util.NodeSelector;
 
-public class Resource extends Annotable
+public class Resource extends Annotable<ResourceNode>
 {
-
-    private ResourceNode node;
-
     public Resource(ResourceNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

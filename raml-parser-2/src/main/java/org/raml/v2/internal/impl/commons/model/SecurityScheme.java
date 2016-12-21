@@ -18,14 +18,11 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
 
-public class SecurityScheme extends Annotable
+public class SecurityScheme extends Annotable<SecuritySchemeNode>
 {
-
-    private SecuritySchemeNode node;
-
     public SecurityScheme(SecuritySchemeNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

@@ -64,11 +64,7 @@
      "is": [
       {
        "name": "one",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "baseUriParameters": [],
         "body": [],
@@ -87,11 +83,7 @@
       },
       {
        "name": "two",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "baseUriParameters": [],
         "body": [],
@@ -137,11 +129,7 @@
      "uriParameters": [],
      "usage": "third usage"
     },
-    "structuredValue": {
-     "isScalar": false,
-     "properties": [],
-     "value": null
-    }
+    "structuredValue": null
    },
    "uriParameters": []
   }

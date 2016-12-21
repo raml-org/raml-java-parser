@@ -17,16 +17,15 @@ package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.v2.internal.impl.commons.nodes.BaseSecuritySchemeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.SecuritySchemeNode;
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.model.NodeModel;
+import org.raml.yagi.framework.nodes.Node;
 
-public class SecuritySchemeRef implements NodeModel
+public class SecuritySchemeRef extends AbstractNodeModel<BaseSecuritySchemeRefNode>
 {
-
-    private BaseSecuritySchemeRefNode node;
-
     public SecuritySchemeRef(BaseSecuritySchemeRefNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override
@@ -51,7 +50,8 @@ public class SecuritySchemeRef implements NodeModel
 
     public TypeInstance structuredValue()
     {
-        return new TypeInstance(getNode().getParametersNode());
+        final Node parametersNode = getNode().getParametersNode();
+        return parametersNode != null ? new TypeInstance(parametersNode) : null;
     }
 
 

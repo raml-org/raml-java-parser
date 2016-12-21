@@ -15,20 +15,18 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.model.NodeModel;
 import org.raml.yagi.framework.util.NodeSelector;
 
-public class BodyLike implements NodeModel
+public class BodyLike extends AbstractNodeModel<KeyValueNode>
 {
-
-    private KeyValueNode node;
-
     public BodyLike(KeyValueNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class ModelProxyBuilder
     public static <T> T createModel(Class<T> apiInterface, NodeModel delegateNode, ModelBindingConfiguration bindingConfiguration)
     {
         return (T) Proxy.newProxyInstance(apiInterface.getClassLoader(),
-                new Class[] {apiInterface},
+                new Class[] {apiInterface, NodeModel.class},
                 new SimpleProxy(delegateNode, bindingConfiguration));
     }
 
@@ -131,7 +131,7 @@ public class ModelProxyBuilder
             {
                 NodeModelFactory nodeModelFactory = bindingConfiguration.bindingOf(returnType);
                 Class<?> proxyInterface = nodeModelFactory.polymorphic() ? bindingConfiguration.reverseBindingOf((NodeModel) invoke) : returnType;
-                return Proxy.newProxyInstance(returnType.getClassLoader(), new Class[] {proxyInterface}, new SimpleProxy((NodeModel) invoke, bindingConfiguration));
+                return createModel(proxyInterface, (NodeModel) invoke, bindingConfiguration);
             }
         }
 
@@ -200,7 +200,7 @@ public class ModelProxyBuilder
                     proxyInterface = returnClass;
                 }
 
-                return Proxy.newProxyInstance(returnClass.getClassLoader(), new Class[] {proxyInterface}, new SimpleProxy(nodeModel, bindingConfiguration));
+                return createModel(proxyInterface, nodeModel, bindingConfiguration);
             }
         }
 

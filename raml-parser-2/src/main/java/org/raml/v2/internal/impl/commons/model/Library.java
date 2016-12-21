@@ -19,14 +19,11 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
 
-public class Library extends Annotable
+public class Library extends Annotable<LibraryNode>
 {
-
-    private LibraryNode node;
-
     public Library(LibraryNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

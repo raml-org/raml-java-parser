@@ -20,13 +20,11 @@ import org.raml.yagi.framework.nodes.Node;
 /**
  * Default Model implementation
  */
-public class DefaultNodeBaseModel implements NodeModel
+public class DefaultNodeBaseModel extends AbstractNodeModel<Node>
 {
-    private Node node;
-
     public DefaultNodeBaseModel(Node node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

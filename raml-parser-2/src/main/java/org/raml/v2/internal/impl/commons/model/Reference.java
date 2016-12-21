@@ -15,18 +15,16 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
-import org.raml.yagi.framework.model.NodeModel;
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.v2.internal.impl.commons.nodes.AbstractReferenceNode;
+import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 
-public class Reference implements NodeModel
+public class Reference extends AbstractNodeModel<ReferenceNode>
 {
-
-    private ReferenceNode node;
-
     public Reference(ReferenceNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     public ReferenceNode getNode()
@@ -36,7 +34,8 @@ public class Reference implements NodeModel
 
     public TypeInstance structuredValue()
     {
-        return new TypeInstance(((AbstractReferenceNode) getNode()).getParametersNode());
+        final Node parametersNode = ((AbstractReferenceNode) getNode()).getParametersNode();
+        return parametersNode != null ? new TypeInstance(parametersNode) : null;
     }
 
     public String name()

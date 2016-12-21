@@ -27,6 +27,6 @@ public class ResourceTypeRef extends Reference
 
     public ResourceType resourceType()
     {
-        return new ResourceType(getNode().getRefNode());
+        return ResourceType.create(getNode().getRefNode());
     }
 }

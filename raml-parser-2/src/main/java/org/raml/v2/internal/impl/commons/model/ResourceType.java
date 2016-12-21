@@ -18,18 +18,20 @@ package org.raml.v2.internal.impl.commons.model;
 import org.raml.v2.internal.impl.commons.nodes.ResourceTypeNode;
 import org.raml.yagi.framework.nodes.Node;
 
-public class ResourceType extends Annotable
+public class ResourceType extends Annotable<ResourceTypeNode>
 {
-
-    private ResourceTypeNode node;
-
-    public ResourceType(Node node)
+    public static ResourceType create(Node node)
     {
         if (!(node instanceof ResourceTypeNode))
         {
             throw new IllegalArgumentException("Invalid node type: " + node.getClass().getName());
         }
-        this.node = (ResourceTypeNode) node;
+        return new ResourceType((ResourceTypeNode) node);
+    }
+
+    public ResourceType(ResourceTypeNode node)
+    {
+        super(node);
     }
 
     @Override

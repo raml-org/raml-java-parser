@@ -15,19 +15,17 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.model.NodeModel;
 
-public class GlobalSchema implements NodeModel
+public class GlobalSchema extends AbstractNodeModel<KeyValueNode>
 {
-
-    private KeyValueNode node;
-
     public GlobalSchema(KeyValueNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

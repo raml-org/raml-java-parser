@@ -13,27 +13,36 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.commons.model;
+package org.raml.yagi.framework.model;
 
-import org.raml.v2.internal.impl.commons.nodes.TraitNode;
+import com.google.common.base.Preconditions;
 import org.raml.yagi.framework.nodes.Node;
 
-public class Trait extends Annotable<TraitNode>
+public abstract class AbstractNodeModel<T extends Node> implements NodeModel
 {
-    public Trait(TraitNode node)
+    protected final T node;
+
+    public AbstractNodeModel(T node)
     {
-        super(node);
+        Preconditions.checkNotNull(node);
+        this.node = node;
     }
 
     @Override
-    public Node getNode()
+    public int hashCode()
     {
-        return node.getValue();
+        return node.hashCode();
     }
 
-    public String name()
+    @Override
+    public boolean equals(Object obj)
     {
-        return node.getName();
+        if (!(obj instanceof AbstractNodeModel))
+        {
+            return false;
+        }
+        final AbstractNodeModel abstractNodeModel = (AbstractNodeModel) obj;
+        return node.equals(abstractNodeModel.node);
     }
 
 }

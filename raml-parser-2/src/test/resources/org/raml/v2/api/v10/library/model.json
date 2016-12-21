@@ -40,11 +40,7 @@
      "is": [
       {
        "name": "paging",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "paging",
         "usage": null

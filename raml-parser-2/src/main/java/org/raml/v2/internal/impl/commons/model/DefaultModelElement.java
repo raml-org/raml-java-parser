@@ -17,13 +17,11 @@ package org.raml.v2.internal.impl.commons.model;
 
 import org.raml.yagi.framework.nodes.Node;
 
-public class DefaultModelElement extends Annotable
+public class DefaultModelElement extends Annotable<Node>
 {
-    private Node node;
-
     public DefaultModelElement(Node node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

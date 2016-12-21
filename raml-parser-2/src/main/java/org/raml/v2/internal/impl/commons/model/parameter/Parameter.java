@@ -15,20 +15,18 @@
  */
 package org.raml.v2.internal.impl.commons.model.parameter;
 
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.model.NodeModel;
 import org.raml.yagi.framework.util.NodeSelector;
 
-public class Parameter implements NodeModel
+public class Parameter extends AbstractNodeModel<KeyValueNode>
 {
-
-    private KeyValueNode node;
-
     public Parameter(KeyValueNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

@@ -19,14 +19,11 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
 
-public class Method extends Annotable
+public class Method extends Annotable<MethodNode>
 {
-
-    private MethodNode node;
-
     public Method(MethodNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

@@ -24,11 +24,7 @@
    "is": [
     {
      "name": "orderby",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "orderby",
       "usage": null
@@ -36,11 +32,7 @@
     },
     {
      "name": "top",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "top",
       "usage": null
@@ -48,11 +40,7 @@
     },
     {
      "name": "skip",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "skip",
       "usage": null
@@ -60,11 +48,7 @@
     },
     {
      "name": "filter",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "filter",
       "usage": null
@@ -72,11 +56,7 @@
     },
     {
      "name": "expand",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "expand",
       "usage": null
@@ -84,11 +64,7 @@
     },
     {
      "name": "format",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "format",
       "usage": null
@@ -96,11 +72,7 @@
     },
     {
      "name": "select",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "select",
       "usage": null
@@ -108,11 +80,7 @@
     },
     {
      "name": "inlinecount",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "inlinecount",
       "usage": null
@@ -1032,11 +1000,7 @@
      "is": [
       {
        "name": "filter",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "filter",
         "usage": null
@@ -1044,11 +1008,7 @@
       },
       {
        "name": "expand",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "expand",
         "usage": null
@@ -1056,11 +1016,7 @@
       },
       {
        "name": "format",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "format",
         "usage": null
@@ -1068,11 +1024,7 @@
       },
       {
        "name": "select",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "select",
         "usage": null
@@ -1945,11 +1897,7 @@
    "is": [
     {
      "name": "orderby",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "orderby",
       "usage": null
@@ -1957,11 +1905,7 @@
     },
     {
      "name": "top",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "top",
       "usage": null
@@ -1969,11 +1913,7 @@
     },
     {
      "name": "skip",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "skip",
       "usage": null
@@ -1981,11 +1921,7 @@
     },
     {
      "name": "filter",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "filter",
       "usage": null
@@ -1993,11 +1929,7 @@
     },
     {
      "name": "expand",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "expand",
       "usage": null
@@ -2005,11 +1937,7 @@
     },
     {
      "name": "format",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "format",
       "usage": null
@@ -2017,11 +1945,7 @@
     },
     {
      "name": "select",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "select",
       "usage": null
@@ -2029,11 +1953,7 @@
     },
     {
      "name": "inlinecount",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "inlinecount",
       "usage": null
@@ -2953,11 +2873,7 @@
      "is": [
       {
        "name": "filter",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "filter",
         "usage": null
@@ -2965,11 +2881,7 @@
       },
       {
        "name": "expand",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "expand",
         "usage": null
@@ -2977,11 +2889,7 @@
       },
       {
        "name": "format",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "format",
         "usage": null
@@ -2989,11 +2897,7 @@
       },
       {
        "name": "select",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "select",
         "usage": null
@@ -3866,11 +3770,7 @@
    "is": [
     {
      "name": "orderby",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "orderby",
       "usage": null
@@ -3878,11 +3778,7 @@
     },
     {
      "name": "top",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "top",
       "usage": null
@@ -3890,11 +3786,7 @@
     },
     {
      "name": "skip",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "skip",
       "usage": null
@@ -3902,11 +3794,7 @@
     },
     {
      "name": "filter",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "filter",
       "usage": null
@@ -3914,11 +3802,7 @@
     },
     {
      "name": "expand",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "expand",
       "usage": null
@@ -3926,11 +3810,7 @@
     },
     {
      "name": "format",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "format",
       "usage": null
@@ -3938,11 +3818,7 @@
     },
     {
      "name": "select",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "select",
       "usage": null
@@ -3950,11 +3826,7 @@
     },
     {
      "name": "inlinecount",
-     "structuredValue": {
-      "isScalar": false,
-      "properties": [],
-      "value": null
-     },
+     "structuredValue": null,
      "trait": {
       "name": "inlinecount",
       "usage": null
@@ -4874,11 +4746,7 @@
      "is": [
       {
        "name": "filter",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "filter",
         "usage": null
@@ -4886,11 +4754,7 @@
       },
       {
        "name": "expand",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "expand",
         "usage": null
@@ -4898,11 +4762,7 @@
       },
       {
        "name": "format",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "format",
         "usage": null
@@ -4910,11 +4770,7 @@
       },
       {
        "name": "select",
-       "structuredValue": {
-        "isScalar": false,
-        "properties": [],
-        "value": null
-       },
+       "structuredValue": null,
        "trait": {
         "name": "select",
         "usage": null

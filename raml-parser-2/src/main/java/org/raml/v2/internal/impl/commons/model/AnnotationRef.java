@@ -15,20 +15,18 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.model.NodeModel;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.model.type.TypeDeclaration;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 
-public class AnnotationRef implements NodeModel
+public class AnnotationRef extends AbstractNodeModel<AnnotationNode>
 {
-
-    private AnnotationNode node;
-
     public AnnotationRef(AnnotationNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     public TypeDeclaration annotation()

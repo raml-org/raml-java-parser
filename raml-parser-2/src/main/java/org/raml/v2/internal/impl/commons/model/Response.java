@@ -19,14 +19,11 @@ import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
-public class Response extends Annotable
+public class Response extends Annotable<KeyValueNode>
 {
-
-    private KeyValueNode node;
-
     public Response(KeyValueNode node)
     {
-        this.node = node;
+        super(node);
     }
 
     @Override

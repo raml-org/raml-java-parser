@@ -53,18 +53,17 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
-public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable
+public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<KeyValueNode>
 {
 
     private static final List<String> GLOBAL_NAMED_TYPE_DECLARATION_NODE_NAMES = Arrays.asList("types", "annotationTypes", "baseUriParameters");
     private static final List<String> LOCAL_NAMED_TYPE_DECLARATION_NODE_NAMES = Arrays.asList("headers", "queryParameters", "queryString", "uriParameters");
 
-    private KeyValueNode node;
     private T resolvedType;
 
     public TypeDeclaration(KeyValueNode node, T resolvedType)
     {
-        this.node = node;
+        super(node);
         this.resolvedType = resolvedType;
     }
 
