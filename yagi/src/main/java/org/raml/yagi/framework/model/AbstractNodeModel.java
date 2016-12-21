@@ -37,12 +37,11 @@ public abstract class AbstractNodeModel<T extends Node> implements NodeModel
     @Override
     public boolean equals(Object obj)
     {
-        if (!(obj instanceof AbstractNodeModel))
+        if (!(obj instanceof NodeModel))
         {
             return false;
         }
-        final AbstractNodeModel abstractNodeModel = (AbstractNodeModel) obj;
-        return node.equals(abstractNodeModel.node);
+        final NodeModel nodeModel = (NodeModel) obj;
+        return getNode().equals(nodeModel.getNode());
     }
-
 }
