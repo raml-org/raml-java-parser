@@ -41,13 +41,21 @@ public class SYFloatingNode extends SYBaseRamlNode implements FloatingNode
     public BigDecimal getValue()
     {
         final String value = ((ScalarNode) getYamlNode()).getValue();
-        return new BigDecimal(value);
+        try
+        {
+            return new BigDecimal(value);
+        }
+        catch (NumberFormatException e)
+        {
+            return null;
+        }
     }
 
     @Override
     public String toString()
     {
-        return String.valueOf(getValue());
+        BigDecimal value = getValue();
+        return String.valueOf(value != null ? value : ((ScalarNode) getYamlNode()).getValue());
     }
 
     @Nonnull
