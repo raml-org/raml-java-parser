@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser-2</artifactId>
-    <version>0.1.0-alpha-2</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Raml Java Parser 2nd generation</name>
     <description>Raml parser implemented in java</description>
