@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Sample API
+/person:
+  post: 
+     body: 
+       application/xml:
+        schema: !include person-schema.xsd
+        example: !include person-example.xml
+     responses:
+        200:
+          body:
+            text/plain:
+               example: OK    
