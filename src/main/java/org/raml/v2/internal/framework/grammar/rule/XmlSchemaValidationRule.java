@@ -22,7 +22,10 @@ import java.io.StringReader;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 
 import org.raml.v2.api.loader.ResourceLoader;
@@ -34,6 +37,8 @@ import org.raml.v2.internal.framework.nodes.StringNode;
 import org.raml.v2.internal.framework.suggester.RamlParsingContext;
 import org.raml.v2.internal.framework.suggester.Suggestion;
 import org.raml.v2.internal.utils.SchemaGenerator;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class XmlSchemaValidationRule extends Rule
@@ -115,13 +120,40 @@ public class XmlSchemaValidationRule extends Rule
             }
             else
             {
-                schema.newValidator().validate(new StreamSource(new StringReader(value)));
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                setFeatures(factory);
+
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                builder.setErrorHandler(null);
+                Document document = builder.parse(new InputSource(new StringReader(value)));
+
+                schema.newValidator().validate(new DOMSource(document.getDocumentElement()));
             }
         }
-        catch (SAXException | IOException e)
+        catch (SAXException | IOException | ParserConfigurationException e)
         {
             node.replaceWith(ErrorNodeFactory.createInvalidXmlExampleNode(e.getMessage()));
         }
+    }
+
+    private static void setFeatures(DocumentBuilderFactory dbf) throws ParserConfigurationException
+    {
+        String feature;
+
+        // If you can't completely disable DTDs, then at least do the following:
+        feature = "http://xml.org/sax/features/external-general-entities";
+        dbf.setFeature(feature, false);
+
+        feature = "http://xml.org/sax/features/external-parameter-entities";
+        dbf.setFeature(feature, false);
+
+        feature = "http://apache.org/xml/features/disallow-doctype-decl";
+        dbf.setFeature(feature, true);
+
+        // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks" (see reference below)
+        dbf.setXIncludeAware(false);
+        dbf.setExpandEntityReferences(false);
+        dbf.setNamespaceAware(true);
     }
 
     @Override
