@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: Test
+
+types:
+  Login:
+    type: object
+    properties:
+      name: string
+
+resourceTypes:
+  collection:
+    post?:
+      body:
+        application/json:
+          type: <<resourcePathName | !singularize | !uppercamelcase>>
+
+/user/login:
+  type: collection
+  post:
+    body:
+      application/json:
+        example:
+          name: "Something"
+/other:
+  /login:
+    type: collection
+    post:
+      body:
+        application/json:
+          example:
+            name: "Something"
