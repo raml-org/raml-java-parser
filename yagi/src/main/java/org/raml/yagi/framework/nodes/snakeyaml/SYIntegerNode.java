@@ -37,14 +37,14 @@ public class SYIntegerNode extends SYBaseRamlNode implements IntegerNode
         super(scalarNode, resourcePath, resourceLoader);
     }
 
-    public Integer getValue()
+    public Long getValue()
     {
         final String value = ((ScalarNode) getYamlNode()).getValue();
         if (value != null && (value.startsWith("0x") || value.startsWith("0X")))
         {
-            return Integer.valueOf(value.substring(2), 16);
+            return Long.valueOf(value.substring(2), 16);
         }
-        return Integer.valueOf(value);
+        return Long.valueOf(value);
     }
 
     @Override

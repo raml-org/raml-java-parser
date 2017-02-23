@@ -61,7 +61,7 @@ public class MinimumValueRule extends Rule
         {
             value = ((FloatingNode) node).getValue();
         }
-        return value != null && value.compareTo(new BigDecimal(minimumValue.floatValue())) >= 0;
+        return value != null && value.compareTo(new BigDecimal(minimumValue.doubleValue())) >= 0;
     }
 
     @Override

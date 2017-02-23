@@ -61,7 +61,7 @@ public class MaximumValueRule extends Rule
         {
             value = ((FloatingNode) node).getValue();
         }
-        return value != null && value.compareTo(new BigDecimal(maximumValue.floatValue())) <= 0;
+        return value != null && value.compareTo(new BigDecimal(maximumValue.doubleValue())) <= 0;
     }
 
     @Override

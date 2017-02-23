@@ -172,13 +172,13 @@ public class Raml08Grammar extends BaseRamlGrammar
 
     private KeyValueRule maxLengthField()
     {
-        return field(string("maxLength"), positiveIntegerType(true)).description("The maxLength attribute specifies the parameter value's maximum number of characters.");
+        return field(string("maxLength"), positiveIntegerType(true, (long) Integer.MAX_VALUE)).description("The maxLength attribute specifies the parameter value's maximum number of characters.");
     }
 
     private KeyValueRule minLengthField()
     {
-        return field(string("minLength"), positiveIntegerType(true))
-                                                                    .description("The minLength attribute specifies the parameter value's minimum number of characters.");
+        return field(string("minLength"), positiveIntegerType(true, (long) Integer.MAX_VALUE))
+                                                                                              .description("The minLength attribute specifies the parameter value's minimum number of characters.");
     }
 
     private KeyValueRule enumField(Rule of)

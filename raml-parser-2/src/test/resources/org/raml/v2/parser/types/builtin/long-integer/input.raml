@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Long number
+
+types:
+  LongNumber:
+    type: number
+    maximum: 999999999999
+    examples:
+      one: 999999999998
+      two: 999999999999
+      three: 1000000000000
+  OtherLongNumber:
+    type: integer
+    minimum: 2500000000000
+    examples:
+      one: 2500000000001
+      two: 2500000000000
+      three: 2499999999999

@@ -37,9 +37,9 @@ public class JIntegerNode extends JBaseRamlNode implements IntegerNode
     }
 
     @Override
-    public Integer getValue()
+    public Long getValue()
     {
-        return getJsonNode().intValue();
+        return getJsonNode().longValue();
     }
 
     @Override

@@ -191,9 +191,9 @@ public class BaseGrammar
      * Matches an integer greater than zero
      * @return The rule
      */
-    public IntegerTypeRule positiveIntegerType(boolean includesZero)
+    public IntegerTypeRule positiveIntegerType(boolean includesZero, Long maxValue)
     {
-        return new IntegerTypeRule(Range.closed(includesZero ? 0 : 1, Integer.MAX_VALUE));
+        return new IntegerTypeRule(Range.closed(includesZero ? 0L : 1L, maxValue));
     }
 
     /**
@@ -219,7 +219,7 @@ public class BaseGrammar
      * @param range The valid range
      * @return The rule
      */
-    public IntegerTypeRule range(Range<Integer> range)
+    public IntegerTypeRule range(Range<Long> range)
     {
         return new IntegerTypeRule(range);
     }
