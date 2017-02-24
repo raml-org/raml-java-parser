@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Invalid min/maxLength facet
+types:
+  CustomString:
+    type: string
+    minLength: -2
+    maxLength: 0
+  OtherCustomString:
+    type: string
+    minLength: 0
+    maxLength: 3

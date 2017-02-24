@@ -61,7 +61,7 @@ public class IntegerResolvedType extends NumberResolvedType
                                                    .add(raml10Grammar.maximumField(raml10Grammar.integerType()))
                                                    .add(raml10Grammar.numberFormat())
                                                    .add(raml10Grammar.enumField())
-                                                   .add(raml10Grammar.multipleOfField(raml10Grammar.integerType()))
+                                                   .add(raml10Grammar.multipleOfField(raml10Grammar.positiveIntegerType(false)))
                                                    .addAll(customFacets.getRules());
         TypesUtils.validateAllWith(facetRule, from.getFacets());
     }

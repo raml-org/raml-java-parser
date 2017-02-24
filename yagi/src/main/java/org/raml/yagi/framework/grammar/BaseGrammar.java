@@ -191,9 +191,9 @@ public class BaseGrammar
      * Matches an integer greater than zero
      * @return The rule
      */
-    public IntegerTypeRule positiveIntegerType()
+    public IntegerTypeRule positiveIntegerType(boolean includesZero)
     {
-        return new IntegerTypeRule(Range.greaterThan(0));
+        return new IntegerTypeRule(Range.closed(includesZero ? 0 : 1, Integer.MAX_VALUE));
     }
 
     /**

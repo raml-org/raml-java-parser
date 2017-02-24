@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Invalid min/maxItems facet
+types:
+  Email:
+    type: array
+    items: string
+    minItems: -6
+    maxItems: 0
+  Name:
+    type: array
+    items: string
+    minItems: 0
+    maxItems: 7
