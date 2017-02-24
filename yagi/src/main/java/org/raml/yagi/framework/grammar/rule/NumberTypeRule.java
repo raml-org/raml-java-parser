@@ -15,6 +15,7 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
+import com.google.common.collect.Range;
 import org.raml.yagi.framework.nodes.FloatingNode;
 import org.raml.yagi.framework.nodes.IntegerNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -24,11 +25,24 @@ import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
 public class NumberTypeRule extends AbstractTypeRule
 {
+    @Nullable
+    private Range<Double> range;
+
+    public NumberTypeRule(@Nullable Range<Double> range)
+    {
+        this.range = range;
+    }
+
+    public NumberTypeRule()
+    {
+        this(null);
+    }
 
     @Nonnull
     @Override
@@ -41,16 +55,20 @@ public class NumberTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof FloatingNode || node instanceof IntegerNode)
+        if (node instanceof FloatingNode)
         {
-            return true;
+            return range == null || range.contains(((FloatingNode) node).getValue().doubleValue());
+        }
+        if (node instanceof IntegerNode)
+        {
+            return range == null || range.contains(((IntegerNode) node).getValue().doubleValue());
         }
         if (node instanceof StringNode)
         {
             try
             {
-                Double.parseDouble(((StringNode) node).getValue());
-                return true;
+                Double value = Double.parseDouble(((StringNode) node).getValue());
+                return range == null || range.contains(value);
             }
             catch (NumberFormatException ex)
             {
