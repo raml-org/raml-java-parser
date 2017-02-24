@@ -184,7 +184,16 @@ public class BaseGrammar
      */
     public IntegerTypeRule integerType()
     {
-        return new IntegerTypeRule(null);
+        return new IntegerTypeRule();
+    }
+
+    /**
+     * Matches an integer greater than zero
+     * @return The rule
+     */
+    public IntegerTypeRule positiveIntegerType()
+    {
+        return new IntegerTypeRule(Range.greaterThan(0));
     }
 
     /**
@@ -194,6 +203,15 @@ public class BaseGrammar
     public Rule numberType()
     {
         return new NumberTypeRule();
+    }
+
+    /**
+     * Matches any number greater than zero
+     * @return The rule
+     */
+    public Rule positiveNumberType()
+    {
+        return new NumberTypeRule(Range.greaterThan(0D));
     }
 
     /**

@@ -389,13 +389,13 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                    .add(maximumField(integerType()))
                                                                                    .add(numberFormat())
                                                                                    .add(enumField())
-                                                                                   .add(multipleOfField(integerType())),
+                                                                                   .add(multipleOfField(positiveIntegerType())),
                                                            is(numericTypeLiteral())
                                                                                    .add(minimumField(numberType()))
                                                                                    .add(maximumField(numberType()))
                                                                                    .add(numberFormat())
                                                                                    .add(enumField())
-                                                                                   .add(multipleOfField(numberType())),
+                                                                                   .add(multipleOfField(positiveNumberType())),
                                                            is(fileTypeLiteral())
                                                                                 .add(fileTypesField())
                                                                                 .add(minLengthField())
@@ -421,7 +421,7 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(maxItemsField().matchValue())
                                                                                   .add(minimumField(numberType()).matchValue())
                                                                                   .add(maximumField(numberType()).matchValue())
-                                                                                  .add(multipleOfField(numberType()).matchValue())
+                                                                                  .add(multipleOfField(positiveNumberType()).matchValue())
                                                                                   .add(fileTypesField().matchValue())
                                                                                   .add(propertiesField().matchValue())
                                                                                   .add(minPropertiesField().matchValue())
