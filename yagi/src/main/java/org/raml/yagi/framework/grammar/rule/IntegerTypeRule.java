@@ -32,9 +32,9 @@ public class IntegerTypeRule extends AbstractTypeRule
 {
 
     @Nullable
-    private Range<Integer> range;
+    private Range<Long> range;
 
-    public IntegerTypeRule(@Nullable Range<Integer> range)
+    public IntegerTypeRule(@Nullable Range<Long> range)
     {
         this.range = range;
     }
@@ -63,7 +63,7 @@ public class IntegerTypeRule extends AbstractTypeRule
         {
             try
             {
-                Integer value = Integer.parseInt(((StringNode) node).getValue());
+                Long value = Long.parseLong(((StringNode) node).getValue());
                 return range == null || range.contains(value);
             }
             catch (NumberFormatException ex)
