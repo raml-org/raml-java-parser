@@ -54,8 +54,8 @@ public class RangeValueRule extends Rule
             return ((IntegerNode) node).getValue().compareTo(minimumValue.longValue()) >= 0 &&
                    ((IntegerNode) node).getValue().compareTo(maximumValue.longValue()) <= 0;
         }
-        return node instanceof FloatingNode && ((FloatingNode) node).getValue().compareTo(new BigDecimal(minimumValue.intValue())) >= 0 &&
-               ((FloatingNode) node).getValue().compareTo(new BigDecimal(maximumValue.intValue())) <= 0;
+        return node instanceof FloatingNode && ((FloatingNode) node).getValue().compareTo(BigDecimal.valueOf(minimumValue.doubleValue())) >= 0 &&
+               ((FloatingNode) node).getValue().compareTo(BigDecimal.valueOf(maximumValue.doubleValue())) <= 0;
     }
 
     @Override
