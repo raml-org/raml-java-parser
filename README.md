@@ -1,5 +1,6 @@
 # RAML Java Parser
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raml-org/raml-java-parser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.raml/raml-parser-2/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.raml/raml-parser-2)
 
 This is a Java implementation of a [RAML](http://raml.org) parser for versions [1.0](http://raml.org/raml-10-spec) and [0.8](http://raml.org/raml-08-spec).
 The parser depends on SnakeYaml, a Java YAML parser.
@@ -8,6 +9,20 @@ The old version that only support RAML 0.8 is still available [here](https://git
 
 See http://raml.org for more information about RAML.
 
+
+## Maven
+
+```xml
+  <dependency>
+    <groupId>org.raml</groupId>
+    <artifactId>raml-parser-2</artifactId>
+    <version>${raml-parser-version}</version>
+  </dependency>
+```
+
+### Development version
+
+SNAPSHOT versions are NOT synchronized to Central. If you want to use a snapshot version you need to add the https://repository.mulesoft.org/nexus/content/repositories/snapshots/ repository to your pom.xml.
 
 ## Build
 
