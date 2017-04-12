@@ -759,6 +759,6 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule responseCodes()
     {
-        return range(Range.closed(100L, 599L));
+        return range(Range.closed(0L, 999L));
     }
 }
