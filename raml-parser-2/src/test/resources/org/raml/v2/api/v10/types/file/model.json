@@ -1,0 +1,70 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "API with Examples"
+ },
+ "traits": [],
+ "types": [
+  {
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "userPicture"
+   },
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "fileTypes": [
+    "image/jpeg",
+    "image/png"
+   ],
+   "maxLength": 307200,
+   "minLength": null,
+   "name": "userPicture",
+   "parentTypes": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": null,
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "fileTypes": null,
+     "maxLength": null,
+     "minLength": null,
+     "name": "file",
+     "parentTypes": [],
+     "required": true,
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"base64Binary\"/>\n</schema>\n",
+     "type": null,
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"userPicture\" type=\"base64Binary\"/>\n</schema>\n",
+   "type": "file",
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": null
+}

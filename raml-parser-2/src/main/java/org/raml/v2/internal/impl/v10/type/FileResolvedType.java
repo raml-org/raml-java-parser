@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FILE_TYPES_KEY_NAME;
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.FORMAT_KEY_NAME;
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_LENGTH_KEY_NAME;
 import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_LENGTH_KEY_NAME;
@@ -78,7 +79,7 @@ public class FileResolvedType extends XmlFacetsCapableType
         result.customFacets = customFacets.overwriteFacets(from);
         result.setMinLength(selectIntValue(MIN_LENGTH_KEY_NAME, from));
         result.setMaxLength(selectIntValue(MAX_LENGTH_KEY_NAME, from));
-        result.setFileTypes(selectStringCollection(FORMAT_KEY_NAME, from));
+        result.setFileTypes(selectStringCollection(FILE_TYPES_KEY_NAME, from));
         return overwriteFacets(result, from);
     }
 
