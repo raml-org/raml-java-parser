@@ -21,11 +21,20 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BooleanResolvedType extends XmlFacetsCapableType
 {
+    private List<String> enums = new ArrayList<>();
 
     public BooleanResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
@@ -46,7 +55,10 @@ public class BooleanResolvedType extends XmlFacetsCapableType
     public void validateCanOverwriteWith(TypeDeclarationNode from)
     {
         customFacets.validate(from);
-        final AnyOfRule facetRule = new AnyOfRule().addAll(customFacets.getRules());
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.enumField())
+                                                   .addAll(customFacets.getRules());
         TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
@@ -55,6 +67,7 @@ public class BooleanResolvedType extends XmlFacetsCapableType
     {
         final BooleanResolvedType copy = copy();
         copy.customFacets = copy.customFacets().overwriteFacets(from);
+        copy.setEnums(getEnumValues(from));
         return overwriteFacets(copy, from);
     }
 
@@ -64,6 +77,34 @@ public class BooleanResolvedType extends XmlFacetsCapableType
         final BooleanResolvedType copy = copy();
         copy.customFacets = copy.customFacets().mergeWith(with.customFacets());
         return mergeFacets(copy, with);
+    }
+
+    @Nonnull
+    private List<String> getEnumValues(Node typeNode)
+    {
+        Node values = typeNode.get("enum");
+        List<String> enumValues = new ArrayList<>();
+        if (values != null && values instanceof SYArrayNode)
+        {
+            for (Node node : values.getChildren())
+            {
+                enumValues.add(((SimpleTypeNode) node).getLiteralValue());
+            }
+        }
+        return enumValues;
+    }
+
+    public List<String> getEnums()
+    {
+        return enums;
+    }
+
+    public void setEnums(List<String> enums)
+    {
+        if (enums != null && !enums.isEmpty())
+        {
+            this.enums = enums;
+        }
     }
 
     @Override

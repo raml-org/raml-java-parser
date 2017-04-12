@@ -379,6 +379,8 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(enumField()),
                                                            is(dateTimeTypeLiteral())
                                                                                     .add(formatField()),
+                                                           is(booleanTypeLiteral())
+                                                                                   .add(enumField()),
                                                            is(arrayTypeLiteral())
                                                                                  .add(uniqueItemsField())
                                                                                  .add(itemsField())
@@ -780,6 +782,11 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected Rule integerTypeLiteral()
     {
         return string("integer");
+    }
+
+    protected Rule booleanTypeLiteral()
+    {
+        return string("boolean");
     }
 
     protected StringValueRule stringTypeLiteral()

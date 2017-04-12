@@ -16,6 +16,7 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.yagi.framework.nodes.BooleanNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.StringNode;
@@ -49,7 +50,17 @@ public class StringValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode && ((StringNode) node).getValue().equals(value);
+        if (node instanceof StringNode)
+        {
+            return ((StringNode) node).getValue().equals(value);
+        }
+
+        if (node instanceof BooleanNode)
+        {
+            return ((BooleanNode) node).getValue().toString().equals(value);
+        }
+
+        return false;
     }
 
     public StringValueRule description(String description)
@@ -62,7 +73,7 @@ public class StringValueRule extends Rule
     @Override
     public Node apply(@Nonnull Node node)
     {
-        if (!(node instanceof StringNode))
+        if (!(node instanceof StringNode || node instanceof BooleanNode))
         {
             return ErrorNodeFactory.createInvalidType(node, NodeType.String);
         }
@@ -70,8 +81,13 @@ public class StringValueRule extends Rule
         {
             return ErrorNodeFactory.createInvalidValue(node, value);
         }
-        return createNodeUsingFactory(node, ((StringNode) node).getValue());
 
+        if (node instanceof StringNode)
+        {
+            return createNodeUsingFactory(node, ((StringNode) node).getValue());
+        }
+        else
+            return createNodeUsingFactory(node, ((BooleanNode) node).getValue());
     }
 
     @Override
