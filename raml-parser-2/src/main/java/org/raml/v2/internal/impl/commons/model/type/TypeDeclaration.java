@@ -52,6 +52,7 @@ import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.util.NodeSelector;
+import org.raml.yagi.framework.util.NodeUtils;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<KeyValueNode>
 {
@@ -177,9 +178,10 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
         final ResourceLoader resourceLoader = node.getStartPosition().getResourceLoader();
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
         final Node validate = exampleValidationPhase.validate(node, payload);
-        if (validate instanceof ErrorNode)
+        if (NodeUtils.isErrorResult(validate))
         {
-            return singletonList(new RamlValidationResult((ErrorNode) validate));
+            ErrorNode error = validate instanceof ErrorNode ? (ErrorNode) validate : validate.findDescendantsWith(ErrorNode.class).get(0);
+            return singletonList(new RamlValidationResult(error));
         }
         else
         {
