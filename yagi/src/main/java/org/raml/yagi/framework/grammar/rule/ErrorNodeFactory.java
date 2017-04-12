@@ -30,6 +30,11 @@ import org.raml.yagi.framework.util.NodeSelector;
 public class ErrorNodeFactory
 {
 
+    public static ErrorNode createCanNotInheritFromDifferentBaseTypes(String... baseTypes)
+    {
+        return new ErrorNode("Can not inherit from different base types '" + StringUtils.join(baseTypes, " , "));
+    }
+
     public static ErrorNode createUnexpectedKey(Node key, Collection<String> options)
     {
         return new ErrorNode("Unexpected key '" + key + "'. Options are : " + StringUtils.join(options, " or "));
