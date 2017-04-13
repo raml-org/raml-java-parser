@@ -152,9 +152,9 @@ public class ErrorNodeFactory
         return new ErrorNode("Expected maximum value " + maximumValue);
     }
 
-    public static Node createInvalidRangeValue(Number minimumValue, Number maximumValue)
+    public static Node createInvalidRangeValue(String value, Number minimumValue, Number maximumValue)
     {
-        return new ErrorNode("Expected number between " + minimumValue + " and " + maximumValue);
+        return new ErrorNode("Invalid number "+value+" expected number between " + minimumValue + " and " + maximumValue);
     }
 
     public static Node createMissingField(String selector)

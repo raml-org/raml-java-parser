@@ -16,6 +16,8 @@
 package org.raml.yagi.framework.grammar;
 
 import com.google.common.collect.Range;
+import org.apache.commons.lang.math.IntRange;
+import org.apache.commons.lang.math.LongRange;
 import org.raml.yagi.framework.grammar.rule.AllOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyValueRule;
@@ -37,6 +39,7 @@ import org.raml.yagi.framework.grammar.rule.NullValueRule;
 import org.raml.yagi.framework.grammar.rule.NumberTypeRule;
 import org.raml.yagi.framework.grammar.rule.ObjectRule;
 import org.raml.yagi.framework.grammar.rule.ParentKeyDefaultValue;
+import org.raml.yagi.framework.grammar.rule.RangeValueRule;
 import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.ScalarTypeRule;
@@ -216,12 +219,11 @@ public class BaseGrammar
 
     /**
      * Matches a number that is Integer and is included in the range
-     * @param range The valid range
      * @return The rule
      */
-    public IntegerTypeRule range(Range<Long> range)
+    public RangeValueRule range(Integer min, Integer max)
     {
-        return new IntegerTypeRule(range);
+        return new RangeValueRule(new IntRange(min,max));
     }
 
     /**
