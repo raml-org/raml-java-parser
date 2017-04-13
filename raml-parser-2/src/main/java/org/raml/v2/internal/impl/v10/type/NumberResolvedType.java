@@ -152,8 +152,8 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
     public ErrorNode validateFacets()
     {
-        BigDecimal min = minimum != null ? new BigDecimal(minimum.toString()) : new BigDecimal(Double.MIN_VALUE);
-        BigDecimal max = maximum != null ? new BigDecimal(maximum.toString()) : new BigDecimal(Double.MAX_VALUE);
+        BigDecimal min = minimum != null ? new BigDecimal(minimum.toString()) : new BigDecimal(Integer.MIN_VALUE);
+        BigDecimal max = maximum != null ? new BigDecimal(maximum.toString()) : new BigDecimal(Integer.MAX_VALUE);
         BigDecimal mult = multiple != null ? new BigDecimal(multiple.toString()) : null;
 
         // Checking conflicts between the minimum and maximum facets if both are set
@@ -181,7 +181,7 @@ public class NumberResolvedType extends XmlFacetsCapableType
             {
                 return RamlErrorNodeFactory.createInvalidFacetState(
                         getTypeName(),
-                        "enum values must be between " + minimum + " and " + maximum);
+                        "enum values must be between " + min + " and " + max);
             }
 
             if (mult != null && value.remainder(mult).compareTo(BigDecimal.ZERO) != 0)
