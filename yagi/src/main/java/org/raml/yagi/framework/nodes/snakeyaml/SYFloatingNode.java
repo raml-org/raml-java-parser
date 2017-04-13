@@ -47,7 +47,7 @@ public class SYFloatingNode extends SYBaseRamlNode implements FloatingNode
     @Override
     public String toString()
     {
-        return String.valueOf(getValue());
+        return ((ScalarNode) getYamlNode()).getValue();
     }
 
     @Nonnull

@@ -47,12 +47,6 @@ public class SYIntegerNode extends SYBaseRamlNode implements IntegerNode
         return Long.valueOf(value);
     }
 
-    @Override
-    public String toString()
-    {
-        return String.valueOf(getValue());
-    }
-
     @Nonnull
     @Override
     public Node copy()

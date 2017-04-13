@@ -42,12 +42,6 @@ public class SYBooleanNode extends SYBaseRamlNode implements BooleanNode
         return Boolean.parseBoolean(value);
     }
 
-    @Override
-    public String toString()
-    {
-        return String.valueOf(getValue());
-    }
-
     @Nonnull
     @Override
     public Node copy()

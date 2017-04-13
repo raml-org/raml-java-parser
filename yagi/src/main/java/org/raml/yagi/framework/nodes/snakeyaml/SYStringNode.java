@@ -40,7 +40,7 @@ public class SYStringNode extends SYBaseRamlNode implements StringNode
 
     public String getValue()
     {
-        return ((ScalarNode) getYamlNode()).getValue();
+        return getLiteralValue();
     }
 
     @Nonnull
@@ -48,12 +48,6 @@ public class SYStringNode extends SYBaseRamlNode implements StringNode
     public Node copy()
     {
         return new SYStringNode(this);
-    }
-
-    @Override
-    public String toString()
-    {
-        return getValue();
     }
 
     @Override

@@ -50,6 +50,6 @@ public class SYNullNode extends SYBaseRamlNode implements NullNode
     @Override
     public String toString()
     {
-        return "SyNullNode";
+        return "null";
     }
 }

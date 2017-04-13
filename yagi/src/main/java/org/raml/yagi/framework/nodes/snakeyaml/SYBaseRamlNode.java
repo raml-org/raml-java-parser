@@ -81,6 +81,11 @@ public abstract class SYBaseRamlNode extends BaseNode
         return null;
     }
 
+    @Override
+    public String toString() {
+        return getLiteralValue();
+    }
+
     public ResourceLoader getResourceLoader()
     {
         return resourceLoader;

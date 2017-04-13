@@ -8,7 +8,7 @@ RamlDocumentNode (Start: 11 , End: 143, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 47 , End: 74, On: input.raml)
         SYStringNode: "resourceTypes" (Start: 47 , End: 60, On: input.raml)
         ErrorNode: "Invalid element Array[{
-one: SyNullNode
+one: null
 }]." (Start: 66 , End: 74, On: input.raml, Source: SYArrayNode)
             SYObjectNode (Start: 68 , End: 74, On: input.raml)
                 KeyValueNodeImpl (Start: 68 , End: 72, On: input.raml)
@@ -17,7 +17,7 @@ one: SyNullNode
     KeyValueNodeImpl (Start: 74 , End: 94, On: input.raml)
         SYStringNode: "traits" (Start: 74 , End: 80, On: input.raml)
         ErrorNode: "Invalid element Array[{
-one: SyNullNode
+one: null
 }]." (Start: 86 , End: 94, On: input.raml, Source: SYArrayNode)
             SYObjectNode (Start: 88 , End: 94, On: input.raml)
                 KeyValueNodeImpl (Start: 88 , End: 92, On: input.raml)
@@ -26,7 +26,7 @@ one: SyNullNode
     TypesNode (Start: 94 , End: 115, On: input.raml, Source: KeyValueNodeImpl)
         SYStringNode: "schemas" (Start: 94 , End: 101, On: input.raml)
         ErrorNode: "Invalid element Array[{
-one: SyNullNode
+one: null
 }]." (Start: 107 , End: 115, On: input.raml, Source: SYArrayNode)
             SYObjectNode (Start: 109 , End: 115, On: input.raml)
                 KeyValueNodeImpl (Start: 109 , End: 113, On: input.raml)
@@ -35,7 +35,7 @@ one: SyNullNode
     KeyValueNodeImpl (Start: 115 , End: 143, On: input.raml)
         SYStringNode: "securitySchemes" (Start: 115 , End: 130, On: input.raml)
         ErrorNode: "Invalid element Array[{
-one: SyNullNode
+one: null
 }]." (Start: 136 , End: 143, On: input.raml, Source: SYArrayNode)
             SYObjectNode (Start: 138 , End: 143, On: input.raml)
                 KeyValueNodeImpl (Start: 138 , End: 142, On: input.raml)
