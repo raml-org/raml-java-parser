@@ -16,8 +16,10 @@
 package org.raml.v2.api.model.v10.datamodel;
 
 
+import java.util.List;
+
 public interface BooleanTypeDeclaration extends TypeDeclaration
 {
 
-
+    List<Boolean> enumValues();
 }

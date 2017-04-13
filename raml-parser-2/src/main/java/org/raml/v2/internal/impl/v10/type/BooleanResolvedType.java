@@ -15,17 +15,28 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedCustomFacets;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+import org.raml.yagi.framework.nodes.BooleanNode;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BooleanResolvedType extends XmlFacetsCapableType
 {
+
+    private List<Boolean> enums = new ArrayList<>();
 
     public BooleanResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
@@ -46,7 +57,10 @@ public class BooleanResolvedType extends XmlFacetsCapableType
     public void validateCanOverwriteWith(TypeDeclarationNode from)
     {
         customFacets.validate(from);
-        final AnyOfRule facetRule = new AnyOfRule().addAll(customFacets.getRules());
+        final Raml10Grammar raml10Grammar = new Raml10Grammar();
+        final AnyOfRule facetRule = new AnyOfRule()
+                                                   .add(raml10Grammar.enumField())
+                                                   .addAll(customFacets.getRules());
         TypesUtils.validateAllWith(facetRule, from.getFacets());
     }
 
@@ -55,7 +69,27 @@ public class BooleanResolvedType extends XmlFacetsCapableType
     {
         final BooleanResolvedType copy = copy();
         copy.customFacets = copy.customFacets().overwriteFacets(from);
+        copy.setEnums(getEnumValues(from));
         return overwriteFacets(copy, from);
+    }
+
+    @Nonnull
+    private List<Boolean> getEnumValues(Node typeNode)
+    {
+
+        Node values = typeNode.get("enum");
+        List<Boolean> enumValues = new ArrayList<>();
+        if (values != null && values instanceof SYArrayNode)
+        {
+            for (Node node : values.getChildren())
+            {
+                if (node instanceof BooleanNode)
+                {
+                    enumValues.add(((BooleanNode) node).getValue());
+                }
+            }
+        }
+        return enumValues;
     }
 
     @Override
@@ -63,7 +97,24 @@ public class BooleanResolvedType extends XmlFacetsCapableType
     {
         final BooleanResolvedType copy = copy();
         copy.customFacets = copy.customFacets().mergeWith(with.customFacets());
+        if (with instanceof BooleanResolvedType)
+        {
+            copy.setEnums(((BooleanResolvedType) with).getEnums());
+        }
         return mergeFacets(copy, with);
+    }
+
+    public void setEnums(List<Boolean> enums)
+    {
+        if (enums != null)
+        {
+            this.enums = enums;
+        }
+    }
+
+    public List<Boolean> getEnums()
+    {
+        return enums;
     }
 
     @Override

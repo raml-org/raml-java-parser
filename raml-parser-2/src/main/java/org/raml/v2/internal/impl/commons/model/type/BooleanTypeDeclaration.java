@@ -19,11 +19,18 @@ package org.raml.v2.internal.impl.commons.model.type;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.v2.internal.impl.v10.type.BooleanResolvedType;
 
+import java.util.List;
+
 public class BooleanTypeDeclaration extends TypeDeclaration<BooleanResolvedType>
 {
 
     public BooleanTypeDeclaration(KeyValueNode node, BooleanResolvedType resolvedType)
     {
         super(node, resolvedType);
+    }
+
+    public List<Boolean> enumValues()
+    {
+        return getResolvedType().getEnums();
     }
 }

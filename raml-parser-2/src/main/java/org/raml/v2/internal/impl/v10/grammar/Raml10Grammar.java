@@ -377,6 +377,8 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(minLengthField())
                                                                                   .add(maxLengthField())
                                                                                   .add(enumField()),
+                                                           is(booleanTypeLiteral())
+                                                                                   .add(enumField()),
                                                            is(dateTimeTypeLiteral())
                                                                                     .add(formatField()),
                                                            is(arrayTypeLiteral())
@@ -785,6 +787,11 @@ public class Raml10Grammar extends BaseRamlGrammar
     protected StringValueRule stringTypeLiteral()
     {
         return string("string");
+    }
+
+    protected StringValueRule booleanTypeLiteral()
+    {
+        return string("boolean");
     }
 
     private StringValueRule dateTimeTypeLiteral()
