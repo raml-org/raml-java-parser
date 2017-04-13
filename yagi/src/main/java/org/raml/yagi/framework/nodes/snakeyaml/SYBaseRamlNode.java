@@ -82,7 +82,8 @@ public abstract class SYBaseRamlNode extends BaseNode
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return getLiteralValue();
     }
 
