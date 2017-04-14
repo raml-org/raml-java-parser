@@ -16,10 +16,12 @@
 package org.raml.yagi.framework.nodes;
 
 import javax.annotation.Nonnull;
+import java.util.Stack;
 
 public class ErrorNode extends AbstractRamlNode
 {
     private final String errorMessage;
+    private String path;
 
     public ErrorNode(String msg)
     {
@@ -29,6 +31,46 @@ public class ErrorNode extends AbstractRamlNode
     public String getErrorMessage()
     {
         return errorMessage;
+    }
+
+    public String getPath()
+    {
+        if (path == null)
+        {
+            Node previousNode = this;
+            Node currentNode = previousNode.getParent();
+            Stack<String> keysStack = new Stack<>();
+
+            while (currentNode != null)
+            {
+                if (currentNode instanceof ArrayNode)
+                {
+                    // In order to get the index of the node containing the error, we compare the previous
+                    // node (which is an element of the array) in the tree with all the children of the current node
+                    keysStack.push(String.valueOf(currentNode.getChildren().indexOf(previousNode)));
+                }
+                else if (currentNode instanceof KeyValueNode)
+                {
+                    Node key = ((KeyValueNode) currentNode).getKey();
+                    String currentKey = ((SimpleTypeNode) key).getLiteralValue().replace("/", "~1");
+                    keysStack.push(currentKey);
+                }
+                previousNode = currentNode;
+                currentNode = currentNode.getParent();
+            }
+
+            // Creating the path
+            StringBuilder fullPath = new StringBuilder();
+
+            while (!keysStack.isEmpty())
+            {
+                fullPath.append("/").append(keysStack.pop());
+            }
+
+            path = fullPath.length() > 0 ? fullPath.toString() : "/";
+        }
+
+        return path;
     }
 
     @Nonnull

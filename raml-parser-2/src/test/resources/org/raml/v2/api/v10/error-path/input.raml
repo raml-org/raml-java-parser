@@ -1,0 +1,83 @@
+#%RAML 1.0
+title: Test API
+types:
+  Matrix:
+    type: number[][]
+    example: [[1,invalid], [3,invalid]]
+  User:
+    properties:
+      age:
+        required: true
+        type: integer
+      name:
+        required: true
+        type: string
+      family:
+        required: true
+        type: string[]
+    examples:
+      goodExample:
+        name: "Mirtha"
+        age: 105
+        family:
+          - "Pepe"
+          - "Jose"
+      badExample:
+        name: "Mirtha"
+        age: 105
+        family:
+          - "Pepe"
+          - 1234
+      anotherBadExample:
+        name: "Mirtha"
+      anotherOne:
+        name: 1234
+        age: "asdasd"
+        family:
+          - "Pepe"
+          - "Juan"
+  Book:
+    properties:
+      users:
+        required: true
+        type: User[]
+      authors:
+        type: string[]
+        required: true
+      /slashedProperty:
+        type: integer
+    examples:
+      one:
+        users:
+          - name: "A"
+            age: 10
+            family:
+              - "sister"
+              - "brother"
+          - name: "B"
+            age: 20
+            family:
+              - "sister"
+              - 1234
+              - 5678
+          - name: "C"
+            age: "asdasd"
+            family:
+              - "sister"
+              - "brother"
+        authors:
+          - "abcd"
+          - "efgh"
+        /slashedProperty: 23
+      two:
+        users:
+          - name: "A"
+            age: 10
+            family:
+              - "sister"
+              - "brother"
+        authors:
+          - "abcd"
+          - 2
+          - "efgh"
+        /slashedProperty: 23
