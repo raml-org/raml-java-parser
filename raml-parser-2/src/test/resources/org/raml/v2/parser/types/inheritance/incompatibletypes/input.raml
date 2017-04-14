@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: My API With Types
+types:
+    Cat:
+      type: object
+      properties:
+        name: string
+        color: string
+    Dog:
+      type: string
+    HomeAnimal: [ Dog, Cat]
