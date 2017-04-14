@@ -223,7 +223,7 @@ public class BaseGrammar
      */
     public RangeValueRule range(Integer min, Integer max)
     {
-        return new RangeValueRule(new IntRange(min,max));
+        return new RangeValueRule(new IntRange(min, max));
     }
 
     /**

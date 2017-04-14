@@ -29,66 +29,94 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-public class RangeValueRule extends Rule {
+public class RangeValueRule extends Rule
+{
 
     private Range range;
 
-    public RangeValueRule(Range range) {
+    public RangeValueRule(Range range)
+    {
         this.range = range;
     }
 
     @Nonnull
     @Override
-    public List<Suggestion> getSuggestions(Node node, ParsingContext context) {
+    public List<Suggestion> getSuggestions(Node node, ParsingContext context)
+    {
         return Collections.emptyList();
     }
 
     @Override
-    public boolean matches(@Nonnull Node node) {
-        if (node instanceof IntegerNode || node instanceof FloatingNode) {
+    public boolean matches(@Nonnull Node node)
+    {
+        if (node instanceof IntegerNode || node instanceof FloatingNode)
+        {
             return true;
-        } else if (node instanceof SimpleTypeNode) {
-            try {
+        }
+        else if (node instanceof SimpleTypeNode)
+        {
+            try
+            {
                 Long.parseLong(((SimpleTypeNode) node).getLiteralValue());
                 return true;
-            } catch (NumberFormatException ex) {
+            }
+            catch (NumberFormatException ex)
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     @Override
-    public Node apply(@Nonnull Node node) {
-        if (validate(node)) {
+    public Node apply(@Nonnull Node node)
+    {
+        if (validate(node))
+        {
             return createNodeUsingFactory(node, ((SimpleTypeNode) node).getValue());
-        } else {
+        }
+        else
+        {
             return ErrorNodeFactory.createInvalidRangeValue(node.toString(), range.getMinimumNumber(), range.getMaximumNumber());
         }
     }
 
-    private boolean validate(Node node) {
-        if (node instanceof IntegerNode) {
+    private boolean validate(Node node)
+    {
+        if (node instanceof IntegerNode)
+        {
             Long value = ((IntegerNode) node).getValue();
             return range.containsLong(value);
-        } else if (node instanceof FloatingNode) {
+        }
+        else if (node instanceof FloatingNode)
+        {
             BigDecimal value = ((FloatingNode) node).getValue();
             return range.containsDouble(value.doubleValue());
-        } else if (node instanceof SimpleTypeNode) {
-            try {
+        }
+        else if (node instanceof SimpleTypeNode)
+        {
+            try
+            {
                 long parseLong = Long.parseLong(((StringNode) node).getValue());
                 return range.containsLong(parseLong);
-            } catch (NumberFormatException ex) {
+            }
+            catch (NumberFormatException ex)
+            {
                 return false;
             }
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     @Override
-    public String getDescription() {
+    public String getDescription()
+    {
         return "Maximum value";
     }
 }
