@@ -45,6 +45,7 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
     public AbstractReferenceNode(AbstractReferenceNode node)
     {
         super(node);
+        this.contextNode = node.contextNode;
     }
 
     @Nullable

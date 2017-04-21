@@ -67,18 +67,29 @@ public class StringTemplateNode extends AbstractStringNode implements Executable
         else
         {
             final StringBuilder content = new StringBuilder();
+            Node referenceContext = null;
             for (Node executedNode : executedNodes)
             {
                 if (executedNode instanceof SimpleTypeNode)
                 {
                     content.append(((SimpleTypeNode) executedNode).getLiteralValue());
+                    if (referenceContext == null && executedNode instanceof ContextAwareStringNodeImpl)
+                    {
+                        // use reference context node from parameter node
+                        referenceContext = ((ContextAwareNode) executedNode).getReferenceContext();
+                    }
                 }
                 else
                 {
                     return ErrorNodeFactory.createInvalidType(executedNode, NodeType.String);
                 }
             }
-            return new ContextAwareStringNodeImpl(content.toString(), context.getContextNode());
+            if (referenceContext == null)
+            {
+                // no context defined in parameter node, use context of current node
+                referenceContext = context.getContextNode();
+            }
+            return new ContextAwareStringNodeImpl(content.toString(), referenceContext);
         }
     }
 

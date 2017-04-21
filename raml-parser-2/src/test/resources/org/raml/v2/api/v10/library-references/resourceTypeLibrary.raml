@@ -1,0 +1,11 @@
+#%RAML 1.0 Library
+
+uses:
+    TraitsLib: traitsLibrary.raml
+
+resourceTypes:
+  collection:
+      get:
+        is:
+            - TraitsLib.basic:
+                traitTypeName: <<rtTypeName>>

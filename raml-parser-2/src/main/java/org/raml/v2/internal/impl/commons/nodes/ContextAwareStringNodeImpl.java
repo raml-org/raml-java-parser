@@ -20,11 +20,8 @@ import javax.annotation.Nonnull;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 
-/**
- * Class used for resource types and traits parameters to allow
- * the propagation of the context where the parameters were assigned
- */
-public class ContextAwareStringNodeImpl extends StringNodeImpl
+
+public class ContextAwareStringNodeImpl extends StringNodeImpl implements ContextAwareNode
 {
 
     private final Node referenceContext;
@@ -41,6 +38,7 @@ public class ContextAwareStringNodeImpl extends StringNodeImpl
         this.referenceContext = node.referenceContext;
     }
 
+    @Override
     public Node getReferenceContext()
     {
         return referenceContext;
