@@ -16,7 +16,6 @@
 package org.raml.v2.unit;
 
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;

@@ -132,7 +132,7 @@ public class RamlHeader
         case Trait:
             return grammar.trait().with(0, grammar.usesField());
         case AnnotationTypeDeclaration:
-            return grammar.explicitType().with(0, grammar.usesField());
+            return grammar.annotationTypeDeclaration().with(0, grammar.usesField());
         case Library:
             return grammar.libraryValue();
         case Overlay:

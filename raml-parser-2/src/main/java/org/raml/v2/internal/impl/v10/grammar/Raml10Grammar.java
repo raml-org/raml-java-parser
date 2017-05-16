@@ -349,6 +349,11 @@ public class Raml10Grammar extends BaseRamlGrammar
         return baseType(TypeId.STRING, DEFAULT_TYPE_RULE);
     }
 
+    public ObjectRule annotationTypeDeclaration()
+    {
+        return explicitType().with(allowedTargetsField());
+    }
+
     private ObjectRule baseType(final TypeId defaultType, final String ruleName)
     {
         return named(ruleName,
