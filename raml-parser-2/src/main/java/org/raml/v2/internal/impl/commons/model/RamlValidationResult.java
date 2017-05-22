@@ -52,6 +52,26 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
     }
 
     @Override
+    public int getStartLine() {
+        return start.getLine() + 1;
+    }
+
+    @Override
+    public int getEndLine() {
+        return end.getLine() + 1;
+    }
+
+    @Override
+    public int getStartColumn() {
+        return start.getColumn() + 1;
+    }
+
+    @Override
+    public int getEndColumn() {
+        return end.getColumn() + 1;
+    }
+
+    @Override
     public String toString()
     {
         StringBuilder builder = new StringBuilder(message);

@@ -42,22 +42,26 @@ public class ApiModelUnitTestCase
     }
 
     @Test
-    public void schemaShouldNotAddAnyWhenAdditionalPropertiesFalse() {
+    public void schemaShouldNotAddAnyWhenAdditionalPropertiesFalse()
+    {
         URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/xml-schema.raml");
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(savedRamlLocation.toString());
         String schema = ramlModelResult.getApiV10().types().get(0).toXmlSchema();
-        assertThat(schema.trim(), is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n" +
-                "    <element name=\"user\" type=\"tns:user\"/>\n" +
-                "    <complexType name=\"user\">\n" +
-                "        <sequence>\n" +
-                "            <element name=\"name\">\n" +
-                "                <simpleType>\n" +
-                "                    <restriction base=\"string\"/>\n" +
-                "                </simpleType>\n" +
-                "            </element>\n" +
-                "        </sequence>\n" +
-                "    </complexType>\n" +
-                "</schema>"));
+        assertThat(
+                schema.trim(),
+                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n"
+                   +
+                   "    <element name=\"user\" type=\"tns:user\"/>\n" +
+                   "    <complexType name=\"user\">\n" +
+                   "        <sequence>\n" +
+                   "            <element name=\"name\">\n" +
+                   "                <simpleType>\n" +
+                   "                    <restriction base=\"string\"/>\n" +
+                   "                </simpleType>\n" +
+                   "            </element>\n" +
+                   "        </sequence>\n" +
+                   "    </complexType>\n" +
+                   "</schema>"));
 
 
     }

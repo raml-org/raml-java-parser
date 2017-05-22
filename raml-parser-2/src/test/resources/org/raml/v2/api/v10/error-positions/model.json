@@ -1,0 +1,15 @@
+{
+  "errors": [
+    "Invalid array element invalid.",
+    "Invalid array element invalid.",
+    "Invalid array element 1234.",
+    "Missing required field \"age\"",
+    "Missing required field \"family\"",
+    "Invalid type Integer, expected String",
+    "Invalid type String, expected Integer",
+    "Invalid array element 1234.",
+    "Invalid array element 5678.",
+    "Invalid type String, expected Integer",
+    "Invalid array element 2."
+  ]
+}

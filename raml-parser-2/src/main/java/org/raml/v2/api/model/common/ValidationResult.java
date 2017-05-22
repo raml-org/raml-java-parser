@@ -21,4 +21,12 @@ public interface ValidationResult
     String getMessage();
 
     String getPath();
+
+    int getStartLine();
+
+    int getEndLine();
+
+    int getStartColumn();
+
+    int getEndColumn();
 }
