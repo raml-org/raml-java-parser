@@ -27,14 +27,14 @@ import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 public class DateOnlyResolvedType extends XmlFacetsCapableType
 {
 
-    public DateOnlyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public DateOnlyResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
     }
 
     public DateOnlyResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets());
+        super(getTypeName(from, TypeId.DATE_ONLY.getType()), from, new ResolvedCustomFacets());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class DateOnlyResolvedType extends XmlFacetsCapableType
 
     protected DateOnlyResolvedType copy()
     {
-        return new DateOnlyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+        return new DateOnlyResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override

@@ -27,20 +27,20 @@ import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 public class NullResolvedType extends XmlFacetsCapableType
 {
 
-    public NullResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public NullResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
     }
 
     public NullResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets());
+        super(getTypeName(from, TypeId.NULL.getType()), from, new ResolvedCustomFacets());
 
     }
 
     protected NullResolvedType copy()
     {
-        return new NullResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+        return new NullResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override

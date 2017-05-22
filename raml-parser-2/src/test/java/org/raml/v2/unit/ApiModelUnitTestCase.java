@@ -42,23 +42,55 @@ public class ApiModelUnitTestCase
     }
 
     @Test
-    public void schemaShouldNotAddAnyWhenAdditionalPropertiesFalse() {
+    public void schemaShouldNotAddAnyWhenAdditionalPropertiesFalse()
+    {
         URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/xml-schema.raml");
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(savedRamlLocation.toString());
         String schema = ramlModelResult.getApiV10().types().get(0).toXmlSchema();
-        assertThat(schema.trim(), is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n" +
-                "    <element name=\"user\" type=\"tns:user\"/>\n" +
-                "    <complexType name=\"user\">\n" +
-                "        <sequence>\n" +
-                "            <element name=\"name\">\n" +
-                "                <simpleType>\n" +
-                "                    <restriction base=\"string\"/>\n" +
-                "                </simpleType>\n" +
-                "            </element>\n" +
-                "        </sequence>\n" +
-                "    </complexType>\n" +
-                "</schema>"));
+        assertThat(
+                schema.trim(),
+                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n"
+                   +
+                   "    <element name=\"user\" type=\"tns:user\"/>\n" +
+                   "    <complexType name=\"user\">\n" +
+                   "        <sequence>\n" +
+                   "            <element name=\"name\">\n" +
+                   "                <simpleType>\n" +
+                   "                    <restriction base=\"string\"/>\n" +
+                   "                </simpleType>\n" +
+                   "            </element>\n" +
+                   "        </sequence>\n" +
+                   "    </complexType>\n" +
+                   "</schema>"));
 
+
+    }
+
+
+    @Test
+    public void shouldGenerateXsdSchemaOnRecursiveTypes()
+    {
+        URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/recursive-type.raml");
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(savedRamlLocation.toString());
+        String schema = ramlModelResult.getApiV10().types().get(0).toXmlSchema();
+        assertThat(
+                schema.trim(),
+                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n"
+                   +
+                   "    <element name=\"Tree\" type=\"tns:Tree\"/>\n" +
+                   "    <complexType name=\"Tree\">\n" +
+                   "        <sequence>\n" +
+                   "            <element name=\"value\">\n" +
+                   "                <simpleType>\n" +
+                   "                    <restriction base=\"string\"/>\n" +
+                   "                </simpleType>\n" +
+                   "            </element>\n" +
+                   "            <element name=\"left\" type=\"tns:Tree\"/>\n" +
+                   "            <element name=\"right\" type=\"tns:Tree\"/>\n" +
+                   "            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n" +
+                   "        </sequence>\n" +
+                   "    </complexType>\n" +
+                   "</schema>"));
 
     }
 }

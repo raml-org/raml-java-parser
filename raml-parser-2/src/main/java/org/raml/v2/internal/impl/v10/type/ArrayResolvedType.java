@@ -45,9 +45,10 @@ public class ArrayResolvedType extends XmlFacetsCapableType
     private Integer minItems;
     private Integer maxItems;
 
-    public ArrayResolvedType(TypeExpressionNode node, XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems, ResolvedCustomFacets customFacets)
+    public ArrayResolvedType(String typeName, TypeExpressionNode node, XmlFacets xmlFacets, ResolvedType items, Boolean uniqueItems, Integer minItems, Integer maxItems,
+            ResolvedCustomFacets customFacets)
     {
-        super(node, xmlFacets, customFacets);
+        super(typeName, node, xmlFacets, customFacets);
         this.items = items;
         this.uniqueItems = uniqueItems;
         this.minItems = minItems;
@@ -62,12 +63,12 @@ public class ArrayResolvedType extends XmlFacetsCapableType
 
     public ArrayResolvedType(TypeExpressionNode node)
     {
-        super(node, new ResolvedCustomFacets(MIN_ITEMS_KEY_NAME, MAX_ITEMS_KEY_NAME, UNIQUE_ITEMS_KEY_NAME, ITEMS_KEY_NAME));
+        super(getTypeName(node, TypeId.ARRAY.getType()), node, new ResolvedCustomFacets(MIN_ITEMS_KEY_NAME, MAX_ITEMS_KEY_NAME, UNIQUE_ITEMS_KEY_NAME, ITEMS_KEY_NAME));
     }
 
     protected ArrayResolvedType copy()
     {
-        return new ArrayResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), items, uniqueItems, minItems, maxItems, customFacets.copy());
+        return new ArrayResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), items, uniqueItems, minItems, maxItems, customFacets.copy());
     }
 
 
@@ -122,12 +123,12 @@ public class ArrayResolvedType extends XmlFacetsCapableType
         int max = maxItems != null ? maxItems : Integer.MAX_VALUE;
         if (max < min)
         {
-            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(getTypeName(), "maxItems must be greater than or equal to minItems."));
+            getTypeExpressionNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(getTypeName(), "maxItems must be greater than or equal to minItems."));
         }
 
         if (getItems() instanceof SchemaBasedResolvedType)
         {
-            getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(getItems().getTypeName(), "array type cannot be of an external type."));
+            getTypeExpressionNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(getItems().getTypeName(), "array type cannot be of an external type."));
         }
     }
 
@@ -159,7 +160,7 @@ public class ArrayResolvedType extends XmlFacetsCapableType
         if (items == null)
         {
             // If array is not typed (either through 'items' or an expression) then items in the array can be anything
-            items = new AnyResolvedType(getTypeDeclarationNode());
+            items = new AnyResolvedType(getTypeExpressionNode());
         }
         return items;
     }

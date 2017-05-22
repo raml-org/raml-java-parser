@@ -73,7 +73,7 @@ public interface ResolvedType
      * The type declaration node that define this type
      * @return The node
      */
-    TypeExpressionNode getTypeDeclarationNode();
+    TypeExpressionNode getTypeExpressionNode();
 
     /**
      * Validate state consistency

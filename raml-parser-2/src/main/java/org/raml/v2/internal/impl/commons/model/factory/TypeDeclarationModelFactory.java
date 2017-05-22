@@ -101,7 +101,7 @@ public class TypeDeclarationModelFactory implements NodeModelFactory
 
     public TypeDeclaration create(ResolvedType type)
     {
-        return createTypeDeclaration(type.getTypeDeclarationNode(), type);
+        return createTypeDeclaration(type.getTypeExpressionNode(), type);
     }
 
     private static class NodeModelTypeFactory implements TypeVisitor<TypeDeclaration>
