@@ -43,12 +43,12 @@ public class FileResolvedType extends XmlFacetsCapableType
 
     public FileResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, FORMAT_KEY_NAME));
+        super(getTypeName(from, TypeId.FILE.getType()), from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, FORMAT_KEY_NAME));
     }
 
-    public FileResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes, ResolvedCustomFacets customFacets)
+    public FileResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, List<String> fileTypes, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.fileTypes = fileTypes;
@@ -56,7 +56,7 @@ public class FileResolvedType extends XmlFacetsCapableType
 
     protected FileResolvedType copy()
     {
-        return new FileResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minLength, maxLength, fileTypes, customFacets.copy());
+        return new FileResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), minLength, maxLength, fileTypes, customFacets.copy());
     }
 
     @Override

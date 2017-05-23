@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Test
+types:
+    Tree:
+        type: object
+        properties:
+            value: string
+            left: Tree
+            right: Tree
+/test:
+  get:

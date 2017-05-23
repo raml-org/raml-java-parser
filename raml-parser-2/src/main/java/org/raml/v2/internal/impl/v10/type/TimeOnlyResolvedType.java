@@ -28,19 +28,19 @@ public class TimeOnlyResolvedType extends XmlFacetsCapableType
 {
 
 
-    public TimeOnlyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public TimeOnlyResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
     }
 
     public TimeOnlyResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets());
+        super(getTypeName(from, TypeId.TIME_ONLY.getType()), from, new ResolvedCustomFacets());
     }
 
     protected TimeOnlyResolvedType copy()
     {
-        return new TimeOnlyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+        return new TimeOnlyResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override

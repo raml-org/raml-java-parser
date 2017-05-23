@@ -142,7 +142,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         if (!resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
         {
             resolvingDiscriminator = false;
-            final TypeExpressionNode typeDeclarationNode = objectTypeDefinition.getTypeDeclarationNode();
+            final TypeExpressionNode typeDeclarationNode = objectTypeDefinition.getTypeExpressionNode();
             return new DiscriminatorBasedRule(this, typeDeclarationNode.getRootNode(), objectTypeDefinition.getDiscriminator());
         }
         else

@@ -26,19 +26,19 @@ import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 
 public class DateTimeOnlyResolvedType extends XmlFacetsCapableType
 {
-    public DateTimeOnlyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public DateTimeOnlyResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
     }
 
     public DateTimeOnlyResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets());
+        super(getTypeName(from, TypeId.DATE_TIME_ONLY.getType()), from, new ResolvedCustomFacets());
     }
 
     protected DateTimeOnlyResolvedType copy()
     {
-        return new DateTimeOnlyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+        return new DateTimeOnlyResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override
