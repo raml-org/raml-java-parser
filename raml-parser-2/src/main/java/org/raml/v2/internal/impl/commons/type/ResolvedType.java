@@ -57,7 +57,6 @@ public interface ResolvedType
      * Returns the type name if any
      * @return The type name
      */
-    @Nullable
     String getTypeName();
 
     /**

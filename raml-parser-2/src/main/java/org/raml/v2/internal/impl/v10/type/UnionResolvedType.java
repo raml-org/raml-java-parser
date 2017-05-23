@@ -37,7 +37,7 @@ public class UnionResolvedType extends BaseType
 
     public UnionResolvedType(TypeExpressionNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
     {
-        this(getTypeName(typeNode, "Union"), typeNode, of, customFacets);
+        this(getTypeName(typeNode, defaultName(of)), typeNode, of, customFacets);
     }
 
 
@@ -50,6 +50,23 @@ public class UnionResolvedType extends BaseType
     public List<ResolvedType> of()
     {
         return of;
+    }
+
+    static String defaultName(List<ResolvedType> of)
+    {
+        StringBuilder result = new StringBuilder();
+        for (ResolvedType resolvedType : of)
+        {
+            if (result.length() == 0)
+            {
+                result = new StringBuilder(resolvedType.getTypeName());
+            }
+            else
+            {
+                result.append(" | ").append(resolvedType.getTypeName());
+            }
+        }
+        return result.toString();
     }
 
     protected UnionResolvedType copy()

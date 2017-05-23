@@ -61,6 +61,10 @@ public abstract class BaseType implements ResolvedType
         {
             from.typeName = ((SimpleTypeNode) ((TypeDeclarationField) node.getParent()).getKey()).getLiteralValue();
         }
+        else if (!(node.getSource() instanceof SimpleTypeNode))
+        {
+            from.typeName = getBuiltinTypeName();
+        }
     }
 
     @Override
