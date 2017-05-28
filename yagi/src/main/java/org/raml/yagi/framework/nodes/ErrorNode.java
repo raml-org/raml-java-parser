@@ -52,8 +52,11 @@ public class ErrorNode extends AbstractRamlNode
                 else if (currentNode instanceof KeyValueNode)
                 {
                     Node key = ((KeyValueNode) currentNode).getKey();
-                    String currentKey = ((SimpleTypeNode) key).getLiteralValue().replace("/", "~1");
-                    keysStack.push(currentKey);
+                    if (key != null)
+                    {
+                        String currentKey = ((SimpleTypeNode) key).getLiteralValue().replace("/", "~1");
+                        keysStack.push(currentKey);
+                    }
                 }
                 previousNode = currentNode;
                 currentNode = currentNode.getParent();
