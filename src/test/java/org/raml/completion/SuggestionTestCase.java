@@ -32,13 +32,13 @@ import org.raml.parser.visitor.YamlDocumentSuggester;
 public class SuggestionTestCase
 {
 
-    public static final int ROOT_SUGGEST_COUNT = 13;
-    public static final int RESOURCE_SUGGEST_COUNT = 17;
-    public static final int ACTION_SUGGEST_COUNT = 10;
+    private static final int ROOT_SUGGEST_COUNT = 13;
+    private static final int RESOURCE_SUGGEST_COUNT = 17;
+    private static final int ACTION_SUGGEST_COUNT = 9;
     private static final int BODY_SUGGEST_COUNT = 4;
     private static final int RESPONSES_SUGGEST_COUNT = 8;
 
-    public static final String HEADER = "#%RAML 0.8\n" +
+    private static final String HEADER = "#%RAML 0.8\n" +
                                         "---\n" +
                                         "title: Sample API\n" +
                                         "version: v1\n" +
@@ -50,7 +50,7 @@ public class SuggestionTestCase
                                         "  headers:\n" +
                                         "   hi:";
 
-    public static final String HEADER_FOUR_SPACE = "#%RAML 0.8\n" +
+    private static final String HEADER_FOUR_SPACE = "#%RAML 0.8\n" +
                                                    "---\n" +
                                                    "title: Sample API\n" +
                                                    "version: v1\n" +
@@ -269,6 +269,7 @@ public class SuggestionTestCase
         assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
+
     @Test
     public void resourceWithDeleteContext()
     {
@@ -325,6 +326,32 @@ public class SuggestionTestCase
         assertThat(suggest.contains(new KeySuggestion("application/xml")), is(true));
         assertThat(suggest.contains(new KeySuggestion("application/x-www-form-urlencoded")), is(true));
         assertThat(suggest.contains(new KeySuggestion("multipart/form-data")), is(true));
+        assertThat(suggest.get(0).getIndentation(), is(-1));
+    }
+
+    @Test
+    public void actionAllSuggestions()
+    {
+        final String topSection = "#%RAML 0.8\n" +
+                "title: one\n" +
+                "/resource:\n" +
+                "  get:\n";
+
+        final RamlDocumentBuilder builder = new RamlDocumentBuilder();
+        final YamlDocumentSuggester yamlDocumentSuggester = new YamlDocumentSuggester(builder);
+        final List<Suggestion> suggest = yamlDocumentSuggester.suggest(topSection, "    ");
+        assertThat(suggest, notNullValue());
+        assertThat(suggest.isEmpty(), is(false));
+        assertThat(suggest.contains(new KeySuggestion("baseUriParameters")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("body")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("description")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("displayName")), is(false));
+        assertThat(suggest.contains(new KeySuggestion("headers")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("is")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("protocols")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("queryParameters")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("responses")), is(true));
+        assertThat(suggest.contains(new KeySuggestion("securedBy")), is(true));
         assertThat(suggest.get(0).getIndentation(), is(-1));
     }
 
