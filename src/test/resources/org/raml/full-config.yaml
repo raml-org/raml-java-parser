@@ -104,9 +104,9 @@ resourceTypes:
         displayName: <<value>> type
 traits:
     - simple:
-        displayName: simple trait
+        description: simple trait
     - knotty:
-        displayName: <<value>> trait
+        description: <<value>> trait
 
 /:
     type: basic
@@ -133,7 +133,6 @@ traits:
             host:
                 enum: [ api2 ]
     get:
-        displayName: RetrieveMediaDisplayName
         description: retrieve media
         headers:
             api-key:
