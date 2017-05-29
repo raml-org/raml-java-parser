@@ -33,6 +33,7 @@ public class ErrorNode extends AbstractRamlNode
         return errorMessage;
     }
 
+
     public String getPath()
     {
         if (path == null)
@@ -82,6 +83,7 @@ public class ErrorNode extends AbstractRamlNode
     {
         return this;
     }
+
 
     @Override
     public NodeType getType()

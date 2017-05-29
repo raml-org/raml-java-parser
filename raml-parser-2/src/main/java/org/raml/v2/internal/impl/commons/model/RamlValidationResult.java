@@ -67,4 +67,16 @@ public class RamlValidationResult implements org.raml.v2.api.model.common.Valida
         return builder.toString();
     }
 
+    public Position getStart()
+    {
+        return start;
+    }
+
+
+    public Position getEnd()
+    {
+        return end;
+    }
+
+
 }
