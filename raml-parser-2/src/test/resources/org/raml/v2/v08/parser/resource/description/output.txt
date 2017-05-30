@@ -30,6 +30,3 @@ When you create a new encoding job through the API, our server
 will immediately respond with details about the job and output
 files being created. You should store the job and outputs IDs
 to track them through the encoding process." (Start: 144 , End: 719, On: input.raml)
-                    KeyValueNodeImpl (Start: -1 , End: -1)
-                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
-                        SYStringNode: "post" (Start: 122 , End: 126, On: input.raml, Source: SYStringNode)

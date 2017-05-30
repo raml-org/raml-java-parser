@@ -81,8 +81,16 @@ public class Raml08Grammar extends BaseRamlGrammar
     @Override
     protected ObjectRule methodValue()
     {
-        return super.methodValue()
-                    .with(field(string("baseUriParameters"), parameters()));
+        return objectType()
+                           .with(descriptionField())
+                           .with(queryParametersField())
+                           .with(headersField())
+                           .with(responsesField())
+                           .with(bodyField())
+                           .with(protocolsField().description("A method can override the protocols specified in the resource or at the API root, by employing this property."))
+                           .with(isField().description("A list of the traits to apply to this method."))
+                           .with(securedByField().description("The security schemes that apply to this method."))
+                           .with(field(string("baseUriParameters"), parameters()));
     }
 
     protected AnyOfRule anyMethod()

@@ -407,12 +407,12 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(securedByField().description("The security schemes that apply to this method."));
     }
 
-    private KeyValueRule queryParametersField()
+    protected KeyValueRule queryParametersField()
     {
         return field(queryParametersKey(), parameters());
     }
 
-    private KeyValueRule responsesField()
+    protected KeyValueRule responsesField()
     {
         return field(responseKey(), responses());
     }
