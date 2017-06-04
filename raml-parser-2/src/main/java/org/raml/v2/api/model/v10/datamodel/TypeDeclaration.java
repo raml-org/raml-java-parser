@@ -104,7 +104,14 @@ public interface TypeDeclaration extends Annotable
 
     XMLFacetInfo xml();
 
-
+    /**
+     * Returns a XML Schema representation of the type.
+     */
     String toXmlSchema();
+
+    /**
+     * Returns a JSON Schema representation of the type.
+     */
+    String toJsonSchema();
 
 }

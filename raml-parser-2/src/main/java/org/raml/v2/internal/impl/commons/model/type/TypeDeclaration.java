@@ -31,6 +31,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import org.apache.ws.commons.schema.XmlSchema;
+import org.json.JSONObject;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;
 import org.raml.v2.internal.impl.commons.model.RamlValidationResult;
@@ -44,6 +45,7 @@ import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
+import org.raml.v2.internal.impl.v10.type.TypeToJsonSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
 import org.raml.yagi.framework.nodes.ArrayNode;
@@ -231,6 +233,19 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
         final StringWriter writer = new StringWriter();
         schema.write(writer);
         return writer.toString();
+    }
+
+    public String toJsonSchema()
+    {
+        if (getResolvedType() instanceof SchemaBasedResolvedType || getResolvedType() instanceof AnyResolvedType || getResolvedType() == null)
+        {
+            return null;
+        }
+
+        final TypeToJsonSchemaVisitor schemaResolver = new TypeToJsonSchemaVisitor();
+        JSONObject jsonObject = schemaResolver.transform(this.getResolvedType());
+
+        return jsonObject.toString();
     }
 
     public String rootElementName()

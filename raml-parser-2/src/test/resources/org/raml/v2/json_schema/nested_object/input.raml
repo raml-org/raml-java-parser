@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: simple object
+types:
+  friend:
+    type: object
+    properties:
+      name: string
+  root:
+    properties:
+      name: string
+      friend: friend
