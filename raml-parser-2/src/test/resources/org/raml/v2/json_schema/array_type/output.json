@@ -3,23 +3,27 @@
   "type": "object",
   "$ref": "#/definitions/root",
   "definitions": {
-    "root": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/Friend"
-          }
-        }
-      }
-    },
     "Friend": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string"
+        }
+      }
+    },
+
+    "root": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "friends": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/Friend"
+          }
         }
       }
     }
