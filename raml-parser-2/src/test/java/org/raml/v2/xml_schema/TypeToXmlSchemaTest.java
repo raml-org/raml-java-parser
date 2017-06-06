@@ -28,7 +28,7 @@ import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -78,9 +78,9 @@ public class TypeToXmlSchemaTest extends TestDataProvider
 
     protected void validateEquals(ResolvedType objectTypeFacets, String expected, String name) throws SAXException, IOException
     {
-        final TypeToSchemaVisitor typeToSchemaVisitor = new TypeToSchemaVisitor();
-        typeToSchemaVisitor.transform(name, objectTypeFacets);
-        final XmlSchema user = typeToSchemaVisitor.getSchema();
+        final TypeToXmlSchemaVisitor typeToXmlSchemaVisitor = new TypeToXmlSchemaVisitor();
+        typeToXmlSchemaVisitor.transform(name, objectTypeFacets);
+        final XmlSchema user = typeToXmlSchemaVisitor.getSchema();
         final StringWriter writer = new StringWriter();
         user.write(writer);
         dump = writer.toString();

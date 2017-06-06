@@ -39,7 +39,7 @@ import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.StringResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
-import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -174,9 +174,9 @@ public class ExampleValidationPhase implements Phase
     @Nullable
     protected Node validateXml(TypeDeclarationNode type, ResolvedType resolvedType, String value)
     {
-        final TypeToSchemaVisitor typeToSchemaVisitor = new TypeToSchemaVisitor();
-        typeToSchemaVisitor.transform(new TypeDeclarationModelFactory().create(type).rootElementName(), resolvedType);
-        final XmlSchema schema = typeToSchemaVisitor.getSchema();
+        final TypeToXmlSchemaVisitor typeToXmlSchemaVisitor = new TypeToXmlSchemaVisitor();
+        typeToXmlSchemaVisitor.transform(new TypeDeclarationModelFactory().create(type).rootElementName(), resolvedType);
+        final XmlSchema schema = typeToXmlSchemaVisitor.getSchema();
         final StringWriter xsd = new StringWriter();
         schema.write(xsd);
         try
@@ -185,7 +185,7 @@ public class ExampleValidationPhase implements Phase
             final Schema schema1 = factory.newSchema(new StreamSource(new StringReader(xsd.toString())));
             final Validator validator = schema1.newValidator();
             validator.validate(new SAXSource(
-                    new NamespaceFilter(XMLReaderFactory.createXMLReader(), TypeToSchemaVisitor.getTargetNamespace(resolvedType)),
+                    new NamespaceFilter(XMLReaderFactory.createXMLReader(), TypeToXmlSchemaVisitor.getTargetNamespace(resolvedType)),
                     new InputSource(new StringReader(value))));
         }
         catch (IOException | SAXException e)

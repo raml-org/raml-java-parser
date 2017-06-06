@@ -46,7 +46,7 @@ import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToJsonSchemaVisitor;
-import org.raml.v2.internal.impl.v10.type.TypeToSchemaVisitor;
+import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -227,9 +227,9 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
         {
             return null;
         }
-        final TypeToSchemaVisitor typeToSchemaVisitor = new TypeToSchemaVisitor();
-        typeToSchemaVisitor.transform(rootElementName(), getResolvedType());
-        final XmlSchema schema = typeToSchemaVisitor.getSchema();
+        final TypeToXmlSchemaVisitor typeToXmlSchemaVisitor = new TypeToXmlSchemaVisitor();
+        typeToXmlSchemaVisitor.transform(rootElementName(), getResolvedType());
+        final XmlSchema schema = typeToXmlSchemaVisitor.getSchema();
         final StringWriter writer = new StringWriter();
         schema.write(writer);
         return writer.toString();
@@ -242,10 +242,10 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
             return null;
         }
 
-        final TypeToJsonSchemaVisitor schemaResolver = new TypeToJsonSchemaVisitor();
-        JSONObject jsonObject = schemaResolver.transform(this.getResolvedType());
+        final TypeToJsonSchemaVisitor typeToJsonSchemaVisitor = new TypeToJsonSchemaVisitor();
+        JSONObject jsonSchema = typeToJsonSchemaVisitor.transform(this.getResolvedType());
 
-        return jsonObject.toString();
+        return jsonSchema.toString();
     }
 
     public String rootElementName()
