@@ -78,10 +78,14 @@ public class UnionResolvedType extends BaseType
     public ResolvedType overwriteFacets(TypeDeclarationNode from)
     {
         final List<ResolvedType> result = new ArrayList<>();
-        final List<ResolvedType> of = of();
-        for (ResolvedType resolvedType : of)
+        for (ResolvedType resolvedType : of())
         {
-            result.add(resolvedType.overwriteFacets(from));
+            ResolvedType overwriteFacets = resolvedType.overwriteFacets(from);
+            if(overwriteFacets instanceof BaseType)
+            {
+                ((BaseType) overwriteFacets).setTypeName(resolvedType.getTypeName());
+            }
+            result.add(overwriteFacets);
         }
         return new UnionResolvedType(from, result, customFacets.overwriteFacets(from));
     }

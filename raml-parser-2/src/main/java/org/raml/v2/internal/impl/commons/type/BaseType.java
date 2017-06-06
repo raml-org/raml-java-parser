@@ -94,6 +94,10 @@ public abstract class BaseType implements ResolvedType
         return this.getClass().equals(resolvedType.getClass());
     }
 
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
     @Nullable
     @Override
     public String getTypeName()
@@ -133,4 +137,5 @@ public abstract class BaseType implements ResolvedType
             return defaultName;
         }
     }
+
 }
