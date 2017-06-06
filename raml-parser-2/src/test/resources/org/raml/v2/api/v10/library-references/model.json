@@ -147,6 +147,7 @@
               "parentTypes": [],
               "pattern": null,
               "required": true,
+              "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
               "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
               "type": null,
               "xml": null
@@ -154,12 +155,14 @@
             ],
             "pattern": null,
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
             "type": "string",
             "xml": null
            }
           ],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
           "type": "remote",
           "xml": null
@@ -189,6 +192,7 @@
             "name": "array",
             "parentTypes": [],
             "required": true,
+            "toJsonSchema": null,
             "toXmlSchema": null,
             "type": null,
             "xml": null
@@ -198,6 +202,7 @@
            "name": "array",
            "parentTypes": [],
            "required": true,
+           "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{},\"definitions\":{}}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"root\">\n        <complexType>\n            <choice>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </choice>\n        </complexType>\n    </element>\n</schema>\n",
            "type": null,
            "uniqueItems": null,
@@ -205,6 +210,7 @@
           }
          ],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": "array",
          "uniqueItems": null,
@@ -340,6 +346,7 @@
        "parentTypes": [],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": null,
        "xml": null
@@ -347,6 +354,7 @@
      ],
      "pattern": null,
      "required": true,
+     "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
      "type": "string",
      "xml": null

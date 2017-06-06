@@ -95,6 +95,7 @@
          "parentTypes": [],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -102,6 +103,7 @@
        ],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"userId\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "string",
        "xml": null
@@ -154,12 +156,14 @@
          "name": "integer",
          "parentTypes": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"integer\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"integer\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
         }
        ],
        "required": false,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"integer\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"size\">\n        <simpleType>\n            <restriction base=\"integer\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "integer",
        "xml": null
@@ -212,12 +216,14 @@
          "name": "integer",
          "parentTypes": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"integer\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"integer\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
         }
        ],
        "required": false,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"integer\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"page\">\n        <simpleType>\n            <restriction base=\"integer\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "integer",
        "xml": null
@@ -550,6 +556,7 @@
              "parentTypes": [],
              "properties": [],
              "required": true,
+             "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
              "type": null,
              "xml": null
@@ -600,12 +607,14 @@
                 "parentTypes": [],
                 "properties": [],
                 "required": true,
+                "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
                 "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
                 "type": null,
                 "xml": null
                }
               ],
               "required": true,
+              "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
               "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
               "type": "object",
               "xml": null
@@ -655,12 +664,14 @@
                   "parentTypes": [],
                   "properties": [],
                   "required": true,
+                  "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
                   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
                   "type": null,
                   "xml": null
                  }
                 ],
                 "required": true,
+                "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
                 "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
                 "type": "object",
                 "xml": null
@@ -670,6 +681,7 @@
                "name": "Order[]",
                "parentTypes": [],
                "required": true,
+               "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"},\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
                "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
                "type": null,
                "uniqueItems": null,
@@ -677,6 +689,7 @@
               }
              ],
              "required": true,
+             "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"},\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
              "type": "Order[]",
              "uniqueItems": null,
@@ -684,6 +697,7 @@
             }
            ],
            "required": true,
+           "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Orders\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"Orders\":{\"type\":\"object\",\"properties\":{\"orders\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Orders\" type=\"tns:Orders\"/>\n    <complexType name=\"Orders\">\n        <sequence>\n            <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
            "type": "object",
            "xml": null
@@ -734,12 +748,14 @@
               "parentTypes": [],
               "properties": [],
               "required": true,
+              "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
               "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
               "type": null,
               "xml": null
              }
             ],
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
             "type": "object",
             "xml": null
@@ -789,12 +805,14 @@
                 "parentTypes": [],
                 "properties": [],
                 "required": true,
+                "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
                 "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
                 "type": null,
                 "xml": null
                }
               ],
               "required": true,
+              "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
               "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
               "type": "object",
               "xml": null
@@ -804,6 +822,7 @@
              "name": "Order[]",
              "parentTypes": [],
              "required": true,
+             "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"},\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
              "type": null,
              "uniqueItems": null,
@@ -811,6 +830,7 @@
             }
            ],
            "required": true,
+           "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"},\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
            "type": "Order[]",
            "uniqueItems": null,
@@ -818,6 +838,7 @@
           }
          ],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}},\"properties\":{\"orders\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"}}}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Orders\">\n        <complexType>\n            <sequence>\n                <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
          "type": "Orders",
          "xml": null
@@ -904,6 +925,7 @@
        "parentTypes": [],
        "properties": [],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
        "type": null,
        "xml": null
@@ -943,6 +965,7 @@
          "parentTypes": [],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -950,6 +973,7 @@
        ],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"product_id\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "string",
        "xml": null
@@ -990,18 +1014,21 @@
          "name": "integer",
          "parentTypes": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"integer\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"integer\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
         }
        ],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"integer\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"quantity\">\n        <simpleType>\n            <restriction base=\"integer\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "integer",
        "xml": null
       }
      ],
      "required": true,
+     "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
      "type": "object",
      "xml": null
@@ -1043,6 +1070,7 @@
        "parentTypes": [],
        "properties": [],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
        "type": null,
        "xml": null
@@ -1082,6 +1110,7 @@
          "parentTypes": [],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -1089,6 +1118,7 @@
        ],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"order_id\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "string",
        "xml": null
@@ -1126,6 +1156,7 @@
          "parentTypes": [],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -1133,6 +1164,7 @@
        ],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"creation_date\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "string",
        "xml": null
@@ -1181,12 +1213,14 @@
           "parentTypes": [],
           "properties": [],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
           "type": null,
           "xml": null
          }
         ],
         "required": true,
+        "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
         "type": "object",
         "xml": null
@@ -1236,12 +1270,14 @@
             "parentTypes": [],
             "properties": [],
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
             "type": null,
             "xml": null
            }
           ],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
           "type": "object",
           "xml": null
@@ -1251,6 +1287,7 @@
          "name": "ProductItem[]",
          "parentTypes": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"},\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
          "type": null,
          "uniqueItems": null,
@@ -1258,6 +1295,7 @@
         }
        ],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"},\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
        "type": "ProductItem[]",
        "uniqueItems": null,
@@ -1265,6 +1303,7 @@
       }
      ],
      "required": true,
+     "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
      "type": "object",
      "xml": null
@@ -1306,6 +1345,7 @@
        "parentTypes": [],
        "properties": [],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
        "type": null,
        "xml": null
@@ -1356,12 +1396,14 @@
           "parentTypes": [],
           "properties": [],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
           "type": null,
           "xml": null
          }
         ],
         "required": true,
+        "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
         "type": "object",
         "xml": null
@@ -1411,12 +1453,14 @@
             "parentTypes": [],
             "properties": [],
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
             "type": null,
             "xml": null
            }
           ],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
           "type": "object",
           "xml": null
@@ -1426,6 +1470,7 @@
          "name": "Order[]",
          "parentTypes": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"},\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
          "type": null,
          "uniqueItems": null,
@@ -1433,6 +1478,7 @@
         }
        ],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"},\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
        "type": "Order[]",
        "uniqueItems": null,
@@ -1440,6 +1486,7 @@
       }
      ],
      "required": true,
+     "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Orders\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"Orders\":{\"type\":\"object\",\"properties\":{\"orders\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/Order\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Orders\" type=\"tns:Orders\"/>\n    <complexType name=\"Orders\">\n        <sequence>\n            <element maxOccurs=\"unbounded\" name=\"Order\" type=\"tns:Order\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
      "type": "object",
      "xml": null
@@ -1500,6 +1547,7 @@
          "parentTypes": [],
          "properties": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -1539,6 +1587,7 @@
            "parentTypes": [],
            "pattern": null,
            "required": true,
+           "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
            "type": null,
            "xml": null
@@ -1546,6 +1595,7 @@
          ],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"order_id\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": "string",
          "xml": null
@@ -1583,6 +1633,7 @@
            "parentTypes": [],
            "pattern": null,
            "required": true,
+           "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
            "type": null,
            "xml": null
@@ -1590,6 +1641,7 @@
          ],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"creation_date\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": "string",
          "xml": null
@@ -1638,12 +1690,14 @@
             "parentTypes": [],
             "properties": [],
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
             "type": null,
             "xml": null
            }
           ],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
           "type": "object",
           "xml": null
@@ -1693,12 +1747,14 @@
               "parentTypes": [],
               "properties": [],
               "required": true,
+              "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
               "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
               "type": null,
               "xml": null
              }
             ],
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
             "type": "object",
             "xml": null
@@ -1708,6 +1764,7 @@
            "name": "ProductItem[]",
            "parentTypes": [],
            "required": true,
+           "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"},\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
            "type": null,
            "uniqueItems": null,
@@ -1715,6 +1772,7 @@
           }
          ],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"},\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
          "type": "ProductItem[]",
          "uniqueItems": null,
@@ -1722,6 +1780,7 @@
         }
        ],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Order\",\"definitions\":{\"Order\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Order\" type=\"tns:Order\"/>\n    <complexType name=\"Order\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
        "type": "object",
        "xml": null
@@ -1761,6 +1820,7 @@
          "parentTypes": [],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -1768,6 +1828,7 @@
        ],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"order_id\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "string",
        "xml": null
@@ -1805,6 +1866,7 @@
          "parentTypes": [],
          "pattern": null,
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": null,
          "xml": null
@@ -1812,6 +1874,7 @@
        ],
        "pattern": null,
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"definitions\":{}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"creation_date\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
        "type": "string",
        "xml": null
@@ -1860,12 +1923,14 @@
           "parentTypes": [],
           "properties": [],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
           "type": null,
           "xml": null
          }
         ],
         "required": true,
+        "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
         "type": "object",
         "xml": null
@@ -1915,12 +1980,14 @@
             "parentTypes": [],
             "properties": [],
             "required": true,
+            "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"definitions\":{},\"properties\":{}}",
             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
             "type": null,
             "xml": null
            }
           ],
           "required": true,
+          "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\",\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
           "type": "object",
           "xml": null
@@ -1930,6 +1997,7 @@
          "name": "ProductItem[]",
          "parentTypes": [],
          "required": true,
+         "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"},\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
          "type": null,
          "uniqueItems": null,
@@ -1937,6 +2005,7 @@
         }
        ],
        "required": true,
+       "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"},\"definitions\":{\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
        "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
        "type": "ProductItem[]",
        "uniqueItems": null,
@@ -1944,6 +2013,7 @@
       }
      ],
      "required": true,
+     "toJsonSchema": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"$ref\":\"#/definitions/Inherit\",\"definitions\":{\"Inherit\":{\"type\":\"object\",\"properties\":{\"creation_date\":{\"type\":\"string\"},\"order_id\":{\"type\":\"string\"},\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"$ref\":\"#/definitions/ProductItem\"}}}},\"ProductItem\":{\"type\":\"object\",\"properties\":{\"quantity\":{\"type\":\"integer\"},\"product_id\":{\"type\":\"string\"}}}}}",
      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Inherit\" type=\"tns:Inherit\"/>\n    <complexType name=\"Inherit\">\n        <sequence>\n            <element name=\"order_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"creation_date\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element maxOccurs=\"unbounded\" name=\"ProductItem\" type=\"tns:ProductItem\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n    <complexType name=\"ProductItem\">\n        <sequence>\n            <element name=\"product_id\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"quantity\">\n                <simpleType>\n                    <restriction base=\"integer\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
      "type": "Order",
      "xml": null

@@ -70,6 +70,7 @@
            "parentTypes": [],
            "required": true,
            "schemaContent": null,
+           "toJsonSchema": null,
            "toXmlSchema": null,
            "type": null,
            "xml": null
@@ -77,6 +78,7 @@
          ],
          "required": true,
          "schemaContent": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+         "toJsonSchema": null,
          "toXmlSchema": null,
          "type": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
          "xml": null
@@ -84,6 +86,7 @@
        ],
        "required": true,
        "schemaContent": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+       "toJsonSchema": null,
        "toXmlSchema": null,
        "type": "UserJson",
        "xml": null
@@ -150,6 +153,7 @@
      "parentTypes": [],
      "required": true,
      "schemaContent": null,
+     "toJsonSchema": null,
      "toXmlSchema": null,
      "type": null,
      "xml": null
@@ -157,6 +161,7 @@
    ],
    "required": true,
    "schemaContent": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
+   "toJsonSchema": null,
    "toXmlSchema": null,
    "type": "{\n \"$schema\": \"http://json-schema.org/draft-04/schema\",\n \"type\": \"object\",\n \"properties\": {\n   \"firstname\":  { \"type\": \"string\" },\n   \"lastname\":  { \"type\": \"string\" },\n   \"age\":  { \"type\": \"integer\" }\n },\n \"required\": [ \"firstname\", \"lastname\" ]\n}\n",
    "xml": null
