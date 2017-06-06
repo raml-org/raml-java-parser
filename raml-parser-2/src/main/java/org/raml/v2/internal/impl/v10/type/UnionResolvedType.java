@@ -81,7 +81,7 @@ public class UnionResolvedType extends BaseType
         for (ResolvedType resolvedType : of())
         {
             ResolvedType overwriteFacets = resolvedType.overwriteFacets(from);
-            if(overwriteFacets instanceof BaseType)
+            if (overwriteFacets instanceof BaseType)
             {
                 ((BaseType) overwriteFacets).setTypeName(resolvedType.getTypeName());
             }

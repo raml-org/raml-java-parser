@@ -94,7 +94,8 @@ public abstract class BaseType implements ResolvedType
         return this.getClass().equals(resolvedType.getClass());
     }
 
-    public void setTypeName(String typeName) {
+    public void setTypeName(String typeName)
+    {
         this.typeName = typeName;
     }
 
