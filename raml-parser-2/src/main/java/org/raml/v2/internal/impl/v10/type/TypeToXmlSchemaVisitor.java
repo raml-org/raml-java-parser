@@ -54,7 +54,7 @@ import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.utils.xml.XMLChar;
 
-public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
+public class TypeToXmlSchemaVisitor implements TypeVisitor<XmlSchemaType>
 {
     public static final long UNBOUNDED = Long.MAX_VALUE;
     private static final String DEFAULT_NAMESPACE = "http://validationnamespace.raml.org";
@@ -63,7 +63,7 @@ public class TypeToSchemaVisitor implements TypeVisitor<XmlSchemaType>
     private Stack<XmlSchemaElement> currentElement;
     private Map<String, XmlSchemaType> types;
 
-    public TypeToSchemaVisitor()
+    public TypeToXmlSchemaVisitor()
     {
         this.currentElement = new Stack<>();
         this.types = new HashMap<>();

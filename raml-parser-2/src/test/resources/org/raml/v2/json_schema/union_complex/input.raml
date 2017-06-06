@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: simple object
+types:
+  root:
+    properties:
+      value: cat | dog
+  cat:
+    type: object
+    properties:
+      name: string
+      color: string
+  dog:
+    type: object
+    properties:
+      name: string
+      fangs: string
