@@ -37,12 +37,27 @@ public class InflectorTestCase
     public void singularizer()
     {
         assertThat(singularize("users"), is("user"));
+        assertThat(singularize("user"), is("user"));
+        assertThat(singularize("statuses"), is("status"));
+        assertThat(singularize("status"), is("status"));
+        assertThat(singularize("buses"), is("bus"));
+        assertThat(singularize("bus"), is("bus"));
+        assertThat(singularize("analysis"), is("analysis"));
+        assertThat(singularize("analyses"), is("analysis"));
     }
 
     @Test
     public void pluralizer()
     {
         assertThat(pluralize("user"), is("users"));
+        assertThat(pluralize("users"), is("users"));
+        assertThat(pluralize("status"), is("statuses"));
+        assertThat(pluralize("statuses"), is("statuses"));
+        assertThat(pluralize("bus"), is("buses"));
+        assertThat(pluralize("buses"), is("buses"));
+        assertThat(pluralize("analysis"), is("analyses"));
+        assertThat(pluralize("analyses"), is("analyses"));
+
     }
 
     @Test
