@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: simple object
+types:
+  invoice:
+    properties:
+      amount:
+        type: number
+  root:
+    type: invoice
+    properties:
+      id: integer
+
