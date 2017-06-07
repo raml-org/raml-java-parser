@@ -58,6 +58,7 @@ public class InflectorBase
         addSingular("(n)ews$", "$1ews");
         addSingular("([ti])a$", "$1um");
         addSingular("((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$", "$1sis");
+        addSingular("((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)sis$", "$1sis");
         addSingular("(^analy)ses$", "$1sis");
         addSingular("([^f])ves$", "$1fe");
         addSingular("(hive)s$", "$1");
@@ -69,11 +70,14 @@ public class InflectorBase
         addSingular("(x|ch|ss|sh)es$", "$1");
         addSingular("([m|l])ice$", "$1ouse");
         addSingular("(bus)es$", "$1");
+        addSingular("(bus)$", "$1");
         addSingular("(o)es$", "$1");
         addSingular("(shoe)s$", "$1");
         addSingular("(cris|ax|test)es$", "$1is");
+        addSingular("(cris|ax|test)is$", "$1is");
         addSingular("(octop|vir)i$", "$1us");
         addSingular("(alias|status)es$", "$1");
+        addSingular("(alias|status)$", "$1");
         addSingular("^(ox)en", "$1");
         addSingular("(vert|ind)ices$", "$1ex");
         addSingular("(matr)ices$", "$1ix");
