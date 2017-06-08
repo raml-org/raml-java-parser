@@ -61,7 +61,7 @@ public class ApiModelUnitTestCase
                    "            </element>\n" +
                    "        </sequence>\n" +
                    "    </complexType>\n" +
-                   "</schema>"))
+                   "</schema>"));
 
     }
 

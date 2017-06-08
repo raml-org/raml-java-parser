@@ -22,4 +22,11 @@ public interface ValidationResult
 
     String getPath();
 
+    int getStartLine();
+
+    int getEndLine();
+
+    int getStartColumn();
+
+    int getEndColumn();
 }
