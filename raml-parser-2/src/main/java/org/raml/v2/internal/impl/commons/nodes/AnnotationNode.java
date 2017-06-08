@@ -61,7 +61,12 @@ public class AnnotationNode extends KeyValueNodeImpl implements OverlayableNode
     @Override
     public AnnotationReferenceNode getKey()
     {
-        return (AnnotationReferenceNode) super.getKey();
+        AnnotationReferenceNode node = null;
+        if (super.getKey() instanceof AnnotationReferenceNode)
+        {
+            node = (AnnotationReferenceNode) super.getKey();
+        }
+        return node;
     }
 
     public AnnotationTarget getTarget()
