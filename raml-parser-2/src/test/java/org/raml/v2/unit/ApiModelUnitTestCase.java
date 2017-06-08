@@ -63,9 +63,7 @@ public class ApiModelUnitTestCase
                    "    </complexType>\n" +
                    "</schema>"));
 
-
     }
-
 
     @Test
     public void shouldGenerateXsdSchemaOnRecursiveTypes()
