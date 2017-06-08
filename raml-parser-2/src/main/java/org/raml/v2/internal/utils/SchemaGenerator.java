@@ -76,7 +76,7 @@ public class SchemaGenerator
     private static String resolveResourceUriIfIncluded(JsonSchemaExternalType jsonTypeDefinition)
     {
         // Getting the type holding the schema
-        TypeExpressionNode typeDeclarationNode = jsonTypeDefinition.getTypeDeclarationNode();
+        TypeExpressionNode typeDeclarationNode = jsonTypeDefinition.getTypeExpressionNode();
 
         if (typeDeclarationNode instanceof ExternalSchemaTypeExpressionNode)
         {

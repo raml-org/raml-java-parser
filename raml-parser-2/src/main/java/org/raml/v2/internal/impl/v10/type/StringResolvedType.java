@@ -53,12 +53,13 @@ public class StringResolvedType extends XmlFacetsCapableType
 
     public StringResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, PATTERN_KEY_NAME));
+        super(getTypeName(from, TypeId.STRING.getType()), from, new ResolvedCustomFacets(MIN_LENGTH_KEY_NAME, MAX_LENGTH_KEY_NAME, PATTERN_KEY_NAME));
     }
 
-    public StringResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums, ResolvedCustomFacets customFacets)
+    public StringResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, Integer minLength, Integer maxLength, String pattern, List<String> enums,
+            ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
         this.minLength = minLength;
         this.maxLength = maxLength;
         this.pattern = pattern;
@@ -67,7 +68,7 @@ public class StringResolvedType extends XmlFacetsCapableType
 
     protected StringResolvedType copy()
     {
-        return new StringResolvedType(getTypeDeclarationNode(), getXmlFacets(), minLength, maxLength, pattern, enums, customFacets.copy());
+        return new StringResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets(), minLength, maxLength, pattern, enums, customFacets.copy());
     }
 
 
@@ -137,7 +138,7 @@ public class StringResolvedType extends XmlFacetsCapableType
         final ErrorNode errorNode = validateFacets();
         if (errorNode != null)
         {
-            getTypeDeclarationNode().replaceWith(errorNode);
+            getTypeExpressionNode().replaceWith(errorNode);
         }
     }
 

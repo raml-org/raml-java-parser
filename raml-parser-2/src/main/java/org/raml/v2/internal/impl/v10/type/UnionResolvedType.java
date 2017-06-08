@@ -37,7 +37,13 @@ public class UnionResolvedType extends BaseType
 
     public UnionResolvedType(TypeExpressionNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
     {
-        super(typeNode, customFacets);
+        this(getTypeName(typeNode, "Union"), typeNode, of, customFacets);
+    }
+
+
+    public UnionResolvedType(String name, TypeExpressionNode typeNode, List<ResolvedType> of, ResolvedCustomFacets customFacets)
+    {
+        super(name, typeNode, customFacets);
         this.of = of;
     }
 
@@ -48,7 +54,7 @@ public class UnionResolvedType extends BaseType
 
     protected UnionResolvedType copy()
     {
-        return new UnionResolvedType(getTypeDeclarationNode(), new ArrayList<>(of), customFacets.copy());
+        return new UnionResolvedType(getTypeName(), getTypeExpressionNode(), new ArrayList<>(of), customFacets.copy());
     }
 
     @Override
@@ -112,7 +118,7 @@ public class UnionResolvedType extends BaseType
     @Override
     public void validateState()
     {
-        final Node parent = getTypeDeclarationNode().getParent();
+        final Node parent = getTypeExpressionNode().getParent();
         for (ResolvedType resolvedType : of)
         {
             if (parent.findDescendantsWith(ErrorNode.class).isEmpty())
@@ -125,7 +131,7 @@ public class UnionResolvedType extends BaseType
         {
             if (resolvedType instanceof SchemaBasedResolvedType)
             {
-                getTypeDeclarationNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(resolvedType.getTypeName(), "union type cannot be of an external type"));
+                getTypeExpressionNode().replaceWith(RamlErrorNodeFactory.createInvalidFacetState(resolvedType.getTypeName(), "union type cannot be of an external type"));
             }
         }
     }
@@ -143,6 +149,6 @@ public class UnionResolvedType extends BaseType
             }
         }
 
-        return new UnionResolvedType(getTypeDeclarationNode(), combination, customFacets);
+        return new UnionResolvedType(getTypeExpressionNode(), combination, customFacets);
     }
 }

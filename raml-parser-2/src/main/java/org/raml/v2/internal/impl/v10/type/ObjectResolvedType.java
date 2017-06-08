@@ -55,7 +55,8 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     private Map<String, PropertyFacets> properties = new LinkedHashMap<>();
 
-    public ObjectResolvedType(TypeExpressionNode declarationNode,
+    public ObjectResolvedType(
+            String typeName, TypeExpressionNode declarationNode,
             XmlFacets xmlFacets,
             Integer minProperties,
             Integer maxProperties,
@@ -65,7 +66,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
             Map<String, PropertyFacets> properties,
             ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
         this.minProperties = minProperties;
         this.maxProperties = maxProperties;
         this.additionalProperties = additionalProperties;
@@ -76,13 +77,13 @@ public class ObjectResolvedType extends XmlFacetsCapableType
 
     public ObjectResolvedType(TypeExpressionNode from)
     {
-        super(from,
+        super(getTypeName(from, TypeId.OBJECT.getType()), from,
                 new ResolvedCustomFacets(MIN_PROPERTIES_KEY_NAME, MAX_PROPERTIES_KEY_NAME, ADDITIONAL_PROPERTIES_KEY_NAME, DISCRIMINATOR_KEY_NAME, DISCRIMINATOR_VALUE_KEY_NAME, PROPERTIES_KEY_NAME));
     }
 
     protected ObjectResolvedType copy()
     {
-        return new ObjectResolvedType(getTypeDeclarationNode(),
+        return new ObjectResolvedType(getTypeName(), getTypeExpressionNode(),
                 getXmlFacets().copy(),
                 minProperties,
                 maxProperties,
@@ -242,7 +243,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
         final ErrorNode errorNode = validateFacets();
         if (errorNode != null)
         {
-            getTypeDeclarationNode().replaceWith(errorNode);
+            getTypeExpressionNode().replaceWith(errorNode);
         }
     }
 

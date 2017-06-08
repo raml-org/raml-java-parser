@@ -26,19 +26,19 @@ public class AnyResolvedType extends XmlFacetsCapableType
 {
 
 
-    public AnyResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public AnyResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
     }
 
     public AnyResolvedType(TypeExpressionNode declarationNode)
     {
-        super(declarationNode, new ResolvedCustomFacets());
+        super(getTypeName(declarationNode, TypeId.ANY.getType()), declarationNode, new ResolvedCustomFacets());
     }
 
     protected AnyResolvedType copy()
     {
-        return new AnyResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+        return new AnyResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override

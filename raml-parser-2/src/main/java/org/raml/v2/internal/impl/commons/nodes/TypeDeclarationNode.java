@@ -76,7 +76,7 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
         {
             if (resolvingType)
             {
-                this.replaceWith(RamlErrorNodeFactory.createRecurrentTypeDefinition(getTypeName()));
+                this.replaceWith(RamlErrorNodeFactory.createRecurrentTypeDefinition(getTypeExpressionText()));
                 return null;
             }
             else
@@ -166,14 +166,7 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
     @Nullable
     public String getTypeName()
     {
-        if (getParent() instanceof TypeDeclarationField)
-        {
-            return ((SimpleTypeNode) ((TypeDeclarationField) getParent()).getKey()).getLiteralValue();
-        }
-        else
-        {
-            return getResolvedType() != null ? getResolvedType().getBuiltinTypeName() : null;
-        }
+        return getResolvedType() != null ? getResolvedType().getTypeName() : null;
     }
 
     @Nonnull
@@ -193,7 +186,18 @@ public class TypeDeclarationNode extends AbstractObjectNode implements TypeExpre
     @Override
     public String getTypeExpressionText()
     {
-        return getTypeName();
+        if (getParent() instanceof TypeDeclarationField)
+        {
+            return ((SimpleTypeNode) ((TypeDeclarationField) getParent()).getKey()).getLiteralValue();
+        }
+        else if (getSource() instanceof SimpleTypeNode)
+        {
+            return ((SimpleTypeNode) getSource()).getLiteralValue();
+        }
+        else
+        {
+            return getResolvedType().getBuiltinTypeName();
+        }
     }
 
     public List<FacetNode> getFacets()

@@ -18,9 +18,11 @@ package org.raml.v2.internal.impl.commons.type;
 import java.util.List;
 
 import org.raml.v2.internal.impl.commons.nodes.FacetNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
+import org.raml.yagi.framework.util.NodeUtils;
 
 public abstract class AbstractExternalType extends BaseType implements SchemaBasedResolvedType
 {
@@ -31,7 +33,7 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
 
     public AbstractExternalType(TypeExpressionNode from, String schemaValue, String schemaPath, String internalFragment)
     {
-        super(from, new ResolvedCustomFacets());
+        super(getExternalTypeName(from), from, new ResolvedCustomFacets());
         this.schemaValue = schemaValue;
         this.schemaPath = schemaPath;
         this.internalFragment = internalFragment;
@@ -39,7 +41,10 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
 
     public AbstractExternalType(AbstractExternalType externalType)
     {
-        this(externalType.getTypeDeclarationNode(), externalType.schemaValue, externalType.schemaPath, externalType.internalFragment);
+        super(externalType.getTypeName(), externalType.getTypeExpressionNode(), new ResolvedCustomFacets());
+        this.schemaValue = externalType.schemaValue;
+        this.schemaPath = externalType.schemaPath;
+        this.internalFragment = externalType.internalFragment;
     }
 
     protected abstract AbstractExternalType copy();
@@ -85,5 +90,18 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
     public String getInternalFragment()
     {
         return internalFragment;
+    }
+
+    public static String getExternalTypeName(TypeExpressionNode node)
+    {
+        TypeDeclarationField ancestor = NodeUtils.getAncestor(node, TypeDeclarationField.class);
+        if (ancestor != null)
+        {
+            return ancestor.getName();
+        }
+        else
+        {
+            return "Schema";
+        }
     }
 }

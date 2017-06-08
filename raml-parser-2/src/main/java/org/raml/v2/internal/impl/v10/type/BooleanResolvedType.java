@@ -27,7 +27,6 @@ import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.BooleanNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
 
 import java.util.ArrayList;
@@ -38,19 +37,19 @@ public class BooleanResolvedType extends XmlFacetsCapableType
 
     private List<Boolean> enums = new ArrayList<>();
 
-    public BooleanResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
+    public BooleanResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
     }
 
     public BooleanResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets());
+        super(getTypeName(from, TypeId.BOOLEAN.getType()), from, new ResolvedCustomFacets());
     }
 
     protected BooleanResolvedType copy()
     {
-        return new BooleanResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), customFacets.copy());
+        return new BooleanResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), customFacets.copy());
     }
 
     @Override

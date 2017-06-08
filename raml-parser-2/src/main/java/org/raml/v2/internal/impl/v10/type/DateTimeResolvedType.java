@@ -33,20 +33,20 @@ public class DateTimeResolvedType extends XmlFacetsCapableType
 
     private String format;
 
-    public DateTimeResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, String format, ResolvedCustomFacets customFacets)
+    public DateTimeResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, String format, ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
         this.format = format;
     }
 
     public DateTimeResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets(FORMAT_KEY_NAME));
+        super(getTypeName(from, TypeId.DATE_TIME.getType()), from, new ResolvedCustomFacets(FORMAT_KEY_NAME));
     }
 
     protected DateTimeResolvedType copy()
     {
-        return new DateTimeResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), format, customFacets.copy());
+        return new DateTimeResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), format, customFacets.copy());
     }
 
     @Override

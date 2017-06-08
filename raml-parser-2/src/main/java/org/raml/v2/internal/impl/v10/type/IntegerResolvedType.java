@@ -34,15 +34,15 @@ public class IntegerResolvedType extends NumberResolvedType
         super(from);
     }
 
-    public IntegerResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets copy)
+    public IntegerResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets copy)
     {
-        super(declarationNode, xmlFacets, minimum, maximum, multiple, format, copy);
+        super(typeName, declarationNode, xmlFacets, minimum, maximum, multiple, format, copy);
     }
 
     @Override
     public NumberResolvedType copy()
     {
-        return new IntegerResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), getMinimum(), getMaximum(), getMultiple(), getFormat(), customFacets.copy());
+        return new IntegerResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), getMinimum(), getMaximum(), getMultiple(), getFormat(), customFacets.copy());
     }
 
     @Override

@@ -55,12 +55,13 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
     public NumberResolvedType(TypeExpressionNode from)
     {
-        super(from, new ResolvedCustomFacets(MINIMUM_KEY_NAME, MAXIMUM_KEY_NAME, MULTIPLE_OF_KEY_NAME, FORMAT_KEY_NAME));
+        super(getTypeName(from, TypeId.NUMBER.getType()), from, new ResolvedCustomFacets(MINIMUM_KEY_NAME, MAXIMUM_KEY_NAME, MULTIPLE_OF_KEY_NAME, FORMAT_KEY_NAME));
     }
 
-    public NumberResolvedType(TypeExpressionNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format, ResolvedCustomFacets customFacets)
+    public NumberResolvedType(String typeName, TypeExpressionNode declarationNode, XmlFacets xmlFacets, Number minimum, Number maximum, Number multiple, String format,
+            ResolvedCustomFacets customFacets)
     {
-        super(declarationNode, xmlFacets, customFacets);
+        super(typeName, declarationNode, xmlFacets, customFacets);
         this.minimum = minimum;
         this.maximum = maximum;
         this.multiple = multiple;
@@ -69,7 +70,7 @@ public class NumberResolvedType extends XmlFacetsCapableType
 
     public NumberResolvedType copy()
     {
-        return new NumberResolvedType(getTypeDeclarationNode(), getXmlFacets().copy(), minimum, maximum, multiple, format, customFacets.copy());
+        return new NumberResolvedType(getTypeName(), getTypeExpressionNode(), getXmlFacets().copy(), minimum, maximum, multiple, format, customFacets.copy());
     }
 
     @Override
@@ -146,7 +147,7 @@ public class NumberResolvedType extends XmlFacetsCapableType
         final ErrorNode errorNode = validateFacets();
         if (errorNode != null)
         {
-            getTypeDeclarationNode().replaceWith(errorNode);
+            getTypeExpressionNode().replaceWith(errorNode);
         }
     }
 
