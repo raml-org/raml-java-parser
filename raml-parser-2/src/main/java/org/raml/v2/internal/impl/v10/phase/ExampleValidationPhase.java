@@ -45,6 +45,7 @@ import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.NullNodeImpl;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
@@ -93,7 +94,12 @@ public class ExampleValidationPhase implements Phase
     public Node validate(TypeDeclarationNode type, String exampleValue)
     {
         Node exampleValueNode = new StringNodeImpl(exampleValue);
-        if (!(type.getResolvedType() instanceof StringResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
+
+        if (exampleValue == null)
+        {
+            exampleValueNode = new NullNodeImpl();
+        }
+        else if (!(type.getResolvedType() instanceof StringResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
         {
             // parse as yaml except for string, json and xml types
             exampleValueNode = NodeParser.parse(resourceLoader, "", exampleValue);

@@ -42,6 +42,16 @@ public class ApiModelUnitTestCase
     }
 
     @Test
+    public void testTypeValidationWithNullValue() {
+        URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/validation.raml");
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(savedRamlLocation.toString());
+        TypeDeclaration typeDeclaration = ramlModelResult.getApiV10().resources().get(0).methods().get(0).body().get(0);
+        List<ValidationResult> validate = typeDeclaration.validate(null);
+        assertThat(validate.get(0).getMessage(), is("Invalid type Null, expected Object"));
+    }
+
+
+    @Test
     public void schemaShouldNotAddAnyWhenAdditionalPropertiesFalse()
     {
         URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/xml-schema.raml");
