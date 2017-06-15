@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://raml.org/subdir2/user"
+        targetNamespace="http://raml.org/subdir2/user"
+        xmlns:person="http://raml.org/subdir2/person"
+        version="1.0"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <import namespace="http://raml.org/subdir2/person" schemaLocation="person.xsd" />
+
+    <complexType name="User">
+        <sequence>
+            <element name="Id" type="string" minOccurs="0" />
+            <element name="Gender" type="person:Gender" minOccurs="0" />
+            <element name="EmailAddresses" type="person:EmailAddresses" minOccurs="0" />
+        </sequence>
+    </complexType>
+</schema>
+
+

@@ -42,7 +42,8 @@ public class ApiModelUnitTestCase
     }
 
     @Test
-    public void testTypeValidationWithNullValue() {
+    public void testTypeValidationWithNullValue()
+    {
         URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/validation.raml");
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(savedRamlLocation.toString());
         TypeDeclaration typeDeclaration = ramlModelResult.getApiV10().resources().get(0).methods().get(0).body().get(0);
