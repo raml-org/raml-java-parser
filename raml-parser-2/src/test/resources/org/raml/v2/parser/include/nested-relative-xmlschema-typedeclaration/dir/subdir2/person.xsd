@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://raml.org/subdir2/person"
+        targetNamespace="http://raml.org/subdir2/person"
+        version="1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <simpleType name="Gender">
+        <restriction base="xs:string">
+            <enumeration value="FE">
+                <annotation>
+                    <documentation>Female</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="MA">
+                <annotation>
+                    <documentation>Male</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+
+    <complexType name="EmailAddresses">
+        <sequence>
+            <element name="EmailAddress" type="tns:EmailAddress" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="EmailAddress">
+        <sequence>
+            <element name="EmailAddress" type="xs:string" minOccurs="0" />
+        </sequence>
+    </complexType>
+
+
+</schema>

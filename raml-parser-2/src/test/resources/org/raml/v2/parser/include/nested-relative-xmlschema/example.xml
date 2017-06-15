@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns1:Request xmlns:tns1="http://raml.org/subdir1/request"
+              xmlns:tns2="http://raml.org/subdir2/message"
+              xmlns:tns3="http://raml.org/subdir2/user"
+              xmlns:tns4="http://raml.org/subdir2/person">
+    <tns1:Header>
+        <tns2:User>
+            <tns3:Id>ramluserid</tns3:Id>
+            <tns3:Gender>MA</tns3:Gender>
+            <tns3:EmailAddresses>
+                <tns4:EmailAddress>
+                    <tns4:EmailAddress>user@raml.org</tns4:EmailAddress>
+                </tns4:EmailAddress>
+            </tns3:EmailAddresses>
+        </tns2:User>
+    </tns1:Header>
+    <tns1:Payload>
+        <tns2:Content>This is the content</tns2:Content>
+        <tns2:Type>Enum3</tns2:Type>
+    </tns1:Payload>
+</tns1:Request>

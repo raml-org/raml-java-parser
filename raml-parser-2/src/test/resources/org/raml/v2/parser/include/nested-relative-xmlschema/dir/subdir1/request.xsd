@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://raml.org/subdir1/request"
+           xmlns:tns="http://raml.org/subdir1/request"
+           xmlns:message="http://raml.org/subdir2/message"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://raml.org/subdir2/message" schemaLocation="../subdir2/message.xsd" />
+
+    <xs:element name="Request">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Header" type="message:Header" />
+                <xs:element name="Payload" type="message:Payload" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

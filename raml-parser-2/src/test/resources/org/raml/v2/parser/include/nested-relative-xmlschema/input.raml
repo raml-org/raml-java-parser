@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: testXML
+version: 1.0
+
+/api/request:
+  post:
+    body:
+      application/xml:
+        schema: !include dir/subdir1/request.xsd
+        example: !include example.xml

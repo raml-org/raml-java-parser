@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -34,6 +35,7 @@ import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
+import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
 import org.raml.v2.internal.utils.xml.XsdResourceResolver;
@@ -42,11 +44,12 @@ import org.xml.sax.SAXException;
 public class SchemaGenerator
 {
 
-    public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType schemaNode) throws SAXException
+    public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType xmlTypeDefinition) throws SAXException
     {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        factory.setResourceResolver(new XsdResourceResolver(resourceLoader, schemaNode.getSchemaPath()));
-        return factory.newSchema(new StreamSource(new StringReader(schemaNode.getSchemaValue())));
+        factory.setResourceResolver(new XsdResourceResolver(resourceLoader, xmlTypeDefinition.getSchemaPath()));
+        String includedResourceUri = resolveResourceUriIfIncluded(xmlTypeDefinition);
+        return factory.newSchema(new StreamSource(new StringReader(xmlTypeDefinition.getSchemaValue()), includedResourceUri));
     }
 
     public static JsonSchema generateJsonSchema(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException
@@ -73,10 +76,11 @@ public class SchemaGenerator
         }
     }
 
-    private static String resolveResourceUriIfIncluded(JsonSchemaExternalType jsonTypeDefinition)
+    @Nullable
+    private static String resolveResourceUriIfIncluded(ResolvedType typeDefinition)
     {
         // Getting the type holding the schema
-        TypeExpressionNode typeDeclarationNode = jsonTypeDefinition.getTypeExpressionNode();
+        TypeExpressionNode typeDeclarationNode = typeDefinition.getTypeExpressionNode();
 
         if (typeDeclarationNode instanceof ExternalSchemaTypeExpressionNode)
         {

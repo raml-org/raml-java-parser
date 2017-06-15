@@ -1,0 +1,102 @@
+RamlDocumentNode (Start: 11 , End: 216, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 25, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 25, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 25, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "testXML" (Start: 18 , End: 25, On: input.raml)
+    KeyValueNodeImpl (Start: 26 , End: 38, On: input.raml)
+        SYStringNode: "version" (Start: 26 , End: 33, On: input.raml)
+        ObjectNodeImpl (Start: 35 , End: 38, On: input.raml, Source: SYFloatingNode)
+            KeyValueNodeImpl (Start: -1 , End: 38)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYFloatingNode: 1.0 (Start: 35 , End: 38, On: input.raml, Source: SYFloatingNode)
+    TypesNode (Start: 40 , End: 102, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 40 , End: 45, On: input.raml)
+        SYObjectNode (Start: 49 , End: 102, On: input.raml)
+            TypeDeclarationField (Start: 49 , End: 102, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "Request" (Start: 49 , End: 56, On: input.raml)
+                TypeDeclarationNode (Start: 62 , End: 102, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 62 , End: 100, On: input.raml)
+                        SYStringNode: "type" (Start: 62 , End: 66, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://raml.org/subdir1/request"
+           xmlns:tns="http://raml.org/subdir1/request"
+           xmlns:message="http://raml.org/subdir2/message"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://raml.org/subdir2/message" schemaLocation="../subdir2/message.xsd" />
+
+    <xs:element name="Request">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Header" type="message:Header" />
+                <xs:element name="Payload" type="message:Payload" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>" (Start: 68 , End: 100, On: input.raml, Source: StringNodeImpl)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "Request" (Start: -1 , End: -1, Source: SYStringNode)
+    ResourceNode (Start: 102 , End: 216, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "/api/request" (Start: 102 , End: 114, On: input.raml)
+        SYObjectNode (Start: 118 , End: 216, On: input.raml)
+            MethodNode (Start: 118 , End: 216, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "post" (Start: 118 , End: 122, On: input.raml)
+                SYObjectNode (Start: 128 , End: 216, On: input.raml)
+                    BodyNode (Start: 128 , End: 216, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "body" (Start: 128 , End: 132, On: input.raml)
+                        SYObjectNode (Start: 140 , End: 216, On: input.raml)
+                            KeyValueNodeImpl (Start: 140 , End: 216, On: input.raml)
+                                SYStringNode: "application/xml" (Start: 140 , End: 155, On: input.raml)
+                                TypeDeclarationNode (Start: 165 , End: 216, On: input.raml, Source: SYObjectNode)
+                                    KeyValueNodeImpl (Start: 165 , End: 178, On: input.raml)
+                                        SYStringNode: "type" (Start: 165 , End: 169, On: input.raml)
+                                        NamedTypeExpressionNode Request -> {TypeDeclarationNode RefStart: 62 , RefEnd: 102} (Start: 171 , End: 178, On: input.raml, Source: SYStringNode)
+                                    ExampleDeclarationNode (Start: 187 , End: 216, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYStringNode: "example" (Start: 187 , End: 194, On: input.raml)
+                                        StringNodeImpl: "<?xml version="1.0" encoding="UTF-8"?>
+<tns1:Request xmlns:tns1="http://raml.org/subdir1/request"
+              xmlns:tns2="http://raml.org/subdir2/message"
+              xmlns:tns3="http://raml.org/subdir2/user"
+              xmlns:tns4="http://raml.org/subdir2/person">
+    <tns1:Header>
+        <tns2:User>
+            <tns3:Id>ramluserid</tns3:Id>
+            <tns3:Gender>MA</tns3:Gender>
+            <tns3:EmailAddresses>
+                <tns4:EmailAddress>
+                    <tns4:EmailAddress>user@raml.org</tns4:EmailAddress>
+                </tns4:EmailAddress>
+            </tns3:EmailAddresses>
+        </tns2:User>
+    </tns1:Header>
+    <tns1:Payload>
+        <tns2:Content>This is the content</tns2:Content>
+        <tns2:Type>Enum3</tns2:Type>
+    </tns1:Payload>
+</tns1:Request>" (Start: 196 , End: 216, On: input.raml, Source: SYIncludeNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "application/xml" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "post" (Start: -1 , End: -1, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                ObjectNodeImpl (Start: -1 , End: -1)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                        OverlayableStringNode: "/api/request" (Start: -1 , End: -1, Source: SYStringNode)

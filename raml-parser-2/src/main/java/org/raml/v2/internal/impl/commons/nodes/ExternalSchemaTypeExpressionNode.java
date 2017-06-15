@@ -73,7 +73,7 @@ public class ExternalSchemaTypeExpressionNode extends AbstractStringNode impleme
 
     public boolean isJsonSchema()
     {
-        return SchemaGenerator.isJsonSchema(getSchemaPath());
+        return SchemaGenerator.isJsonSchema(getSchemaValue());
     }
 
     public boolean isXmlSchema()

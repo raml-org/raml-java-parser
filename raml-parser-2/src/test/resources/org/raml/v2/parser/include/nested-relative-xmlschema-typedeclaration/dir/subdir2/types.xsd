@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://raml.org/subdir2/types"
+        targetNamespace="http://raml.org/subdir2/types"
+        version="1.0"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <simpleType name="PayloadType">
+        <restriction base="string">
+            <enumeration value="Enum1">
+                <annotation>
+                    <documentation>Enumeration one</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Enum2">
+                <annotation>
+                    <documentation>Enumeration two</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Enum3">
+                <annotation>
+                    <documentation>Enumeration three</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+
+</schema>
