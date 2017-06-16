@@ -16,7 +16,6 @@
 package org.raml.v2.json_schema;
 
 import org.apache.commons.io.IOUtils;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -29,6 +28,7 @@ import org.raml.v2.internal.impl.v10.type.TypeToJsonSchemaVisitor;
 import org.raml.yagi.framework.nodes.Node;
 import org.xml.sax.SAXException;
 
+import javax.json.JsonObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class TypeToJsonSchemaTest extends TestDataProvider
             if (field.getName().equals("root"))
             {
                 final ResolvedType resolvedType = ((TypeDeclarationNode) field.getValue()).getResolvedType();
-                JSONObject actual = new TypeToJsonSchemaVisitor().transform(resolvedType);
+                JsonObject actual = new TypeToJsonSchemaVisitor().transform(resolvedType);
                 dump = actual.toString();
                 expected = IOUtils.toString(new FileInputStream(expectedOutput));
                 assertTrue(jsonEquals(dump, expected));
