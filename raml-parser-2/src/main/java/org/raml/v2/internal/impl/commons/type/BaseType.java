@@ -24,7 +24,10 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
+import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class BaseType implements ResolvedType
 {
@@ -61,10 +64,29 @@ public abstract class BaseType implements ResolvedType
         {
             from.typeName = ((SimpleTypeNode) ((TypeDeclarationField) node.getParent()).getKey()).getLiteralValue();
         }
-        else if (!(node.getSource() instanceof SimpleTypeNode))
+        else if (!isTypeReference(node))
         {
             from.typeName = getBuiltinTypeName();
         }
+    }
+
+    private boolean isTypeReference(TypeDeclarationNode node)
+    {
+        return (node.getSource() instanceof SimpleTypeNode) || isObjectWithOnlyTypeDecl(node);
+    }
+
+    /**
+     * This method detects the pattern of
+     *  type:
+     *      MyType
+     * So that we can treat this as a reference to the node.
+     */
+    protected boolean isObjectWithOnlyTypeDecl(Node node)
+    {
+        return node instanceof ObjectNode &&
+               node.getChildren().size() == 2 &&
+               // Display Name doesn't affect the type and is always present (if not present by the user injected by a phase).
+               (NodeSelector.selectFrom("type", node) != null && NodeSelector.selectFrom("displayName", node) != null);
     }
 
     @Override
