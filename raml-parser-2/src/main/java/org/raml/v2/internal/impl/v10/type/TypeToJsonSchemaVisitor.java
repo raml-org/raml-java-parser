@@ -15,16 +15,16 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 
-import java.util.List;
+import javax.json.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
-public class TypeToJsonSchemaVisitor implements TypeVisitor<JSONObject>
+public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
 {
 
     private static final String DEFINITIONS = "definitions";
@@ -47,56 +47,59 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JSONObject>
     private static final String SCHEMA = "$schema";
     private static final String SCHEMA_VALUE = "http://json-schema.org/draft-04/schema#";
 
-    private JSONObject definitions;
+    private JsonObjectBuilder definitions;
+    private JsonBuilderFactory factory;
+    private Set<String> definedTypes;
 
 
     public TypeToJsonSchemaVisitor()
     {
-        this.definitions = new JSONObject();
+        this.factory = Json.createBuilderFactory(null);
+        this.definitions = this.factory.createObjectBuilder();
+        this.definedTypes = new HashSet<>();
     }
 
-    public JSONObject transform(final ResolvedType resolvedType)
+    public JsonObject transform(final ResolvedType resolvedType)
     {
-        final JSONObject root = resolvedType.visit(this);
-        root.put(DEFINITIONS, definitions);
-        root.put(SCHEMA, SCHEMA_VALUE);
-        return root;
-    }
-
-    @Override
-    public JSONObject visitString(StringResolvedType stringTypeDefinition)
-    {
-        return new JSONObject().put(TYPE, STRING);
+        final JsonObjectBuilder root = resolvedType.visit(this);
+        root.add(DEFINITIONS, this.definitions);
+        root.add(SCHEMA, SCHEMA_VALUE);
+        return root.build();
     }
 
     @Override
-    public JSONObject visitObject(ObjectResolvedType objectTypeDefinition)
+    public JsonObjectBuilder visitString(StringResolvedType stringTypeDefinition)
     {
-        final JSONObject typeDefinition = new JSONObject();
+        return this.factory.createObjectBuilder().add(TYPE, STRING);
+    }
+
+    @Override
+    public JsonObjectBuilder visitObject(ObjectResolvedType objectTypeDefinition)
+    {
+        final JsonObjectBuilder typeDefinitionBuilder = this.factory.createObjectBuilder();
         String typeName = getTypeName(objectTypeDefinition);
 
         // By default add all named types to definitions to allow fully recursive types.
-        if (typeName != null && !this.definitions.has(typeName))
+        if (typeName != null && !this.definedTypes.contains(typeName))
         {
-            this.definitions.put(typeName, typeDefinition);
-            addPropertiesToJsonObject(objectTypeDefinition, typeDefinition);
+            this.definedTypes.add(typeName);
+            this.definitions.add(typeName, addPropertiesToJsonObject(objectTypeDefinition, typeDefinitionBuilder));
         }
 
         // If the type is inline, then the object is created inline.
         if (typeName == null)
         {
-            return addPropertiesToJsonObject(objectTypeDefinition, new JSONObject());
+            return addPropertiesToJsonObject(objectTypeDefinition, this.factory.createObjectBuilder());
         }
 
-        return new JSONObject()
-                               .put(TYPE, OBJECT)
-                               .put(REF, "#/definitions/" + escapeJsonPointer(typeName));
+        return this.factory.createObjectBuilder()
+                           .add(TYPE, OBJECT)
+                           .add(REF, "#/definitions/" + escapeJsonPointer(typeName));
     }
 
-    private JSONObject addPropertiesToJsonObject(final ObjectResolvedType objectTypeDefinition, JSONObject object)
+    private JsonObjectBuilder addPropertiesToJsonObject(final ObjectResolvedType objectTypeDefinition, JsonObjectBuilder objectBuilder)
     {
-        JSONObject propertiesObject = new JSONObject();
-        object.put(TYPE, OBJECT).put(PROPERTIES, propertiesObject);
+        final JsonObjectBuilder propertiesBuilder = this.factory.createObjectBuilder();
 
         for (String propertyName : objectTypeDefinition.getProperties().keySet())
         {
@@ -104,11 +107,11 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JSONObject>
 
             if (!propertyName.startsWith("/") || !propertyName.endsWith("/"))
             {
-                propertiesObject.put(propertyName, propertyFacets.getValueType().visit(this));
+                propertiesBuilder.add(propertyName, propertyFacets.getValueType().visit(this));
             }
         }
 
-        return object;
+        return objectBuilder.add(TYPE, OBJECT).add(PROPERTIES, propertiesBuilder);
     }
 
     private String escapeJsonPointer(final String typeName)
@@ -132,101 +135,102 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JSONObject>
     }
 
     @Override
-    public JSONObject visitBoolean(BooleanResolvedType booleanTypeDefinition)
+    public JsonObjectBuilder visitBoolean(BooleanResolvedType booleanTypeDefinition)
     {
-        return new JSONObject().put(TYPE, BOOLEAN);
+        return this.factory.createObjectBuilder().add(TYPE, BOOLEAN);
     }
 
     @Override
-    public JSONObject visitInteger(IntegerResolvedType integerTypeDefinition)
+    public JsonObjectBuilder visitInteger(IntegerResolvedType integerTypeDefinition)
     {
-        return new JSONObject().put(TYPE, INTEGER);
+        return this.factory.createObjectBuilder().add(TYPE, INTEGER);
     }
 
     @Override
-    public JSONObject visitNumber(NumberResolvedType numberTypeDefinition)
+    public JsonObjectBuilder visitNumber(NumberResolvedType numberTypeDefinition)
     {
-        return new JSONObject().put(TYPE, NUMBER);
+        return this.factory.createObjectBuilder().add(TYPE, NUMBER);
     }
 
     @Override
-    public JSONObject visitDateTimeOnly(DateTimeOnlyResolvedType dateTimeOnlyTypeDefinition)
+    public JsonObjectBuilder visitDateTimeOnly(DateTimeOnlyResolvedType dateTimeOnlyTypeDefinition)
     {
-        return new JSONObject()
-                               .put(TYPE, STRING)
-                               .put(FORMAT, DATE_TIME);
+        return this.factory.createObjectBuilder()
+                           .add(TYPE, STRING)
+                           .add(FORMAT, DATE_TIME);
     }
 
     @Override
-    public JSONObject visitDate(DateOnlyResolvedType dateOnlyTypeDefinition)
+    public JsonObjectBuilder visitDate(DateOnlyResolvedType dateOnlyTypeDefinition)
     {
-        return new JSONObject()
-                               .put(TYPE, STRING)
-                               .put(FORMAT, DATE_TIME);
+        return this.factory.createObjectBuilder()
+                           .add(TYPE, STRING)
+                           .add(FORMAT, DATE_TIME);
     }
 
     @Override
-    public JSONObject visitDateTime(DateTimeResolvedType dateTimeTypeDefinition)
+    public JsonObjectBuilder visitDateTime(DateTimeResolvedType dateTimeTypeDefinition)
     {
-        return new JSONObject()
-                               .put(TYPE, STRING)
-                               .put(FORMAT, DATE_TIME);
+        return this.factory.createObjectBuilder()
+                           .add(TYPE, STRING)
+                           .add(FORMAT, DATE_TIME);
     }
 
     @Override
-    public JSONObject visitFile(FileResolvedType fileTypeDefinition)
+    public JsonObjectBuilder visitFile(FileResolvedType fileTypeDefinition)
     {
-        return new JSONObject().put(TYPE, STRING);
+        return this.factory.createObjectBuilder().add(TYPE, STRING);
     }
 
     @Override
-    public JSONObject visitNull(NullResolvedType nullTypeDefinition)
+    public JsonObjectBuilder visitNull(NullResolvedType nullTypeDefinition)
     {
-        return new JSONObject().put(TYPE, NULL);
+        return this.factory.createObjectBuilder().add(TYPE, NULL);
     }
 
     @Override
-    public JSONObject visitArray(ArrayResolvedType arrayTypeDefinition)
+    public JsonObjectBuilder visitArray(ArrayResolvedType arrayTypeDefinition)
     {
-        return new JSONObject()
-                               .put(TYPE, ARRAY)
-                               .put(ITEMS, arrayTypeDefinition.getItems().visit(this));
+        return this.factory.createObjectBuilder()
+                           .add(TYPE, ARRAY)
+                           .add(ITEMS, arrayTypeDefinition.getItems().visit(this));
     }
 
     @Override
-    public JSONObject visitUnion(UnionResolvedType unionTypeDefinition)
+    public JsonObjectBuilder visitUnion(UnionResolvedType unionTypeDefinition)
     {
-        final JSONArray unionTypeArray = new JSONArray();
-        final List<ResolvedType> of = unionTypeDefinition.of();
-        for (ResolvedType resolvedType : of)
+        final JsonArrayBuilder unionArrayBuilder = this.factory.createArrayBuilder();
+
+        for (ResolvedType resolvedType : unionTypeDefinition.of())
         {
-            unionTypeArray.put(resolvedType.visit(this));
+            unionArrayBuilder.add(resolvedType.visit(this));
         }
-        return new JSONObject().put(ANY_OF, unionTypeArray);
+
+        return this.factory.createObjectBuilder().add(ANY_OF, unionArrayBuilder);
     }
 
     @Override
-    public JSONObject visitTimeOnly(TimeOnlyResolvedType timeOnlyTypeDefinition)
+    public JsonObjectBuilder visitTimeOnly(TimeOnlyResolvedType timeOnlyTypeDefinition)
     {
-        return new JSONObject().put(TYPE, STRING);
+        return this.factory.createObjectBuilder().add(TYPE, STRING);
     }
 
     @Override
-    public JSONObject visitJson(JsonSchemaExternalType jsonTypeDefinition)
-    {
-        throw new IllegalArgumentException("Unsupported type");
-    }
-
-    @Override
-    public JSONObject visitXml(XmlSchemaExternalType xmlTypeDefinition)
+    public JsonObjectBuilder visitJson(JsonSchemaExternalType jsonTypeDefinition)
     {
         throw new IllegalArgumentException("Unsupported type");
     }
 
     @Override
-    public JSONObject visitAny(AnyResolvedType anyResolvedType)
+    public JsonObjectBuilder visitXml(XmlSchemaExternalType xmlTypeDefinition)
     {
-        return new JSONObject();
+        throw new IllegalArgumentException("Unsupported type");
+    }
+
+    @Override
+    public JsonObjectBuilder visitAny(AnyResolvedType anyResolvedType)
+    {
+        return this.factory.createObjectBuilder();
     }
 
 }
