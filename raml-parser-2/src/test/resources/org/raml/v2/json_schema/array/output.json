@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
@@ -9,7 +8,6 @@
         "value": {
           "type": "array",
           "items": {
-            "type": "object",
             "$ref": "#/definitions/Friend"
           }
         }

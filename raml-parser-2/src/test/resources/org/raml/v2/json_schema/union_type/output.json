@@ -2,11 +2,9 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "anyOf": [
     {
-      "type": "object",
       "$ref": "#/definitions/cat"
     },
     {
-      "type": "object",
       "$ref": "#/definitions/dog"
     }
   ],
