@@ -93,7 +93,6 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
         }
 
         return this.factory.createObjectBuilder()
-                           .add(TYPE, OBJECT)
                            .add(REF, "#/definitions/" + escapeJsonPointer(typeName));
     }
 
