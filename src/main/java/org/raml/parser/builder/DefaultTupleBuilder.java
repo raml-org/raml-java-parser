@@ -22,7 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.SuppressPropertiesBeanIntrospector;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
@@ -38,7 +39,7 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 
 public class DefaultTupleBuilder<K extends Node, V extends Node> implements TupleBuilder<K, V>
 {
-
+    private BeanUtilsBean beanUtilsBean;
     private Map<String, TupleBuilder<?, ?>> builders;
     private NodeBuilder<?> parent;
     private TupleHandler handler;
@@ -49,6 +50,8 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
     {
         builders = new HashMap<String, TupleBuilder<?, ?>>();
         this.setHandler(tupleHandler);
+        beanUtilsBean = new BeanUtilsBean();
+        beanUtilsBean.getPropertyUtils().addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
     }
 
     @Override
@@ -163,7 +166,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
                 {
                     try
                     {
-                        value = PropertyUtils.getProperty(parent, parentAnnotation.property());
+                        value = beanUtilsBean.getPropertyUtils().getProperty(parent, parentAnnotation.property());
                     }
                     catch (IllegalAccessException e)
                     {
