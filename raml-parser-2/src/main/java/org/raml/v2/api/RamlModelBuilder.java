@@ -28,9 +28,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.io.IOUtils;
-import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v08.parameters.Parameter;
@@ -74,7 +72,7 @@ public class RamlModelBuilder
 
     public RamlModelBuilder()
     {
-        this(new DefaultResourceLoader());
+
     }
 
     public RamlModelBuilder(ResourceLoader resourceLoader)
@@ -85,6 +83,10 @@ public class RamlModelBuilder
     @Nonnull
     public RamlModelResult buildApi(String ramlLocation)
     {
+        if (this.resourceLoader == null)
+        {
+            createResourceLoader(new File(ramlLocation).getParent());
+        }
         String content = getRamlContent(ramlLocation);
         if (content == null)
         {
@@ -96,6 +98,10 @@ public class RamlModelBuilder
     @Nonnull
     public RamlModelResult buildApi(File ramlFile)
     {
+        if (this.resourceLoader == null)
+        {
+            createResourceLoader(ramlFile.getParent());
+        }
         String content = getRamlContent(ramlFile);
         if (content == null)
         {
@@ -107,6 +113,10 @@ public class RamlModelBuilder
     @Nonnull
     public RamlModelResult buildApi(Reader reader, String ramlLocation)
     {
+        if (this.resourceLoader == null)
+        {
+            createResourceLoader(new File(ramlLocation).getParent());
+        }
         String content = getRamlContent(reader);
         if (content == null)
         {
@@ -249,8 +259,7 @@ public class RamlModelBuilder
         {
             return null;
         }
-        ResourceLoader fileLoader = new CompositeResourceLoader(resourceLoader, new FileResourceLoader(ramlFile.getParent()));
-        return getRamlContent(ramlFile.getName(), fileLoader);
+        return getRamlContent(ramlFile.getName());
     }
 
     private String getRamlContent(Reader ramlReader)
@@ -275,21 +284,21 @@ public class RamlModelBuilder
 
     private String getRamlContent(String ramlLocation)
     {
-        return getRamlContent(ramlLocation, resourceLoader);
-    }
-
-    private String getRamlContent(String ramlLocation, ResourceLoader loader)
-    {
         if (ramlLocation == null)
         {
             return null;
         }
-        InputStream ramlStream = loader.fetchResource(ramlLocation);
+        InputStream ramlStream = resourceLoader.fetchResource(ramlLocation);
         if (ramlStream != null)
         {
             return StreamUtils.toString(ramlStream);
         }
         return null;
+    }
+
+    private void createResourceLoader(String location)
+    {
+        this.resourceLoader = new DefaultResourceLoader(location);
     }
 
 }

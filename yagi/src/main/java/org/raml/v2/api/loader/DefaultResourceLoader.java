@@ -32,6 +32,16 @@ public class DefaultResourceLoader implements ResourceLoaderExtended
                 new FileResourceLoader("."));
     }
 
+    public DefaultResourceLoader(String baseLocation)
+    {
+        resourceLoader = new CompositeResourceLoader(
+                new UrlResourceLoader(),
+                new RamlUrlResourceLoader(),
+                new ClassPathResourceLoader(),
+                new FileResourceLoader(baseLocation),
+                new FileResourceLoader("."));
+    }
+
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {

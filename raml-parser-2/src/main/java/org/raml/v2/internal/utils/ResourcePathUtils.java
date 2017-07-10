@@ -21,6 +21,27 @@ public class ResourcePathUtils
 {
 
     /**
+     * Returns a location to be load by a ResourceLoader.
+     *
+     * If the resource location starts with a "/" then it is considered relative to the root RAML according to the 1.0
+     * spec, so this method returns the location without the leading slash.
+     *
+     * Otherwise this returns an absolute location, taking into account the parent directory if necessary.
+     *
+     * @param parent The parent directory of the resource.
+     * @param resourcePath The path of the resource to be included.
+     *
+     * @return A valid path to be loaded by a ResourceLoader.
+     */
+    public static String getResourceLocation(String parent, String resourcePath)
+    {
+        if (resourcePath.startsWith("/"))
+            return resourcePath.substring(1);
+        else
+            return toAbsoluteLocation(parent, resourcePath);
+    }
+
+    /**
     * Returns the absolute resource location using the basePath
     * basePath and relativePath must have forward slashes(/) as path separators.
     * @param basePath The base path of the relative path
