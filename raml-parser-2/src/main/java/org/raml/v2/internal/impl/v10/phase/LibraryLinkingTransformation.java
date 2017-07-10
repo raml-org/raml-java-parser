@@ -28,8 +28,6 @@ import org.raml.yagi.framework.phase.Transformer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Set;
 
 public class LibraryLinkingTransformation implements Transformer
 {
@@ -55,24 +53,25 @@ public class LibraryLinkingTransformation implements Transformer
         final LibraryLinkNode linkNode = (LibraryLinkNode) node;
         final String baseLocation = linkNode.getStartPosition().getPath();
         final String refName = linkNode.getRefName();
-        final String absoluteLocation = ResourcePathUtils.toAbsoluteLocation(baseLocation, refName);
+        final String resourceLocation = ResourcePathUtils.getResourceLocation(baseLocation, refName);
+
         try
         {
-            try (InputStream inputStream = resourceLoader.fetchResource(absoluteLocation))
+            try (InputStream inputStream = resourceLoader.fetchResource(resourceLocation))
             {
                 if (inputStream == null)
                 {
-                    return new IncludeErrorNode("Library cannot be resolved: " + absoluteLocation);
+                    return new IncludeErrorNode("Library cannot be resolved: " + resourceLocation);
                 }
                 final String content = StreamUtils.toString(inputStream);
                 final Node libraryReference = builder
-                                                     .build(content, RamlFragment.Library, resourceLoader, absoluteLocation, RamlBuilder.ALL_PHASES);
+                                                     .build(content, RamlFragment.Library, resourceLoader, resourceLocation, RamlBuilder.ALL_PHASES);
                 linkNode.setLibraryReference(libraryReference);
             }
         }
         catch (IOException e)
         {
-            return new IncludeErrorNode(String.format("Library cannot be resolved: %s. (%s)", absoluteLocation, e.getMessage()));
+            return new IncludeErrorNode(String.format("Library cannot be resolved: %s. (%s)", resourceLocation, e.getMessage()));
         }
 
         return linkNode;

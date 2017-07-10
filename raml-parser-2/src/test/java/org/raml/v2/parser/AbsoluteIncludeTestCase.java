@@ -43,9 +43,10 @@ public class AbsoluteIncludeTestCase
     private String getRaml()
     {
         String includePath = new File("src/test/resources/org/raml/v2/parser/include/nested/description.txt").getAbsolutePath();
+        // Absolute files should use the "file:" prefix.
         return "#%RAML 1.0\n" +
                "title: absolute include\n" +
-               "description: !include " + includePath;
+               "description: !include file:" + includePath;
     }
 
     private String getExpectedOutput()

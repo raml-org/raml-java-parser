@@ -68,7 +68,6 @@ public class ApiModelParserTestCase extends TestDataProvider
     @Test
     public void basicRaml() throws Exception
     {
-
         final RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         final List<ValidationResult> validationResults = ramlModelResult.getValidationResults();
         final StringWriter out = new StringWriter();
