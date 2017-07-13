@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: hola
+uses:
+    lib1: /lib1.raml
+    lib2: subdir/lib2.raml
+/top: !include subdir/basic-resource.raml
+/down:
+    get:
+        is: [lib1.orderby]
+/down2:
+    get:
+        is: [lib2.orderby2]
