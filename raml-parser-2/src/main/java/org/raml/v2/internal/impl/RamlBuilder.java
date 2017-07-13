@@ -27,8 +27,8 @@ import java.io.StringReader;
 import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.FileResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.loader.RootRamlResourceLoader;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.v08.Raml08Builder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
@@ -73,11 +73,10 @@ public class RamlBuilder
 
     public Node build(File ramlFile, ResourceLoader resourceLoader)
     {
-        this.resourceLoader = new CompositeResourceLoader(resourceLoader, new FileResourceLoader(ramlFile.getParent()));
         this.actualPath = ramlFile.getPath();
         try (InputStream inputStream = new FileInputStream(ramlFile))
         {
-            return build(StreamUtils.reader(inputStream), this.resourceLoader, ramlFile.getName());
+            return build(StreamUtils.reader(inputStream), resourceLoader, ramlFile.getName());
         }
         catch (IOException ioe)
         {
@@ -104,6 +103,8 @@ public class RamlBuilder
     {
         try
         {
+            resourceLoader = addRootRamlResourceLoader(resourceLoader, resourceLocation);
+
             final String stringContent = IOUtils.toString(content);
 
             // In order to be consistent between different OS, we normalize the resource location
@@ -145,6 +146,17 @@ public class RamlBuilder
         {
             IOUtils.closeQuietly(content);
         }
+    }
+
+    private ResourceLoader addRootRamlResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
+    {
+        File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
+        if (parentFile != null)
+        {
+            resourceLoader = new CompositeResourceLoader(new RootRamlResourceLoader(parentFile), resourceLoader);
+        }
+        this.resourceLoader = resourceLoader;
+        return resourceLoader;
     }
 
     private String normalizeResourceLocation(String resourceLocation)
