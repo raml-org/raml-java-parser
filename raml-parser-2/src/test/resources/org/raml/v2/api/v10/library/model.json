@@ -349,7 +349,7 @@
             ],
             "value": null
            },
-           "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n}]\n}"
+           "value": "{\n\"orders\" : [\n{\n\"order_id\" : \"ORDER-437563756\",\n\"creation_date\" : \"2016-03-30\",\n\"items\" : [\n{\n\"product_id\" : \"PRODUCT-1\",\n\"quantity\" : 5\n},\n{\n\"product_id\" : \"PRODUCT-2\",\n\"quantity\" : 2\n}\n]\n}\n]\n}"
           },
           {
            "annotations": [],
@@ -511,7 +511,7 @@
             ],
             "value": null
            },
-           "value": "{\norders: Array[{\norder_id: ORDER-437563756,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-1,\nquantity: 5\n},{\nproduct_id: PRODUCT-2,\nquantity: 2\n}]\n},{\norder_id: ORDER-437542111,\ncreation_date: 2016-03-30,\nitems: Array[{\nproduct_id: PRODUCT-7,\nquantity: 2\n}]\n}]\n}"
+           "value": "{\n\"orders\" : [\n{\n\"order_id\" : \"ORDER-437563756\",\n\"creation_date\" : \"2016-03-30\",\n\"items\" : [\n{\n\"product_id\" : \"PRODUCT-1\",\n\"quantity\" : 5\n},\n{\n\"product_id\" : \"PRODUCT-2\",\n\"quantity\" : 2\n}\n]\n},\n{\n\"order_id\" : \"ORDER-437542111\",\n\"creation_date\" : \"2016-03-30\",\n\"items\" : [\n{\n\"product_id\" : \"PRODUCT-7\",\n\"quantity\" : 2\n}\n]\n}\n]\n}"
           }
          ],
          "facets": [],

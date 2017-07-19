@@ -94,7 +94,7 @@
             ],
             "value": null
            },
-           "value": "{\nfirstname: bruce,\nlastname: wayne,\nage: 77\n}"
+           "value": "{\n\"firstname\" : \"bruce\",\n\"lastname\" : \"wayne\",\n\"age\" : 77\n}"
           },
           {
            "annotations": [],
@@ -135,7 +135,7 @@
             ],
             "value": null
            },
-           "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
+           "value": "{\n\"firstname\" : \"matt\",\n\"lastname\" : \"murdock\",\n\"age\" : 52\n}"
           }
          ],
          "facets": [],
@@ -598,7 +598,7 @@
               ],
               "value": null
              },
-             "value": "{\nfirstname: bruce,\nlastname: wayne,\nage: 77\n}"
+             "value": "{\n\"firstname\" : \"bruce\",\n\"lastname\" : \"wayne\",\n\"age\" : 77\n}"
             },
             {
              "annotations": [],
@@ -639,7 +639,7 @@
               ],
               "value": null
              },
-             "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
+             "value": "{\n\"firstname\" : \"matt\",\n\"lastname\" : \"murdock\",\n\"age\" : 52\n}"
             }
            ],
            "facets": [],
@@ -1097,7 +1097,7 @@
       ],
       "value": null
      },
-     "value": "{\nfirstname: bruce,\nlastname: wayne,\nage: 77\n}"
+     "value": "{\n\"firstname\" : \"bruce\",\n\"lastname\" : \"wayne\",\n\"age\" : 77\n}"
     },
     {
      "annotations": [],
@@ -1138,7 +1138,7 @@
       ],
       "value": null
      },
-     "value": "{\nfirstname: matt,\nlastname: murdock,\nage: 52\n}"
+     "value": "{\n\"firstname\" : \"matt\",\n\"lastname\" : \"murdock\",\n\"age\" : 52\n}"
     }
    ],
    "facets": [],

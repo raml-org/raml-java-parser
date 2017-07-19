@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ObjectNode;
@@ -30,9 +31,14 @@ public class JSonDumper
 
     public static String dump(Node node)
     {
+        return dumpNode(node);
+    }
+
+    private static String dump(Node node, String start, String separator, String end)
+    {
         StringBuilder builder = new StringBuilder();
         List<String> children = dumpChildren(node.getChildren());
-        builder.append("{").append(StringUtils.join(children, ",\n")).append("}");
+        builder.append(start).append(StringUtils.join(children, separator)).append(end);
         return builder.toString();
     }
 
@@ -55,11 +61,15 @@ public class JSonDumper
         }
         else if (child instanceof ObjectNode)
         {
-            return dump(child);
+            return dump(child, "{\n", ",\n", "\n}");
         }
         else if (child instanceof StringNode)
         {
             return "\"" + ((StringNode) child).getValue() + "\"";
+        }
+        else if (child instanceof ArrayNode)
+        {
+            return dump(child, "[\n", ",\n", "\n]");
         }
         else
         {
