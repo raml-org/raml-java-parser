@@ -96,7 +96,7 @@
            ],
            "value": null
           },
-          "value": "Array[1,2]"
+          "value": "[\n\"1\",\n\"2\"\n]"
          },
          "examples": [],
          "facets": [],
