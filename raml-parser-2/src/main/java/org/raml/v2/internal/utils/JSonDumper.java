@@ -34,7 +34,7 @@ public class JSonDumper
         return dumpNode(node);
     }
 
-    public static String dump(Node node, String start, String separator, String end)
+    private static String dump(Node node, String start, String separator, String end)
     {
         StringBuilder builder = new StringBuilder();
         List<String> children = dumpChildren(node.getChildren());

@@ -51,7 +51,7 @@ public class ExampleSpec extends Annotable<KeyValueNode>
 
     public TypeInstance structuredValue()
     {
-        Node value = node.getValue();
+        final Node value = getExampleValue();
         // FIXME ExampleTypeNode may wrap a SimpleTypeNode
         // if ((value instanceof ExampleTypeNode) && value.getSource() != null)
         // {
