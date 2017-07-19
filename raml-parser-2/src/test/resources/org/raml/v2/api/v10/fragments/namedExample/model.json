@@ -27,5 +27,5 @@
   ],
   "value": null
  },
- "value": "{\nproperty1: string value,\nproperty2: 1\n}"
+ "value": "{\n\"property1\" : \"string value\",\n\"property2\" : 1\n}"
 }

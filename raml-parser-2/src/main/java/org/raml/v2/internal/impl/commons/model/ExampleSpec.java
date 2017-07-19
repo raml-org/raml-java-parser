@@ -15,9 +15,11 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.internal.utils.JSonDumper;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.ObjectNode;
+import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
 
@@ -30,7 +32,16 @@ public class ExampleSpec extends Annotable<KeyValueNode>
 
     public String value()
     {
-        return getExampleValue().toString();
+        final Node exampleValue = getExampleValue();
+
+        if (structuredValue().isScalar())
+        {
+            return exampleValue.toString();
+        }
+        else
+        {
+            return JSonDumper.dump(exampleValue);
+        }
     }
 
     public String name()
@@ -40,7 +51,7 @@ public class ExampleSpec extends Annotable<KeyValueNode>
 
     public TypeInstance structuredValue()
     {
-        Node value = node.getValue();
+        final Node value = getExampleValue();
         // FIXME ExampleTypeNode may wrap a SimpleTypeNode
         // if ((value instanceof ExampleTypeNode) && value.getSource() != null)
         // {

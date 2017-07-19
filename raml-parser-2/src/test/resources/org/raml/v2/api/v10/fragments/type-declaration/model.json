@@ -54,7 +54,7 @@
    ],
    "value": null
   },
-  "value": "{\nprop1: 10,\nprop2: {\nobjProp1: some,\nobjProp2: 20\n}\n}"
+  "value": "{\n\"prop1\" : 10,\n\"prop2\" : {\n\"objProp1\" : \"some\",\n\"objProp2\" : 20\n}\n}"
  },
  "examples": [],
  "facets": [],
