@@ -15,17 +15,49 @@
  */
 package org.raml.v2.api.loader;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
+
 import javax.annotation.Nullable;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 
+import org.apache.commons.lang.StringUtils;
+
 public class ClassPathResourceLoader implements ResourceLoaderExtended
 {
+
+    private final String rootRamlPackage;
+
+    public ClassPathResourceLoader()
+    {
+        rootRamlPackage = "";
+    }
+
+    /**
+     * When the root raml is loaded through the classpath allows specifying
+     * the package where it is loaded from in order to correctly resolve
+     * absolute path includes and libraries
+     *
+     * @param rootRamlPackage in the classpath
+     */
+    public ClassPathResourceLoader(String rootRamlPackage)
+    {
+        if (isBlank(rootRamlPackage) || rootRamlPackage.equals("/"))
+        {
+            this.rootRamlPackage = "";
+        }
+        else
+        {
+
+            this.rootRamlPackage = (rootRamlPackage.startsWith("/") ? rootRamlPackage.substring(1) : rootRamlPackage) + "/";
+        }
+    }
 
     @Nullable
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
+        resourceName = rootRamlPackage + (resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
         if (inputStream == null)
         {

@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: resource type parameter with reference
+
+uses:
+  ResourceTypesLib: /libraries/resourceTypeLibrary.raml
+  TypesLib: /libraries/typeLibrary.raml
+
+/lot:
+    type:
+      ResourceTypesLib.collection:
+        rtTypeName: TypesLib.remote

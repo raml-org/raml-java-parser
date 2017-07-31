@@ -60,18 +60,19 @@ public class ApiModelUnitTestCase
         String schema = ramlModelResult.getApiV10().types().get(0).toXmlSchema();
         assertThat(
                 schema.trim(),
-                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n"
+                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">" +
+                   System.lineSeparator()
                    +
-                   "    <element name=\"user\" type=\"tns:user\"/>\n" +
-                   "    <complexType name=\"user\">\n" +
-                   "        <sequence>\n" +
-                   "            <element name=\"name\">\n" +
-                   "                <simpleType>\n" +
-                   "                    <restriction base=\"string\"/>\n" +
-                   "                </simpleType>\n" +
-                   "            </element>\n" +
-                   "        </sequence>\n" +
-                   "    </complexType>\n" +
+                   "    <element name=\"user\" type=\"tns:user\"/>" + System.lineSeparator() +
+                   "    <complexType name=\"user\">" + System.lineSeparator() +
+                   "        <sequence>" + System.lineSeparator() +
+                   "            <element name=\"name\">" + System.lineSeparator() +
+                   "                <simpleType>" + System.lineSeparator() +
+                   "                    <restriction base=\"string\"/>" + System.lineSeparator() +
+                   "                </simpleType>" + System.lineSeparator() +
+                   "            </element>" + System.lineSeparator() +
+                   "        </sequence>" + System.lineSeparator() +
+                   "    </complexType>" + System.lineSeparator() +
                    "</schema>"));
 
 
@@ -86,21 +87,22 @@ public class ApiModelUnitTestCase
         String schema = ramlModelResult.getApiV10().types().get(0).toXmlSchema();
         assertThat(
                 schema.trim(),
-                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n"
+                is("<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">" +
+                   System.lineSeparator()
                    +
-                   "    <element name=\"Tree\" type=\"tns:Tree\"/>\n" +
-                   "    <complexType name=\"Tree\">\n" +
-                   "        <sequence>\n" +
-                   "            <element name=\"value\">\n" +
-                   "                <simpleType>\n" +
-                   "                    <restriction base=\"string\"/>\n" +
-                   "                </simpleType>\n" +
-                   "            </element>\n" +
-                   "            <element name=\"left\" type=\"tns:Tree\"/>\n" +
-                   "            <element name=\"right\" type=\"tns:Tree\"/>\n" +
-                   "            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n" +
-                   "        </sequence>\n" +
-                   "    </complexType>\n" +
+                   "    <element name=\"Tree\" type=\"tns:Tree\"/>" + System.lineSeparator() +
+                   "    <complexType name=\"Tree\">" + System.lineSeparator() +
+                   "        <sequence>" + System.lineSeparator() +
+                   "            <element name=\"value\">" + System.lineSeparator() +
+                   "                <simpleType>" + System.lineSeparator() +
+                   "                    <restriction base=\"string\"/>" + System.lineSeparator() +
+                   "                </simpleType>" + System.lineSeparator() +
+                   "            </element>" + System.lineSeparator() +
+                   "            <element name=\"left\" type=\"tns:Tree\"/>" + System.lineSeparator() +
+                   "            <element name=\"right\" type=\"tns:Tree\"/>" + System.lineSeparator() +
+                   "            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>" + System.lineSeparator() +
+                   "        </sequence>" + System.lineSeparator() +
+                   "    </complexType>" + System.lineSeparator() +
                    "</schema>"));
 
     }

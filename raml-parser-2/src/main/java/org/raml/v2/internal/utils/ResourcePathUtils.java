@@ -33,7 +33,7 @@ public class ResourcePathUtils
         if (!isAbsolute(relativePath))
         {
             // This is for file based path
-            int lastSlash = basePath.lastIndexOf(File.separator);
+            int lastSlash = basePath.lastIndexOf("/");
             if (lastSlash == -1)
             {
                 // This is for URL based path
@@ -53,6 +53,6 @@ public class ResourcePathUtils
 
     public static boolean isAbsolute(String includePath)
     {
-        return includePath.startsWith("http:") || includePath.startsWith("https:") || includePath.startsWith("file:") || new File(includePath).isAbsolute();
+        return includePath.startsWith("http:") || includePath.startsWith("https:") || includePath.startsWith("file:") || includePath.startsWith("/") || new File(includePath).isAbsolute();
     }
 }
