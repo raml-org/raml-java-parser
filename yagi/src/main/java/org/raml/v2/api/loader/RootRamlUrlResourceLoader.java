@@ -23,30 +23,39 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RootRamlUrlResourceLoader implements ResourceLoaderExtended {
+public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
+{
     public static final String APPLICATION_RAML = "application/ramlyaml";
 
     private String rootRamlUrl;
 
-    public RootRamlUrlResourceLoader(String rootRamlUrl) {
-        this.rootRamlUrl = rootRamlUrl;
+    public RootRamlUrlResourceLoader(String rootRamlUrl)
+    {
+        this.rootRamlUrl = rootRamlUrl.endsWith("/") ? rootRamlUrl : rootRamlUrl + "/";
     }
 
     @Override
-    public InputStream fetchResource(String resourceName, ResourceUriCallback callback) {
+    public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
+    {
         InputStream inputStream = null;
-        try {
+        try
+        {
             URL url = new URL(resourceName.startsWith(rootRamlUrl) ? resourceName : rootRamlUrl + resourceName);
             URLConnection connection = url.openConnection();
             connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
             inputStream = new BufferedInputStream(connection.getInputStream());
 
-            if (callback != null) {
+            if (callback != null)
+            {
                 callback.onResourceFound(url.toURI());
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             // ignore on resource not found
-        } catch (URISyntaxException e) {
+        }
+        catch (URISyntaxException e)
+        {
             // Ignore
         }
         return inputStream;
@@ -55,7 +64,8 @@ public class RootRamlUrlResourceLoader implements ResourceLoaderExtended {
 
     @Nullable
     @Override
-    public InputStream fetchResource(String resourceName) {
+    public InputStream fetchResource(String resourceName)
+    {
         return fetchResource(resourceName, null);
     }
 

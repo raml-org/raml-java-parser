@@ -79,7 +79,8 @@ public class ApiModelParserTestCase extends TestDataProvider
         validateModel(ramlModelResult);
     }
 
-    private void validateModel(RamlModelResult ramlModelResult) throws Exception {
+    private void validateModel(RamlModelResult ramlModelResult) throws Exception
+    {
         final List<ValidationResult> validationResults = ramlModelResult.getValidationResults();
         final StringWriter out = new StringWriter();
         final JsonWriter jsonWriter = new JsonWriter(out);

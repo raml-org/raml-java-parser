@@ -43,7 +43,7 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
     {
         FileInputStream inputStream = null;
 
-        File includedFile = new File(resourceName.startsWith(rootRamlPath) ? resourceName : rootRamlPath + resourceName);
+        File includedFile = new File(resourceName.startsWith(rootRamlPath) ? resourceName : rootRamlPath + "/" + resourceName);
 
         logger.debug("Looking for resource: {} on directory: {}...", resourceName, rootRamlPath);
         try

@@ -155,7 +155,7 @@ public class RamlBuilder
 
     private ResourceLoader addRootRamlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
     {
-        String rootRamlPath = getRootPath(actualPath != null? actualPath : resourceLocation);
+        String rootRamlPath = getRootPath(actualPath != null ? actualPath : resourceLocation);
 
         if (!Strings.isNullOrEmpty(rootRamlPath))
         {
@@ -167,11 +167,13 @@ public class RamlBuilder
         return resourceLoader;
     }
 
-    private String getRootPath(String rootRamlFileUrl) {
+    private String getRootPath(String rootRamlFileUrl)
+    {
         List<String> urlSegments = Lists.newArrayList(rootRamlFileUrl.split("/"));
-        if (urlSegments.isEmpty()) {
-                return "";
-            }
+        if (urlSegments.isEmpty())
+        {
+            return "";
+        }
         urlSegments.remove(urlSegments.size() - 1);
         return StringUtils.join(urlSegments, "/");
     }
