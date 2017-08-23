@@ -26,15 +26,15 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RootRamlResourceLoader implements ResourceLoaderExtended
+public class RootRamlFileResourceLoader implements ResourceLoaderExtended
 {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private File parentPath;
+    private String rootRamlPath;
 
-    public RootRamlResourceLoader(File path)
+    public RootRamlFileResourceLoader(String path)
     {
-        this.parentPath = path;
+        this.rootRamlPath = path;
     }
 
     @Nullable
@@ -42,8 +42,10 @@ public class RootRamlResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
         FileInputStream inputStream = null;
-        File includedFile = new File(parentPath, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
-        logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentPath);
+
+        File includedFile = new File(resourceName.startsWith(rootRamlPath) ? resourceName : rootRamlPath + resourceName);
+
+        logger.debug("Looking for resource: {} on directory: {}...", resourceName, rootRamlPath);
         try
         {
             inputStream = new FileInputStream(includedFile);

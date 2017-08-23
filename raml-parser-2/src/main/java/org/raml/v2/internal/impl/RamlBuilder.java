@@ -23,12 +23,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.List;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.api.loader.RootRamlResourceLoader;
+import org.raml.v2.api.loader.RootRamlFileResourceLoader;
+import org.raml.v2.api.loader.RootRamlUrlResourceLoader;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.v08.Raml08Builder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
@@ -103,7 +108,7 @@ public class RamlBuilder
     {
         try
         {
-            resourceLoader = addRootRamlResourceLoader(resourceLoader, resourceLocation);
+            resourceLoader = addRootRamlResourceLoaders(resourceLoader, resourceLocation);
 
             final String stringContent = IOUtils.toString(content);
 
@@ -148,15 +153,27 @@ public class RamlBuilder
         }
     }
 
-    private ResourceLoader addRootRamlResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
+    private ResourceLoader addRootRamlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
     {
-        File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
-        if (parentFile != null)
+        String rootRamlPath = getRootPath(actualPath != null? actualPath : resourceLocation);
+
+        if (!Strings.isNullOrEmpty(rootRamlPath))
         {
-            resourceLoader = new CompositeResourceLoader(new RootRamlResourceLoader(parentFile), resourceLoader);
+            resourceLoader = new CompositeResourceLoader(new RootRamlFileResourceLoader(rootRamlPath),
+                    new RootRamlUrlResourceLoader(rootRamlPath),
+                    resourceLoader);
         }
         this.resourceLoader = resourceLoader;
         return resourceLoader;
+    }
+
+    private String getRootPath(String rootRamlFileUrl) {
+        List<String> urlSegments = Lists.newArrayList(rootRamlFileUrl.split("/"));
+        if (urlSegments.isEmpty()) {
+                return "";
+            }
+        urlSegments.remove(urlSegments.size() - 1);
+        return StringUtils.join(urlSegments, "/");
     }
 
     private String normalizeResourceLocation(String resourceLocation)
