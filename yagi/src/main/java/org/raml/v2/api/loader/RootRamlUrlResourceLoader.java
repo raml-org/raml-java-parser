@@ -25,7 +25,7 @@ import java.net.URLConnection;
 
 public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
 {
-    public static final String APPLICATION_RAML = "application/ramlyaml";
+    public static final String APPLICATION_RAML = "application/raml+yaml";
 
     private String rootRamlUrl;
 
