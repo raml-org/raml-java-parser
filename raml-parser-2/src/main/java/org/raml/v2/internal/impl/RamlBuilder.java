@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl;
 
+import static com.google.common.collect.Iterables.limit;
 import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 
 import java.io.File;
@@ -25,10 +26,10 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -169,13 +170,12 @@ public class RamlBuilder
 
     private String getRootPath(String rootRamlFileUrl)
     {
-        List<String> urlSegments = Lists.newArrayList(rootRamlFileUrl.split("/"));
+        final List<String> urlSegments = Splitter.on("/").splitToList(rootRamlFileUrl);
         if (urlSegments.isEmpty())
         {
             return "";
         }
-        urlSegments.remove(urlSegments.size() - 1);
-        return StringUtils.join(urlSegments, "/");
+        return Joiner.on("/").join(limit(urlSegments, urlSegments.size() - 1));
     }
 
     private String normalizeResourceLocation(String resourceLocation)
