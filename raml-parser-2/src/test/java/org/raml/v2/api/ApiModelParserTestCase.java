@@ -66,10 +66,21 @@ public class ApiModelParserTestCase extends TestDataProvider
     }
 
     @Test
-    public void basicRaml() throws Exception
+    public void parseRamlFromFile() throws Exception
     {
-
         final RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
+        validateModel(ramlModelResult);
+    }
+
+    @Test
+    public void parseRamlFromUri() throws Exception
+    {
+        final RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input.toURI().toString());
+        validateModel(ramlModelResult);
+    }
+
+    private void validateModel(RamlModelResult ramlModelResult) throws Exception
+    {
         final List<ValidationResult> validationResults = ramlModelResult.getValidationResults();
         final StringWriter out = new StringWriter();
         final JsonWriter jsonWriter = new JsonWriter(out);

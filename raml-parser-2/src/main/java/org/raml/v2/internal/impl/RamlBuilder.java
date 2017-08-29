@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl;
 
+import static com.google.common.collect.Iterables.limit;
 import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 
 import java.io.File;
@@ -23,12 +24,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.List;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.api.loader.RootRamlResourceLoader;
+import org.raml.v2.api.loader.RootRamlFileResourceLoader;
+import org.raml.v2.api.loader.RootRamlUrlResourceLoader;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.v08.Raml08Builder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
@@ -103,7 +109,7 @@ public class RamlBuilder
     {
         try
         {
-            resourceLoader = addRootRamlResourceLoader(resourceLoader, resourceLocation);
+            resourceLoader = addRootRamlResourceLoaders(resourceLoader, resourceLocation);
 
             final String stringContent = IOUtils.toString(content);
 
@@ -148,15 +154,44 @@ public class RamlBuilder
         }
     }
 
-    private ResourceLoader addRootRamlResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
+    private ResourceLoader addRootRamlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
+    {
+        resourceLoader = addRootRamlFileResourceLoader(resourceLoader, resourceLocation);
+        resourceLoader = addRootRamlUrlResourceLoader(resourceLoader, resourceLocation);
+        this.resourceLoader = resourceLoader;
+        return resourceLoader;
+    }
+
+    private ResourceLoader addRootRamlFileResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
     {
         File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
         if (parentFile != null)
         {
-            resourceLoader = new CompositeResourceLoader(new RootRamlResourceLoader(parentFile), resourceLoader);
+            resourceLoader = new CompositeResourceLoader(new RootRamlFileResourceLoader(parentFile), resourceLoader);
         }
-        this.resourceLoader = resourceLoader;
+
         return resourceLoader;
+    }
+
+    private ResourceLoader addRootRamlUrlResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
+    {
+        String rootRamlPath = getRootPath(resourceLocation);
+        if (!Strings.isNullOrEmpty(rootRamlPath))
+        {
+            resourceLoader = new CompositeResourceLoader(new RootRamlUrlResourceLoader(rootRamlPath), resourceLoader);
+        }
+
+        return resourceLoader;
+    }
+
+    private String getRootPath(String rootRamlFileUrl)
+    {
+        final List<String> urlSegments = Splitter.on("/").splitToList(rootRamlFileUrl);
+        if (urlSegments.isEmpty())
+        {
+            return "";
+        }
+        return Joiner.on("/").join(limit(urlSegments, urlSegments.size() - 1));
     }
 
     private String normalizeResourceLocation(String resourceLocation)

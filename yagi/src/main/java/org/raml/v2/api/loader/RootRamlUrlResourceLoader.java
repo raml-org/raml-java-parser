@@ -15,50 +15,51 @@
  */
 package org.raml.v2.api.loader;
 
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import javax.annotation.Nullable;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class RootRamlResourceLoader implements ResourceLoaderExtended
+public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
 {
+    public static final String APPLICATION_RAML = "application/raml+yaml";
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-    private File parentPath;
+    private String rootRamlUrl;
 
-    public RootRamlResourceLoader(File path)
+    public RootRamlUrlResourceLoader(String rootRamlUrl)
     {
-        this.parentPath = path;
+        this.rootRamlUrl = rootRamlUrl.endsWith("/") ? rootRamlUrl : rootRamlUrl + "/";
     }
 
-    @Nullable
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
-        FileInputStream inputStream = null;
-        File includedFile = new File(parentPath, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
-        logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentPath);
+        InputStream inputStream = null;
         try
         {
-            inputStream = new FileInputStream(includedFile);
+            URL url = new URL(resourceName.startsWith(rootRamlUrl) ? resourceName : rootRamlUrl + resourceName);
+            URLConnection connection = url.openConnection();
+            connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
+            inputStream = new BufferedInputStream(connection.getInputStream());
 
             if (callback != null)
             {
-                callback.onResourceFound(includedFile.toURI());
+                callback.onResourceFound(url.toURI());
             }
         }
-        catch (FileNotFoundException e)
+        catch (IOException e)
         {
-            // ignore
+            // ignore on resource not found
         }
-
+        catch (URISyntaxException e)
+        {
+            // Ignore
+        }
         return inputStream;
+
     }
 
     @Nullable
@@ -67,4 +68,5 @@ public class RootRamlResourceLoader implements ResourceLoaderExtended
     {
         return fetchResource(resourceName, null);
     }
+
 }
