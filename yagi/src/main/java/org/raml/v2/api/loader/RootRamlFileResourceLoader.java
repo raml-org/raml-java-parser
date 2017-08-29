@@ -30,11 +30,11 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
 {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private String rootRamlPath;
+    private File parentPath;
 
-    public RootRamlFileResourceLoader(String path)
+    public RootRamlFileResourceLoader(File path)
     {
-        this.rootRamlPath = path;
+        this.parentPath = path;
     }
 
     @Nullable
@@ -42,10 +42,8 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
         FileInputStream inputStream = null;
-
-        File includedFile = new File(resourceName.startsWith(rootRamlPath) ? resourceName : rootRamlPath + "/" + resourceName);
-
-        logger.debug("Looking for resource: {} on directory: {}...", resourceName, rootRamlPath);
+        File includedFile = new File(parentPath, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
+        logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentPath);
         try
         {
             inputStream = new FileInputStream(includedFile);
