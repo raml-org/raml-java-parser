@@ -156,13 +156,13 @@ public class RamlBuilder
 
     private ResourceLoader addRootRamlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
     {
-        resourceLoader = addRootRamlFileResourceLoaders(resourceLoader, resourceLocation);
-        resourceLoader = addRootRamlUrlResourceLoaders(resourceLoader, resourceLocation);
+        resourceLoader = addRootRamlFileResourceLoader(resourceLoader, resourceLocation);
+        resourceLoader = addRootRamlUrlResourceLoader(resourceLoader, resourceLocation);
         this.resourceLoader = resourceLoader;
         return resourceLoader;
     }
 
-    private ResourceLoader addRootRamlFileResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
+    private ResourceLoader addRootRamlFileResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
     {
         File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
         if (parentFile != null)
@@ -173,7 +173,7 @@ public class RamlBuilder
         return resourceLoader;
     }
 
-    private ResourceLoader addRootRamlUrlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
+    private ResourceLoader addRootRamlUrlResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
     {
         String rootRamlPath = getRootPath(resourceLocation);
         if (!Strings.isNullOrEmpty(rootRamlPath))
