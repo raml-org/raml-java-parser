@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.8.19</version>
     <packaging>jar</packaging>
     <name>Raml parser</name>
     <description>Java implementation of the raml parser</description>
@@ -291,7 +291,7 @@
         <connection>scm:git:git://github.com:raml-org/raml-java-parser.git</connection>
         <developerConnection>scm:git:git@github.com:raml-org/raml-java-parser.git</developerConnection>
         <url>http://github.com/raml-org/raml-java-parser</url>
-        <tag>HEAD</tag>
+        <tag>0.8.19</tag>
     </scm>
 
     <distributionManagement>
