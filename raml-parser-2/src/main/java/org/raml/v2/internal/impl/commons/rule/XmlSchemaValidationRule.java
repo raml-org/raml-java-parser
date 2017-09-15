@@ -53,10 +53,13 @@ public class XmlSchemaValidationRule extends Rule
     public static final String EXTERNAL_ENTITIES_PROPERTY = "raml.xml.expandExternalEntities";
     public static final String EXPAND_ENTITIES_PROPERTY = "raml.xml.expandInternalEntities";
 
-    private static final Boolean externalEntities =
+    public static final Boolean externalEntities =
             Boolean.parseBoolean(System.getProperty(EXTERNAL_ENTITIES_PROPERTY, "false"));
-    private static final Boolean expandEntities =
+    public static final Boolean expandEntities =
             Boolean.parseBoolean(System.getProperty(EXPAND_ENTITIES_PROPERTY, "false"));
+    public static final String EXTERNAL_GENERAL_ENTITIES_FEATURE = "http://xml.org/sax/features/external-general-entities";
+    public static final String EXTERNAL_PARAMETER_ENTITIES_FEATURE = "http://xml.org/sax/features/external-parameter-entities";
+    public static final String DISALLOW_DOCTYPE_DECL_FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
 
     private Schema schema;
     private String type;
@@ -138,14 +141,11 @@ public class XmlSchemaValidationRule extends Rule
         String feature = null;
 
         // If you can't completely disable DTDs, then at least do the following:
-        feature = "http://xml.org/sax/features/external-general-entities";
-        dbf.setFeature(feature, externalEntities);
+        dbf.setFeature(EXTERNAL_GENERAL_ENTITIES_FEATURE, externalEntities);
 
-        feature = "http://xml.org/sax/features/external-parameter-entities";
-        dbf.setFeature(feature, externalEntities);
+        dbf.setFeature(EXTERNAL_PARAMETER_ENTITIES_FEATURE, externalEntities);
 
-        feature = "http://apache.org/xml/features/disallow-doctype-decl";
-        dbf.setFeature(feature, !expandEntities);
+        dbf.setFeature(DISALLOW_DOCTYPE_DECL_FEATURE, !expandEntities);
 
         // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks" (see reference below)
         dbf.setXIncludeAware(expandEntities);
