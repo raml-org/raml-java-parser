@@ -58,6 +58,12 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.DISALLOW_DOCTYPE_DECL_FEATURE;
+import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.expandEntities;
+import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.EXTERNAL_GENERAL_ENTITIES_FEATURE;
+import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.EXTERNAL_PARAMETER_ENTITIES_FEATURE;
+import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.externalEntities;
+
 public class ExampleValidationPhase implements Phase
 {
     private ResourceLoader resourceLoader;
@@ -190,8 +196,15 @@ public class ExampleValidationPhase implements Phase
             final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             final Schema schema1 = factory.newSchema(new StreamSource(new StringReader(xsd.toString())));
             final Validator validator = schema1.newValidator();
+
+            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+
+            xmlReader.setFeature(DISALLOW_DOCTYPE_DECL_FEATURE, !expandEntities);
+            xmlReader.setFeature(EXTERNAL_GENERAL_ENTITIES_FEATURE, externalEntities);
+            xmlReader.setFeature(EXTERNAL_PARAMETER_ENTITIES_FEATURE, externalEntities);
+
             validator.validate(new SAXSource(
-                    new NamespaceFilter(XMLReaderFactory.createXMLReader(), TypeToXmlSchemaVisitor.getTargetNamespace(resolvedType)),
+                    new NamespaceFilter(xmlReader, TypeToXmlSchemaVisitor.getTargetNamespace(resolvedType)),
                     new InputSource(new StringReader(value))));
         }
         catch (IOException | SAXException e)
