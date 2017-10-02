@@ -1,0 +1,97 @@
+RamlDocumentNode (Start: 11 , End: 292, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 28, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 28, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 28, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "Sample API" (Start: 18 , End: 28, On: input.raml)
+    TypesNode (Start: 30 , End: 79, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 30 , End: 35, On: input.raml)
+        SYObjectNode (Start: 39 , End: 79, On: input.raml)
+            TypeDeclarationField (Start: 39 , End: 75, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "accountKey" (Start: 39 , End: 49, On: input.raml)
+                TypeDeclarationNode (Start: 51 , End: 75, On: input.raml, Source: StringNodeImpl)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                        ExternalSchemaTypeExpressionNode: "{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Account",
+	"description": "Account object",
+	"type": "object",
+	"properties": {
+		"accountId": {
+			"description": "The unique identifier for the account.",
+			"type": "string"
+		},
+		"accountStatus": {
+			"$ref": "code.json#"
+		}
+	},
+	"additionalProperties": false
+}" (Start: -1 , End: -1, Source: ExternalSchemaTypeExpressionNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "accountKey" (Start: -1 , End: -1, Source: SYStringNode)
+    ResourceNode (Start: 79 , End: 292, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "/testRefIssue" (Start: 79 , End: 92, On: input.raml)
+        SYObjectNode (Start: 96 , End: 292, On: input.raml)
+            MethodNode (Start: 96 , End: 292, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "post" (Start: 96 , End: 100, On: input.raml)
+                SYObjectNode (Start: 107 , End: 292, On: input.raml)
+                    BodyNode (Start: 107 , End: 212, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "body" (Start: 107 , End: 111, On: input.raml)
+                        SYObjectNode (Start: 120 , End: 212, On: input.raml)
+                            KeyValueNodeImpl (Start: 120 , End: 212, On: input.raml)
+                                SYStringNode: "application/json" (Start: 120 , End: 136, On: input.raml)
+                                TypeDeclarationNode (Start: 147 , End: 212, On: input.raml, Source: SYObjectNode)
+                                    KeyValueNodeImpl (Start: 147 , End: 166, On: input.raml)
+                                        SYStringNode: "schema" (Start: 147 , End: 153, On: input.raml)
+                                        NamedTypeExpressionNode accountKey -> {TypeDeclarationNode RefStart: 51 , RefEnd: 75} (Start: 156 , End: 166, On: input.raml, Source: SYStringNode)
+                                    ExampleDeclarationNode (Start: 176 , End: 206, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYStringNode: "example" (Start: 176 , End: 183, On: input.raml)
+                                        StringNodeImpl: "{
+  "accountId": "zdiigepi4sogg8qwicg3m7ka4c1",
+  "accountStatus": {
+    "code": "OPEN",
+    "description": "Opened"
+  }
+}" (Start: 185 , End: 206, On: input.raml, Source: SYIncludeNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: 212 , End: 292, On: input.raml)
+                        SYStringNode: "responses" (Start: 212 , End: 221, On: input.raml)
+                        SYObjectNode (Start: 229 , End: 292, On: input.raml)
+                            ResponseNode (Start: 229 , End: 292, On: input.raml, Source: KeyValueNodeImpl)
+                                SYIntegerNode: 200 (Start: 229 , End: 232, On: input.raml)
+                                SYObjectNode (Start: 250 , End: 292, On: input.raml)
+                                    KeyValueNodeImpl (Start: 250 , End: 292, On: input.raml)
+                                        SYStringNode: "description" (Start: 250 , End: 261, On: input.raml)
+                                        OverlayableObjectNodeImpl (Start: 264 , End: 292, On: input.raml, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: 250 , End: 292, On: input.raml)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "Successfully updated account" (Start: 264 , End: 292, On: input.raml)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYIntegerNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "post" (Start: -1 , End: -1, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                ObjectNodeImpl (Start: -1 , End: -1)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                        OverlayableStringNode: "/testRefIssue" (Start: -1 , End: -1, Source: SYStringNode)

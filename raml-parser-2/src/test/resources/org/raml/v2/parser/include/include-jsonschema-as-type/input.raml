@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Sample API
+
+types:
+  accountKey: !include accountKey.json
+  
+/testRefIssue:
+  post:
+     body:
+       application/json:
+         schema:  accountKey
+         example: !include example.json
+     responses:
+      200:        
+        description:  Successfully updated account

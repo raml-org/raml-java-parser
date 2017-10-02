@@ -1,0 +1,16 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Account",
+	"description": "Account object",
+	"type": "object",
+	"properties": {
+		"accountId": {
+			"description": "The unique identifier for the account.",
+			"type": "string"
+		},
+		"accountStatus": {
+			"$ref": "code.json#"
+		}
+	},
+	"additionalProperties": false
+}
