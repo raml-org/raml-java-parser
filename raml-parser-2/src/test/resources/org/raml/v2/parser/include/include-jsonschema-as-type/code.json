@@ -1,0 +1,20 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Code",
+	"description": "Standard definition for codes.",
+	"type": "object",
+	"properties": {
+		"code": {
+			"description": "unique identifier for the code",
+			"type": "string"
+		},
+		"description": {
+			"description": "Display description of the code.",
+			"type": "string"
+		}
+	},
+	"required": [
+		"code"
+	],
+	"additionalProperties": false
+}
