@@ -1,0 +1,25 @@
+#%RAML 1.0
+
+title: Test
+
+types:
+  Foo:
+    properties:
+      amount:
+        type: number
+        multipleOf: 0.01
+        examples:
+          valid1: 100.22
+          valid2: 100.0
+          valid3: 100
+  Fee:
+    properties:
+      amount:
+        type: number
+        multipleOf: 2
+        examples:
+          valid1: 100
+          valid2: 100.0
+          valid3: 100.00
+          valid4: 2
+          valid5: 4
