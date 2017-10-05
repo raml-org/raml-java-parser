@@ -2,7 +2,7 @@
 # RAML Java Parser
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/raml-org/raml-java-parser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This is a Java parser for [RAML](http://raml.org) version 0.8 as defined in the [0.8 RAML specification](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md) The parser depends on SnakeYaml, a Java YAML parser.
+This is a Java parser for [RAML](http://raml.org) version 0.8 as defined in the [0.8 RAML specification](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md) The parser depends on SnakeYAML, a Java YAML parser.
 
 A newer [version](https://github.com/raml-org/raml-java-parser/tree/v2) is now available as a beta. It supports RAML 1.0 as well as RAML 0.8.
 
