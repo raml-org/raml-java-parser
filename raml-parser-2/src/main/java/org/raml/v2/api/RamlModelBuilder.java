@@ -249,7 +249,7 @@ public class RamlModelBuilder
         {
             return null;
         }
-        ResourceLoader fileLoader = new CompositeResourceLoader(resourceLoader, new FileResourceLoader(ramlFile.getParent()));
+        ResourceLoader fileLoader = new CompositeResourceLoader(resourceLoader, new FileResourceLoader(ramlFile.getAbsoluteFile().getParent()));
         return getRamlContent(ramlFile.getName(), fileLoader);
     }
 
