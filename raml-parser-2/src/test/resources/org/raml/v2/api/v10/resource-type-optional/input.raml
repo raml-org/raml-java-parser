@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: Test
+
+traits:
+  trait:
+    queryParameters:
+      param:
+        required: false
+        default: "Default value"
+
+resourceTypes:
+  optional-post:
+    get:
+      is: [ trait ]
+    post?:
+      body:
+        application/json:
+          type: <<resourcePathName>>
+
+types:
+  implemented-post:
+
+/unimplemented-post:
+  type: optional-post
+
+/implemented-post:
+  type: optional-post
+  post:

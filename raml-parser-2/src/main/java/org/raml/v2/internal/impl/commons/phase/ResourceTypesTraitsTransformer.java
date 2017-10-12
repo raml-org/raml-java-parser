@@ -151,9 +151,11 @@ public class ResourceTypesTraitsTransformer implements Transformer
             referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
         }
         // resolves types
+        boolean success = applyPhases(templateNode, grammarPhase);
 
+        removeUnimplementedOptionalMethods(templateNode, baseResourceNode);
 
-        final boolean success = applyPhases(templateNode, grammarPhase, referenceResolution);
+        success = success && applyPhases(templateNode, referenceResolution);
 
         if (success)
         {
@@ -169,6 +171,27 @@ public class ResourceTypesTraitsTransformer implements Transformer
         }
 
         merge(targetNode.getValue(), templateNode.getValue());
+    }
+
+    private void removeUnimplementedOptionalMethods(ResourceTypeNode templateNode, ResourceNode baseResourceNode)
+    {
+        final List<MethodNode> unimplementedMethods = new ArrayList<>();
+        for (MethodNode node : findMethodNodes(templateNode))
+        {
+            String key = node.getName();
+            if (!key.endsWith("?"))
+                continue;
+
+            key = key.substring(0, key.length() - 1);
+            Node methodInTemplateNode = NodeSelector.selectFrom(NodeSelector.encodePath(key), baseResourceNode.getValue());
+            if (methodInTemplateNode == null)
+                unimplementedMethods.add(node);
+        }
+
+        for (MethodNode unimplementedMethod : unimplementedMethods)
+        {
+            templateNode.getValue().removeChild(unimplementedMethod);
+        }
     }
 
     private boolean applyPhases(KeyValueNode templateNode, Phase... phases)
