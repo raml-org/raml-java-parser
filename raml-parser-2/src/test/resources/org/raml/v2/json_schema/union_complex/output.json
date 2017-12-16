@@ -1,10 +1,45 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
+  "$ref"       : "#/definitions/root",
   "definitions": {
+    "cat" : {
+      "required"            : [
+        "name",
+        "color"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
+        "name" : {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        }
+      }
+    },
+    "dog" : {
+      "required"            : [
+        "name",
+        "fangs"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
+        "name" : {
+          "type": "string"
+        },
+        "fangs": {
+          "type": "string"
+        }
+      }
+    },
     "root": {
-      "type": "object",
-      "properties": {
+      "required"            : [
+        "value"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
         "value": {
           "anyOf": [
             {
@@ -16,28 +51,7 @@
           ]
         }
       }
-    },
-    "cat": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "color": {
-          "type": "string"
-        }
-      }
-    },
-    "dog": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "fangs": {
-          "type": "string"
-        }
-      }
     }
-  }
+  },
+  "$schema"    : "http://json-schema.org/draft-04/schema#"
 }

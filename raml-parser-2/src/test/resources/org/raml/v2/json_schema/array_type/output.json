@@ -1,29 +1,37 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
+  "$ref"       : "#/definitions/root",
   "definitions": {
     "Friend": {
-      "type": "object",
-      "properties": {
+      "required"            : [
+        "name"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
         "name": {
           "type": "string"
         }
       }
     },
-
-    "root": {
-      "type": "object",
-      "properties": {
-        "name": {
+    "root"  : {
+      "required"            : [
+        "name",
+        "friends"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
+        "name"   : {
           "type": "string"
         },
         "friends": {
-          "type": "array",
+          "type" : "array",
           "items": {
             "$ref": "#/definitions/Friend"
           }
         }
       }
     }
-  }
+  },
+  "$schema"    : "http://json-schema.org/draft-04/schema#"
 }
