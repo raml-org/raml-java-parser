@@ -15,18 +15,18 @@
  */
 package org.raml.v2.internal.impl.commons;
 
-import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_08;
-import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
-
-import java.util.StringTokenizer;
-
-import javax.annotation.Nullable;
-
 import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNodeFragment;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.grammar.rule.Rule;
+
+import javax.annotation.Nullable;
+import java.util.StringTokenizer;
+
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_08;
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 
 public class RamlHeader
 {
@@ -124,7 +124,7 @@ public class RamlHeader
             return grammar.documentation()
                           .with(0, grammar.usesField());
         case DataType:
-            return grammar.explicitType().with(0, grammar.usesField());
+            return grammar.explicitType().with(0, grammar.usesField()).then(TypeDeclarationNodeFragment.class);
         case NamedExample:
             return grammar.exampleFragment();
         case ResourceType:
