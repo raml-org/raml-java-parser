@@ -20,6 +20,7 @@ import org.raml.v2.internal.impl.commons.phase.RamlTypedFragment;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.util.NodeSelector;
+import org.raml.yagi.framework.util.NodeUtils;
 
 import javax.annotation.Nonnull;
 
@@ -35,7 +36,7 @@ public class TypeDeclarationNodeFragment extends TypeDeclarationNode implements 
     @Override
     public Node getContextNode()
     {
-        return getLibraryNode() != null || getParent() == null ? this : org.raml.yagi.framework.util.NodeUtils.getContextNode(getParent());
+        return getLibraryNode() != null || getParent() == null ? this : NodeUtils.getContextNode(getParent());
     }
 
     @Override
