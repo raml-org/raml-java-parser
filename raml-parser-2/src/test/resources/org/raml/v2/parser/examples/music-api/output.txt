@@ -207,7 +207,7 @@ length: 125
         SYObjectNode (Start: 182 , End: 226, On: input.raml)
             TraitNode (Start: 182 , End: 224, On: input.raml, Source: KeyValueNodeImpl)
                 SYStringNode: "secured" (Start: 182 , End: 189, On: input.raml)
-                RamlTypedFragmentNode (Start: 191 , End: 224, On: input.raml, Source: SYIncludeNode)
+                DefaultRamlTypedFragment (Start: 191 , End: 224, On: input.raml, Source: SYIncludeNode)
                     KeyValueNodeImpl (Start: 18 , End: 130, On: secured/accessToken.raml)
                         SYStringNode: "usage" (Start: 18 , End: 23, On: secured/accessToken.raml)
                         ObjectNodeImpl (Start: 26 , End: 130, On: secured/accessToken.raml, Source: SYStringNode)

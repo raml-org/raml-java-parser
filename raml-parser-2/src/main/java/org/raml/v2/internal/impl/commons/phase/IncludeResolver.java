@@ -15,28 +15,28 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import java.io.InputStream;
-import java.net.URI;
-
 import org.apache.commons.io.IOUtils;
+import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.loader.ResourceLoaderExtended;
 import org.raml.v2.api.loader.ResourceUriCallback;
-import org.raml.yagi.framework.nodes.AbstractRamlNode;
-import org.raml.yagi.framework.nodes.NullNodeImpl;
-import org.raml.yagi.framework.nodes.ObjectNode;
+import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.impl.commons.nodes.DefaultRamlTypedFragment;
+import org.raml.v2.internal.utils.ResourcePathUtils;
+import org.raml.v2.internal.utils.StreamUtils;
+import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.IncludeErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNodeImpl;
+import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.nodes.snakeyaml.SYIncludeNode;
 import org.raml.yagi.framework.phase.Transformer;
-import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentNode;
-import org.raml.v2.api.model.v10.RamlFragment;
-import org.raml.v2.internal.utils.ResourcePathUtils;
-import org.raml.v2.internal.utils.StreamUtils;
+
+import java.io.InputStream;
+import java.net.URI;
 
 
 public class IncludeResolver implements Transformer, ResourceUriCallback
@@ -89,7 +89,7 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
                     result = NodeParser.parse(resourceLoader, resourcePath, includeContent);
                     if (result != null && isTypedFragment(result, fragment))
                     {
-                        final RamlTypedFragmentNode newNode = new RamlTypedFragmentNode(fragment);
+                        final DefaultRamlTypedFragment newNode = new DefaultRamlTypedFragment(fragment);
                         result.replaceWith(newNode);
                         result = newNode;
                     }

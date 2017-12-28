@@ -1,4 +1,4 @@
-TypeDeclarationNode (Start: 20 , End: 127, On: input.raml, Source: SYObjectNode)
+TypeDeclarationNodeFragment (Start: 20 , End: 127, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 20 , End: 32, On: input.raml)
         SYStringNode: "type" (Start: 20 , End: 24, On: input.raml)
         NativeTypeExpressionNode: "object" (Start: 26 , End: 32, On: input.raml, Source: SYStringNode)

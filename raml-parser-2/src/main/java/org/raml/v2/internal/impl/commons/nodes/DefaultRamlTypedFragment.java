@@ -15,27 +15,27 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import org.raml.yagi.framework.nodes.AbstractObjectNode;
-import org.raml.yagi.framework.nodes.ContextProviderNode;
-import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.api.model.v10.RamlFragment;
+import org.raml.v2.internal.impl.commons.phase.RamlTypedFragment;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.yagi.framework.nodes.AbstractObjectNode;
+import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
 
-public class RamlTypedFragmentNode extends AbstractObjectNode implements LibraryNodeProvider, ContextProviderNode
+public class DefaultRamlTypedFragment extends AbstractObjectNode implements RamlTypedFragment
 {
 
     private final RamlFragment fragment;
     private Node libraryNode;
 
-    public RamlTypedFragmentNode(RamlFragment fragment)
+    public DefaultRamlTypedFragment(RamlFragment fragment)
     {
         this.fragment = fragment;
     }
 
-    private RamlTypedFragmentNode(RamlTypedFragmentNode node)
+    protected DefaultRamlTypedFragment(DefaultRamlTypedFragment node)
     {
         super(node);
         this.fragment = node.getFragment();
@@ -46,7 +46,7 @@ public class RamlTypedFragmentNode extends AbstractObjectNode implements Library
     @Override
     public Node copy()
     {
-        return new RamlTypedFragmentNode(this);
+        return new DefaultRamlTypedFragment(this);
     }
 
     @Nonnull
