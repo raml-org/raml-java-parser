@@ -24,18 +24,18 @@ import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
 
-public class RamlTypedFragmentDefault extends AbstractObjectNode implements RamlTypedFragment
+public class DefaultRamlTypedFragment extends AbstractObjectNode implements RamlTypedFragment
 {
 
     private final RamlFragment fragment;
     private Node libraryNode;
 
-    public RamlTypedFragmentDefault(RamlFragment fragment)
+    public DefaultRamlTypedFragment(RamlFragment fragment)
     {
         this.fragment = fragment;
     }
 
-    protected RamlTypedFragmentDefault(RamlTypedFragmentDefault node)
+    protected DefaultRamlTypedFragment(DefaultRamlTypedFragment node)
     {
         super(node);
         this.fragment = node.getFragment();
@@ -46,7 +46,7 @@ public class RamlTypedFragmentDefault extends AbstractObjectNode implements Raml
     @Override
     public Node copy()
     {
-        return new RamlTypedFragmentDefault(this);
+        return new DefaultRamlTypedFragment(this);
     }
 
     @Nonnull

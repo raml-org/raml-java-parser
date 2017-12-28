@@ -21,7 +21,7 @@ import org.raml.v2.api.loader.ResourceLoaderExtended;
 import org.raml.v2.api.loader.ResourceUriCallback;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.commons.RamlHeader;
-import org.raml.v2.internal.impl.commons.nodes.RamlTypedFragmentDefault;
+import org.raml.v2.internal.impl.commons.nodes.DefaultRamlTypedFragment;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
@@ -89,7 +89,7 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
                     result = NodeParser.parse(resourceLoader, resourcePath, includeContent);
                     if (result != null && isTypedFragment(result, fragment))
                     {
-                        final RamlTypedFragmentDefault newNode = new RamlTypedFragmentDefault(fragment);
+                        final DefaultRamlTypedFragment newNode = new DefaultRamlTypedFragment(fragment);
                         result.replaceWith(newNode);
                         result = newNode;
                     }

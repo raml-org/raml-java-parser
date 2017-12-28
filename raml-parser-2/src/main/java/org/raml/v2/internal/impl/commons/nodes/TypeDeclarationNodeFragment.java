@@ -23,7 +23,8 @@ import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
 
-import static org.raml.v2.api.model.v10.RamlFragment.*;
+import static org.raml.v2.api.model.v10.RamlFragment.DataType;
+
 
 public class TypeDeclarationNodeFragment extends TypeDeclarationNode implements RamlTypedFragment
 {
