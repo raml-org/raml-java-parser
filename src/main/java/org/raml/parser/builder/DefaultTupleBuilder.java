@@ -15,15 +15,7 @@
  */
 package org.raml.parser.builder;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.beanutils.SuppressPropertiesBeanIntrospector;
 import org.raml.parser.annotation.Key;
 import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Parent;
@@ -36,6 +28,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.NodeTuple;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.apache.commons.beanutils.SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS;
 
 public class DefaultTupleBuilder<K extends Node, V extends Node> implements TupleBuilder<K, V>
 {
@@ -51,7 +52,7 @@ public class DefaultTupleBuilder<K extends Node, V extends Node> implements Tupl
         builders = new HashMap<String, TupleBuilder<?, ?>>();
         this.setHandler(tupleHandler);
         beanUtilsBean = new BeanUtilsBean();
-        beanUtilsBean.getPropertyUtils().addBeanIntrospector(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
+        beanUtilsBean.getPropertyUtils().addBeanIntrospector(SUPPRESS_CLASS);
     }
 
     @Override
