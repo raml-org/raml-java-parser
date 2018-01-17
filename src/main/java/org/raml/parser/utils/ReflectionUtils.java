@@ -15,6 +15,8 @@
  */
 package org.raml.parser.utils;
 
+import org.apache.commons.beanutils.BeanUtilsBean;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -26,12 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.PropertyUtilsBean;
+import static org.apache.commons.beanutils.SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS;
 
 public class ReflectionUtils
 {
 
     private static final Set<Class<?>> WRAPPERS_PLUS_STRING = new HashSet<Class<?>>();
+    private static BeanUtilsBean BEAN_UTILS_BEAN;
 
     static
     {
@@ -46,6 +49,9 @@ public class ReflectionUtils
         WRAPPERS_PLUS_STRING.add(BigInteger.class);
         WRAPPERS_PLUS_STRING.add(BigDecimal.class);
         WRAPPERS_PLUS_STRING.add(String.class);
+
+        BEAN_UTILS_BEAN = new BeanUtilsBean();
+        BEAN_UTILS_BEAN.getPropertyUtils().addBeanIntrospector(SUPPRESS_CLASS);
     }
 
     public static boolean isWrapperOrString(Class<?> type)
@@ -78,7 +84,7 @@ public class ReflectionUtils
         {
             try
             {
-                new PropertyUtilsBean().setProperty(parent, fieldName, value);
+                BEAN_UTILS_BEAN.getPropertyUtils().setProperty(parent, fieldName, value);
             }
             catch (IllegalAccessException e)
             {

@@ -15,14 +15,16 @@
  */
 package org.raml.parser.builder;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-
-import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.raml.parser.resolver.DefaultScalarTupleHandler;
 import org.raml.parser.utils.ConvertUtils;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.ScalarNode;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+
+import static org.apache.commons.beanutils.SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS;
 
 public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Node>
 {
@@ -33,6 +35,7 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
     private Class<?> keyClass;
     private Class valueClass;
 
+    private BeanUtilsBean beanUtilsBean;
 
     public ImplicitMapEntryBuilder(String fieldName, Class<?> keyClass, Class<?> valueClass)
     {
@@ -40,6 +43,8 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
         this.fieldName = fieldName;
         this.keyClass = keyClass;
         this.valueClass = valueClass;
+        beanUtilsBean = new BeanUtilsBean();
+        beanUtilsBean.getPropertyUtils().addBeanIntrospector(SUPPRESS_CLASS);
     }
 
 
@@ -60,7 +65,7 @@ public class ImplicitMapEntryBuilder extends DefaultTupleBuilder<ScalarNode, Nod
         Map actualParent;
         try
         {
-            actualParent = (Map) new PropertyUtilsBean().getProperty(parent, fieldName);
+            actualParent = (Map) beanUtilsBean.getPropertyUtils().getProperty(parent, fieldName);
             Object newValue = valueClass.newInstance();
             Object key = ConvertUtils.convertTo(keyValue, keyClass);
             actualParent.put(key, newValue);
