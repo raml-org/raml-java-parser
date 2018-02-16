@@ -4,9 +4,9 @@
 	"type": "A",
 	"address":
 	{
-		"street": "Wanheimer Straße 70",
-		"zipCode": "40468",
-		"city": "Düsseldorf",
-		"country": "Germany"
+		"street": "street name",
+		"zipCode": "1234",
+		"city": "San Francisco",
+		"country": "United States"
 	}
 }
