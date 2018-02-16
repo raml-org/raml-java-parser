@@ -1,0 +1,14 @@
+{
+  "definitions": {
+    "Car": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {
+        "color" : {
+          "$ref": "car-properties-schema.json#/definitions/color"
+        }
+      },
+      "required": ["color"]
+    }
+  }
+}

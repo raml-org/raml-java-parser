@@ -1,0 +1,96 @@
+RamlDocumentNode (Start: 11 , End: 303, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 38, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 38, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 38, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "Ref json schema test" (Start: 18 , End: 38, On: input.raml)
+    KeyValueNodeImpl (Start: 39 , End: 54, On: input.raml)
+        SYStringNode: "version" (Start: 39 , End: 46, On: input.raml)
+        ObjectNodeImpl (Start: 48 , End: 54, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 54)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "1.27.0" (Start: 48 , End: 54, On: input.raml, Source: SYStringNode)
+    TypesNode (Start: 56 , End: 237, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "types" (Start: 56 , End: 61, On: input.raml)
+        SYObjectNode (Start: 65 , End: 237, On: input.raml)
+            TypeDeclarationField (Start: 65 , End: 237, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "Car" (Start: 65 , End: 68, On: input.raml)
+                TypeDeclarationNode (Start: 74 , End: 237, On: input.raml, Source: SYObjectNode)
+                    KeyValueNodeImpl (Start: 74 , End: 108, On: input.raml)
+                        SYStringNode: "type" (Start: 74 , End: 78, On: input.raml)
+                        ExternalSchemaTypeExpressionNode: "{
+  "definitions": {
+    "Car": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {
+        "color" : {
+          "$ref": "car-properties-schema.json#/definitions/color"
+        }
+      },
+      "required": ["color"]
+    }
+  }
+}" (Start: 80 , End: 108, On: input.raml, Source: StringNodeImpl)
+                    ExamplesNode (Start: 113 , End: 237, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "examples" (Start: 113 , End: 121, On: input.raml)
+                        SYObjectNode (Start: 129 , End: 237, On: input.raml)
+                            ExampleDeclarationNode (Start: 129 , End: 182, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "good" (Start: 129 , End: 133, On: input.raml)
+                                SYStringNode: "{
+  "color": "RED"
+}
+" (Start: 135 , End: 182, On: input.raml)
+                            ExampleDeclarationNode (Start: 188 , End: 237, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "bad" (Start: 188 , End: 191, On: input.raml)
+                                ErrorNode: "Error validating JSON. Error: {
+error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
+    level: "error"
+    schema: {"loadingURI":"car-properties-schema.json#","pointer":"/definitions/color"}
+    instance: {"pointer":"/color"}
+    domain: "validation"
+    keyword: "type"
+    found: "integer"
+    expected: ["string"]
+
+}" (Start: 193 , End: 237, On: input.raml, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "Car" (Start: -1 , End: -1, Source: SYStringNode)
+    ResourceNode (Start: 237 , End: 303, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "/car" (Start: 237 , End: 241, On: input.raml)
+        SYObjectNode (Start: 245 , End: 303, On: input.raml)
+            MethodNode (Start: 245 , End: 303, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "post" (Start: 245 , End: 249, On: input.raml)
+                SYObjectNode (Start: 255 , End: 303, On: input.raml)
+                    BodyNode (Start: 255 , End: 303, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "body" (Start: 255 , End: 259, On: input.raml)
+                        SYObjectNode (Start: 267 , End: 303, On: input.raml)
+                            KeyValueNodeImpl (Start: 267 , End: 303, On: input.raml)
+                                SYStringNode: "application/json" (Start: 267 , End: 283, On: input.raml)
+                                TypeDeclarationNode (Start: 293 , End: 303, On: input.raml, Source: SYObjectNode)
+                                    KeyValueNodeImpl (Start: 293 , End: 302, On: input.raml)
+                                        SYStringNode: "type" (Start: 293 , End: 297, On: input.raml)
+                                        NamedTypeExpressionNode Car -> {TypeDeclarationNode RefStart: 74 , RefEnd: 237} (Start: 299 , End: 302, On: input.raml, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "post" (Start: -1 , End: -1, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                ObjectNodeImpl (Start: -1 , End: -1)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                        OverlayableStringNode: "/car" (Start: -1 , End: -1, Source: SYStringNode)
