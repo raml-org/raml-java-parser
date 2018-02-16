@@ -1,0 +1,12 @@
+{
+	"name": "C&A",
+	"active": true,
+	"type": "AG",
+	"address":
+	{
+		"street": "Wanheimer Straße 70",
+		"zipCode": "40468",
+		"city": "Düsseldorf",
+		"country": "Germany"
+	}
+}

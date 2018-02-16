@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Data type demo. Nothing really useful
+baseUri: http://localhost:8080/api
+
+types:
+  Partner: !include ref/partner.raml
+  Company: !include ref/company.raml
+
+/raml:
+  /companies:
+    post:
+      body:
+        application/json:
+          type: Company
+          example: !include ref/company-example.json
