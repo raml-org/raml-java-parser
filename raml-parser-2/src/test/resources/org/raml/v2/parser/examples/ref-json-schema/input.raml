@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Ref json schema test
+version: 1.27.0
+
+types:
+  Car:
+    type: !include car-schema.json#Car
+    examples:
+      good: |
+        {
+          "color": "RED"
+        }
+      bad: |
+        {
+          "color": 1
+        }
+
+/car:
+  post:
+    body:
+      application/json:
+        type: Car

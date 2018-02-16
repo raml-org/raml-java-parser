@@ -45,6 +45,7 @@ import org.xml.sax.SAXException;
 
 public class SchemaGenerator
 {
+    private static String DEFINITIONS = "/definitions/";
 
     public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType xmlTypeDefinition) throws SAXException
     {
@@ -62,7 +63,11 @@ public class SchemaGenerator
         JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
         if (jsonTypeDefinition.getInternalFragment() != null)
         {
-            return factory.getJsonSchema(jsonSchema, "/definitions/" + jsonTypeDefinition.getInternalFragment());
+            if (includedResourceUri != null)
+            {
+                return factory.getJsonSchema(includedResourceUri + "#" + DEFINITIONS + jsonTypeDefinition.getInternalFragment());
+            }
+            return factory.getJsonSchema(jsonSchema, DEFINITIONS + jsonTypeDefinition.getInternalFragment());
         }
         else
         {

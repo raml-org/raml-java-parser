@@ -52,7 +52,7 @@ RamlDocumentNode (Start: 11 , End: 422, On: input.raml, Source: SYObjectNode)
                                 ErrorNode: "Error validating JSON. Error: {
 error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
     level: "error"
-    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/age"}
+    schema: {"loadingURI":"user.json#","pointer":"/definitions/User/properties/age"}
     instance: {"pointer":"/age"}
     domain: "validation"
     keyword: "type"
@@ -61,7 +61,7 @@ error: instance type (string) does not match any allowed primitive type (allowed
 ,
 error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
     level: "error"
-    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/name"}
+    schema: {"loadingURI":"user.json#","pointer":"/definitions/User/properties/name"}
     instance: {"pointer":"/name"}
     domain: "validation"
     keyword: "type"
@@ -95,7 +95,7 @@ error: instance type (integer) does not match any allowed primitive type (allowe
                                         ErrorNode: "Error validating JSON. Error: {
 error: instance type (string) does not match any allowed primitive type (allowed: ["integer"])
     level: "error"
-    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/age"}
+    schema: {"loadingURI":"user.json#","pointer":"/definitions/User/properties/age"}
     instance: {"pointer":"/age"}
     domain: "validation"
     keyword: "type"
@@ -104,7 +104,7 @@ error: instance type (string) does not match any allowed primitive type (allowed
 ,
 error: instance type (integer) does not match any allowed primitive type (allowed: ["string"])
     level: "error"
-    schema: {"loadingURI":"#","pointer":"/definitions/User/properties/name"}
+    schema: {"loadingURI":"user.json#","pointer":"/definitions/User/properties/name"}
     instance: {"pointer":"/name"}
     domain: "validation"
     keyword: "type"
