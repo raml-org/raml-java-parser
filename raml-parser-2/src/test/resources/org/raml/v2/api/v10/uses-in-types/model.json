@@ -1,0 +1,233 @@
+{
+  "annotationTypes": [],
+  "annotations": [],
+  "baseUri": null,
+  "baseUriParameters": [],
+  "description": null,
+  "documentation": [],
+  "mediaType": [],
+  "protocols": [],
+  "ramlVersion": "1.0",
+  "resourceTypes": [],
+  "resources": [
+    {
+      "annotations": [],
+      "description": null,
+      "displayName": {
+        "annotations": [],
+        "value": "/trips"
+      },
+      "is": [],
+      "methods": [
+        {
+          "annotations": [],
+          "body": [],
+          "description": null,
+          "displayName": {
+            "annotations": [],
+            "value": "get"
+          },
+          "headers": [],
+          "is": [],
+          "method": "get",
+          "protocols": [],
+          "queryParameters": [],
+          "queryString": null,
+          "responses": [
+            {
+              "annotations": [],
+              "body": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": {
+                    "annotations": [],
+                    "value": "application/json"
+                  },
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "name": "application/json",
+                  "parentTypes": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": null,
+                      "displayName": null,
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "name": "any",
+                      "parentTypes": [],
+                      "required": true,
+                      "toJsonSchema": null,
+                      "toXmlSchema": null,
+                      "type": null,
+                      "xml": null
+                    }
+                  ],
+                  "required": true,
+                  "toJsonSchema": null,
+                  "toXmlSchema": null,
+                  "type": "any",
+                  "xml": null
+                }
+              ],
+              "code": {
+                "value": "200"
+              },
+              "description": null,
+              "headers": []
+            }
+          ],
+          "securedBy": []
+        }
+      ],
+      "relativeUri": {
+        "value": "/trips"
+      },
+      "resourcePath": "/trips",
+      "resources": [],
+      "securedBy": [],
+      "type": null,
+      "uriParameters": []
+    }
+  ],
+  "schemas": [],
+  "securedBy": [],
+  "securitySchemes": [],
+  "title": {
+    "annotations": [],
+    "value": "System Trips API"
+  },
+  "traits": [],
+  "types": [
+    {
+      "additionalProperties": true,
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": null,
+      "discriminator": null,
+      "discriminatorValue": null,
+      "displayName": {
+        "annotations": [],
+        "value": "type-from-data-type"
+      },
+      "example": null,
+      "examples": [],
+      "facets": [],
+      "maxProperties": null,
+      "minProperties": null,
+      "name": "type-from-data-type",
+      "parentTypes": [
+        {
+          "additionalProperties": true,
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "discriminator": null,
+          "discriminatorValue": null,
+          "displayName": null,
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxProperties": null,
+          "minProperties": null,
+          "name": "object",
+          "parentTypes": [],
+          "properties": [],
+          "required": true,
+          "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+          "type": null,
+          "xml": null
+        }
+      ],
+      "properties": [
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "displayName": {
+            "annotations": [],
+            "value": "vcr"
+          },
+          "enumValues": [],
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxLength": null,
+          "minLength": null,
+          "name": "vcr",
+          "parentTypes": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": {
+                "annotations": [],
+                "value": "type-in-library"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "type-in-library",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "string",
+                  "parentTypes": [],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"type-in-library\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": "string",
+              "xml": null
+            }
+          ],
+          "pattern": null,
+          "required": true,
+          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"vcr\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+          "type": "type-in-library",
+          "xml": null
+        }
+      ],
+      "required": true,
+      "toJsonSchema": "{\"$ref\":\"#/definitions/type-from-data-type\",\"definitions\":{\"type-from-data-type\":{\"type\":\"object\",\"properties\":{\"vcr\":{\"type\":\"string\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"type-from-data-type\" type=\"tns:type-from-data-type\"/>\n    <complexType name=\"type-from-data-type\">\n        <sequence>\n            <element name=\"vcr\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+      "type": "object",
+      "xml": null
+    }
+  ],
+  "uses": [],
+  "version": null
+}

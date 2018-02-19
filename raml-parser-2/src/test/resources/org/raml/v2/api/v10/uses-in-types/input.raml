@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: System Trips API   
+
+types:
+  type-from-data-type: !include data-type.raml
+          
+/trips:
+  get:
+    responses:  
+      200:
+        body: 
+          application/json:
