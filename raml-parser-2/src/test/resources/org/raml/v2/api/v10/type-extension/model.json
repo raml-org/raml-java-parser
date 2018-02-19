@@ -57,9 +57,9 @@
                     "structuredValue": {
                       "isScalar": true,
                       "properties": [],
-                      "value": "{\n\t\"name\": \"C&A\",\n\t\"active\": true,\n\t\"type\": \"A\",\n\t\"address\":\n\t{\n\t\t\"street\": \"Wanheimer Straße 70\",\n\t\t\"zipCode\": \"40468\",\n\t\t\"city\": \"Düsseldorf\",\n\t\t\"country\": \"Germany\"\n\t}\n}"
+                      "value": "{\n\t\"name\": \"C&A\",\n\t\"active\": true,\n\t\"type\": \"A\",\n\t\"address\":\n\t{\n\t\t\"street\": \"street name\",\n\t\t\"zipCode\": \"1234\",\n\t\t\"city\": \"San Francisco\",\n\t\t\"country\": \"United States\"\n\t}\n}"
                     },
-                    "value": "{\n\t\"name\": \"C&A\",\n\t\"active\": true,\n\t\"type\": \"A\",\n\t\"address\":\n\t{\n\t\t\"street\": \"Wanheimer Straße 70\",\n\t\t\"zipCode\": \"40468\",\n\t\t\"city\": \"Düsseldorf\",\n\t\t\"country\": \"Germany\"\n\t}\n}"
+                    "value": "{\n\t\"name\": \"C&A\",\n\t\"active\": true,\n\t\"type\": \"A\",\n\t\"address\":\n\t{\n\t\t\"street\": \"street name\",\n\t\t\"zipCode\": \"1234\",\n\t\t\"city\": \"San Francisco\",\n\t\t\"country\": \"United States\"\n\t}\n}"
                   },
                   "examples": [],
                   "facets": [],
