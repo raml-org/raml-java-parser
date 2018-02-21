@@ -18,7 +18,6 @@ package org.raml.v2.internal.impl.commons.phase;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
-import org.raml.v2.internal.impl.v10.phase.ReferenceResolverTransformer;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.TransformationPhase;
 import org.raml.yagi.framework.phase.Transformer;
