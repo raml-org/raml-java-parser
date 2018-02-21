@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl.v10.nodes;
 
 import org.raml.v2.internal.impl.commons.nodes.AbstractReferenceNode;
+import org.raml.v2.internal.impl.commons.nodes.RamlDocumentNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
@@ -50,6 +51,14 @@ public class NamedTypeExpressionNode extends AbstractReferenceNode implements Ty
         {
             // We add the .. as the node selector selects the value and we want the key value pair
             Node node = NodeSelector.selectFrom(Raml10Grammar.TYPES_KEY_NAME + "/" + getRefName(), contextNode);
+
+            if (node == null && contextNode != null)
+            {
+                if (contextNode.getRootNode() instanceof RamlDocumentNode)
+                {
+                    node = NodeSelector.selectFrom(Raml10Grammar.TYPES_KEY_NAME + "/" + getRefName(), contextNode.getRootNode());
+                }
+            }
             if (node == null)
             {
                 // If is not defined in types we need to search in schemas
