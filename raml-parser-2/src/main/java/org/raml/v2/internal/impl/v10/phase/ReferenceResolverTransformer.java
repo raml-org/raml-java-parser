@@ -24,7 +24,6 @@ import org.raml.yagi.framework.phase.Transformer;
 public class ReferenceResolverTransformer implements Transformer
 {
 
-
     @Override
     public boolean matches(Node node)
     {

@@ -112,7 +112,7 @@ public abstract class Rule
         if (getFactory() != null)
         {
             Node newNode = getFactory().create(currentNode, args);
-            if (!newNode.getClass().equals(currentNode.getClass()))
+            if (!newNode.getClass().isAssignableFrom(currentNode.getClass()))
             {
                 return newNode;
             }

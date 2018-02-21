@@ -48,12 +48,9 @@ public class RamlFragmentLibraryLinkingTransformer implements Transformer
     {
         Node apply = applyPhases(node, new TransformationPhase(new LibraryLinkingTransformation(builder, resourceLoader)));
 
-        if (apply instanceof RamlTypedFragment)
-        {
-            // Hack!!!!
-            ((RamlTypedFragment) apply).resolveLibraryReference();
-        }
-        apply = applyPhases(apply, new TransformationPhase(new ReferenceResolverTransformer()));
+        // Hack!!!!
+        ((RamlTypedFragment) apply).resolveLibraryReference();
+
         return apply;
     }
 }
