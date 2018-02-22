@@ -1,0 +1,2476 @@
+{
+  "annotationTypes": [],
+  "annotations": [],
+  "baseUri": {
+    "annotations": [],
+    "value": "http://localhost:8080/api"
+  },
+  "baseUriParameters": [],
+  "description": null,
+  "documentation": [],
+  "mediaType": [],
+  "protocols": [],
+  "ramlVersion": "1.0",
+  "resourceTypes": [],
+  "resources": [
+    {
+      "annotations": [],
+      "description": null,
+      "displayName": {
+        "annotations": [],
+        "value": "/raml"
+      },
+      "is": [],
+      "methods": [],
+      "relativeUri": {
+        "value": "/raml"
+      },
+      "resourcePath": "/raml",
+      "resources": [
+        {
+          "annotations": [],
+          "description": null,
+          "displayName": {
+            "annotations": [],
+            "value": "/companies"
+          },
+          "is": [],
+          "methods": [
+            {
+              "annotations": [],
+              "body": [
+                {
+                  "additionalProperties": true,
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "discriminator": null,
+                  "discriminatorValue": null,
+                  "displayName": {
+                    "annotations": [],
+                    "value": "application/json"
+                  },
+                  "example": {
+                    "annotations": [],
+                    "name": null,
+                    "structuredValue": {
+                      "isScalar": true,
+                      "properties": [],
+                      "value": "{\n\t\"name\": \"C&A\",\n\t\"active\": true,\n\t\"type\": \"A\",\n\t\"address\":\n\t{\n\t\t\"street\": \"street name\",\n\t\t\"zipCode\": \"1234\",\n\t\t\"city\": \"San Francisco\",\n\t\t\"country\": \"United States\"\n\t}\n}"
+                    },
+                    "value": "{\n\t\"name\": \"C&A\",\n\t\"active\": true,\n\t\"type\": \"A\",\n\t\"address\":\n\t{\n\t\t\"street\": \"street name\",\n\t\t\"zipCode\": \"1234\",\n\t\t\"city\": \"San Francisco\",\n\t\t\"country\": \"United States\"\n\t}\n}"
+                  },
+                  "examples": [],
+                  "facets": [],
+                  "maxProperties": null,
+                  "minProperties": null,
+                  "name": "application/json",
+                  "parentTypes": [
+                    {
+                      "additionalProperties": true,
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "annotations": [],
+                        "value": "A legal company (legal person)"
+                      },
+                      "discriminator": null,
+                      "discriminatorValue": null,
+                      "displayName": {
+                        "annotations": [],
+                        "value": "Company"
+                      },
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxProperties": null,
+                      "minProperties": null,
+                      "name": "Company",
+                      "parentTypes": [
+                        {
+                          "additionalProperties": true,
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Base for company and person"
+                          },
+                          "discriminator": null,
+                          "discriminatorValue": null,
+                          "displayName": {
+                            "annotations": [],
+                            "value": "Partner"
+                          },
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxProperties": null,
+                          "minProperties": null,
+                          "name": "Partner",
+                          "parentTypes": [
+                            {
+                              "additionalProperties": true,
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "discriminator": null,
+                              "discriminatorValue": null,
+                              "displayName": null,
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxProperties": null,
+                              "minProperties": null,
+                              "name": "object",
+                              "parentTypes": [],
+                              "properties": [],
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "properties": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Second name or company name"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "name"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "name",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Still doing business with him/it?"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "active"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "name": "active",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "name": "boolean",
+                                  "parentTypes": [],
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"boolean\"/>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"active\" type=\"boolean\"/>\n</schema>\n",
+                              "type": "boolean",
+                              "xml": null
+                            }
+                          ],
+                          "required": true,
+                          "toJsonSchema": "{\"$ref\":\"#/definitions/Partner\",\"definitions\":{\"Partner\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"active\":{\"type\":\"boolean\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Partner\" type=\"tns:Partner\"/>\n    <complexType name=\"Partner\">\n        <sequence>\n            <element name=\"name\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"active\" type=\"boolean\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+                          "type": "object",
+                          "xml": null
+                        }
+                      ],
+                      "properties": [
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Second name or company name"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "name"
+                          },
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "name",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "string",
+                              "parentTypes": [],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": "string",
+                          "xml": null
+                        },
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Still doing business with him/it?"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "active"
+                          },
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "name": "active",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "name": "boolean",
+                              "parentTypes": [],
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"boolean\"/>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"active\" type=\"boolean\"/>\n</schema>\n",
+                          "type": "boolean",
+                          "xml": null
+                        },
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Legal status"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "type"
+                          },
+                          "enumValues": [
+                            "A",
+                            "B"
+                          ],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "type",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "string",
+                              "parentTypes": [],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"type\">\n        <simpleType>\n            <restriction base=\"string\">\n                <enumeration value=\"A\"/>\n                <enumeration value=\"B\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": "string",
+                          "xml": null
+                        },
+                        {
+                          "additionalProperties": true,
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": null,
+                          "discriminator": null,
+                          "discriminatorValue": null,
+                          "displayName": {
+                            "annotations": [],
+                            "value": "address"
+                          },
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxProperties": null,
+                          "minProperties": null,
+                          "name": "address",
+                          "parentTypes": [
+                            {
+                              "additionalProperties": true,
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Simple address"
+                              },
+                              "discriminator": null,
+                              "discriminatorValue": null,
+                              "displayName": {
+                                "annotations": [],
+                                "value": "type"
+                              },
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxProperties": null,
+                              "minProperties": null,
+                              "name": "object",
+                              "parentTypes": [
+                                {
+                                  "additionalProperties": true,
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "discriminator": null,
+                                  "discriminatorValue": null,
+                                  "displayName": null,
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxProperties": null,
+                                  "minProperties": null,
+                                  "name": "object",
+                                  "parentTypes": [],
+                                  "properties": [],
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "properties": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": {
+                                    "annotations": [],
+                                    "value": "Street and number"
+                                  },
+                                  "displayName": {
+                                    "annotations": [],
+                                    "value": "street"
+                                  },
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "street",
+                                  "parentTypes": [
+                                    {
+                                      "allowedTargets": [],
+                                      "annotations": [],
+                                      "defaultValue": null,
+                                      "description": null,
+                                      "displayName": null,
+                                      "enumValues": [],
+                                      "example": null,
+                                      "examples": [],
+                                      "facets": [],
+                                      "maxLength": null,
+                                      "minLength": null,
+                                      "name": "string",
+                                      "parentTypes": [],
+                                      "pattern": null,
+                                      "required": true,
+                                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                      "type": null,
+                                      "xml": null
+                                    }
+                                  ],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"street\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": "string",
+                                  "xml": null
+                                },
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": {
+                                    "annotations": [],
+                                    "value": "Street and number"
+                                  },
+                                  "displayName": {
+                                    "annotations": [],
+                                    "value": "zipCode"
+                                  },
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "zipCode",
+                                  "parentTypes": [
+                                    {
+                                      "allowedTargets": [],
+                                      "annotations": [],
+                                      "defaultValue": null,
+                                      "description": null,
+                                      "displayName": null,
+                                      "enumValues": [],
+                                      "example": null,
+                                      "examples": [],
+                                      "facets": [],
+                                      "maxLength": null,
+                                      "minLength": null,
+                                      "name": "string",
+                                      "parentTypes": [],
+                                      "pattern": null,
+                                      "required": true,
+                                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                      "type": null,
+                                      "xml": null
+                                    }
+                                  ],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"zipCode\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": "string",
+                                  "xml": null
+                                },
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": {
+                                    "annotations": [],
+                                    "value": "The city"
+                                  },
+                                  "displayName": {
+                                    "annotations": [],
+                                    "value": "city"
+                                  },
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "city",
+                                  "parentTypes": [
+                                    {
+                                      "allowedTargets": [],
+                                      "annotations": [],
+                                      "defaultValue": null,
+                                      "description": null,
+                                      "displayName": null,
+                                      "enumValues": [],
+                                      "example": null,
+                                      "examples": [],
+                                      "facets": [],
+                                      "maxLength": null,
+                                      "minLength": null,
+                                      "name": "string",
+                                      "parentTypes": [],
+                                      "pattern": null,
+                                      "required": true,
+                                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                      "type": null,
+                                      "xml": null
+                                    }
+                                  ],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"city\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": "string",
+                                  "xml": null
+                                },
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": {
+                                    "annotations": [],
+                                    "value": "The city"
+                                  },
+                                  "displayName": {
+                                    "annotations": [],
+                                    "value": "country"
+                                  },
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "country",
+                                  "parentTypes": [
+                                    {
+                                      "allowedTargets": [],
+                                      "annotations": [],
+                                      "defaultValue": null,
+                                      "description": null,
+                                      "displayName": null,
+                                      "enumValues": [],
+                                      "example": null,
+                                      "examples": [],
+                                      "facets": [],
+                                      "maxLength": null,
+                                      "minLength": null,
+                                      "name": "string",
+                                      "parentTypes": [],
+                                      "pattern": null,
+                                      "required": true,
+                                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                      "type": null,
+                                      "xml": null
+                                    }
+                                  ],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"country\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": "string",
+                                  "xml": null
+                                }
+                              ],
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <element name=\"street\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"zipCode\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"city\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"country\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                              "type": "object",
+                              "xml": null
+                            }
+                          ],
+                          "properties": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Street and number"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "street"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "street",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"street\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Street and number"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "zipCode"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "zipCode",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"zipCode\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "The city"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "city"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "city",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"city\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "The city"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "country"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "country",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"country\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            }
+                          ],
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"address\">\n        <complexType>\n            <sequence>\n                <element name=\"street\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"zipCode\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"city\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"country\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                          "type": "object",
+                          "xml": null
+                        }
+                      ],
+                      "required": true,
+                      "toJsonSchema": "{\"$ref\":\"#/definitions/Company\",\"definitions\":{\"Company\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"active\":{\"type\":\"boolean\"},\"type\":{\"type\":\"string\"},\"address\":{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}}}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Company\" type=\"tns:Company\"/>\n    <complexType name=\"Company\">\n        <sequence>\n            <element name=\"name\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"active\" type=\"boolean\"/>\n            <element name=\"type\">\n                <simpleType>\n                    <restriction base=\"string\">\n                        <enumeration value=\"A\"/>\n                        <enumeration value=\"B\"/>\n                    </restriction>\n                </simpleType>\n            </element>\n            <element name=\"address\">\n                <complexType>\n                    <sequence>\n                        <element name=\"street\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <element name=\"zipCode\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <element name=\"city\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <element name=\"country\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n                    </sequence>\n                </complexType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+                      "type": "Partner",
+                      "xml": null
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "annotations": [],
+                        "value": "Second name or company name"
+                      },
+                      "displayName": {
+                        "annotations": [],
+                        "value": "name"
+                      },
+                      "enumValues": [],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxLength": null,
+                      "minLength": null,
+                      "name": "name",
+                      "parentTypes": [
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": null,
+                          "displayName": null,
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "string",
+                          "parentTypes": [],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": null,
+                          "xml": null
+                        }
+                      ],
+                      "pattern": null,
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                      "type": "string",
+                      "xml": null
+                    },
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "annotations": [],
+                        "value": "Still doing business with him/it?"
+                      },
+                      "displayName": {
+                        "annotations": [],
+                        "value": "active"
+                      },
+                      "enumValues": [],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "name": "active",
+                      "parentTypes": [
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": null,
+                          "displayName": null,
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "name": "boolean",
+                          "parentTypes": [],
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"boolean\"/>\n</schema>\n",
+                          "type": null,
+                          "xml": null
+                        }
+                      ],
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"active\" type=\"boolean\"/>\n</schema>\n",
+                      "type": "boolean",
+                      "xml": null
+                    },
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": {
+                        "annotations": [],
+                        "value": "Legal status"
+                      },
+                      "displayName": {
+                        "annotations": [],
+                        "value": "type"
+                      },
+                      "enumValues": [
+                        "A",
+                        "B"
+                      ],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxLength": null,
+                      "minLength": null,
+                      "name": "type",
+                      "parentTypes": [
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": null,
+                          "displayName": null,
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "string",
+                          "parentTypes": [],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": null,
+                          "xml": null
+                        }
+                      ],
+                      "pattern": null,
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"type\">\n        <simpleType>\n            <restriction base=\"string\">\n                <enumeration value=\"A\"/>\n                <enumeration value=\"B\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+                      "type": "string",
+                      "xml": null
+                    },
+                    {
+                      "additionalProperties": true,
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": null,
+                      "discriminator": null,
+                      "discriminatorValue": null,
+                      "displayName": {
+                        "annotations": [],
+                        "value": "address"
+                      },
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxProperties": null,
+                      "minProperties": null,
+                      "name": "address",
+                      "parentTypes": [
+                        {
+                          "additionalProperties": true,
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Simple address"
+                          },
+                          "discriminator": null,
+                          "discriminatorValue": null,
+                          "displayName": {
+                            "annotations": [],
+                            "value": "type"
+                          },
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxProperties": null,
+                          "minProperties": null,
+                          "name": "object",
+                          "parentTypes": [
+                            {
+                              "additionalProperties": true,
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "discriminator": null,
+                              "discriminatorValue": null,
+                              "displayName": null,
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxProperties": null,
+                              "minProperties": null,
+                              "name": "object",
+                              "parentTypes": [],
+                              "properties": [],
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "properties": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Street and number"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "street"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "street",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"street\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "Street and number"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "zipCode"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "zipCode",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"zipCode\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "The city"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "city"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "city",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"city\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            },
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": {
+                                "annotations": [],
+                                "value": "The city"
+                              },
+                              "displayName": {
+                                "annotations": [],
+                                "value": "country"
+                              },
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "country",
+                              "parentTypes": [
+                                {
+                                  "allowedTargets": [],
+                                  "annotations": [],
+                                  "defaultValue": null,
+                                  "description": null,
+                                  "displayName": null,
+                                  "enumValues": [],
+                                  "example": null,
+                                  "examples": [],
+                                  "facets": [],
+                                  "maxLength": null,
+                                  "minLength": null,
+                                  "name": "string",
+                                  "parentTypes": [],
+                                  "pattern": null,
+                                  "required": true,
+                                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                                  "type": null,
+                                  "xml": null
+                                }
+                              ],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"country\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": "string",
+                              "xml": null
+                            }
+                          ],
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <element name=\"street\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"zipCode\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"city\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"country\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                          "type": "object",
+                          "xml": null
+                        }
+                      ],
+                      "properties": [
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Street and number"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "street"
+                          },
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "street",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "string",
+                              "parentTypes": [],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"street\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": "string",
+                          "xml": null
+                        },
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "Street and number"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "zipCode"
+                          },
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "zipCode",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "string",
+                              "parentTypes": [],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"zipCode\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": "string",
+                          "xml": null
+                        },
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "The city"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "city"
+                          },
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "city",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "string",
+                              "parentTypes": [],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"city\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": "string",
+                          "xml": null
+                        },
+                        {
+                          "allowedTargets": [],
+                          "annotations": [],
+                          "defaultValue": null,
+                          "description": {
+                            "annotations": [],
+                            "value": "The city"
+                          },
+                          "displayName": {
+                            "annotations": [],
+                            "value": "country"
+                          },
+                          "enumValues": [],
+                          "example": null,
+                          "examples": [],
+                          "facets": [],
+                          "maxLength": null,
+                          "minLength": null,
+                          "name": "country",
+                          "parentTypes": [
+                            {
+                              "allowedTargets": [],
+                              "annotations": [],
+                              "defaultValue": null,
+                              "description": null,
+                              "displayName": null,
+                              "enumValues": [],
+                              "example": null,
+                              "examples": [],
+                              "facets": [],
+                              "maxLength": null,
+                              "minLength": null,
+                              "name": "string",
+                              "parentTypes": [],
+                              "pattern": null,
+                              "required": true,
+                              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                              "type": null,
+                              "xml": null
+                            }
+                          ],
+                          "pattern": null,
+                          "required": true,
+                          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"country\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                          "type": "string",
+                          "xml": null
+                        }
+                      ],
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"address\">\n        <complexType>\n            <sequence>\n                <element name=\"street\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"zipCode\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"city\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"country\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                      "type": "object",
+                      "xml": null
+                    }
+                  ],
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"active\":{\"type\":\"boolean\"},\"type\":{\"type\":\"string\"},\"address\":{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}}}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Company\">\n        <complexType>\n            <sequence>\n                <element name=\"name\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"active\" type=\"boolean\"/>\n                <element name=\"type\">\n                    <simpleType>\n                        <restriction base=\"string\">\n                            <enumeration value=\"A\"/>\n                            <enumeration value=\"B\"/>\n                        </restriction>\n                    </simpleType>\n                </element>\n                <element name=\"address\">\n                    <complexType>\n                        <sequence>\n                            <element name=\"street\">\n                                <simpleType>\n                                    <restriction base=\"string\"/>\n                                </simpleType>\n                            </element>\n                            <element name=\"zipCode\">\n                                <simpleType>\n                                    <restriction base=\"string\"/>\n                                </simpleType>\n                            </element>\n                            <element name=\"city\">\n                                <simpleType>\n                                    <restriction base=\"string\"/>\n                                </simpleType>\n                            </element>\n                            <element name=\"country\">\n                                <simpleType>\n                                    <restriction base=\"string\"/>\n                                </simpleType>\n                            </element>\n                            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n                        </sequence>\n                    </complexType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                  "type": "Company",
+                  "xml": null
+                }
+              ],
+              "description": null,
+              "displayName": {
+                "annotations": [],
+                "value": "post"
+              },
+              "headers": [],
+              "is": [],
+              "method": "post",
+              "protocols": [],
+              "queryParameters": [],
+              "queryString": null,
+              "responses": [],
+              "securedBy": []
+            }
+          ],
+          "relativeUri": {
+            "value": "/companies"
+          },
+          "resourcePath": "/raml/companies",
+          "resources": [],
+          "securedBy": [],
+          "type": null,
+          "uriParameters": []
+        }
+      ],
+      "securedBy": [],
+      "type": null,
+      "uriParameters": []
+    }
+  ],
+  "schemas": [],
+  "securedBy": [],
+  "securitySchemes": [],
+  "title": {
+    "annotations": [],
+    "value": "Data type demo. Nothing really useful"
+  },
+  "traits": [],
+  "types": [
+    {
+      "additionalProperties": true,
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": {
+        "annotations": [],
+        "value": "Base for company and person"
+      },
+      "discriminator": null,
+      "discriminatorValue": null,
+      "displayName": {
+        "annotations": [],
+        "value": "Partner"
+      },
+      "example": null,
+      "examples": [],
+      "facets": [],
+      "maxProperties": null,
+      "minProperties": null,
+      "name": "Partner",
+      "parentTypes": [
+        {
+          "additionalProperties": true,
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "discriminator": null,
+          "discriminatorValue": null,
+          "displayName": null,
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxProperties": null,
+          "minProperties": null,
+          "name": "object",
+          "parentTypes": [],
+          "properties": [],
+          "required": true,
+          "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+          "type": null,
+          "xml": null
+        }
+      ],
+      "properties": [
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+            "annotations": [],
+            "value": "Second name or company name"
+          },
+          "displayName": {
+            "annotations": [],
+            "value": "name"
+          },
+          "enumValues": [],
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxLength": null,
+          "minLength": null,
+          "name": "name",
+          "parentTypes": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "string",
+              "parentTypes": [],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": null,
+              "xml": null
+            }
+          ],
+          "pattern": null,
+          "required": true,
+          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+          "type": "string",
+          "xml": null
+        },
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+            "annotations": [],
+            "value": "Still doing business with him/it?"
+          },
+          "displayName": {
+            "annotations": [],
+            "value": "active"
+          },
+          "enumValues": [],
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "name": "active",
+          "parentTypes": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "name": "boolean",
+              "parentTypes": [],
+              "required": true,
+              "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"boolean\"/>\n</schema>\n",
+              "type": null,
+              "xml": null
+            }
+          ],
+          "required": true,
+          "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"active\" type=\"boolean\"/>\n</schema>\n",
+          "type": "boolean",
+          "xml": null
+        }
+      ],
+      "required": true,
+      "toJsonSchema": "{\"$ref\":\"#/definitions/Partner\",\"definitions\":{\"Partner\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"active\":{\"type\":\"boolean\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Partner\" type=\"tns:Partner\"/>\n    <complexType name=\"Partner\">\n        <sequence>\n            <element name=\"name\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"active\" type=\"boolean\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+      "type": "object",
+      "xml": null
+    },
+    {
+      "additionalProperties": true,
+      "allowedTargets": [],
+      "annotations": [],
+      "defaultValue": null,
+      "description": {
+        "annotations": [],
+        "value": "A legal company (legal person)"
+      },
+      "discriminator": null,
+      "discriminatorValue": null,
+      "displayName": {
+        "annotations": [],
+        "value": "Company"
+      },
+      "example": null,
+      "examples": [],
+      "facets": [],
+      "maxProperties": null,
+      "minProperties": null,
+      "name": "Company",
+      "parentTypes": [
+        {
+          "additionalProperties": true,
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+            "annotations": [],
+            "value": "Base for company and person"
+          },
+          "discriminator": null,
+          "discriminatorValue": null,
+          "displayName": {
+            "annotations": [],
+            "value": "Partner"
+          },
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxProperties": null,
+          "minProperties": null,
+          "name": "Partner",
+          "parentTypes": [
+            {
+              "additionalProperties": true,
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "discriminator": null,
+              "discriminatorValue": null,
+              "displayName": null,
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxProperties": null,
+              "minProperties": null,
+              "name": "object",
+              "parentTypes": [],
+              "properties": [],
+              "required": true,
+              "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+              "type": null,
+              "xml": null
+            }
+          ],
+          "properties": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "Second name or company name"
+              },
+              "displayName": {
+                "annotations": [],
+                "value": "name"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "name",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "string",
+                  "parentTypes": [],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": "string",
+              "xml": null
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "Still doing business with him/it?"
+              },
+              "displayName": {
+                "annotations": [],
+                "value": "active"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "name": "active",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "name": "boolean",
+                  "parentTypes": [],
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"boolean\"/>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "required": true,
+              "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"active\" type=\"boolean\"/>\n</schema>\n",
+              "type": "boolean",
+              "xml": null
+            }
+          ],
+          "required": true,
+          "toJsonSchema": "{\"$ref\":\"#/definitions/Partner\",\"definitions\":{\"Partner\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"active\":{\"type\":\"boolean\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Partner\" type=\"tns:Partner\"/>\n    <complexType name=\"Partner\">\n        <sequence>\n            <element name=\"name\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"active\" type=\"boolean\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+          "type": "object",
+          "xml": null
+        }
+      ],
+      "properties": [
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+            "annotations": [],
+            "value": "Second name or company name"
+          },
+          "displayName": {
+            "annotations": [],
+            "value": "name"
+          },
+          "enumValues": [],
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxLength": null,
+          "minLength": null,
+          "name": "name",
+          "parentTypes": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "string",
+              "parentTypes": [],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": null,
+              "xml": null
+            }
+          ],
+          "pattern": null,
+          "required": true,
+          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"name\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+          "type": "string",
+          "xml": null
+        },
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+            "annotations": [],
+            "value": "Still doing business with him/it?"
+          },
+          "displayName": {
+            "annotations": [],
+            "value": "active"
+          },
+          "enumValues": [],
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "name": "active",
+          "parentTypes": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "name": "boolean",
+              "parentTypes": [],
+              "required": true,
+              "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"boolean\"/>\n</schema>\n",
+              "type": null,
+              "xml": null
+            }
+          ],
+          "required": true,
+          "toJsonSchema": "{\"type\":\"boolean\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"active\" type=\"boolean\"/>\n</schema>\n",
+          "type": "boolean",
+          "xml": null
+        },
+        {
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": {
+            "annotations": [],
+            "value": "Legal status"
+          },
+          "displayName": {
+            "annotations": [],
+            "value": "type"
+          },
+          "enumValues": [
+            "A",
+            "B"
+          ],
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxLength": null,
+          "minLength": null,
+          "name": "type",
+          "parentTypes": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": null,
+              "displayName": null,
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "string",
+              "parentTypes": [],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": null,
+              "xml": null
+            }
+          ],
+          "pattern": null,
+          "required": true,
+          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"type\">\n        <simpleType>\n            <restriction base=\"string\">\n                <enumeration value=\"A\"/>\n                <enumeration value=\"B\"/>\n            </restriction>\n        </simpleType>\n    </element>\n</schema>\n",
+          "type": "string",
+          "xml": null
+        },
+        {
+          "additionalProperties": true,
+          "allowedTargets": [],
+          "annotations": [],
+          "defaultValue": null,
+          "description": null,
+          "discriminator": null,
+          "discriminatorValue": null,
+          "displayName": {
+            "annotations": [],
+            "value": "address"
+          },
+          "example": null,
+          "examples": [],
+          "facets": [],
+          "maxProperties": null,
+          "minProperties": null,
+          "name": "address",
+          "parentTypes": [
+            {
+              "additionalProperties": true,
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "Simple address"
+              },
+              "discriminator": null,
+              "discriminatorValue": null,
+              "displayName": {
+                "annotations": [],
+                "value": "type"
+              },
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxProperties": null,
+              "minProperties": null,
+              "name": "object",
+              "parentTypes": [
+                {
+                  "additionalProperties": true,
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "discriminator": null,
+                  "discriminatorValue": null,
+                  "displayName": null,
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxProperties": null,
+                  "minProperties": null,
+                  "name": "object",
+                  "parentTypes": [],
+                  "properties": [],
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "properties": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": {
+                    "annotations": [],
+                    "value": "Street and number"
+                  },
+                  "displayName": {
+                    "annotations": [],
+                    "value": "street"
+                  },
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "street",
+                  "parentTypes": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": null,
+                      "displayName": null,
+                      "enumValues": [],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxLength": null,
+                      "minLength": null,
+                      "name": "string",
+                      "parentTypes": [],
+                      "pattern": null,
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                      "type": null,
+                      "xml": null
+                    }
+                  ],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"street\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": "string",
+                  "xml": null
+                },
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": {
+                    "annotations": [],
+                    "value": "Street and number"
+                  },
+                  "displayName": {
+                    "annotations": [],
+                    "value": "zipCode"
+                  },
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "zipCode",
+                  "parentTypes": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": null,
+                      "displayName": null,
+                      "enumValues": [],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxLength": null,
+                      "minLength": null,
+                      "name": "string",
+                      "parentTypes": [],
+                      "pattern": null,
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                      "type": null,
+                      "xml": null
+                    }
+                  ],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"zipCode\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": "string",
+                  "xml": null
+                },
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": {
+                    "annotations": [],
+                    "value": "The city"
+                  },
+                  "displayName": {
+                    "annotations": [],
+                    "value": "city"
+                  },
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "city",
+                  "parentTypes": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": null,
+                      "displayName": null,
+                      "enumValues": [],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxLength": null,
+                      "minLength": null,
+                      "name": "string",
+                      "parentTypes": [],
+                      "pattern": null,
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                      "type": null,
+                      "xml": null
+                    }
+                  ],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"city\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": "string",
+                  "xml": null
+                },
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": {
+                    "annotations": [],
+                    "value": "The city"
+                  },
+                  "displayName": {
+                    "annotations": [],
+                    "value": "country"
+                  },
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "country",
+                  "parentTypes": [
+                    {
+                      "allowedTargets": [],
+                      "annotations": [],
+                      "defaultValue": null,
+                      "description": null,
+                      "displayName": null,
+                      "enumValues": [],
+                      "example": null,
+                      "examples": [],
+                      "facets": [],
+                      "maxLength": null,
+                      "minLength": null,
+                      "name": "string",
+                      "parentTypes": [],
+                      "pattern": null,
+                      "required": true,
+                      "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                      "type": null,
+                      "xml": null
+                    }
+                  ],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"country\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": "string",
+                  "xml": null
+                }
+              ],
+              "required": true,
+              "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <element name=\"street\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"zipCode\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"city\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"country\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+              "type": "object",
+              "xml": null
+            }
+          ],
+          "properties": [
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "Street and number"
+              },
+              "displayName": {
+                "annotations": [],
+                "value": "street"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "street",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "string",
+                  "parentTypes": [],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"street\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": "string",
+              "xml": null
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "Street and number"
+              },
+              "displayName": {
+                "annotations": [],
+                "value": "zipCode"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "zipCode",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "string",
+                  "parentTypes": [],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"zipCode\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": "string",
+              "xml": null
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "The city"
+              },
+              "displayName": {
+                "annotations": [],
+                "value": "city"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "city",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "string",
+                  "parentTypes": [],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"city\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": "string",
+              "xml": null
+            },
+            {
+              "allowedTargets": [],
+              "annotations": [],
+              "defaultValue": null,
+              "description": {
+                "annotations": [],
+                "value": "The city"
+              },
+              "displayName": {
+                "annotations": [],
+                "value": "country"
+              },
+              "enumValues": [],
+              "example": null,
+              "examples": [],
+              "facets": [],
+              "maxLength": null,
+              "minLength": null,
+              "name": "country",
+              "parentTypes": [
+                {
+                  "allowedTargets": [],
+                  "annotations": [],
+                  "defaultValue": null,
+                  "description": null,
+                  "displayName": null,
+                  "enumValues": [],
+                  "example": null,
+                  "examples": [],
+                  "facets": [],
+                  "maxLength": null,
+                  "minLength": null,
+                  "name": "string",
+                  "parentTypes": [],
+                  "pattern": null,
+                  "required": true,
+                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+                  "type": null,
+                  "xml": null
+                }
+              ],
+              "pattern": null,
+              "required": true,
+              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"country\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+              "type": "string",
+              "xml": null
+            }
+          ],
+          "required": true,
+          "toJsonSchema": "{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"address\">\n        <complexType>\n            <sequence>\n                <element name=\"street\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"zipCode\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"city\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <element name=\"country\">\n                    <simpleType>\n                        <restriction base=\"string\"/>\n                    </simpleType>\n                </element>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+          "type": "object",
+          "xml": null
+        }
+      ],
+      "required": true,
+      "toJsonSchema": "{\"$ref\":\"#/definitions/Company\",\"definitions\":{\"Company\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"active\":{\"type\":\"boolean\"},\"type\":{\"type\":\"string\"},\"address\":{\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"zipCode\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}}}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Company\" type=\"tns:Company\"/>\n    <complexType name=\"Company\">\n        <sequence>\n            <element name=\"name\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"active\" type=\"boolean\"/>\n            <element name=\"type\">\n                <simpleType>\n                    <restriction base=\"string\">\n                        <enumeration value=\"A\"/>\n                        <enumeration value=\"B\"/>\n                    </restriction>\n                </simpleType>\n            </element>\n            <element name=\"address\">\n                <complexType>\n                    <sequence>\n                        <element name=\"street\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <element name=\"zipCode\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <element name=\"city\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <element name=\"country\">\n                            <simpleType>\n                                <restriction base=\"string\"/>\n                            </simpleType>\n                        </element>\n                        <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n                    </sequence>\n                </complexType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+      "type": "Partner",
+      "xml": null
+    }
+  ],
+  "uses": [],
+  "version": null
+}

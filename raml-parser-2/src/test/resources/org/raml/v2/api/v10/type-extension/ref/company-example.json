@@ -1,0 +1,12 @@
+{
+	"name": "C&A",
+	"active": true,
+	"type": "A",
+	"address":
+	{
+		"street": "street name",
+		"zipCode": "1234",
+		"city": "San Francisco",
+		"country": "United States"
+	}
+}

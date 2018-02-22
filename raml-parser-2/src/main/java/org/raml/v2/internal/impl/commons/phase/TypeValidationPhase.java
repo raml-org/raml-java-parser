@@ -18,16 +18,11 @@ package org.raml.v2.internal.impl.commons.phase;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
-import org.raml.v2.internal.impl.v10.type.NullResolvedType;
-import org.raml.v2.internal.impl.v10.type.UnionResolvedType;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
-import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.Phase;
-import org.raml.yagi.framework.phase.Transformer;
 import org.raml.yagi.framework.util.NodeUtils;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
