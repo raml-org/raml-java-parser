@@ -1,0 +1,338 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [
+  {
+   "name": "member",
+   "usage": null
+  }
+ ],
+ "resources": [
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "/release"
+   },
+   "is": [],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "get?"
+     },
+     "headers": [],
+     "is": [
+      {
+       "name": "hasGetResResponse",
+       "structuredValue": null,
+       "trait": {
+        "name": "hasGetResResponse",
+        "usage": null
+       }
+      }
+     ],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [],
+     "queryString": null,
+     "responses": [
+      {
+       "annotations": [],
+       "body": [
+        {
+         "additionalProperties": true,
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "discriminator": null,
+         "discriminatorValue": null,
+         "displayName": {
+          "annotations": [],
+          "value": "application/json"
+         },
+         "example": null,
+         "examples": [],
+         "facets": [],
+         "maxProperties": null,
+         "minProperties": null,
+         "name": "application/json",
+         "parentTypes": [
+          {
+           "additionalProperties": true,
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "discriminator": null,
+           "discriminatorValue": null,
+           "displayName": {
+            "annotations": [],
+            "value": "Release"
+           },
+           "example": null,
+           "examples": [],
+           "facets": [],
+           "maxProperties": null,
+           "minProperties": null,
+           "name": "Release",
+           "parentTypes": [
+            {
+             "additionalProperties": true,
+             "allowedTargets": [],
+             "annotations": [],
+             "defaultValue": null,
+             "description": null,
+             "discriminator": null,
+             "discriminatorValue": null,
+             "displayName": null,
+             "example": null,
+             "examples": [],
+             "facets": [],
+             "maxProperties": null,
+             "minProperties": null,
+             "name": "object",
+             "parentTypes": [],
+             "properties": [],
+             "required": true,
+             "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+             "type": null,
+             "xml": null
+            }
+           ],
+           "properties": [
+            {
+             "allowedTargets": [],
+             "annotations": [],
+             "defaultValue": null,
+             "description": null,
+             "displayName": {
+              "annotations": [],
+              "value": "release_date?"
+             },
+             "example": null,
+             "examples": [],
+             "facets": [],
+             "name": "release_date",
+             "parentTypes": [
+              {
+               "allowedTargets": [],
+               "annotations": [],
+               "defaultValue": null,
+               "description": null,
+               "displayName": null,
+               "example": null,
+               "examples": [],
+               "facets": [],
+               "name": "date-only",
+               "parentTypes": [],
+               "required": true,
+               "toJsonSchema": "{\"type\":\"string\",\"format\":\"date-time\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+               "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"date\"/>\n</schema>\n",
+               "type": null,
+               "xml": null
+              }
+             ],
+             "required": false,
+             "toJsonSchema": "{\"type\":\"string\",\"format\":\"date-time\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"release_date\" type=\"date\"/>\n</schema>\n",
+             "type": "date-only",
+             "xml": null
+            }
+           ],
+           "required": true,
+           "toJsonSchema": "{\"$ref\":\"#/definitions/Release\",\"definitions\":{\"Release\":{\"type\":\"object\",\"properties\":{\"release_date\":{\"type\":\"string\",\"format\":\"date-time\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Release\" type=\"tns:Release\"/>\n    <complexType name=\"Release\">\n        <sequence>\n            <element minOccurs=\"0\" name=\"release_date\" type=\"date\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+           "type": "object",
+           "xml": null
+          }
+         ],
+         "properties": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": {
+            "annotations": [],
+            "value": "release_date?"
+           },
+           "example": null,
+           "examples": [],
+           "facets": [],
+           "name": "release_date",
+           "parentTypes": [
+            {
+             "allowedTargets": [],
+             "annotations": [],
+             "defaultValue": null,
+             "description": null,
+             "displayName": null,
+             "example": null,
+             "examples": [],
+             "facets": [],
+             "name": "date-only",
+             "parentTypes": [],
+             "required": true,
+             "toJsonSchema": "{\"type\":\"string\",\"format\":\"date-time\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+             "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"date\"/>\n</schema>\n",
+             "type": null,
+             "xml": null
+            }
+           ],
+           "required": false,
+           "toJsonSchema": "{\"type\":\"string\",\"format\":\"date-time\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"release_date\" type=\"date\"/>\n</schema>\n",
+           "type": "date-only",
+           "xml": null
+          }
+         ],
+         "required": true,
+         "toJsonSchema": "{\"$ref\":\"#/definitions/Release\",\"definitions\":{\"Release\":{\"type\":\"object\",\"properties\":{\"release_date\":{\"type\":\"string\",\"format\":\"date-time\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Release\" type=\"tns:Release\"/>\n    <complexType name=\"Release\">\n        <sequence>\n            <element minOccurs=\"0\" name=\"release_date\" type=\"date\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+         "type": "Release",
+         "xml": null
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/release"
+   },
+   "resourcePath": "/release",
+   "resources": [],
+   "securedBy": [],
+   "type": {
+    "name": "member",
+    "resourceType": {
+     "name": "member",
+     "usage": null
+    },
+    "structuredValue": null
+   },
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "Version Manager"
+ },
+ "traits": [],
+ "types": [
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
+    "annotations": [],
+    "value": "Release"
+   },
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "Release",
+   "parentTypes": [
+    {
+     "additionalProperties": true,
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
+     "displayName": null,
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxProperties": null,
+     "minProperties": null,
+     "name": "object",
+     "parentTypes": [],
+     "properties": [],
+     "required": true,
+     "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+     "type": null,
+     "xml": null
+    }
+   ],
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "release_date?"
+     },
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "name": "release_date",
+     "parentTypes": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": null,
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "name": "date-only",
+       "parentTypes": [],
+       "required": true,
+       "toJsonSchema": "{\"type\":\"string\",\"format\":\"date-time\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\" type=\"date\"/>\n</schema>\n",
+       "type": null,
+       "xml": null
+      }
+     ],
+     "required": false,
+     "toJsonSchema": "{\"type\":\"string\",\"format\":\"date-time\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"release_date\" type=\"date\"/>\n</schema>\n",
+     "type": "date-only",
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toJsonSchema": "{\"$ref\":\"#/definitions/Release\",\"definitions\":{\"Release\":{\"type\":\"object\",\"properties\":{\"release_date\":{\"type\":\"string\",\"format\":\"date-time\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"Release\" type=\"tns:Release\"/>\n    <complexType name=\"Release\">\n        <sequence>\n            <element minOccurs=\"0\" name=\"release_date\" type=\"date\"/>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+   "type": "object",
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": null
+}

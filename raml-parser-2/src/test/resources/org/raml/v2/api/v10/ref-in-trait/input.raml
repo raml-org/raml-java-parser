@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Version Manager
+types: 
+  Release: !include /dataTypes/Release.raml
+
+resourceTypes: 
+  member: !include /resourceTypes/member.raml
+
+/release:
+  type: member
+  get:

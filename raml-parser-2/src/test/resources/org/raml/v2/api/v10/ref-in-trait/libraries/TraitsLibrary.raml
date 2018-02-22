@@ -1,0 +1,9 @@
+#%RAML 1.0 Library
+usage: This library fragment consists of traits
+traits:
+  hasGetResResponse:
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<resourcePathName | !singularize | !uppercamelcase>>
