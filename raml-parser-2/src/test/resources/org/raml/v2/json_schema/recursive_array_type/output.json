@@ -1,20 +1,24 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
+  "$ref"       : "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
-      "properties": {
-        "name": {
+      "required"            : [
+        "name"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
+        "name"    : {
           "type": "string"
         },
         "children": {
-          "type": "array",
+          "type" : "array",
           "items": {
             "$ref": "#/definitions/root"
           }
         }
       }
     }
-  }
+  },
+  "$schema"    : "http://json-schema.org/draft-04/schema#"
 }

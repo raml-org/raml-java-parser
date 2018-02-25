@@ -1,17 +1,22 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
+  "$ref"       : "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
-      "properties": {
+      "required"            : [
+        "amount",
+        "id"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
         "amount": {
           "type": "number"
         },
-        "id": {
+        "id"    : {
           "type": "integer"
         }
       }
     }
-  }
+  },
+  "$schema"    : "http://json-schema.org/draft-04/schema#"
 }

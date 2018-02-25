@@ -15,12 +15,14 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 
 import javax.json.*;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -31,6 +33,10 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     private static final String REF = "$ref";
     private static final String TYPE = "type";
     private static final String ITEMS = "items";
+    private static final String ADDITIONAL_PROPERTIES = "additionalProperties";
+    private static final String ENUM = "enum";
+    private static final String PATTERN = "pattern";
+    private static final String REQUIRED = "required";
     private static final String FORMAT = "format";
     private static final String PROPERTIES = "properties";
     private static final String ANY_OF = "anyOf";
@@ -47,9 +53,9 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     private static final String SCHEMA = "$schema";
     private static final String SCHEMA_VALUE = "http://json-schema.org/draft-04/schema#";
 
-    private JsonObjectBuilder definitions;
-    private JsonBuilderFactory factory;
-    private Set<String> definedTypes;
+    private final JsonObjectBuilder definitions;
+    private final JsonBuilderFactory factory;
+    private final Set<String> definedTypes;
 
 
     public TypeToJsonSchemaVisitor()
@@ -70,7 +76,19 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     @Override
     public JsonObjectBuilder visitString(StringResolvedType stringTypeDefinition)
     {
-        return this.factory.createObjectBuilder().add(TYPE, STRING);
+        JsonObjectBuilder jsonObjectBuilder = this.factory.createObjectBuilder().add(TYPE, STRING);
+
+        if (stringTypeDefinition.getEnums().size() > 0) {
+            JsonArrayBuilder arrayBuilder = this.factory.createArrayBuilder();
+            for (String s : stringTypeDefinition.getEnums()) {
+                arrayBuilder.add(s);
+            }
+            jsonObjectBuilder.add(ENUM, arrayBuilder);
+        } else if (StringUtils.isNotEmpty(stringTypeDefinition.getPattern())) {
+            jsonObjectBuilder.add(PATTERN, stringTypeDefinition.getPattern());
+        }
+
+        return jsonObjectBuilder;
     }
 
     @Override
@@ -108,6 +126,24 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
             {
                 propertiesBuilder.add(propertyName, propertyFacets.getValueType().visit(this));
             }
+        }
+
+        boolean hasRequiredProperties = false;
+        JsonArrayBuilder requiredPropertiesJsonArrayBuilder = this.factory.createArrayBuilder();
+        for (Map.Entry<String, PropertyFacets> property : objectTypeDefinition.getProperties().entrySet()) {
+            if (property.getValue().isRequired()) {
+                requiredPropertiesJsonArrayBuilder.add(property.getKey());
+                hasRequiredProperties = true;
+            }
+        }
+        if (hasRequiredProperties) {
+            objectBuilder.add(REQUIRED, requiredPropertiesJsonArrayBuilder);
+        }
+
+        if (Boolean.FALSE.equals(objectTypeDefinition.getAdditionalProperties())) {
+            objectBuilder.add(ADDITIONAL_PROPERTIES, Boolean.FALSE);
+        } else {
+            objectBuilder.add(ADDITIONAL_PROPERTIES, Boolean.TRUE);
         }
 
         return objectBuilder.add(TYPE, OBJECT).add(PROPERTIES, propertiesBuilder);

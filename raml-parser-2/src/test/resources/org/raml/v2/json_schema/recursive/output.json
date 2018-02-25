@@ -1,14 +1,19 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
+  "$ref"       : "#/definitions/root",
   "definitions": {
     "root": {
-      "type": "object",
-      "properties": {
+      "required"            : [
+        "value",
+        "left",
+        "right"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
         "value": {
           "type": "string"
         },
-        "left": {
+        "left" : {
           "$ref": "#/definitions/root"
         },
         "right": {
@@ -16,5 +21,6 @@
         }
       }
     }
-  }
+  },
+  "$schema"    : "http://json-schema.org/draft-04/schema#"
 }

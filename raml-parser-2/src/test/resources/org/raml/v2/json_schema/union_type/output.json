@@ -1,6 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "anyOf": [
+  "anyOf"      : [
     {
       "$ref": "#/definitions/cat"
     },
@@ -10,9 +9,14 @@
   ],
   "definitions": {
     "cat": {
-      "type": "object",
-      "properties": {
-        "name": {
+      "required"            : [
+        "name",
+        "color"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
+        "name" : {
           "type": "string"
         },
         "color": {
@@ -21,9 +25,14 @@
       }
     },
     "dog": {
-      "type": "object",
-      "properties": {
-        "name": {
+      "required"            : [
+        "name",
+        "fangs"
+      ],
+      "additionalProperties": true,
+      "type"                : "object",
+      "properties"          : {
+        "name" : {
           "type": "string"
         },
         "fangs": {
@@ -31,5 +40,6 @@
         }
       }
     }
-  }
+  },
+  "$schema"    : "http://json-schema.org/draft-04/schema#"
 }
