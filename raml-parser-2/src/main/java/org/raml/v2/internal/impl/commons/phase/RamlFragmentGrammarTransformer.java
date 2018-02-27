@@ -20,12 +20,14 @@ import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.Transformer;
 
+import static org.raml.v2.internal.utils.RamlNodeUtils.isErrorResult;
+
 public class RamlFragmentGrammarTransformer implements Transformer
 {
     @Override
     public boolean matches(Node node)
     {
-        return node instanceof RamlTypedFragment && node.getParent() != null;
+        return node instanceof RamlTypedFragment && node.getParent() != null && !isErrorResult(node);
     }
 
     @Override
