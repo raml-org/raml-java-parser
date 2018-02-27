@@ -1,0 +1,9 @@
+#%RAML 1.0 Trait
+headers: 
+ Accept?: 
+        description: Specify the media type of the response to be returned
+        example: application/xml
+responses: 
+  406:
+    body:
+      type: <<CustomErrorDataType>>

@@ -70,6 +70,11 @@ public class Raml10Builder
 
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
+        return build(null, stringContent, fragment, resourceLoader, resourceLocation, maxPhaseNumber);
+    }
+
+    public Node build(Node contextNode, String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
+    {
         if (openedFiles.contains(resourceLocation))
         {
 
@@ -84,6 +89,8 @@ public class Raml10Builder
             {
                 return ErrorNodeFactory.createEmptyDocument();
             }
+            if (contextNode != null)
+                rootNode.setContextNode(contextNode);
             boolean applyExtension = false;
             if ((fragment == Extension || fragment == Overlay) && maxPhaseNumber > FIRST_PHASE)
             {

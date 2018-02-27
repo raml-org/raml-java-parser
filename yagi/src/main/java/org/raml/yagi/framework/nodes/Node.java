@@ -171,4 +171,11 @@ public interface Node
      * @param newSubTree The new subtree
      */
     void replaceTree(Node newSubTree);
+
+    /**
+     * Sets the context node. This is used to provide a global context when parsing an isolated fragment, i.e without
+     * parent node.
+     * @param node The root node.
+     */
+    void setContextNode(Node node);
 }
