@@ -51,8 +51,8 @@ public class RamlBuilder
 {
 
     public static int FIRST_PHASE = 1;
-    public static int GRAMMAR_PHASE = 3;
-    public static int LIBRARY_LINK_PHASE = 4;
+    public static int GRAMMAR_PHASE = 4;
+    public static int LIBRARY_LINK_PHASE = 5;
 
     public static int ALL_PHASES = Integer.MAX_VALUE;
 
