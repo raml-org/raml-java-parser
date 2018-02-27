@@ -29,6 +29,9 @@ import org.raml.yagi.framework.phase.Transformer;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.raml.v2.api.model.v10.RamlFragment.Library;
+import static org.raml.v2.internal.impl.RamlBuilder.ALL_PHASES;
+
 public class LibraryLinkingTransformation implements Transformer
 {
 
@@ -64,7 +67,7 @@ public class LibraryLinkingTransformation implements Transformer
                 }
                 final String content = StreamUtils.toString(inputStream);
                 final Node libraryReference = builder
-                                                     .build(content, RamlFragment.Library, resourceLoader, absoluteLocation, RamlBuilder.ALL_PHASES);
+                                                     .build(linkNode, content, Library, resourceLoader, absoluteLocation, ALL_PHASES);
                 linkNode.setLibraryReference(libraryReference);
             }
         }

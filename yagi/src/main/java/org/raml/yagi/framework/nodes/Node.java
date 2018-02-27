@@ -171,4 +171,10 @@ public interface Node
      * @param newSubTree The new subtree
      */
     void replaceTree(Node newSubTree);
+
+    /**
+     * Sets the root node. This is used to provide a global context when parsing just an isolated raml fragment.
+     * @param node The root node.
+     */
+    void setRootNode(Node node);
 }

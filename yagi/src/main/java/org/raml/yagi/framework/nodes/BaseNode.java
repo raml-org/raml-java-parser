@@ -30,6 +30,7 @@ public abstract class BaseNode implements Node
 
     private Node source;
     private Node parent;
+    private Node rootNode;
     protected List<Node> children = new ArrayList<>();
 
     private List<NodeAnnotation> annotations = new ArrayList<>();
@@ -90,7 +91,13 @@ public abstract class BaseNode implements Node
     @Override
     public Node getRootNode()
     {
-        return getParent() == null ? this : getParent().getRootNode();
+        if (rootNode != null)
+            return rootNode.getRootNode();
+
+        if (getParent() != null)
+            return getParent().getRootNode();
+
+        return this;
     }
 
     @Nonnull
@@ -210,5 +217,11 @@ public abstract class BaseNode implements Node
     public Node get(String selector)
     {
         return NodeSelector.selectFrom(selector, this);
+    }
+
+    @Override
+    public void setRootNode(Node node)
+    {
+        this.rootNode = node;
     }
 }

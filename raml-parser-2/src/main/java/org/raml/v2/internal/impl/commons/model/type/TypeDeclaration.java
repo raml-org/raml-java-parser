@@ -306,7 +306,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
     private boolean isGlobalNamedTypeDeclarationNode()
     {
         final Node parent = node.getParent();
-        final Node rootNode = node.getRootNode();
+        final Node rootNode = NodeUtils.getContextNode(node);
 
         return Iterables.any(GLOBAL_NAMED_TYPE_DECLARATION_NODE_NAMES, new Predicate<String>()
         {
