@@ -173,8 +173,9 @@ public interface Node
     void replaceTree(Node newSubTree);
 
     /**
-     * Sets the root node. This is used to provide a global context when parsing just an isolated raml fragment.
+     * Sets the context node. This is used to provide a global context when parsing an isolated fragment, i.e without
+     * parent node.
      * @param node The root node.
      */
-    void setRootNode(Node node);
+    void setContextNode(Node node);
 }

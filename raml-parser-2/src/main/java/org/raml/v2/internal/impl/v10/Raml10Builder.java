@@ -90,7 +90,7 @@ public class Raml10Builder
                 return ErrorNodeFactory.createEmptyDocument();
             }
             if (contextNode != null)
-                rootNode.setRootNode(contextNode);
+                rootNode.setContextNode(contextNode);
             boolean applyExtension = false;
             if ((fragment == Extension || fragment == Overlay) && maxPhaseNumber > FIRST_PHASE)
             {

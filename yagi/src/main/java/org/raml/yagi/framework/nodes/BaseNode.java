@@ -30,7 +30,7 @@ public abstract class BaseNode implements Node
 
     private Node source;
     private Node parent;
-    private Node rootNode;
+    private Node contextNode;
     protected List<Node> children = new ArrayList<>();
 
     private List<NodeAnnotation> annotations = new ArrayList<>();
@@ -91,11 +91,11 @@ public abstract class BaseNode implements Node
     @Override
     public Node getRootNode()
     {
-        if (rootNode != null)
-            return rootNode.getRootNode();
-
         if (getParent() != null)
             return getParent().getRootNode();
+
+        if (contextNode != null)
+            return contextNode.getRootNode();
 
         return this;
     }
@@ -220,8 +220,8 @@ public abstract class BaseNode implements Node
     }
 
     @Override
-    public void setRootNode(Node node)
+    public void setContextNode(Node node)
     {
-        this.rootNode = node;
+        this.contextNode = node;
     }
 }
