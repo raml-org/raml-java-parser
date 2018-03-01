@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "properties": {
+        "infant": {
+          "$ref": "#/definitions/root"
+        }
+      }
+    }
+  }
+}
