@@ -1,0 +1,10 @@
+#%RAML 1.0 
+title: Darwin Integration API DEV
+  
+/promotions:
+  get:
+    responses:  
+      200:
+        body:
+          application/json:
+            type: !include type-wrapper.raml
