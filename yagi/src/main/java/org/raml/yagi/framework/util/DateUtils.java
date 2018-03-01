@@ -22,7 +22,7 @@ import org.joda.time.format.ISODateTimeFormat;
 public class DateUtils
 {
     private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
-    private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD");
+    private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-dd");
     private static DateTimeFormatter dateTimeOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
     private static DateTimeFormatter rfc3339Formatter = ISODateTimeFormat.dateTimeParser();
