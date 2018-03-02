@@ -27,7 +27,7 @@ public class DateUtils
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
     private static DateTimeFormatter rfc3339Formatter = ISODateTimeFormat.dateTimeParser();
 
-    public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "date-only.four-digits-year-length-validation";
+    public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
     public static boolean FOUR_YEARS_VALIDATION = Boolean.valueOf(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
 
     public static boolean isValidDate(String date, DateType format, String rfc)
