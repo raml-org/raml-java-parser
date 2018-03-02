@@ -21,11 +21,14 @@ import org.joda.time.format.ISODateTimeFormat;
 
 public class DateUtils
 {
-    private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
     private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-dd");
+    private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
     private static DateTimeFormatter dateTimeOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
     private static DateTimeFormatter rfc3339Formatter = ISODateTimeFormat.dateTimeParser();
+
+    public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "date-only.four-digits-year-length-validation";
+    public static boolean FOUR_YEARS_VALIDATION = Boolean.valueOf(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
 
     public static boolean isValidDate(String date, DateType format, String rfc)
     {
@@ -34,6 +37,7 @@ public class DateUtils
             switch (format)
             {
             case date_only:
+                if (!hasFourDigitsYear(date.split("-")) && FOUR_YEARS_VALIDATION) throw new IllegalArgumentException();
                 dateOnlyFormatter.parseLocalDate(date);
                 break;
             case time_only:
@@ -62,5 +66,9 @@ public class DateUtils
         {
             return false;
         }
+    }
+
+    private static boolean hasFourDigitsYear(String[] splitted) {
+        return splitted.length > 0 && splitted[0].length() == 4;
     }
 }
