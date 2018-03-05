@@ -86,7 +86,7 @@ public class RamlValidator
 
         ramlCount++;
         final Node raml = new RamlBuilder().build(ramlFile);
-        List<ErrorNode> errors = raml.findDescendantsWith(ErrorNode.class);
+        List<ErrorNode> errors = RamlNodeUtils.getErrors(raml);
         if (!errors.isEmpty())
         {
             logErrors(errors);
