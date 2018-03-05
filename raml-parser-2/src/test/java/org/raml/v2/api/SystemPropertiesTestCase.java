@@ -18,6 +18,7 @@ package org.raml.v2.api;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.raml.yagi.framework.util.DateUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,13 +37,14 @@ public class SystemPropertiesTestCase
     public void clearProperties()
     {
         clearFailOnWarning();
+        DateUtils.FOUR_YEARS_VALIDATION = true;
     }
 
     @Test
     public void failOnWarning() throws IOException
     {
         failOnWarningOldValue = System.setProperty(JSON_SCHEMA_FAIL_ON_WARNING_KEY, "true");
-        RamlModelResult ramlModelResult = getApi();
+        RamlModelResult ramlModelResult = getJsonSchemaApi();
         assertThat(ramlModelResult.hasErrors(), is(true));
         assertThat(ramlModelResult.getValidationResults().size(), is(1));
     }
@@ -51,13 +53,40 @@ public class SystemPropertiesTestCase
     public void doNotFailOnWarning() throws IOException
     {
         failOnWarningOldValue = System.setProperty(JSON_SCHEMA_FAIL_ON_WARNING_KEY, "false");
-        RamlModelResult ramlModelResult = getApi();
+        RamlModelResult ramlModelResult = getJsonSchemaApi();
         assertThat(ramlModelResult.hasErrors(), is(false));
     }
 
-    private RamlModelResult getApi()
+    @Test
+    public void failFourYearsValidation()
     {
-        File ramlFile = new File("src/test/resources/org/raml/v2/api/v10/system-properties/jsonschema-fail-on-warning.raml");
+        DateUtils.FOUR_YEARS_VALIDATION = true;
+        RamlModelResult ramlModelResult = getDateTimeApi();
+        assertThat(ramlModelResult.hasErrors(), is(true));
+
+    }
+
+    @Test
+    public void doNotFailFourYearsValidation()
+    {
+        DateUtils.FOUR_YEARS_VALIDATION = false;
+        RamlModelResult ramlModelResult = getDateTimeApi();
+        assertThat(ramlModelResult.hasErrors(), is(false));
+    }
+
+    private RamlModelResult getJsonSchemaApi()
+    {
+        return getApi("src/test/resources/org/raml/v2/api/v10/system-properties/jsonschema-fail-on-warning.raml");
+    }
+
+    private RamlModelResult getDateTimeApi()
+    {
+        return getApi("src/test/resources/org/raml/v2/api/v10/system-properties/date-only-validation.raml");
+    }
+
+    private RamlModelResult getApi(String pathname)
+    {
+        File ramlFile = new File(pathname);
         assertTrue(ramlFile.isFile());
         return new RamlModelBuilder().buildApi(ramlFile);
     }
