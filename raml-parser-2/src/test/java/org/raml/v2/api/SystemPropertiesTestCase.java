@@ -37,7 +37,7 @@ public class SystemPropertiesTestCase
     public void clearProperties()
     {
         clearFailOnWarning();
-        DateUtils.FOUR_YEARS_VALIDATION = false;
+        DateUtils.FOUR_YEARS_VALIDATION = true;
     }
 
     @Test
