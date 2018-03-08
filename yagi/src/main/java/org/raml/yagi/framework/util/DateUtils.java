@@ -25,7 +25,8 @@ public class DateUtils
     private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
     private static DateTimeFormatter dateTimeOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
-    private static DateTimeFormatter rfc3339Formatter = ISODateTimeFormat.dateTimeParser();
+    private static DateTimeFormatter rfc3339FormatterMillis = ISODateTimeFormat.dateTime();
+    private static DateTimeFormatter rfc3339FormatterNoMillis = ISODateTimeFormat.dateTimeNoMillis();
 
     public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
     public static boolean FOUR_YEARS_VALIDATION = Boolean.valueOf(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
@@ -54,7 +55,11 @@ public class DateUtils
                 }
                 else
                 {
-                    rfc3339Formatter.parseLocalDateTime(date);
+                    try {
+                        rfc3339FormatterMillis.parseLocalDateTime(date);
+                    } catch (Exception e) {
+                        rfc3339FormatterNoMillis.parseLocalDateTime(date);
+                    }
                     break;
                 }
             default:
