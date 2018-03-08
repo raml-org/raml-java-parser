@@ -15,18 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import static org.apache.commons.lang.StringUtils.isNotEmpty;
-import static org.raml.v2.internal.utils.BasicRuleFactory.property;
-import static org.raml.v2.internal.utils.BasicRuleFactory.regexValue;
-import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
-import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
-
-import java.util.ArrayList;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
+import com.google.common.base.Predicate;
 import org.apache.commons.lang.math.NumberRange;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
@@ -63,6 +52,21 @@ import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringTypeRule;
 import org.raml.yagi.framework.util.DateType;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
+
+import static com.google.common.base.Predicates.not;
+import static com.google.common.collect.Maps.filterEntries;
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+import static org.raml.v2.internal.utils.BasicRuleFactory.property;
+import static org.raml.v2.internal.utils.BasicRuleFactory.regexValue;
+import static org.raml.v2.internal.utils.BasicRuleFactory.stringValue;
+import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
 
 public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
@@ -149,39 +153,21 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         {
             final ObjectRule objectRule = new ObjectRule(strictMode);
             registerRule(objectTypeDefinition, objectRule);
-            final boolean additionalProperties = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
-            objectRule.additionalProperties(additionalProperties);
+
+            final boolean isAdditionalPropertiesEnabled = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
+            objectRule.additionalProperties(isAdditionalPropertiesEnabled);
+
             final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
-            for (Map.Entry<String, PropertyFacets> property : properties.entrySet())
+
+            final Map<String, PropertyFacets> nonPatternProperties = getNonPatternProperties(properties);
+            addFieldsToRule(objectRule, nonPatternProperties);
+
+            // If additional properties is set to false the pattern properties are ignored
+            if (isAdditionalPropertiesEnabled)
             {
-                final PropertyFacets propertyValue = property.getValue();
-                final KeyValueRule keyValue;
-                final Rule value = generateRule(propertyValue.getValueType());
-                // If additional properties is set to false the pattern properties are ignored
-                if (propertyValue.isPatternProperty())
-                {
-                    if (additionalProperties)
-                    {
-                        keyValue = new KeyValueRule(regexValue(propertyValue.getPatternRegex()).fullMatch(false), value);
-                        // We set to false as it should only validate the ones that matches the regex
-                        objectRule.additionalProperties(false);
-                        objectRule.with(keyValue);
-                    }
-                    else
-                    {
-                        // Ignoring pattern properties as additional properties is false
-                    }
-                }
-                else
-                {
-                    keyValue = property(property.getKey(), value);
-                    final Boolean required = propertyValue.isRequired();
-                    if (required)
-                    {
-                        keyValue.required();
-                    }
-                    objectRule.with(keyValue);
-                }
+                // Additional properties should be processed after specified properties, so they will be added at the end
+                final Map<String, PropertyFacets> additionalProperties = getPatternProperties(properties);
+                addAdditionalPropertiesToRule(objectRule, additionalProperties);
             }
 
             final AllOfRule allOfRule = new AllOfRule(objectRule);
@@ -198,6 +184,57 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 
             return allOfRule;
         }
+    }
+
+    private void addFieldsToRule(ObjectRule objectRule, Map<String, PropertyFacets> properties)
+    {
+        for (Entry<String, PropertyFacets> property : properties.entrySet())
+        {
+            final PropertyFacets propertyValue = property.getValue();
+            final Rule value = generateRule(propertyValue.getValueType());
+
+            final KeyValueRule keyValue = property(property.getKey(), value);
+            final Boolean required = propertyValue.isRequired();
+            if (required)
+            {
+                keyValue.required();
+            }
+            objectRule.with(keyValue);
+        }
+    }
+
+    private void addAdditionalPropertiesToRule(ObjectRule objectRule, Map<String, PropertyFacets> properties)
+    {
+        for (PropertyFacets property : properties.values())
+        {
+            final Rule value = generateRule(property.getValueType());
+            final KeyValueRule keyValue = new KeyValueRule(regexValue(property.getPatternRegex()).fullMatch(false), value);
+            // We set to false as it should only validate the ones that matches the regex
+            objectRule.additionalProperties(false);
+            objectRule.with(keyValue);
+        }
+    }
+
+    private Map<String, PropertyFacets> getPatternProperties(Map<String, PropertyFacets> properties)
+    {
+        return filterEntries(properties, isPatternProperty());
+    }
+
+    private Map<String, PropertyFacets> getNonPatternProperties(Map<String, PropertyFacets> properties)
+    {
+        return filterEntries(properties, not(isPatternProperty()));
+    }
+
+    private Predicate<Entry<String, PropertyFacets>> isPatternProperty()
+    {
+        return new Predicate<Entry<String, PropertyFacets>>()
+        {
+            @Override
+            public boolean apply(Entry<String, PropertyFacets> entry)
+            {
+                return entry.getValue().isPatternProperty();
+            }
+        };
     }
 
     protected void registerRule(ResolvedType objectResolvedType, Rule objectRule)
