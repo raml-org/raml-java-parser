@@ -38,7 +38,8 @@ public class DateUtils
             switch (format)
             {
             case date_only:
-                if (!hasFourDigitsYear(date.split("-")) && FOUR_YEARS_VALIDATION) throw new IllegalArgumentException();
+                if (!hasFourDigitsYear(date.split("-")) && FOUR_YEARS_VALIDATION)
+                    throw new IllegalArgumentException();
                 dateOnlyFormatter.parseLocalDate(date);
                 break;
             case time_only:
@@ -55,9 +56,12 @@ public class DateUtils
                 }
                 else
                 {
-                    try {
+                    try
+                    {
                         rfc3339FormatterMillis.parseLocalDateTime(date);
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e)
+                    {
                         rfc3339FormatterNoMillis.parseLocalDateTime(date);
                     }
                     break;
@@ -73,7 +77,8 @@ public class DateUtils
         }
     }
 
-    private static boolean hasFourDigitsYear(String[] splitted) {
+    private static boolean hasFourDigitsYear(String[] splitted)
+    {
         return splitted.length > 0 && splitted[0].length() == 4;
     }
 }
