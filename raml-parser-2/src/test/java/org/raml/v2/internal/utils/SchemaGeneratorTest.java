@@ -61,7 +61,7 @@ public class SchemaGeneratorTest extends TestDataProvider
 
         JsonSchemaExternalType jsonSchemaExternalType = (JsonSchemaExternalType) node.generateDefinition();
         JsonSchema jsonSchema = SchemaGenerator.generateJsonSchema(jsonSchemaExternalType);
-        ProcessingReport report = jsonSchema.validate(new ObjectMapper().readTree(expectedOutput));
+        ProcessingReport report = jsonSchema.validate(new ObjectMapper().disableDefaultTyping().readTree(expectedOutput));
 
         assertTrue(report.isSuccess());
     }

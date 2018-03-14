@@ -63,7 +63,7 @@ public class SuggesterTestCase extends TestDataProvider
         final int offset = content.indexOf(CURSOR_KEYWORD);
         final String document = content.substring(0, offset) + content.substring(offset + CURSOR_KEYWORD.length());
         final List<Suggestion> suggestions = ramlSuggester.suggestions(document, offset - 1).getSuggestions();
-        final ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        final ObjectWriter ow = new ObjectMapper().disableDefaultTyping().writer().withDefaultPrettyPrinter();
         dump = ow.writeValueAsString(suggestions);
         expected = IOUtils.toString(new FileInputStream(this.expectedOutput));
         Assert.assertTrue(jsonEquals(dump, expected));
