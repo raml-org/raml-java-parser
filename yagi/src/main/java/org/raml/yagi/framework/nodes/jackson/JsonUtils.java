@@ -38,6 +38,7 @@ public class JsonUtils
     public static JsonNode parseJson(Reader reader) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.disableDefaultTyping();
         mapper.configure(JsonParser.Feature.STRICT_DUPLICATE_DETECTION, STRICT_DUPLICATE_DETECTION_VALUE);
         return mapper.readValue(reader, JsonNode.class);
     }

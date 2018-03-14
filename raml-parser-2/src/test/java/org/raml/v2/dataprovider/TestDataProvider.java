@@ -133,6 +133,7 @@ public abstract class TestDataProvider
         ObjectMapper mapper = new ObjectMapper();
         try
         {
+            mapper.disableDefaultTyping();
             JsonNode beforeNode = filterNodes(mapper.readTree(expected));
             JsonNode afterNode = filterNodes(mapper.readTree(produced));
             JsonNode patch = JsonDiff.asJson(beforeNode, afterNode);

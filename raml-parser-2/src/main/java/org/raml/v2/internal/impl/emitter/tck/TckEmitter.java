@@ -285,6 +285,7 @@ public class TckEmitter
         ObjectMapper objectMapper = new ObjectMapper();
         try
         {
+            objectMapper.disableDefaultTyping();
             return objectMapper.writeValueAsString(text);
         }
         catch (JsonProcessingException e)
