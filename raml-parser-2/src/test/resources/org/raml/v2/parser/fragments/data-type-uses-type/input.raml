@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Test API
+
+types:
+  type-from-data-type: !include data-type.raml
+  Partner: !include partner.raml
+  Company: !include company.raml
+          
+/trips:
+  get:
+    responses:  
+      200:
+        body: 
+          application/json:
+
+
+/raml:
+  /companies:
+    post:
+      body:
+        application/json:
+          type: Company
+          example: !include company-example.json
