@@ -16,15 +16,14 @@
 package org.raml.yagi.framework.grammar.rule;
 
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.List;
 
 public class MaxLengthRule extends Rule
 {
@@ -57,7 +56,7 @@ public class MaxLengthRule extends Rule
     {
         if (!matches(node))
         {
-            return ErrorNodeFactory.createInvalidMaxLength(maxLength);
+            return ErrorNodeFactory.createInvalidMaxLength(maxLength, node);
         }
         return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }
