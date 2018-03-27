@@ -132,7 +132,7 @@ public class JsonSchemaValidationRule extends Rule
         }
         catch (IOException | ProcessingException e)
         {
-            return ErrorNodeFactory.createInvalidJsonExampleNode("Invalid json content : " + node.toString());
+            return ErrorNodeFactory.createInvalidJsonExampleNode("Invalid json content. " + e.getMessage());
         }
         return node;
     }
