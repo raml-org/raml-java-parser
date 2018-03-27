@@ -191,6 +191,7 @@ public class SchemaRule extends SimpleRule implements ContextPathAware, Resource
     private ScalarNode getGlobalSchemaNode(String key)
     {
         GlobalSchemasRule schemasRule = (GlobalSchemasRule) getRootTupleRule().getRuleByFieldName("schemas");
+        if (schemasRule == null) return null;
         return schemasRule.getSchema(key);
     }
 
