@@ -15,10 +15,6 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.EmptyErrorNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -26,6 +22,10 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.util.NodeSelector;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
 
 public class ErrorNodeFactory
 {
@@ -102,9 +102,12 @@ public class ErrorNodeFactory
         return new ErrorNode("Error while reading the input. Reason " + ioe.getMessage());
     }
 
-    public static Node createInvalidMaxLength(int maxLength)
+    public static Node createInvalidMaxLength(int maxLength, Node node)
     {
-        return new ErrorNode("Expected max length " + maxLength);
+        if (node.getParent() == null)
+            return new ErrorNode("Expected max length " + maxLength + " for value \"" + node.toString() + "\"");
+        Node field = node.getParent().getChildren().get(0);
+        return new ErrorNode("Expected max length " + maxLength + " for field \"" + field.toString() + "\", but got \"" + node.toString() + "\"");
     }
 
     public static Node createInvalidMaxItems(int maxItems)
