@@ -1,0 +1,22 @@
+#%RAML 0.8
+title: test
+
+securitySchemes:
+  - x-token:
+      describedBy:
+        responses:
+          401:
+            body:
+              application/json:
+                schema: |
+                  {
+                    "type":"object",
+                    "$schema": "http://json-schema.org/draft-03/schema",
+                    "id":"http://jsonschema.net",
+                    "properties": {
+                      "message": {
+                        "required": true,
+                        "type": "string"
+                      }
+                    }
+                  }
