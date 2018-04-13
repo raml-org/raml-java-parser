@@ -15,13 +15,13 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import javax.annotation.Nullable;
-
 import org.raml.v2.internal.impl.commons.rule.RamlErrorNodeFactory;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+
+import javax.annotation.Nullable;
 
 public class PropertyFacets
 {
@@ -86,11 +86,22 @@ public class PropertyFacets
 
     public PropertyFacets mergeFacets(PropertyFacets value)
     {
+        checkOptionalPropertyOverRequired(value);
+        return new PropertyFacets(name, getValueType().mergeFacets(value.getValueType()), required || value.isRequired());
+    }
+
+    public PropertyFacets overwriteFacets(PropertyFacets value)
+    {
+        checkOptionalPropertyOverRequired(value);
+        return new PropertyFacets(name, value.getValueType(), required || value.isRequired());
+    }
+
+    private void checkOptionalPropertyOverRequired(PropertyFacets value)
+    {
         if (required && !value.isRequired())
         {
             value.errorNode = RamlErrorNodeFactory.createInvalidRequiredFacet(name);
         }
-        return new PropertyFacets(name, getValueType().mergeFacets(value.getValueType()), required || value.isRequired());
     }
 
     public Node getErrorNode()

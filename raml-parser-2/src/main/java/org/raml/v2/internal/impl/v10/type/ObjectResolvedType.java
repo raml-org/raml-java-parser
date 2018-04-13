@@ -15,22 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ADDITIONAL_PROPERTIES_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_VALUE_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_PROPERTIES_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_PROPERTIES_KEY_NAME;
-import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.PROPERTIES_KEY_NAME;
-import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
-import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
-import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
@@ -44,6 +28,21 @@ import org.raml.v2.internal.impl.v10.rules.TypesUtils;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
+
+import javax.annotation.Nullable;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.ADDITIONAL_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.DISCRIMINATOR_VALUE_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MAX_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.MIN_PROPERTIES_KEY_NAME;
+import static org.raml.v2.internal.impl.v10.grammar.Raml10Grammar.PROPERTIES_KEY_NAME;
+import static org.raml.yagi.framework.util.NodeSelector.selectBooleanValue;
+import static org.raml.yagi.framework.util.NodeSelector.selectIntValue;
+import static org.raml.yagi.framework.util.NodeSelector.selectStringValue;
 
 public class ObjectResolvedType extends XmlFacetsCapableType
 {
@@ -150,7 +149,7 @@ public class ObjectResolvedType extends XmlFacetsCapableType
                     else
                     {
                         // If present in both merge facets of both types
-                        resultProperties.put(name, resultProperties.get(name).mergeFacets(propertyDefinition));
+                        resultProperties.put(name, resultProperties.get(name).overwriteFacets(propertyDefinition));
                         if (propertyDefinition.getErrorNode() != null)
                         {
                             child.replaceWith(propertyDefinition.getErrorNode());

@@ -1,0 +1,41 @@
+#%RAML 1.0
+title: Test
+types:
+  BaseType:
+    type: object
+    properties:
+      data:
+        type: object | object[]
+  User:
+    type: BaseType
+    properties:
+      data:
+        type: object
+        properties:
+          attributes:
+            type: object
+            properties:
+              id:
+                type: string
+    example: |
+      {
+        "data": {
+          "attributes": {
+            "endpoint": null,
+            "details": {
+              "identifier": "1234554321",
+              "serverIdentifier": "9876556789",
+              "region": "south",
+              "accountIdentifier": "1.1"
+            },
+            "token": "utiwsdeadfbjad-asda",
+            "info": {
+              "customerLastLoggedInTime": "Sun, 10 Sep 2017 19:43:31 UTC",
+              "ip": "104.25.212.99"
+            },
+            "cityId": "9876543210",
+            "userId": "0123456789",
+            "BirthDateTime": "Sun, 10 Sep 2017 12:00:00 UTC"
+          }
+        }
+      }
