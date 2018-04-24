@@ -15,19 +15,6 @@
  */
 package org.raml.v2.internal.impl.v10.phase;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.xml.XMLConstants;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
@@ -58,10 +45,23 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.List;
+
+import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.DISALLOW_DOCTYPE_DECL_FEATURE;
-import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.expandEntities;
 import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.EXTERNAL_GENERAL_ENTITIES_FEATURE;
 import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.EXTERNAL_PARAMETER_ENTITIES_FEATURE;
+import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.expandEntities;
 import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.externalEntities;
 
 public class ExampleValidationPhase implements Phase
@@ -101,7 +101,7 @@ public class ExampleValidationPhase implements Phase
     {
         Node exampleValueNode = new StringNodeImpl(exampleValue);
 
-        if (exampleValue == null)
+        if (exampleValue == null || (isBlank(exampleValue) && !(type.getResolvedType() instanceof StringResolvedType)))
         {
             exampleValueNode = new NullNodeImpl();
         }
