@@ -1,17 +1,21 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
-  "definitions": {
-    "root": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "$ref":"#/definitions/root",
+  "definitions":{
+    "root":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string"
         },
-        "age": {
-          "type": "integer"
+        "age":{
+          "type":"integer"
         }
-      }
+      },
+      "required":[
+        "name",
+        "age"
+      ]
     }
   }
 }
