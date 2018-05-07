@@ -329,7 +329,7 @@
             }
            ],
            "required": true,
-           "toJsonSchema": "{\"$ref\":\"#/definitions/CustomErrorMessage\",\"definitions\":{\"CustomErrorMessage\":{\"type\":\"object\",\"properties\":{\"statusCode\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+           "toJsonSchema": "{\"$ref\":\"#/definitions/CustomErrorMessage\",\"definitions\":{\"CustomErrorMessage\":{\"type\":\"object\",\"properties\":{\"statusCode\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}},\"required\":[\"statusCode\",\"message\"]}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
            "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"CustomErrorMessage\" type=\"tns:CustomErrorMessage\"/>\n    <complexType name=\"CustomErrorMessage\">\n        <sequence>\n            <element name=\"statusCode\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"message\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
            "type": "object",
            "xml": null
@@ -430,7 +430,7 @@
           }
          ],
          "required": true,
-         "toJsonSchema": "{\"$ref\":\"#/definitions/CustomErrorMessage\",\"definitions\":{\"CustomErrorMessage\":{\"type\":\"object\",\"properties\":{\"statusCode\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+         "toJsonSchema": "{\"$ref\":\"#/definitions/CustomErrorMessage\",\"definitions\":{\"CustomErrorMessage\":{\"type\":\"object\",\"properties\":{\"statusCode\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}},\"required\":[\"statusCode\",\"message\"]}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"CustomErrorMessage\" type=\"tns:CustomErrorMessage\"/>\n    <complexType name=\"CustomErrorMessage\">\n        <sequence>\n            <element name=\"statusCode\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"message\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
          "type": "CustomErrorMessage",
          "xml": null
@@ -603,7 +603,7 @@
     }
    ],
    "required": true,
-   "toJsonSchema": "{\"$ref\":\"#/definitions/CustomErrorMessage\",\"definitions\":{\"CustomErrorMessage\":{\"type\":\"object\",\"properties\":{\"statusCode\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+   "toJsonSchema": "{\"$ref\":\"#/definitions/CustomErrorMessage\",\"definitions\":{\"CustomErrorMessage\":{\"type\":\"object\",\"properties\":{\"statusCode\":{\"type\":\"string\"},\"message\":{\"type\":\"string\"}},\"required\":[\"statusCode\",\"message\"]}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
    "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"CustomErrorMessage\" type=\"tns:CustomErrorMessage\"/>\n    <complexType name=\"CustomErrorMessage\">\n        <sequence>\n            <element name=\"statusCode\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"message\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
    "type": "object",
    "xml": null

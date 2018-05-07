@@ -1,359 +1,359 @@
 {
-  "annotationTypes": [],
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
   "annotations": [],
-  "baseUri": null,
-  "baseUriParameters": [],
-  "description": null,
-  "documentation": [],
-  "mediaType": [],
-  "protocols": [],
-  "ramlVersion": "1.0",
-  "resourceTypes": [],
-  "resources": [],
-  "schemas": [],
-  "securedBy": [],
-  "securitySchemes": [],
-  "title": {
+  "value": "API"
+ },
+ "traits": [],
+ "types": [
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
     "annotations": [],
-    "value": "API"
-  },
-  "traits": [],
-  "types": [
+    "value": "basetype"
+   },
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "basetype",
+   "parentTypes": [
     {
-      "additionalProperties": true,
-      "allowedTargets": [],
+     "additionalProperties": true,
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
+     "displayName": null,
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxProperties": null,
+     "minProperties": null,
+     "name": "object",
+     "parentTypes": [],
+     "properties": [],
+     "required": true,
+     "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+     "type": null,
+     "xml": null
+    }
+   ],
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
       "annotations": [],
-      "defaultValue": null,
-      "description": null,
-      "discriminator": null,
-      "discriminatorValue": null,
-      "displayName": {
+      "value": "//"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "//",
+     "parentTypes": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": null,
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "string",
+       "parentTypes": [],
+       "pattern": null,
+       "required": true,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": null,
+       "xml": null
+      }
+     ],
+     "pattern": null,
+     "required": true,
+     "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"//\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "type": "string",
+     "xml": null
+    }
+   ],
+   "required": true,
+   "toJsonSchema": "{\"$ref\":\"#/definitions/basetype\",\"definitions\":{\"basetype\":{\"type\":\"object\",\"properties\":{}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"basetype\" type=\"tns:basetype\"/>\n    <complexType name=\"basetype\">\n        <sequence>\n            <element name=\"___\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+   "type": "object",
+   "xml": null
+  },
+  {
+   "additionalProperties": true,
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "discriminator": null,
+   "discriminatorValue": null,
+   "displayName": {
+    "annotations": [],
+    "value": "subtype"
+   },
+   "example": {
+    "annotations": [],
+    "name": null,
+    "structuredValue": {
+     "isScalar": false,
+     "properties": [
+      {
+       "isArray": false,
+       "name": "attr",
+       "value": {
+        "isScalar": true,
+        "properties": [],
+        "value": "a"
+       },
+       "values": []
+      }
+     ],
+     "value": null
+    },
+    "value": "{\n\"attr\" : \"a\"\n}"
+   },
+   "examples": [],
+   "facets": [],
+   "maxProperties": null,
+   "minProperties": null,
+   "name": "subtype",
+   "parentTypes": [
+    {
+     "additionalProperties": true,
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "discriminator": null,
+     "discriminatorValue": null,
+     "displayName": {
+      "annotations": [],
+      "value": "basetype"
+     },
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxProperties": null,
+     "minProperties": null,
+     "name": "basetype",
+     "parentTypes": [
+      {
+       "additionalProperties": true,
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "discriminator": null,
+       "discriminatorValue": null,
+       "displayName": null,
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxProperties": null,
+       "minProperties": null,
+       "name": "object",
+       "parentTypes": [],
+       "properties": [],
+       "required": true,
+       "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
+       "type": null,
+       "xml": null
+      }
+     ],
+     "properties": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
         "annotations": [],
-        "value": "basetype"
-      },
-      "example": null,
-      "examples": [],
-      "facets": [],
-      "maxProperties": null,
-      "minProperties": null,
-      "name": "basetype",
-      "parentTypes": [
+        "value": "//"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "//",
+       "parentTypes": [
         {
-          "additionalProperties": true,
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "discriminator": null,
-          "discriminatorValue": null,
-          "displayName": null,
-          "example": null,
-          "examples": [],
-          "facets": [],
-          "maxProperties": null,
-          "minProperties": null,
-          "name": "object",
-          "parentTypes": [],
-          "properties": [],
-          "required": true,
-          "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
-          "type": null,
-          "xml": null
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": null,
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "facets": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "string",
+         "parentTypes": [],
+         "pattern": null,
+         "required": true,
+         "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "type": null,
+         "xml": null
         }
-      ],
-      "properties": [
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": {
-            "annotations": [],
-            "value": "//"
-          },
-          "enumValues": [],
-          "example": null,
-          "examples": [],
-          "facets": [],
-          "maxLength": null,
-          "minLength": null,
-          "name": "//",
-          "parentTypes": [
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": null,
-              "displayName": null,
-              "enumValues": [],
-              "example": null,
-              "examples": [],
-              "facets": [],
-              "maxLength": null,
-              "minLength": null,
-              "name": "string",
-              "parentTypes": [],
-              "pattern": null,
-              "required": true,
-              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-              "type": null,
-              "xml": null
-            }
-          ],
-          "pattern": null,
-          "required": true,
-          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"//\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-          "type": "string",
-          "xml": null
-        }
-      ],
-      "required": true,
-      "toJsonSchema": "{\"$ref\":\"#/definitions/basetype\",\"definitions\":{\"basetype\":{\"type\":\"object\",\"properties\":{}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"basetype\" type=\"tns:basetype\"/>\n    <complexType name=\"basetype\">\n        <sequence>\n            <element name=\"___\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
-      "type": "object",
-      "xml": null
+       ],
+       "pattern": null,
+       "required": true,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"//\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "string",
+       "xml": null
+      }
+     ],
+     "required": true,
+     "toJsonSchema": "{\"$ref\":\"#/definitions/basetype\",\"definitions\":{\"basetype\":{\"type\":\"object\",\"properties\":{}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"basetype\" type=\"tns:basetype\"/>\n    <complexType name=\"basetype\">\n        <sequence>\n            <element name=\"___\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+     "type": "object",
+     "xml": null
+    }
+   ],
+   "properties": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "//"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "//",
+     "parentTypes": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": null,
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "string",
+       "parentTypes": [],
+       "pattern": null,
+       "required": true,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": null,
+       "xml": null
+      }
+     ],
+     "pattern": null,
+     "required": true,
+     "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"//\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "type": "string",
+     "xml": null
     },
     {
-      "additionalProperties": true,
-      "allowedTargets": [],
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": {
       "annotations": [],
-      "defaultValue": null,
-      "description": null,
-      "discriminator": null,
-      "discriminatorValue": null,
-      "displayName": {
-        "annotations": [],
-        "value": "subtype"
-      },
-      "example": {
-        "annotations": [],
-        "name": null,
-        "structuredValue": {
-          "isScalar": false,
-          "properties": [
-            {
-              "isArray": false,
-              "name": "attr",
-              "value": {
-                "isScalar": true,
-                "properties": [],
-                "value": "a"
-              },
-              "values": []
-            }
-          ],
-          "value": null
-        },
-        "value": "{\n\"attr\" : \"a\"\n}"
-      },
-      "examples": [],
-      "facets": [],
-      "maxProperties": null,
-      "minProperties": null,
-      "name": "subtype",
-      "parentTypes": [
-        {
-          "additionalProperties": true,
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "discriminator": null,
-          "discriminatorValue": null,
-          "displayName": {
-            "annotations": [],
-            "value": "basetype"
-          },
-          "example": null,
-          "examples": [],
-          "facets": [],
-          "maxProperties": null,
-          "minProperties": null,
-          "name": "basetype",
-          "parentTypes": [
-            {
-              "additionalProperties": true,
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": null,
-              "discriminator": null,
-              "discriminatorValue": null,
-              "displayName": null,
-              "example": null,
-              "examples": [],
-              "facets": [],
-              "maxProperties": null,
-              "minProperties": null,
-              "name": "object",
-              "parentTypes": [],
-              "properties": [],
-              "required": true,
-              "toJsonSchema": "{\"type\":\"object\",\"properties\":{},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <complexType>\n            <sequence>\n                <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n            </sequence>\n        </complexType>\n    </element>\n</schema>\n",
-              "type": null,
-              "xml": null
-            }
-          ],
-          "properties": [
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": null,
-              "displayName": {
-                "annotations": [],
-                "value": "//"
-              },
-              "enumValues": [],
-              "example": null,
-              "examples": [],
-              "facets": [],
-              "maxLength": null,
-              "minLength": null,
-              "name": "//",
-              "parentTypes": [
-                {
-                  "allowedTargets": [],
-                  "annotations": [],
-                  "defaultValue": null,
-                  "description": null,
-                  "displayName": null,
-                  "enumValues": [],
-                  "example": null,
-                  "examples": [],
-                  "facets": [],
-                  "maxLength": null,
-                  "minLength": null,
-                  "name": "string",
-                  "parentTypes": [],
-                  "pattern": null,
-                  "required": true,
-                  "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-                  "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-                  "type": null,
-                  "xml": null
-                }
-              ],
-              "pattern": null,
-              "required": true,
-              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"//\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-              "type": "string",
-              "xml": null
-            }
-          ],
-          "required": true,
-          "toJsonSchema": "{\"$ref\":\"#/definitions/basetype\",\"definitions\":{\"basetype\":{\"type\":\"object\",\"properties\":{}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"basetype\" type=\"tns:basetype\"/>\n    <complexType name=\"basetype\">\n        <sequence>\n            <element name=\"___\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
-          "type": "object",
-          "xml": null
-        }
-      ],
-      "properties": [
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": {
-            "annotations": [],
-            "value": "//"
-          },
-          "enumValues": [],
-          "example": null,
-          "examples": [],
-          "facets": [],
-          "maxLength": null,
-          "minLength": null,
-          "name": "//",
-          "parentTypes": [
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": null,
-              "displayName": null,
-              "enumValues": [],
-              "example": null,
-              "examples": [],
-              "facets": [],
-              "maxLength": null,
-              "minLength": null,
-              "name": "string",
-              "parentTypes": [],
-              "pattern": null,
-              "required": true,
-              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-              "type": null,
-              "xml": null
-            }
-          ],
-          "pattern": null,
-          "required": true,
-          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"//\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-          "type": "string",
-          "xml": null
-        },
-        {
-          "allowedTargets": [],
-          "annotations": [],
-          "defaultValue": null,
-          "description": null,
-          "displayName": {
-            "annotations": [],
-            "value": "attr"
-          },
-          "enumValues": [],
-          "example": null,
-          "examples": [],
-          "facets": [],
-          "maxLength": null,
-          "minLength": null,
-          "name": "attr",
-          "parentTypes": [
-            {
-              "allowedTargets": [],
-              "annotations": [],
-              "defaultValue": null,
-              "description": null,
-              "displayName": null,
-              "enumValues": [],
-              "example": null,
-              "examples": [],
-              "facets": [],
-              "maxLength": null,
-              "minLength": null,
-              "name": "string",
-              "parentTypes": [],
-              "pattern": null,
-              "required": true,
-              "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-              "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-              "type": null,
-              "xml": null
-            }
-          ],
-          "pattern": null,
-          "required": true,
-          "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-          "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"attr\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
-          "type": "string",
-          "xml": null
-        }
-      ],
-      "required": true,
-      "toJsonSchema": "{\"$ref\":\"#/definitions/subtype\",\"definitions\":{\"subtype\":{\"type\":\"object\",\"properties\":{\"attr\":{\"type\":\"string\"}}}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-      "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"subtype\" type=\"tns:subtype\"/>\n    <complexType name=\"subtype\">\n        <sequence>\n            <element name=\"___\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"attr\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
-      "type": "basetype",
-      "xml": null
+      "value": "attr"
+     },
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "attr",
+     "parentTypes": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": null,
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "string",
+       "parentTypes": [],
+       "pattern": null,
+       "required": true,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": null,
+       "xml": null
+      }
+     ],
+     "pattern": null,
+     "required": true,
+     "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"attr\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "type": "string",
+     "xml": null
     }
-  ],
-  "uses": [],
-  "version": null
+   ],
+   "required": true,
+   "toJsonSchema": "{\"$ref\":\"#/definitions/subtype\",\"definitions\":{\"subtype\":{\"type\":\"object\",\"properties\":{\"attr\":{\"type\":\"string\"}},\"required\":[\"attr\"]}},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"subtype\" type=\"tns:subtype\"/>\n    <complexType name=\"subtype\">\n        <sequence>\n            <element name=\"___\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <element name=\"attr\">\n                <simpleType>\n                    <restriction base=\"string\"/>\n                </simpleType>\n            </element>\n            <any maxOccurs=\"unbounded\" minOccurs=\"0\" processContents=\"skip\"/>\n        </sequence>\n    </complexType>\n</schema>\n",
+   "type": "basetype",
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": null
 }

@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import java.util.Map;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
@@ -33,6 +34,7 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     private static final String ITEMS = "items";
     private static final String FORMAT = "format";
     private static final String PROPERTIES = "properties";
+    private static final String REQUIRED = "required";
     private static final String ANY_OF = "anyOf";
 
     private static final String OBJECT = "object";
@@ -99,18 +101,29 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     private JsonObjectBuilder addPropertiesToJsonObject(final ObjectResolvedType objectTypeDefinition, JsonObjectBuilder objectBuilder)
     {
         final JsonObjectBuilder propertiesBuilder = this.factory.createObjectBuilder();
+        final JsonArrayBuilder requiredBuilder = this.factory.createArrayBuilder();
 
-        for (String propertyName : objectTypeDefinition.getProperties().keySet())
+        boolean fieldsRequired = false;
+
+        for (Map.Entry<String, PropertyFacets> entry : objectTypeDefinition.getProperties().entrySet())
         {
+
+            final String propertyName = entry.getKey();
             PropertyFacets propertyFacets = objectTypeDefinition.getProperties().get(propertyName);
 
             if (!propertyName.startsWith("/") || !propertyName.endsWith("/"))
             {
                 propertiesBuilder.add(propertyName, propertyFacets.getValueType().visit(this));
+                if (entry.getValue().isRequired())
+                {
+                    requiredBuilder.add(propertyName);
+                    fieldsRequired = true;
+                }
             }
         }
 
-        return objectBuilder.add(TYPE, OBJECT).add(PROPERTIES, propertiesBuilder);
+        final JsonObjectBuilder builder = objectBuilder.add(TYPE, OBJECT).add(PROPERTIES, propertiesBuilder);
+        return fieldsRequired ? builder.add(REQUIRED, requiredBuilder) : builder;
     }
 
     private String escapeJsonPointer(final String typeName)

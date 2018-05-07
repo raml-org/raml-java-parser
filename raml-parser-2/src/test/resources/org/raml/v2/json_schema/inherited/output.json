@@ -11,7 +11,8 @@
         "id": {
           "type": "integer"
         }
-      }
+      },
+      "required":["amount","id"]
     }
   }
 }

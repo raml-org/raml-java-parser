@@ -8,7 +8,8 @@
         "age": {
           "type": "number"
         }
-      }
+      },
+      "required":["age"]
     }
   }
 }

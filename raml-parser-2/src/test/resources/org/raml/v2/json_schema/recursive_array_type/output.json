@@ -14,7 +14,8 @@
             "$ref": "#/definitions/root"
           }
         }
-      }
+      },
+      "required":["name"]
     }
   }
 }

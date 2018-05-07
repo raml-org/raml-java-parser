@@ -18,7 +18,8 @@
         "color": {
           "type": "string"
         }
-      }
+      },
+      "required":["name","color"]
     },
     "dog": {
       "type": "object",
@@ -29,7 +30,8 @@
         "fangs": {
           "type": "string"
         }
-      }
+      },
+      "required":["name","fangs"]
     }
   }
 }

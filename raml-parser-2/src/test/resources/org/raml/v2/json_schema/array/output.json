@@ -11,7 +11,8 @@
             "$ref": "#/definitions/Friend"
           }
         }
-      }
+      },
+      "required":["value"]
     },
     "Friend": {
       "type": "object",
@@ -19,7 +20,8 @@
         "name": {
           "type": "string"
         }
-      }
+      },
+      "required":["name"]
     }
   }
 }

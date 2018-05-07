@@ -1,43 +1,54 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
-  "definitions": {
-    "root": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "anyOf": [
+  "$schema":"http://json-schema.org/draft-04/schema#",
+  "$ref":"#/definitions/root",
+  "definitions":{
+    "cat":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string"
+        },
+        "color":{
+          "type":"string"
+        }
+      },
+      "required":[
+        "name",
+        "color"
+      ]
+    },
+    "dog":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string"
+        },
+        "fangs":{
+          "type":"string"
+        }
+      },
+      "required":[
+        "name",
+        "fangs"
+      ]
+    },
+    "root":{
+      "type":"object",
+      "properties":{
+        "value":{
+          "anyOf":[
             {
-              "$ref": "#/definitions/cat"
+              "$ref":"#/definitions/cat"
             },
             {
-              "$ref": "#/definitions/dog"
+              "$ref":"#/definitions/dog"
             }
           ]
         }
-      }
-    },
-    "cat": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "color": {
-          "type": "string"
-        }
-      }
-    },
-    "dog": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "fangs": {
-          "type": "string"
-        }
-      }
+      },
+      "required":[
+        "value"
+      ]
     }
   }
 }

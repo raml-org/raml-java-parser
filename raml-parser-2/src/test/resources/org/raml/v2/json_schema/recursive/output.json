@@ -14,7 +14,8 @@
         "right": {
           "$ref": "#/definitions/root"
         }
-      }
+      },
+      "required":["value","left","right"]
     }
   }
 }

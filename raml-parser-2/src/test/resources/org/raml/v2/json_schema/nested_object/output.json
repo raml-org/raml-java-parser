@@ -11,7 +11,8 @@
                 "friend": {
                     "$ref": "#/definitions/friend"
                 }
-            }
+            },
+            "required":["name","friend"]
         },
         "friend": {
             "type": "object",
@@ -19,7 +20,8 @@
                 "name": {
                     "type": "string"
                 }
-            }
+            },
+            "required":["name"]
         }
     }
 }
