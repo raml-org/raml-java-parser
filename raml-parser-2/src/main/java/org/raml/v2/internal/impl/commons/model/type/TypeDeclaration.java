@@ -41,6 +41,7 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
+import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
@@ -279,6 +280,19 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
         {
             // type declaration
             return name();
+        }
+    }
+
+    public String internalFragment()
+    {
+        ResolvedType resolvedType = getResolvedType();
+        if (resolvedType instanceof XmlSchemaExternalType)
+        {
+            return ((XmlSchemaExternalType) resolvedType).getInternalFragment();
+        }
+        else
+        {
+            return null;
         }
     }
 

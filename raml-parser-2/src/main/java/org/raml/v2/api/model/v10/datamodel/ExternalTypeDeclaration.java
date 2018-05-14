@@ -24,4 +24,9 @@ public interface ExternalTypeDeclaration extends TypeDeclaration
      **/
     String schemaContent();
 
+    /**
+     * Returns internal fragment name when it is used
+     **/
+    String internalFragment();
+
 }
