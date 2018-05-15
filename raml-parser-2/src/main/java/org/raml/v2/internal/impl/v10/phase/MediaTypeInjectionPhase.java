@@ -16,11 +16,6 @@
 package org.raml.v2.internal.impl.v10.phase;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.yagi.framework.nodes.BaseNode;
@@ -34,6 +29,10 @@ import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.phase.Phase;
 import org.raml.yagi.framework.util.NodeSelector;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MediaTypeInjectionPhase implements Phase
 {
@@ -50,6 +49,18 @@ public class MediaTypeInjectionPhase implements Phase
                 if (!hasExplicitMimeTypes(bodyNode))
                 {
                     injectMediaTypes(bodyNode, defaultMediaTypes);
+                }
+                else
+                {
+                    // if hasExplicitMimeType and body node has attributes type and display name, they get removed because they where incorrectly merge. See #498
+                    Node bodyNodeValue = bodyNode.getValue();
+                    Node type = NodeSelector.selectFrom("type", bodyNodeValue);
+                    Node displayName = NodeSelector.selectFrom("displayName", bodyNodeValue);
+
+                    if (type != null)
+                        bodyNodeValue.removeChild(type.getParent());
+                    if (displayName != null)
+                        bodyNodeValue.removeChild(displayName.getParent());
                 }
             }
         }
