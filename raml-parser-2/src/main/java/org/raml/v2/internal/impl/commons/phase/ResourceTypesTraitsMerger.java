@@ -18,13 +18,10 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import static org.raml.yagi.framework.nodes.DefaultPosition.isDefaultNode;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.OverridableNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -35,6 +32,11 @@ import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.util.NodeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.raml.yagi.framework.nodes.DefaultPosition.isDefaultNode;
 
 public class ResourceTypesTraitsMerger
 {
@@ -109,8 +111,23 @@ public class ResourceTypesTraitsMerger
             }
             else if (node == null)
             {
-                logger.debug("Adding key '{}'", key);
-                baseNode.addChild(child);
+                // if merging children of body node and media type is defined under baseNode, child gets merge with the value of mediaType node. See #498
+                if (baseNode.getParent() instanceof BodyNode)
+                {
+                    if (baseNode.getChildren().size() > 0 && baseNode.getChildren().get(0) instanceof KeyValueNode) {
+                        KeyValueNode mimeTypeNode = (KeyValueNode) baseNode.getChildren().get(0);
+                        if (new Raml10Grammar().mimeTypeRegex().matches(mimeTypeNode.getKey()))
+                        {
+                            logger.debug("Overriding keys under the media type '{}'", copyNode);
+                            merge(mimeTypeNode.getValue(), copyNode);
+                        }
+                    }
+                }
+                else
+                {
+                    logger.debug("Adding key '{}'", key);
+                    baseNode.addChild(child);
+                }
             }
             else if (childValue instanceof SimpleTypeNode)
             {

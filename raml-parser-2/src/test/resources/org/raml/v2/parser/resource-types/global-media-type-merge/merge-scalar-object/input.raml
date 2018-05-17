@@ -1,0 +1,20 @@
+#%RAML 1.0
+
+title: API Manager
+mediaType: application/json
+
+resourceTypes:
+  collection:
+    post:
+      body:
+        type: string
+
+
+/tiers:
+  type: collection
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          melli: number
