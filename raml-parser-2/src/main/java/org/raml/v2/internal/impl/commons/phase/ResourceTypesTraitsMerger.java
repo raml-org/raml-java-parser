@@ -22,6 +22,7 @@ import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.OverridableNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
@@ -111,12 +112,15 @@ public class ResourceTypesTraitsMerger
             }
             else if (node == null)
             {
-                // if merging children of body node and media type is defined under baseNode, child gets merge with the value of mediaType node. See #498
-                if (baseNode.getParent() instanceof BodyNode)
+                // if merging children of body node, media type is defined under baseNode and child is not a mime type node,
+                // child gets merge with the value of mediaType node. See #498
+                RegexValueRule mimeTypeRegex = new Raml10Grammar().mimeTypeRegex();
+                if (baseNode.getParent() instanceof BodyNode && !mimeTypeRegex.matches(((KeyValueNode) child).getKey()))
                 {
-                    if (baseNode.getChildren().size() > 0 && baseNode.getChildren().get(0) instanceof KeyValueNode) {
+                    if (baseNode.getChildren().size() > 0 && baseNode.getChildren().get(0) instanceof KeyValueNode)
+                    {
                         KeyValueNode mimeTypeNode = (KeyValueNode) baseNode.getChildren().get(0);
-                        if (new Raml10Grammar().mimeTypeRegex().matches(mimeTypeNode.getKey()))
+                        if (mimeTypeRegex.matches(mimeTypeNode.getKey()))
                         {
                             logger.debug("Overriding keys under the media type '{}'", copyNode);
                             merge(mimeTypeNode.getValue(), copyNode);
