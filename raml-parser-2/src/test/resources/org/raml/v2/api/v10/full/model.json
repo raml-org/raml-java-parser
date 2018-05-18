@@ -2161,6 +2161,7 @@
         }
        ],
        "facets": [],
+       "internalFragment": null,
        "name": "application/xml",
        "parentTypes": [
         {
@@ -2172,6 +2173,7 @@
          "example": null,
          "examples": [],
          "facets": [],
+         "internalFragment": null,
          "name": null,
          "parentTypes": [],
          "required": true,
@@ -2955,6 +2957,7 @@
           }
          ],
          "facets": [],
+         "internalFragment": null,
          "name": "application/xml",
          "parentTypes": [
           {
@@ -2966,6 +2969,7 @@
            "example": null,
            "examples": [],
            "facets": [],
+           "internalFragment": null,
            "name": null,
            "parentTypes": [],
            "required": true,
@@ -3167,6 +3171,7 @@
          "example": null,
          "examples": [],
          "facets": [],
+         "internalFragment": null,
          "name": "application/json",
          "parentTypes": [
           {
@@ -3181,6 +3186,7 @@
            "example": null,
            "examples": [],
            "facets": [],
+           "internalFragment": null,
            "name": "UserJson",
            "parentTypes": [
             {
@@ -3192,6 +3198,7 @@
              "example": null,
              "examples": [],
              "facets": [],
+             "internalFragment": null,
              "name": null,
              "parentTypes": [],
              "required": true,
@@ -5540,6 +5547,7 @@
    "example": null,
    "examples": [],
    "facets": [],
+   "internalFragment": null,
    "name": "UserJson",
    "parentTypes": [
     {
@@ -5551,6 +5559,7 @@
      "example": null,
      "examples": [],
      "facets": [],
+     "internalFragment": null,
      "name": null,
      "parentTypes": [],
      "required": true,
@@ -5580,6 +5589,7 @@
    "example": null,
    "examples": [],
    "facets": [],
+   "internalFragment": null,
    "name": "UserXml",
    "parentTypes": [
     {
@@ -5591,6 +5601,7 @@
      "example": null,
      "examples": [],
      "facets": [],
+     "internalFragment": null,
      "name": null,
      "parentTypes": [],
      "required": true,

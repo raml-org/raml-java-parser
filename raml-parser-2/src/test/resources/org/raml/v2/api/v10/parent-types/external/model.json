@@ -41,6 +41,7 @@
        "example": null,
        "examples": [],
        "facets": [],
+       "internalFragment": null,
        "name": "application/json",
        "parentTypes": [
         {
@@ -55,6 +56,7 @@
          "example": null,
          "examples": [],
          "facets": [],
+         "internalFragment": null,
          "name": "UserJson",
          "parentTypes": [
           {
@@ -66,6 +68,7 @@
            "example": null,
            "examples": [],
            "facets": [],
+           "internalFragment": null,
            "name": null,
            "parentTypes": [],
            "required": true,
@@ -138,6 +141,7 @@
    "example": null,
    "examples": [],
    "facets": [],
+   "internalFragment": null,
    "name": "UserJson",
    "parentTypes": [
     {
@@ -149,6 +153,7 @@
      "example": null,
      "examples": [],
      "facets": [],
+     "internalFragment": null,
      "name": null,
      "parentTypes": [],
      "required": true,
