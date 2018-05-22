@@ -32,7 +32,7 @@ import org.raml.yagi.framework.util.NodeSelector;
 public class UnusedParametersTransformer implements Transformer
 {
 
-    private static Pattern templatePattern = Pattern.compile("\\{([^}]+)\\}");
+    final private static Pattern TEMPLATE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
     @Override
     public boolean matches(Node node)
@@ -77,12 +77,12 @@ public class UnusedParametersTransformer implements Transformer
         }
     }
 
-    private List<String> getUriTemplates(String value)
+    public static List<String> getUriTemplates(String value)
     {
         List<String> result = new ArrayList<>();
         if (value != null)
         {
-            Matcher m = templatePattern.matcher(value);
+            Matcher m = TEMPLATE_PATTERN.matcher(value);
             while (m.find())
             {
                 result.add(m.group(1));

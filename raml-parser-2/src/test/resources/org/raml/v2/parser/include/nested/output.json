@@ -25,6 +25,11 @@
                     "displayName": {
                         "value": "/{id}"
                     },
+                    "uriParameters": {
+                        "id": {
+                            "type": "string"
+                        }
+                    },
                     "methods": [
                         {
                             "method": "put",

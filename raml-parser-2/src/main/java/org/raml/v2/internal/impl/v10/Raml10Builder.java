@@ -36,6 +36,7 @@ import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.impl.v10.phase.ReferenceResolverTransformer;
+import org.raml.v2.internal.impl.v10.phase.ImplicitUriParametersInjectionTransformer;
 import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 import org.raml.v2.internal.utils.ResourcePathUtils;
@@ -197,6 +198,8 @@ public class Raml10Builder
         // Check unused uri parameters
         final TransformationPhase checkUnusedParameters = new TransformationPhase(new UnusedParametersTransformer());
 
+        final TransformationPhase undefinedUriParameterInjection = new TransformationPhase(new ImplicitUriParametersInjectionTransformer());
+
         // Run grammar again to re-validate tree
 
         final AnnotationValidationPhase annotationValidationPhase = new AnnotationValidationPhase(resourceLoader);
@@ -220,6 +223,7 @@ public class Raml10Builder
                 resourcePhase,
                 duplicatedPaths,
                 checkUnusedParameters,
+                undefinedUriParameterInjection,
                 annotationValidationPhase,
                 mediaTypeInjection,
                 grammarPhase,
