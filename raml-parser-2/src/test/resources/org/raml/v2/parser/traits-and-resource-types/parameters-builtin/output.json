@@ -50,6 +50,11 @@
                     "description": {
                         "value": "resourcePath /users/{userId} and resourcePathName users"
                     },
+                    "uriParameters": {
+                        "userId": {
+                            "type": "string"
+                        }
+                    },
                     "methods": [
                         {
                             "method": "get",

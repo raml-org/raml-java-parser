@@ -16,9 +16,14 @@
 package org.raml.v2.internal.utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ResourcePathUtils
 {
+    final private static Pattern TEMPLATE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
     /**
     * Returns the absolute resource location using the basePath
@@ -54,5 +59,24 @@ public class ResourcePathUtils
     public static boolean isAbsolute(String includePath)
     {
         return includePath.startsWith("http:") || includePath.startsWith("https:") || includePath.startsWith("file:") || includePath.startsWith("/") || new File(includePath).isAbsolute();
+    }
+
+    /**
+     * Returns a List containing all the uri templates (aka uri parameters) of a resource
+     * @param value the resource to extract the parameters
+     * @return List containing the uri parameters
+     */
+    public static List<String> getUriTemplates(String value)
+    {
+        List<String> result = new ArrayList<>();
+        if (value != null)
+        {
+            Matcher m = TEMPLATE_PATTERN.matcher(value);
+            while (m.find())
+            {
+                result.add(m.group(1));
+            }
+        }
+        return result;
     }
 }
