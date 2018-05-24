@@ -29,10 +29,10 @@ import org.raml.yagi.framework.nodes.WarningMessageAnnotation;
 import org.raml.yagi.framework.phase.Transformer;
 import org.raml.yagi.framework.util.NodeSelector;
 
+import static org.raml.v2.internal.utils.ResourcePathUtils.getUriTemplates;
+
 public class UnusedParametersTransformer implements Transformer
 {
-
-    final private static Pattern TEMPLATE_PATTERN = Pattern.compile("\\{([^}]+)\\}");
 
     @Override
     public boolean matches(Node node)
@@ -75,19 +75,5 @@ public class UnusedParametersTransformer implements Transformer
                 }
             }
         }
-    }
-
-    public static List<String> getUriTemplates(String value)
-    {
-        List<String> result = new ArrayList<>();
-        if (value != null)
-        {
-            Matcher m = TEMPLATE_PATTERN.matcher(value);
-            while (m.find())
-            {
-                result.add(m.group(1));
-            }
-        }
-        return result;
     }
 }

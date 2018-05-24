@@ -29,7 +29,7 @@ import org.raml.yagi.framework.util.NodeSelector;
 
 import java.util.List;
 
-import static org.raml.v2.internal.impl.commons.phase.UnusedParametersTransformer.getUriTemplates;
+import static org.raml.v2.internal.utils.ResourcePathUtils.getUriTemplates;
 
 public class ImplicitUriParametersInjectionTransformer implements Transformer
 {
@@ -44,8 +44,9 @@ public class ImplicitUriParametersInjectionTransformer implements Transformer
     @Override
     public Node transform(Node node)
     {
-        List<String> templates = getUriTemplates(((ResourceNode) node).getRelativeUri());
-        injectImplicitUriParameters(((ResourceNode) node).getValue(), templates);
+        ResourceNode resourceNode = (ResourceNode) node;
+        List<String> templates = getUriTemplates(resourceNode.getRelativeUri());
+        injectImplicitUriParameters(resourceNode.getValue(), templates);
 
         return node;
     }
@@ -60,6 +61,10 @@ public class ImplicitUriParametersInjectionTransformer implements Transformer
                 String parameterName = ((SimpleTypeNode) ((KeyValueNode) child).getKey()).getLiteralValue();
                 templates.remove(parameterName.endsWith("?") ? parameterName.substring(0, parameterName.length() - 1) : parameterName);
             }
+            if (!templates.isEmpty())
+            {
+                addUriParameters(templates, parametersNode);
+            }
         }
         else if (!templates.isEmpty())
         {
@@ -70,10 +75,6 @@ public class ImplicitUriParametersInjectionTransformer implements Transformer
             node.addChild(new KeyValueNodeImpl(uriParameters, objectNode));
         }
 
-        if (parametersNode != null && !templates.isEmpty())
-        {
-            addUriParameters(templates, parametersNode);
-        }
     }
 
     private void addUriParameters(List<String> templates, Node objectNode)
