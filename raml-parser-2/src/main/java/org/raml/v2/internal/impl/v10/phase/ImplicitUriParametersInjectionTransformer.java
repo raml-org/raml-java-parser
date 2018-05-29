@@ -46,6 +46,8 @@ public class ImplicitUriParametersInjectionTransformer implements Transformer
     {
         ResourceNode resourceNode = (ResourceNode) node;
         List<String> templates = getUriTemplates(resourceNode.getRelativeUri());
+        // version should be defined at root level
+        templates.remove("version");
         injectImplicitUriParameters(resourceNode.getValue(), templates);
 
         return node;
