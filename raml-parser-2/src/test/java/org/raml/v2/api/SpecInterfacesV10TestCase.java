@@ -151,6 +151,8 @@ public class SpecInterfacesV10TestCase
         assertThat(parentTypesUser.get(0).name(), is("object"));
         assertThat(parentTypesUser.get(0).parentTypes(), hasSize(0));
 
+        assertThat(user.defaultValue(), is("{\nfirstname: pietro,\nlastname: maximoff,\nage: 104,\nheight: 1.563,\ngoggles: true\n}"));
+
         // inherited object type
         ObjectTypeDeclaration superUser = (ObjectTypeDeclaration) types.get(1);
         assertThat(superUser.name(), is("SuperUser"));

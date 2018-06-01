@@ -18,6 +18,8 @@ package org.raml.v2.internal.impl.commons.model.type;
 import static java.util.Collections.singletonList;
 import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
+import static org.raml.yagi.framework.util.NodeSelector.selectFrom;
+import static org.raml.yagi.framework.util.NodeSelector.selectType;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -42,7 +44,6 @@ import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.AbstractExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.SchemaBasedResolvedType;
-import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
@@ -54,8 +55,10 @@ import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
+import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.util.NodeSelector;
+import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.yagi.framework.util.NodeUtils;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<KeyValueNode>
@@ -205,22 +208,29 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
             // in Raml 0.8 parameters are optional by default except for uri parameters
             if (getVersion(getNode()) == RAML_10 || isUriParameter(getNode()))
             {
-                return NodeSelector.selectType("required", getNode(), true);
+                return selectType("required", getNode(), true);
             }
-            return NodeSelector.selectType("required", getNode(), false);
+            return selectType("required", getNode(), false);
         }
     }
 
     private boolean isUriParameter(Node node)
     {
-        Node ancestor = NodeSelector.selectFrom("../../../../uriParameters", node);
+        Node ancestor = selectFrom("../../../../uriParameters", node);
         return ancestor != null;
     }
 
     public String defaultValue()
     {
-        Object defaultValue = NodeSelector.selectType("default", getNode(), null);
-        return defaultValue != null ? defaultValue.toString() : null;
+        Node result = selectFrom("default", getNode());
+        if (result != null && !(result instanceof NullNode))
+        {
+            if (result instanceof SYObjectNode)
+                return result.toString();
+            if (result instanceof SimpleTypeNode)
+                return ((SimpleTypeNode) result).getValue().toString();
+        }
+        return null;
     }
 
     public String toXmlSchema()
