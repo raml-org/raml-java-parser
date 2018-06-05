@@ -51,13 +51,14 @@ import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToJsonSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
 import org.raml.v2.internal.impl.v10.type.XmlFacetsCapableType;
+import org.raml.v2.internal.utils.JSonDumper;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.yagi.framework.util.NodeUtils;
 
@@ -223,12 +224,12 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
     public String defaultValue()
     {
         Node result = selectFrom("default", getNode());
-        if (result != null && !(result instanceof NullNode))
+        if (result != null)
         {
-            if (result instanceof SYObjectNode)
-                return result.toString();
             if (result instanceof SimpleTypeNode)
                 return ((SimpleTypeNode) result).getValue().toString();
+            if (result instanceof SYObjectNode || result instanceof SYArrayNode)
+                return JSonDumper.dump(result);
         }
         return null;
     }

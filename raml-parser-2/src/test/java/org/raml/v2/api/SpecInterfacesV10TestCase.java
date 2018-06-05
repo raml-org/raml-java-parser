@@ -151,7 +151,7 @@ public class SpecInterfacesV10TestCase
         assertThat(parentTypesUser.get(0).name(), is("object"));
         assertThat(parentTypesUser.get(0).parentTypes(), hasSize(0));
 
-        assertThat(user.defaultValue(), is("{\nfirstname: pietro,\nlastname: maximoff,\nage: 104,\nheight: 1.563,\ngoggles: true\n}"));
+        assertThat(user.defaultValue(), is("{\n\"firstname\" : \"pietro\",\n\"lastname\" : \"maximoff\",\n\"age\" : 104,\n\"height\" : 1.563,\n\"goggles\" : true\n}"));
 
         // inherited object type
         ObjectTypeDeclaration superUser = (ObjectTypeDeclaration) types.get(1);
@@ -171,6 +171,12 @@ public class SpecInterfacesV10TestCase
         assertThat(parentTypesSuperUserUser, hasSize(1));
         assertThat(parentTypesSuperUserUser.get(0).name(), is("object"));
         assertThat(parentTypesSuperUserUser.get(0).parentTypes(), hasSize(0));
+
+        ArrayTypeDeclaration users = (ArrayTypeDeclaration) types.get(2);
+        assertThat(users.name(), is("Users"));
+        assertThat(
+                users.defaultValue(),
+                is("[\n{\n\"firstname\" : \"pietro\",\n\"lastname\" : \"maximoff\",\n\"age\" : 104,\n\"height\" : 1.563,\n\"goggles\" : true\n},\n{\n\"firstname\" : \"lionel\",\n\"lastname\" : \"messi\",\n\"age\" : 30,\n\"height\" : 1.7,\n\"goggles\" : false\n}\n]"));
 
         // string type
         StringTypeDeclaration nString = (StringTypeDeclaration) types.get(3);
