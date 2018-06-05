@@ -46,6 +46,7 @@ types:
                 maximum: 144
             height?: number
             goggles?: boolean
+        default: {"firstname": "pietro", "lastname": "maximoff", "age": 104, "height": 1.563, "goggles": true}
         examples:
             batman:
                 firstname: bruce
@@ -70,6 +71,7 @@ types:
                 maxItems: 3
     Users:
         type: User[]
+        default: [{"firstname": "pietro", "lastname": "maximoff", "age": 104, "height": 1.563, "goggles": true},{"firstname": "lionel", "lastname": "messi", "age": 30, "height": 1.7, "goggles": false}]
         minItems: 2
     nString:
         maxLength: 10
@@ -230,6 +232,7 @@ annotationTypes:
                 long: number
         body: &bodyPost
             application/json:
+                default: {"firstname": "pietro", "lastname": "maximoff", "age": 104, "height": 1.563, "goggles": true}
                 type: User
                 example: |
                     {
