@@ -74,7 +74,11 @@ public class ErrorNodeFactory
 
     public static Node createInvalidType(Node node, NodeType type)
     {
-        return new ErrorNode("Invalid type " + node.getType() + ", expected " + type);
+        return new ErrorNode("Invalid type " + node.getType() + ", expected " + type + getFieldMessageIfPresent(node));
+    }
+
+    private static String getFieldMessageIfPresent(Node node) {
+        return node.getParent() != null ? " for " + node.getParent().getChildren().get(0).toString() : "";
     }
 
     public static Node createInvalidFragmentName(String fragmentText)
