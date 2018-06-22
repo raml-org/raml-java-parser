@@ -214,7 +214,7 @@ public class AbstractParam implements Serializable
 
     public boolean validate(String value)
     {
-        return OK.equals(message(value));
+        return value != null && OK.equals(message(value));
     }
 
     public String message(String value)
