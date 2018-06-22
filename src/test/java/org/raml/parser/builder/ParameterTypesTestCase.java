@@ -65,6 +65,7 @@ public class ParameterTypesTestCase extends AbstractRamlTestCase
         assertThat(nameParam.isRequired(), is(false));
         assertThat(nameParam.getDefaultValue(), is("three"));
 
+        assertThat(nameParam.validate(null), is(false));
         assertThat(nameParam.validate("one"), is(true));
         assertThat(nameParam.validate("two"), is(true));
         assertThat(nameParam.validate("three"), is(true));
