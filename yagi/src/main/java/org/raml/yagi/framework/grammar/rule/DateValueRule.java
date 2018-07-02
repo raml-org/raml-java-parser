@@ -53,7 +53,7 @@ public class DateValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode;
+        return node instanceof StringNode && DateUtils.isValidDate(((StringNode) node).getValue(), this.dateType, this.rfc);
     }
 
     @Override
@@ -72,6 +72,10 @@ public class DateValueRule extends Rule
         }
         else
         {
+            if (node instanceof StringNode)
+            {
+                return ErrorNodeFactory.createInvalidDateValue(((StringNode) node).getValue(), this.dateType.name(), this.rfc);
+            }
             return ErrorNodeFactory.createInvalidNode(node);
         }
     }
