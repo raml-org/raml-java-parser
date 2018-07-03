@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.commons.model.type;
 import static java.util.Collections.singletonList;
 import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
 import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
+import static org.raml.yagi.framework.nodes.DefaultPosition.ARTIFICIAL_NODE;
 import static org.raml.yagi.framework.util.NodeSelector.selectFrom;
 import static org.raml.yagi.framework.util.NodeSelector.selectType;
 
@@ -33,6 +34,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.json.JsonObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;
@@ -301,6 +303,22 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
         if (resolvedType instanceof AbstractExternalType)
         {
             return ((AbstractExternalType) resolvedType).getInternalFragment();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public String schemaPath()
+    {
+        ResolvedType resolvedType = getResolvedType();
+        if (resolvedType instanceof AbstractExternalType)
+        {
+            if(!((AbstractExternalType) resolvedType).getSchemaPath().equalsIgnoreCase(ARTIFICIAL_NODE)){
+                return ((AbstractExternalType) resolvedType).getSchemaPath();
+            }
+            return null;
         }
         else
         {
