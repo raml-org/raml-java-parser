@@ -315,7 +315,8 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
         ResolvedType resolvedType = getResolvedType();
         if (resolvedType instanceof AbstractExternalType)
         {
-            if(!((AbstractExternalType) resolvedType).getSchemaPath().equalsIgnoreCase(ARTIFICIAL_NODE)){
+            if (!((AbstractExternalType) resolvedType).getSchemaPath().equalsIgnoreCase(ARTIFICIAL_NODE))
+            {
                 return ((AbstractExternalType) resolvedType).getSchemaPath();
             }
             return null;
