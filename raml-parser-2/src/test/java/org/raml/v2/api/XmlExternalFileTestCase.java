@@ -44,6 +44,6 @@ public class XmlExternalFileTestCase
 
         Api apiV10 = ramlModelResult.getApiV10();
 
-        Assert.assertTrue(((XMLTypeDeclaration)apiV10.resources().get(0).methods().get(0).body().get(0)).schemaPath().endsWith("person-schema.xsd"));
+        Assert.assertTrue(((XMLTypeDeclaration) apiV10.resources().get(0).methods().get(0).body().get(0)).schemaPath().endsWith("person-schema.xsd"));
     }
 }

@@ -47,7 +47,8 @@ public class ExternalSchemaTypeExpressionNode extends AbstractStringNode impleme
 
     public String getSchemaPath()
     {
-        if(StringUtils.isNotBlank(this.getStartPosition().getIncludedResourceUri())){
+        if (StringUtils.isNotBlank(this.getStartPosition().getIncludedResourceUri()))
+        {
             return this.getStartPosition().getIncludedResourceUri();
         }
         return this.getStartPosition().getPath();
