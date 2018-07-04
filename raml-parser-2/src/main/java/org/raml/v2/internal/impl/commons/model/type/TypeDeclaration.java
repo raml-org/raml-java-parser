@@ -34,7 +34,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.json.JsonObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;

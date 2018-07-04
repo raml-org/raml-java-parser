@@ -18,19 +18,12 @@ package org.raml.v2.api;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.api.model.v10.api.Api;
-import org.raml.v2.api.model.v10.datamodel.ObjectTypeDeclaration;
-import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.XMLTypeDeclaration;
 
-import javax.validation.constraints.AssertTrue;
 import java.io.File;
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 
 public class XmlExternalFileTestCase
 {
@@ -38,9 +31,9 @@ public class XmlExternalFileTestCase
     public void checkThatTypeDeclarationRetrievedFromDataTypeFragmentImplementsMostSpecializedTypeDeclarationInterface() throws IOException
     {
         File input = new File("src/test/resources/org/raml/v2/api/v10/xml-external/input.raml");
-        assertTrue(input.isFile());
+        Assert.assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
-        assertFalse(ramlModelResult.hasErrors());
+        Assert.assertTrue(ramlModelResult.hasErrors());
 
         Api apiV10 = ramlModelResult.getApiV10();
 
