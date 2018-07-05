@@ -77,7 +77,8 @@ public class ErrorNodeFactory
         return new ErrorNode("Invalid type " + node.getType() + ", expected " + type + getFieldMessageIfPresent(node));
     }
 
-    private static String getFieldMessageIfPresent(Node node) {
+    private static String getFieldMessageIfPresent(Node node)
+    {
         return node.getParent() != null ? " for " + node.getParent().getChildren().get(0).toString() : "";
     }
 
