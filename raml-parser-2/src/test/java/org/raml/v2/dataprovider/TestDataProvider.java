@@ -172,7 +172,7 @@ public abstract class TestDataProvider
 
     protected String[] getKeysToFilter()
     {
-        return new String[] {};
+        return new String[] {"schemaPath"};
     }
 
 }

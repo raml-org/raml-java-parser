@@ -29,4 +29,9 @@ public interface ExternalTypeDeclaration extends TypeDeclaration
      **/
     String internalFragment();
 
+    /**
+     * Returns the schema path
+     **/
+    String schemaPath();
+
 }
