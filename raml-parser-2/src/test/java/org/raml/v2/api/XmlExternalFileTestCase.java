@@ -33,7 +33,7 @@ public class XmlExternalFileTestCase
         File input = new File("src/test/resources/org/raml/v2/api/v10/xml-external/input.raml");
         Assert.assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
-        Assert.assertTrue(ramlModelResult.hasErrors());
+        Assert.assertFalse(ramlModelResult.hasErrors());
 
         Api apiV10 = ramlModelResult.getApiV10();
 
