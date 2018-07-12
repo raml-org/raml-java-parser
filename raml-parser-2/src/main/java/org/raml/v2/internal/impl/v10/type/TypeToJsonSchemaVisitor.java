@@ -42,6 +42,8 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     private static final String INTEGER = "integer";
     private static final String NULL = "null";
     private static final String DATE_TIME = "date-time";
+    private static final String DATE_ONLY = "date";
+    private static final String TIME_ONLY = "time";
     private static final String STRING = "string";
     private static final String BOOLEAN = "boolean";
     private static final String ARRAY = "array";
@@ -177,7 +179,7 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     {
         return this.factory.createObjectBuilder()
                            .add(TYPE, STRING)
-                           .add(FORMAT, DATE_TIME);
+                           .add(FORMAT, DATE_ONLY);
     }
 
     @Override
@@ -185,7 +187,7 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     {
         return this.factory.createObjectBuilder()
                            .add(TYPE, STRING)
-                           .add(FORMAT, DATE_TIME);
+                           .add(FORMAT, TIME_ONLY);
     }
 
     @Override
