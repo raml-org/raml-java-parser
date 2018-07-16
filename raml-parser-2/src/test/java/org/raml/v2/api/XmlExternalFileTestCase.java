@@ -28,7 +28,7 @@ import java.io.IOException;
 public class XmlExternalFileTestCase
 {
     @Test
-    public void checkThatTypeDeclarationRetrievedFromDataTypeFragmentImplementsMostSpecializedTypeDeclarationInterface() throws IOException
+    public void testSchemaPath() throws IOException
     {
         File input = new File("src/test/resources/org/raml/v2/api/v10/xml-external/input.raml");
         Assert.assertTrue(input.isFile());
@@ -37,6 +37,6 @@ public class XmlExternalFileTestCase
 
         Api apiV10 = ramlModelResult.getApiV10();
 
-        Assert.assertTrue(((XMLTypeDeclaration) apiV10.resources().get(0).methods().get(0).body().get(0)).schemaPath().endsWith("person-schema.xsd"));
+        Assert.assertTrue(((XMLTypeDeclaration) apiV10.resources().get(0).methods().get(0).body().get(0)).schemaPath().equals("person-schema.xsd"));
     }
 }

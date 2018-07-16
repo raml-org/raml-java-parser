@@ -35,6 +35,7 @@ import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.nodes.snakeyaml.SYIncludeNode;
 import org.raml.yagi.framework.phase.Transformer;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 
@@ -44,6 +45,7 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
 
     private final ResourceLoader resourceLoader;
     private String includedResourceUri;
+    private String includedResourcePath;
 
     public IncludeResolver(ResourceLoader resourceLoader)
     {
@@ -60,6 +62,7 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
     public Node transform(Node node)
     {
         final SYIncludeNode includeNode = (SYIncludeNode) node;
+        includedResourcePath = includeNode.getIncludePath();
         String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getPath(), includeNode.getIncludePath());
         InputStream inputStream = null;
 
@@ -130,6 +133,9 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
         startPosition.setIncludedResourceUri(includedResourceUri);
         endPosition.setIncludedResourceUri(includedResourceUri);
 
+        startPosition.setIncludedResourcePath(includedResourcePath);
+        endPosition.setIncludedResourcePath(includedResourcePath);
+
         ((AbstractRamlNode) result).setStartPosition(startPosition);
         ((AbstractRamlNode) result).setEndPosition(endPosition);
     }
@@ -141,8 +147,8 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
 
 
     @Override
-    public void onResourceFound(URI resourceURI)
+    public void onResourceFound(URI resource)
     {
-        this.includedResourceUri = resourceURI.toString();
+        this.includedResourceUri = resource.toString();
     }
 }

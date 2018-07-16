@@ -16,6 +16,7 @@
 package org.raml.yagi.framework.nodes.snakeyaml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.nodes.AbstractPosition;
@@ -28,6 +29,7 @@ public class SYPosition extends AbstractPosition
     private ResourceLoader resourceLoader;
     private String resourcePath;
     private String includedResourceURI;
+    private String includedResourcePath;
 
     public SYPosition(Mark mark, ResourceLoader resourceLoader, String resourcePath)
     {
@@ -71,6 +73,19 @@ public class SYPosition extends AbstractPosition
     public void setIncludedResourceUri(String includedResourceURI)
     {
         this.includedResourceURI = includedResourceURI;
+    }
+
+    @Nullable
+    @Override
+    public String getIncludedResourcePath()
+    {
+        return includedResourcePath;
+    }
+
+    @Override
+    public void setIncludedResourcePath(String includedResourcePath)
+    {
+        this.includedResourcePath = includedResourcePath;
     }
 
     @Nonnull

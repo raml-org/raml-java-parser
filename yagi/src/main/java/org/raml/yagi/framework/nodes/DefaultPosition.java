@@ -16,6 +16,7 @@
 package org.raml.yagi.framework.nodes;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -30,6 +31,7 @@ public class DefaultPosition extends AbstractPosition
     private final String resource;
     private final ResourceLoader resourceLoader;
     private String includedResourceUri;
+    private String includedResourcePath;
 
     public DefaultPosition(int index, int line, int column, String resource, ResourceLoader resourceLoader)
     {
@@ -74,6 +76,19 @@ public class DefaultPosition extends AbstractPosition
     public void setIncludedResourceUri(String includedResourceURI)
     {
         this.includedResourceUri = includedResourceURI;
+    }
+
+    @Nullable
+    @Override
+    public String getIncludedResourcePath()
+    {
+        return includedResourcePath;
+    }
+
+    @Override
+    public void setIncludedResourcePath(String includedResourcePath)
+    {
+        this.includedResourcePath = includedResourcePath;
     }
 
     @Nonnull

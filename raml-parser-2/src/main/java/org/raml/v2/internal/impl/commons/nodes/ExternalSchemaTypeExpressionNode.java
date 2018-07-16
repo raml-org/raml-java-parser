@@ -18,7 +18,6 @@ package org.raml.v2.internal.impl.commons.nodes;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
@@ -47,11 +46,7 @@ public class ExternalSchemaTypeExpressionNode extends AbstractStringNode impleme
 
     public String getSchemaPath()
     {
-        if (StringUtils.isNotBlank(this.getStartPosition().getIncludedResourceUri()))
-        {
-            return this.getStartPosition().getIncludedResourceUri();
-        }
-        return this.getStartPosition().getPath();
+        return this.getStartPosition().getIncludedResourcePath();
     }
 
     @Nullable

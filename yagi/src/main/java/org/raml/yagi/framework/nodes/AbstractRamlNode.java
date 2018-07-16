@@ -68,13 +68,18 @@ public abstract class AbstractRamlNode extends BaseNode
             // Propagate resourceURI already calculated by the include resolver
             // and stored in an artificial node
             String resourceURI = null;
+            String includedResourcePath = null;
             if (startPosition != null)
             {
                 resourceURI = startPosition.getIncludedResourceUri();
+                includedResourcePath = startPosition.getIncludedResourcePath();
             }
 
             sourceStartPosition.setIncludedResourceUri(resourceURI);
             sourceEndPosition.setIncludedResourceUri(resourceURI);
+
+            sourceStartPosition.setIncludedResourcePath(includedResourcePath);
+            sourceEndPosition.setIncludedResourcePath(includedResourcePath);
         }
 
         this.endPosition = sourceEndPosition;
