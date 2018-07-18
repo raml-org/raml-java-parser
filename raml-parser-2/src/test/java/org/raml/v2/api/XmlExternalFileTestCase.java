@@ -28,7 +28,7 @@ import java.io.IOException;
 public class XmlExternalFileTestCase
 {
     @Test
-    public void checkThatTypeDeclarationRetrievedFromDataTypeFragmentImplementsMostSpecializedTypeDeclarationInterface() throws IOException
+    public void testSchemaPath() throws IOException
     {
         File input = new File("src/test/resources/org/raml/v2/api/v10/xml-external/input.raml");
         Assert.assertTrue(input.isFile());
