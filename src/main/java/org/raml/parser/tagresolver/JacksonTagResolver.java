@@ -48,6 +48,7 @@ public class JacksonTagResolver implements TagResolver
         {
             Class<?> clazz = Thread.currentThread().getContextClassLoader().loadClass(className);
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.disableDefaultTyping();
             SchemaFactoryWrapper visitor = new SchemaFactoryWrapper();
             objectMapper.acceptJsonFormatVisitor(objectMapper.constructType(clazz), visitor);
             JsonSchema jsonSchema = visitor.finalSchema();
