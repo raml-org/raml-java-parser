@@ -98,7 +98,7 @@ RamlDocumentNode (Start: 11 , End: 1069, On: input.raml, Source: SYObjectNode)
                     ExampleDeclarationNode (Start: 295 , End: 837, On: input.raml, Source: KeyValueNodeImpl)
                         SYStringNode: "example" (Start: 295 , End: 302, On: input.raml)
                         ErrorNode: "Error validating JSON. Error: - Expected minimum value 0
-- Invalid value 'john@'. Expected ^.+@.+\..+$
+- Invalid value 'john@'. Expected ^.+@.+\..+$ for email
 - Invalid type Integer, expected String for name" (Start: 304 , End: 837, On: input.raml, Source: SYStringNode)
                     KeyValueNodeImpl (Start: -1 , End: -1)
                         StringNodeImpl: "type" (Start: -1 , End: -1)

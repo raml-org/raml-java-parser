@@ -21,6 +21,7 @@ import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.ReferenceNode;
+import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import java.io.IOException;
@@ -177,7 +178,7 @@ public class ErrorNodeFactory
 
     public static Node createInvalidValue(Node node, String expected)
     {
-        return new ErrorNode("Invalid value '" + node + "'. Expected " + expected);
+        return new ErrorNode("Invalid value '" + node + "'. Expected " + expected + getFieldMessageIfPresent(node));
     }
 
     public static Node createInvalidSiblingsValue(Node node, Set<String> siblings)
@@ -210,9 +211,9 @@ public class ErrorNodeFactory
         return new ErrorNode("Expected " + comparator + " number of properties to be: " + expected + " but was: " + actual);
     }
 
-    public static ErrorNode createInvalidDateValue(String dateValue, String dateFormat, String rfc)
+    public static ErrorNode createInvalidDateValue(StringNode dateValue, String dateFormat, String rfc)
     {
-        return new ErrorNode("Provided value " + dateValue + " is not compliant with the format " + dateFormat + " provided in " + rfc);
+        return new ErrorNode("Provided value " + dateValue.getValue() + " is not compliant with the format " + dateFormat + " provided in " + rfc + getFieldMessageIfPresent(dateValue));
     }
 
     public static ErrorNode createInvalidReferenceNode(ReferenceNode refNode)

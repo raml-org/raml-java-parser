@@ -67,14 +67,14 @@ public class DateValueRule extends Rule
             }
             else
             {
-                return ErrorNodeFactory.createInvalidDateValue(((StringNode) node).getValue(), this.dateType.name(), this.rfc);
+                return ErrorNodeFactory.createInvalidDateValue((StringNode) node, this.dateType.name(), this.rfc);
             }
         }
         else
         {
             if (node instanceof StringNode)
             {
-                return ErrorNodeFactory.createInvalidDateValue(((StringNode) node).getValue(), this.dateType.name(), this.rfc);
+                return ErrorNodeFactory.createInvalidDateValue((StringNode) node, this.dateType.name(), this.rfc);
             }
             return ErrorNodeFactory.createInvalidNode(node);
         }
