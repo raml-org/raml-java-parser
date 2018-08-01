@@ -65,6 +65,19 @@ public interface Position
      */
     void setIncludedResourceUri(String includedResourceURI);
 
+    /**
+     * Returns the resource relative path of the current position
+     * @return The resource relative path if it is included, null if not
+     */
+    @Nullable
+    String getIncludedResourcePath();
+
+    /**
+     * Sets the resource resource path in the current position
+     * @param includedResourcePath The resource relative path
+     */
+    void setIncludedResourcePath(String includedResourcePath);
+
     @Nonnull
     Position rightShift(int offset);
 
