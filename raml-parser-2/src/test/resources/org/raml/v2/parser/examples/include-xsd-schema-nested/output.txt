@@ -34,7 +34,7 @@ good: <Person>
     <age>1000</age>
 </Person>
 
-}]." (Start: 107 , End: 437, On: input.raml, Source: SYArrayNode)
+}] for examples." (Start: 107 , End: 437, On: input.raml, Source: SYArrayNode)
                             SYObjectNode (Start: 109 , End: 273, On: input.raml)
                                 KeyValueNodeImpl (Start: 109 , End: 267, On: input.raml)
                                     SYStringNode: "bad" (Start: 109 , End: 112, On: input.raml)

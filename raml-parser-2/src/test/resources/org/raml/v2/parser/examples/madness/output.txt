@@ -180,7 +180,7 @@ RamlDocumentNode (Start: 11 , End: 758, On: input.raml, Source: SYObjectNode)
 discriminator: HasHome Parrot,
 livesInside: a,
 feathers: colourful
-}." (Start: 607 , End: 684, On: input.raml, Source: SYObjectNode)
+} for example." (Start: 607 , End: 684, On: input.raml, Source: SYObjectNode)
                             KeyValueNodeImpl (Start: 607 , End: 636, On: input.raml)
                                 SYStringNode: "discriminator" (Start: 607 , End: 620, On: input.raml)
                                 SYStringNode: "HasHome Parrot" (Start: 622 , End: 636, On: input.raml)
