@@ -15,7 +15,7 @@ RamlDocumentNode (Start: 11 , End: 144, On: input.raml, Source: SYObjectNode)
                         SYStringNode: "body" (Start: 48 , End: 52, On: input.raml)
                         ErrorNode: "Invalid element {
 example: bores
-}." (Start: 60 , End: 75, On: input.raml, Source: SYObjectNode)
+} for body." (Start: 60 , End: 75, On: input.raml, Source: SYObjectNode)
                             KeyValueNodeImpl (Start: 60 , End: 74, On: input.raml)
                                 SYStringNode: "example" (Start: 60 , End: 67, On: input.raml)
                                 SYStringNode: "bores" (Start: 69 , End: 74, On: input.raml)

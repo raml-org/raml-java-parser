@@ -18,6 +18,7 @@ package org.raml.yagi.framework.grammar.rule;
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.EmptyErrorNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
+import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.ReferenceNode;
@@ -48,7 +49,7 @@ public class ErrorNodeFactory
 
     public static ErrorNode createInvalidNode(Node child)
     {
-        return new ErrorNode("Invalid element " + child + ".");
+        return new ErrorNode("Invalid element " + child + getKeyFieldMessage(child) + ".");
     }
 
     public static ErrorNode createInvalidRootElement(Node rootNode, String expected)
@@ -81,6 +82,11 @@ public class ErrorNodeFactory
     private static String getFieldMessageIfPresent(Node node)
     {
         return node.getParent() != null ? " for " + node.getParent().getChildren().get(0).toString() : "";
+    }
+
+    private static String getKeyFieldMessage(Node node)
+    {
+        return node.getParent() != null && (node.getParent() instanceof KeyValueNode) ? " for " + node.getParent().getChildren().get(0).toString() : "";
     }
 
     public static Node createInvalidFragmentName(String fragmentText)
