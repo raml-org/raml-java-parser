@@ -86,7 +86,7 @@ public class ErrorNodeFactory
 
     private static String getKeyFieldMessage(Node node)
     {
-        return node.getParent() != null && (node.getParent() instanceof KeyValueNode) ? " for " + node.getParent().getChildren().get(0).toString() : "";
+        return node.getParent() != null && (node.getParent() instanceof KeyValueNode) ? " for " + ((KeyValueNode) node.getParent()).getKey().toString() : "";
     }
 
     public static Node createInvalidFragmentName(String fragmentText)
