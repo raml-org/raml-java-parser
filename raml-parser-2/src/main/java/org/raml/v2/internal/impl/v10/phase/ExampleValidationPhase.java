@@ -24,6 +24,7 @@ import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
+import org.raml.v2.internal.impl.v10.type.FileResolvedType;
 import org.raml.v2.internal.impl.v10.type.StringResolvedType;
 import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
 import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
@@ -105,9 +106,9 @@ public class ExampleValidationPhase implements Phase
         {
             exampleValueNode = new NullNodeImpl();
         }
-        else if (!(type.getResolvedType() instanceof StringResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
+        else if (!(type.getResolvedType() instanceof StringResolvedType) && !(type.getResolvedType() instanceof FileResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
         {
-            // parse as yaml except for string, json and xml types
+            // parse as yaml except for string, file, json and xml types
             exampleValueNode = NodeParser.parse(resourceLoader, "", exampleValue);
         }
         return validate(type, exampleValueNode);
