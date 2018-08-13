@@ -66,9 +66,9 @@ public class IntegerResolvedType extends NumberResolvedType
     @Override
     public ErrorNode validateFacets()
     {
-        int min = getMinimum() != null ? getMinimum().intValue() : Integer.MIN_VALUE;
-        int max = getMaximum() != null ? getMaximum().intValue() : Integer.MAX_VALUE;
-        int mult = getMultiple() != null ? getMultiple().intValue() : 1;
+        long min = getMinimum() != null ? getMinimum().longValue() : Long.MIN_VALUE;
+        long max = getMaximum() != null ? getMaximum().longValue() : Long.MAX_VALUE;
+        long mult = getMultiple() != null ? getMultiple().longValue() : 1;
 
         // Checking conflicts between the minimum and maximum facets
         if (max < min)
@@ -89,7 +89,7 @@ public class IntegerResolvedType extends NumberResolvedType
         // For each value in the list, it must be between minimum and maximum
         for (Number thisEnum : getEnums())
         {
-            int value = (int) thisEnum;
+            long value = thisEnum.longValue();
             if (value < min || value > max)
             {
                 return RamlErrorNodeFactory.createInvalidFacetState(

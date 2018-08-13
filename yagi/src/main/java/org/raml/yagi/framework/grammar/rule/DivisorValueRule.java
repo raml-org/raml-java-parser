@@ -49,23 +49,24 @@ public class DivisorValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        final BigDecimal divisor = new BigDecimal(divisorValue.toString());
+        BigDecimal value = null;
         if (node instanceof IntegerNode)
         {
-            if (divisorValue.intValue() == 0 && Integer.valueOf(0).equals(((IntegerNode) node).getValue()))
-            {
-                return true;
-            }
-            return divisorValue.intValue() != 0 && ((IntegerNode) node).getValue() % divisorValue.intValue() == 0;
+            value = new BigDecimal(((IntegerNode) node).getValue());
         }
         else if (node instanceof FloatingNode)
         {
-            BigDecimal value = new BigDecimal(divisorValue.toString());
+            value = ((FloatingNode) node).getValue();
+        }
 
-            if (value.compareTo(ZERO) == 0 && ((FloatingNode) node).getValue().compareTo(ZERO) == 0)
+        if (value != null)
+        {
+            if (divisor.compareTo(ZERO) == 0 && value.compareTo(ZERO) == 0)
             {
                 return true;
             }
-            return !(value.compareTo(ZERO) == 0) && (((FloatingNode) node).getValue().remainder(value).compareTo(ZERO) == 0);
+            return !(divisor.compareTo(ZERO) == 0) && (value.remainder(divisor).compareTo(ZERO) == 0);
         }
 
         return false;

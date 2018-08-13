@@ -15,7 +15,7 @@
  */
 package org.raml.yagi.framework.nodes;
 
-public interface IntegerNode extends SimpleTypeNode<Integer>
+public interface IntegerNode extends SimpleTypeNode<Long>
 {
-    Integer getValue();
+    Long getValue();
 }

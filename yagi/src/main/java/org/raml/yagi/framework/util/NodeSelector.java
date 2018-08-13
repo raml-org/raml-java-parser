@@ -66,7 +66,19 @@ public class NodeSelector
     @Nullable
     public static Integer selectIntValue(String path, Node from)
     {
-        return selectType(path, from, null);
+        Long longValue = selectType(path, from, null);
+
+        if (longValue == null)
+        {
+            return null;
+        }
+
+        if (longValue > Integer.MAX_VALUE)
+        {
+            throw new IllegalArgumentException(longValue + " cannot be cast to int.");
+        }
+
+        return longValue.intValue();
     }
 
     @Nullable

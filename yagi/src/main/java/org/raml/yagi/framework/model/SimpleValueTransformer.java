@@ -86,11 +86,12 @@ public enum SimpleValueTransformer
         @Override
         public boolean accepts(Class<?> type)
         {
-            return Integer.class.isAssignableFrom(type) || Integer.TYPE.equals(type);
+            return Integer.class.isAssignableFrom(type) || Integer.TYPE.equals(type) ||
+                   Long.class.isAssignableFrom(type) || Long.TYPE.equals(type);
         }
 
         @Override
-        public Integer adaptTo(Node valueNode, Class<?> returnType)
+        public Long adaptTo(Node valueNode, Class<?> returnType)
         {
             if (NodeUtils.isNull(valueNode))
             {
@@ -102,7 +103,7 @@ public enum SimpleValueTransformer
             }
             if (valueNode instanceof SimpleTypeNode)
             {
-                return Integer.parseInt(((SimpleTypeNode) valueNode).getLiteralValue());
+                return Long.parseLong(((SimpleTypeNode) valueNode).getLiteralValue());
             }
             else
             {
