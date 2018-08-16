@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-import static java.lang.Long.*;
+import static java.lang.Long.parseLong;
 
 public class IntegerTypeRule extends AbstractTypeRule
 {
