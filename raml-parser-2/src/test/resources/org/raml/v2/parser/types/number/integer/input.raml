@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Error message
+
+types:
+  Number:
+    type: integer
+    format: int64
+    minimum: 1
+    maximum: 9999999999
+
+  ObjectType:
+    type: object
+    properties:
+      property: Number
+    example: |
+      { "property":9999999998 }
