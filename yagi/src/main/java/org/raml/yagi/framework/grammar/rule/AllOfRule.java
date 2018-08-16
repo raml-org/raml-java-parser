@@ -15,6 +15,7 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
+import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static org.raml.yagi.framework.util.NodeUtils.isErrorResult;
 
 public class AllOfRule extends Rule
 {
@@ -102,6 +105,7 @@ public class AllOfRule extends Rule
         for (Rule rule : rules)
         {
             node = rule.apply(node);
+            if (isErrorResult(node)) return node;
         }
         return createNodeUsingFactory(node);
     }

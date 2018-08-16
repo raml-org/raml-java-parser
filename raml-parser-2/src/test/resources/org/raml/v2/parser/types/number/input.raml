@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Exception when format
+
+types:
+  LongNumber:
+    type: number
+    format: long
+    minimum: 1
+    maximum: 9223372036854775807
+
+  ObjectType:
+    type: object
+    properties:
+      property: LongNumber
+    example: |
+       { "property":12345678901234567890 }
