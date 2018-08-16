@@ -105,8 +105,7 @@ public class AllOfRule extends Rule
         for (Rule rule : rules)
         {
             node = rule.apply(node);
-            if (isErrorResult(node))
-                return createNodeUsingFactory(node);
+            if (isErrorResult(node)) return node;
         }
         return createNodeUsingFactory(node);
     }
