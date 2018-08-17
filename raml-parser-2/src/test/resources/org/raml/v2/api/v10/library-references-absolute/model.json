@@ -211,7 +211,7 @@
          ],
          "required": true,
          "toJsonSchema": "{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
-         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"remote\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element maxOccurs=\"unbounded\" name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
          "type": "array",
          "uniqueItems": null,
          "xml": null

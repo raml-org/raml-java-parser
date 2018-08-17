@@ -1,4 +1,4 @@
-RamlDocumentNode (Start: 11 , End: 688, On: input.raml, Source: SYObjectNode)
+RamlDocumentNode (Start: 11 , End: 694, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 31, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
         OverlayableObjectNodeImpl (Start: 18 , End: 31, On: input.raml, Source: SYStringNode)
@@ -81,36 +81,36 @@ RamlDocumentNode (Start: 11 , End: 688, On: input.raml, Source: SYObjectNode)
                             KeyValueNodeImpl (Start: -1 , End: -1)
                                 StringNodeImpl: "value" (Start: -1 , End: -1)
                                 OverlayableStringNode: "Friend" (Start: -1 , End: -1, Source: SYStringNode)
-    ResourceNode (Start: 231 , End: 688, On: input.raml, Source: KeyValueNodeImpl)
+    ResourceNode (Start: 231 , End: 694, On: input.raml, Source: KeyValueNodeImpl)
         SYStringNode: "/res" (Start: 231 , End: 235, On: input.raml)
-        SYObjectNode (Start: 239 , End: 688, On: input.raml)
-            MethodNode (Start: 239 , End: 688, On: input.raml, Source: KeyValueNodeImpl)
+        SYObjectNode (Start: 239 , End: 694, On: input.raml)
+            MethodNode (Start: 239 , End: 694, On: input.raml, Source: KeyValueNodeImpl)
                 SYStringNode: "get" (Start: 239 , End: 242, On: input.raml)
-                SYObjectNode (Start: 248 , End: 688, On: input.raml)
-                    BodyNode (Start: 248 , End: 688, On: input.raml, Source: KeyValueNodeImpl)
+                SYObjectNode (Start: 248 , End: 694, On: input.raml)
+                    BodyNode (Start: 248 , End: 694, On: input.raml, Source: KeyValueNodeImpl)
                         SYStringNode: "body" (Start: 248 , End: 252, On: input.raml)
-                        SYObjectNode (Start: 260 , End: 688, On: input.raml)
-                            KeyValueNodeImpl (Start: 260 , End: 688, On: input.raml)
+                        SYObjectNode (Start: 260 , End: 694, On: input.raml)
+                            KeyValueNodeImpl (Start: 260 , End: 694, On: input.raml)
                                 SYStringNode: "application/xml" (Start: 260 , End: 275, On: input.raml)
-                                TypeDeclarationNode (Start: 287 , End: 688, On: input.raml, Source: SYObjectNode)
+                                TypeDeclarationNode (Start: 287 , End: 694, On: input.raml, Source: SYObjectNode)
                                     KeyValueNodeImpl (Start: 287 , End: 297, On: input.raml)
                                         SYStringNode: "type" (Start: 287 , End: 291, On: input.raml)
                                         NamedTypeExpressionNode root -> {TypeDeclarationNode RefStart: 51 , RefEnd: 140} (Start: 293 , End: 297, On: input.raml, Source: SYStringNode)
-                                    ExampleDeclarationNode (Start: 308 , End: 688, On: input.raml, Source: KeyValueNodeImpl)
+                                    ExampleDeclarationNode (Start: 308 , End: 694, On: input.raml, Source: KeyValueNodeImpl)
                                         SYStringNode: "example" (Start: 308 , End: 315, On: input.raml)
                                         SYStringNode: "<root>
   <name>robert</name>
-  <Friend>
+  <friends>
     <name>daenerys</name>
-  </Friend>
-  <Friend>
+  </friends>
+  <friends>
     <name>stannis</name>
-  </Friend>
-  <Friend>
+  </friends>
+  <friends>
     <name>jon</name>
     <night-watch>true</night-watch>
-  </Friend>
-</root>" (Start: 317 , End: 688, On: input.raml)
+  </friends>
+</root>" (Start: 317 , End: 694, On: input.raml)
                                     KeyValueNodeImpl (Start: -1 , End: -1)
                                         StringNodeImpl: "displayName" (Start: -1 , End: -1)
                                         ObjectNodeImpl (Start: -1 , End: -1)
