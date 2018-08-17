@@ -398,7 +398,6 @@ public class TypeToXmlSchemaVisitor implements TypeVisitor<XmlSchemaType>
             visit = itemType.visit(this);
 
             final XmlSchemaElement peek = currentElement.peek();
-            peek.setName(name); // override field name with type name in this case
             addArrayCardinality(arrayTypeDefinition, peek);
         }
 
