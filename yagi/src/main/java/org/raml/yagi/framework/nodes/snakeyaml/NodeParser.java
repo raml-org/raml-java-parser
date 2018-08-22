@@ -15,11 +15,6 @@
  */
 package org.raml.yagi.framework.nodes.snakeyaml;
 
-import java.io.Reader;
-import java.io.StringReader;
-
-import javax.annotation.Nullable;
-
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.yagi.framework.nodes.DefaultPosition;
@@ -28,6 +23,10 @@ import org.raml.yagi.framework.nodes.Node;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
+
+import javax.annotation.Nullable;
+import java.io.Reader;
+import java.io.StringReader;
 
 import static org.apache.commons.io.IOUtils.LINE_SEPARATOR_UNIX;
 import static org.apache.commons.io.IOUtils.LINE_SEPARATOR_WINDOWS;
@@ -55,16 +54,16 @@ public class NodeParser
         }
         catch (final MarkedYAMLException e)
         {
-            return buildYamlErrorNode(e);
+            return buildYamlErrorNode(e, resourcePath);
         }
     }
 
-    private static Node buildYamlErrorNode(MarkedYAMLException e)
+    private static Node buildYamlErrorNode(MarkedYAMLException e, String resourcePath)
     {
         final ErrorNode errorNode = new ErrorNode("Underlying error while parsing YAML syntax: '" + e.getMessage() + "'");
         final Mark problemMark = e.getProblemMark();
-        errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, "", new DefaultResourceLoader()));
-        errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), "", new DefaultResourceLoader()));
+        errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, resourcePath, new DefaultResourceLoader()));
+        errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), resourcePath, new DefaultResourceLoader()));
         return errorNode;
     }
 

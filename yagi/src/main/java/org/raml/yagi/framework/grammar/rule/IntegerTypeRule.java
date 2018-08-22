@@ -89,7 +89,8 @@ public class IntegerTypeRule extends AbstractTypeRule
         return false;
     }
 
-    private boolean isInRange(Long value) {
+    private boolean isInRange(Long value)
+    {
         return range == null || range.contains(value);
     }
 

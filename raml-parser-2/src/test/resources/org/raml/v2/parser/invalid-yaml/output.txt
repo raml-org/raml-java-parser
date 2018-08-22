@@ -2,4 +2,4 @@ ErrorNode: "Underlying error while parsing YAML syntax: 'mapping values are not 
  in 'reader', line 5, column 8:
         get:
            ^
-'" (Start: 52 , End: 53, On: )
+'" (Start: 52 , End: 53, On: input.raml)
