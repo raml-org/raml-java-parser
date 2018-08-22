@@ -16,8 +16,6 @@
 package org.raml.v2.internal.impl.v10.phase;
 
 import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.api.model.v10.RamlFragment;
-import org.raml.v2.internal.impl.RamlBuilder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.utils.ResourcePathUtils;
