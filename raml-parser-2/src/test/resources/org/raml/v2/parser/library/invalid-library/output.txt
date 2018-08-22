@@ -1,0 +1,17 @@
+RamlDocumentNode (Start: 11 , End: 56, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 25, On: input.raml)
+        SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 18 , End: 25, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 11 , End: 25, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "Example" (Start: 18 , End: 25, On: input.raml)
+    KeyValueNodeImpl (Start: 26 , End: 56, On: input.raml)
+        SYStringNode: "uses" (Start: 26 , End: 30, On: input.raml)
+        SYObjectNode (Start: 34 , End: 56, On: input.raml)
+            LibraryNode (Start: 34 , End: 55, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "Library" (Start: 34 , End: 41, On: input.raml)
+                IncludeErrorNode: "Underlying error while parsing YAML syntax: 'mapping values are not allowed here
+ in 'reader', line 4, column 6:
+    types:
+         ^
+'" (Start: 43 , End: 55, On: input.raml, Source: LibraryLinkNode)
