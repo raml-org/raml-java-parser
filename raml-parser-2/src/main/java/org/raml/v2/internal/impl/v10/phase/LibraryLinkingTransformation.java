@@ -66,7 +66,7 @@ public class LibraryLinkingTransformation implements Transformer
                 final String content = StreamUtils.toString(inputStream);
                 final Node libraryReference = builder
                                                      .build(linkNode, content, Library, resourceLoader, absoluteLocation, ALL_PHASES);
-                
+
                 linkNode.setLibraryReference(libraryReference);
             }
         }

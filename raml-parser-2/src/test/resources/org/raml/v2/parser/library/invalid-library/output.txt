@@ -10,8 +10,9 @@ RamlDocumentNode (Start: 11 , End: 56, On: input.raml, Source: SYObjectNode)
         SYObjectNode (Start: 34 , End: 56, On: input.raml)
             LibraryNode (Start: 34 , End: 55, On: input.raml, Source: KeyValueNodeImpl)
                 SYStringNode: "Library" (Start: 34 , End: 41, On: input.raml)
-                IncludeErrorNode: "Underlying error while parsing YAML syntax: 'mapping values are not allowed here
+                LibraryLinkNode library.raml -> {ErrorNode RefStart: 35 , RefEnd: 36} (Start: 43 , End: 55, On: input.raml, Source: SYStringNode)
+                    ErrorNode: "Underlying error while parsing YAML syntax: 'mapping values are not allowed here
  in 'reader', line 4, column 6:
     types:
          ^
-'" (Start: 43 , End: 55, On: input.raml, Source: LibraryLinkNode)
+'" (Start: 35 , End: 36, On: library.raml)
