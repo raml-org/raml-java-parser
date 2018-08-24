@@ -20,7 +20,6 @@ import org.raml.v2.internal.impl.v10.Raml10Builder;
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.v2.internal.utils.ResourcePathUtils;
 import org.raml.v2.internal.utils.StreamUtils;
-import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.IncludeErrorNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.phase.Transformer;
@@ -67,10 +66,7 @@ public class LibraryLinkingTransformation implements Transformer
                 final String content = StreamUtils.toString(inputStream);
                 final Node libraryReference = builder
                                                      .build(linkNode, content, Library, resourceLoader, absoluteLocation, ALL_PHASES);
-                if (libraryReference instanceof ErrorNode)
-                {
-                    return new IncludeErrorNode(((ErrorNode) libraryReference).getErrorMessage());
-                }
+                
                 linkNode.setLibraryReference(libraryReference);
             }
         }
