@@ -142,9 +142,14 @@ public class ErrorNodeFactory
         return new ErrorNode("Expected min properties " + minProperties);
     }
 
-    public static Node createInvalidMinLength(int minLength)
+    public static Node createInvalidMinLength(int minLength, Node node)
     {
-        return new ErrorNode("Expected min length " + minLength);
+        if (node.getParent() == null)
+            return new ErrorNode("Expected min length " + minLength + " for value \"" + node.toString() + "\"");
+        KeyValueNode parent = (KeyValueNode) node.getParent();
+        Node field = parent.getKey();
+        return new ErrorNode("Expected min length " + minLength + " for field \"" + field.toString() + "\", but got \"" + node.toString() + "\"");
+
     }
 
     public static Node createInvalidMinimumValue(Number minimumValue)

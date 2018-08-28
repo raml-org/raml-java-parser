@@ -56,7 +56,7 @@ public class MinLengthRule extends Rule
     {
         if (!matches(node))
         {
-            return ErrorNodeFactory.createInvalidMinLength(minLength);
+            return ErrorNodeFactory.createInvalidMinLength(minLength, node);
         }
         return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }

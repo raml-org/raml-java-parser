@@ -1,4 +1,4 @@
 RamlDocumentNode (Start: 11 , End: 21, On: input.raml, Source: SYObjectNode)
     KeyValueNodeImpl (Start: 11 , End: 20, On: input.raml)
         SYStringNode: "title" (Start: 11 , End: 16, On: input.raml)
-        ErrorNode: "Expected min length 1" (Start: 18 , End: 20, On: input.raml, Source: SYStringNode)
+        ErrorNode: "Expected min length 1 for field "title", but got """ (Start: 18 , End: 20, On: input.raml, Source: SYStringNode)
