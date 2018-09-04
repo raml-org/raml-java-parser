@@ -16,20 +16,18 @@
 package org.raml.yagi.framework.util;
 
 import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ObjectNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class NodeSelector
 {
@@ -54,7 +52,11 @@ public class NodeSelector
     {
         if (path.startsWith("/"))
         {
-            return selectFrom(path.substring(1), from.getRootNode());
+            Node result = selectFrom(path.substring(1), from.getRootNode());
+            Node contextNode = from.getRootNode().getContextNode();
+            if (result == null && contextNode != null)
+                return selectFrom(path, contextNode);
+            return result;
         }
         else
         {

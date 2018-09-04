@@ -15,15 +15,14 @@
  */
 package org.raml.yagi.framework.nodes;
 
+import org.raml.yagi.framework.util.NodeSelector;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class BaseNode implements Node
 {
@@ -94,10 +93,13 @@ public abstract class BaseNode implements Node
         if (getParent() != null)
             return getParent().getRootNode();
 
-        if (contextNode != null)
-            return contextNode.getRootNode();
-
         return this;
+    }
+
+    @Override
+    public Node getContextNode()
+    {
+        return contextNode;
     }
 
     @Nonnull
