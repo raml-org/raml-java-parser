@@ -2,7 +2,7 @@ ErrorNode: "Underlying error while parsing YAML syntax: 'while parsing a block m
  in 'reader', line 7, column 9:
             type: |
             ^
-expected <block end>, but found FlowMappingEnd
+expected <block end>, but found '}'
  in 'reader', line 27, column 9:
             }
             ^
