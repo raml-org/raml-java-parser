@@ -15,11 +15,10 @@
  */
 package org.raml.yagi.framework.nodes;
 
-import java.util.Collection;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.List;
 
 public interface Node
 {
@@ -178,4 +177,6 @@ public interface Node
      * @param node The root node.
      */
     void setContextNode(Node node);
+
+    Node getContextNode();
 }

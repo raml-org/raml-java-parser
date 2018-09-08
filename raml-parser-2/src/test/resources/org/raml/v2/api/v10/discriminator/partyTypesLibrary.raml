@@ -1,0 +1,23 @@
+#%RAML 1.0 Library
+types:
+  party:
+    type: object
+    discriminator: kind
+    properties:
+      id:
+        type: string  
+        required: false
+      kind:
+        type: string
+        required: true
+        
+  naturalPerson:
+    type: party
+    properties:
+      salutation:
+        type: string
+        required: true
+    example:
+      id: "1213"
+      salutation: "Dhr."
+      kind: naturalPerson
