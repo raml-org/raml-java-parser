@@ -303,7 +303,7 @@ public class RamlEmitter
             }
             else
             {
-                if (isNumberOrBoolean(pojo) && field.getName().equals("defaultValue")) {
+                if ((isNumber(pojo) || isInteger(pojo) || isBoolean(pojo)) && isDefaultValue(field)) {
                     //prevent numbers, integer and boolean to be surrounded by quotes
                     dump.append(String.valueOf(value)).append("\n");
                 } else {
@@ -317,8 +317,20 @@ public class RamlEmitter
         }
     }
 
-    private boolean isNumberOrBoolean(Object pojo) {
-        return pojo instanceof AbstractParam && (((AbstractParam) pojo).getType() == ParamType.NUMBER ||  ((AbstractParam) pojo).getType() == ParamType.INTEGER || ((AbstractParam) pojo).getType() == ParamType.BOOLEAN);
+    private boolean isDefaultValue(Field field) {
+        return field.getName().equals("defaultValue");
+    }
+
+    private boolean isNumber(Object pojo) {
+        return pojo instanceof AbstractParam && ((AbstractParam) pojo).getType() == ParamType.NUMBER;
+    }
+
+    private boolean isInteger(Object pojo) {
+        return pojo instanceof AbstractParam && ((AbstractParam) pojo).getType() == ParamType.INTEGER;
+    }
+
+    private boolean isBoolean(Object pojo) {
+        return pojo instanceof AbstractParam && ((AbstractParam) pojo).getType() == ParamType.BOOLEAN;
     }
 
     private String alias(Field field)
