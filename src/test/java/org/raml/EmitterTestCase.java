@@ -109,10 +109,12 @@ public class EmitterTestCase extends AbstractRamlTestCase
                       "    type: integer\n" +
                       "    maximum: 8.0\n" +
                       "    minimum: 1\n" +
+                      "    default: 3\n" +
                       "   number:\n" +
                       "    type: number\n" +
                       "    maximum: 9.5\n" +
-                      "    minimum: 2.0";
+                      "    minimum: 2.0\n"  +
+                      "    default: 4";
         Raml raml = parseRaml(yaml, "");
         RamlEmitter emitter = new RamlEmitter();
         String dump = emitter.dump(raml);
@@ -120,9 +122,28 @@ public class EmitterTestCase extends AbstractRamlTestCase
         assertThat(dump, not(containsString("maximum: 8.0")));
         assertThat(dump, containsString("minimum: 1"));
         assertThat(dump, not(containsString("minimum: 1.0")));
+        assertThat(dump, containsString("default: 3"));
         assertThat(dump, containsString("maximum: 9.5"));
         assertThat(dump, containsString("minimum: 2"));
         assertThat(dump, not(containsString("minimum: 2.0")));
+        assertThat(dump, containsString("default: 4"));
+    }
+
+    @Test
+    public void emitBoolean()
+    {
+        String yaml = "#%RAML 0.8\n" +
+                "title: numbers\n" +
+                "/resource:\n" +
+                " get:\n" +
+                "  queryParameters:\n" +
+                "   boolean:\n" +
+                "    type: boolean\n" +
+                "    default: true";
+        Raml raml = parseRaml(yaml, "");
+        RamlEmitter emitter = new RamlEmitter();
+        String dump = emitter.dump(raml);
+        assertThat(dump, containsString("default: true"));
     }
 
     private Raml verifyDump(Raml source, String dump)

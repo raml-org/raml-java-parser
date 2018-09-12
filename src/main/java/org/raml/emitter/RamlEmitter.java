@@ -15,6 +15,8 @@
  */
 package org.raml.emitter;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
 import static org.raml.parser.utils.ReflectionUtils.isEnum;
 import static org.raml.parser.utils.ReflectionUtils.isPojo;
@@ -29,6 +31,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.model.ParamType;
 import org.raml.model.Protocol;
 import org.raml.model.Raml;
 import org.raml.model.SecurityReference;
@@ -300,13 +303,34 @@ public class RamlEmitter
             }
             else
             {
-                dump.append(sanitizeScalarValue(depth, value)).append("\n");
+                if ((isNumber(pojo) || isInteger(pojo) || isBoolean(pojo)) && isDefaultValue(field)) {
+                    //prevent numbers, integer and boolean to be surrounded by quotes
+                    dump.append(String.valueOf(value)).append("\n");
+                } else {
+                    dump.append(sanitizeScalarValue(depth, value)).append("\n");
+                }
             }
         }
         catch (IllegalAccessException e)
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean isDefaultValue(Field field) {
+        return field.getName().equals("defaultValue");
+    }
+
+    private boolean isNumber(Object pojo) {
+        return pojo instanceof AbstractParam && ((AbstractParam) pojo).getType() == ParamType.NUMBER;
+    }
+
+    private boolean isInteger(Object pojo) {
+        return pojo instanceof AbstractParam && ((AbstractParam) pojo).getType() == ParamType.INTEGER;
+    }
+
+    private boolean isBoolean(Object pojo) {
+        return pojo instanceof AbstractParam && ((AbstractParam) pojo).getType() == ParamType.BOOLEAN;
     }
 
     private String alias(Field field)
@@ -329,6 +353,16 @@ public class RamlEmitter
         }
         return field.getName();
     }
+    
+//    private boolean isBooleanOrInteger(Object value) {
+//        try {
+//            Long.valueOf(value.toString());
+//            return true;
+//        } catch (NumberFormatException e)
+//        {
+//            return TRUE.toString().equals(value.toString()) || FALSE.toString().equals(value.toString());
+//        }
+//    }
 
     private String sanitizeScalarValue(int depth, Object value)
     {
