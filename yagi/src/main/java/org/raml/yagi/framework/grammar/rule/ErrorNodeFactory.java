@@ -116,10 +116,7 @@ public class ErrorNodeFactory
 
     public static Node createInvalidMaxLength(int maxLength, Node node)
     {
-        if (node.getParent() == null)
-            return new ErrorNode("Expected max length " + maxLength + " for value \"" + node.toString() + "\"");
-        Node field = node.getParent().getChildren().get(0);
-        return new ErrorNode("Expected max length " + maxLength + " for field \"" + field.toString() + "\", but got \"" + node.toString() + "\"");
+        return createInvalidLength(maxLength, node, "max");
     }
 
     public static Node createInvalidMaxItems(int maxItems)
@@ -144,12 +141,15 @@ public class ErrorNodeFactory
 
     public static Node createInvalidMinLength(int minLength, Node node)
     {
-        if (node.getParent() == null)
-            return new ErrorNode("Expected min length " + minLength + " for value \"" + node.toString() + "\"");
-        KeyValueNode parent = (KeyValueNode) node.getParent();
-        Node field = parent.getKey();
-        return new ErrorNode("Expected min length " + minLength + " for field \"" + field.toString() + "\", but got \"" + node.toString() + "\"");
+        return createInvalidLength(minLength, node, "min");
+    }
 
+    private static Node createInvalidLength(int length, Node node, String minOrMax)
+    {
+        if (node.getParent() == null)
+            return new ErrorNode("Expected " + minOrMax + " length " + length + " for value \"" + node.toString() + "\"");
+        Node field = node.getParent().getChildren().get(0);
+        return new ErrorNode("Expected " + minOrMax + " length " + length + " for field \"" + field.toString() + "\", but got \"" + node.toString() + "\"");
     }
 
     public static Node createInvalidMinimumValue(Number minimumValue)
