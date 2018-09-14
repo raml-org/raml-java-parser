@@ -1,0 +1,81 @@
+#%RAML 1.0
+title: Bookshop Demo
+version: 1.0
+
+types:
+  Book:
+    properties:
+      title: string
+      author: string
+      available?: boolean
+  Customer: |
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "integer"
+        },
+        "adress" : {
+          "type" : "string"
+        }
+      }
+    }
+
+/books:
+  get:
+    description: Retrieves a list of all books in the store
+    queryParameters:
+      sortAsc: boolean
+    headers:
+      X-Amount:
+        type: string
+        required: true
+    responses:
+      400:
+      303:
+        body:
+      200:
+        headers:
+          header1: string
+          header2: integer
+        body:
+          application/json:
+            type: Book[]
+          application/xml:
+            type: Book[]
+  post:
+    description: Creates a new book in the store
+    body:
+      application/json:
+        type: Book
+
+  /{bookId}:
+    get:
+      description: Retrieves a particular book with its ID
+    put:
+      description: Updates info of a particular book
+
+/customers:
+  post:
+    description: Creates a new customer
+    responses:
+      200:
+        body:
+          application/json:
+            type: Customer
+
+
+  /{customerId}:
+    get:
+      description: Retrieves a particular customer
+    put:
+      description: Updates a particular custumer
+
+    /purchases:
+      get:
+        description: Retrieves all purchases for a particular customer
+
