@@ -54,7 +54,7 @@ public class NodeSelector
         {
             Node result = selectFrom(path.substring(1), from.getRootNode());
             Node contextNode = from.getRootNode().getContextNode();
-            if (result == null && contextNode != null)
+            if (result == null && contextNode != null && !contextNode.equals(from.getRootNode()))
                 return selectFrom(path, contextNode);
             return result;
         }
