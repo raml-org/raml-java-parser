@@ -106,11 +106,8 @@ public class ResourceTypesTraitsMerger
             }
             Node node = NodeSelector.selectFrom(NodeSelector.encodePath(key), baseNode);
             Node childValue = ((KeyValueNode) child).getValue();
-            if (node == null && optional)
-            {
-                logger.debug("Ignoring optional key {}", key);
-            }
-            else if (node == null)
+
+            if (node == null)
             {
                 // if merging children of body node, media type is defined under baseNode and child is not a mime type node,
                 // child gets merge with the value of mediaType node. See #498

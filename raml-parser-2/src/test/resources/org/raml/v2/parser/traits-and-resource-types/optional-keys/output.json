@@ -19,6 +19,11 @@
                 "absent?": {
                     "type": "string",
                     "example": "no"
+                },
+                "optional": {
+                    "type": "string",
+                    "required": false,
+                    "example": "no"
                 }
             }
         }
@@ -46,6 +51,21 @@
                             "example": "yes",
                             "displayName": {
                                 "value": "fixed"
+                            }
+                        },
+                        "absent?": {
+                            "type": "string",
+                            "example": "no",
+                            "displayName": {
+                                "value": "absent?"
+                            }
+                        },
+                        "optional": {
+                            "type": "string",
+                            "required": false,
+                            "example": "no",
+                            "displayName": {
+                                "value": "optional"
                             }
                         }
                     },
