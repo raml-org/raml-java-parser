@@ -1,0 +1,57 @@
+{
+    "title": {
+        "value": "Example API"
+    },
+    "version": {
+        "value": "v1"
+    },
+    "resourceTypes": {
+        "collection": {
+            "usage": {
+                "value": "This resourceType should be used for any collection of items"
+            },
+            "description": "The collection of <<resourcePathName>>",
+            "get": {
+                "description": "Get all <<resourcePathName>>, optionally filtered"
+            },
+            "post?": {
+                "description": "Create a new <<resourcePathName | !singularize>>"
+            },
+            "delete?": {
+                "description": "Delete a <<resourcePathName | !singularize>>"
+            }
+        }
+    },
+    "resources": [
+        {
+            "relativeUri": "/users",
+            "type": "collection",
+            "displayName": {
+                "value": "/users"
+            },
+            "description": {
+                "value": "The collection of users"
+            },
+            "methods": [
+                {
+                    "method": "post",
+                    "description": {
+                        "value": "Create a new user"
+                    },
+                    "displayName": {
+                        "value": "post?"
+                    }
+                },
+                {
+                    "method": "get",
+                    "description": {
+                        "value": "Get all users, optionally filtered"
+                    },
+                    "displayName": {
+                        "value": "get"
+                    }
+                }
+            ]
+        }
+    ]
+}
