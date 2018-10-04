@@ -20,17 +20,6 @@ import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.xml.XMLConstants;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -43,9 +32,22 @@ import org.raml.v2.internal.utils.xml.XsdResourceResolver;
 import org.raml.yagi.framework.util.NodeUtils;
 import org.xml.sax.SAXException;
 
+import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class SchemaGenerator
 {
     private static String DEFINITIONS = "/definitions/";
+
+    private static Map<JsonSchemaExternalType, JsonSchema> jsonSchemaCache = new ConcurrentHashMap<>();
 
     public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType xmlTypeDefinition) throws SAXException
     {
@@ -57,6 +59,10 @@ public class SchemaGenerator
 
     public static JsonSchema generateJsonSchema(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException
     {
+        if (jsonSchemaCache.containsKey(jsonTypeDefinition))
+            return jsonSchemaCache.get(jsonTypeDefinition);
+
+        final JsonSchema result;
         String includedResourceUri = resolveResourceUriIfIncluded(jsonTypeDefinition);
 
         JsonNode jsonSchema = JsonLoader.fromString(jsonTypeDefinition.getSchemaValue());
@@ -65,22 +71,27 @@ public class SchemaGenerator
         {
             if (includedResourceUri != null)
             {
-                return factory.getJsonSchema(includedResourceUri + "#" + DEFINITIONS + jsonTypeDefinition.getInternalFragment());
+                result = factory.getJsonSchema(includedResourceUri + "#" + DEFINITIONS + jsonTypeDefinition.getInternalFragment());
             }
-            return factory.getJsonSchema(jsonSchema, DEFINITIONS + jsonTypeDefinition.getInternalFragment());
+            else
+            {
+                result = factory.getJsonSchema(jsonSchema, DEFINITIONS + jsonTypeDefinition.getInternalFragment());
+            }
         }
         else
         {
             if (includedResourceUri != null)
             {
-                return factory.getJsonSchema(includedResourceUri);
+                result = factory.getJsonSchema(includedResourceUri);
             }
             else
             {
-                return factory.getJsonSchema(jsonSchema);
+                result = factory.getJsonSchema(jsonSchema);
             }
-
         }
+
+        jsonSchemaCache.put(jsonTypeDefinition, result);
+        return result;
     }
 
     @Nullable
