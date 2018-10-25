@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.commons;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNodeFragment;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
+import org.raml.v2.internal.impl.v10.grammar.Raml10GrammarUsesAllowed;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.grammar.rule.Rule;
@@ -118,6 +119,17 @@ public class RamlHeader
     public static Rule getFragmentRule(RamlFragment fragment)
     {
         Raml10Grammar grammar = new Raml10Grammar();
+        return getRule(fragment, grammar);
+    }
+
+    public static Rule getFragmentUsesAllowedRule(RamlFragment fragment)
+    {
+        Raml10Grammar grammar = new Raml10GrammarUsesAllowed();
+        return getRule(fragment, grammar);
+    }
+
+    private static Rule getRule(RamlFragment fragment, Raml10Grammar grammar)
+    {
         switch (fragment)
         {
         case DocumentationItem:
