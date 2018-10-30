@@ -110,7 +110,7 @@ traits:
 
 /:
     type: basic
-    securedBy: [oauth_2_0: { scopes: [ comments ] }, oauth_1_0, null]
+    securedBy: [oauth_2_0: { scopes: [ "comments:read" ] }, oauth_1_0, null]
     displayName: Root resource
     description: Root resource description
     head:

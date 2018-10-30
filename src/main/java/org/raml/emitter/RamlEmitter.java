@@ -15,8 +15,6 @@
  */
 package org.raml.emitter;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
 import static org.raml.parser.utils.ReflectionUtils.isEnum;
 import static org.raml.parser.utils.ReflectionUtils.isPojo;
@@ -40,6 +38,7 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.utils.ReflectionUtils;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 public class RamlEmitter
 {
@@ -54,6 +53,9 @@ public class RamlEmitter
 
     private static final Pattern NO_QUOTES = Pattern.compile("^[a-zA-Z_/+][^:]*$");
     private static final String[] LITERALS = {"yes", "no", "true", "false", "on", "off", "null"};
+
+    final ParameterizedTypeImpl SCOPES_TYPE = ParameterizedTypeImpl
+            .make(List.class, new Type[]{String.class}, null);
 
     public String dump(Raml raml)
     {
@@ -184,7 +186,7 @@ public class RamlEmitter
             if (((SecurityReference) item).getParameters().size() > 0)
             {
                 dump.append(YAML_MAP_SEP).append("\n");
-                dumpMap(dump, depth + 2, String.class, ((SecurityReference) item).getParameters());
+                dumpMap(dump, depth + 2, SCOPES_TYPE, ((SecurityReference) item).getParameters());
             }
             else
             {
@@ -353,7 +355,7 @@ public class RamlEmitter
         }
         return field.getName();
     }
-    
+
 //    private boolean isBooleanOrInteger(Object value) {
 //        try {
 //            Long.valueOf(value.toString());
