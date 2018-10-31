@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Currencies API
+uses:
+  crt: resource-type.raml
+
+/currencies:
+  type:
+    crt.all:
+      getResponseType: string
+  get:
+
+
+/no-methods:
+  type: crt.all
