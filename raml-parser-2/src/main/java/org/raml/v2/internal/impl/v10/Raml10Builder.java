@@ -30,13 +30,13 @@ import org.raml.v2.internal.impl.commons.phase.SchemaValidationTransformer;
 import org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer;
 import org.raml.v2.internal.impl.commons.phase.TypeValidationPhase;
 import org.raml.v2.internal.impl.commons.phase.UnusedParametersTransformer;
-import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.grammar.Raml10GrammarUsesAllowed;
 import org.raml.v2.internal.impl.v10.phase.AnnotationValidationPhase;
 import org.raml.v2.internal.impl.v10.phase.ExampleValidationPhase;
+import org.raml.v2.internal.impl.v10.phase.ImplicitUriParametersInjectionTransformer;
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.impl.v10.phase.ReferenceResolverTransformer;
-import org.raml.v2.internal.impl.v10.phase.ImplicitUriParametersInjectionTransformer;
 import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.v2.internal.utils.RamlTreeNodeDumper;
 import org.raml.v2.internal.utils.ResourcePathUtils;
@@ -191,7 +191,7 @@ public class Raml10Builder
         final TransformationPhase referenceCheck = new TransformationPhase(new ReferenceResolverTransformer());
 
         // Applies resourceTypes and Traits Library
-        final TransformationPhase resourcePhase = new TransformationPhase(new ResourceTypesTraitsTransformer(new Raml10Grammar()));
+        final TransformationPhase resourcePhase = new TransformationPhase(new ResourceTypesTraitsTransformer(new Raml10GrammarUsesAllowed()));
 
         final TransformationPhase duplicatedPaths = new TransformationPhase(new DuplicatedPathsTransformer());
 

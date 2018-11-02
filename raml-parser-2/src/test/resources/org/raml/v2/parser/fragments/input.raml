@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: test
+
+traits:
+  this-is-a-trait: !include trait.raml
+
+/max:
+  is: this-is-a-trait
+  get:

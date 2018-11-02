@@ -34,7 +34,7 @@ public class RamlFragmentGrammarTransformer implements Transformer
     public Node transform(Node node)
     {
         final RamlTypedFragment ramlTypedFragmentNode = (RamlTypedFragment) node;
-        final Rule rule = RamlHeader.getFragmentRule(ramlTypedFragmentNode.getFragment());
+        final Rule rule = RamlHeader.getFragmentUsesAllowedRule(ramlTypedFragmentNode.getFragment());
         return rule.apply(node);
     }
 }

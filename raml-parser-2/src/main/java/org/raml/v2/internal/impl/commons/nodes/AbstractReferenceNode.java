@@ -15,22 +15,20 @@
  */
 package org.raml.v2.internal.impl.commons.nodes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import org.raml.v2.internal.impl.v10.nodes.LibraryRefNode;
 import org.raml.yagi.framework.nodes.AbstractRamlNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.util.NodeUtils;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractReferenceNode extends AbstractRamlNode implements ReferenceNode
 {
@@ -45,6 +43,7 @@ public abstract class AbstractReferenceNode extends AbstractRamlNode implements 
     public AbstractReferenceNode(AbstractReferenceNode node)
     {
         super(node);
+        this.refNode = node.refNode;
         this.contextNode = node.contextNode;
     }
 

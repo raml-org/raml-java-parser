@@ -15,17 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.grammar;
 
-import static org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer.TEMPLATE_PATTERN;
-
 import com.google.common.base.Function;
-import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
-
-import java.util.concurrent.Callable;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ParametrizedResourceTypeRefNode;
@@ -59,6 +50,12 @@ import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.grammar.rule.StringValueRule;
 import org.raml.yagi.framework.nodes.Node;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.concurrent.Callable;
+
+import static org.raml.v2.internal.impl.commons.phase.StringTemplateExpressionTransformer.TEMPLATE_PATTERN;
 
 public abstract class BaseRamlGrammar extends BaseGrammar
 {
@@ -228,7 +225,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                                                                                      .then(MethodNode.class));
     }
 
-    public Rule traitParamsResolved()
+    public ObjectRule traitParamsResolved()
     {
         return objectType()
                            .with(descriptionField())
