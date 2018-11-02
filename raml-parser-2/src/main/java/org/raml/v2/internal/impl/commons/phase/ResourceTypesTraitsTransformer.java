@@ -18,15 +18,6 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
-import static org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsMerger.merge;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
@@ -57,6 +48,15 @@ import org.raml.yagi.framework.util.NodeSelector;
 import org.raml.yagi.framework.util.NodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static org.raml.v2.internal.impl.commons.phase.ResourceTypesTraitsMerger.merge;
 
 public class ResourceTypesTraitsTransformer implements Transformer
 {
@@ -151,11 +151,12 @@ public class ResourceTypesTraitsTransformer implements Transformer
             referenceResolution = new TransformationPhase(new ReferenceResolverTransformer());
         }
         // resolves types
-        boolean success = applyPhases(templateNode, grammarPhase);
+
+        grammarPhase.apply(templateNode.getValue());
 
         removeUnimplementedOptionalMethods(templateNode, baseResourceNode);
 
-        success = success && applyPhases(templateNode, referenceResolution);
+        boolean success = applyPhases(templateNode, referenceResolution);
 
         if (success)
         {
