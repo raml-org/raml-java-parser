@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: test validate
+/resource:
+   get:
+     queryParameters:
+        union-type:
+          type: object | string
+        union-boolean-type:
+          type: object | boolean
+        array-type:
+          type: number[]
