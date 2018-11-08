@@ -16,6 +16,7 @@
 package org.raml.v2.api;
 
 import org.junit.Test;
+import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v10.datamodel.ArrayTypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import org.raml.v2.api.model.v10.datamodel.UnionTypeDeclaration;
@@ -23,13 +24,16 @@ import org.raml.v2.api.model.v10.datamodel.UnionTypeDeclaration;
 import java.io.File;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TypeDeclarationValidationTestCase
 {
 
     @Test
-    public void unionAndArrayValidation() {
+    public void unionAndArrayValidation()
+    {
         File input = new File("src/test/resources/org/raml/v2/api/v10/validation/union-array-validation.raml");
         assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
@@ -37,5 +41,14 @@ public class TypeDeclarationValidationTestCase
         List<TypeDeclaration> typeDeclarations = ramlModelResult.getApiV10().resources().get(0).methods().get(0).queryParameters();
         assertTrue(((UnionTypeDeclaration) typeDeclarations.get(0)).of().get(1).validate("100").isEmpty());
         assertTrue(((ArrayTypeDeclaration) typeDeclarations.get(1)).items().validate("20").isEmpty());
+
+        List<ValidationResult> validationResults = ((ArrayTypeDeclaration) typeDeclarations.get(1)).items().validate("Hello world!");
+        assertFalse(validationResults.isEmpty());
+        assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Float");
+
+        validationResults = ((UnionTypeDeclaration) typeDeclarations.get(2)).of().get(1).validate("not a boolean");
+        assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Boolean");
+
+
     }
 }

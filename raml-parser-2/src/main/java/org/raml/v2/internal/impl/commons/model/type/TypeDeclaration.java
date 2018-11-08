@@ -184,9 +184,12 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
     public List<RamlValidationResult> validate(String payload)
     {
         TypeDeclarationNode typeDeclarationNode;
-        if (getNode() instanceof TypeDeclarationNode) {
+        if (getNode() instanceof TypeDeclarationNode)
+        {
             typeDeclarationNode = (TypeDeclarationNode) getNode();
-        } else {
+        }
+        else
+        {
             // if union or array of scalar types, TypeDeclarationNode is not generated
             typeDeclarationNode = new TypeDeclarationNode();
             typeDeclarationNode.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), getResolvedType().getTypeExpressionNode()));
