@@ -30,25 +30,31 @@ import static org.junit.Assert.assertTrue;
 
 public class TypeDeclarationValidationTestCase
 {
-
     @Test
-    public void unionAndArrayValidation()
+    public void validation()
     {
         File input = new File("src/test/resources/org/raml/v2/api/v10/validation/union-array-validation.raml");
         assertTrue(input.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
 
+        arrayValidation(ramlModelResult);
+        unionValidation(ramlModelResult);
+    }
+
+    private void unionValidation(RamlModelResult ramlModelResult) {
         List<TypeDeclaration> typeDeclarations = ramlModelResult.getApiV10().resources().get(0).methods().get(0).queryParameters();
         assertTrue(((UnionTypeDeclaration) typeDeclarations.get(0)).of().get(1).validate("100").isEmpty());
-        assertTrue(((ArrayTypeDeclaration) typeDeclarations.get(1)).items().validate("20").isEmpty());
 
-        List<ValidationResult> validationResults = ((ArrayTypeDeclaration) typeDeclarations.get(1)).items().validate("Hello world!");
+        List<ValidationResult> validationResults = ((UnionTypeDeclaration) typeDeclarations.get(1)).of().get(1).validate("not a boolean");
+        assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Boolean");
+    }
+
+    private void arrayValidation(RamlModelResult ramlModelResult) {
+        List<TypeDeclaration> typeDeclarations = ramlModelResult.getApiV10().resources().get(0).methods().get(0).queryParameters();
+        assertTrue(((ArrayTypeDeclaration) typeDeclarations.get(2)).items().validate("20").isEmpty());
+
+        List<ValidationResult> validationResults = ((ArrayTypeDeclaration) typeDeclarations.get(2)).items().validate("Hello world!");
         assertFalse(validationResults.isEmpty());
         assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Float");
-
-        validationResults = ((UnionTypeDeclaration) typeDeclarations.get(2)).of().get(1).validate("not a boolean");
-        assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Boolean");
-
-
     }
 }
