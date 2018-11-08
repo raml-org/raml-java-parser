@@ -15,25 +15,8 @@
  */
 package org.raml.v2.internal.impl.commons.model.type;
 
-import static java.util.Collections.singletonList;
-import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
-import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
-import static org.raml.yagi.framework.nodes.DefaultPosition.ARTIFICIAL_NODE;
-import static org.raml.yagi.framework.util.NodeSelector.selectFrom;
-import static org.raml.yagi.framework.util.NodeSelector.selectType;
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.json.JsonObject;
-
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.Annotable;
@@ -56,12 +39,29 @@ import org.raml.v2.internal.utils.JSonDumper;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
+import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.snakeyaml.SYArrayNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.yagi.framework.util.NodeUtils;
+
+import javax.annotation.Nullable;
+import javax.json.JsonObject;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Collections.singletonList;
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
+import static org.raml.v2.internal.utils.RamlNodeUtils.getVersion;
+import static org.raml.yagi.framework.nodes.DefaultPosition.ARTIFICIAL_NODE;
+import static org.raml.yagi.framework.util.NodeSelector.selectFrom;
+import static org.raml.yagi.framework.util.NodeSelector.selectType;
 
 public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<KeyValueNode>
 {
@@ -183,10 +183,18 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
 
     public List<RamlValidationResult> validate(String payload)
     {
-        final TypeDeclarationNode node = (TypeDeclarationNode) getNode();
-        final ResourceLoader resourceLoader = node.getStartPosition().getResourceLoader();
+        TypeDeclarationNode typeDeclarationNode;
+        if (getNode() instanceof TypeDeclarationNode) {
+            typeDeclarationNode = (TypeDeclarationNode) getNode();
+        } else {
+            // if union or array of scalar types, TypeDeclarationNode is not generated
+            typeDeclarationNode = new TypeDeclarationNode();
+            typeDeclarationNode.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), getResolvedType().getTypeExpressionNode()));
+        }
+
+        final ResourceLoader resourceLoader = typeDeclarationNode.getStartPosition().getResourceLoader();
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
-        final Node validate = exampleValidationPhase.validate(node, payload);
+        final Node validate = exampleValidationPhase.validate(typeDeclarationNode, payload);
         if (NodeUtils.isErrorResult(validate))
         {
             ErrorNode error = validate instanceof ErrorNode ? (ErrorNode) validate : validate.findDescendantsWith(ErrorNode.class).get(0);
