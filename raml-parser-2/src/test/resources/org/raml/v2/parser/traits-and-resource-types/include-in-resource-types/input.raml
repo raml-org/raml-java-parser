@@ -1,0 +1,41 @@
+#%RAML 1.0
+title: Test API
+
+resourceTypes:
+  foo:
+    post:
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include bar.raml
+
+types:
+  person:
+    type: object
+    properties:
+      name: string
+      isMale: boolean
+
+
+/test:
+  type: foo
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: person
+            examples:
+              valid: |
+                {
+                  "name": "Rama Funes Mori",
+                  "age": 21,
+                  "isMale": true
+                }
+              invalid:
+                {
+                  "name": "Rama Funes Mori",
+                  "age": 21,
+                  "isMale": "error"
+                }

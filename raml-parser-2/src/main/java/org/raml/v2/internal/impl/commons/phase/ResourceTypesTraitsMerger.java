@@ -149,8 +149,15 @@ public class ResourceTypesTraitsMerger
             }
             else
             {
-                logger.debug("Merging values '{}' and '{}'", node.getParent(), child);
-                merge(node, childValue);
+                logger.debug("Merging values '{}' and '{}'", baseNode.getParent(), child);
+                if (node instanceof SimpleTypeNode)
+                {
+                    merge(baseNode, childValue);
+                }
+                else
+                {
+                    merge(node, childValue);
+                }
             }
         }
     }
