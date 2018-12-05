@@ -41,7 +41,8 @@ public class TypeDeclarationValidationTestCase
         unionValidation(ramlModelResult);
     }
 
-    private void unionValidation(RamlModelResult ramlModelResult) {
+    private void unionValidation(RamlModelResult ramlModelResult)
+    {
         List<TypeDeclaration> typeDeclarations = ramlModelResult.getApiV10().resources().get(0).methods().get(0).queryParameters();
         assertTrue(((UnionTypeDeclaration) typeDeclarations.get(0)).of().get(1).validate("100").isEmpty());
 
@@ -49,7 +50,8 @@ public class TypeDeclarationValidationTestCase
         assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Boolean");
     }
 
-    private void arrayValidation(RamlModelResult ramlModelResult) {
+    private void arrayValidation(RamlModelResult ramlModelResult)
+    {
         List<TypeDeclaration> typeDeclarations = ramlModelResult.getApiV10().resources().get(0).methods().get(0).queryParameters();
         assertTrue(((ArrayTypeDeclaration) typeDeclarations.get(2)).items().validate("20").isEmpty());
 
