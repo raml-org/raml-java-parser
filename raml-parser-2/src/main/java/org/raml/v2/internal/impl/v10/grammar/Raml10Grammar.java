@@ -15,56 +15,25 @@
  */
 package org.raml.v2.internal.impl.v10.grammar;
 
-import static java.util.Arrays.asList;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
-import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
-import org.raml.v2.internal.impl.commons.nodes.AnnotationReferenceNode;
-import org.raml.v2.internal.impl.commons.nodes.AnnotationTypeNode;
-import org.raml.v2.internal.impl.commons.nodes.AnnotationTypesNode;
-import org.raml.v2.internal.impl.commons.nodes.CustomFacetDefinitionNode;
-import org.raml.v2.internal.impl.commons.nodes.DocumentationItemNode;
-import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.ExamplesNode;
-import org.raml.v2.internal.impl.commons.nodes.ExtendsNode;
-import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
-import org.raml.v2.internal.impl.commons.nodes.FacetNode;
-import org.raml.v2.internal.impl.commons.nodes.ResponseNode;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationField;
-import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
-import org.raml.v2.internal.impl.commons.nodes.TypesNode;
+import org.raml.v2.internal.impl.commons.nodes.*;
 import org.raml.v2.internal.impl.commons.rule.NodeReferenceFactory;
 import org.raml.v2.internal.impl.commons.rule.SchemaDeclarationRule;
-import org.raml.v2.internal.impl.v10.nodes.DisplayNameDefaultValue;
-import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
-import org.raml.v2.internal.impl.v10.nodes.LibraryNode;
-import org.raml.v2.internal.impl.v10.nodes.NativeTypeExpressionNode;
-import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
-import org.raml.v2.internal.impl.v10.nodes.factory.DefaultMimeTypeDeclarationFactory;
-import org.raml.v2.internal.impl.v10.nodes.factory.InlineTypeDeclarationFactory;
-import org.raml.v2.internal.impl.v10.nodes.factory.OverlayableSimpleTypeFactory;
-import org.raml.v2.internal.impl.v10.nodes.factory.RamlScalarValueFactory;
-import org.raml.v2.internal.impl.v10.nodes.factory.TypeExpressionReferenceFactory;
+import org.raml.v2.internal.impl.v10.nodes.*;
+import org.raml.v2.internal.impl.v10.nodes.factory.*;
 import org.raml.v2.internal.impl.v10.rules.TypeDefaultValue;
 import org.raml.v2.internal.impl.v10.rules.TypeExpressionReferenceRule;
 import org.raml.v2.internal.impl.v10.type.TypeId;
 import org.raml.yagi.framework.grammar.RuleFactory;
-import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-import org.raml.yagi.framework.grammar.rule.ArrayWrapperFactory;
-import org.raml.yagi.framework.grammar.rule.ConditionalRule;
-import org.raml.yagi.framework.grammar.rule.KeyValueRule;
-import org.raml.yagi.framework.grammar.rule.ObjectRule;
-import org.raml.yagi.framework.grammar.rule.RegexValueRule;
-import org.raml.yagi.framework.grammar.rule.ResourceRefRule;
-import org.raml.yagi.framework.grammar.rule.Rule;
-import org.raml.yagi.framework.grammar.rule.StringValueRule;
+import org.raml.yagi.framework.grammar.rule.*;
 import org.raml.yagi.framework.nodes.NullNodeImpl;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 
 
 public class Raml10Grammar extends BaseRamlGrammar
@@ -438,7 +407,7 @@ public class Raml10Grammar extends BaseRamlGrammar
                                                                                   .add(discriminatorValueField().matchValue())
                                                                                   .add(customFacetField().matchValue())
                                                    ).defaultValue(new TypeDefaultValue(defaultType))
-                                           ).then(TypeDeclarationNode.class);
+                                           ).then(new TypeDeclarationNodeFactory());
 
 
                     }
@@ -826,7 +795,7 @@ public class Raml10Grammar extends BaseRamlGrammar
         return field(scalarType(), anyOf(inlineType(), propertyType())).then(PropertyNode.class);
     }
 
-    private ObjectRule propertyType()
+    ObjectRule propertyType()
     {
         return baseType(TypeId.STRING, PROPERTY_TYPE_RULE).named("PropertyTypeRule");
     }
