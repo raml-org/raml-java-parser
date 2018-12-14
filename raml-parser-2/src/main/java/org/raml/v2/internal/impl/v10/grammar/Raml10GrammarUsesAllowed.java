@@ -22,7 +22,12 @@ public class Raml10GrammarUsesAllowed extends Raml10Grammar
     @Override
     public ObjectRule explicitType()
     {
-        return super.explicitType().with(usesField());
+        return super.explicitType().with(0, usesField());
+    }
+
+    @Override
+    ObjectRule propertyType() {
+        return super.propertyType().with(0, usesField());
     }
 
     @Override
