@@ -16,12 +16,13 @@
 package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.NamedNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 
 import javax.annotation.Nonnull;
 
-public class TypeDeclarationField extends KeyValueNodeImpl
+public class TypeDeclarationField extends KeyValueNodeImpl implements NamedNode
 {
     public TypeDeclarationField(KeyValueNodeImpl node)
     {

@@ -22,11 +22,12 @@ import javax.annotation.Nonnull;
 
 import org.raml.v2.api.model.v10.declarations.AnnotationTarget;
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.NamedNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.util.NodeSelector;
 
-public class AnnotationTypeNode extends KeyValueNodeImpl
+public class AnnotationTypeNode extends KeyValueNodeImpl implements NamedNode
 {
 
     public AnnotationTypeNode()
