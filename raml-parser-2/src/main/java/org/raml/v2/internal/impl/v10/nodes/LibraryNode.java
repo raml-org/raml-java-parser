@@ -15,14 +15,11 @@
  */
 package org.raml.v2.internal.impl.v10.nodes;
 
-import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.ContextProviderNode;
+import org.raml.yagi.framework.nodes.*;
 
 import javax.annotation.Nonnull;
 
-public class LibraryNode extends KeyValueNodeImpl implements ContextProviderNode
+public class LibraryNode extends KeyValueNodeImpl implements ContextProviderNode, NamedNode
 {
 
     public LibraryNode()

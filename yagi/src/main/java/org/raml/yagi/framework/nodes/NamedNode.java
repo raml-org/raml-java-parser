@@ -13,27 +13,11 @@
  * either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
-package org.raml.v2.internal.impl.v10.grammar;
+package org.raml.yagi.framework.nodes;
 
-import org.raml.yagi.framework.grammar.rule.ObjectRule;
-
-public class Raml10GrammarUsesAllowed extends Raml10Grammar
+public interface NamedNode extends Node
 {
-    @Override
-    public ObjectRule explicitType()
-    {
-        return super.explicitType().with(0, usesField());
-    }
 
-    @Override
-    ObjectRule propertyType()
-    {
-        return super.propertyType().with(0, usesField());
-    }
+    String getName();
 
-    @Override
-    public ObjectRule traitParamsResolved()
-    {
-        return super.traitParamsResolved().with(usesField());
-    }
 }

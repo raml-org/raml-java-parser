@@ -18,9 +18,10 @@ package org.raml.v2.internal.impl.commons.nodes;
 import javax.annotation.Nonnull;
 
 import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
+import org.raml.yagi.framework.nodes.NamedNode;
 import org.raml.yagi.framework.nodes.StringNode;
 
-public class ResourceTypeNode extends KeyValueNodeImpl
+public class ResourceTypeNode extends KeyValueNodeImpl implements NamedNode
 {
 
     public ResourceTypeNode()
