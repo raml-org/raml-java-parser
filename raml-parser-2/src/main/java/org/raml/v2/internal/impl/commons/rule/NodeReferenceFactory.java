@@ -27,24 +27,33 @@ import org.raml.yagi.framework.nodes.Position;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.System.arraycopy;
 
 public class NodeReferenceFactory implements NodeFactory
 {
 
     private static final Map<String, Class<? extends NamedNode>> DECLARATION_SECTIONS;
+
+    private static final String TYPES = "types";
+    private static final String SCHEMAS = "schemas";
+    private static final String RESOURCE_TYPES = "resourceTypes";
+    private static final String TRAITS = "traits";
+    private static final String SECURITY_SCHEMES = "securitySchemes";
+    private static final String ANNOTATION_TYPES = "annotationTypes";
+
     static
     {
         DECLARATION_SECTIONS = new HashMap<>();
-        DECLARATION_SECTIONS.put("types", TypeDeclarationField.class);
-        DECLARATION_SECTIONS.put("schemas", TypeDeclarationField.class);
-        DECLARATION_SECTIONS.put("resourceTypes", ResourceTypeNode.class);
-        DECLARATION_SECTIONS.put("traits", TraitNode.class);
-        DECLARATION_SECTIONS.put("securitySchemes", SecuritySchemeNode.class);
-        DECLARATION_SECTIONS.put("annotationTypes", AnnotationTypeNode.class);
+        DECLARATION_SECTIONS.put(TYPES, TypeDeclarationField.class);
+        DECLARATION_SECTIONS.put(SCHEMAS, TypeDeclarationField.class);
+        DECLARATION_SECTIONS.put(RESOURCE_TYPES, ResourceTypeNode.class);
+        DECLARATION_SECTIONS.put(TRAITS, TraitNode.class);
+        DECLARATION_SECTIONS.put(SECURITY_SCHEMES, SecuritySchemeNode.class);
+        DECLARATION_SECTIONS.put(ANNOTATION_TYPES, AnnotationTypeNode.class);
     }
 
     private NodeFactory defaultFactory;
@@ -112,34 +121,37 @@ public class NodeReferenceFactory implements NodeFactory
 
     private String[] getParts(Node currentNode, String value)
     {
-        if (existsDeclaration(currentNode, value))
+        if (!value.contains(".") || existsAsDeclaration(currentNode, value))
             return new String[] {value};
 
-        final String[] parts = value.split("\\.");
+        final String[] allParts = value.split("\\.");
 
         final Node libraryDeclarationsNode = NodeSelector.selectFrom("uses", currentNode.getRootNode());
         if (libraryDeclarationsNode != null)
         {
-            final List<LibraryNode> descendants = libraryDeclarationsNode.findDescendantsWith(LibraryNode.class);
+            final List<LibraryNode> libraryDeclarations = libraryDeclarationsNode.findDescendantsWith(LibraryNode.class);
             String libraryName = "";
-            for (int i = 0; i < parts.length - 1; i++)
+            for (int i = 0; i < allParts.length - 1; i++)
             {
-                libraryName = i == 0 ? parts[i] : libraryName + "." + parts[i];
-                for (LibraryNode descendant : descendants)
+                libraryName = i == 0 ? allParts[i] : libraryName + "." + allParts[i];
+                for (LibraryNode libraryDeclaration : libraryDeclarations)
                 {
-                    final String declarationName = value.substring(libraryName.length());
-                    if (descendant.getName().equalsIgnoreCase(libraryName) && existsDeclaration(descendant, declarationName))
+                    if (libraryName.equalsIgnoreCase(libraryDeclaration.getName()))
                     {
-                        return new String[] {libraryName, declarationName};
+                        final int length = allParts.length - i;
+                        final String[] libraryReferenceParts = new String[length];
+                        libraryReferenceParts[0] = libraryName;
+                        arraycopy(allParts, i + 1, libraryReferenceParts, 1, length - 1);
+                        return libraryReferenceParts;
                     }
                 }
             }
         }
 
-        return parts;
+        return allParts;
     }
 
-    private boolean existsDeclaration(Node currentNode, String value)
+    private boolean existsAsDeclaration(Node currentNode, String value)
     {
         for (Map.Entry<String, Class<? extends NamedNode>> declarationSection : DECLARATION_SECTIONS.entrySet())
         {

@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: chaining
+
+uses:
+  this.is.a.library: library.raml
+
+types:
+  this.is.a.type:
+
+  someOtherType:
+    type: this.is.a.type
+
+  typeFromLibrary:
+    type: this.is.a.library.someType
+
+traits:
+  this.is.a.trait:
+    headers:
+      h1:
+
+resourceTypes:
+  this.is.a.resource.type:
+    get:
+
+securitySchemes:
+  this.is.a.security.scheme:
+    type: Digest Authentication
+
+#annotationTypes:
+#  this.is.an.annotation.type: string
+
+
+/resource:
+#  (this.is.an.annotation.type): foo
+  type: this.is.a.resource.type
+  get:
+    is: [ this.is.a.trait ]
+    securedBy: [ this.is.a.security.scheme ]
