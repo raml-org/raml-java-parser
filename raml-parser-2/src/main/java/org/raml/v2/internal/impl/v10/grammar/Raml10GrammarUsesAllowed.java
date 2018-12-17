@@ -26,7 +26,8 @@ public class Raml10GrammarUsesAllowed extends Raml10Grammar
     }
 
     @Override
-    ObjectRule propertyType() {
+    ObjectRule propertyType()
+    {
         return super.propertyType().with(0, usesField());
     }
 

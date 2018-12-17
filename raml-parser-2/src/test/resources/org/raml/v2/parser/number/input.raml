@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Decimal test
+
+types:
+  tomato:
+    properties:
+      weight:
+        type: number
+        minimum: -999999999999
+        maximum: 999999999999
+        required: true
+    example: '{ "weight" : "100.43" }'
+
+
+
+/greengrocery:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: tomato
