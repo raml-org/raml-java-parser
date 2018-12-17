@@ -60,9 +60,17 @@ public class RangeValueRule extends Rule
                 Long.parseLong(((SimpleTypeNode) node).getLiteralValue());
                 return true;
             }
-            catch (NumberFormatException ex)
+            catch (NumberFormatException parseLongException)
             {
-                return false;
+                try
+                {
+                    Double.parseDouble(((SimpleTypeNode) node).getLiteralValue());
+                    return true;
+                }
+                catch (NumberFormatException parseDoubleException)
+                {
+                    return false;
+                }
             }
         }
         else
@@ -103,9 +111,18 @@ public class RangeValueRule extends Rule
                 long parseLong = Long.parseLong(((StringNode) node).getValue());
                 return range.containsLong(parseLong);
             }
-            catch (NumberFormatException ex)
+            catch (NumberFormatException parseLongException)
             {
-                return false;
+                try
+                {
+                    double parseDouble = Double.parseDouble(((StringNode) node).getValue());
+                    return range.containsDouble(parseDouble);
+                }
+                catch (NumberFormatException parseDoubleException)
+                {
+                    return false;
+                }
+
             }
         }
         else
