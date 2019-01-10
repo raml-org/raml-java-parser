@@ -68,6 +68,8 @@ import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.ext
 public class ExampleValidationPhase implements Phase
 {
     private ResourceLoader resourceLoader;
+    private static final String ERROR_MESSAGE_MAX_LENGTH = "raml.error_message_max_length";
+    public static int errorMessageMaxLength = Integer.parseInt(System.getProperty(ERROR_MESSAGE_MAX_LENGTH, "10000"));
 
     public ExampleValidationPhase(ResourceLoader resourceLoader)
     {
@@ -162,6 +164,8 @@ public class ExampleValidationPhase implements Phase
                 String errorMessage = "";
                 for (ErrorNode errorNode : errorNodeList)
                 {
+                    if (errorMessage.length() > errorMessageMaxLength)
+                        break;
                     if (errorMessage.isEmpty())
                     {
                         errorMessage = "- " + errorNode.getErrorMessage();

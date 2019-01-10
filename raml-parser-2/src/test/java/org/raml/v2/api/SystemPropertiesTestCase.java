@@ -16,7 +16,6 @@
 package org.raml.v2.api;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.raml.yagi.framework.util.DateUtils;
 
@@ -26,7 +25,6 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import static org.raml.v2.internal.impl.commons.rule.JsonSchemaValidationRule.JSON_SCHEMA_FAIL_ON_WARNING_KEY;
 
 public class SystemPropertiesTestCase
