@@ -69,7 +69,7 @@ public class ExampleValidationPhase implements Phase
 {
     private ResourceLoader resourceLoader;
     private static final String ERROR_MESSAGE_MAX_LENGTH = "raml.error_message_max_length";
-    public static int errorMessageMaxLength = Integer.valueOf(System.getProperty(ERROR_MESSAGE_MAX_LENGTH, "10000"));
+    public static int errorMessageMaxLength = Integer.parseInt(System.getProperty(ERROR_MESSAGE_MAX_LENGTH, "10000"));
 
     public ExampleValidationPhase(ResourceLoader resourceLoader)
     {
