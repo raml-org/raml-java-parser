@@ -25,12 +25,10 @@ import static org.junit.Assert.assertTrue;
 
 public class LimitErrorMessagesTestCase
 {
-    private static final String LIMIT_ERROR_MESSAGE_LENGTH = "raml.limit_error_message_length";
-
     @Test
     public void originalErrorMessage()
     {
-        ExampleValidationPhase.limitErrorMessageLength = false;
+        ExampleValidationPhase.errorMessageMaxLength = Integer.MAX_VALUE;
         File ramlFile = new File("src/test/resources/org/raml/v2/api/v10/limit-error-message/limit-error-message.raml");
         assertTrue(ramlFile.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
@@ -40,7 +38,7 @@ public class LimitErrorMessagesTestCase
     @Test
     public void limitErrorMessage()
     {
-        ExampleValidationPhase.limitErrorMessageLength = true;
+        ExampleValidationPhase.errorMessageMaxLength = 10000;
         File ramlFile = new File("src/test/resources/org/raml/v2/api/v10/limit-error-message/limit-error-message.raml");
         assertTrue(ramlFile.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
