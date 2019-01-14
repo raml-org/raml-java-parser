@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Test!
+
+types:
+  type-with-number:
+    type: object
+    properties:
+      214:
+        displayName: "214"
+
+/reosurce:
+  get:
+    body:
+      application/json:
+        type: type-with-number

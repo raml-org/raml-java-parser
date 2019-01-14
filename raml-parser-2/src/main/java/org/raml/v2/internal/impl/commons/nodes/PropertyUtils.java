@@ -16,17 +16,16 @@
 package org.raml.v2.internal.impl.commons.nodes;
 
 import org.raml.yagi.framework.nodes.BooleanNode;
+import org.raml.yagi.framework.nodes.IntegerNode;
 import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.KeyValueNodeImpl;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.StringNode;
 
 public class PropertyUtils
 {
-    public static String getName(KeyValueNodeImpl node)
+    public static String getName(KeyValueNode node)
     {
-        final StringNode key = (StringNode) node.getKey();
-        final String keyValue = key.getValue();
+        final String keyValue = getStringValue(node);
         if (getRequiredNode(node) == null)
         {
             // If required field is set then the ? should be ignored
@@ -38,6 +37,21 @@ public class PropertyUtils
         }
     }
 
+    private static String getStringValue(KeyValueNode node)
+    {
+        final String keyValue;
+        if (node.getKey() instanceof IntegerNode)
+        {
+            keyValue = String.valueOf(((IntegerNode) node.getKey()).getValue());
+        }
+        else
+        {
+            StringNode key = (StringNode) node.getKey();
+            keyValue = key.getValue();
+        }
+        return keyValue;
+    }
+
     private static Node getRequiredNode(KeyValueNode node)
     {
         return node.getValue().get("required");
@@ -45,7 +59,6 @@ public class PropertyUtils
 
     public static boolean isRequired(KeyValueNode node)
     {
-        final StringNode key = (StringNode) node.getKey();
-        return getRequiredNode(node) instanceof BooleanNode ? ((BooleanNode) getRequiredNode(node)).getValue() : !key.getValue().endsWith("?");
+        return getRequiredNode(node) instanceof BooleanNode ? ((BooleanNode) getRequiredNode(node)).getValue() : !getStringValue(node).endsWith("?");
     }
 }
