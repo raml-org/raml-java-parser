@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: Test!
+mediaType: application/json
+
+resourceTypes:
+  this-is-a-resource-type:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: object
+              properties:
+                resourceTypeProperty: string
+
+/resoure:
+  type: this-is-a-resource-type
+  get:
+    responses:
+      200:
+        body:
+          type: object
+          properties:
+            inlineProperties: boolean
