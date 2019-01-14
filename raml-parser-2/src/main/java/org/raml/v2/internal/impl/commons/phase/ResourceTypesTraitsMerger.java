@@ -112,7 +112,8 @@ public class ResourceTypesTraitsMerger
                 // if merging children of body node, media type is defined under baseNode and child is not a mime type node,
                 // child gets merge with the value of mediaType node. See #498
                 RegexValueRule mimeTypeRegex = new Raml10Grammar().mimeTypeRegex();
-                if (baseNode.getParent() instanceof BodyNode && !mimeTypeRegex.matches(((KeyValueNode) child).getKey()))
+                boolean isMimeType = mimeTypeRegex.matches(((KeyValueNode) child).getKey());
+                if (baseNode.getParent() instanceof BodyNode && !isMimeType)
                 {
                     if (baseNode.getChildren().size() > 0 && baseNode.getChildren().get(0) instanceof KeyValueNode)
                     {
@@ -123,6 +124,10 @@ public class ResourceTypesTraitsMerger
                             merge(mimeTypeNode.getValue(), copyNode);
                         }
                     }
+                }
+                else if (baseNode.getParent() instanceof BodyNode && baseNode instanceof TypeDeclarationNode && isMimeType)
+                {
+                    merge(baseNode, ((KeyValueNode) child).getValue());
                 }
                 else
                 {
