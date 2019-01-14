@@ -25,7 +25,7 @@ public class PropertyUtils
 {
     public static String getName(KeyValueNode node)
     {
-        final String keyValue = getStringValue(node);
+        final String keyValue = getValueAsString(node);
         if (getRequiredNode(node) == null)
         {
             // If required field is set then the ? should be ignored
@@ -37,7 +37,7 @@ public class PropertyUtils
         }
     }
 
-    private static String getStringValue(KeyValueNode node)
+    private static String getValueAsString(KeyValueNode node)
     {
         final String keyValue;
         if (node.getKey() instanceof IntegerNode)
@@ -59,6 +59,6 @@ public class PropertyUtils
 
     public static boolean isRequired(KeyValueNode node)
     {
-        return getRequiredNode(node) instanceof BooleanNode ? ((BooleanNode) getRequiredNode(node)).getValue() : !getStringValue(node).endsWith("?");
+        return getRequiredNode(node) instanceof BooleanNode ? ((BooleanNode) getRequiredNode(node)).getValue() : !getValueAsString(node).endsWith("?");
     }
 }
