@@ -17,13 +17,16 @@ package org.raml.yagi.framework.util;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.joda.time.format.ISODateTimeFormat;
 
 public class DateUtils
 {
     private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-dd");
     private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
-    private static DateTimeFormatter dateTimeOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-DD'T'HH:mm:ss");
+    private static String dateTimePattern = "YYYY-MM-DD'T'HH:mm:ss";
+    private static DateTimeFormatter dateTimeOnlyFormatterNoMillis = DateTimeFormat.forPattern(dateTimePattern);
+    private static DateTimeFormatter dateTimeOnlyFormatterMillis = new DateTimeFormatterBuilder().appendPattern(dateTimePattern).appendLiteral(".").appendFractionOfSecond(1, 9).toFormatter();
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
     private static DateTimeFormatter rfc3339FormatterMillis = ISODateTimeFormat.dateTime();
     private static DateTimeFormatter rfc3339FormatterNoMillis = ISODateTimeFormat.dateTimeNoMillis();
@@ -46,7 +49,14 @@ public class DateUtils
                 timeOnlyFormatter.parseLocalTime(date);
                 break;
             case datetime_only:
-                dateTimeOnlyFormatter.parseLocalDateTime(date);
+                try
+                {
+                    dateTimeOnlyFormatterNoMillis.parseLocalDateTime(date);
+                }
+                catch (Exception e)
+                {
+                    dateTimeOnlyFormatterMillis.parseLocalDateTime(date);
+                }
                 break;
             case datetime:
                 if (rfc != null && "rfc2616".equals(rfc))
