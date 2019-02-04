@@ -16,6 +16,7 @@
 package org.raml.v2.internal.utils;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,6 +48,16 @@ public class ResourcePathUtils
             if (lastSlash != -1)
             {
                 result = basePath.substring(0, lastSlash + 1) + relativePath;
+                if (isUri(result))
+                {
+                    URI resultUri = URI.create(result);
+                    result = resultUri.normalize().toString();
+                }
+                else
+                {
+                    File resultFile = new File(result);
+                    result = resultFile.toPath().normalize().toString();
+                }
             }
         }
         if (result.contains("#"))
@@ -54,6 +65,11 @@ public class ResourcePathUtils
             return result.split("#")[0];
         }
         return result;
+    }
+
+    public static boolean isUri(String includePath)
+    {
+        return includePath.startsWith("http:") || includePath.startsWith("https:") || includePath.startsWith("file:");
     }
 
     public static boolean isAbsolute(String includePath)
