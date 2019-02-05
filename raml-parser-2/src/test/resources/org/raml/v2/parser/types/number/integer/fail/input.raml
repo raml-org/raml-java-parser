@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Integer type test
+/resource:
+  get:
+    queryParameters:
+      integer-range-type-fail:
+        type: integer
+        minimum: 0
+        maximum: 9999
+        example: "37"
+      integer-range-type-success:
+        type: integer
+        minimum: 0
+        maximum: 9999
+        example: 37
+      integer-type-fail:
+        type: integer
+        example: "37"
+      integer-type-success:
+        type: integer
+        example: 37

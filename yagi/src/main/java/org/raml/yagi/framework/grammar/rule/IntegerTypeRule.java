@@ -19,7 +19,6 @@ import com.google.common.collect.Range;
 import org.raml.yagi.framework.nodes.IntegerNode;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.nodes.jackson.JFloatingNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -28,8 +27,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-
-import static java.lang.Long.parseLong;
 
 public class IntegerTypeRule extends AbstractTypeRule
 {
@@ -61,18 +58,6 @@ public class IntegerTypeRule extends AbstractTypeRule
         if (node instanceof IntegerNode)
         {
             return isInRange(((IntegerNode) node).getValue());
-        }
-        else if (node instanceof StringNode)
-        {
-            try
-            {
-                Long value = parseLong(((StringNode) node).getValue());
-                return isInRange(value);
-            }
-            catch (NumberFormatException ex)
-            {
-                return false;
-            }
         }
         else if (node instanceof JFloatingNode)
         {

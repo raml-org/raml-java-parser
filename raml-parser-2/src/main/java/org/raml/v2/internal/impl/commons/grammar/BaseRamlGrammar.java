@@ -756,6 +756,6 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule responseCodes()
     {
-        return allOf(integerType(), range(100, 599));
+        return allOf(range(100, 599));
     }
 }
