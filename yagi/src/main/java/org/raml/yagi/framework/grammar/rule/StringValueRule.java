@@ -32,6 +32,7 @@ public class StringValueRule extends Rule
 
     private String value;
     private String description;
+    private boolean caseSensitive = true;
 
     public StringValueRule(String value)
     {
@@ -49,12 +50,21 @@ public class StringValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode && ((StringNode) node).getValue().equals(value);
+        return node instanceof StringNode &&
+               ((caseSensitive) ?
+                       ((StringNode) node).getValue().equals(value) :
+                       ((StringNode) node).getValue().equalsIgnoreCase(value));
     }
 
     public StringValueRule description(String description)
     {
         this.description = description;
+        return this;
+    }
+
+    public StringValueRule caseSensitive(boolean caseSensitive)
+    {
+        this.caseSensitive = caseSensitive;
         return this;
     }
 

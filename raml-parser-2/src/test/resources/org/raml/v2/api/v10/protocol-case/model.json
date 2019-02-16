@@ -1,0 +1,27 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [
+  "http",
+  "https"
+ ],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "Example"
+ },
+ "traits": [],
+ "types": [],
+ "uses": [],
+ "version": null
+}
