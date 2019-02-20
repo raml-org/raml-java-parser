@@ -926,5 +926,11 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return super.documentation().with(annotationField()).then(DocumentationItemNode.class);
     }
+    
+    protected Rule protocols()
+    {
+        AnyOfRule protocols = anyOf(string("HTTP"), string("HTTPS"), string("http"), string("https"));
+        return anyOf(protocols, array(protocols)).then(new ArrayWrapperFactory());
+    }
 
 }
