@@ -750,7 +750,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
 
     protected Rule protocols()
     {
-        AnyOfRule protocols = anyOf(string("HTTP"), string("HTTPS"));
+        AnyOfRule protocols = anyOf(string("HTTP").caseSensitive(false), string("HTTPS").caseSensitive(false));
         return anyOf(protocols, array(protocols)).then(new ArrayWrapperFactory());
     }
 
