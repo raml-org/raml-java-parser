@@ -23,6 +23,7 @@ import org.raml.yagi.framework.nodes.Node;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.Mark;
 import org.yaml.snakeyaml.error.MarkedYAMLException;
+import org.yaml.snakeyaml.reader.ReaderException;
 
 import javax.annotation.Nullable;
 import java.io.Reader;
@@ -56,6 +57,10 @@ public class NodeParser
         {
             return buildYamlErrorNode(e, resourcePath);
         }
+        catch (ReaderException e) {
+
+            return buildYamlErrorNode(e, resourcePath);
+        }
     }
 
     private static Node buildYamlErrorNode(MarkedYAMLException e, String resourcePath)
@@ -64,6 +69,15 @@ public class NodeParser
         final Mark problemMark = e.getProblemMark();
         errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, resourcePath, new DefaultResourceLoader()));
         errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), resourcePath, new DefaultResourceLoader()));
+        return errorNode;
+    }
+
+    private static Node buildYamlErrorNode(ReaderException e, String resourcePath)
+    {
+
+        final ErrorNode errorNode = new ErrorNode("Underlying error while parsing YAML syntax: '" + e.getMessage() + " at position " + e.getPosition() + "(" + "'" + e.getCharacter() +"')");
+//        errorNode.setStartPosition(new DefaultPosition(e.getPosition(), 0, 0, resourcePath, new DefaultResourceLoader()));
+//        errorNode.setEndPosition(new DefaultPosition(e.getPosition() + 1, 0,0, resourcePath, new DefaultResourceLoader()));
         return errorNode;
     }
 
