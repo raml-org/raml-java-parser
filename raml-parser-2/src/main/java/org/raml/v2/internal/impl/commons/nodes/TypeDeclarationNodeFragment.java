@@ -18,6 +18,7 @@ package org.raml.v2.internal.impl.commons.nodes;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.commons.phase.RamlTypedFragment;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.util.NodeSelector;
 import org.raml.yagi.framework.util.NodeUtils;
@@ -53,7 +54,7 @@ public class TypeDeclarationNodeFragment extends TypeDeclarationNode implements 
             resolveLibraryReference()
     {
         libraryNode = NodeSelector.selectFrom(Raml10Grammar.USES_KEY_NAME, this);
-        if (libraryNode != null)
+        if (libraryNode != null && !RamlNodeUtils.isErrorResult(libraryNode))
         {
             // The parent is the key value pair
             final Node parent = libraryNode.getParent();
