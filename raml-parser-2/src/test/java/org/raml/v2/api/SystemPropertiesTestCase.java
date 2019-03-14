@@ -36,6 +36,7 @@ public class SystemPropertiesTestCase
     {
         clearFailOnWarning();
         DateUtils.FOUR_YEARS_VALIDATION = true;
+        DateUtils.setFormatters();
     }
 
     @Test
@@ -59,6 +60,7 @@ public class SystemPropertiesTestCase
     public void failFourYearsValidation()
     {
         DateUtils.FOUR_YEARS_VALIDATION = true;
+        DateUtils.setFormatters();
         RamlModelResult ramlModelResult = getDateTimeApi();
         assertThat(ramlModelResult.hasErrors(), is(true));
 
@@ -68,6 +70,7 @@ public class SystemPropertiesTestCase
     public void doNotFailFourYearsValidation()
     {
         DateUtils.FOUR_YEARS_VALIDATION = false;
+        DateUtils.setFormatters();
         RamlModelResult ramlModelResult = getDateTimeApi();
         assertThat(ramlModelResult.hasErrors(), is(false));
     }

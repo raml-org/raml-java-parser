@@ -15,6 +15,7 @@
  */
 package org.raml.yagi.framework.util;
 
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -22,23 +23,43 @@ import org.joda.time.format.ISODateTimeFormat;
 
 public class DateUtils
 {
-    private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-dd");
-    private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
-
-    private static String dateTimePattern = "-MM-DD'T'HH:mm:ss";
-    private static DateTimeFormatter dateTimeOnlyFormatterNoMillis = new DateTimeFormatterBuilder().appendYear(4, 4).append(DateTimeFormat.forPattern(dateTimePattern)).toFormatter();
-    private static DateTimeFormatter dateTimeOnlyFormatterMillis = new DateTimeFormatterBuilder().appendYear(4, 4)
-                                                                                                 .append(DateTimeFormat.forPattern(dateTimePattern))
-                                                                                                 .appendLiteral(".")
-                                                                                                 .appendFractionOfSecond(1, 9)
-                                                                                                 .toFormatter();
-
-    private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
-    private static DateTimeFormatter rfc3339FormatterMillis = ISODateTimeFormat.dateTime();
-    private static DateTimeFormatter rfc3339FormatterNoMillis = ISODateTimeFormat.dateTimeNoMillis();
-
     public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
     public static boolean FOUR_YEARS_VALIDATION = Boolean.valueOf(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
+
+    static
+    {
+        setFormatters();
+    }
+
+    public static void setFormatters()
+    {
+
+        dateOnlyFormatter = yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter();
+        timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
+
+        String dateTimePattern = "-MM-DD'T'HH:mm:ss";
+        dateTimeOnlyFormatterNoMillis = yearFormat().append(DateTimeFormat.forPattern(dateTimePattern)).toFormatter();
+        dateTimeOnlyFormatterMillis = yearFormat()
+                                                  .append(DateTimeFormat.forPattern(dateTimePattern))
+                                                  .appendLiteral(".")
+                                                  .appendFractionOfSecond(1, 9)
+                                                  .toFormatter();
+
+        rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
+        rfc3339FormatterMillis = ISODateTimeFormat.dateTime();
+        rfc3339FormatterNoMillis = ISODateTimeFormat.dateTimeNoMillis();
+    }
+
+    private static DateTimeFormatter dateOnlyFormatter;
+    private static DateTimeFormatter timeOnlyFormatter;
+
+    private static DateTimeFormatter dateTimeOnlyFormatterNoMillis;
+    private static DateTimeFormatter dateTimeOnlyFormatterMillis;
+
+    private static DateTimeFormatter rfc2616Formatter;
+    private static DateTimeFormatter rfc3339FormatterMillis;
+    private static DateTimeFormatter rfc3339FormatterNoMillis;
+
 
     public static boolean isValidDate(String date, DateType format, String rfc)
     {
@@ -47,8 +68,6 @@ public class DateUtils
             switch (format)
             {
             case date_only:
-                if (!hasFourDigitsYear(date.split("-")) && FOUR_YEARS_VALIDATION)
-                    throw new IllegalArgumentException();
                 dateOnlyFormatter.parseLocalDate(date);
                 break;
             case time_only:
@@ -93,8 +112,18 @@ public class DateUtils
         }
     }
 
-    private static boolean hasFourDigitsYear(String[] splitted)
+    private static DateTimeFormatterBuilder yearFormat()
     {
-        return splitted.length > 0 && splitted[0].length() == 4;
+
+        if (FOUR_YEARS_VALIDATION)
+        {
+
+            return new DateTimeFormatterBuilder().appendFixedSignedDecimal(DateTimeFieldType.year(), 4);
+        }
+        else
+        {
+
+            return new DateTimeFormatterBuilder().append(DateTimeFormat.forPattern("YYYY"));
+        }
     }
 }
