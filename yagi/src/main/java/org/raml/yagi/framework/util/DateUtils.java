@@ -24,9 +24,15 @@ public class DateUtils
 {
     private static DateTimeFormatter dateOnlyFormatter = DateTimeFormat.forPattern("YYYY-MM-dd");
     private static DateTimeFormatter timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
-    private static String dateTimePattern = "YYYY-MM-DD'T'HH:mm:ss";
-    private static DateTimeFormatter dateTimeOnlyFormatterNoMillis = DateTimeFormat.forPattern(dateTimePattern);
-    private static DateTimeFormatter dateTimeOnlyFormatterMillis = new DateTimeFormatterBuilder().appendPattern(dateTimePattern).appendLiteral(".").appendFractionOfSecond(1, 9).toFormatter();
+
+    private static String dateTimePattern = "-MM-DD'T'HH:mm:ss";
+    private static DateTimeFormatter dateTimeOnlyFormatterNoMillis = new DateTimeFormatterBuilder().appendYear(4, 4).append(DateTimeFormat.forPattern(dateTimePattern)).toFormatter();
+    private static DateTimeFormatter dateTimeOnlyFormatterMillis = new DateTimeFormatterBuilder().appendYear(4, 4)
+                                                                                                 .append(DateTimeFormat.forPattern(dateTimePattern))
+                                                                                                 .appendLiteral(".")
+                                                                                                 .appendFractionOfSecond(1, 9)
+                                                                                                 .toFormatter();
+
     private static DateTimeFormatter rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
     private static DateTimeFormatter rfc3339FormatterMillis = ISODateTimeFormat.dateTime();
     private static DateTimeFormatter rfc3339FormatterNoMillis = ISODateTimeFormat.dateTimeNoMillis();
