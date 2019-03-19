@@ -25,7 +25,9 @@ import org.raml.v2.api.model.v10.datamodel.TypeDeclaration;
 import java.net.URL;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class ApiModelUnitTestCase
@@ -105,5 +107,22 @@ public class ApiModelUnitTestCase
                    "    </complexType>" + System.lineSeparator() +
                    "</schema>"));
 
+    }
+
+    @Test
+    public void testXMLValidation()
+    {
+        URL savedRamlLocation = getClass().getClassLoader().getResource("org/raml/v2/unit/xml-validation.raml");
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(savedRamlLocation.toString());
+        TypeDeclaration typeDeclaration = ramlModelResult.getApiV10().resources().get(0).methods().get(0).body().get(0);
+        List<ValidationResult> validationResults = typeDeclaration.validate("<root>\n" +
+                                                                            "              <name>robert</name>\n" +
+                                                                            "              <my-custom-xml>with-custom-value</my-custom-xml>\n" +
+                                                                            "            </root>");
+        assertEquals(1, validationResults.size());
+        String message = validationResults.get(0).getMessage();
+        assertThat(message, containsString("Error validating XML. Error: cvc-complex-type.2.4.a: Invalid content was found starting with element"));
+        assertThat(message, containsString("my-custom-xml"));
+        assertThat(message, containsString("One of '{\"http://validationnamespace.raml.org\":friends}' is expected."));
     }
 }
