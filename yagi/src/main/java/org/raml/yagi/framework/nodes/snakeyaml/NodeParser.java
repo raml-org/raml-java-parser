@@ -148,7 +148,7 @@ public class NodeParser
                 {
 
 
-                    for (char c : ("[BAD: " + Character.getName(this.lastBufferRead[i]) + "]").toCharArray())
+                    for (char c : ("[BAD: " + this.lastBufferRead[i] + "]").toCharArray())
                     {
 
                         seen.add(c);
@@ -214,7 +214,7 @@ public class NodeParser
     private static Node buildYamlErrorNode(ReaderException e, SmartReader reader)
     {
 
-        final ErrorNode errorNode = new ErrorNode("Underlying error while parsing YAML syntax: '" + e.getMessage() + " around '" + reader.getLastValidString() + "'");
+        final ErrorNode errorNode = new ErrorNode("Underlying error while parsing YAML syntax: '" + e.getMessage() + " around: " + reader.getLastValidString() + "'");
         // errorNode.setStartPosition(new DefaultPosition(e.getPosition(), 0, 0, resourcePath, new DefaultResourceLoader()));
         // errorNode.setEndPosition(new DefaultPosition(e.getPosition() + 1, 0,0, resourcePath, new DefaultResourceLoader()));
         return errorNode;

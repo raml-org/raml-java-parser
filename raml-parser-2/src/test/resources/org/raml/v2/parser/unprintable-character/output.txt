@@ -1,2 +1,2 @@
-ErrorNode: "Underlying error while parsing YAML syntax: 'special characters are not allowed around 'ow an error like:
-#               {â[BAD: LATIN 1 SUPPLEMENT 80]'" (Start: -1 , End: -1)
+ErrorNode: "Underlying error while parsing YAML syntax: 'special characters are not allowed around:  JS parser should show an error like:
+#               {â[BAD: ]'" (Start: -1 , End: -1)
