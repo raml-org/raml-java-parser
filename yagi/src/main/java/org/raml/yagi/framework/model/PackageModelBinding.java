@@ -15,11 +15,16 @@
  */
 package org.raml.yagi.framework.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 public class PackageModelBinding implements ModelBinding
 {
+    private static final ClassNodeModelFactory NULL_WRAPPER = new ClassNodeModelFactory(null);
     private String packageName;
+    private Map<Class<?>, ClassNodeModelFactory> cache = new HashMap<>();
 
     public PackageModelBinding(String packageName)
     {
@@ -30,15 +35,24 @@ public class PackageModelBinding implements ModelBinding
     @Override
     public NodeModelFactory binding(Class<?> clazz)
     {
-        final String simpleName = clazz.getSimpleName();
+        ClassNodeModelFactory factory = cache.get(clazz);
+        if (factory != null)
+        {
+            return (factory == NULL_WRAPPER) ? null : factory;
+        }
+
         try
         {
+            final String simpleName = clazz.getSimpleName();
             final Class<?> aClass = Class.forName(packageName + "." + simpleName);
-            return new ClassNodeModelFactory((Class<? extends NodeModel>) aClass);
+            factory = new ClassNodeModelFactory((Class<? extends NodeModel>) aClass);
+            cache.put(clazz, factory);
+            return factory;
         }
         catch (ClassNotFoundException e)
         {
             // No binding available
+            cache.put(clazz, NULL_WRAPPER);
             return null;
         }
     }
