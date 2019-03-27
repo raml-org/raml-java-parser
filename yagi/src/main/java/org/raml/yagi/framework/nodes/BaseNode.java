@@ -15,14 +15,15 @@
  */
 package org.raml.yagi.framework.nodes;
 
-import org.raml.yagi.framework.util.NodeSelector;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class BaseNode implements Node
 {
@@ -106,17 +107,25 @@ public abstract class BaseNode implements Node
     @Override
     public <T extends Node> List<T> findDescendantsWith(Class<T> nodeType)
     {
+        if (children.isEmpty())
+        {
+            return Collections.emptyList();
+        }
         final List<T> result = new ArrayList<>();
-        final List<Node> children = getChildren();
-        for (Node child : children)
+        collectDescendantsWithType(this, nodeType, result);
+        return result;
+    }
+
+    private static <T extends Node> void collectDescendantsWithType(Node node, Class<T> nodeType, List<T> descendants)
+    {
+        for (Node child : node.getChildren())
         {
             if (nodeType.isAssignableFrom(child.getClass()))
             {
-                result.add(nodeType.cast(child));
+                descendants.add(nodeType.cast(child));
             }
-            result.addAll(child.findDescendantsWith(nodeType));
+            collectDescendantsWithType(child, nodeType, descendants);
         }
-        return result;
     }
 
     @Nullable
