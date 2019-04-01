@@ -82,7 +82,6 @@ public class Raml10Builder
         String key = resourceLocation + String.valueOf(stringContent.hashCode());
         if (alreadyBuilt.containsKey(key))
         {
-            System.out.println("Built hit: " + key);
             return alreadyBuilt.get(key);
         }
 
