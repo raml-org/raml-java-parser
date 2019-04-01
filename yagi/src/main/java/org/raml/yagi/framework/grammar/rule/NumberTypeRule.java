@@ -63,18 +63,6 @@ public class NumberTypeRule extends AbstractTypeRule
         {
             return range == null || range.contains(((IntegerNode) node).getValue().doubleValue());
         }
-        if (node instanceof StringNode)
-        {
-            try
-            {
-                Double value = Double.parseDouble(((StringNode) node).getValue());
-                return range == null || range.contains(value);
-            }
-            catch (NumberFormatException ex)
-            {
-                return false;
-            }
-        }
         return false;
     }
 
