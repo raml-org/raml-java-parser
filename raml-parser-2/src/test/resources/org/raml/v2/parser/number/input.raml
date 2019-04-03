@@ -10,6 +10,15 @@ types:
         maximum: 999999999999
         required: true
     example: '{ "weight" : "100.43" }'
+  weirdRange:
+    properties:
+      something:
+        type: number
+        minimum: 1.0
+        maximum: 5
+        examples:
+          works: 4
+          fails: 10
 
 
 
