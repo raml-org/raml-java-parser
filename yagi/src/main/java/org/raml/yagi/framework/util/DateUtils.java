@@ -21,6 +21,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.joda.time.format.ISODateTimeFormat;
 
+import static org.joda.time.format.ISODateTimeFormat.*;
+
 public class DateUtils
 {
     public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
@@ -46,8 +48,14 @@ public class DateUtils
                                                   .toFormatter();
 
         rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
-        rfc3339FormatterMillis = ISODateTimeFormat.dateTime();
-        rfc3339FormatterNoMillis = ISODateTimeFormat.dateTimeNoMillis();
+        rfc3339FormatterMillis = new DateTimeFormatterBuilder()
+                .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
+                .append(tTime())
+                .toFormatter();
+        rfc3339FormatterNoMillis = new DateTimeFormatterBuilder()
+                .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
+                .append(tTimeNoMillis())
+                .toFormatter();
     }
 
     private static DateTimeFormatter dateOnlyFormatter;
