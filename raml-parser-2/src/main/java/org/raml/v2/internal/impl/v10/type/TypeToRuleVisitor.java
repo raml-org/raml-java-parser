@@ -267,10 +267,13 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         registerRule(numericTypeNode, typeRule);
         if (numericTypeNode.getMinimum() != null && numericTypeNode.getMaximum() != null)
         {
-            if ( numericTypeNode.getMinimum().getClass() == numericTypeNode.getMaximum().getClass()) {
+            if (numericTypeNode.getMinimum().getClass() == numericTypeNode.getMaximum().getClass())
+            {
 
                 typeRule.and(new RangeValueRule(new NumberRange(numericTypeNode.getMinimum(), numericTypeNode.getMaximum())));
-            } else {
+            }
+            else
+            {
 
                 typeRule.and(new RangeValueRule(new NumberRange(numericTypeNode.getMinimum().doubleValue(), numericTypeNode.getMaximum().doubleValue())));
             }

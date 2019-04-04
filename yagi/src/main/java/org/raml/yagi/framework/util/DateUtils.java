@@ -49,13 +49,13 @@ public class DateUtils
 
         rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
         rfc3339FormatterMillis = new DateTimeFormatterBuilder()
-                .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
-                .append(tTime())
-                .toFormatter();
+                                                               .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
+                                                               .append(tTime())
+                                                               .toFormatter();
         rfc3339FormatterNoMillis = new DateTimeFormatterBuilder()
-                .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
-                .append(tTimeNoMillis())
-                .toFormatter();
+                                                                 .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
+                                                                 .append(tTimeNoMillis())
+                                                                 .toFormatter();
     }
 
     private static DateTimeFormatter dateOnlyFormatter;
