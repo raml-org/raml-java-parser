@@ -1,0 +1,32 @@
+#%RAML 1.0
+#Has problem
+title: Types and traits issue.
+mediaType: application/json
+baseUri: http://foo.com
+
+types:
+  Stuff:
+    properties:
+      name: string
+
+resourceTypes:
+  base-collection:
+    get?:
+      responses:
+        200:
+          body:
+            application/json:
+              type: array
+              items: <<typeResponseCollectionItem200Get>>
+
+  collection-readonly-get:
+    type:
+      base-collection:
+        typeResponseCollectionItem200Get: <<typeResponseCollectionItem200Get>>
+    get:
+
+/parent:
+  /child:
+    type:
+      collection-readonly-get:
+        typeResponseCollectionItem200Get: Stuff

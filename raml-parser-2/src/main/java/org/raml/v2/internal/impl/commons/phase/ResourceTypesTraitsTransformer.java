@@ -87,15 +87,15 @@ public class ResourceTypesTraitsTransformer implements Transformer
             return node;
         }
 
-        // apply method and resource traits if defined
-        checkTraits(resourceNode, resourceNode);
-
         // apply resource type if defined
         ReferenceNode resourceTypeReference = findResourceTypeReference(resourceNode);
         if (resourceTypeReference != null)
         {
             applyResourceType(resourceNode, resourceTypeReference, resourceNode);
         }
+
+        // apply method and resource traits if defined
+        checkTraits(resourceNode, resourceNode);
 
         mergedResources.add(resourceNode);
         return node;
