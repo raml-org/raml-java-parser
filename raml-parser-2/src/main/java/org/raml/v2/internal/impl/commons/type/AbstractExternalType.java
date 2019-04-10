@@ -106,7 +106,8 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((internalFragment == null) ? 0 : internalFragment.hashCode());
@@ -141,7 +142,5 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
             return false;
         return true;
     }
-    
-    
-    
+
 }
