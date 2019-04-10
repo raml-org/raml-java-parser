@@ -96,9 +96,9 @@ public class RamlValidator
         }
 
         validRamlCount++;
-        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
+        // RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
 
-        System.err.println(ramlModelResult);
+        // System.err.println(ramlModelResult);
         if (dump)
         {
             String json = new TckEmitter().dump(raml);

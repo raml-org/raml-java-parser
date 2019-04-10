@@ -34,7 +34,7 @@ public class TreeNodeDumper
     private static final int TAB_SPACES = 4;
     protected StringBuilder dump;
     private int indent = 0;
-    private IdentityHashMap<Node, Node> seenNodes = new IdentityHashMap<>();
+
     private boolean dumpOn = true;
 
     private TreeNodeDumper(StringBuilder dump)
@@ -50,16 +50,7 @@ public class TreeNodeDumper
     public String dump(Node node)
     {
         printIndent();
-        if (seenNodes.containsKey(node))
-        {
-            System.err.println(node.hashCode());
-        }
-        else
-        {
-            seenNodes.put(node, node);
-        }
-
-        // dumpNode(node);
+        dumpNode(node);
         dump.append(" (");
         dump.append("Start: ").append(node.getStartPosition().getIndex());
         dump.append(" , End: ").append(node.getEndPosition().getIndex());

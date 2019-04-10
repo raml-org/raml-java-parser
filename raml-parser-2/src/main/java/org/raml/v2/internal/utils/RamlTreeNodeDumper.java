@@ -17,11 +17,10 @@ package org.raml.v2.internal.utils;
 
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.util.FasterTreeNodeDumper;
 import org.raml.yagi.framework.util.TreeNodeDumper;
 
 
-public class RamlTreeNodeDumper extends FasterTreeNodeDumper
+public class RamlTreeNodeDumper extends TreeNodeDumper
 {
 
     protected void dumpChildren(Node node)
