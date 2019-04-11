@@ -18,6 +18,7 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import com.google.common.collect.FluentIterable;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
