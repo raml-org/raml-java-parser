@@ -17,11 +17,28 @@ package org.raml.v2.internal.utils;
 
 import org.raml.v2.internal.impl.v10.nodes.LibraryLinkNode;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.util.NodeAppender;
 import org.raml.yagi.framework.util.TreeNodeDumper;
+
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Writer;
 
 
 public class RamlTreeNodeDumper extends TreeNodeDumper
 {
+
+
+    public RamlTreeNodeDumper(NodeAppender appender)
+    {
+
+        super(appender);
+    }
+
+    public RamlTreeNodeDumper(Writer writer)
+    {
+        super(writer);
+    }
 
     protected void dumpChildren(Node node)
     {

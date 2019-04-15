@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.v2.internal.impl.emitter.tck.TckEmitter;
+import org.raml.v2.internal.utils.Dumper;
 import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -96,9 +97,8 @@ public class RamlValidator
         validRamlCount++;
         if (dump)
         {
-            String json = new TckEmitter().dump(raml);
             System.out.println(StringUtils.repeat("=", 120));
-            System.out.println(json);
+            Dumper.straightOutput(raml);
             System.out.println(StringUtils.repeat("=", 120));
         }
         else

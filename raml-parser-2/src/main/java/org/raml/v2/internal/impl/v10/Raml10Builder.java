@@ -15,6 +15,21 @@
  */
 package org.raml.v2.internal.impl.v10;
 
+import static org.raml.v2.api.model.v10.RamlFragment.Default;
+import static org.raml.v2.api.model.v10.RamlFragment.Extension;
+import static org.raml.v2.api.model.v10.RamlFragment.Overlay;
+import static org.raml.v2.internal.impl.RamlBuilder.FIRST_PHASE;
+import static org.raml.v2.internal.impl.RamlBuilder.LIBRARY_LINK_PHASE;
+import static org.raml.v2.internal.impl.commons.RamlVersion.RAML_10;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.model.v10.RamlFragment;
 import org.raml.v2.internal.impl.RamlBuilder;
@@ -37,10 +52,7 @@ import org.raml.v2.internal.impl.v10.phase.ImplicitUriParametersInjectionTransfo
 import org.raml.v2.internal.impl.v10.phase.LibraryLinkingTransformation;
 import org.raml.v2.internal.impl.v10.phase.MediaTypeInjectionPhase;
 import org.raml.v2.internal.impl.v10.phase.ReferenceResolverTransformer;
-import org.raml.v2.internal.utils.RamlNodeUtils;
-import org.raml.v2.internal.utils.RamlTreeNodeDumper;
-import org.raml.v2.internal.utils.ResourcePathUtils;
-import org.raml.v2.internal.utils.StreamUtils;
+import org.raml.v2.internal.utils.*;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.IncludeErrorNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -136,11 +148,10 @@ public class Raml10Builder
     {
         if (Boolean.getBoolean("dump.phases"))
         {
-            String dump = new RamlTreeNodeDumper().dump(rootNode);
             System.out.println("===============================================================");
             System.out.println("After phase = " + i + " --- " + phase.getClass());
             System.out.println("---------------------------------------------------------------");
-            System.out.println(dump);
+            Dumper.straightOutput(rootNode);
             System.out.println("---------------------------------------------------------------");
         }
     }
