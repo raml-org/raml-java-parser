@@ -53,7 +53,7 @@ public class SchemaGenerator
     private static String DEFINITIONS = "/definitions/";
 
     private static LoadingCache<JsonSchemaExternalType, JsonSchema> jsonSchemaCache = CacheBuilder.newBuilder()
-            .maximumSize(Integer.parseInt(System.getProperty("org.mule.tooling.jsonCache", "200"))).build(new CacheLoader<JsonSchemaExternalType, JsonSchema>() {
+            .maximumSize(Integer.parseInt(System.getProperty("yagi.json_cache_size", "200"))).build(new CacheLoader<JsonSchemaExternalType, JsonSchema>() {
 
                 @Override
                 public JsonSchema load(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException {
