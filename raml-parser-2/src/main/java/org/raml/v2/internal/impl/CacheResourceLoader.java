@@ -52,7 +52,6 @@ public class CacheResourceLoader implements ResourceLoaderExtended
             if (resources.containsKey(resourceName))
             {
                 final byte[] resourceByteArray = resources.get(resourceName);
-                System.out.println("CacheResourceLoader hits: " + String.valueOf(++hits));
                 return toInputStreamOrNull(resourceByteArray);
             }
 
