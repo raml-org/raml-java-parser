@@ -17,6 +17,7 @@ package org.raml.v2.internal.utils;
 
 import java.io.File;
 import java.net.URI;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -55,8 +56,7 @@ public class ResourcePathUtils
                 }
                 else
                 {
-                    File resultFile = new File(result);
-                    result = resultFile.toPath().normalize().toString();
+                    result = Paths.get(result).normalize().toString().replace("\\", "/");
                 }
             }
         }
