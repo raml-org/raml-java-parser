@@ -117,7 +117,8 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj)
+    {
         if (this == obj)
             return true;
         if (obj == null)
@@ -125,20 +126,26 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
         if (getClass() != obj.getClass())
             return false;
         AbstractExternalType other = (AbstractExternalType) obj;
-        if (internalFragment == null) {
+        if (internalFragment == null)
+        {
             if (other.internalFragment != null)
                 return false;
-        } else if (!internalFragment.equals(other.internalFragment))
+        }
+        else if (!internalFragment.equals(other.internalFragment))
             return false;
-        if (schemaPath == null) {
+        if (schemaPath == null)
+        {
             if (other.schemaPath != null)
                 return false;
-        } else if (!schemaPath.equals(other.schemaPath))
+        }
+        else if (!schemaPath.equals(other.schemaPath))
             return false;
-        if (schemaValue == null) {
+        if (schemaValue == null)
+        {
             if (other.schemaValue != null)
                 return false;
-        } else if (!schemaValue.equals(other.schemaValue))
+        }
+        else if (!schemaValue.equals(other.schemaValue))
             return false;
         return true;
     }
