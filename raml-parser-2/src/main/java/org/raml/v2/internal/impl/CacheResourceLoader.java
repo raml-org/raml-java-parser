@@ -31,7 +31,6 @@ public class CacheResourceLoader implements ResourceLoaderExtended
 
     private final Map<String, byte[]> resources = new HashMap<>();
     private ResourceLoader resourceLoader;
-    private int hits = 0;
 
     public CacheResourceLoader(ResourceLoader resourceLoader)
     {
@@ -55,7 +54,7 @@ public class CacheResourceLoader implements ResourceLoaderExtended
                 return toInputStreamOrNull(resourceByteArray);
             }
 
-            InputStream resource = null;
+            InputStream resource;
             if (resourceLoader instanceof ResourceLoaderExtended)
             {
                 resource = ((ResourceLoaderExtended) resourceLoader).fetchResource(resourceName, callback);

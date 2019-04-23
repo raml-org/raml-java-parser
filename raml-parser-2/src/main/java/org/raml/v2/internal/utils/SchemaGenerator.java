@@ -53,13 +53,17 @@ public class SchemaGenerator
     private static String DEFINITIONS = "/definitions/";
 
     private static LoadingCache<JsonSchemaExternalType, JsonSchema> jsonSchemaCache = CacheBuilder.newBuilder()
-            .maximumSize(Integer.parseInt(System.getProperty("yagi.json_cache_size", "200"))).build(new CacheLoader<JsonSchemaExternalType, JsonSchema>() {
+                                                                                                  .maximumSize(Integer.parseInt(System.getProperty("yagi.json_cache_size", "200")))
+                                                                                                  .build(new CacheLoader<JsonSchemaExternalType, JsonSchema>()
+                                                                                                  {
 
-                @Override
-                public JsonSchema load(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException {
-                    return loadJsonSchema(jsonTypeDefinition);
-                }
-            });
+                                                                                                      @Override
+                                                                                                      public JsonSchema load(JsonSchemaExternalType jsonTypeDefinition) throws IOException,
+                                                                                                              ProcessingException
+                                                                                                      {
+                                                                                                          return loadJsonSchema(jsonTypeDefinition);
+                                                                                                      }
+                                                                                                  });
 
     public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType xmlTypeDefinition) throws SAXException
     {
