@@ -104,4 +104,43 @@ public abstract class AbstractExternalType extends BaseType implements SchemaBas
             return "Schema";
         }
     }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((internalFragment == null) ? 0 : internalFragment.hashCode());
+        result = prime * result + ((schemaPath == null) ? 0 : schemaPath.hashCode());
+        result = prime * result + ((schemaValue == null) ? 0 : schemaValue.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbstractExternalType other = (AbstractExternalType) obj;
+        if (internalFragment == null) {
+            if (other.internalFragment != null)
+                return false;
+        } else if (!internalFragment.equals(other.internalFragment))
+            return false;
+        if (schemaPath == null) {
+            if (other.schemaPath != null)
+                return false;
+        } else if (!schemaPath.equals(other.schemaPath))
+            return false;
+        if (schemaValue == null) {
+            if (other.schemaValue != null)
+                return false;
+        } else if (!schemaValue.equals(other.schemaValue))
+            return false;
+        return true;
+    }
+
 }
