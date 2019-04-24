@@ -35,6 +35,7 @@ import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
 import org.raml.v2.internal.impl.commons.nodes.AnnotationNode;
 import org.raml.v2.internal.impl.commons.nodes.MethodNode;
 import org.raml.v2.internal.impl.commons.nodes.ResourceNode;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.Tag;
@@ -223,7 +224,7 @@ public class TckEmitter
     {
         if (node instanceof NullNode)
         {
-            node = new SYObjectNode(new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), null),
+            node = new SYObjectNode(new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), DumperOptions.FlowStyle.AUTO),
                     node.getStartPosition().getResourceLoader(),
                     node.getStartPosition().getPath());
         }
