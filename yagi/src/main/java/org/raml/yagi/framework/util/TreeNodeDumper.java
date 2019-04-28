@@ -15,6 +15,9 @@
  */
 package org.raml.yagi.framework.util;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.Objects;
@@ -32,19 +35,19 @@ public class TreeNodeDumper
 {
 
     private static final int TAB_SPACES = 4;
-    protected StringBuilder dump;
+    protected NodeAppender dump;
     private int indent = 0;
 
     private boolean dumpOn = true;
 
-    private TreeNodeDumper(StringBuilder dump)
+    public TreeNodeDumper(NodeAppender dump)
     {
         this.dump = dump;
     }
 
-    public TreeNodeDumper()
+    public TreeNodeDumper(Writer writer)
     {
-        this(new StringBuilder());
+        this(NodeAppenderFactory.stringBuilder(writer));
     }
 
     public String dump(Node node)
@@ -69,7 +72,8 @@ public class TreeNodeDumper
         indent();
         dumpChildren(node);
         dedent();
-        return dump.toString();
+        dump.dump();
+        return "";
     }
 
     protected void dumpChildren(Node node)
