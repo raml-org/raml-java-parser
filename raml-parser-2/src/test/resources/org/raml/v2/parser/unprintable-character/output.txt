@@ -1,2 +1,3 @@
-ErrorNode: "Underlying error while parsing YAML syntax: 'special characters are not allowed around:  JS parser should show an error like:
+ErrorNode: "Underlying error while parsing YAML syntax: 'unacceptable code point '' (0x80) special characters are not allowed
+in "'reader'", position 69 around:  JS parser should show an error like:
 #               {â[BAD: ]'" (Start: -1 , End: -1)
