@@ -93,8 +93,8 @@ public class RamlValidator
         }
 
         validRamlCount++;
-//         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
-//         System.err.println(ramlModelResult);
+        // RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
+        // System.err.println(ramlModelResult);
 
         if (dump)
         {
@@ -115,7 +115,8 @@ public class RamlValidator
         return pathname.isFile() && pathname.getName().endsWith(".raml");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         new RamlValidator(args).validate();
     }
 
