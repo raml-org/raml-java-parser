@@ -15,11 +15,17 @@
  */
 package org.raml.v2.internal.utils;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.github.fge.jackson.JsonLoader;
-import com.github.fge.jsonschema.core.exceptions.ProcessingException;
-import com.github.fge.jsonschema.main.JsonSchema;
-import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
@@ -32,22 +38,32 @@ import org.raml.v2.internal.utils.xml.XsdResourceResolver;
 import org.raml.yagi.framework.util.NodeUtils;
 import org.xml.sax.SAXException;
 
-import javax.annotation.Nullable;
-import javax.xml.XMLConstants;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.fge.jackson.JsonLoader;
+import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.github.fge.jsonschema.main.JsonSchema;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 public class SchemaGenerator
 {
     private static String DEFINITIONS = "/definitions/";
 
-    private static Map<JsonSchemaExternalType, JsonSchema> jsonSchemaCache = new ConcurrentHashMap<>();
+    private static LoadingCache<JsonSchemaExternalType, JsonSchema> jsonSchemaCache = CacheBuilder.newBuilder()
+                                                                                                  .maximumSize(Integer.parseInt(System.getProperty("yagi.json_cache_size", "200")))
+                                                                                                  .build(new CacheLoader<JsonSchemaExternalType, JsonSchema>()
+                                                                                                  {
+
+                                                                                                      @Override
+                                                                                                      public JsonSchema load(JsonSchemaExternalType jsonTypeDefinition) throws IOException,
+                                                                                                              ProcessingException
+                                                                                                      {
+                                                                                                          return loadJsonSchema(jsonTypeDefinition);
+                                                                                                      }
+                                                                                                  });
 
     public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType xmlTypeDefinition) throws SAXException
     {
@@ -57,16 +73,14 @@ public class SchemaGenerator
         return factory.newSchema(new StreamSource(new StringReader(xmlTypeDefinition.getSchemaValue()), includedResourceUri));
     }
 
-    public static JsonSchema generateJsonSchema(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException
+    private static JsonSchema loadJsonSchema(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException
     {
-        if (jsonSchemaCache.containsKey(jsonTypeDefinition))
-            return jsonSchemaCache.get(jsonTypeDefinition);
-
         final JsonSchema result;
         String includedResourceUri = resolveResourceUriIfIncluded(jsonTypeDefinition);
 
         JsonNode jsonSchema = JsonLoader.fromString(jsonTypeDefinition.getSchemaValue());
         JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+
         if (jsonTypeDefinition.getInternalFragment() != null)
         {
             if (includedResourceUri != null)
@@ -89,9 +103,26 @@ public class SchemaGenerator
                 result = factory.getJsonSchema(jsonSchema);
             }
         }
-
-        jsonSchemaCache.put(jsonTypeDefinition, result);
         return result;
+    }
+
+    public static JsonSchema generateJsonSchema(JsonSchemaExternalType jsonTypeDefinition) throws IOException, ProcessingException
+    {
+        try
+        {
+            return jsonSchemaCache.get(jsonTypeDefinition);
+        }
+        catch (ExecutionException e)
+        {
+            if (e.getCause() instanceof JsonParseException)
+                throw (JsonParseException) e.getCause();
+            else if (e.getCause() instanceof IOException)
+            {
+                throw (IOException) e.getCause();
+            }
+            else
+                throw new ProcessingException(e.getMessage(), e.getCause());
+        }
     }
 
     @Nullable

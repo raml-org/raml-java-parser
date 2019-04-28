@@ -15,64 +15,55 @@
  */
 package org.raml.yagi.framework.util;
 
-import java.io.PrintStream;
+import org.apache.commons.lang.StringUtils;
+import org.raml.yagi.framework.nodes.*;
+
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.IdentityHashMap;
-import java.util.Objects;
-
-import org.apache.commons.lang.StringUtils;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.Position;
-import org.raml.yagi.framework.nodes.ReferenceNode;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
-import org.raml.yagi.framework.nodes.StringNode;
 
 
-public class TreeNodeDumper
+public class FasterTreeNodeDumper
 {
 
     private static final int TAB_SPACES = 4;
-    protected NodeAppender dump;
+    protected PrintWriter dump;
     private int indent = 0;
-
     private boolean dumpOn = true;
 
-    public TreeNodeDumper(NodeAppender dump)
+    private FasterTreeNodeDumper(PrintWriter dump)
     {
         this.dump = dump;
     }
 
-    public TreeNodeDumper(Writer writer)
+    public FasterTreeNodeDumper()
     {
-        this(NodeAppenderFactory.stringBuilder(writer));
+        this(new PrintWriter(new OutputStreamWriter(System.out)));
     }
 
     public String dump(Node node)
     {
         printIndent();
         dumpNode(node);
-        dump.append(" (");
-        dump.append("Start: ").append(node.getStartPosition().getIndex());
-        dump.append(" , End: ").append(node.getEndPosition().getIndex());
+        dump.print(" (");
+        dump.print("Start: " + node.getStartPosition().getIndex());
+        dump.print(" , End: " + node.getEndPosition().getIndex());
         if (node.getStartPosition().getIndex() != Position.UNKNOWN &&
             node.getEndPosition().getIndex() != Position.UNKNOWN && dumpOn)
         {
-            dump.append(", On: ").append(node.getStartPosition().getPath());
+            dump.print(", On: " + node.getStartPosition().getPath());
         }
         if (node.getSource() != null)
         {
-            dump.append(", Source: ");
-            dump.append(node.getSource().getClass().getSimpleName());
+            dump.print(", Source: ");
+            dump.print(node.getSource().getClass().getSimpleName());
         }
-        dump.append(")");
-        dump.append("\n");
+        dump.print(")");
+        dump.print("\n");
         indent();
         dumpChildren(node);
         dedent();
-        dump.dump();
         return "";
     }
 
@@ -84,7 +75,7 @@ public class TreeNodeDumper
         }
     }
 
-    public TreeNodeDumper dumpOn(boolean dumpOn)
+    public FasterTreeNodeDumper dumpOn(boolean dumpOn)
     {
         this.dumpOn = dumpOn;
         return this;
@@ -105,11 +96,11 @@ public class TreeNodeDumper
         }
         else if (node instanceof StringNode)
         {
-            dump.append(": \"").append(((StringNode) node).getValue()).append("\"");
+            dump.append(": \"").append(((StringNode) node).getValue().replace("\n", "\\n")).append("\"");
         }
         else if (node instanceof SimpleTypeNode)
         {
-            dump.append(": ").append(((SimpleTypeNode) node).getValue());
+            dump.append(": ").print(((SimpleTypeNode) node).getValue());
         }
         else if (node instanceof ErrorNode)
         {
@@ -121,11 +112,11 @@ public class TreeNodeDumper
     {
         final ReferenceNode referenceNode = node;
         final Node refNode = referenceNode.getRefNode();
-        dump.append(" ").append(referenceNode.getRefName()).append(" -> {").append(refNode == null ? "null" : refNode.getClass().getSimpleName());
+        dump.print(" " + referenceNode.getRefName() + " -> {" + ((refNode == null ? "null" : refNode.getClass().getSimpleName())));
         if (refNode != null)
         {
-            dump.append(" RefStart: ").append(refNode.getStartPosition().getIndex());
-            dump.append(" , RefEnd: ").append(refNode.getEndPosition().getIndex());
+            dump.append(" RefStart: " + refNode.getStartPosition().getIndex());
+            dump.append(" , RefEnd: " + refNode.getEndPosition().getIndex());
         }
         dump.append("}");
     }

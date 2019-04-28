@@ -18,6 +18,7 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import com.google.common.collect.FluentIterable;
 import org.raml.v2.internal.impl.commons.grammar.BaseRamlGrammar;
 import org.raml.v2.internal.impl.commons.nodes.BaseResourceTypeRefNode;
 import org.raml.v2.internal.impl.commons.nodes.BaseTraitRefNode;
@@ -87,6 +88,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
             return node;
         }
 
+
         // apply method and resource traits if defined
         checkTraits(resourceNode, resourceNode);
 
@@ -94,9 +96,13 @@ public class ResourceTypesTraitsTransformer implements Transformer
         ReferenceNode resourceTypeReference = findResourceTypeReference(resourceNode);
         if (resourceTypeReference != null)
         {
-            applyResourceType(resourceNode, resourceTypeReference, resourceNode);
-        }
+            List<KeyValueNode> typeNodes = new ArrayList<>();
+            typeNodes.add(resourceNode);
+            typeNodes.add((KeyValueNode) resourceTypeReference.getRefNode());
+            findTheStuff((ResourceTypeNode) resourceTypeReference.getRefNode(), typeNodes);
 
+            applyResourceType(resourceNode, resourceTypeReference, resourceNode, typeNodes);
+        }
         mergedResources.add(resourceNode);
         return node;
     }
@@ -119,14 +125,16 @@ public class ResourceTypesTraitsTransformer implements Transformer
         }
     }
 
-    private void applyResourceType(KeyValueNode targetNode, ReferenceNode resourceTypeReference, ResourceNode baseResourceNode)
+    private void applyResourceType(KeyValueNode targetNode, ReferenceNode resourceTypeReference, ResourceNode baseResourceNode, List<KeyValueNode> typeNodes)
     {
+
         ResourceTypeNode refNode = (ResourceTypeNode) resourceTypeReference.getRefNode();
         if (refNode.getValue() instanceof NullNode)
         {
             // empty resource type
             return;
         }
+
         ResourceTypeNode templateNode = refNode.copy();
         templateNode.setParent(refNode.getParent());
 
@@ -154,7 +162,7 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
         grammarPhase.apply(templateNode.getValue());
 
-        removeUnimplementedOptionalMethods(templateNode, baseResourceNode);
+        removeUnimplementedOptionalMethods(templateNode, typeNodes);
 
         boolean success = applyPhases(templateNode, referenceResolution);
 
@@ -167,14 +175,26 @@ public class ResourceTypesTraitsTransformer implements Transformer
             ReferenceNode parentTypeReference = findResourceTypeReference(templateNode);
             if (parentTypeReference != null)
             {
-                applyResourceType(templateNode, parentTypeReference, baseResourceNode);
+                applyResourceType(templateNode, parentTypeReference, baseResourceNode, typeNodes);
             }
         }
 
         merge(targetNode.getValue(), templateNode.getValue());
     }
 
-    private void removeUnimplementedOptionalMethods(ResourceTypeNode templateNode, ResourceNode baseResourceNode)
+    private void findTheStuff(ResourceTypeNode templateNode, List<KeyValueNode> nodes)
+    {
+
+        ReferenceNode parentTypeReference = findResourceTypeReference(templateNode);
+        if (parentTypeReference != null)
+        {
+            ResourceTypeNode resourceTypeNode = (ResourceTypeNode) parentTypeReference.getRefNode();
+            nodes.add(resourceTypeNode);
+            findTheStuff(resourceTypeNode, nodes);
+        }
+    }
+
+    private void removeUnimplementedOptionalMethods(ResourceTypeNode templateNode, List<KeyValueNode> typeNodes)
     {
         final List<MethodNode> unimplementedMethods = new ArrayList<>();
         for (MethodNode node : findMethodNodes(templateNode))
@@ -184,8 +204,24 @@ public class ResourceTypesTraitsTransformer implements Transformer
                 continue;
 
             key = key.substring(0, key.length() - 1);
-            Node methodInTemplateNode = NodeSelector.selectFrom(NodeSelector.encodePath(key), baseResourceNode.getValue());
-            if (methodInTemplateNode == null)
+
+            boolean found = false;
+            for (KeyValueNode typeNode : typeNodes)
+            {
+
+                if (typeNode.getKey().toString().equals(templateNode.getKey().toString()))
+                {
+                    break;
+                }
+
+                Node methodInTemplateNode = NodeSelector.selectFrom(NodeSelector.encodePath(key), typeNode.getValue());
+                if (methodInTemplateNode != null)
+                {
+                    found = true;
+                }
+            }
+
+            if (!found)
                 unimplementedMethods.add(node);
         }
 
