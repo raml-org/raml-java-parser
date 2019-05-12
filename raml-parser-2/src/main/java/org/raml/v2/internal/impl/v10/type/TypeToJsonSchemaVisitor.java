@@ -15,6 +15,8 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import java.awt.geom.Rectangle2D;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
@@ -199,7 +201,20 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     @Override
     public JsonObjectBuilder visitNumber(NumberResolvedType numberTypeDefinition)
     {
-        return this.factory.createObjectBuilder().add(TYPE, NUMBER);
+        if (numberTypeDefinition.getEnums().isEmpty())
+        {
+            return this.factory.createObjectBuilder().add(TYPE, NUMBER);
+        }
+        else
+        {
+            JsonArrayBuilder builder = factory.createArrayBuilder();
+            for (Number enumValue : numberTypeDefinition.getEnums())
+            {
+
+                builder.add(new BigDecimal(enumValue.toString()));
+            }
+            return this.factory.createObjectBuilder().add(TYPE, NUMBER).add("enum", builder);
+        }
     }
 
     @Override
