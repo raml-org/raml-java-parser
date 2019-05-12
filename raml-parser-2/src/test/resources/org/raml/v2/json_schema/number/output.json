@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
@@ -7,9 +6,31 @@
       "properties": {
         "age": {
           "type": "number"
+        },
+        "children": {
+          "type": "number",
+          "enum": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "averageAgeOfChildren": {
+          "type": "number",
+          "enum": [
+            6,
+            6.5,
+            7
+          ]
         }
       },
-      "required":["age"]
+      "required": [
+        "age",
+        "children",
+        "averageAgeOfChildren"
+      ]
     }
-  }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
 }

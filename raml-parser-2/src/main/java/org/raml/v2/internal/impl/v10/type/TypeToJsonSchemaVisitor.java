@@ -15,6 +15,9 @@
  */
 package org.raml.v2.internal.impl.v10.type;
 
+import java.awt.geom.Rectangle2D;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
@@ -72,7 +75,19 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     @Override
     public JsonObjectBuilder visitString(StringResolvedType stringTypeDefinition)
     {
-        return this.factory.createObjectBuilder().add(TYPE, STRING);
+        if (stringTypeDefinition.getEnums().isEmpty())
+        {
+            return this.factory.createObjectBuilder().add(TYPE, STRING);
+        }
+        else
+        {
+            JsonArrayBuilder builder = factory.createArrayBuilder();
+            for (String enumValue : stringTypeDefinition.getEnums())
+            {
+                builder.add(enumValue);
+            }
+            return this.factory.createObjectBuilder().add(TYPE, STRING).add("enum", builder);
+        }
     }
 
     @Override
@@ -149,19 +164,57 @@ public class TypeToJsonSchemaVisitor implements TypeVisitor<JsonObjectBuilder>
     @Override
     public JsonObjectBuilder visitBoolean(BooleanResolvedType booleanTypeDefinition)
     {
-        return this.factory.createObjectBuilder().add(TYPE, BOOLEAN);
+
+        if (booleanTypeDefinition.getEnums().isEmpty())
+        {
+            return this.factory.createObjectBuilder().add(TYPE, BOOLEAN);
+        }
+        else
+        {
+            JsonArrayBuilder builder = factory.createArrayBuilder();
+            for (boolean enumValue : booleanTypeDefinition.getEnums())
+            {
+                builder.add(enumValue);
+            }
+            return this.factory.createObjectBuilder().add(TYPE, BOOLEAN).add("enum", builder);
+        }
     }
 
     @Override
     public JsonObjectBuilder visitInteger(IntegerResolvedType integerTypeDefinition)
     {
-        return this.factory.createObjectBuilder().add(TYPE, INTEGER);
+        if (integerTypeDefinition.getEnums().isEmpty())
+        {
+            return this.factory.createObjectBuilder().add(TYPE, INTEGER);
+        }
+        else
+        {
+            JsonArrayBuilder builder = factory.createArrayBuilder();
+            for (Number enumValue : integerTypeDefinition.getEnums())
+            {
+                builder.add((Long) enumValue);
+            }
+            return this.factory.createObjectBuilder().add(TYPE, INTEGER).add("enum", builder);
+        }
     }
 
     @Override
     public JsonObjectBuilder visitNumber(NumberResolvedType numberTypeDefinition)
     {
-        return this.factory.createObjectBuilder().add(TYPE, NUMBER);
+        if (numberTypeDefinition.getEnums().isEmpty())
+        {
+            return this.factory.createObjectBuilder().add(TYPE, NUMBER);
+        }
+        else
+        {
+            JsonArrayBuilder builder = factory.createArrayBuilder();
+            for (Number enumValue : numberTypeDefinition.getEnums())
+            {
+
+                builder.add(new BigDecimal(enumValue.toString()));
+            }
+            return this.factory.createObjectBuilder().add(TYPE, NUMBER).add("enum", builder);
+        }
     }
 
     @Override

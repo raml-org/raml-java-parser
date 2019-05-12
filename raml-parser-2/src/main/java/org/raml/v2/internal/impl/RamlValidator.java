@@ -20,6 +20,8 @@ import java.io.FileFilter;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.raml.v2.api.RamlModelBuilder;
+import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.internal.impl.emitter.tck.TckEmitter;
 import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -93,8 +95,9 @@ public class RamlValidator
         }
 
         validRamlCount++;
-        // RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
-        // System.err.println(ramlModelResult);
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
+        System.err.println(ramlModelResult);
+        String jsonSchema = ramlModelResult.getApiV10().types().get(0).toJsonSchema();
 
         if (dump)
         {
