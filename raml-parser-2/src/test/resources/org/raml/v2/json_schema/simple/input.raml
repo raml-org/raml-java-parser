@@ -5,3 +5,12 @@ types:
     type: object
     properties:
       name: string
+      strengths:
+        type: string
+        enum: [ "people", "code"]
+      legcount:
+        type: integer
+        enum: [2,4,6,8]
+      exists:
+        type: boolean
+        enum: [true]

@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "$ref": "#/definitions/root",
   "definitions": {
     "root": {
@@ -7,9 +6,37 @@
       "properties": {
         "name": {
           "type": "string"
+        },
+        "strengths": {
+          "type": "string",
+          "enum": [
+            "people",
+            "code"
+          ]
+        },
+        "legcount": {
+          "type": "integer",
+          "enum": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        "exists": {
+          "type": "boolean",
+          "enum": [
+            true
+          ]
         }
       },
-      "required":["name"]
+      "required": [
+        "name",
+        "strengths",
+        "legcount",
+        "exists"
+      ]
     }
-  }
+  },
+  "$schema": "http://json-schema.org/draft-04/schema#"
 }
