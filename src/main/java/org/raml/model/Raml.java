@@ -27,7 +27,9 @@ import org.raml.parser.annotation.Mapping;
 import org.raml.parser.annotation.Scalar;
 import org.raml.parser.annotation.Sequence;
 import org.raml.parser.builder.GlobalSchemaSequenceTupleBuilder;
+import org.raml.parser.builder.ProtocolBuilder;
 import org.raml.parser.resolver.ResourceHandler;
+import org.raml.parser.rule.ProtocolRule;
 import org.raml.parser.rule.SecurityReferenceSequenceRule;
 
 
@@ -45,7 +47,7 @@ public class Raml implements Serializable
     @Scalar(rule = org.raml.parser.rule.BaseUriRule.class)
     private String baseUri;
 
-    @Sequence
+    @Sequence(rule = ProtocolRule.class, builder = ProtocolBuilder.class)
     private List<Protocol> protocols = new ArrayList<Protocol>();
 
     @Mapping(rule = org.raml.parser.rule.UriParametersRule.class)

@@ -1,0 +1,6 @@
+#%RAML 0.8
+title: example
+version: v1
+baseUri: http://api.com/extended
+#protocols: HTTP
+protocols: [HTTPS,HTTP]

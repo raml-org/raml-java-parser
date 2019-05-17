@@ -33,9 +33,20 @@ import org.raml.parser.builder.AbstractRamlTestCase;
 import org.raml.parser.rule.ValidationResult;
 import org.raml.parser.tagresolver.ContextPath;
 import org.raml.parser.visitor.IncludeInfo;
+import org.raml.parser.visitor.RamlDocumentBuilder;
 
 public class ValidationTestCase extends AbstractRamlTestCase
 {
+
+    @Test
+    public void protocolNotAsAList()
+    {
+        List<ValidationResult> validationResults = validateRaml("org/raml/validation/protocol-as-not-a-list.yaml");
+        assertThat(validationResults.size(), is(0));
+
+        Raml raml = new RamlDocumentBuilder().build("org/raml/validation/protocol-as-not-a-list.yaml");
+        System.err.println(raml.getProtocols());
+    }
 
     @Test
     public void sequenceTemplateExpected()
