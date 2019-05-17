@@ -1,6 +1,20 @@
+/*
+ * Copyright 2016 (c) MuleSoft, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
 package org.raml.parser.rule;
 
-import org.raml.model.Protocol;
 import org.raml.parser.completion.DefaultSuggestion;
 import org.raml.parser.completion.Suggestion;
 import org.raml.parser.resolver.TupleHandler;
@@ -8,6 +22,7 @@ import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,10 +37,6 @@ public class ProtocolTupleHandler implements TupleHandler {
     @Override
     public List<Suggestion> getSuggestions() {
 
-        ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
-        for (Protocol value : Protocol.values()) {
-            suggestions.add(new DefaultSuggestion(value.name().toLowerCase()));
-        }
-        return suggestions;
+        return new ArrayList<Suggestion>(Collections.singletonList(new DefaultSuggestion("protocols")));
     }
 }

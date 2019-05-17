@@ -3,4 +3,4 @@ title: example
 version: v1
 baseUri: http://api.com/extended
 #protocols: HTTP
-protocols: HTTP
+protocols: [HTTP, HTTPS]
