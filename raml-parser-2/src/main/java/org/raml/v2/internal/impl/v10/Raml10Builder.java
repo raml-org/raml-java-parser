@@ -65,10 +65,8 @@ import org.raml.yagi.framework.phase.TransformationPhase;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.raml.v2.api.model.v10.RamlFragment.Default;
@@ -82,7 +80,6 @@ public class Raml10Builder
 {
 
     private final Set<String> openedFiles = new HashSet<>();
-    private final Map<String, Node> alreadyBuilt = new HashMap<>();
 
     public Node build(String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
@@ -91,12 +88,6 @@ public class Raml10Builder
 
     public Node build(Node contextNode, String stringContent, RamlFragment fragment, ResourceLoader resourceLoader, String resourceLocation, int maxPhaseNumber) throws IOException
     {
-        String key = resourceLocation + String.valueOf(stringContent.hashCode());
-        if (alreadyBuilt.containsKey(key))
-        {
-            return alreadyBuilt.get(key);
-        }
-
         if (openedFiles.contains(resourceLocation))
         {
 
@@ -126,7 +117,6 @@ public class Raml10Builder
                 rootNode = applyExtension(rootNode, resourceLoader, resourceLocation, fragment);
             }
             rootNode.annotate(new RamlVersionAnnotation(RAML_10));
-            alreadyBuilt.put(key, rootNode);
             return rootNode;
         }
         finally
