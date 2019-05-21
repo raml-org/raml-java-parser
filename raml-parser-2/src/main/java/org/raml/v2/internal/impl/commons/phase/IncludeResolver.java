@@ -60,7 +60,7 @@ public class IncludeResolver implements Transformer, ResourceUriCallback
     public Node transform(Node node)
     {
         final SYIncludeNode includeNode = (SYIncludeNode) node;
-        String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getPath(), includeNode.getIncludePath());
+        final String resourcePath = ResourcePathUtils.toAbsoluteLocation(node.getStartPosition().getPath(), includeNode.getIncludePath());
         InputStream inputStream = null;
 
         try

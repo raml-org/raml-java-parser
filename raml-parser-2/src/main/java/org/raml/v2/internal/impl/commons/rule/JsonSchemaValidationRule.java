@@ -52,6 +52,7 @@ public class JsonSchemaValidationRule extends Rule
     public static final String JSON_SCHEMA_FAIL_ON_WARNING_KEY = "raml.json_schema.fail_on_warning";
     private final boolean FAIL_ON_WARNING = Boolean.valueOf(
                                                    System.getProperty(JSON_SCHEMA_FAIL_ON_WARNING_KEY, "false"));
+    private JsonSchemaExternalType node;
 
     private JsonSchema schema;
 
@@ -59,6 +60,7 @@ public class JsonSchemaValidationRule extends Rule
     {
         try
         {
+            this.node = schemaNode;
             this.schema = SchemaGenerator.generateJsonSchema(schemaNode);
         }
         catch (Exception e)

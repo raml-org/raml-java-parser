@@ -95,9 +95,10 @@ public class RamlValidator
         }
 
         validRamlCount++;
+/*
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
         System.err.println(ramlModelResult);
-        String jsonSchema = ramlModelResult.getApiV10().types().get(0).toJsonSchema();
+*/
 
         if (dump)
         {
