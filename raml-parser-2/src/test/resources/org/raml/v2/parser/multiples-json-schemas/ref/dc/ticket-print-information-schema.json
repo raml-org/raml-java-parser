@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Representation of the ticket information",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ticketRequestId",
+    "responseCode"
+  ],
+  "properties": {
+    "ticketRequestId": {
+      "type": "string",
+      "description": "The ticket request id",
+      "minimum": 32,
+      "maximum": 32
+    },
+    "responseCode": {
+      "type": "integer",
+      "description": "The response code",
+      "minimum": 0,
+      "maximum": 99999
+    }
+  }
+}
+         

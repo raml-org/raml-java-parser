@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of shipment attributes.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"supplierNumber"
+	],
+	"properties": {
+		"supplierNumber": {
+			"type": "integer",
+			"description": "The merchandise supplier number",
+			"minimum": 0,
+			"maximum": 99999
+		},
+		"creationTimestamp": {
+			"description": "User defined timestamp",
+			"type": "string",
+			"format": "datetime"
+		}
+	}
+}
