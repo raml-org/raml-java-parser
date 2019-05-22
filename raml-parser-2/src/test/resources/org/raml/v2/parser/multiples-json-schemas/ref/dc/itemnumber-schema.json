@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of a itemnumber.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"item"
+	],
+	"properties": {
+		"item": {
+			"type": "integer",
+			"description": "The item number",
+			"minimum": 19,
+			"maximum": 9999999
+		},
+		"creationTimestamp": {
+			"description": "User defined timestamp",
+			"type": "string",
+			"format": "datetime"
+		}
+	}
+}

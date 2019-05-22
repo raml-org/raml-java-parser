@@ -1,0 +1,31 @@
+#%RAML 1.0
+version: api
+title: test
+
+
+/dc:
+  /itRequests:
+    post:
+      body:
+        application/json:
+          example: !include ref/dc/itemnumber-example.json
+          type: !include ref/dc/itemnumber-schema.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ref/dc/ticket-print-information-example.json
+              type: !include ref/dc/ticket-print-information-schema.json
+
+  /sTRequests:
+    post:
+      body:
+        application/json:
+          example: !include ref/dc/shipment-ticket-request-example.json
+          type: !include ref/dc/shipment-ticket-request-schema.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include ref/dc/ticket-print-information-example.json
+              type: !include ref/dc/ticket-print-information-schema.json
