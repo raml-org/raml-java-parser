@@ -1,0 +1,22 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"description": "Representation of an ticket request status update",
+	"additionalProperties": false,
+	"required": [
+		"status"
+	],
+	"properties": {
+		"status": {
+			"type": "string",
+			"description": "The status of the ticket request",
+			"enum": [
+				"Created",
+				"Confirmed",
+				"Cancelled",
+				"ProductionStarted",
+				"Completed"
+			]
+		}
+	}
+}

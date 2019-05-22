@@ -1,0 +1,3 @@
+{
+  "message" : "TODO you need to replace this generated setpayload by #[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)] in the api.xml"
+}

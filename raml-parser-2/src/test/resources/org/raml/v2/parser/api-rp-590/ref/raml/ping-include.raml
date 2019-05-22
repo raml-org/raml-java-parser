@@ -1,0 +1,8 @@
+  description: This generic "resource" can be used to check the "is-alive" state of the application.
+  get:
+    description: Answers the current version of the deployed Mule application, possibly a value like "2018.6.1". Please leave the example below - ${muleapp.version.info} - as it is in order to set the correct payload in case the flows are regenerated from this RAML file.
+    responses:
+       200:
+         body:
+           text/plain:
+             example: ${muleapp.version.info}

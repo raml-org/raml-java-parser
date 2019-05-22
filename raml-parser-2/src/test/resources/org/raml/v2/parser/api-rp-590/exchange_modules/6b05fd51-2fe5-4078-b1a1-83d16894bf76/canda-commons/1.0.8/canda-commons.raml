@@ -1,0 +1,57 @@
+#%RAML 1.0 Library
+usage: |
+      This library defines some common concepts to be used throughout C&A's API specifications.
+
+traits:
+  client-id-required:
+    usage: Apply this trait to every API/resource that is protected by "client-id enforcement".
+    description: Access requires client credentials (ID and secret).
+
+resourceTypes: 
+  ping:
+    description: |
+      Answers the current version of the deployed Mule application, possibly a value like "2018.6.1". Your implementation should always return **${muleapp.version.info}**.
+    get:
+      responses: 
+        200:
+          body:
+            text/plain:
+              example: ${muleapp.version.info}
+  logLevel:
+      description: Change the severity of a specific logger.
+      uriParameters:
+        loggerName:
+          description: Name of the logger whose level is to be changed.
+          type: string
+          required: true
+          example: "org.apache"
+      put:
+        body:
+          application/json:
+            example: !include ref/log-levels-example.json
+            type: !include ref/log-levels-schema.json
+        responses:
+          200:
+            body:
+              application/json:
+                description: |
+                    Add 
+                    "#[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)]" 
+                    to your generated set-payload flow element.
+                example: !include ref/log-levels-response-example.json
+                type: !include ref/log-levels-response-schema.json
+
+securitySchemes:
+  basicAuth:
+    displayName: Basic Authentication
+    description: This API supports Basic Authentication. The client has to provide an "Authorization" header with valid credentials.
+    type: Basic Authentication
+    describedBy:
+      headers:
+        Authorization:
+          description: Used to send valid credentials.
+          type: string
+          example: Basic ax5Gdza5OnJpZnG4Z2ok
+      responses:
+        401:
+          description: Credentials are missing or could not be validated by the server.

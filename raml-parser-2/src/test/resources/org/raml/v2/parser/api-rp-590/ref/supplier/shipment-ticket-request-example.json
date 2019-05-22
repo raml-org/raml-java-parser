@@ -1,0 +1,16 @@
+{
+	"supplierNumber": 99999,
+	"classificationNumber": 999,
+	"codeNumber": 99,
+	"serialNumber": 999,
+	"shipmentNumber": 999,
+	"masterCompanyIsoCodes": [
+		"DE",
+		"NL",
+		"FR"
+	],
+	"allMasterCompanies": false,
+	"requestedTicketType": 105,
+	"ticketRequestReason": "FirstRequest",
+	"creationTimestamp": "2018-12-31T23:59:59.999Z"
+}

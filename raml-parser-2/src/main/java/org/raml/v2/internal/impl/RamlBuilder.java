@@ -157,60 +157,25 @@ public class RamlBuilder
     private ResourceLoader addRootRamlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
     {
 
-        RootRamlFileResourceLoader rootRamlFileResourceLoader = null;
         File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
         if (parentFile != null)
         {
-            rootRamlFileResourceLoader = new RootRamlFileResourceLoader(parentFile);
+        	resourceLoader = new CompositeResourceLoader(new RootRamlFileResourceLoader(parentFile), resourceLoader);
         }
-        RootRamlUrlResourceLoader rootRamlUrlResourceLoader = null;
         String rootRamlPath = getRootPath(resourceLocation);
         if (!Strings.isNullOrEmpty(rootRamlPath))
         {
-            rootRamlUrlResourceLoader = new RootRamlUrlResourceLoader(rootRamlPath);
+        	resourceLoader = new CompositeResourceLoader(new RootRamlUrlResourceLoader(rootRamlPath), resourceLoader);
         }
-        CacheResourceLoader cacheResourceLoader = null;
-        if (rootRamlFileResourceLoader != null && rootRamlUrlResourceLoader != null)
-        {
-            cacheResourceLoader = new CacheResourceLoader(new CompositeResourceLoader(rootRamlFileResourceLoader, rootRamlUrlResourceLoader, resourceLoader));
+        CacheResourceLoader cacheResourceLoader;
+        if (parentFile!=null) {
+        	cacheResourceLoader = new CacheResourceLoader(resourceLoader, parentFile);
+        } else {
+        	cacheResourceLoader = new CacheResourceLoader(resourceLoader);
         }
-        else if (rootRamlFileResourceLoader != null)
-        {
-            cacheResourceLoader = new CacheResourceLoader(new CompositeResourceLoader(rootRamlFileResourceLoader, resourceLoader));
-        }
-        else if (rootRamlUrlResourceLoader != null)
-        {
-            cacheResourceLoader = new CacheResourceLoader(new CompositeResourceLoader(rootRamlUrlResourceLoader, resourceLoader));
-        }
-        else
-        {
-            cacheResourceLoader = new CacheResourceLoader(resourceLoader);
-        }
-
+  
         this.resourceLoader = cacheResourceLoader;
         return this.resourceLoader;
-    }
-
-    private ResourceLoader addRootRamlFileResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
-    {
-        File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
-        if (parentFile != null)
-        {
-            resourceLoader = new CompositeResourceLoader(new RootRamlFileResourceLoader(parentFile), resourceLoader);
-        }
-
-        return resourceLoader;
-    }
-
-    private ResourceLoader addRootRamlUrlResourceLoader(ResourceLoader resourceLoader, String resourceLocation)
-    {
-        String rootRamlPath = getRootPath(resourceLocation);
-        if (!Strings.isNullOrEmpty(rootRamlPath))
-        {
-            resourceLoader = new CompositeResourceLoader(new RootRamlUrlResourceLoader(rootRamlPath), resourceLoader);
-        }
-
-        return resourceLoader;
     }
 
     private String getRootPath(String rootRamlFileUrl)

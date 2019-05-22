@@ -16,6 +16,7 @@
 package org.raml.v2.internal.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -25,16 +26,25 @@ import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.api.loader.ResourceLoaderExtended;
 import org.raml.v2.api.loader.ResourceUriCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CacheResourceLoader implements ResourceLoaderExtended
 {
-
+	private final Logger logger = LoggerFactory.getLogger(getClass());
     private final Map<String, byte[]> resources = new HashMap<>();
     private ResourceLoader resourceLoader;
+    private File parentFile;
 
     public CacheResourceLoader(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
+    }
+    
+    public CacheResourceLoader(ResourceLoader resourceLoader, File parentFile)
+    {
+        this.resourceLoader = resourceLoader;
+        this.parentFile = parentFile;
     }
 
     @Override
@@ -51,6 +61,14 @@ public class CacheResourceLoader implements ResourceLoaderExtended
             if (resources.containsKey(resourceName))
             {
                 final byte[] resourceByteArray = resources.get(resourceName);
+                if (callback != null)
+                {
+                    if(parentFile != null) {
+						File includedFile = new File(parentFile, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
+					    logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentFile);
+					    callback.onResourceFound(includedFile.toURI());
+					}
+                }
                 return toInputStreamOrNull(resourceByteArray);
             }
 

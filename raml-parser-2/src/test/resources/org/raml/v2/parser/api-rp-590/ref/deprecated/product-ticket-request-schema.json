@@ -1,0 +1,43 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of a ticket request for a single company based on the usim of the product.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"usim",
+		"masterCompanyIsoCode"
+	],
+	"properties": {
+		"usim": {
+			"type": "integer",
+			"description": "the unique style identification mark id",
+			"minimum": 0,
+			"maximum": 9999999999
+		},
+		"masterCompanyIsoCode": {
+			"type": "string",
+			"description": "A country iso code",
+			"minLength": 2,
+			"maxLength": 2,
+			"pattern": "^[A-Z]{2}$",
+			"examples": [
+				"DE"
+			]
+		},
+		"requestedTicketType": {
+			"type": "integer",
+			"description": "the requested ticket type",
+			"minimum": 0,
+			"maximum": 32767
+		},
+		"barcodeWithSellingPrice": {
+			"type": "boolean",
+			"description": "This flag indicates if the selling price should be printed within the barcode"
+		},
+		"creationTimestamp": {
+			"description": "user defined timestamp at which the request was created by the ticket provider",
+			"type": "string",
+			"format": "datetime"
+		}
+	}
+}

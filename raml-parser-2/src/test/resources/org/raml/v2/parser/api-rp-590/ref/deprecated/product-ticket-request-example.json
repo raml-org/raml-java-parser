@@ -1,0 +1,7 @@
+{
+	"usim": 1234567890,
+	"masterCompanyIsoCode": "DE",
+	"requestedTicketType": 1,
+	"barcodeWithSellingPrice": true,
+	"creationTimestamp": "2018-12-31T23:59:59.999Z"
+}

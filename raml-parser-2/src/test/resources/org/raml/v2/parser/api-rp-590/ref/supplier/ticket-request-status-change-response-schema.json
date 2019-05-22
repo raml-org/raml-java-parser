@@ -1,0 +1,33 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of the response from an ticket request status update",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"responseCode",
+		"responseType"
+	],
+	"properties": {
+		"responseCode": {
+			"type": "integer",
+			"description": "The response code from the validation process",
+			"minimum": 0,
+			"maximum": 99999
+		},
+		"responseType": {
+			"type": "string",
+			"description": "The response type from the validation process ('Info' indicates that there were no issues during processing)",
+			"enum": [
+				"Info",
+				"Warning",
+				"Error"
+			]
+		},
+		"responseMessage": {
+			"type": "string",
+			"description": "The detailed response message from the validation process",
+			"minLenght": 1,
+			"maxLenght": 500
+		}
+	}
+}

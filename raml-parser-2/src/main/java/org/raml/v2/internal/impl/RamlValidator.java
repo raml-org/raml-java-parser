@@ -95,10 +95,9 @@ public class RamlValidator
         }
 
         validRamlCount++;
-/*
-        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
-        System.err.println(ramlModelResult);
-*/
+        /*
+         * RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile); System.err.println(ramlModelResult);
+         */
 
         if (dump)
         {

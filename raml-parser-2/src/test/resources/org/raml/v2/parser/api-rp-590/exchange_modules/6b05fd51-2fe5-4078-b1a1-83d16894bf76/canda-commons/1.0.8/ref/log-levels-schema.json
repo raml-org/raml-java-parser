@@ -1,0 +1,30 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"title": "change  a certain log level",
+	"properties": {
+		"newLevel": {
+			"type": "string",
+			"description": "The new log level to be set.",
+			"enum": [
+				"OFF",
+				"ERROR",
+				"WARN",
+				"INFO",
+				"DEBUG",
+				"TRACE"
+			]
+		},
+		"createFlag": {
+			"description": "Optional parameter to create a logger in case it does not exist (to avoid typo errors for existing loggers).",
+			"type": "boolean"
+		},
+		"hoursToReset": {
+			"description": "Delay in hours after which time the logger is set back to its original log level.",
+			"type": "integer"
+		}
+	},
+	"required": [
+		"newLevel"
+	]
+}

@@ -1,0 +1,61 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of a ticket request for multiple companies based on the shipment attributes of the purchase order.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"supplierNumber",
+		"classificationNumber",
+		"codeNumber",
+		"serialNumber",
+		"shipmentNumber",
+		"masterCompanyIsoCode"
+	],
+	"properties": {
+		"supplierNumber": {
+			"type": "integer",
+			"description": "The merchandise supplier number",
+			"minimum": 0,
+			"maximum": 99999
+		},
+		"classificationNumber": {
+			"type": "integer",
+			"description": "The classification number",
+			"minimum": 0,
+			"maximum": 999
+		},
+		"codeNumber": {
+			"type": "integer",
+			"description": "The code number",
+			"minimum": 0,
+			"maximum": 99
+		},
+		"serialNumber": {
+			"type": "integer",
+			"description": "The serial number",
+			"minimum": 0,
+			"maximum": 999
+		},
+		"shipmentNumber": {
+			"type": "integer",
+			"description": "The shipment number",
+			"minimum": 0,
+			"maximum": 999
+		},
+		"masterCompanyIsoCode": {
+			"type": "string",
+			"description": "The country iso code",
+			"minLength": 2,
+			"maxLength": 2,
+			"pattern": "^[A-Z]{2}$",
+			"examples": [
+				"DE"
+			]
+		},
+		"creationTimestamp": {
+			"description": "User defined timestamp at which the request was created by the ticket provider",
+			"type": "string",
+			"format": "datetime"
+		}
+	}
+}

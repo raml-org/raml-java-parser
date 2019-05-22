@@ -1,0 +1,20 @@
+  description: Change the severity of a specific logger.
+  uriParameters:
+    loggerName:
+      description: |
+        Name of the logger whose level is to be changed.
+      type: string
+      required: true
+      example: "org.apache"
+  put:
+    body:
+      application/json:
+         example: !include log-levels-example.json
+         type: !include log-levels-schema.json
+    responses:
+      200:
+        body:
+#        application/json:
+# above fails in API design center with error Can not parse JSON example: Cannot tokenize symbol '#'
+          text/plain:
+              example: "#[com.canda.mulestac.logging.ChangeLogLevel.changeWithJson(flowVars.loggerName, payload)]"

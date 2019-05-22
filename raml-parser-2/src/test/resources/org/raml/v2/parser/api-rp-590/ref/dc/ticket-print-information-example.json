@@ -1,0 +1,122 @@
+{
+  "ticketRequestId": "567a5eae74d543bcadbfeb165c37a0e6",
+  "responseCode": 0,
+  "responseType": "Info",
+  "responseMessage": "No error occured during validation",
+  "ticketType": 105,
+  "oekotexFlag": true,
+  "nosSeasonIndicator": "SNOS",
+  "orderNumber": "705/32/77580/656",
+  "purchaseOrderNumber": 80792995,
+  "masterCompanies": [
+    {
+      "companyIsoCode": "AT",
+      "itemNumber": "0123.456",
+      "ticketInfoText": "CB:07_THEM _PR_TA02",
+      "nationalStyleIdPrefix": "S820",
+      "customerSizeRange": "XS - XXL",
+      "sellingPrices": [
+        {
+          "companyIsoCode": "AT",
+          "sellingPrice": "8.00",
+          "crossedPrice": "9.00",
+          "currencyCode": "EURO",
+          "sellingPriceTicketPosition": 1,
+          "printedCompanyIdentifier": "A",
+          "licensePlateCompanyIdentifier": "AT"
+        },
+        {
+          "companyIsoCode": "RO",
+          "sellingPrice": "34.90",
+          "crossedPrice": "38.00",
+          "currencyCode": "RON",
+          "sellingPriceTicketPosition": 2,
+          "printedCompanyIdentifier": "RO",
+          "licensePlateCompanyIdentifier": "RO"
+        },
+        {
+          "companyIsoCode": "HR",
+          "sellingPrice": "59,00",
+          "crossedPrice": "65.00",
+          "currencyCode": "HRK",
+          "printedCompanyIdentifier": "HR",
+          "licensePlateCompanyIdentifier": "HR"
+        },
+        {
+          "companyIsoCode": "SI",
+          "sellingPrice": "7.50",
+          "crossedPrice": "8.00",
+          "currencyCode": "EURO",
+          "printedCompanyIdentifier": "SI",
+          "licensePlateCompanyIdentifier": "SI"
+        },
+        {
+          "companyIsoCode": "RS",
+          "sellingPrice": "950.00",
+          "crossedPrice": "1000.00",
+          "currencyCode": "RSD",
+          "printedCompanyIdentifier": "RS",
+          "licensePlateCompanyIdentifier": "RS"
+        }
+      ],
+      "colourSizes": [
+        {
+          "colourTicketPositionNumber": "1",
+          "computerSizeNumber": "056",
+          "quantity": 150,
+          "pantoneName": "16-5803",
+          "colourDescription": "Flint Gray",
+          "customerSizeNumber": "M",
+          "additionalSizeInformation": "0-1 MON",
+          "gtin": "04 061507 789603",
+          "url": "https://qr.c-a.com/?01=04061507789603",
+          "barcode": {
+            "itemNumber": "0123456",
+            "colourTicketPositionNumber": "1",
+            "computerSizeNumber": "056"
+          },
+          "barcodeSubLine": {
+            "itemNumber": "0123.456",
+            "colourTicketPositionNumber": "1",
+            "computerSizeNumber": "056"
+          },
+          "waistbandRiderCode": 13,
+          "waistbandRiderColour": "yellow",
+          "waistbandRiderText": "WEITE PASSWORM"
+        }
+      ],
+      "packs": [
+        {
+          "packName": "A",
+          "numberOfPacks": 3,
+          "colourSizes": [
+            {
+              "colourTicketPositionNumber": "1",
+              "computerSizeNumber": "056",
+              "quantity": 50,
+              "pantoneName": "16-5803",
+              "colourDescription": "Flint Gray",
+              "customerSizeNumber": "M",
+              "additionalSizeInformation": "0-1 MON",
+              "gtin": "04 061507 789603",
+              "url": "https://qr.c-a.com/?01=04061507789603",
+              "barcode": {
+                "itemNumber": "0123456",
+                "colourTicketPositionNumber": "1",
+                "computerSizeNumber": "056"
+              },
+              "barcodeSubLine": {
+                "itemNumber": "0123.456",
+                "colourTicketPositionNumber": "1",
+                "computerSizeNumber": "056"
+              },
+              "waistbandRiderCode": 13,
+              "waistbandRiderColour": "yellow",
+              "waistbandRiderText": "WEITE PASSWORM"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
