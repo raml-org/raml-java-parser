@@ -1,0 +1,256 @@
+RamlDocumentNode (Start: 11 , End: 875, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 11 , End: 23, On: input.raml)
+        SYStringNode: "version" (Start: 11 , End: 18, On: input.raml)
+        ObjectNodeImpl (Start: 20 , End: 23, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 23)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "api" (Start: 20 , End: 23, On: input.raml, Source: SYStringNode)
+    KeyValueNodeImpl (Start: 24 , End: 35, On: input.raml)
+        SYStringNode: "title" (Start: 24 , End: 29, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 31 , End: 35, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 24 , End: 35, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "test" (Start: 31 , End: 35, On: input.raml)
+    ResourceNode (Start: 38 , End: 875, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "/dc" (Start: 38 , End: 41, On: input.raml)
+        SYObjectNode (Start: 45 , End: 875, On: input.raml)
+            ResourceNode (Start: 45 , End: 449, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "/itRequests" (Start: 45 , End: 56, On: input.raml)
+                SYObjectNode (Start: 62 , End: 449, On: input.raml)
+                    MethodNode (Start: 62 , End: 449, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "post" (Start: 62 , End: 66, On: input.raml)
+                        SYObjectNode (Start: 74 , End: 449, On: input.raml)
+                            BodyNode (Start: 74 , End: 226, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "body" (Start: 74 , End: 78, On: input.raml)
+                                SYObjectNode (Start: 88 , End: 226, On: input.raml)
+                                    KeyValueNodeImpl (Start: 88 , End: 226, On: input.raml)
+                                        SYStringNode: "application/json" (Start: 88 , End: 104, On: input.raml)
+                                        TypeDeclarationNode (Start: 116 , End: 226, On: input.raml, Source: SYObjectNode)
+                                            ExampleDeclarationNode (Start: 116 , End: 164, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYStringNode: "example" (Start: 116 , End: 123, On: input.raml)
+                                                StringNodeImpl: "{
+	"item": 4657666,
+	"creationTimestamp": "2018-12-31T23:59:59.999Z"
+}" (Start: 125 , End: 164, On: input.raml, Source: SYIncludeNode)
+                                            KeyValueNodeImpl (Start: 175 , End: 219, On: input.raml)
+                                                SYStringNode: "type" (Start: 175 , End: 179, On: input.raml)
+                                                ExternalSchemaTypeExpressionNode: "{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of a itemnumber.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"item"
+	],
+	"properties": {
+		"item": {
+			"type": "integer",
+			"description": "The item number",
+			"minimum": 19,
+			"maximum": 9999999
+		},
+		"creationTimestamp": {
+			"description": "User defined timestamp",
+			"type": "string",
+			"format": "datetime"
+		}
+	}
+}" (Start: 181 , End: 219, On: input.raml, Source: StringNodeImpl)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                            KeyValueNodeImpl (Start: 226 , End: 449, On: input.raml)
+                                SYStringNode: "responses" (Start: 226 , End: 235, On: input.raml)
+                                SYObjectNode (Start: 245 , End: 449, On: input.raml)
+                                    ResponseNode (Start: 245 , End: 449, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYIntegerNode: 200 (Start: 245 , End: 248, On: input.raml)
+                                        SYObjectNode (Start: 260 , End: 449, On: input.raml)
+                                            BodyNode (Start: 260 , End: 449, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYStringNode: "body" (Start: 260 , End: 264, On: input.raml)
+                                                SYObjectNode (Start: 278 , End: 449, On: input.raml)
+                                                    KeyValueNodeImpl (Start: 278 , End: 449, On: input.raml)
+                                                        SYStringNode: "application/json" (Start: 278 , End: 294, On: input.raml)
+                                                        TypeDeclarationNode (Start: 310 , End: 449, On: input.raml, Source: SYObjectNode)
+                                                            ExampleDeclarationNode (Start: 310 , End: 372, On: input.raml, Source: KeyValueNodeImpl)
+                                                                SYStringNode: "example" (Start: 310 , End: 317, On: input.raml)
+                                                                StringNodeImpl: "{
+  "ticketRequestId": "567a5eae74d543bcadbfeb165c37a0e6",
+  "responseCode": 0
+}" (Start: 319 , End: 372, On: input.raml, Source: SYIncludeNode)
+                                                            KeyValueNodeImpl (Start: 387 , End: 445, On: input.raml)
+                                                                SYStringNode: "type" (Start: 387 , End: 391, On: input.raml)
+                                                                ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Representation of the ticket information",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ticketRequestId",
+    "responseCode"
+  ],
+  "properties": {
+    "ticketRequestId": {
+      "type": "string",
+      "description": "The ticket request id",
+      "minimum": 32,
+      "maximum": 32
+    },
+    "responseCode": {
+      "type": "integer",
+      "description": "The response code",
+      "minimum": 0,
+      "maximum": 99999
+    }
+  }
+}
+         " (Start: 393 , End: 445, On: input.raml, Source: StringNodeImpl)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                        OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYIntegerNode)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                ObjectNodeImpl (Start: -1 , End: -1)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                        OverlayableStringNode: "post" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "/itRequests" (Start: -1 , End: -1, Source: SYStringNode)
+            ResourceNode (Start: 449 , End: 875, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "/sTRequests" (Start: 449 , End: 460, On: input.raml)
+                SYObjectNode (Start: 466 , End: 875, On: input.raml)
+                    MethodNode (Start: 466 , End: 875, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "post" (Start: 466 , End: 470, On: input.raml)
+                        SYObjectNode (Start: 478 , End: 875, On: input.raml)
+                            BodyNode (Start: 478 , End: 656, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "body" (Start: 478 , End: 482, On: input.raml)
+                                SYObjectNode (Start: 492 , End: 656, On: input.raml)
+                                    KeyValueNodeImpl (Start: 492 , End: 656, On: input.raml)
+                                        SYStringNode: "application/json" (Start: 492 , End: 508, On: input.raml)
+                                        TypeDeclarationNode (Start: 520 , End: 656, On: input.raml, Source: SYObjectNode)
+                                            ExampleDeclarationNode (Start: 520 , End: 581, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYStringNode: "example" (Start: 520 , End: 527, On: input.raml)
+                                                StringNodeImpl: "{
+	"supplierNumber": 99999,
+	"creationTimestamp": "2018-12-31T23:59:59.999Z"
+}" (Start: 529 , End: 581, On: input.raml, Source: SYIncludeNode)
+                                            KeyValueNodeImpl (Start: 592 , End: 649, On: input.raml)
+                                                SYStringNode: "type" (Start: 592 , End: 596, On: input.raml)
+                                                ExternalSchemaTypeExpressionNode: "{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "Representation of shipment attributes.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"supplierNumber"
+	],
+	"properties": {
+		"supplierNumber": {
+			"type": "integer",
+			"description": "The merchandise supplier number",
+			"minimum": 0,
+			"maximum": 99999
+		},
+		"creationTimestamp": {
+			"description": "User defined timestamp",
+			"type": "string",
+			"format": "datetime"
+		}
+	}
+}" (Start: 598 , End: 649, On: input.raml, Source: StringNodeImpl)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                            KeyValueNodeImpl (Start: 656 , End: 875, On: input.raml)
+                                SYStringNode: "responses" (Start: 656 , End: 665, On: input.raml)
+                                SYObjectNode (Start: 675 , End: 875, On: input.raml)
+                                    ResponseNode (Start: 675 , End: 875, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYIntegerNode: 200 (Start: 675 , End: 678, On: input.raml)
+                                        SYObjectNode (Start: 690 , End: 875, On: input.raml)
+                                            BodyNode (Start: 690 , End: 875, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYStringNode: "body" (Start: 690 , End: 694, On: input.raml)
+                                                SYObjectNode (Start: 708 , End: 875, On: input.raml)
+                                                    KeyValueNodeImpl (Start: 708 , End: 875, On: input.raml)
+                                                        SYStringNode: "application/json" (Start: 708 , End: 724, On: input.raml)
+                                                        TypeDeclarationNode (Start: 740 , End: 875, On: input.raml, Source: SYObjectNode)
+                                                            ExampleDeclarationNode (Start: 740 , End: 802, On: input.raml, Source: KeyValueNodeImpl)
+                                                                SYStringNode: "example" (Start: 740 , End: 747, On: input.raml)
+                                                                StringNodeImpl: "{
+  "ticketRequestId": "567a5eae74d543bcadbfeb165c37a0e6",
+  "responseCode": 0
+}" (Start: 749 , End: 802, On: input.raml, Source: SYIncludeNode)
+                                                            KeyValueNodeImpl (Start: 817 , End: 875, On: input.raml)
+                                                                SYStringNode: "type" (Start: 817 , End: 821, On: input.raml)
+                                                                ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Representation of the ticket information",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ticketRequestId",
+    "responseCode"
+  ],
+  "properties": {
+    "ticketRequestId": {
+      "type": "string",
+      "description": "The ticket request id",
+      "minimum": 32,
+      "maximum": 32
+    },
+    "responseCode": {
+      "type": "integer",
+      "description": "The response code",
+      "minimum": 0,
+      "maximum": 99999
+    }
+  }
+}
+         " (Start: 823 , End: 875, On: input.raml, Source: StringNodeImpl)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                        OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYIntegerNode)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                ObjectNodeImpl (Start: -1 , End: -1)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                        OverlayableStringNode: "post" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "/sTRequests" (Start: -1 , End: -1, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                ObjectNodeImpl (Start: -1 , End: -1)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                        OverlayableStringNode: "/dc" (Start: -1 , End: -1, Source: SYStringNode)
