@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class CacheResourceLoader implements ResourceLoaderExtended
 {
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final Map<String, byte[]> resources = new HashMap<>();
     private ResourceLoader resourceLoader;
     private File parentFile;
@@ -40,7 +40,7 @@ public class CacheResourceLoader implements ResourceLoaderExtended
     {
         this.resourceLoader = resourceLoader;
     }
-    
+
     public CacheResourceLoader(ResourceLoader resourceLoader, File parentFile)
     {
         this.resourceLoader = resourceLoader;
@@ -61,13 +61,13 @@ public class CacheResourceLoader implements ResourceLoaderExtended
             if (resources.containsKey(resourceName))
             {
                 final byte[] resourceByteArray = resources.get(resourceName);
-                if (callback != null)
+                if (callback != null && parentFile != null)
                 {
-                    if(parentFile != null) {
-						File includedFile = new File(parentFile, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
-					    logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentFile);
-					    callback.onResourceFound(includedFile.toURI());
-					}
+                    File includedFile = new File(parentFile,
+                            resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
+                    logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentFile);
+                    callback.onResourceFound(includedFile.toURI());
+
                 }
                 return toInputStreamOrNull(resourceByteArray);
             }
