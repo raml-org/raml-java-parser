@@ -259,8 +259,8 @@
         <dependency>
             <!-- Dependency needed for json-schema-validator -->
             <groupId>com.sun.mail</groupId>
-            <artifactId>mailapi</artifactId>
-            <version>1.5.4</version>
+            <artifactId>jakarta.mail</artifactId>
+            <version>1.6.3</version>
         </dependency>
 
         <dependency>
