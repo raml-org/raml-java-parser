@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class FileResourceLoader implements ResourceLoaderExtended
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private File parentPath;
+    private URI callbackParam;
 
     public FileResourceLoader(String path)
     {
@@ -61,7 +63,8 @@ public class FileResourceLoader implements ResourceLoaderExtended
 
             if (callback != null)
             {
-                callback.onResourceFound(includedFile.toURI());
+                callbackParam = includedFile.toURI();
+                callback.onResourceFound(callbackParam);
             }
         }
         catch (FileNotFoundException e)
@@ -76,5 +79,11 @@ public class FileResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        return callbackParam;
     }
 }

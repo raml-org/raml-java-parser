@@ -26,10 +26,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
 import org.apache.commons.io.IOUtils;
+import org.raml.v2.api.loader.CacheResourceLoader;
 import org.raml.v2.api.loader.CompositeResourceLoader;
 import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -41,6 +39,10 @@ import org.raml.v2.internal.impl.v10.Raml10Builder;
 import org.raml.v2.internal.utils.StreamUtils;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.Node;
+
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 
 /**
  * RamlBuilder create a Node representation of your raml.
@@ -76,6 +78,7 @@ public class RamlBuilder
     {
         return build(ramlFile, new DefaultResourceLoader());
     }
+
 
     public Node build(File ramlFile, ResourceLoader resourceLoader)
     {
@@ -167,17 +170,8 @@ public class RamlBuilder
         {
             resourceLoader = new CompositeResourceLoader(new RootRamlUrlResourceLoader(rootRamlPath), resourceLoader);
         }
-        CacheResourceLoader cacheResourceLoader;
-        if (parentFile != null)
-        {
-            cacheResourceLoader = new CacheResourceLoader(resourceLoader, parentFile);
-        }
-        else
-        {
-            cacheResourceLoader = new CacheResourceLoader(resourceLoader);
-        }
 
-        this.resourceLoader = cacheResourceLoader;
+        this.resourceLoader = new CacheResourceLoader(resourceLoader);
         return this.resourceLoader;
     }
 

@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -28,6 +29,7 @@ public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
     public static final String APPLICATION_RAML = "application/raml+yaml";
 
     private String rootRamlUrl;
+    private URI callbackParam;
 
     public RootRamlUrlResourceLoader(String rootRamlUrl)
     {
@@ -47,7 +49,8 @@ public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
 
             if (callback != null)
             {
-                callback.onResourceFound(url.toURI());
+                callbackParam = url.toURI();
+                callback.onResourceFound(callbackParam);
             }
         }
         catch (IOException e)
@@ -67,6 +70,12 @@ public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        return callbackParam;
     }
 
 }

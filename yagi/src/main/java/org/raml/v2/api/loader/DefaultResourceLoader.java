@@ -17,6 +17,7 @@ package org.raml.v2.api.loader;
 
 import javax.annotation.Nullable;
 import java.io.InputStream;
+import java.net.URI;
 
 public class DefaultResourceLoader implements ResourceLoaderExtended
 {
@@ -50,5 +51,15 @@ public class DefaultResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        if (resourceLoader != null && resourceLoader instanceof ResourceLoaderExtended)
+        {
+            return ((ResourceLoaderExtended) resourceLoader).getUriCallBackParam();
+        }
+        return null;
     }
 }

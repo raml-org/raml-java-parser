@@ -19,6 +19,7 @@ import static org.apache.commons.lang.StringUtils.isBlank;
 
 import javax.annotation.Nullable;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.commons.lang.StringUtils;
@@ -27,6 +28,7 @@ public class ClassPathResourceLoader implements ResourceLoaderExtended
 {
 
     private final String rootRamlPackage;
+    private URI callbackParam;
 
     public ClassPathResourceLoader()
     {
@@ -68,7 +70,8 @@ public class ClassPathResourceLoader implements ResourceLoaderExtended
         {
             try
             {
-                callback.onResourceFound(Thread.currentThread().getContextClassLoader().getResource(resourceName).toURI());
+                this.callbackParam = Thread.currentThread().getContextClassLoader().getResource(resourceName).toURI();
+                callback.onResourceFound(callbackParam);
             }
             catch (URISyntaxException e)
             {
@@ -83,5 +86,11 @@ public class ClassPathResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        return callbackParam;
     }
 }

@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URI;
 
 import javax.annotation.Nullable;
 
@@ -31,6 +32,7 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private File parentPath;
+    private URI callbackParam;
 
     public RootRamlFileResourceLoader(File path)
     {
@@ -50,7 +52,8 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
 
             if (callback != null)
             {
-                callback.onResourceFound(includedFile.toURI());
+                callbackParam = includedFile.toURI();
+                callback.onResourceFound(callbackParam);
             }
         }
         catch (FileNotFoundException e)
@@ -66,5 +69,11 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        return callbackParam;
     }
 }
