@@ -17,11 +17,13 @@ package org.raml.v2.api.loader;
 
 import javax.annotation.Nullable;
 import java.io.InputStream;
+import java.net.URI;
 
 public class CompositeResourceLoader implements ResourceLoaderExtended
 {
 
     private ResourceLoader[] resourceLoaders;
+    private ResourceLoader callBackLoader;
 
     public CompositeResourceLoader(ResourceLoader... resourceLoaders)
     {
@@ -45,6 +47,7 @@ public class CompositeResourceLoader implements ResourceLoaderExtended
 
             if (inputStream != null)
             {
+                callBackLoader = loader;
                 break;
             }
         }
@@ -56,5 +59,15 @@ public class CompositeResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        if (callBackLoader != null && callBackLoader instanceof ResourceLoaderExtended)
+        {
+            return ((ResourceLoaderExtended) callBackLoader).getUriCallBackParam();
+        }
+        return null;
     }
 }

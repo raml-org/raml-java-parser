@@ -1,0 +1,53 @@
+#%RAML 1.0
+title: s-derby-rfc-sap
+version: 1.0.0
+baseUri: http://s-derby-rfc-sap.eu.cloudhub.io/*
+
+/customer:
+  /{customerID}:    
+    /backOrder:
+      displayName: Get backOrders from customer
+      get:
+        queryParameters:
+          orderCreationDate:
+            type: integer
+            required: false 
+            example: 20140101
+        responses:
+          200:
+            body:
+              application/json:
+                schema: !include backorder_respons_schema.json
+                example: !include backorder_respons.json
+                  
+      /{orderID}:
+        displayName: get one backorder from specific customer
+        get:
+          queryParameters:
+           orderCreationDate:
+            type: integer
+            required: false 
+            example: 20140101
+          description: get all salesOrders
+          responses:
+            200:
+              body:
+                application/json:
+                  schema: !include backorder_respons_schema.json
+                  example: !include backorder_respons.json
+
+      /orderItems:
+        displayName: get one specific order
+        /{orderItems}:
+          get:
+            queryParameters:
+             orderCreationDate:
+              type: integer
+              required: false 
+              example: 20140101
+            responses:
+              200:
+                body:
+                  application/json:
+                    schema: !include backorder_respons_schema.json
+                    example: !include backorder_respons.json      

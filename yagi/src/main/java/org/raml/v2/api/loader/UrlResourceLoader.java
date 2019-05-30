@@ -19,11 +19,13 @@ import javax.annotation.Nullable;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 public class UrlResourceLoader implements ResourceLoaderExtended
 {
+    private URI callbackParam;
 
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
@@ -36,6 +38,7 @@ public class UrlResourceLoader implements ResourceLoaderExtended
 
             if (callback != null)
             {
+                callbackParam = url.toURI();
                 callback.onResourceFound(url.toURI());
             }
         }
@@ -57,5 +60,11 @@ public class UrlResourceLoader implements ResourceLoaderExtended
     public InputStream fetchResource(String resourceName)
     {
         return fetchResource(resourceName, null);
+    }
+
+    @Override
+    public URI getUriCallBackParam()
+    {
+        return callbackParam;
     }
 }

@@ -19,6 +19,8 @@ package org.raml.v2.parser;
 
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -34,8 +36,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.raml.v2.internal.impl.RamlBuilder;
+import org.raml.v2.api.RamlModelBuilder;
+import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.dataprovider.TestDataProvider;
 import org.raml.v2.internal.utils.Dumper;
+import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.Node;
 
 @RunWith(Parameterized.class)
@@ -58,6 +63,22 @@ public class RamlBuilderTestCase extends TestDataProvider
 
         expected = IOUtils.toString(new FileInputStream(this.expectedOutput));
         Assert.assertThat(dump, IsEqualIgnoringWhiteSpace.equalToIgnoringWhiteSpace(expected));
+    }
+
+    @Test
+    public void crossValidatioTest()
+    {
+        Node raml = new RamlBuilder().build(input);
+
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
+
+
+        boolean xor = ramlModelResult.hasErrors() ^ !RamlNodeUtils.getErrors(raml).isEmpty();
+
+        assertFalse(xor);
+        assertEquals(ramlModelResult.getValidationResults().size(), RamlNodeUtils.getErrors(raml).size());
+
+
     }
 
     @Parameterized.Parameters(name = "{2}")

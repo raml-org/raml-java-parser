@@ -17,6 +17,7 @@ package org.raml.v2.api.loader;
 
 import javax.annotation.Nullable;
 import java.io.InputStream;
+import java.net.URI;
 
 public interface ResourceLoaderExtended extends ResourceLoader
 {
@@ -29,4 +30,14 @@ public interface ResourceLoaderExtended extends ResourceLoader
      */
     @Nullable
     InputStream fetchResource(String resourceName, ResourceUriCallback callback);
+
+    /**
+     * Returns the URI used by ResourceUriCallback if exists
+     *
+     * 
+     * @return An URI if callback is called in fetchResource method, or <tt>null</tt>
+     *        
+     */
+    @Nullable
+    URI getUriCallBackParam();
 }

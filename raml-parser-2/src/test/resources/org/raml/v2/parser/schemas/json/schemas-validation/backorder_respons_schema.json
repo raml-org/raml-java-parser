@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "properties": {
+      "items":
+        {
+          "type": "object",
+          "properties": {
+            "Auftrag": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftrag"
+            },
+            "Position": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Position"
+            },
+            "Artikel": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Artikel"
+            },
+            "ArtikelBez": {
+              "type": "string",
+              "id": "http://pon.bike/derby/ArtikelBez"
+            },
+            "Auftragsmenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsmenge"
+            },
+            "offene_Liefermenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/offene_Liefermenge"
+            },
+            "bereits_gelieferte_Menge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/bereits_gelieferte_Menge"
+            },
+            "Lieferdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Lieferdatum"
+            },
+            "Auftragsdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsdatum"
+            }
+          },
+          "required": [
+            "Auftrag",
+            "Position",
+            "Artikel",
+            "ArtikelBez",
+            "Auftragsmenge",
+            "offene_Liefermenge",
+            "bereits_gelieferte_Menge",
+            "Lieferdatum",
+            "Auftragsdatum"
+          ]
+        }
+
+    }
+  }

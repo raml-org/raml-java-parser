@@ -1,0 +1,1363 @@
+RamlDocumentNode (Start: 12 , End: 1601, On: input.raml, Source: SYObjectNode)
+    KeyValueNodeImpl (Start: 12 , End: 34, On: input.raml)
+        SYStringNode: "title" (Start: 12 , End: 17, On: input.raml)
+        OverlayableObjectNodeImpl (Start: 19 , End: 34, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: 12 , End: 34, On: input.raml)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                OverlayableStringNode: "s-derby-rfc-sap" (Start: 19 , End: 34, On: input.raml)
+    KeyValueNodeImpl (Start: 36 , End: 50, On: input.raml)
+        SYStringNode: "version" (Start: 36 , End: 43, On: input.raml)
+        ObjectNodeImpl (Start: 45 , End: 50, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 50)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "1.0.0" (Start: 45 , End: 50, On: input.raml, Source: SYStringNode)
+    KeyValueNodeImpl (Start: 52 , End: 100, On: input.raml)
+        SYStringNode: "baseUri" (Start: 52 , End: 59, On: input.raml)
+        ObjectNodeImpl (Start: 61 , End: 100, On: input.raml, Source: SYStringNode)
+            KeyValueNodeImpl (Start: -1 , End: 100)
+                StringNodeImpl: "value" (Start: -1 , End: -1)
+                SYStringNode: "http://s-derby-rfc-sap.eu.cloudhub.io/*" (Start: 61 , End: 100, On: input.raml, Source: SYStringNode)
+    ResourceNode (Start: 104 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+        SYStringNode: "/customer" (Start: 104 , End: 113, On: input.raml)
+        SYObjectNode (Start: 118 , End: 1601, On: input.raml)
+            ResourceNode (Start: 118 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                SYStringNode: "/{customerID}" (Start: 118 , End: 131, On: input.raml)
+                SYObjectNode (Start: 142 , End: 1601, On: input.raml)
+                    ResourceNode (Start: 142 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                        SYStringNode: "/backOrder" (Start: 142 , End: 152, On: input.raml)
+                        SYObjectNode (Start: 161 , End: 1601, On: input.raml)
+                            KeyValueNodeImpl (Start: 161 , End: 202, On: input.raml)
+                                SYStringNode: "displayName" (Start: 161 , End: 172, On: input.raml)
+                                OverlayableObjectNodeImpl (Start: 174 , End: 202, On: input.raml, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: 161 , End: 202, On: input.raml)
+                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                        OverlayableStringNode: "Get backOrders from customer" (Start: 174 , End: 202, On: input.raml)
+                            MethodNode (Start: 210 , End: 596, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "get" (Start: 210 , End: 213, On: input.raml)
+                                SYObjectNode (Start: 224 , End: 596, On: input.raml)
+                                    KeyValueNodeImpl (Start: 224 , End: 368, On: input.raml)
+                                        SYStringNode: "queryParameters" (Start: 224 , End: 239, On: input.raml)
+                                        SYObjectNode (Start: 252 , End: 368, On: input.raml)
+                                            PropertyNode (Start: 252 , End: 368, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYStringNode: "orderCreationDate" (Start: 252 , End: 269, On: input.raml)
+                                                TypeDeclarationNode (Start: 284 , End: 368, On: input.raml, Source: SYObjectNode)
+                                                    KeyValueNodeImpl (Start: 284 , End: 297, On: input.raml)
+                                                        SYStringNode: "type" (Start: 284 , End: 288, On: input.raml)
+                                                        NativeTypeExpressionNode: "integer" (Start: 290 , End: 297, On: input.raml, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: 311 , End: 326, On: input.raml)
+                                                        SYStringNode: "required" (Start: 311 , End: 319, On: input.raml)
+                                                        SYBooleanNode: false (Start: 321 , End: 326, On: input.raml)
+                                                    ExampleDeclarationNode (Start: 341 , End: 358, On: input.raml, Source: KeyValueNodeImpl)
+                                                        SYStringNode: "example" (Start: 341 , End: 348, On: input.raml)
+                                                        SYIntegerNode: 20140101 (Start: 350 , End: 358, On: input.raml)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                OverlayableStringNode: "orderCreationDate" (Start: -1 , End: -1, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: 368 , End: 596, On: input.raml)
+                                        SYStringNode: "responses" (Start: 368 , End: 377, On: input.raml)
+                                        SYObjectNode (Start: 390 , End: 596, On: input.raml)
+                                            ResponseNode (Start: 390 , End: 596, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYIntegerNode: 200 (Start: 390 , End: 393, On: input.raml)
+                                                SYObjectNode (Start: 408 , End: 596, On: input.raml)
+                                                    BodyNode (Start: 408 , End: 596, On: input.raml, Source: KeyValueNodeImpl)
+                                                        SYStringNode: "body" (Start: 408 , End: 412, On: input.raml)
+                                                        SYObjectNode (Start: 429 , End: 596, On: input.raml)
+                                                            KeyValueNodeImpl (Start: 429 , End: 596, On: input.raml)
+                                                                SYStringNode: "application/json" (Start: 429 , End: 445, On: input.raml)
+                                                                TypeDeclarationNode (Start: 464 , End: 596, On: input.raml, Source: SYObjectNode)
+                                                                    KeyValueNodeImpl (Start: 464 , End: 510, On: input.raml)
+                                                                        SYStringNode: "schema" (Start: 464 , End: 470, On: input.raml)
+                                                                        ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "properties": {
+      "items":
+        {
+          "type": "object",
+          "properties": {
+            "Auftrag": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftrag"
+            },
+            "Position": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Position"
+            },
+            "Artikel": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Artikel"
+            },
+            "ArtikelBez": {
+              "type": "string",
+              "id": "http://pon.bike/derby/ArtikelBez"
+            },
+            "Auftragsmenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsmenge"
+            },
+            "offene_Liefermenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/offene_Liefermenge"
+            },
+            "bereits_gelieferte_Menge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/bereits_gelieferte_Menge"
+            },
+            "Lieferdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Lieferdatum"
+            },
+            "Auftragsdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsdatum"
+            }
+          },
+          "required": [
+            "Auftrag",
+            "Position",
+            "Artikel",
+            "ArtikelBez",
+            "Auftragsmenge",
+            "offene_Liefermenge",
+            "bereits_gelieferte_Menge",
+            "Lieferdatum",
+            "Auftragsdatum"
+          ]
+        }
+
+    }
+  }
+" (Start: 472 , End: 510, On: input.raml, Source: StringNodeImpl)
+                                                                    ExampleDeclarationNode (Start: 528 , End: 568, On: input.raml, Source: KeyValueNodeImpl)
+                                                                        SYStringNode: "example" (Start: 528 , End: 535, On: input.raml)
+                                                                        StringNodeImpl: "[
+  {
+    "Auftrag": "0003207715",
+    "Position": "000010",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-22",
+    "Auftragsdatum": "2018-08-17"
+  },
+  {
+    "Auftrag": "0060104476",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "100.000",
+    "offene_Liefermenge": "100.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-08",
+    "Auftragsdatum": "2018-08-08"
+  },
+  {
+    "Auftrag": "0003207706",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-15",
+    "Auftragsdatum": "2018-08-13"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-26",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000020",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-30",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000030",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-30",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207704",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-09",
+    "Auftragsdatum": "2018-08-09"
+  },
+  {
+    "Auftrag": "0003207708",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "1.000",
+    "Lieferdatum": "2018-08-27",
+    "Auftragsdatum": "2018-08-14"
+  },
+  {
+    "Auftrag": "0001345515",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-07",
+    "Auftragsdatum": "2018-08-07"
+  },
+  {
+    "Auftrag": "0003207701",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-08",
+    "Auftragsdatum": "2018-08-08"
+  },
+  {
+    "Auftrag": "0003207707",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-14",
+    "Auftragsdatum": "2018-08-14"
+  },
+  {
+    "Auftrag": "0003207713",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-21",
+    "Auftragsdatum": "2018-08-16"
+  },
+  {
+    "Auftrag": "0003207716",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207717",
+    "Position": "000012",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207718",
+    "Position": "000012",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207705",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-09",
+    "Auftragsdatum": "2018-08-09"
+  },
+  {
+    "Auftrag": "0030000190",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "10.000",
+    "offene_Liefermenge": "10.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-01",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207722",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "200.000",
+    "offene_Liefermenge": "200.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-24",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207723",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "100.000",
+    "offene_Liefermenge": "100.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-04",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207724",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-10",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207721",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-07",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207725",
+    "Position": "000010",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "5.000",
+    "offene_Liefermenge": "5.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-10",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0003207725",
+    "Position": "000020",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "12.000",
+    "offene_Liefermenge": "12.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-10",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000020",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000030",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0003207728",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-11",
+    "Auftragsdatum": "2018-09-06"
+  }
+]
+" (Start: 537 , End: 568, On: input.raml, Source: SYIncludeNode)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                                OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYIntegerNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "get" (Start: -1 , End: -1, Source: SYStringNode)
+                            ResourceNode (Start: 596 , End: 1107, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "/{orderID}" (Start: 596 , End: 606, On: input.raml)
+                                SYObjectNode (Start: 617 , End: 1107, On: input.raml)
+                                    KeyValueNodeImpl (Start: 617 , End: 670, On: input.raml)
+                                        SYStringNode: "displayName" (Start: 617 , End: 628, On: input.raml)
+                                        OverlayableObjectNodeImpl (Start: 630 , End: 670, On: input.raml, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: 617 , End: 670, On: input.raml)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "get one backorder from specific customer" (Start: 630 , End: 670, On: input.raml)
+                                    MethodNode (Start: 680 , End: 1107, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYStringNode: "get" (Start: 680 , End: 683, On: input.raml)
+                                        SYObjectNode (Start: 696 , End: 1107, On: input.raml)
+                                            KeyValueNodeImpl (Start: 696 , End: 843, On: input.raml)
+                                                SYStringNode: "queryParameters" (Start: 696 , End: 711, On: input.raml)
+                                                SYObjectNode (Start: 725 , End: 843, On: input.raml)
+                                                    PropertyNode (Start: 725 , End: 843, On: input.raml, Source: KeyValueNodeImpl)
+                                                        SYStringNode: "orderCreationDate" (Start: 725 , End: 742, On: input.raml)
+                                                        TypeDeclarationNode (Start: 757 , End: 843, On: input.raml, Source: SYObjectNode)
+                                                            KeyValueNodeImpl (Start: 757 , End: 770, On: input.raml)
+                                                                SYStringNode: "type" (Start: 757 , End: 761, On: input.raml)
+                                                                NativeTypeExpressionNode: "integer" (Start: 763 , End: 770, On: input.raml, Source: SYStringNode)
+                                                            KeyValueNodeImpl (Start: 784 , End: 799, On: input.raml)
+                                                                SYStringNode: "required" (Start: 784 , End: 792, On: input.raml)
+                                                                SYBooleanNode: false (Start: 794 , End: 799, On: input.raml)
+                                                            ExampleDeclarationNode (Start: 814 , End: 831, On: input.raml, Source: KeyValueNodeImpl)
+                                                                SYStringNode: "example" (Start: 814 , End: 821, On: input.raml)
+                                                                SYIntegerNode: 20140101 (Start: 823 , End: 831, On: input.raml)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                        OverlayableStringNode: "orderCreationDate" (Start: -1 , End: -1, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: 843 , End: 875, On: input.raml)
+                                                SYStringNode: "description" (Start: 843 , End: 854, On: input.raml)
+                                                OverlayableObjectNodeImpl (Start: 856 , End: 875, On: input.raml, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: 843 , End: 875, On: input.raml)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "get all salesOrders" (Start: 856 , End: 875, On: input.raml)
+                                            KeyValueNodeImpl (Start: 887 , End: 1107, On: input.raml)
+                                                SYStringNode: "responses" (Start: 887 , End: 896, On: input.raml)
+                                                SYObjectNode (Start: 911 , End: 1107, On: input.raml)
+                                                    ResponseNode (Start: 911 , End: 1107, On: input.raml, Source: KeyValueNodeImpl)
+                                                        SYIntegerNode: 200 (Start: 911 , End: 914, On: input.raml)
+                                                        SYObjectNode (Start: 931 , End: 1107, On: input.raml)
+                                                            BodyNode (Start: 931 , End: 1107, On: input.raml, Source: KeyValueNodeImpl)
+                                                                SYStringNode: "body" (Start: 931 , End: 935, On: input.raml)
+                                                                SYObjectNode (Start: 954 , End: 1107, On: input.raml)
+                                                                    KeyValueNodeImpl (Start: 954 , End: 1107, On: input.raml)
+                                                                        SYStringNode: "application/json" (Start: 954 , End: 970, On: input.raml)
+                                                                        TypeDeclarationNode (Start: 991 , End: 1107, On: input.raml, Source: SYObjectNode)
+                                                                            KeyValueNodeImpl (Start: 991 , End: 1037, On: input.raml)
+                                                                                SYStringNode: "schema" (Start: 991 , End: 997, On: input.raml)
+                                                                                ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "properties": {
+      "items":
+        {
+          "type": "object",
+          "properties": {
+            "Auftrag": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftrag"
+            },
+            "Position": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Position"
+            },
+            "Artikel": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Artikel"
+            },
+            "ArtikelBez": {
+              "type": "string",
+              "id": "http://pon.bike/derby/ArtikelBez"
+            },
+            "Auftragsmenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsmenge"
+            },
+            "offene_Liefermenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/offene_Liefermenge"
+            },
+            "bereits_gelieferte_Menge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/bereits_gelieferte_Menge"
+            },
+            "Lieferdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Lieferdatum"
+            },
+            "Auftragsdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsdatum"
+            }
+          },
+          "required": [
+            "Auftrag",
+            "Position",
+            "Artikel",
+            "ArtikelBez",
+            "Auftragsmenge",
+            "offene_Liefermenge",
+            "bereits_gelieferte_Menge",
+            "Lieferdatum",
+            "Auftragsdatum"
+          ]
+        }
+
+    }
+  }
+" (Start: 999 , End: 1037, On: input.raml, Source: StringNodeImpl)
+                                                                            ExampleDeclarationNode (Start: 1057 , End: 1097, On: input.raml, Source: KeyValueNodeImpl)
+                                                                                SYStringNode: "example" (Start: 1057 , End: 1064, On: input.raml)
+                                                                                StringNodeImpl: "[
+  {
+    "Auftrag": "0003207715",
+    "Position": "000010",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-22",
+    "Auftragsdatum": "2018-08-17"
+  },
+  {
+    "Auftrag": "0060104476",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "100.000",
+    "offene_Liefermenge": "100.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-08",
+    "Auftragsdatum": "2018-08-08"
+  },
+  {
+    "Auftrag": "0003207706",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-15",
+    "Auftragsdatum": "2018-08-13"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-26",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000020",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-30",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000030",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-30",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207704",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-09",
+    "Auftragsdatum": "2018-08-09"
+  },
+  {
+    "Auftrag": "0003207708",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "1.000",
+    "Lieferdatum": "2018-08-27",
+    "Auftragsdatum": "2018-08-14"
+  },
+  {
+    "Auftrag": "0001345515",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-07",
+    "Auftragsdatum": "2018-08-07"
+  },
+  {
+    "Auftrag": "0003207701",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-08",
+    "Auftragsdatum": "2018-08-08"
+  },
+  {
+    "Auftrag": "0003207707",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-14",
+    "Auftragsdatum": "2018-08-14"
+  },
+  {
+    "Auftrag": "0003207713",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-21",
+    "Auftragsdatum": "2018-08-16"
+  },
+  {
+    "Auftrag": "0003207716",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207717",
+    "Position": "000012",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207718",
+    "Position": "000012",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207705",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-09",
+    "Auftragsdatum": "2018-08-09"
+  },
+  {
+    "Auftrag": "0030000190",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "10.000",
+    "offene_Liefermenge": "10.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-01",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207722",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "200.000",
+    "offene_Liefermenge": "200.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-24",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207723",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "100.000",
+    "offene_Liefermenge": "100.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-04",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207724",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-10",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207721",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-07",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207725",
+    "Position": "000010",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "5.000",
+    "offene_Liefermenge": "5.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-10",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0003207725",
+    "Position": "000020",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "12.000",
+    "offene_Liefermenge": "12.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-10",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000020",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000030",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0003207728",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-11",
+    "Auftragsdatum": "2018-09-06"
+  }
+]
+" (Start: 1066 , End: 1097, On: input.raml, Source: SYIncludeNode)
+                                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                                        OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                        OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYIntegerNode)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "get" (Start: -1 , End: -1, Source: SYStringNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "uriParameters" (Start: -1 , End: -1)
+                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                            PropertyNode (Start: -1 , End: -1)
+                                                StringNodeImpl: "orderID" (Start: -1 , End: -1)
+                                                TypeDeclarationNode (Start: -1 , End: -1, Source: NativeTypeExpressionNode)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                                                        NativeTypeExpressionNode: "string" (Start: -1 , End: -1, Source: NativeTypeExpressionNode)
+                            ResourceNode (Start: 1107 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                                SYStringNode: "/orderItems" (Start: 1107 , End: 1118, On: input.raml)
+                                SYObjectNode (Start: 1129 , End: 1601, On: input.raml)
+                                    KeyValueNodeImpl (Start: 1129 , End: 1164, On: input.raml)
+                                        SYStringNode: "displayName" (Start: 1129 , End: 1140, On: input.raml)
+                                        OverlayableObjectNodeImpl (Start: 1142 , End: 1164, On: input.raml, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: 1129 , End: 1164, On: input.raml)
+                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                OverlayableStringNode: "get one specific order" (Start: 1142 , End: 1164, On: input.raml)
+                                    ResourceNode (Start: 1174 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                                        SYStringNode: "/{orderItems}" (Start: 1174 , End: 1187, On: input.raml)
+                                        SYObjectNode (Start: 1200 , End: 1601, On: input.raml)
+                                            MethodNode (Start: 1200 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                                                SYStringNode: "get" (Start: 1200 , End: 1203, On: input.raml)
+                                                SYObjectNode (Start: 1218 , End: 1601, On: input.raml)
+                                                    KeyValueNodeImpl (Start: 1218 , End: 1375, On: input.raml)
+                                                        SYStringNode: "queryParameters" (Start: 1218 , End: 1233, On: input.raml)
+                                                        SYObjectNode (Start: 1249 , End: 1375, On: input.raml)
+                                                            PropertyNode (Start: 1249 , End: 1375, On: input.raml, Source: KeyValueNodeImpl)
+                                                                SYStringNode: "orderCreationDate" (Start: 1249 , End: 1266, On: input.raml)
+                                                                TypeDeclarationNode (Start: 1283 , End: 1375, On: input.raml, Source: SYObjectNode)
+                                                                    KeyValueNodeImpl (Start: 1283 , End: 1296, On: input.raml)
+                                                                        SYStringNode: "type" (Start: 1283 , End: 1287, On: input.raml)
+                                                                        NativeTypeExpressionNode: "integer" (Start: 1289 , End: 1296, On: input.raml, Source: SYStringNode)
+                                                                    KeyValueNodeImpl (Start: 1312 , End: 1327, On: input.raml)
+                                                                        SYStringNode: "required" (Start: 1312 , End: 1320, On: input.raml)
+                                                                        SYBooleanNode: false (Start: 1322 , End: 1327, On: input.raml)
+                                                                    ExampleDeclarationNode (Start: 1344 , End: 1361, On: input.raml, Source: KeyValueNodeImpl)
+                                                                        SYStringNode: "example" (Start: 1344 , End: 1351, On: input.raml)
+                                                                        SYIntegerNode: 20140101 (Start: 1353 , End: 1361, On: input.raml)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                                OverlayableStringNode: "orderCreationDate" (Start: -1 , End: -1, Source: SYStringNode)
+                                                    KeyValueNodeImpl (Start: 1375 , End: 1601, On: input.raml)
+                                                        SYStringNode: "responses" (Start: 1375 , End: 1384, On: input.raml)
+                                                        SYObjectNode (Start: 1401 , End: 1601, On: input.raml)
+                                                            ResponseNode (Start: 1401 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                                                                SYIntegerNode: 200 (Start: 1401 , End: 1404, On: input.raml)
+                                                                SYObjectNode (Start: 1423 , End: 1601, On: input.raml)
+                                                                    BodyNode (Start: 1423 , End: 1601, On: input.raml, Source: KeyValueNodeImpl)
+                                                                        SYStringNode: "body" (Start: 1423 , End: 1427, On: input.raml)
+                                                                        SYObjectNode (Start: 1448 , End: 1601, On: input.raml)
+                                                                            KeyValueNodeImpl (Start: 1448 , End: 1601, On: input.raml)
+                                                                                SYStringNode: "application/json" (Start: 1448 , End: 1464, On: input.raml)
+                                                                                TypeDeclarationNode (Start: 1487 , End: 1601, On: input.raml, Source: SYObjectNode)
+                                                                                    KeyValueNodeImpl (Start: 1487 , End: 1533, On: input.raml)
+                                                                                        SYStringNode: "schema" (Start: 1487 , End: 1493, On: input.raml)
+                                                                                        ExternalSchemaTypeExpressionNode: "{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "properties": {
+      "items":
+        {
+          "type": "object",
+          "properties": {
+            "Auftrag": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftrag"
+            },
+            "Position": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Position"
+            },
+            "Artikel": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Artikel"
+            },
+            "ArtikelBez": {
+              "type": "string",
+              "id": "http://pon.bike/derby/ArtikelBez"
+            },
+            "Auftragsmenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsmenge"
+            },
+            "offene_Liefermenge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/offene_Liefermenge"
+            },
+            "bereits_gelieferte_Menge": {
+              "type": "string",
+              "id": "http://pon.bike/derby/bereits_gelieferte_Menge"
+            },
+            "Lieferdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Lieferdatum"
+            },
+            "Auftragsdatum": {
+              "type": "string",
+              "id": "http://pon.bike/derby/Auftragsdatum"
+            }
+          },
+          "required": [
+            "Auftrag",
+            "Position",
+            "Artikel",
+            "ArtikelBez",
+            "Auftragsmenge",
+            "offene_Liefermenge",
+            "bereits_gelieferte_Menge",
+            "Lieferdatum",
+            "Auftragsdatum"
+          ]
+        }
+
+    }
+  }
+" (Start: 1495 , End: 1533, On: input.raml, Source: StringNodeImpl)
+                                                                                    ExampleDeclarationNode (Start: 1555 , End: 1595, On: input.raml, Source: KeyValueNodeImpl)
+                                                                                        SYStringNode: "example" (Start: 1555 , End: 1562, On: input.raml)
+                                                                                        StringNodeImpl: "[
+  {
+    "Auftrag": "0003207715",
+    "Position": "000010",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-22",
+    "Auftragsdatum": "2018-08-17"
+  },
+  {
+    "Auftrag": "0060104476",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "100.000",
+    "offene_Liefermenge": "100.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-08",
+    "Auftragsdatum": "2018-08-08"
+  },
+  {
+    "Auftrag": "0003207706",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-15",
+    "Auftragsdatum": "2018-08-13"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-26",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000020",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-30",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207699",
+    "Position": "000030",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-07-30",
+    "Auftragsdatum": "2018-07-26"
+  },
+  {
+    "Auftrag": "0003207704",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-09",
+    "Auftragsdatum": "2018-08-09"
+  },
+  {
+    "Auftrag": "0003207708",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "1.000",
+    "Lieferdatum": "2018-08-27",
+    "Auftragsdatum": "2018-08-14"
+  },
+  {
+    "Auftrag": "0001345515",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-07",
+    "Auftragsdatum": "2018-08-07"
+  },
+  {
+    "Auftrag": "0003207701",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-08",
+    "Auftragsdatum": "2018-08-08"
+  },
+  {
+    "Auftrag": "0003207707",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-14",
+    "Auftragsdatum": "2018-08-14"
+  },
+  {
+    "Auftrag": "0003207713",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-21",
+    "Auftragsdatum": "2018-08-16"
+  },
+  {
+    "Auftrag": "0003207716",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207717",
+    "Position": "000012",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207718",
+    "Position": "000012",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "2.000",
+    "offene_Liefermenge": "2.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-23",
+    "Auftragsdatum": "2018-08-20"
+  },
+  {
+    "Auftrag": "0003207705",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-08-09",
+    "Auftragsdatum": "2018-08-09"
+  },
+  {
+    "Auftrag": "0030000190",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "10.000",
+    "offene_Liefermenge": "10.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-01",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207722",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "200.000",
+    "offene_Liefermenge": "200.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-24",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207723",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "100.000",
+    "offene_Liefermenge": "100.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-04",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207724",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-10-10",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207721",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-07",
+    "Auftragsdatum": "2018-09-04"
+  },
+  {
+    "Auftrag": "0003207725",
+    "Position": "000010",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "5.000",
+    "offene_Liefermenge": "5.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-10",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0003207725",
+    "Position": "000020",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "12.000",
+    "offene_Liefermenge": "12.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-10",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000020",
+    "Artikel": "A633536007",
+    "ArtikelBez": "28\"WA\"BORDEAUX B7\"7G 52M 36V 8,2AH",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0061277550",
+    "Position": "000030",
+    "Artikel": "A633521149",
+    "ArtikelBez": "28\"WA\"ENDEAVOUR 5.I BEL\"8G 48M V3 36V",
+    "Auftragsmenge": "500.000",
+    "offene_Liefermenge": "500.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-05",
+    "Auftragsdatum": "2018-09-05"
+  },
+  {
+    "Auftrag": "0003207728",
+    "Position": "000010",
+    "Artikel": "A633514010",
+    "ArtikelBez": "27\"DI\"SAM2 6.8\"11G 42S GREY/BLUE 36V",
+    "Auftragsmenge": "1.000",
+    "offene_Liefermenge": "1.000",
+    "bereits_gelieferte_Menge": "0.000",
+    "Lieferdatum": "2018-09-11",
+    "Auftragsdatum": "2018-09-06"
+  }
+]
+" (Start: 1564 , End: 1595, On: input.raml, Source: SYIncludeNode)
+                                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                                                OverlayableStringNode: "application/json" (Start: -1 , End: -1, Source: SYStringNode)
+                                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                                OverlayableStringNode: "200" (Start: -1 , End: -1, Source: SYIntegerNode)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                        ObjectNodeImpl (Start: -1 , End: -1)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                                OverlayableStringNode: "get" (Start: -1 , End: -1, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                                                        OverlayableStringNode: "/{orderItems}" (Start: -1 , End: -1, Source: SYStringNode)
+                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                StringNodeImpl: "uriParameters" (Start: -1 , End: -1)
+                                                ObjectNodeImpl (Start: -1 , End: -1)
+                                                    PropertyNode (Start: -1 , End: -1)
+                                                        StringNodeImpl: "orderItems" (Start: -1 , End: -1)
+                                                        TypeDeclarationNode (Start: -1 , End: -1, Source: NativeTypeExpressionNode)
+                                                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                                                StringNodeImpl: "type" (Start: -1 , End: -1)
+                                                                NativeTypeExpressionNode: "string" (Start: -1 , End: -1, Source: NativeTypeExpressionNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            KeyValueNodeImpl (Start: -1 , End: -1)
+                                StringNodeImpl: "value" (Start: -1 , End: -1)
+                                OverlayableStringNode: "/{customerID}" (Start: -1 , End: -1, Source: SYStringNode)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "uriParameters" (Start: -1 , End: -1)
+                        ObjectNodeImpl (Start: -1 , End: -1)
+                            PropertyNode (Start: -1 , End: -1)
+                                StringNodeImpl: "customerID" (Start: -1 , End: -1)
+                                TypeDeclarationNode (Start: -1 , End: -1, Source: NativeTypeExpressionNode)
+                                    KeyValueNodeImpl (Start: -1 , End: -1)
+                                        StringNodeImpl: "type" (Start: -1 , End: -1)
+                                        NativeTypeExpressionNode: "string" (Start: -1 , End: -1, Source: NativeTypeExpressionNode)
+            KeyValueNodeImpl (Start: -1 , End: -1)
+                StringNodeImpl: "displayName" (Start: -1 , End: -1)
+                ObjectNodeImpl (Start: -1 , End: -1)
+                    KeyValueNodeImpl (Start: -1 , End: -1)
+                        StringNodeImpl: "value" (Start: -1 , End: -1)
+                        OverlayableStringNode: "/customer" (Start: -1 , End: -1, Source: SYStringNode)
