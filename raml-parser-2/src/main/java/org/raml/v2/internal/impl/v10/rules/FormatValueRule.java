@@ -43,8 +43,9 @@ public class FormatValueRule extends Rule
     {
         if (node instanceof FloatingNode && (format.equals("long") || format.startsWith("int")))
         {
-            BigDecimal value = ((FloatingNode) node).getValue();
-            return value.scale() <= 0;
+            FloatingNode floatingNode = (FloatingNode) node;
+            long value = floatingNode.getValue().longValue();
+            return floatingNode.getValue().compareTo(new BigDecimal(value)) == 0;
         }
 
         return true;
