@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: API with Examples
+types:
+  User:
+    type: object
+    properties:
+      name: string
+      age:
+        type: number
+        format: int
+    examples:
+      good: |
+        {
+          "name": "John",
+          "age": 18.000
+        }
