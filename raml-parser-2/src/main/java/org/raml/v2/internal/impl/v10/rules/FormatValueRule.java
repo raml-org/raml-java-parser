@@ -26,6 +26,7 @@ import org.raml.yagi.framework.suggester.Suggestion;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,8 +44,10 @@ public class FormatValueRule extends Rule
     {
         if (node instanceof FloatingNode && (format.equals("long") || format.startsWith("int")))
         {
-            BigDecimal value = ((FloatingNode) node).getValue();
-            return value.scale() <= 0;
+            FloatingNode floatingNode = (FloatingNode) node;
+            BigDecimal value = floatingNode.getValue();
+            BigDecimal roundedValue = floatingNode.getValue().setScale(0, RoundingMode.DOWN);
+            return roundedValue.compareTo(value) == 0;
         }
 
         return true;
