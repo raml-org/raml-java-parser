@@ -1,0 +1,369 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [
+  {
+   "name": "optional-post",
+   "usage": null
+  }
+ ],
+ "resources": [
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "/unimplemented-post"
+   },
+   "is": [],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
+     "headers": [],
+     "is": [
+      {
+       "name": "trait",
+       "structuredValue": null,
+       "trait": {
+        "name": "trait",
+        "usage": null
+       }
+      }
+     ],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": "Default value",
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "param"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "param",
+       "parentTypes": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": null,
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "facets": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "string",
+         "parentTypes": [],
+         "pattern": null,
+         "required": true,
+         "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "type": null,
+         "xml": null
+        }
+       ],
+       "pattern": null,
+       "required": false,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"param\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "string",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/unimplemented-post"
+   },
+   "resourcePath": "/unimplemented-post",
+   "resources": [],
+   "securedBy": [],
+   "type": {
+    "name": "optional-post",
+    "resourceType": {
+     "name": "optional-post",
+     "usage": null
+    },
+    "structuredValue": null
+   },
+   "uriParameters": []
+  },
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "/implemented-post"
+   },
+   "is": [],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": null,
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "application/json"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "application/json",
+       "parentTypes": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": {
+          "annotations": [],
+          "value": "implemented-post"
+         },
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "facets": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "implemented-post",
+         "parentTypes": [
+          {
+           "allowedTargets": [],
+           "annotations": [],
+           "defaultValue": null,
+           "description": null,
+           "displayName": null,
+           "enumValues": [],
+           "example": null,
+           "examples": [],
+           "facets": [],
+           "maxLength": null,
+           "minLength": null,
+           "name": "string",
+           "parentTypes": [],
+           "pattern": null,
+           "required": true,
+           "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+           "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+           "type": null,
+           "xml": null
+          }
+         ],
+         "pattern": null,
+         "required": true,
+         "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"implemented-post\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "type": "string",
+         "xml": null
+        }
+       ],
+       "pattern": null,
+       "required": true,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"implemented-post\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "implemented-post",
+       "xml": null
+      }
+     ],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "post?"
+     },
+     "headers": [],
+     "is": [],
+     "method": "post",
+     "protocols": [],
+     "queryParameters": [],
+     "queryString": null,
+     "responses": [],
+     "securedBy": []
+    },
+    {
+     "annotations": [],
+     "body": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
+     "headers": [],
+     "is": [
+      {
+       "name": "trait",
+       "structuredValue": null,
+       "trait": {
+        "name": "trait",
+        "usage": null
+       }
+      }
+     ],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "allowedTargets": [],
+       "annotations": [],
+       "defaultValue": "Default value",
+       "description": null,
+       "displayName": {
+        "annotations": [],
+        "value": "param"
+       },
+       "enumValues": [],
+       "example": null,
+       "examples": [],
+       "facets": [],
+       "maxLength": null,
+       "minLength": null,
+       "name": "param",
+       "parentTypes": [
+        {
+         "allowedTargets": [],
+         "annotations": [],
+         "defaultValue": null,
+         "description": null,
+         "displayName": null,
+         "enumValues": [],
+         "example": null,
+         "examples": [],
+         "facets": [],
+         "maxLength": null,
+         "minLength": null,
+         "name": "string",
+         "parentTypes": [],
+         "pattern": null,
+         "required": true,
+         "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+         "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+         "type": null,
+         "xml": null
+        }
+       ],
+       "pattern": null,
+       "required": false,
+       "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+       "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"param\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+       "type": "string",
+       "xml": null
+      }
+     ],
+     "queryString": null,
+     "responses": [],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/implemented-post"
+   },
+   "resourcePath": "/implemented-post",
+   "resources": [],
+   "securedBy": [],
+   "type": {
+    "name": "optional-post",
+    "resourceType": {
+     "name": "optional-post",
+     "usage": null
+    },
+    "structuredValue": null
+   },
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "Test"
+ },
+ "traits": [
+  {
+   "name": "trait",
+   "usage": null
+  }
+ ],
+ "types": [
+  {
+   "allowedTargets": [],
+   "annotations": [],
+   "defaultValue": null,
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "implemented-post"
+   },
+   "enumValues": [],
+   "example": null,
+   "examples": [],
+   "facets": [],
+   "maxLength": null,
+   "minLength": null,
+   "name": "implemented-post",
+   "parentTypes": [
+    {
+     "allowedTargets": [],
+     "annotations": [],
+     "defaultValue": null,
+     "description": null,
+     "displayName": null,
+     "enumValues": [],
+     "example": null,
+     "examples": [],
+     "facets": [],
+     "maxLength": null,
+     "minLength": null,
+     "name": "string",
+     "parentTypes": [],
+     "pattern": null,
+     "required": true,
+     "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+     "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"root\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+     "type": null,
+     "xml": null
+    }
+   ],
+   "pattern": null,
+   "required": true,
+   "toJsonSchema": "{\"type\":\"string\",\"definitions\":{},\"$schema\":\"http://json-schema.org/draft-04/schema#\"}",
+   "toXmlSchema": "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\" xmlns:tns=\"http://validationnamespace.raml.org\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" targetNamespace=\"http://validationnamespace.raml.org\">\n    <element name=\"implemented-post\">\n        <simpleType>\n            <restriction base=\"string\"/>\n        </simpleType>\n    </element>\n</schema>\n",
+   "type": "string",
+   "xml": null
+  }
+ ],
+ "uses": [],
+ "version": null
+}
