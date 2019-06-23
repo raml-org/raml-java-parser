@@ -90,7 +90,8 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
 
         // apply method and resource traits if defined
-        checkTraits(resourceNode, resourceNode);
+        Set<String> previouslyAppliedTraits = new HashSet<>();
+        checkTraits(resourceNode, resourceNode, previouslyAppliedTraits);
 
         // apply resource type if defined
         ReferenceNode resourceTypeReference = findResourceTypeReference(resourceNode);
@@ -101,13 +102,13 @@ public class ResourceTypesTraitsTransformer implements Transformer
             typeNodes.add((KeyValueNode) resourceTypeReference.getRefNode());
             findTheStuff((ResourceTypeNode) resourceTypeReference.getRefNode(), typeNodes);
 
-            applyResourceType(resourceNode, resourceTypeReference, resourceNode, typeNodes);
+            applyResourceType(resourceNode, resourceTypeReference, resourceNode, typeNodes, previouslyAppliedTraits);
         }
         mergedResources.add(resourceNode);
         return node;
     }
 
-    private void checkTraits(KeyValueNode resourceNode, ResourceNode baseResourceNode)
+    private void checkTraits(KeyValueNode resourceNode, ResourceNode baseResourceNode, Set<String> previouslyAppliedTraits)
     {
         final List<MethodNode> methodNodes = findMethodNodes(resourceNode);
         final List<ReferenceNode> resourceTraitRefs = findTraitReferences(resourceNode);
@@ -116,16 +117,21 @@ public class ResourceTypesTraitsTransformer implements Transformer
         {
             final List<ReferenceNode> traitRefs = findTraitReferences(methodNode);
             traitRefs.addAll(resourceTraitRefs);
-            for (final ReferenceNode traitRef : traitRefs)
-            {
+            for (final ReferenceNode traitRef : traitRefs) {
+                if ( previouslyAppliedTraits.contains(traitRef.getRefName())) {
+
+                    continue;
+                }
+
                 final String traitLevel = resourceTraitRefs.contains(traitRef) ? "resource" : "method";
                 logger.debug("applying {} level trait '{}' to '{}.{}'", traitLevel, traitRef.getRefName(), resourceNode.getKey(), methodNode.getName());
                 applyTrait(methodNode, traitRef, baseResourceNode);
+                previouslyAppliedTraits.add(traitRef.getRefName());
             }
         }
     }
 
-    private void applyResourceType(KeyValueNode targetNode, ReferenceNode resourceTypeReference, ResourceNode baseResourceNode, List<KeyValueNode> typeNodes)
+    private void applyResourceType(KeyValueNode targetNode, ReferenceNode resourceTypeReference, ResourceNode baseResourceNode, List<KeyValueNode> typeNodes, Set<String> previouslyAppliedTraits)
     {
 
         ResourceTypeNode refNode = (ResourceTypeNode) resourceTypeReference.getRefNode();
@@ -169,13 +175,13 @@ public class ResourceTypesTraitsTransformer implements Transformer
         if (success)
         {
             // apply traits
-            checkTraits(templateNode, baseResourceNode);
+            checkTraits(templateNode, baseResourceNode, previouslyAppliedTraits);
 
             // generateDefinition inheritance
             ReferenceNode parentTypeReference = findResourceTypeReference(templateNode);
             if (parentTypeReference != null)
             {
-                applyResourceType(templateNode, parentTypeReference, baseResourceNode, typeNodes);
+                applyResourceType(templateNode, parentTypeReference, baseResourceNode, typeNodes, previouslyAppliedTraits);
             }
         }
 
