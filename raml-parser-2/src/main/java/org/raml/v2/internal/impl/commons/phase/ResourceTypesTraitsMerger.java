@@ -18,10 +18,15 @@
  */
 package org.raml.v2.internal.impl.commons.phase;
 
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import org.raml.v2.internal.impl.commons.nodes.BodyNode;
 import org.raml.v2.internal.impl.commons.nodes.OverridableNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.v10.grammar.Raml10Grammar;
+import org.raml.v2.internal.impl.v10.nodes.PropertyNode;
 import org.raml.yagi.framework.grammar.rule.RegexValueRule;
 import org.raml.yagi.framework.nodes.ArrayNode;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -34,7 +39,9 @@ import org.raml.yagi.framework.util.NodeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.raml.yagi.framework.nodes.DefaultPosition.isDefaultNode;
@@ -79,7 +86,7 @@ public class ResourceTypesTraitsMerger
 
     static void merge(ObjectNode baseNode, ObjectNode copyNode)
     {
-        for (Node child : copyNode.getChildren())
+        for (final Node child : copyNode.getChildren())
         {
             if (child instanceof ErrorNode)
             {
@@ -131,8 +138,53 @@ public class ResourceTypesTraitsMerger
                 }
                 else
                 {
-                    logger.debug("Adding key '{}'", key);
-                    baseNode.addChild(child);
+                    if (child instanceof PropertyNode)
+                    {
+
+                        Optional<PropertyNode> foundBasenodeChild = FluentIterable.from(baseNode.getChildren()).filter(new Predicate<Node>()
+                        {
+                            @Override
+                            public boolean apply(@Nullable Node input)
+                            {
+                                return input instanceof PropertyNode;
+                            }
+                        }).transform(new Function<Node, PropertyNode>()
+                        {
+
+                            @Nullable
+                            @Override
+                            public PropertyNode apply(@Nullable Node input)
+                            {
+                                return ((PropertyNode) input);
+                            }
+                        }).firstMatch(new Predicate<PropertyNode>()
+                        {
+                            @Override
+                            public boolean apply(@Nullable PropertyNode input)
+                            {
+                                return input.getName().equals(((PropertyNode) child).getName());
+                            }
+                        });
+
+                        if (!foundBasenodeChild.isPresent())
+                        {
+
+                            logger.debug("Adding key '{}'", key);
+                            baseNode.addChild(child);
+                        }
+                        else
+                        {
+
+                            merge(foundBasenodeChild.get().getValue(), ((PropertyNode) child).getValue());
+                        }
+
+                    }
+                    else
+                    {
+
+                        logger.debug("Adding key '{}'", key);
+                        baseNode.addChild(child);
+                    }
                 }
             }
             else if (childValue instanceof SimpleTypeNode)
