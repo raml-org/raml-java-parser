@@ -118,8 +118,8 @@ public class ResourceTypesTraitsTransformer implements Transformer
             traitRefs.addAll(resourceTraitRefs);
             for (final ReferenceNode traitRef : traitRefs)
             {
-                final String traitLevel = resourceTraitRefs.contains(traitRef) ? "resource" : "method";
-                logger.debug("applying {} level trait '{}' to '{}.{}'", traitLevel, traitRef.getRefName(), resourceNode.getKey(), methodNode.getName());
+                logger.debug("applying {} level trait '{}' to '{}.{}'", resourceTraitRefs.contains(traitRef) ? "resource" : "method", traitRef.getRefName(), resourceNode.getKey(),
+                        methodNode.getName());
                 applyTrait(methodNode, traitRef, baseResourceNode);
             }
         }

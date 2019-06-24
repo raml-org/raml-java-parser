@@ -1,0 +1,39 @@
+#%RAML 1.0
+title: Types and traits issue.
+mediaType: application/json
+baseUri: http://foo.com
+
+traits:
+  error:
+    responses:
+      400:
+        description: thang
+        body:
+          application/json:
+            type:
+              properties:
+                one?: string
+                two?: string
+  anotherError:
+    responses:
+      400:
+        description: thang
+        body:
+          application/json:
+            type:
+              properties:
+                one?: string
+                two?: string
+
+resourceTypes:
+  thing:
+    get?:
+      is: [error]
+
+/customers:
+  type: thing
+  get:
+      is: [
+        anotherError
+      ]
+      responses:
