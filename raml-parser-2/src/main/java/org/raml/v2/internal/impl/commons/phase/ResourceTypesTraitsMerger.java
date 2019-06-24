@@ -141,30 +141,7 @@ public class ResourceTypesTraitsMerger
                     if (child instanceof PropertyNode)
                     {
 
-                        Optional<PropertyNode> foundBasenodeChild = FluentIterable.from(baseNode.getChildren()).filter(new Predicate<Node>()
-                        {
-                            @Override
-                            public boolean apply(@Nullable Node input)
-                            {
-                                return input instanceof PropertyNode;
-                            }
-                        }).transform(new Function<Node, PropertyNode>()
-                        {
-
-                            @Nullable
-                            @Override
-                            public PropertyNode apply(@Nullable Node input)
-                            {
-                                return ((PropertyNode) input);
-                            }
-                        }).firstMatch(new Predicate<PropertyNode>()
-                        {
-                            @Override
-                            public boolean apply(@Nullable PropertyNode input)
-                            {
-                                return input.getName().equals(((PropertyNode) child).getName());
-                            }
-                        });
+                        Optional<PropertyNode> foundBasenodeChild = findPropertyNode(baseNode, (PropertyNode) child);
 
                         if (!foundBasenodeChild.isPresent())
                         {
@@ -216,6 +193,47 @@ public class ResourceTypesTraitsMerger
                     merge(node, childValue);
                 }
             }
+        }
+    }
+
+    private static Optional<PropertyNode> findPropertyNode(ObjectNode baseNode, final PropertyNode child)
+    {
+        return FluentIterable.from(baseNode.getChildren()).filter(new Predicate<Node>()
+        {
+            @Override
+            public boolean apply(@Nullable Node input)
+            {
+                return input instanceof PropertyNode;
+            }
+        }).transform(new Function<Node, PropertyNode>()
+        {
+
+            @Nullable
+            @Override
+            public PropertyNode apply(@Nullable Node input)
+            {
+                return ((PropertyNode) input);
+            }
+        }).firstMatch(new Predicate<PropertyNode>()
+        {
+            @Override
+            public boolean apply(@Nullable PropertyNode input)
+            {
+                return nonOptionalName(input.getName()).equals(nonOptionalName(child.getName()));
+            }
+        });
+    }
+
+    private static String nonOptionalName(String name)
+    {
+
+        if (name.endsWith("?"))
+        {
+            return name.substring(0, name.length() - 1);
+        }
+        else
+        {
+            return name;
         }
     }
 
