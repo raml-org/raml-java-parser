@@ -1,3 +1,7 @@
+DEPRECATION NOTICE: please note that this parser is now deprecated, please use [webapi-parser](https://github.com/raml-org/webapi-parser) instead.
+
+—-
+
 # RAML Java Parser
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/raml-org/raml-java-parser?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.raml/raml-parser-2/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.raml/raml-parser-2)
