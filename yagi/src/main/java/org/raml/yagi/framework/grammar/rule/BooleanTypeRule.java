@@ -29,9 +29,6 @@ import java.util.List;
 
 public class BooleanTypeRule extends AbstractTypeRule
 {
-    private final static String TRUE = "true";
-    private final static String FALSE = "false";
-
     @Nonnull
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
@@ -42,11 +39,6 @@ public class BooleanTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof StringNode)
-        {
-            String value = ((StringNode) node).getValue();
-            return TRUE.equals(value) || FALSE.equals(value);
-        }
         return node instanceof BooleanNode;
     }
 
