@@ -74,7 +74,7 @@ public class StringTemplateExpressionTransformer implements Transformer
 
         if (value.length() > previousEndPosition)
         {
-            final StringNodeImpl stringNode = new StringNodeImpl(value.substring(previousEndPosition, value.length()));
+            final StringNodeImpl stringNode = new StringNodeImpl(value.substring(previousEndPosition));
             stringNode.setStartPosition(startPosition.rightShift(previousEndPosition));
             stringNode.setEndPosition(startPosition.rightShift(value.length()));
             stringTemplateNode.addChild(stringNode);

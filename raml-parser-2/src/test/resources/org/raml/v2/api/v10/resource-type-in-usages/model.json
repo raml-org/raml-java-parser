@@ -1,0 +1,82 @@
+{
+ "annotationTypes": [],
+ "annotations": [],
+ "baseUri": null,
+ "baseUriParameters": [],
+ "description": null,
+ "documentation": [],
+ "mediaType": [],
+ "protocols": [],
+ "ramlVersion": "1.0",
+ "resourceTypes": [],
+ "resources": [
+  {
+   "annotations": [],
+   "description": null,
+   "displayName": {
+    "annotations": [],
+    "value": "/songs"
+   },
+   "is": [],
+   "methods": [
+    {
+     "annotations": [],
+     "body": [],
+     "description": null,
+     "displayName": {
+      "annotations": [],
+      "value": "get"
+     },
+     "headers": [],
+     "is": [],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [],
+     "queryString": null,
+     "responses": [],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/songs"
+   },
+   "resourcePath": "/songs",
+   "resources": [],
+   "securedBy": [],
+   "type": null,
+   "uriParameters": []
+  }
+ ],
+ "schemas": [],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": {
+  "annotations": [],
+  "value": "demoJsonAPI"
+ },
+ "traits": [],
+ "types": [],
+ "uses": [
+  {
+   "annotationTypes": [],
+   "annotations": [],
+   "name": "lib",
+   "resourceTypes": [
+    {
+     "name": "collection",
+     "usage": null
+    }
+   ],
+   "schemas": [],
+   "securitySchemes": [],
+   "traits": [],
+   "types": [],
+   "usage": {
+    "annotations": [],
+    "value": "a literal string <<resourcePathName>>"
+   },
+   "uses": []
+  }
+ ],
+ "version": null
+}

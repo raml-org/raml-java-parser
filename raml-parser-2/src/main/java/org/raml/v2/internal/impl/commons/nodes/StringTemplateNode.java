@@ -116,4 +116,13 @@ public class StringTemplateNode extends AbstractStringNode implements Executable
     {
         return new StringTemplateNode(this);
     }
+
+    @Override
+    public void replaceWith(Node newNode)
+    {
+        if (this != newNode)
+        {
+            replaceTree(newNode);
+        }
+    }
 }
