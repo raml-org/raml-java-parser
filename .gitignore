@@ -9,3 +9,4 @@ dist
 .settings
 .idea
 target
+private
