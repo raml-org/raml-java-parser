@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser-parent</artifactId>
-    <version>1.0.39-SNAPSHOT</version>
+    <version>1.0.39</version>
     <packaging>pom</packaging>
     <name>Raml Java Parser 2nd generation parent</name>
     <description>Raml parser implemented in java</description>
