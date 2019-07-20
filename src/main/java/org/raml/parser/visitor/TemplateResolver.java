@@ -225,7 +225,7 @@ public class TemplateResolver
     private Node getFakeTemplateNode(Node keyNode)
     {
         List<NodeTuple> innerTuples = new ArrayList<NodeTuple>();
-        innerTuples.add(new NodeTuple(new ScalarNode(Tag.STR, "displayName", null, null, null), keyNode));
+        innerTuples.add(new NodeTuple(new ScalarNode(Tag.STR, "displayName", null, null, (Character)null), keyNode));
         MappingNode innerNode = new MappingNode(Tag.MAP, innerTuples, false);
         List<NodeTuple> outerTuples = new ArrayList<NodeTuple>();
         outerTuples.add(new NodeTuple(keyNode, innerNode));

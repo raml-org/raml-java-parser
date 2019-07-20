@@ -121,7 +121,7 @@ public class MediaTypeResolver
             }
         }
         List<NodeTuple> copy = new ArrayList<NodeTuple>(bodyNode.getValue());
-        Node keyNode = new ScalarNode(Tag.STR, mediaType, null, null, null);
+        Node keyNode = new ScalarNode(Tag.STR, mediaType, null, null, (Character)null);
         Node valueNode = new MappingNode(Tag.MAP, copy, false);
         bodyNode.getValue().clear();
         bodyNode.getValue().add(new NodeTuple(keyNode, valueNode));
