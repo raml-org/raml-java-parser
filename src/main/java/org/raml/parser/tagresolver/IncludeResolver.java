@@ -128,7 +128,7 @@ public class IncludeResolver implements TagResolver, ContextPathAware
 
     private Node mockInclude(Node node)
     {
-        return new ScalarNode(INCLUDE_NOT_FOUND_TAG, "invalid", node.getStartMark(), node.getEndMark(), null);
+        return new ScalarNode(INCLUDE_NOT_FOUND_TAG, "invalid", node.getStartMark(), node.getEndMark(), (Character)null);
     }
 
     public void setContextPath(ContextPath contextPath)

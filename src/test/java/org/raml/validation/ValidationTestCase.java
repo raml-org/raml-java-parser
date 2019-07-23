@@ -212,7 +212,7 @@ public class ValidationTestCase extends AbstractRamlTestCase
         String resource = "org/raml/validation/indentation-broken.raml";
         List<ValidationResult> validationResults = validateRaml(resource);
         assertThat(validationResults.size(), is(1));
-        assertThat(validationResults.get(0).getMessage(), is("expected <block end>, but found BlockMappingStart"));
+        assertThat(validationResults.get(0).getMessage(), is("expected <block end>, but found '<block mapping start>'"));
         assertThat(validationResults.get(0).getLine() + 1, is(12));
     }
 
