@@ -21,7 +21,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <snakeyaml.version>1.23</snakeyaml.version>
+        <snakeyaml.version>1.15</snakeyaml.version>
     </properties>
 
     <build>
