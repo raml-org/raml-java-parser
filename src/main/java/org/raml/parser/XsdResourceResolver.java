@@ -16,6 +16,7 @@
 package org.raml.parser;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -48,11 +49,18 @@ public class XsdResourceResolver implements LSResourceResolver
             return null;
         }
         String path = contextPath.resolveAbsolutePath(systemId);
-        if (path == null || path.startsWith("http://"))
+        if (path == null || path.startsWith("http://")|| path.startsWith("https://")|| path.startsWith("file:"))
         {
             //delegate resource resolution to xml parser
             return null;
         }
+
+        if (new File(systemId).isAbsolute())
+        {
+
+            return null;
+        }
+
         InputStream inputStream = resourceLoader.fetchResource(path);
         if (inputStream == null)
         {
@@ -68,7 +76,6 @@ public class XsdResourceResolver implements LSResourceResolver
         {
             throw new ResolveResourceException(e);
         }
-        LSInput input = new LSInputImpl(publicId, systemId, baseURI, new ByteArrayInputStream(content), StreamUtils.detectEncoding(content));
-        return input;
+        return new LSInputImpl(publicId, systemId, baseURI, new ByteArrayInputStream(content), StreamUtils.detectEncoding(content));
     }
 }
