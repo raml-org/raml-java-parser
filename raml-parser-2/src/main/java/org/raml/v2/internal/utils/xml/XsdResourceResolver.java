@@ -18,6 +18,7 @@ package org.raml.v2.internal.utils.xml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.ResourceLoader;
@@ -40,18 +41,26 @@ public class XsdResourceResolver implements LSResourceResolver
     @Override
     public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, String baseURI)
     {
-        String path = resolvePath(systemId);
-        if (path == null || path.startsWith("http://") || path.startsWith("https://"))
+        if (systemId == null || systemId.startsWith("http://") || systemId.startsWith("https://") || systemId.startsWith("file:"))
         {
             // delegate resource resolution to xml parser
             return null;
         }
-        InputStream inputStream = resourceLoader.fetchResource(path);
+
+        if (Paths.get(systemId).normalize().isAbsolute())
+        {
+
+            return null;
+        }
+
+        InputStream inputStream = resourceLoader.fetchResource(systemId);
         if (inputStream == null)
         {
             // delegate resource resolution to xml parser
             return null;
         }
+
+
         byte[] content;
         try
         {
@@ -61,18 +70,6 @@ public class XsdResourceResolver implements LSResourceResolver
         {
             throw new RuntimeException(e);
         }
-        LSInput input = new LSInputImpl(publicId, systemId, baseURI, new ByteArrayInputStream(content), StreamUtils.detectEncoding(content));
-        return input;
-    }
-
-    private String resolvePath(String includePath)
-    {
-        // TODO works for relative only for now
-        int lastSlash = resourcePath.lastIndexOf("/");
-        if (lastSlash != -1)
-        {
-            return resourcePath.substring(0, lastSlash + 1) + includePath;
-        }
-        return includePath;
+        return new LSInputImpl(publicId, systemId, baseURI, new ByteArrayInputStream(content), StreamUtils.detectEncoding(content));
     }
 }
