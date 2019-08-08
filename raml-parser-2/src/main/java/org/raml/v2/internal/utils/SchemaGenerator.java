@@ -68,7 +68,6 @@ public class SchemaGenerator
     public static Schema generateXmlSchema(ResourceLoader resourceLoader, XmlSchemaExternalType xmlTypeDefinition) throws SAXException
     {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         factory.setResourceResolver(new XsdResourceResolver(resourceLoader, xmlTypeDefinition.getSchemaPath()));
         String includedResourceUri = resolveResourceUriIfIncluded(xmlTypeDefinition);
         return factory.newSchema(new StreamSource(new StringReader(xmlTypeDefinition.getSchemaValue()), includedResourceUri));
