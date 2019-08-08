@@ -34,7 +34,7 @@ public class XxeCheckTestCase
 
     static
     {
-        // System.setProperty("javax.xml.accessExternalDTD", "");
+        System.setProperty("javax.xml.accessExternalDTD", "");
 
         try
         {
