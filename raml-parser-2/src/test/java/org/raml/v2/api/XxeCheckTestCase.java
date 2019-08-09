@@ -40,7 +40,7 @@ public class XxeCheckTestCase
         {
             File desFile = File.createTempFile("temp", ".raml");
             EXISTENT_FILE = desFile.toURI();
-            FileUtils.copyFile(new File(XxeCheckTestCase.class.getResource("/simplelogger.properties").getFile()), desFile);
+            FileUtils.copyInputStreamToFile(XxeCheckTestCase.class.getResource("/simplelogger.properties").openStream(), desFile);
             // FileUtils.copyFile(new File(XxeCheckTestCase.class.getResource("/fun.dtd").getFile()), desFile);
         }
         catch (IOException e)
