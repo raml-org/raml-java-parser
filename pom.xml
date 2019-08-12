@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser</artifactId>
-    <version>0.8.34-SNAPSHOT</version>
+    <version>0.8.35-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Raml parser</name>
     <description>Java implementation of the raml parser</description>
