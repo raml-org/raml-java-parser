@@ -17,14 +17,9 @@ package org.raml.v2.internal.impl;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.raml.v2.api.RamlModelBuilder;
-import org.raml.v2.api.RamlModelResult;
-import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.internal.impl.emitter.tck.TckEmitter;
 import org.raml.v2.internal.utils.RamlNodeUtils;
 import org.raml.yagi.framework.nodes.ErrorNode;
@@ -34,14 +29,14 @@ import org.raml.yagi.framework.nodes.Position;
 public class RamlValidator
 {
 
-    public static final String USAGE = "Arguments: [-dump] file|url|dir";
+    private static final String USAGE = "Arguments: [-dump] file|url|dir";
 
     private boolean dump;
     private String ramlLocation;
     private int ramlCount;
     private int validRamlCount;
 
-    public RamlValidator(String[] args)
+    private RamlValidator(String[] args)
     {
         parseArguments(args);
     }
@@ -89,35 +84,6 @@ public class RamlValidator
         System.out.println(StringUtils.repeat("=", 120));
 
         ramlCount++;
-        System.setProperty("javax.xml.accessExternalDTD", "");
-        System.setProperty("javax.xml.accessExternalSchema", "");
-        String javaSchema = "#%RAML 0.8\n"
-                            + "title: api1\n"
-                            + "version: \"1.0\"\n"
-                            + "schemas:\n"
-                            + "  schema1: |\n"
-                            + "   <?xml version=\"1.0\" ?>\n"
-                            + "   <!DOCTYPE r [\n"
-                            + "   <!ELEMENT r ANY >\n"
-                            + "   <!ENTITY sp SYSTEM \"file:///Users/jpbelang/IdeaProjects/raml-java-parser/private/fun.dtd\">\n"
-                            + "   ]>\n"
-                            + "   <r>&sp;</r>\n"
-                            + "/test:\n"
-                            + "  displayName: res1\n"
-                            + "  get:\n"
-                            + "  post:";
-        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(javaSchema, ".");
-        if (ramlModelResult.hasErrors())
-        {
-            for (ValidationResult validationResult : ramlModelResult.getValidationResults())
-            {
-                System.err.println(validationResult.getMessage());
-            }
-            System.exit(1);
-        }
-
-        // System.exit(1);
-
         final Node raml = new RamlBuilder().build(ramlFile);
         List<ErrorNode> errors = RamlNodeUtils.getErrors(raml);
         if (!errors.isEmpty())
