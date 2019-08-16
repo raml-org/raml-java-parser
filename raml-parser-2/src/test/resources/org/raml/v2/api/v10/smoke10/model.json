@@ -1,0 +1,441 @@
+{
+ "baseUri": {
+  "value": "http://base.uri/{version}/{param1}"
+ },
+ "baseUriParameters": [
+  {
+   "defaultValue": null,
+   "description": {
+    "value": "some description"
+   },
+   "displayName": "Param 1",
+   "enumValues": [],
+   "example": "one",
+   "maxLength": 10,
+   "minLength": null,
+   "name": "param1",
+   "pattern": null,
+   "repeat": null,
+   "required": false,
+   "type": "string"
+  }
+ ],
+ "description": null,
+ "documentation": [
+  {
+   "content": {
+    "value": "single line"
+   },
+   "title": "doc title 1"
+  },
+  {
+   "content": {
+    "value": "multi\nline\n"
+   },
+   "title": "doc title 2"
+  }
+ ],
+ "mediaType": {
+  "value": "application/json"
+ },
+ "protocols": [
+  "HTTP",
+  "HTTPS"
+ ],
+ "ramlVersion": "0.8",
+ "resourceTypes": [
+  {
+   "baseUriParameters": [],
+   "description": null,
+   "displayName": null,
+   "is": [],
+   "methods": [],
+   "name": "first",
+   "parametrizedProperties": null,
+   "securedBy": [],
+   "type": null,
+   "uriParameters": [],
+   "usage": "first usage"
+  }
+ ],
+ "resources": [
+  {
+   "baseUriParameters": [
+    {
+     "defaultValue": null,
+     "description": {
+      "value": "resource override"
+     },
+     "displayName": "param1",
+     "example": null,
+     "maximum": null,
+     "minimum": null,
+     "name": "param1",
+     "repeat": null,
+     "required": false,
+     "type": "number"
+    }
+   ],
+   "description": {
+    "value": "top description"
+   },
+   "displayName": "/top",
+   "is": [],
+   "methods": [
+    {
+     "baseUriParameters": [
+      {
+       "defaultValue": null,
+       "description": {
+        "value": "method override"
+       },
+       "displayName": "param1",
+       "example": null,
+       "name": "param1",
+       "repeat": null,
+       "required": false,
+       "type": "boolean"
+      }
+     ],
+     "body": [],
+     "description": {
+      "value": "get something"
+     },
+     "headers": [],
+     "is": [],
+     "method": "get",
+     "protocols": [],
+     "queryParameters": [
+      {
+       "defaultValue": "asc",
+       "description": null,
+       "displayName": "order",
+       "enumValues": [],
+       "example": "desc",
+       "maxLength": 4,
+       "minLength": null,
+       "name": "order",
+       "pattern": null,
+       "repeat": true,
+       "required": false,
+       "type": "string"
+      }
+     ],
+     "responses": [],
+     "securedBy": []
+    },
+    {
+     "baseUriParameters": [],
+     "body": [
+      {
+       "description": null,
+       "example": {
+        "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+       },
+       "formParameters": [],
+       "name": "application/json",
+       "schema": {
+        "value": "UserJson"
+       },
+       "schemaContent": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
+      },
+      {
+       "description": null,
+       "example": null,
+       "formParameters": [],
+       "name": "application/xml",
+       "schema": {
+        "value": "UserXml"
+       },
+       "schemaContent": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
+      },
+      {
+       "description": null,
+       "example": null,
+       "formParameters": [
+        {
+         "defaultValue": null,
+         "description": null,
+         "displayName": "description",
+         "enumValues": [],
+         "example": null,
+         "maxLength": null,
+         "minLength": null,
+         "name": "description",
+         "pattern": null,
+         "repeat": null,
+         "required": false,
+         "type": "string"
+        },
+        {
+         "defaultValue": null,
+         "description": null,
+         "displayName": "image",
+         "example": null,
+         "name": "image",
+         "repeat": null,
+         "required": false,
+         "type": "file"
+        }
+       ],
+       "name": "multipart/form-data",
+       "schema": null,
+       "schemaContent": null
+      },
+      {
+       "description": null,
+       "example": null,
+       "formParameters": [],
+       "name": "application/vnd.inline+json",
+       "schema": {
+        "value": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+       },
+       "schemaContent": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+      }
+     ],
+     "description": {
+      "value": "post something"
+     },
+     "headers": [],
+     "is": [],
+     "method": "post",
+     "protocols": [],
+     "queryParameters": [],
+     "responses": [
+      {
+       "body": [
+        {
+         "description": null,
+         "example": {
+          "value": "{\n    \"firstname\": \"tato\",\n    \"lastname\": \"bores\",\n    \"age\": 66\n}\n"
+         },
+         "formParameters": [],
+         "name": "application/json",
+         "schema": {
+          "value": "UserJson"
+         },
+         "schemaContent": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
+        },
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [],
+         "name": "application/xml",
+         "schema": {
+          "value": "UserXml"
+         },
+         "schemaContent": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
+        },
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [
+          {
+           "defaultValue": null,
+           "description": null,
+           "displayName": "description",
+           "enumValues": [],
+           "example": null,
+           "maxLength": null,
+           "minLength": null,
+           "name": "description",
+           "pattern": null,
+           "repeat": null,
+           "required": false,
+           "type": "string"
+          },
+          {
+           "defaultValue": null,
+           "description": null,
+           "displayName": "image",
+           "example": null,
+           "name": "image",
+           "repeat": null,
+           "required": false,
+           "type": "file"
+          }
+         ],
+         "name": "multipart/form-data",
+         "schema": null,
+         "schemaContent": null
+        },
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [],
+         "name": "application/vnd.inline+json",
+         "schema": {
+          "value": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+         },
+         "schemaContent": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+        }
+       ],
+       "code": {
+        "value": "200"
+       },
+       "description": null,
+       "headers": []
+      },
+      {
+       "body": [],
+       "code": {
+        "value": "400"
+       },
+       "description": null,
+       "headers": []
+      }
+     ],
+     "securedBy": []
+    }
+   ],
+   "relativeUri": {
+    "value": "/top"
+   },
+   "resourcePath": "/top",
+   "resources": [
+    {
+     "baseUriParameters": [],
+     "description": {
+      "value": "child description"
+     },
+     "displayName": "/children",
+     "is": [],
+     "methods": [
+      {
+       "baseUriParameters": [],
+       "body": [
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [],
+         "name": "application/json",
+         "schema": {
+          "value": "UserJson"
+         },
+         "schemaContent": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
+        }
+       ],
+       "description": null,
+       "headers": [],
+       "is": [],
+       "method": "post",
+       "protocols": [],
+       "queryParameters": [],
+       "responses": [],
+       "securedBy": []
+      }
+     ],
+     "relativeUri": {
+      "value": "/children"
+     },
+     "resourcePath": "/top/children",
+     "resources": [
+      {
+       "baseUriParameters": [],
+       "description": null,
+       "displayName": "/{childId}",
+       "is": [],
+       "methods": [],
+       "relativeUri": {
+        "value": "/{childId}"
+       },
+       "resourcePath": "/top/children/{childId}",
+       "resources": [],
+       "securedBy": [],
+       "type": null,
+       "uriParameters": [
+        {
+         "defaultValue": null,
+         "description": null,
+         "displayName": "childId",
+         "enumValues": [],
+         "example": null,
+         "maxLength": null,
+         "minLength": null,
+         "name": "childId",
+         "pattern": null,
+         "repeat": null,
+         "required": true,
+         "type": "string"
+        }
+       ]
+      }
+     ],
+     "securedBy": [],
+     "type": null,
+     "uriParameters": []
+    }
+   ],
+   "securedBy": [],
+   "type": {
+    "name": "first",
+    "resourceType": {
+     "baseUriParameters": [],
+     "description": null,
+     "displayName": null,
+     "is": [],
+     "methods": [],
+     "name": "first",
+     "parametrizedProperties": null,
+     "securedBy": [],
+     "type": null,
+     "uriParameters": [],
+     "usage": "first usage"
+    },
+    "structuredValue": null
+   },
+   "uriParameters": []
+  }
+ ],
+ "schemas": [
+  {
+   "key": "UserJson",
+   "value": {
+    "value": "{\n   \"$schema\": \"http://json-schema.org/draft-04/schema\",\n   \"type\": \"object\",\n   \"properties\": {\n     \"firstname\":  { \"type\": \"string\" },\n     \"lastname\":  { \"type\": \"string\" },\n     \"age\":  { \"type\": \"integer\" }\n   },\n   \"required\": [ \"firstname\", \"lastname\" ]\n}\n"
+   }
+  },
+  {
+   "key": "UserXml",
+   "value": {
+    "value": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
+   }
+  }
+ ],
+ "securedBy": [],
+ "securitySchemes": [],
+ "title": "api title",
+ "traits": [
+  {
+   "baseUriParameters": [],
+   "body": [],
+   "description": {
+    "value": "method description from trait one"
+   },
+   "headers": [],
+   "name": "one",
+   "parametrizedProperties": null,
+   "protocols": [],
+   "queryParameters": [],
+   "responses": [],
+   "securedBy": [],
+   "usage": null
+  },
+  {
+   "baseUriParameters": [],
+   "body": [],
+   "description": {
+    "value": "method description from trait two"
+   },
+   "headers": [],
+   "name": "two",
+   "parametrizedProperties": null,
+   "protocols": [],
+   "queryParameters": [],
+   "responses": [],
+   "securedBy": [],
+   "usage": null
+  }
+ ],
+ "uriParameters": [],
+ "version": "v1"
+}

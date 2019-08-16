@@ -1,0 +1,405 @@
+#%RAML 1.0
+title: Validation API
+baseUri: http://localhost:8083/api
+mediaType: [ application/json, application/xml ]
+
+traits:
+  chargeable:
+    headers:
+      X-Dept:
+          example: 111-XYZH
+types:
+  User:
+    type: object
+    properties:
+      firstname: string
+      lastname:  string
+      age: number
+  Employee:
+    type: User
+  Files: !include files.xsd
+/users/{id}:
+  get:
+    responses:
+      200:
+        body:
+          type: User
+/employee:
+  get:
+    responses:
+      200:
+        body:
+            type: Employee
+/resource:
+    put:
+        body:
+            application/json:
+                #schema: !include fstab-referring.json
+                #schema: !include refs/fstab.json
+        responses:
+            200:
+                body:
+                    text/plain: ~
+/resource2:
+    put:
+                #schema: !include fstab-referring.json
+                #schema: !include refs/fstab.json
+        responses:
+            200:
+                body:
+                    text/plain: ~
+/schema:
+    put:
+      body:
+          application/json:
+                schema: !include schema.json
+                #schema: !include refs/fstab.json
+                example: !include example.json
+      responses:
+            200:
+                body:
+/customers:
+  get:
+    is: [ chargeable ]
+    description: |
+      The HTTP interaction will look like
+      GET /customers HTTP/1.1
+      X-Dept: 200-MISC
+    headers:
+      X-Dept:
+        example: 200-MISC
+/types-test:
+  post:
+    body:
+        application/json:
+            type: User
+    responses:
+      200: ~
+/jsonschema:
+    put:
+      body:
+          application/json:
+                schema: !include schema.json
+                #schema: !include refs/fstab.json
+                example: !include example.json
+      responses:
+            200:
+                body:
+/xmlschema:
+  put:
+    body:
+          application/xml:
+            schema: Files
+    responses:
+      200:
+        body:
+          application/xml:
+            schema: Files
+#            example:
+#              <?xml version="1.0" encoding="UTF-8"?>
+#                <response>
+#                        <name>Eleo</name>
+#                        <age>35</age>
+#                </response>
+/entero:
+  get:
+    headers:
+      X-Integer:
+        type: integer
+        required: true
+        description: |
+          Testing integer header type
+          example: 33
+/multiplo:
+  get:
+    headers:
+      X-MultipleOf:
+        type: integer
+        multipleOf : 4
+        description: |
+          Testing multipleOf facet
+/minimo:
+  get:
+    headers:
+      X-Minimum:
+        type: integer
+        required: true
+        minimum : 4
+        description: |
+          Testing minimum facet
+/maximo:
+  get:
+    headers:
+      X-Maximum:
+        type: integer
+        required: true
+        maximum : 10
+        description: |
+          Testing maximum facet
+/booleano:
+  get:
+    headers:
+      X-NoFacets:
+        type: boolean
+        description: Testing boolean header type with no facets defined
+/dateonly:
+  get:
+    headers:
+      X-Birthday:
+        type: date-only # no implications about time or offset
+        description: Testing date-only header type
+        example: 2015-05-23
+/datetimeonly:
+  get:
+    headers:
+      X-Fireworks:
+        type: datetime-only # no implications about offset
+        description: Testing datetime-only header type
+        example: 2015-07-04T21:00:00
+/datetime3339:
+  get:
+    headers:
+      X-Created:
+        type: datetime
+        description: Testing datetime format rfc3339 header type
+        example: 2016-02-28T16:41:41.090Z
+        format: rfc3339 # the default, so no need to specify
+/datetime2616:
+  get:
+    headers:
+      X-ModifiedSince:
+        type: datetime
+        description: Testing datetime format rfc2616 header type
+        example: Sun, 28 Feb 2016 16:41:41 GMT
+        format: rfc2616 # this time it's required, otherwise, the example format is invalid
+/cadena:
+  get:
+    headers:
+      X-String:
+        description: Testing string header type
+        type: string
+        required: true
+        example: abcdefghijklmnop  
+/cadenaminlength:
+  get:
+    headers:
+      X-MinLength:
+        description: Testing string header type with minLenght facet
+        type: string
+        minLength: 2
+        example: abcdefghijklmnop
+/cadenamaxlength:
+  get:
+    headers:
+      X-MaxLength:
+        description: Testing string header type with maxLength facet
+        type: string
+        maxLength: 2
+        example: ab
+/cadenapattern:
+  get:
+    headers:
+      X-Pattern:
+        description: test pattern
+        pattern: ^\d+\-\w+$
+        example: 230-OCTO
+/intdefectoheader:
+   get:
+     headers:
+        X-DefaultInt:
+          type: integer
+          required: false
+          default: 4
+          description: |
+            Testing default facet with integer
+/booldefectoheader:
+   get:
+     headers:
+       X-DefaultBool:
+         type: boolean
+         required: false
+         default: false
+         description: Testing boolean header type with no facets defined
+/datedefectoheader:
+   get:
+     headers:
+        X-DefaultDate:
+          type: datetime-only
+          required: false
+          default: 2017-01-01T00:00:00
+          description: Testing default facet with datetime-only header type
+          example: 2015-07-04T21:00:00
+/stringdefectoheader:
+   get:
+     headers:
+        X-DefaultString:
+          description: Testing default string header type facet
+          type: string
+          required: false
+          default: ComingDown
+          example: abcdefghijklmnop
+/queryparamstring:
+  get:
+    description: Sending a number in a string type is valid
+    queryParameters:
+      cadena:
+        description: Specify the page that you want to retrieve
+        type:        string
+        required:    true
+        example:     "1"
+      per_page:
+        description: Specify the amount of items that will be retrieved per page
+        type:        integer
+        minimum:     10
+        maximum:     200
+        default:     30
+        example:     50
+/users:
+  get:
+    description: Get a list of users
+    queryParameters:
+      page:
+        description: Specify the page that you want to retrieve
+        type:        integer
+        required:    true
+        example:     1
+      per_page:
+        description: Specify the amount of items that will be retrieved per page
+        type:        integer
+        minimum:     10
+        maximum:     200
+        default:     30
+        example:     50
+/q-entero:
+  get:
+    queryParameters:
+      Q-Integer:
+        type: integer
+        required: true
+/q-multiplo:
+  get:
+    queryParameters:
+      Q-MultipleOf:
+        type: integer
+        multipleOf : 4
+        description: |
+          Testing multipleOf facet
+/q-minimo:
+  get:
+    queryParameters:
+      Q-Minimum:
+        type: integer
+        required: true
+        minimum : 4
+        description: |
+          Testing minimum facet
+/q-maximo:
+  get:
+    queryParameters:
+      Q-Maximum:
+        type: integer
+        required: true
+        maximum : 10
+        description: |
+          Testing maximum facet
+/q-booleano:
+  get:
+    queryParameters:
+      Q-NoFacets:
+        type: boolean
+        description: Testing boolean header type with no facets defined
+/q-dateonly:
+  get:
+    queryParameters:
+      Q-Birthday:
+        type: date-only # no implications about time or offset
+        description: Testing date-only header type
+        example: 2015-05-23
+/q-datetimeonly:
+  get:
+    queryParameters:
+      Q-Fireworks:
+        type: datetime-only # no implications about offset
+        description: Testing datetime-only header type
+        example: 2015-07-04T21:00:00
+/q-datetime3339:
+  get:
+    queryParameters:
+      Q-Created:
+        type: datetime
+        description: Testing datetime format rfc3339 header type
+        example: 2016-02-28T16:41:41.090Z
+        format: rfc3339 # the default, so no need to specify
+/q-datetime2616:
+  get:
+    queryParameters:
+      Q-ModifiedSince:
+        type: datetime
+        description: Testing datetime format rfc2616 header type
+        example: Sun, 28 Feb 2016 16:41:41 GMT
+        format: rfc2616 # this time it's required, otherwise, the example format is invalid
+/q-cadena:
+  get:
+    queryParameters:
+      Q-String:
+        description: Testing string header type
+        type: string
+        required: true
+        example: abcdefghijklmnop  
+/q-cadenaminlength:
+  get:
+    queryParameters:
+      Q-MinLength:
+        description: Testing string header type with minLenght facet
+        type: string
+        minLength: 2
+        example: abcdefghijklmnop
+/q-cadenamaxlength:
+  get:
+    queryParameters:
+      Q-MaxLength:
+        description: Testing string header type with maxLength facet
+        type: string
+        maxLength: 2
+        example: ab
+/q-cadenapattern:
+  get:
+    queryParameters:
+      Q-Pattern:
+        description: test pattern
+        pattern: ^\d+\-\w+$
+        example: 230-OCTO
+/q-intdefecto:
+   get:
+     queryParameters:
+        Q-DefaultInt:
+          type: integer
+          required: false
+          default: 4
+          description: Testing default facet with integer
+/q-booldefecto:
+   get:
+      queryParameters:
+       Q-DefaultBool:
+         type: boolean
+         required: false
+         default: false
+         description: Testing default facet with boolean
+/q-datedefecto:
+   get:
+     queryParameters:
+        Q-DefaultDate:
+          type: datetime-only
+          required: false
+          default: 2017-01-01T00:00:00
+          description: Testing default facet with datetime-only
+          example: 2015-07-04T21:00:00
+/q-stringdefecto:
+   get:
+     queryParameters:
+        Q-DefaultString:
+          description: Testing default string queryParameter
+          type: string
+          required: false
+          default: ComingDown
+          example: abcdefghijklmnop
