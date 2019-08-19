@@ -25,6 +25,7 @@ import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.rules.DiscriminatorBasedRule;
+import org.raml.v2.internal.impl.v10.rules.DiscriminatorForExamplesBasedRule;
 import org.raml.v2.internal.impl.v10.rules.FormatValueRule;
 import org.raml.yagi.framework.grammar.rule.AllOfRule;
 import org.raml.yagi.framework.grammar.rule.AnyOfRule;
@@ -72,15 +73,23 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
 
     private ResourceLoader resourceLoader;
+    private final boolean useDiscriminatorsToCalculateTypes;
     private boolean strictMode = false;
     private Map<ResolvedType, Rule> definitionRuleMap = new IdentityHashMap<>();
 
     // Flag that should be turn on when discriminator should be resolved
     private boolean resolvingDiscriminator = false;
 
+    public TypeToRuleVisitor(ResourceLoader resourceLoader, boolean useDiscriminatorsToCalculateTypes)
+    {
+        this.resourceLoader = resourceLoader;
+        this.useDiscriminatorsToCalculateTypes = useDiscriminatorsToCalculateTypes;
+    }
+
     public TypeToRuleVisitor(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
+        this.useDiscriminatorsToCalculateTypes = true;
     }
 
     public Rule generateRule(ResolvedType items)
@@ -143,7 +152,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     @Override
     public Rule visitObject(ObjectResolvedType objectTypeDefinition)
     {
-        if (!resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
+        if (useDiscriminatorsToCalculateTypes && !resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
         {
             resolvingDiscriminator = false;
             final TypeExpressionNode typeDeclarationNode = objectTypeDefinition.getTypeExpressionNode();
@@ -151,38 +160,55 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         }
         else
         {
-            final ObjectRule objectRule = new ObjectRule(strictMode);
-            registerRule(objectTypeDefinition, objectRule);
-
-            final boolean isAdditionalPropertiesEnabled = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
-            objectRule.additionalProperties(isAdditionalPropertiesEnabled);
-
-            final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
-
-            final Map<String, PropertyFacets> nonPatternProperties = getNonPatternProperties(properties);
-            addFieldsToRule(objectRule, nonPatternProperties);
-
-            // If additional properties is set to false the pattern properties are ignored
-            if (isAdditionalPropertiesEnabled)
+            if (!resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
             {
-                // Additional properties should be processed after specified properties, so they will be added at the end
-                final Map<String, PropertyFacets> additionalProperties = getPatternProperties(properties);
-                addAdditionalPropertiesToRule(objectRule, additionalProperties);
+
+                resolvingDiscriminator = false;
+                final TypeExpressionNode typeDeclarationNode = objectTypeDefinition.getTypeExpressionNode();
+                return new DiscriminatorForExamplesBasedRule(this, typeDeclarationNode.getRootNode(), objectTypeDefinition.getDiscriminator(), objectTypeDefinition);
+
             }
-
-            final AllOfRule allOfRule = new AllOfRule(objectRule);
-
-            if (objectTypeDefinition.getMaxProperties() != null)
+            else
             {
-                allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMaxProperties()));
-            }
+                final ObjectRule objectRule = new ObjectRule(strictMode);
+                registerRule(objectTypeDefinition, objectRule);
 
-            if (objectTypeDefinition.getMinProperties() != null)
-            {
-                allOfRule.and(new MinPropertiesRule(objectTypeDefinition.getMinProperties()));
-            }
+                final boolean isAdditionalPropertiesEnabled = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
+                objectRule.additionalProperties(isAdditionalPropertiesEnabled);
 
-            return allOfRule;
+                final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
+
+                final Map<String, PropertyFacets> nonPatternProperties = getNonPatternProperties(properties);
+                addFieldsToRule(objectRule, nonPatternProperties);
+
+                // If additional properties is set to false the pattern properties are ignored
+                if (isAdditionalPropertiesEnabled)
+                {
+                    // Additional properties should be processed after specified properties, so they will be added at the end
+                    final Map<String, PropertyFacets> additionalProperties = getPatternProperties(properties);
+                    addAdditionalPropertiesToRule(objectRule, additionalProperties);
+                }
+
+                /*
+                 * if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
+                 * 
+                 * StringTypeRule value = new StringTypeRule(); objectRule.with(property(objectTypeDefinition.getDiscriminator(), value).); }
+                 */
+
+                final AllOfRule allOfRule = new AllOfRule(objectRule);
+
+                if (objectTypeDefinition.getMaxProperties() != null)
+                {
+                    allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMaxProperties()));
+                }
+
+                if (objectTypeDefinition.getMinProperties() != null)
+                {
+                    allOfRule.and(new MinPropertiesRule(objectTypeDefinition.getMinProperties()));
+                }
+
+                return allOfRule;
+            }
         }
     }
 
