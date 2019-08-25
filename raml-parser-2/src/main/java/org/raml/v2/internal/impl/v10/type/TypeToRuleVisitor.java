@@ -25,7 +25,6 @@ import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.rules.DiscriminatorBasedRule;
-import org.raml.v2.internal.impl.v10.rules.DiscriminatorForExamplesBasedRule;
 import org.raml.v2.internal.impl.v10.rules.FormatValueRule;
 import org.raml.yagi.framework.grammar.rule.*;
 import org.raml.yagi.framework.util.DateType;
