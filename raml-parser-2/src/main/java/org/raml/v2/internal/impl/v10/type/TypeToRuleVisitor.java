@@ -221,7 +221,8 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         }
     }
 
-    private static Predicate<Entry<String, PropertyFacets>> getAllButDiscriminator(final ObjectResolvedType objectTypeDefinition) {
+    private static Predicate<Entry<String, PropertyFacets>> getAllButDiscriminator(final ObjectResolvedType objectTypeDefinition)
+    {
         return new Predicate<Entry<String, PropertyFacets>>()
         {
             @Override
