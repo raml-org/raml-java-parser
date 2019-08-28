@@ -138,22 +138,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
             objectRule.additionalProperties(isAdditionalPropertiesEnabled);
 
             final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
-            final Map<String, PropertyFacets> nonPatternProperties = filterEntries(getNonPatternProperties(properties), new Predicate<Entry<String, PropertyFacets>>()
-            {
-                @Override
-                public boolean apply(@Nullable Entry<String, PropertyFacets> input)
-                {
-                    if (input != null && isNotEmpty(objectTypeDefinition.getDiscriminator()))
-                    {
-                        return !input.getKey().equals(objectTypeDefinition.getDiscriminator());
-                    }
-                    else
-                    {
-
-                        return true;
-                    }
-                }
-            });
+            final Map<String, PropertyFacets> nonPatternProperties = filterEntries(getNonPatternProperties(properties), getAllButDiscriminator(objectTypeDefinition));
             addFieldsToRule(objectRule, nonPatternProperties);
 
             // If additional properties is set to false the pattern properties are ignored
@@ -234,6 +219,25 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 
             return allOfRule;
         }
+    }
+
+    private static Predicate<Entry<String, PropertyFacets>> getAllButDiscriminator(final ObjectResolvedType objectTypeDefinition) {
+        return new Predicate<Entry<String, PropertyFacets>>()
+        {
+            @Override
+            public boolean apply(@Nullable Entry<String, PropertyFacets> input)
+            {
+                if (input != null && isNotEmpty(objectTypeDefinition.getDiscriminator()))
+                {
+                    return !input.getKey().equals(objectTypeDefinition.getDiscriminator());
+                }
+                else
+                {
+
+                    return true;
+                }
+            }
+        };
     }
 
     private void addFieldsToRule(ObjectRule objectRule, Map<String, PropertyFacets> properties)
