@@ -26,7 +26,31 @@ import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.rules.DiscriminatorBasedRule;
 import org.raml.v2.internal.impl.v10.rules.FormatValueRule;
-import org.raml.yagi.framework.grammar.rule.*;
+import org.raml.yagi.framework.grammar.rule.AllOfRule;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
+import org.raml.yagi.framework.grammar.rule.AnyValueRule;
+import org.raml.yagi.framework.grammar.rule.ArrayRule;
+import org.raml.yagi.framework.grammar.rule.BooleanTypeRule;
+import org.raml.yagi.framework.grammar.rule.DateValueRule;
+import org.raml.yagi.framework.grammar.rule.DivisorValueRule;
+import org.raml.yagi.framework.grammar.rule.IntegerTypeRule;
+import org.raml.yagi.framework.grammar.rule.KeyValueRule;
+import org.raml.yagi.framework.grammar.rule.MaxItemsRule;
+import org.raml.yagi.framework.grammar.rule.MaxLengthRule;
+import org.raml.yagi.framework.grammar.rule.MaxPropertiesRule;
+import org.raml.yagi.framework.grammar.rule.MaximumValueRule;
+import org.raml.yagi.framework.grammar.rule.MinItemsRule;
+import org.raml.yagi.framework.grammar.rule.MinLengthRule;
+import org.raml.yagi.framework.grammar.rule.MinPropertiesRule;
+import org.raml.yagi.framework.grammar.rule.MinimumValueRule;
+import org.raml.yagi.framework.grammar.rule.NullValueRule;
+import org.raml.yagi.framework.grammar.rule.NumberTypeRule;
+import org.raml.yagi.framework.grammar.rule.NumberValueRule;
+import org.raml.yagi.framework.grammar.rule.ObjectRule;
+import org.raml.yagi.framework.grammar.rule.RangeValueRule;
+import org.raml.yagi.framework.grammar.rule.RegexValueRule;
+import org.raml.yagi.framework.grammar.rule.Rule;
+import org.raml.yagi.framework.grammar.rule.StringTypeRule;
 import org.raml.yagi.framework.util.DateType;
 
 import java.util.ArrayList;
@@ -48,23 +72,15 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
 
     private ResourceLoader resourceLoader;
-    private final boolean useDiscriminatorsToCalculateTypes;
     private boolean strictMode = false;
     private Map<ResolvedType, Rule> definitionRuleMap = new IdentityHashMap<>();
 
     // Flag that should be turn on when discriminator should be resolved
     private boolean resolvingDiscriminator = false;
 
-    public TypeToRuleVisitor(ResourceLoader resourceLoader, boolean useDiscriminatorsToCalculateTypes)
-    {
-        this.resourceLoader = resourceLoader;
-        this.useDiscriminatorsToCalculateTypes = useDiscriminatorsToCalculateTypes;
-    }
-
     public TypeToRuleVisitor(ResourceLoader resourceLoader)
     {
         this.resourceLoader = resourceLoader;
-        this.useDiscriminatorsToCalculateTypes = true;
     }
 
     public Rule generateRule(ResolvedType items)
@@ -127,55 +143,6 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     @Override
     public Rule visitObject(ObjectResolvedType objectTypeDefinition)
     {
-        if (useDiscriminatorsToCalculateTypes == false)
-        {
-
-            final ObjectRule objectRule = new ObjectRule(strictMode);
-            registerRule(objectTypeDefinition, objectRule);
-
-            final boolean isAdditionalPropertiesEnabled = asBoolean(objectTypeDefinition.getAdditionalProperties(), true);
-            objectRule.additionalProperties(isAdditionalPropertiesEnabled);
-
-            final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
-            if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
-                properties.remove(objectTypeDefinition.getDiscriminator());
-            }
-            final Map<String, PropertyFacets> nonPatternProperties = getNonPatternProperties(properties);
-            addFieldsToRule(objectRule, nonPatternProperties);
-
-            // If additional properties is set to false the pattern properties are ignored
-            if (isAdditionalPropertiesEnabled)
-            {
-                // Additional properties should be processed after specified properties, so they will be added at the end
-                final Map<String, PropertyFacets> additionalProperties = getPatternProperties(properties);
-                addAdditionalPropertiesToRule(objectRule, additionalProperties);
-            }
-
-            if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
-
-                objectRule.with(new KeyValueRule(new StringValueRule(objectTypeDefinition.getDiscriminator()), new StringTypeRule()).required()).discriminatorName(objectTypeDefinition.getDiscriminator());
-            }
-            /*
-             * if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
-             * 
-             * StringTypeRule value = new StringTypeRule(); objectRule.with(property(objectTypeDefinition.getDiscriminator(), value).); }
-             */
-
-            final AllOfRule allOfRule = new AllOfRule(objectRule);
-
-            if (objectTypeDefinition.getMaxProperties() != null)
-            {
-                allOfRule.and(new MaxPropertiesRule(objectTypeDefinition.getMaxProperties()));
-            }
-
-            if (objectTypeDefinition.getMinProperties() != null)
-            {
-                allOfRule.and(new MinPropertiesRule(objectTypeDefinition.getMinProperties()));
-            }
-
-            return allOfRule;
-        }
-
         if (!resolvingDiscriminator && isNotEmpty(objectTypeDefinition.getDiscriminator()))
         {
             resolvingDiscriminator = false;
@@ -184,7 +151,6 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         }
         else
         {
-
             final ObjectRule objectRule = new ObjectRule(strictMode);
             registerRule(objectTypeDefinition, objectRule);
 
@@ -203,12 +169,6 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
                 final Map<String, PropertyFacets> additionalProperties = getPatternProperties(properties);
                 addAdditionalPropertiesToRule(objectRule, additionalProperties);
             }
-
-            /*
-             * if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
-             * 
-             * StringTypeRule value = new StringTypeRule(); objectRule.with(property(objectTypeDefinition.getDiscriminator(), value).); }
-             */
 
             final AllOfRule allOfRule = new AllOfRule(objectRule);
 

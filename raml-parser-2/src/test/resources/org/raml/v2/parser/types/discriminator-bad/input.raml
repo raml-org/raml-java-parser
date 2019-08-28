@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    discriminator: kind # refers to the `kind` property of object `Person`
+    properties:
+      kind: string # contains name of the kind of a `Person` instance
+      name: string
+  Employee: # kind can equal `Employee`; default value for `discriminatorValue`
+    type: Person
+    properties:
+      employeeId: integer
+  User: # kind can equal `User`; default value for `discriminatorValue`
+    type: Person
+    properties:
+      userId: integer
+    discriminatorValue: user
+
+/resource:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Person
+            examples:
+              bad1:
+                kind: Empleado
+                employeeId: 1
+                name: Santiago
+              bad2:
+                kind: user
+                userId: "Pepe"
+                name: Leandro
