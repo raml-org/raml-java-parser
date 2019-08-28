@@ -138,7 +138,7 @@ public class ExampleValidationPhase implements Phase
         }
         if (exampleValue != null)
         {
-            final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader));
+            final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader, false));
             return rule != null ? rule.apply(exampleValue) : null;
         }
         return null;
