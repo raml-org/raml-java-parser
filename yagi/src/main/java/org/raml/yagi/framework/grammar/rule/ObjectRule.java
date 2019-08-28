@@ -254,19 +254,39 @@ public class ObjectRule extends Rule
 
             for (KeyValueRule rule : nonMatchingRules)
             {
-                if (rule.isRequired(node))
+                if (discriminatorName == null)
                 {
-                    if ( rule.getKeyRule() instanceof StringValueRule && ((StringValueRule)rule.getKeyRule()).getValue().equals(discriminatorName)) {
 
-                        node.replaceWith(ErrorNodeFactory.createInvalidType("discriminator not specified"));
-                    } else {
-
+                    if (rule.isRequired(node))
+                    {
                         node.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
+                    }
+                    else
+                    {
+
+                        rule.applyDefault(node);
                     }
                 }
                 else
                 {
-                    rule.applyDefault(node);
+
+                    if (rule.isRequired(node))
+                    {
+                        if (rule.getKeyRule() instanceof StringValueRule && ((StringValueRule) rule.getKeyRule()).getValue().equals(discriminatorName))
+                        {
+
+                            node.replaceWith(ErrorNodeFactory.createInvalidType("discriminator not specified"));
+                        }
+                        else
+                        {
+
+                            node.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
+                        }
+                    }
+                    else
+                    {
+                        rule.applyDefault(node);
+                    }
                 }
             }
 
@@ -426,7 +446,8 @@ public class ObjectRule extends Rule
         return this;
     }
 
-    public ObjectRule discriminatorName(String name) {
+    public ObjectRule discriminatorName(String name)
+    {
         this.discriminatorName = name;
         return this;
     }

@@ -29,6 +29,7 @@ import org.raml.v2.internal.impl.v10.rules.FormatValueRule;
 import org.raml.yagi.framework.grammar.rule.*;
 import org.raml.yagi.framework.util.DateType;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -125,7 +126,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     }
 
     @Override
-    public Rule visitObject(ObjectResolvedType objectTypeDefinition)
+    public Rule visitObject(final ObjectResolvedType objectTypeDefinition)
     {
         if (useDiscriminatorsToCalculateTypes == false)
         {
@@ -137,10 +138,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
             objectRule.additionalProperties(isAdditionalPropertiesEnabled);
 
             final Map<String, PropertyFacets> properties = objectTypeDefinition.getProperties();
-            if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
-                properties.remove(objectTypeDefinition.getDiscriminator());
-            }
-            final Map<String, PropertyFacets> nonPatternProperties = getNonPatternProperties(properties);
+            final Map<String, PropertyFacets> nonPatternProperties = filterEntries(getNonPatternProperties(properties), getAllButDiscriminator(objectTypeDefinition));
             addFieldsToRule(objectRule, nonPatternProperties);
 
             // If additional properties is set to false the pattern properties are ignored
@@ -151,15 +149,12 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
                 addAdditionalPropertiesToRule(objectRule, additionalProperties);
             }
 
-            if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
+            if (isNotEmpty(objectTypeDefinition.getDiscriminator()))
+            {
 
-                objectRule.with(new KeyValueRule(new StringValueRule(objectTypeDefinition.getDiscriminator()), new StringTypeRule()).required()).discriminatorName(objectTypeDefinition.getDiscriminator());
+                objectRule.with(new KeyValueRule(new StringValueRule(objectTypeDefinition.getDiscriminator()), new StringTypeRule()).required()).discriminatorName(
+                        objectTypeDefinition.getDiscriminator());
             }
-            /*
-             * if (isNotEmpty(objectTypeDefinition.getDiscriminator())) {
-             * 
-             * StringTypeRule value = new StringTypeRule(); objectRule.with(property(objectTypeDefinition.getDiscriminator(), value).); }
-             */
 
             final AllOfRule allOfRule = new AllOfRule(objectRule);
 
@@ -224,6 +219,26 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 
             return allOfRule;
         }
+    }
+
+    private static Predicate<Entry<String, PropertyFacets>> getAllButDiscriminator(final ObjectResolvedType objectTypeDefinition)
+    {
+        return new Predicate<Entry<String, PropertyFacets>>()
+        {
+            @Override
+            public boolean apply(@Nullable Entry<String, PropertyFacets> input)
+            {
+                if (input != null && isNotEmpty(objectTypeDefinition.getDiscriminator()))
+                {
+                    return !input.getKey().equals(objectTypeDefinition.getDiscriminator());
+                }
+                else
+                {
+
+                    return true;
+                }
+            }
+        };
     }
 
     private void addFieldsToRule(ObjectRule objectRule, Map<String, PropertyFacets> properties)
