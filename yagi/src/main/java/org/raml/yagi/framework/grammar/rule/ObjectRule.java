@@ -55,6 +55,7 @@ public class ObjectRule extends Rule
     private ExclusiveKeys exclusiveKeys;
     private boolean strict = false;
     private boolean allowsAdditionalProperties = false;
+    private String discriminatorName;
 
 
     public ObjectRule()
@@ -253,13 +254,39 @@ public class ObjectRule extends Rule
 
             for (KeyValueRule rule : nonMatchingRules)
             {
-                if (rule.isRequired(node))
+                if (discriminatorName == null)
                 {
-                    node.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
+
+                    if (rule.isRequired(node))
+                    {
+                        node.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
+                    }
+                    else
+                    {
+
+                        rule.applyDefault(node);
+                    }
                 }
                 else
                 {
-                    rule.applyDefault(node);
+
+                    if (rule.isRequired(node))
+                    {
+                        if (rule.getKeyRule() instanceof StringValueRule && ((StringValueRule) rule.getKeyRule()).getValue().equals(discriminatorName))
+                        {
+
+                            node.replaceWith(ErrorNodeFactory.createInvalidType("discriminator not specified"));
+                        }
+                        else
+                        {
+
+                            node.addChild(ErrorNodeFactory.createRequiredValueNotFound(node, rule.getKeyRule()));
+                        }
+                    }
+                    else
+                    {
+                        rule.applyDefault(node);
+                    }
                 }
             }
 
@@ -416,6 +443,12 @@ public class ObjectRule extends Rule
     public ObjectRule with(int index, KeyValueRule field)
     {
         this.fields.add(index, field);
+        return this;
+    }
+
+    public ObjectRule discriminatorName(String name)
+    {
+        this.discriminatorName = name;
         return this;
     }
 
