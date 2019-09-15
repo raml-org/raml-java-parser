@@ -46,13 +46,13 @@ public class DateUtils
 
         rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
         rfc3339FormatterMillis = dateTimeFormat()
-                .appendLiteral(".")
-                .appendFractionOfSecond(1, 9)
-                .appendTimeZoneOffset("Z", true, 2, 4)
-                .toFormatter();
+                                                 .appendLiteral(".")
+                                                 .appendFractionOfSecond(1, 9)
+                                                 .appendTimeZoneOffset("Z", true, 2, 4)
+                                                 .toFormatter();
         rfc3339FormatterNoMillis = dateTimeFormat()
-                .appendTimeZoneOffset("Z", true, 2, 4)
-                .toFormatter();
+                                                   .appendTimeZoneOffset("Z", true, 2, 4)
+                                                   .toFormatter();
     }
 
     private static DateTimeFormatterBuilder yearMonthDayFormat()
