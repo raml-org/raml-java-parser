@@ -25,8 +25,8 @@ import static org.joda.time.format.ISODateTimeFormat.*;
 
 public class DateUtils
 {
-    public static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
-    public static boolean FOUR_YEARS_VALIDATION = Boolean.valueOf(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
+    private static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
+    public static boolean FOUR_YEARS_VALIDATION = Boolean.parseBoolean(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
 
     static
     {
@@ -36,26 +36,45 @@ public class DateUtils
     public static void setFormatters()
     {
 
-        dateOnlyFormatter = yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter();
-        timeOnlyFormatter = DateTimeFormat.forPattern("HH:mm:ss");
-
-        String dateTimePattern = "-MM-DD'T'HH:mm:ss";
-        dateTimeOnlyFormatterNoMillis = yearFormat().append(DateTimeFormat.forPattern(dateTimePattern)).toFormatter();
-        dateTimeOnlyFormatterMillis = yearFormat()
-                                                  .append(DateTimeFormat.forPattern(dateTimePattern))
-                                                  .appendLiteral(".")
-                                                  .appendFractionOfSecond(1, 9)
-                                                  .toFormatter();
+        dateOnlyFormatter = yearMonthDayFormat().toFormatter();
+        timeOnlyFormatter = timeOnlyFormatter().toFormatter();
+        dateTimeOnlyFormatterNoMillis = dateTimeFormat().toFormatter();
+        dateTimeOnlyFormatterMillis = dateTimeFormat()
+                                                      .appendLiteral(".")
+                                                      .appendFractionOfSecond(1, 9)
+                                                      .toFormatter();
 
         rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
-        rfc3339FormatterMillis = new DateTimeFormatterBuilder()
-                                                               .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
-                                                               .append(tTime())
-                                                               .toFormatter();
-        rfc3339FormatterNoMillis = new DateTimeFormatterBuilder()
-                                                                 .append(yearFormat().append(DateTimeFormat.forPattern("-MM-dd")).toFormatter())
-                                                                 .append(tTimeNoMillis())
-                                                                 .toFormatter();
+        rfc3339FormatterMillis = dateTimeFormat()
+                                                 .appendLiteral(".")
+                                                 .appendFractionOfSecond(1, 9)
+                                                 .appendTimeZoneOffset("Z", true, 2, 4)
+                                                 .toFormatter();
+        rfc3339FormatterNoMillis = dateTimeFormat()
+                                                   .appendTimeZoneOffset("Z", true, 2, 4)
+                                                   .toFormatter();
+    }
+
+    private static DateTimeFormatterBuilder yearMonthDayFormat()
+    {
+        return yearFormat().appendLiteral('-')
+                           .appendFixedDecimal(DateTimeFieldType.monthOfYear(), 2)
+                           .appendLiteral('-')
+                           .appendFixedDecimal(DateTimeFieldType.dayOfMonth(), 2);
+    }
+
+    private static DateTimeFormatterBuilder dateTimeFormat()
+    {
+        return yearMonthDayFormat().appendLiteral('T').append(timeOnlyFormatter().toFormatter());
+    }
+
+    private static DateTimeFormatterBuilder timeOnlyFormatter()
+    {
+        return new DateTimeFormatterBuilder()
+                                             .appendFixedDecimal(DateTimeFieldType.hourOfDay(), 2).appendLiteral(':')
+                                             .appendFixedDecimal(DateTimeFieldType.minuteOfHour(), 2).appendLiteral(':')
+                                             .appendFixedDecimal(DateTimeFieldType.secondOfMinute(), 2);
+
     }
 
     private static DateTimeFormatter dateOnlyFormatter;
@@ -64,9 +83,10 @@ public class DateUtils
     private static DateTimeFormatter dateTimeOnlyFormatterNoMillis;
     private static DateTimeFormatter dateTimeOnlyFormatterMillis;
 
-    private static DateTimeFormatter rfc2616Formatter;
     private static DateTimeFormatter rfc3339FormatterMillis;
     private static DateTimeFormatter rfc3339FormatterNoMillis;
+
+    private static DateTimeFormatter rfc2616Formatter;
 
 
     public static boolean isValidDate(String date, DateType format, String rfc)
@@ -92,7 +112,7 @@ public class DateUtils
                 }
                 break;
             case datetime:
-                if (rfc != null && "rfc2616".equals(rfc))
+                if ("rfc2616".equals(rfc))
                 {
                     rfc2616Formatter.parseLocalDateTime(date);
                     break;
