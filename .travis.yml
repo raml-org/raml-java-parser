@@ -24,4 +24,5 @@ deploy:
     on:
       repo: raml-org/raml-java-parser
       tags: true
-      condition: "$TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+$"
+      all_branches: true
+      condition: $TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+$
