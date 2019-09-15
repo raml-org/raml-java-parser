@@ -1,21 +1,27 @@
 language: java
 sudo: false
 env:
-    - GPG_EXECUTABLE=gpg2
+  - GPG_EXECUTABLE=gpg2
 before_install:
-    - if [ ! -z "$GPG_SECRET_KEYS" ]; then echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import --no-tty --batch --yes; fi
-    - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust; fi
-    - echo "<settings><servers><server><id>mulesoft-releases</id><username>\${env.NEXUS_USER}</username><password>\${env.NEXUS_PASSWORD}</password></server><server><id>mulesoft-snapshots</id><username>\${env.NEXUS_USER}</username><password>\${env.NEXUS_PASSWORD}</password></server><server><id>ossrh</id><username>\${env.OSSRH_USER}</username><password>\${env.OSSRH_PASSWORD}</password></server></servers><profiles><profile><id>ossrh</id><activation><activeByDefault>true</activeByDefault></activation><properties><gpg.executable>\${env.GPG_EXECUTABLE}</gpg.executable><gpg.keyname>\${env.GPG_KEY_NAME}</gpg.keyname><gpg.passphrase>\${env.GPG_PASSPHRASE}</gpg.passphrase></properties></profile></profiles></settings>" > ~/settings.xml
+  - if [ ! -z "$GPG_SECRET_KEYS" ]; then echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import --no-tty --batch --yes; fi
+  - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust; fi
+  - echo "<settings><servers><server><id>mulesoft-releases</id><username>\${env.NEXUS_USER}</username><password>\${env.NEXUS_PASSWORD}</password></server><server><id>mulesoft-snapshots</id><username>\${env.NEXUS_USER}</username><password>\${env.NEXUS_PASSWORD}</password></server><server><id>ossrh</id><username>\${env.OSSRH_USER}</username><password>\${env.OSSRH_PASSWORD}</password></server></servers><profiles><profile><id>ossrh</id><activation><activeByDefault>true</activeByDefault></activation><properties><gpg.executable>\${env.GPG_EXECUTABLE}</gpg.executable><gpg.keyname>\${env.GPG_KEY_NAME}</gpg.keyname><gpg.passphrase>\${env.GPG_PASSPHRASE}</gpg.passphrase></properties></profile></profiles></settings>" > ~/settings.xml
 
 install:
-    - mvn install --settings ~/settings.xml -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+  - mvn install --settings ~/settings.xml -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
 deploy:
-    -
-        provider: script
-        script: scripts/release.sh $TRAVIS_TAG
-        skip_cleanup: true
-        on:
-            repo: raml-org/raml-java-parser
-            tags: true
-            condition: "$TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+$"
+  - provider: script
+    script: mvn deploy --settings ~/settings.xml -DskipTests -B -U
+    skip_cleanup: true
+    on:
+      repo: mulesoft-labs/raml-java-tools
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^travis$
+  - provider: script
+    script: scripts/release.sh $TRAVIS_TAG
+    skip_cleanup: true
+    on:
+      repo: raml-org/raml-java-parser
+      tags: true
+      condition: "$TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+$"
