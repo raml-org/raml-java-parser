@@ -17,7 +17,7 @@ deploy:
     on:
       repo: raml-org/raml-java-parser
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^travis$
+      condition: $TRAVIS_BRANCH =~ ^master$
   - provider: script
     script: scripts/release.sh $TRAVIS_TAG
     skip_cleanup: true
