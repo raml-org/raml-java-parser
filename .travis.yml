@@ -15,7 +15,7 @@ deploy:
     script: mvn deploy --settings ~/settings.xml -DskipTests -B -U
     skip_cleanup: true
     on:
-      repo: mulesoft-labs/raml-java-tools
+      repo: raml-org/raml-java-parser
       all_branches: true
       condition: $TRAVIS_BRANCH =~ ^travis$
   - provider: script
