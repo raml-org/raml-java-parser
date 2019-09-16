@@ -11,19 +11,27 @@ install:
   - mvn install --settings ~/settings.xml -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
 deploy:
+  # This provider handles pr merges to master and creates a SNAPSHOT
   - provider: script
-#    script: mvn deploy --settings ~/settings.xml -DskipTests -B -U
-    script: bash -x scripts/release.sh $TRAVIS_TAG
+    script: mvn deploy --settings ~/settings.xml -DskipTests -B -U
     skip_cleanup: true
     on:
       repo: raml-org/raml-java-parser
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^travis$
+      condition: $TRAVIS_BRANCH =~ ^master$
+  # This provider handles tags of version 1.0
   - provider: script
     script: bash scripts/release.sh $TRAVIS_TAG
     skip_cleanup: true
     on:
       repo: raml-org/raml-java-parser
       tags: true
-      all_branches: true
-      condition: $TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+$
+      condition: $TRAVIS_TAG =~ ^1\.[0-9]+\.[0-9]+$
+  # This provider handles tags of version 0.8
+  - provider: script
+    script: bash scripts/release.sh $TRAVIS_TAG
+    skip_cleanup: true
+    on:
+      repo: raml-org/raml-java-parser
+      tags: true
+      condition: $TRAVIS_TAG =~ ^0\.[0-9]+\.[0-9]+$
