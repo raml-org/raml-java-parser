@@ -66,6 +66,8 @@
                         <exclude>**/*.xsd</exclude>
                         <exclude>**/*.properties</exclude>
                         <exclude>**/*.md</exclude>
+                        <exclude>private/**</exclude>
+                        <exclude>scripts/release.sh</exclude>
                         <exclude>**/build-number.txt</exclude>
                     </excludes>
                     <mapping>
