@@ -1,4 +1,4 @@
-anguage: java
+language: java
 sudo: false
 env:
   - GPG_EXECUTABLE=gpg2
