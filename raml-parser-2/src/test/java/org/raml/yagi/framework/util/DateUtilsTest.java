@@ -58,6 +58,8 @@ public class DateUtilsTest
         assertFalse(DateUtils.isValidDate("2002-01-01T2:30:00", DateType.datetime_only, "rfc3339"));
         assertFalse(DateUtils.isValidDate("2002-01-01T21:3:00", DateType.datetime_only, "rfc3339"));
         assertFalse(DateUtils.isValidDate("2002-01-01T21:30:0", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.isValidDate("2002-01-011T21:30:00.", DateType.datetime_only, "rfc3339"));
+
     }
 
     @Test
