@@ -88,7 +88,7 @@ public class RangeValueRule extends Rule
         }
         else
         {
-            return ErrorNodeFactory.createInvalidRangeValue(node.toString(), range.getMinimumNumber(), range.getMaximumNumber());
+            return ErrorNodeFactory.createInvalidRangeValue(node, range.getMinimumNumber(), range.getMaximumNumber());
         }
     }
 

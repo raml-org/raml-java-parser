@@ -172,9 +172,13 @@ public class ErrorNodeFactory
         return new ErrorNode("Expected maximum value " + maximumValue);
     }
 
-    public static Node createInvalidRangeValue(String value, Number minimumValue, Number maximumValue)
+    public static Node createInvalidRangeValue(Node node, Number minimumValue, Number maximumValue)
     {
-        return new ErrorNode("Invalid number " + value + " expected number between " + minimumValue + " and " + maximumValue);
+        if (node.getParent() != null && node.getParent().getChildren().get(0) != node)
+        {
+            return new ErrorNode("Invalid number " + node.toString() + " for " + node.getParent().getChildren().get(0).toString() + " expected number between " + minimumValue + " and " + maximumValue);
+        }
+        return new ErrorNode("Invalid number " + node.toString() + " expected number between " + minimumValue + " and " + maximumValue);
     }
 
     public static Node createMissingField(String selector)
