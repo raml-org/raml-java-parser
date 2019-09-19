@@ -44,7 +44,12 @@ public class DateUtils
                                                       .appendFractionOfSecond(1, 9)
                                                       .toFormatter();
 
-        rfc2616Formatter = DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss zzz");
+        rfc2616Formatter = new DateTimeFormatterBuilder()
+                .append(DateTimeFormat.forPattern("EEE, dd MMM "))
+                .appendDecimal(DateTimeFieldType.year(), 2, 4)
+                .appendLiteral(' ')
+                .append(timeOnlyFormatter().toFormatter())
+                .append(DateTimeFormat.forPattern(" zzz")).toFormatter();
         rfc3339FormatterMillis = dateTimeFormat()
                                                  .appendLiteral(".")
                                                  .appendFractionOfSecond(1, 9)

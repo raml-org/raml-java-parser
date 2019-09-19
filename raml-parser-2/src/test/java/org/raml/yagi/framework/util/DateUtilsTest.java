@@ -85,6 +85,12 @@ public class DateUtilsTest
     public void isValidDateTimeRFC2616()
     {
         assertTrue(DateUtils.isValidDate("Sun, 15 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.isValidDate("Sun, 150 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 20119 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 2019 1:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 2019 13:3:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 2019 13:03:3 GMT", DateType.datetime, "rfc2616"));
+
     }
 
 
