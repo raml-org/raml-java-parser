@@ -260,7 +260,7 @@ public class BaseGrammar
 
     /**
      * Matches a field that the key is of string type and matches the specified key name and the value matches the value rule.
-     * The difference with the {@link this#field(String, Rule)} it that Null is not matched for the value.
+     * The difference with it that Null is not matched for the value.
      * @param keyRule The key rule
      * @param valueRule The value rule
      * @return The rule
@@ -272,7 +272,7 @@ public class BaseGrammar
 
     /**
      * Matches a field that the key is of string type and matches the specified key name and the value matches the value rule.
-     * The difference with the {@link this#field(String, Rule)} it that Null is not matched for the value and also mark this field as required in the object rule.
+     * The difference with it that Null is not matched for the value and also mark this field as required in the object rule.
      *
      * @param keyRule The key rule
      * @param valueRule The value rule
