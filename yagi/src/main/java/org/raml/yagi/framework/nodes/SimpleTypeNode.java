@@ -25,9 +25,9 @@ public interface SimpleTypeNode<T> extends Node
 
     /**
      * in some cases the value of the node is different than the literal one
-     * e.g:  (literal value) -> (value)
-     *       001 -> 1
-     *       0xF -> 15
+     * e.g:  (literal value) -&gt; (value)
+     *       001 -&gt; 1
+     *       0xF -&gt; 15
      * @return the literal value of the node
      *
      */

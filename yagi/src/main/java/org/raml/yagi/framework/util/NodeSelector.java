@@ -38,10 +38,10 @@ public class NodeSelector
 
     /**
      * Resolves a path in the specified node. The path uses a very simple expression system like xpath where each element is separated by /.
-     * <p><b>"name"</b> -> return the value of field with key that matches the specified name. <br/>
-     * <b>..</b>        -> returns the parent <br/>
-     * <b>*</b>         -> wild card selector <br/>
-     * <b>[number]</b>    -> returns the element at that index zero base index. The number should be equal or greater than zero</p><br/>
+     * <p><b>"name"</b> -&gt; return the value of field with key that matches the specified name. <br/>
+     * <b>..</b>        -&gt; returns the parent <br/>
+     * <b>*</b>         -&gt; wild card selector <br/>
+     * <b>[number]</b>    -&gt; returns the element at that index zero base index. The number should be equal or greater than zero</p><br/>
      *
      * @param path The path example schemas/foo
      * @param from The source where to query
