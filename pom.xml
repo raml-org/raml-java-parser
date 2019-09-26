@@ -220,6 +220,9 @@
                                     <executable>gpg2</executable>
                                     <keyname>${gpg.keyname}</keyname>
                                     <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                                    <gpgArguments>
+                                        <arg>--no-tty</arg>
+                                    </gpgArguments>
                                 </configuration>
                             </execution>
                         </executions>
