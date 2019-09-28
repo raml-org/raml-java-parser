@@ -22,7 +22,7 @@ deploy:
       condition: $TRAVIS_BRANCH =~ ^master$
   # This provider handles pr merges to master and creates a SNAPSHOT
   - provider: script
-    script: mvn org.apache.maven.plugins:maven-gpg-plugin:sign --settings ~/settings.xml -DskipTests -B -U -Psonatype
+    script: mvn package org.apache.maven.plugins:maven-gpg-plugin:sign --settings ~/settings.xml -DskipTests -B -U -Psonatype
     skip_cleanup: true
     on:
       repo: raml-org/raml-java-parser
