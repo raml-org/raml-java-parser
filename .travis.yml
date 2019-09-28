@@ -20,14 +20,6 @@ deploy:
       repo: raml-org/raml-java-parser
       all_branches: true
       condition: $TRAVIS_BRANCH =~ ^master$
-  # This provider handles pr merges to master and creates a SNAPSHOT
-  - provider: script
-    script: mvn package org.apache.maven.plugins:maven-gpg-plugin:sign -X --settings ~/settings.xml -DskipTests -B -U -Psonatype
-    skip_cleanup: true
-    on:
-      repo: raml-org/raml-java-parser
-      all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^sonatype-release$
   # This provider handles tags of version 1.0
   - provider: script
     script: mvn --settings ~/settings.xml org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$TRAVIS_TAG; mvn clean deploy --settings ~/settings.xml -DskipTests=true -Psonatype -B -U
