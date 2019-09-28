@@ -1,11 +1,11 @@
 language: java
 sudo: false
-dist: bionic
+dist: trusty
 env:
-  - GPG_EXECUTABLE=gpg2
+  - GPG_EXECUTABLE=gpg
 before_install:
-  - if [ ! -z "$GPG_SECRET_KEYS" ]; then echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import --no-tty --batch --yes; fi
-  - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust; fi
+  - if [ ! -z "$GPG_SECRET_KEYS" ]; then echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import --no-use-agent --batch --yes; fi
+  - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --no-use-agent --import-ownertrust; fi
   - echo "<settings><servers><server><id>mulesoft-releases</id><username>\${env.NEXUS_USER}</username><password>\${env.NEXUS_PASSWORD}</password></server><server><id>mulesoft-snapshots</id><username>\${env.NEXUS_USER}</username><password>\${env.NEXUS_PASSWORD}</password></server><server><id>ossrh</id><username>\${env.OSSRH_USER}</username><password>\${env.OSSRH_PASSWORD}</password></server></servers><profiles><profile><id>ossrh</id><activation><activeByDefault>true</activeByDefault></activation><properties><gpg.executable>\${env.GPG_EXECUTABLE}</gpg.executable><gpg.keyname>\${env.GPG_KEY_NAME}</gpg.keyname><gpg.passphrase>\${env.GPG_PASSPHRASE}</gpg.passphrase></properties></profile></profiles></settings>" > ~/settings.xml
   - gpg2 --version
 install:
@@ -20,6 +20,14 @@ deploy:
       repo: raml-org/raml-java-parser
       all_branches: true
       condition: $TRAVIS_BRANCH =~ ^master$
+  # This provider handles pr merges to master and creates a SNAPSHOT
+  - provider: script
+    script: mvn org.apache.maven.plugins:maven-gpg-plugin:sign --settings ~/settings.xml -DskipTests -B -U -Psonatype
+    skip_cleanup: true
+    on:
+      repo: raml-org/raml-java-parser
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^sonatype-release$
   # This provider handles tags of version 1.0
   - provider: script
     script: mvn --settings ~/settings.xml org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$TRAVIS_TAG; mvn clean deploy --settings ~/settings.xml -DskipTests=true -Psonatype -B -U

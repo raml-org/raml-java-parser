@@ -126,29 +126,6 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>generate-test-resources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>unpack</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<artifactItems>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.raml.tck</groupId>-->
-                                    <!--<artifactId>raml-tck</artifactId>-->
-                                    <!--<version>0.1</version>-->
-                                    <!--<type>zip</type>-->
-                                    <!--<outputDirectory>${project.build.directory}/test-classes/tck</outputDirectory>-->
-                                <!--</artifactItem>-->
-                            <!--</artifactItems>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
         <pluginManagement>
             <plugins>
@@ -165,6 +142,7 @@
             <id>sonatype</id>
             <build>
                 <plugins>
+<!--
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -176,6 +154,7 @@
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
+-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -218,10 +197,8 @@
                                     <goal>sign</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>/usr/bin/gpg2</executable>
                                     <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
+                                        <arg>--no-use-agent</arg>
                                     </gpgArguments>
                                 </configuration>
                             </execution>
