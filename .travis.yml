@@ -22,7 +22,7 @@ deploy:
       condition: $TRAVIS_BRANCH =~ ^0.8.x$
   # This provider handles tags of version 0.8
   - provider: script
-    script: bash scripts/release.sh $TRAVIS_TAG
+    script: mvn --settings ~/settings.xml org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$TRAVIS_TAG; mvn clean deploy --settings ~/settings.xml -DskipTests=true -Psonatype -B -U
     skip_cleanup: true
     on:
       repo: raml-org/raml-java-parser
