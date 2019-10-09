@@ -22,7 +22,7 @@ deploy:
       condition: $TRAVIS_BRANCH =~ ^master$
   # This provider handles tags of version 1.0
   - provider: script
-    script: mvn --settings ~/settings.xml org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$TRAVIS_TAG; mvn clean deploy --settings ~/settings.xml -DskipTests=true -Psonatype -B -U
+    script: mvn --settings ~/settings.xml org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$TRAVIS_TAG; mvn clean deploy --settings ~/settings.xml -DskipTests=true -B -U; mvn clean deploy --settings ~/settings.xml -DskipTests=true -Psonatype -B -U
     skip_cleanup: true
     on:
       repo: raml-org/raml-java-parser
