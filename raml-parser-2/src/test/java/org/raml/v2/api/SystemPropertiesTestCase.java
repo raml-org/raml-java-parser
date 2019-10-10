@@ -56,16 +56,6 @@ public class SystemPropertiesTestCase
         assertThat(ramlModelResult.hasErrors(), is(false));
     }
 
-    @Test
-    public void failFourYearsValidation()
-    {
-        DateUtils.FOUR_YEARS_VALIDATION = true;
-        DateUtils.createStrictDateUtils().setFormatters(true, true);
-        RamlModelResult ramlModelResult = getDateTimeApi();
-        assertThat(ramlModelResult.hasErrors(), is(true));
-
-    }
-
     private RamlModelResult getJsonSchemaApi()
     {
         return getApi("src/test/resources/org/raml/v2/api/v10/system-properties/jsonschema-fail-on-warning.raml");

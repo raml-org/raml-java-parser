@@ -26,57 +26,59 @@ import static org.joda.time.format.ISODateTimeFormat.*;
 public class DateUtils
 {
     private static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
-    private static final String STRICT_DATES = "org.raml.strict_dates";
+    private static final String STRICT_DATES_RFC3339 = "org.raml.strict_dates_rfc3339";
+    private static final String STRICT_DATES_RFC2616 = "org.raml.strict_dates_rfc3339";
 
     public static boolean FOUR_YEARS_VALIDATION = Boolean.parseBoolean(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
-    public static boolean STRICT_DATES_VALIDATION = Boolean.parseBoolean(System.getProperty(STRICT_DATES, "true"));
+    public static boolean STRICT_DATES_VALIDATION_3339 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC3339, "true"));
+    public static boolean STRICT_DATES_VALIDATION_2616 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC2616, "true"));
 
-    private DateUtils(boolean strictYear, boolean strictDates)
+    private DateUtils(boolean strictYear, boolean strictDates3339, boolean strictDates2616)
     {
-        setFormatters(strictYear, strictDates);
+        setFormatters(strictYear, strictDates3339, strictDates2616);
     }
 
     public static DateUtils createStrictDateUtils()
     {
-        return new DateUtils(true, true);
+        return new DateUtils(true, true, true);
     }
 
     public static DateUtils createNonStrictDateUtils()
     {
-        return new DateUtils(false, false);
+        return new DateUtils(false, false, false);
     }
 
     public static DateUtils createFromProperties()
     {
-        return new DateUtils(FOUR_YEARS_VALIDATION, STRICT_DATES_VALIDATION);
+        return new DateUtils(FOUR_YEARS_VALIDATION, STRICT_DATES_VALIDATION_3339, STRICT_DATES_VALIDATION_2616);
     }
 
-    public void setFormatters(boolean strictYear, boolean strictDates)
+    public void setFormatters(boolean strictYear, boolean strictDates3339, boolean strictDates2616)
     {
 
-        dateOnlyFormatter = yearMonthDayFormat(strictYear, strictDates).toFormatter();
-        timeOnlyFormatter = timeOnlyFormatter(strictDates).toFormatter();
-        dateTimeOnlyFormatterNoMillis = dateTimeFormat(strictYear, strictDates).toFormatter();
-        dateTimeOnlyFormatterMillis = dateTimeFormat(strictYear, strictDates)
-                                                                             .appendLiteral(".")
-                                                                             .appendFractionOfSecond(1, 9)
-                                                                             .toFormatter();
+        dateOnlyFormatter = yearMonthDayFormat(strictYear, strictDates3339).toFormatter();
+        timeOnlyFormatter = timeOnlyFormatter(strictDates3339).toFormatter();
+        dateTimeOnlyFormatterNoMillis = dateTimeFormat(strictYear, strictDates3339).toFormatter();
+        dateTimeOnlyFormatterMillis = dateTimeFormat(strictYear, strictDates3339)
+                                                                                 .appendLiteral(".")
+                                                                                 .appendFractionOfSecond(1, 9)
+                                                                                 .toFormatter();
 
         rfc2616Formatter = new DateTimeFormatterBuilder()
                                                          .append(DateTimeFormat.forPattern("EEE, dd MMM "))
-                                                         .append(yearFormat(strictYear, strictDates).toFormatter())
+                                                         .append(yearFormat(strictYear, strictDates2616).toFormatter())
                                                          .appendLiteral(' ')
-                                                         .append(timeOnlyFormatter(strictDates).toFormatter())
+                                                         .append(timeOnlyFormatter(strictDates2616).toFormatter())
                                                          .append(DateTimeFormat.forPattern(" zzz")).toFormatter();
 
-        rfc3339FormatterMillis = dateTimeFormat(strictYear, strictDates)
-                                                                        .appendLiteral(".")
-                                                                        .appendFractionOfSecond(1, 9)
-                                                                        .appendTimeZoneOffset("Z", true, 2, 4)
-                                                                        .toFormatter();
-        rfc3339FormatterNoMillis = dateTimeFormat(strictYear, strictDates)
-                                                                          .appendTimeZoneOffset("Z", true, 2, 4)
-                                                                          .toFormatter();
+        rfc3339FormatterMillis = dateTimeFormat(strictYear, strictDates3339)
+                                                                            .appendLiteral(".")
+                                                                            .appendFractionOfSecond(1, 9)
+                                                                            .appendTimeZoneOffset("Z", true, 2, 4)
+                                                                            .toFormatter();
+        rfc3339FormatterNoMillis = dateTimeFormat(strictYear, strictDates3339)
+                                                                              .appendTimeZoneOffset("Z", true, 2, 4)
+                                                                              .toFormatter();
     }
 
     private DateTimeFormatterBuilder yearMonthDayFormat(boolean strictYear, boolean strictDates)
