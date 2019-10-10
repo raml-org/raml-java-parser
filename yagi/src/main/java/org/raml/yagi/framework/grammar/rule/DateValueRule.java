@@ -32,7 +32,7 @@ public class DateValueRule extends Rule
 
     private DateType dateType;
     private String rfc = "rfc3339";
-
+    private final DateUtils dateUtils = DateUtils.createFromProperties();
 
     public DateValueRule(DateType dateType, String rfc)
     {
@@ -53,7 +53,7 @@ public class DateValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode && DateUtils.isValidDate(((StringNode) node).getValue(), this.dateType, this.rfc);
+        return node instanceof StringNode && dateUtils.isValidDate(((StringNode) node).getValue(), this.dateType, this.rfc);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class DateValueRule extends Rule
     {
         if (matches(node))
         {
-            if (DateUtils.isValidDate(((StringNode) node).getValue(), this.dateType, this.rfc))
+            if (dateUtils.isValidDate(((StringNode) node).getValue(), this.dateType, this.rfc))
             {
                 return node;
             }

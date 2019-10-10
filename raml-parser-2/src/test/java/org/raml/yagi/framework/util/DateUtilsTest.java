@@ -29,36 +29,73 @@ public class DateUtilsTest
     public void isValidDateDateOnly()
     {
 
-        assertTrue(DateUtils.isValidDate("2002-01-01", DateType.date_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-1", DateType.date_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-1-01", DateType.date_only, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2002-01-01", DateType.date_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-1", DateType.date_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-1-01", DateType.date_only, "rfc3339"));
+    }
+
+    @Test
+    public void isValidDateDateOnlyNonStrict()
+    {
+
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01", DateType.date_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-1", DateType.date_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-1-01", DateType.date_only, "rfc3339"));
     }
 
     @Test
     public void isValidTimeOnly()
     {
 
-        assertTrue(DateUtils.isValidDate("11:00:31", DateType.time_only, "rfc3339"));
-        assertTrue(DateUtils.isValidDate("21:00:31", DateType.time_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("1:00:31", DateType.time_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("11:0:31", DateType.time_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("11:00:1", DateType.time_only, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("11:00:31", DateType.time_only, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("21:00:31", DateType.time_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("1:00:31", DateType.time_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("11:0:31", DateType.time_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("11:00:1", DateType.time_only, "rfc3339"));
+    }
+
+    @Test
+    public void isValidTimeOnlyNonStrict()
+    {
+
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("11:00:31", DateType.time_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("21:00:31", DateType.time_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("1:00:31", DateType.time_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("11:0:31", DateType.time_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("11:00:1", DateType.time_only, "rfc3339"));
     }
 
     @Test
     public void isValidDateTimeOnly()
     {
 
-        assertTrue(DateUtils.isValidDate("2002-01-01T21:30:00", DateType.datetime_only, "rfc3339"));
-        assertTrue(DateUtils.isValidDate("2002-01-01T21:30:00.001", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-01T21:30:00.", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-01T21:30:00.1234567890", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-0-01T21:30:00", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-0T21:30:00", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-01T2:30:00", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-01T21:3:00", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-01T21:30:0", DateType.datetime_only, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2002-01-011T21:30:00.", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T21:30:00", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T21:30:00.001", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T21:30:00.", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T21:30:00.1234567890", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-0-01T21:30:00", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-0T21:30:00", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T2:30:00", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T21:3:00", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-01T21:30:0", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2002-01-011T21:30:00.", DateType.datetime_only, "rfc3339"));
+
+    }
+
+    @Test
+    public void isValidDateTimeOnlyNonStrict()
+    {
+
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T21:30:00", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T21:30:00.001", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T21:30:00.", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T21:30:00.1234567890", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-1-01T21:30:00", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-1T21:30:00", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T2:30:00", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T21:3:00", DateType.datetime_only, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-01T21:30:0", DateType.datetime_only, "rfc3339"));
+        assertFalse(DateUtils.createNonStrictDateUtils().isValidDate("2002-01-011T21:30:00.", DateType.datetime_only, "rfc3339"));
 
     }
 
@@ -66,32 +103,62 @@ public class DateUtilsTest
     public void isValidDateTimeRFC3339()
     {
 
-        assertTrue(DateUtils.isValidDate("2019-09-15T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
-        assertTrue(DateUtils.isValidDate("2019-09-15T12:38:34.107Z", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-9-15T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-09-5T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-09-15T2:38:34.107-04:00", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-09-15T12:8:34.107-04:00", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-09-15T12:38:4.107-04:00", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-09-15T12:38:34.-04:00", DateType.datetime, "rfc3339"));
-        assertFalse(DateUtils.isValidDate("2019-09-15T12:38:34.107-4:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:34.107Z", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-9-15T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-09-5T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T2:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:8:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:4.107-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:34.-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:34.107-4:00", DateType.datetime, "rfc3339"));
 
-        assertTrue(DateUtils.isValidDate("2019-09-15T12:38:34-04:00", DateType.datetime, "rfc3339"));
-        assertTrue(DateUtils.isValidDate("2019-09-15T12:38:34Z", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:34-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("2019-09-15T12:38:34Z", DateType.datetime, "rfc3339"));
+
+    }
+
+    @Test
+    public void isValidDateTimeRFC3339NonStrict()
+    {
+
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:34.107Z", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-9-15T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-5T12:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T2:38:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:8:34.107-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:4.107-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:34.-04:00", DateType.datetime, "rfc3339"));
+        assertFalse(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:34.107-4:00", DateType.datetime, "rfc3339"));
+
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:34-04:00", DateType.datetime, "rfc3339"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("2019-09-15T12:38:34Z", DateType.datetime, "rfc3339"));
 
     }
 
     @Test
     public void isValidDateTimeRFC2616()
     {
-        assertTrue(DateUtils.isValidDate("Sun, 15 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
-        assertFalse(DateUtils.isValidDate("Sun, 150 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
-        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 20119 13:03:23 GMT", DateType.datetime, "rfc2616"));
-        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 2019 1:03:23 GMT", DateType.datetime, "rfc2616"));
-        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 2019 13:3:23 GMT", DateType.datetime, "rfc2616"));
-        assertFalse(DateUtils.isValidDate("Sun, 15 Sep 2019 13:03:3 GMT", DateType.datetime, "rfc2616"));
+        assertTrue(DateUtils.createStrictDateUtils().isValidDate("Sun, 15 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("Sun, 150 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("Sun, 15 Sep 20119 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("Sun, 15 Sep 2019 1:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("Sun, 15 Sep 2019 13:3:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.createStrictDateUtils().isValidDate("Sun, 15 Sep 2019 13:03:3 GMT", DateType.datetime, "rfc2616"));
 
     }
 
+
+    @Test
+    public void isValidDateTimeRFC2616NonStrict()
+    {
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("Sun, 15 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertFalse(DateUtils.createNonStrictDateUtils().isValidDate("Sun, 150 Sep 2019 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("Sun, 15 Sep 20119 13:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("Sun, 15 Sep 2019 1:03:23 GMT", DateType.datetime, "rfc2616"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("Sun, 15 Sep 2019 13:3:23 GMT", DateType.datetime, "rfc2616"));
+        assertTrue(DateUtils.createNonStrictDateUtils().isValidDate("Sun, 15 Sep 2019 13:03:3 GMT", DateType.datetime, "rfc2616"));
+    }
 
 }
