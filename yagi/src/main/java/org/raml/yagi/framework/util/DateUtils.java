@@ -27,7 +27,7 @@ public class DateUtils
 {
     private static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
     private static final String STRICT_DATES_RFC3339 = "org.raml.strict_dates_rfc3339";
-    private static final String STRICT_DATES_RFC2616 = "org.raml.strict_dates_rfc3339";
+    private static final String STRICT_DATES_RFC2616 = "org.raml.strict_dates_rfc2616";
 
     public static boolean FOUR_YEARS_VALIDATION = Boolean.parseBoolean(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
     public static boolean STRICT_DATES_VALIDATION_3339 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC3339, "true"));
