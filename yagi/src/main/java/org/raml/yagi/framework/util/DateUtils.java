@@ -26,10 +26,13 @@ import static org.joda.time.format.ISODateTimeFormat.*;
 public class DateUtils
 {
     private static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION = "yagi.date_only_four_digits_year_length_validation";
-    private static final String STRICT_DATES_RFC3339 = "org.raml.strict_dates_rfc3339";
-    private static final String STRICT_DATES_RFC2616 = "org.raml.strict_dates_rfc2616";
+    private static final String DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION_ALTERNATE = "org.raml.date_only_four_digits_year_length_validation";
 
-    public static boolean FOUR_YEARS_VALIDATION = Boolean.parseBoolean(System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, "true"));
+    private static final String STRICT_DATES_RFC3339 = "org.raml.dates_rfc3339_validation";
+    private static final String STRICT_DATES_RFC2616 = "org.raml.dates_rfc2616_validation";
+
+    public static boolean FOUR_YEARS_VALIDATION = Boolean.parseBoolean(System.getProperty(
+            DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION_ALTERNATE, "true")));
     public static boolean STRICT_DATES_VALIDATION_3339 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC3339, "true"));
     public static boolean STRICT_DATES_VALIDATION_2616 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC2616, "true"));
 
