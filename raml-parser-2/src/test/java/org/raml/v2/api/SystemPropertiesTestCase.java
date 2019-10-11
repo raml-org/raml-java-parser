@@ -36,7 +36,7 @@ public class SystemPropertiesTestCase
     {
         clearFailOnWarning();
         DateUtils.FOUR_YEARS_VALIDATION = true;
-        DateUtils.setFormatters();
+        // DateUtils.setFormatters();
     }
 
     @Test
@@ -53,25 +53,6 @@ public class SystemPropertiesTestCase
     {
         failOnWarningOldValue = System.setProperty(JSON_SCHEMA_FAIL_ON_WARNING_KEY, "false");
         RamlModelResult ramlModelResult = getJsonSchemaApi();
-        assertThat(ramlModelResult.hasErrors(), is(false));
-    }
-
-    @Test
-    public void failFourYearsValidation()
-    {
-        DateUtils.FOUR_YEARS_VALIDATION = true;
-        DateUtils.setFormatters();
-        RamlModelResult ramlModelResult = getDateTimeApi();
-        assertThat(ramlModelResult.hasErrors(), is(true));
-
-    }
-
-    @Test
-    public void doNotFailFourYearsValidation()
-    {
-        DateUtils.FOUR_YEARS_VALIDATION = false;
-        DateUtils.setFormatters();
-        RamlModelResult ramlModelResult = getDateTimeApi();
         assertThat(ramlModelResult.hasErrors(), is(false));
     }
 
