@@ -214,7 +214,7 @@ public class TemplateResolver
                 //  parent include applied tag path
                 ScalarNode scalarNode = (ScalarNode) node;
                 String parentPath = includeResolver.getContextPath().resolveRelativePath(tag);
-                String includePathRecalculated = ContextPath.getPartentPath(parentPath) + scalarNode.getValue();
+                String includePathRecalculated = ContextPath.getParentPath(parentPath) + scalarNode.getValue();
                 node = new ScalarNode(scalarNode.getTag(), includePathRecalculated, node.getStartMark(), node.getEndMark(), scalarNode.getStyle());
             }
             return includeResolver.resolve(node, resourceLoader, nodeNandler);

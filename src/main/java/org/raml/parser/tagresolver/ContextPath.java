@@ -17,6 +17,7 @@ package org.raml.parser.tagresolver;
 
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 
+import java.io.File;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -70,7 +71,7 @@ public class ContextPath
 
     public String resolveAbsolutePath(String relativeFile)
     {
-        return resolveAbsolutePath(relativeFile, getPartentPath());
+        return resolveAbsolutePath(relativeFile, getParentPath());
     }
 
     /**
@@ -91,25 +92,25 @@ public class ContextPath
         {
             throw new IllegalArgumentException("Tag must be an include applied");
         }
-        String partentPath = getPartentPath();
+        String parentPath = getParentPath();
         String includePath = new IncludeInfo(tag).getIncludeName();
 
-        if (includePath.startsWith(partentPath))
+        if (includePath.startsWith(parentPath))
         {
-            includePath = includePath.substring(partentPath.length());
+            includePath = includePath.substring(parentPath.length());
         }
         return includePath;
     }
 
-    public static String getPartentPath(String path)
+    public static String getParentPath(String path)
     {
-        int idx = path.lastIndexOf("/") + 1;
+        int idx = path.lastIndexOf(File.separatorChar) + 1;
         return path.substring(0, idx);
     }
 
-    private String getPartentPath()
+    private String getParentPath()
     {
-        return getPartentPath(includeStack.peek().getIncludeName());
+        return getParentPath(includeStack.peek().getIncludeName());
     }
 
     public IncludeInfo peek()
@@ -129,7 +130,7 @@ public class ContextPath
 
     public void push(ScalarNode node)
     {
-        push(new IncludeInfo(node, getPartentPath()));
+        push(new IncludeInfo(node, getParentPath()));
     }
 
     public void push(Tag tag)
