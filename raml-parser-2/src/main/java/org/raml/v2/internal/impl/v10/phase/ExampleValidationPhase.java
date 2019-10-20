@@ -15,6 +15,9 @@
  */
 package org.raml.v2.internal.impl.v10.phase;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
@@ -37,6 +40,7 @@ import org.raml.yagi.framework.nodes.NullNodeImpl;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.nodes.StringNodeImpl;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
+import org.raml.yagi.framework.nodes.jackson.JsonUtils;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.Phase;
 import org.xml.sax.Attributes;
@@ -54,6 +58,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
@@ -221,12 +226,48 @@ public class ExampleValidationPhase implements Phase
 
     private boolean isXmlValue(String value)
     {
-        return value.trim().startsWith("<");
+        return value.trim().startsWith("<") && isReallyAnXmlValue(value);
+    }
+
+    private boolean isReallyAnXmlValue(String value)
+    {
+
+        try
+        {
+            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+
+            xmlReader.setFeature(DISALLOW_DOCTYPE_DECL_FEATURE, !expandEntities);
+            xmlReader.setFeature(EXTERNAL_GENERAL_ENTITIES_FEATURE, externalEntities);
+            xmlReader.setFeature(EXTERNAL_PARAMETER_ENTITIES_FEATURE, externalEntities);
+
+            xmlReader.parse(new InputSource(new StringReader(value)));
+            return true;
+        }
+        catch (IOException | SAXException e)
+        {
+
+            return false;
+        }
     }
 
     private boolean isJsonValue(String value)
     {
-        return value.trim().startsWith("{") || value.trim().startsWith("[");
+        return (value.trim().startsWith("{") || value.trim().startsWith("[")) && isReallyJsonValue(value);
+    }
+
+    private boolean isReallyJsonValue(String value)
+    {
+
+        try
+        {
+            JsonNode node = JsonUtils.parseJson(value);
+            return true;
+        }
+        catch (IOException e)
+        {
+
+            return false;
+        }
     }
 
     private boolean isExternalSchemaType(ResolvedType resolvedType)

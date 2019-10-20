@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Sample - Api
+version: 1.0.0-SNAPSHOT
+baseUri: http://api.samplehost.com
+
+/test:
+  get:
+    queryParameters:
+      timeout:
+        type: date-only
+        required: true
+        examples:
+          theXml: <2019-09-09>
+          theJson: |
+            {2019-09-09}
