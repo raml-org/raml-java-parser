@@ -236,6 +236,11 @@ public class ErrorNodeFactory
         return new ErrorNode("Invalid reference '" + refNode.getRefName() + "'");
     }
 
+    public static ErrorNode createInvalidReferenceNode(StringNode refNode)
+    {
+        return new ErrorNode("Invalid reference '" + refNode + "'");
+    }
+
     public static ErrorNode createDuplicatedPathNode(String path)
     {
         return new ErrorNode("The path " + path + " was already defined.");
