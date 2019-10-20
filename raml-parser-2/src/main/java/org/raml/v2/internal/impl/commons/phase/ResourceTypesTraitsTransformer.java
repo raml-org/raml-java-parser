@@ -31,13 +31,8 @@ import org.raml.v2.internal.impl.commons.nodes.TraitNode;
 import org.raml.v2.internal.impl.v08.grammar.Raml08Grammar;
 import org.raml.v2.internal.impl.v08.phase.ReferenceResolverTransformerV08;
 import org.raml.v2.internal.impl.v10.phase.ReferenceResolverTransformer;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.ExecutionContext;
-import org.raml.yagi.framework.nodes.KeyValueNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NullNode;
-import org.raml.yagi.framework.nodes.ReferenceNode;
-import org.raml.yagi.framework.nodes.StringNodeImpl;
+import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.nodes.snakeyaml.SYBaseRamlNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYNullNode;
 import org.raml.yagi.framework.nodes.snakeyaml.SYObjectNode;
@@ -347,7 +342,17 @@ public class ResourceTypesTraitsTransformer implements Transformer
 
     private ReferenceNode findResourceTypeReference(KeyValueNode resourceNode)
     {
-        return (ReferenceNode) NodeSelector.selectFrom("type", resourceNode.getValue());
+        Node node = NodeSelector.selectFrom("type", resourceNode.getValue());
+        if (node == null || node instanceof ReferenceNode)
+        {
+            return (ReferenceNode) node;
+        }
+        else
+        {
+            ErrorNode errorNode = ErrorNodeFactory.createInvalidReferenceNode((StringNode) node);
+            resourceNode.getValue().replaceWith(errorNode);
+            return null;
+        }
     }
 
     private List<MethodNode> findMethodNodes(KeyValueNode resourceNode)

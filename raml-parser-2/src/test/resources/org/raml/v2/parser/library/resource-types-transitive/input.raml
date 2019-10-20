@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Sample - Api
+version: 1.0.0-SNAPSHOT
+baseUri: http://api.samplehost.com
+
+uses:
+  External: resource-types.raml
+
+types:
+  Data:
+    properties:
+      day: datetime
+
+/users:
+  type: { External.Get_Stuff:  { itemType: Data }  }
