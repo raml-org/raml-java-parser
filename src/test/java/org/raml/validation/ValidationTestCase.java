@@ -328,7 +328,7 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
 
         ValidationResult validationResult = validationResults.get(0);
-        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting 'null', 'true', 'false' or NaN"));
+        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')"));
         assertThat(validationResult.getLine(), is(6));
 
         ContextPath includeContext = validationResult.getIncludeContext();
@@ -351,7 +351,7 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
         
         ValidationResult validationResult = validationResults.get(0);
-        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting 'null', 'true', 'false' or NaN"));
+        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')"));
         assertThat(validationResult.getLine(), is(6));
         
         ContextPath includeContext = validationResult.getIncludeContext();
@@ -370,7 +370,7 @@ public class ValidationTestCase extends AbstractRamlTestCase
         assertThat(validationResults.size(), is(1));
 
         ValidationResult validationResult = validationResults.get(0);
-        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting 'null', 'true', 'false' or NaN"));
+        assertThat(validationResult.getMessage(), is("invalid JSON schema (files): Unrecognized token 'files': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')"));
         assertThat(validationResult.getLine(), is(5));
 
         ContextPath includeContext = validationResult.getIncludeContext();
