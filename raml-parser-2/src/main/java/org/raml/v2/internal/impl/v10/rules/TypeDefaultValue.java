@@ -40,6 +40,15 @@ public class TypeDefaultValue implements DefaultValue
         {
             return new NativeTypeExpressionNode(TypeId.OBJECT.getType());
         }
+        if (parent.get("items") != null)
+        {
+            return new NativeTypeExpressionNode(TypeId.ARRAY.getType());
+        }
+        if (parent.get("fileTypes") != null)
+        {
+            return new NativeTypeExpressionNode(TypeId.FILE.getType());
+        }
+
         return new OverridableNativeTypeExpressionNode(defaultType.getType());
     }
 }
