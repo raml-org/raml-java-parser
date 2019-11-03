@@ -1,0 +1,34 @@
+#%RAML 1.0
+# Adding more tests for defaults based on facets (Arrays and Files...add more as required)
+title: My API
+mediaType: application/json
+
+types:
+  someArray:
+    items:
+      properties:
+        Foo: integer
+        Bar: string
+  fireworks:
+    description: This is a new DataType
+    fileTypes:
+      - image/gif
+
+/resource:
+  post:
+    body:
+      application/json:
+        type: array
+        items: integer
+        example: [1, 2]
+
+/other_resource:
+  post:
+    body:
+      application/json:
+        items:
+          properties:
+            Foo: integer
+            Bar: string
+        example:
+          [{"Foo": 1, "Bar": "Qux"}]
