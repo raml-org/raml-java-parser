@@ -32,7 +32,7 @@ public class LimitErrorMessagesTestCase
         File ramlFile = new File("src/test/resources/org/raml/v2/api/v10/limit-error-message/limit-error-message.raml");
         assertTrue(ramlFile.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
-        Assert.assertEquals(32765, ramlModelResult.getValidationResults().get(0).getMessage().length());
+        Assert.assertEquals(26429, ramlModelResult.getValidationResults().get(0).getMessage().length());
     }
 
     @Test
@@ -42,6 +42,6 @@ public class LimitErrorMessagesTestCase
         File ramlFile = new File("src/test/resources/org/raml/v2/api/v10/limit-error-message/limit-error-message.raml");
         assertTrue(ramlFile.isFile());
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(ramlFile);
-        Assert.assertEquals(10042, ramlModelResult.getValidationResults().get(0).getMessage().length());
+        Assert.assertEquals(10079, ramlModelResult.getValidationResults().get(0).getMessage().length());
     }
 }

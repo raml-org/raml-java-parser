@@ -23,22 +23,15 @@ import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
+import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
-import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
-import org.raml.v2.internal.impl.v10.type.FileResolvedType;
-import org.raml.v2.internal.impl.v10.type.StringResolvedType;
-import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
-import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
+import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.type.*;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.NullNodeImpl;
-import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.StringNodeImpl;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
 import org.raml.yagi.framework.nodes.jackson.JsonUtils;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
@@ -50,6 +43,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
 import javax.xml.transform.sax.SAXSource;
@@ -61,6 +55,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.List;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
@@ -113,7 +108,10 @@ public class ExampleValidationPhase implements Phase
         {
             exampleValueNode = new NullNodeImpl();
         }
-        else if (!(type.getResolvedType() instanceof StringResolvedType) && !(type.getResolvedType() instanceof FileResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
+        else if (!(type.getResolvedType() instanceof StringResolvedType) &&
+                 !(type.getResolvedType() instanceof FileResolvedType) &&
+                 !isJsonValue(exampleValue) &&
+                 !isXmlValue(exampleValue))
         {
             // parse as yaml except for string, file, json and xml types
             exampleValueNode = NodeParser.parse(resourceLoader, "", exampleValue);
@@ -129,14 +127,14 @@ public class ExampleValidationPhase implements Phase
         {
             return null;
         }
-        if (exampleValue instanceof StringNode && !(resolvedType instanceof StringResolvedType) && !isExternalSchemaType(resolvedType))
+        if (exampleValue instanceof StringNode && !isExternalSchemaType(resolvedType))
         {
             final String value = ((StringNode) exampleValue).getValue();
-            if (isXmlValue(value))
+            if (((resolvedType instanceof ObjectResolvedType) || (resolvedType instanceof UnionResolvedType)) && isXmlValue(value))
             {
                 return validateXml(type, resolvedType, value);
             }
-            else if (isJsonValue(value))
+            else if ((mightBeAnObjectType(resolvedType) || (resolvedType instanceof ArrayResolvedType)) && isJsonValue(value))
             {
                 return validateJson(exampleValue, resolvedType, value);
             }
@@ -147,6 +145,25 @@ public class ExampleValidationPhase implements Phase
             return rule != null ? rule.apply(exampleValue) : null;
         }
         return null;
+    }
+
+    private boolean mightBeAnObjectType(ResolvedType resolvedType)
+    {
+        if (resolvedType instanceof ObjectResolvedType)
+        {
+            return true;
+        }
+        if (resolvedType instanceof UnionResolvedType)
+        {
+
+            return resolvedType.accepts(new ObjectResolvedType(new NamedTypeExpressionNode("whocares")));
+            // UnionResolvedType unionResolvedType = (UnionResolvedType) resolvedType;
+            // unionResolvedType.
+        }
+        else
+        {
+            return false;
+        }
     }
 
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
@@ -226,48 +243,12 @@ public class ExampleValidationPhase implements Phase
 
     private boolean isXmlValue(String value)
     {
-        return value.trim().startsWith("<") && isReallyAnXmlValue(value);
-    }
-
-    private boolean isReallyAnXmlValue(String value)
-    {
-
-        try
-        {
-            final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-
-            xmlReader.setFeature(DISALLOW_DOCTYPE_DECL_FEATURE, !expandEntities);
-            xmlReader.setFeature(EXTERNAL_GENERAL_ENTITIES_FEATURE, externalEntities);
-            xmlReader.setFeature(EXTERNAL_PARAMETER_ENTITIES_FEATURE, externalEntities);
-
-            xmlReader.parse(new InputSource(new StringReader(value)));
-            return true;
-        }
-        catch (IOException | SAXException e)
-        {
-
-            return false;
-        }
+        return value.trim().startsWith("<");
     }
 
     private boolean isJsonValue(String value)
     {
-        return (value.trim().startsWith("{") || value.trim().startsWith("[")) && isReallyJsonValue(value);
-    }
-
-    private boolean isReallyJsonValue(String value)
-    {
-
-        try
-        {
-            JsonNode node = JsonUtils.parseJson(value);
-            return true;
-        }
-        catch (IOException e)
-        {
-
-            return false;
-        }
+        return value.trim().startsWith("{") || value.trim().startsWith("[");
     }
 
     private boolean isExternalSchemaType(ResolvedType resolvedType)
