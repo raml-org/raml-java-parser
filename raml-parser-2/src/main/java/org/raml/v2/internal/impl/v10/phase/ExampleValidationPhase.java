@@ -18,9 +18,13 @@ package org.raml.v2.internal.impl.v10.phase;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.raml.v2.api.loader.ResourceLoader;
 import org.raml.v2.internal.impl.commons.model.factory.TypeDeclarationModelFactory;
+import org.raml.v2.internal.impl.commons.model.type.TypeDeclaration;
+import org.raml.v2.internal.impl.commons.model.type.UnionTypeDeclaration;
 import org.raml.v2.internal.impl.commons.nodes.ExampleDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.nodes.TypeExpressionNode;
@@ -28,6 +32,7 @@ import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.nodes.NamedTypeExpressionNode;
+import org.raml.v2.internal.impl.v10.nodes.UnionTypeExpressionNode;
 import org.raml.v2.internal.impl.v10.type.*;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
@@ -55,6 +60,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -132,10 +138,19 @@ public class ExampleValidationPhase implements Phase
             final String value = ((StringNode) exampleValue).getValue();
             if (((resolvedType instanceof ObjectResolvedType) || (resolvedType instanceof UnionResolvedType)) && isXmlValue(value))
             {
+                if (resolvedType instanceof UnionResolvedType)
+                {
+                    return resolveUnionTypeWithStuff(type, exampleValue);
+                }
                 return validateXml(type, resolvedType, value);
             }
             else if ((mightBeAnObjectType(resolvedType) || (resolvedType instanceof ArrayResolvedType)) && isJsonValue(value))
             {
+                if (resolvedType instanceof UnionResolvedType)
+                {
+                    return resolveUnionTypeWithStuff(type, exampleValue);
+                }
+
                 return validateJson(exampleValue, resolvedType, value);
             }
         }
@@ -147,23 +162,31 @@ public class ExampleValidationPhase implements Phase
         return null;
     }
 
+    private Node resolveUnionTypeWithStuff(TypeDeclarationNode type, Node exampleValue)
+    {
+        Node node = null;
+        for (ResolvedType resolvedType : ((UnionResolvedType) type.getResolvedType()).of())
+        {
+            TypeDeclarationNode typeDeclarationNode = new TypeDeclarationNode();
+
+            typeDeclarationNode.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), resolvedType.getTypeExpressionNode()));
+            node = validate(typeDeclarationNode, exampleValue);
+            if (!(node instanceof ErrorNode))
+            {
+                return exampleValue;
+            }
+        }
+
+        return node;
+    }
+
     private boolean mightBeAnObjectType(ResolvedType resolvedType)
     {
         if (resolvedType instanceof ObjectResolvedType)
         {
             return true;
         }
-        if (resolvedType instanceof UnionResolvedType)
-        {
-
-            return resolvedType.accepts(new ObjectResolvedType(new NamedTypeExpressionNode("whocares")));
-            // UnionResolvedType unionResolvedType = (UnionResolvedType) resolvedType;
-            // unionResolvedType.
-        }
-        else
-        {
-            return false;
-        }
+        return resolvedType instanceof UnionResolvedType;
     }
 
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
