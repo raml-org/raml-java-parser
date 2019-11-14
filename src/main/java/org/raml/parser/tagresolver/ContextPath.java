@@ -18,6 +18,7 @@ package org.raml.parser.tagresolver;
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -104,8 +105,19 @@ public class ContextPath
 
     public static String getParentPath(String path)
     {
-        int idx = path.lastIndexOf(File.separatorChar) + 1;
+        boolean isURL = isURL(path);
+        int idx = path.lastIndexOf(isURL ? '/': File.separatorChar) + 1;
         return path.substring(0, idx);
+    }
+
+    public static boolean isURL(String path) {
+        try {
+            URI.create(path);
+            return true;
+        } catch (IllegalArgumentException e){
+            return false;
+        }
+
     }
 
     private String getParentPath()
