@@ -3,7 +3,15 @@ title: Sample - Api
 version: 1.0.0-SNAPSHOT
 baseUri: http://api.samplehost.com
 
-/test:
+types:
+  simpleObject:
+    properties:
+      first: string
+  anotherObject:
+    properties:
+      second: string
+
+/scalar:
   get:
     queryParameters:
       timeout:
@@ -13,3 +21,40 @@ baseUri: http://api.samplehost.com
           theXml: <2019-09-09>
           theJson: |
             {2019-09-09}
+/object:
+  get:
+    body:
+      application/json:
+        type: simpleObject
+        examples:
+          moreJson: |
+            {"first": true}
+
+/unionObject:
+  get:
+    body:
+      application/json:
+        type: simpleObject|anotherObject
+        examples:
+          moreJson: |
+            {"first": true}
+
+/unionNeverObject:
+  get:
+    body:
+      application/json:
+        type: boolean|integer
+        examples:
+          moreJson: |
+            {hello}
+
+/unionSometimesObject:
+  get:
+    body:
+      application/json:
+        type: string|simpleObject
+        examples:
+          moreJson: |
+            <hello>
+
+
