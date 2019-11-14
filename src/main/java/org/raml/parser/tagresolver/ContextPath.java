@@ -17,7 +17,6 @@ package org.raml.parser.tagresolver;
 
 import static org.raml.parser.tagresolver.IncludeResolver.INCLUDE_APPLIED_TAG;
 
-import java.io.File;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -104,7 +103,7 @@ public class ContextPath
 
     public static String getParentPath(String path)
     {
-        int idx = path.lastIndexOf(File.separatorChar) + 1;
+        int idx = path.lastIndexOf("/") + 1;
         return path.substring(0, idx);
     }
 
