@@ -62,6 +62,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
@@ -136,21 +137,12 @@ public class ExampleValidationPhase implements Phase
         if (exampleValue instanceof StringNode && !isExternalSchemaType(resolvedType))
         {
             final String value = ((StringNode) exampleValue).getValue();
-            if (((resolvedType instanceof ObjectResolvedType) || (resolvedType instanceof UnionResolvedType)) && isXmlValue(value))
+            if ((mightBeAnObjectType(resolvedType)) && isXmlValue(value))
             {
-                if (resolvedType instanceof UnionResolvedType)
-                {
-                    return resolveUnionTypeWithStuff(type, exampleValue);
-                }
                 return validateXml(type, resolvedType, value);
             }
             else if ((mightBeAnObjectType(resolvedType) || (resolvedType instanceof ArrayResolvedType)) && isJsonValue(value))
             {
-                if (resolvedType instanceof UnionResolvedType)
-                {
-                    return resolveUnionTypeWithStuff(type, exampleValue);
-                }
-
                 return validateJson(exampleValue, resolvedType, value);
             }
         }
@@ -162,31 +154,33 @@ public class ExampleValidationPhase implements Phase
         return null;
     }
 
-    private Node resolveUnionTypeWithStuff(TypeDeclarationNode type, Node exampleValue)
-    {
-        Node node = null;
-        for (ResolvedType resolvedType : ((UnionResolvedType) type.getResolvedType()).of())
-        {
-            TypeDeclarationNode typeDeclarationNode = new TypeDeclarationNode();
-
-            typeDeclarationNode.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), resolvedType.getTypeExpressionNode()));
-            node = validate(typeDeclarationNode, exampleValue);
-            if (!(node instanceof ErrorNode))
-            {
-                return exampleValue;
-            }
-        }
-
-        return node;
-    }
-
     private boolean mightBeAnObjectType(ResolvedType resolvedType)
     {
         if (resolvedType instanceof ObjectResolvedType)
         {
             return true;
         }
-        return resolvedType instanceof UnionResolvedType;
+
+        return unionMightBeAnObject(resolvedType, new HashSet<String>());
+    }
+
+    private boolean unionMightBeAnObject(ResolvedType resolvedType, HashSet<String> seenTypes)
+    {
+
+        seenTypes.add(resolvedType.getTypeName());
+        if (resolvedType instanceof UnionResolvedType)
+        {
+            UnionResolvedType urt = (UnionResolvedType) resolvedType;
+            for (ResolvedType type : urt.of())
+            {
+                if (!seenTypes.contains(type.getTypeName()))
+                {
+                    return unionMightBeAnObject(type, seenTypes);
+                }
+            }
+        }
+
+        return resolvedType instanceof ObjectResolvedType;
     }
 
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
