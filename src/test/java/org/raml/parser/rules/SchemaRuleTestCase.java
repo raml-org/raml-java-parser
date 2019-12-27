@@ -155,6 +155,19 @@ public class SchemaRuleTestCase extends AbstractRamlTestCase
     }
 
     @Test
+    public void validXmlSchemaWithInclude()
+    {
+        try {
+            System.setProperty("javax.xml.accessExternalSchema", "");
+            List<ValidationResult> validationResults = validateRaml("org/raml/schema/external-xml.yaml");
+            assertThat(validationResults.size(), is(1));
+            assertThat(validationResults.get(0).getMessage(), containsString("Failed to read schema document 'customer.xsd', because 'https' access is not allowed due to restriction set by the accessExternalSchema property"));
+        } finally {
+            System.clearProperty("javax.xml.accessExternalSchema");
+        }
+    }
+
+    @Test
     public void validUtf8IncludeUtf16XmlSchema()
     {
         List<ValidationResult> validationResults = validateRaml("org/raml/schema/valid-xml-utf8-include-utf16.yaml");
