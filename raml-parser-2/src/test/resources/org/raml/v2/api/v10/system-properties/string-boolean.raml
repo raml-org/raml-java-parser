@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Sample API
+types:
+  TestType:
+    type: object
+    properties:
+      count?: integer
+      flag?: boolean
+      name?: string
+/test:
+  post:
+    body:
+      application/json:
+        type: TestType
+        example: |
+          { "count": 12, "flag": "true", "name": "Joe" }

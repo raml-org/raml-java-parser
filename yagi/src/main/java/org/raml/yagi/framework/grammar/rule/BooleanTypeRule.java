@@ -29,7 +29,7 @@ import java.util.List;
 
 public class BooleanTypeRule extends AbstractTypeRule
 {
-    private static final String STRICT_BOOLEANS = "org.raml.strict_booleans";
+    public static final String STRICT_BOOLEANS = "org.raml.strict_booleans";
 
     private final static String TRUE = "true";
     private final static String FALSE = "false";
