@@ -23,19 +23,11 @@ import org.raml.v2.internal.impl.commons.nodes.TypeDeclarationNode;
 import org.raml.v2.internal.impl.commons.type.JsonSchemaExternalType;
 import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
-import org.raml.v2.internal.impl.v10.type.AnyResolvedType;
-import org.raml.v2.internal.impl.v10.type.FileResolvedType;
-import org.raml.v2.internal.impl.v10.type.StringResolvedType;
-import org.raml.v2.internal.impl.v10.type.TypeToRuleVisitor;
-import org.raml.v2.internal.impl.v10.type.TypeToXmlSchemaVisitor;
+import org.raml.v2.internal.impl.v10.type.*;
+import org.raml.v2.internal.utils.xml.XMLLocalConstants;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
-import org.raml.yagi.framework.nodes.ErrorNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.NullNodeImpl;
-import org.raml.yagi.framework.nodes.StringNode;
-import org.raml.yagi.framework.nodes.StringNodeImpl;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
 import org.raml.yagi.framework.nodes.snakeyaml.NodeParser;
 import org.raml.yagi.framework.phase.Phase;
@@ -56,14 +48,15 @@ import javax.xml.validation.Validator;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.DISALLOW_DOCTYPE_DECL_FEATURE;
-import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.EXTERNAL_GENERAL_ENTITIES_FEATURE;
-import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.EXTERNAL_PARAMETER_ENTITIES_FEATURE;
-import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.expandEntities;
-import static org.raml.v2.internal.impl.commons.rule.XmlSchemaValidationRule.externalEntities;
+import static org.raml.v2.internal.utils.xml.XMLLocalConstants.DISALLOW_DOCTYPE_DECL_FEATURE;
+import static org.raml.v2.internal.utils.xml.XMLLocalConstants.EXTERNAL_GENERAL_ENTITIES_FEATURE;
+import static org.raml.v2.internal.utils.xml.XMLLocalConstants.EXTERNAL_PARAMETER_ENTITIES_FEATURE;
+import static org.raml.v2.internal.utils.xml.XMLLocalConstants.expandEntities;
+import static org.raml.v2.internal.utils.xml.XMLLocalConstants.externalEntities;
 
 public class ExampleValidationPhase implements Phase
 {
@@ -108,7 +101,10 @@ public class ExampleValidationPhase implements Phase
         {
             exampleValueNode = new NullNodeImpl();
         }
-        else if (!(type.getResolvedType() instanceof StringResolvedType) && !(type.getResolvedType() instanceof FileResolvedType) && !isJsonValue(exampleValue) && !isXmlValue(exampleValue))
+        else if (!(type.getResolvedType() instanceof StringResolvedType) &&
+                 !(type.getResolvedType() instanceof FileResolvedType) &&
+                 !isJsonValue(exampleValue) &&
+                 !isXmlValue(exampleValue))
         {
             // parse as yaml except for string, file, json and xml types
             exampleValueNode = NodeParser.parse(resourceLoader, "", exampleValue);
@@ -124,14 +120,14 @@ public class ExampleValidationPhase implements Phase
         {
             return null;
         }
-        if (exampleValue instanceof StringNode && !(resolvedType instanceof StringResolvedType) && !isExternalSchemaType(resolvedType))
+        if (exampleValue instanceof StringNode && !isExternalSchemaType(resolvedType))
         {
             final String value = ((StringNode) exampleValue).getValue();
-            if (isXmlValue(value))
+            if ((mightBeAnObjectType(resolvedType)) && isXmlValue(value))
             {
                 return validateXml(type, resolvedType, value);
             }
-            else if (isJsonValue(value))
+            else if ((mightBeAnObjectType(resolvedType) || (resolvedType instanceof ArrayResolvedType)) && isJsonValue(value))
             {
                 return validateJson(exampleValue, resolvedType, value);
             }
@@ -142,6 +138,35 @@ public class ExampleValidationPhase implements Phase
             return rule != null ? rule.apply(exampleValue) : null;
         }
         return null;
+    }
+
+    private boolean mightBeAnObjectType(ResolvedType resolvedType)
+    {
+        if (resolvedType instanceof ObjectResolvedType)
+        {
+            return true;
+        }
+
+        return unionMightBeAnObject(resolvedType, new HashSet<String>());
+    }
+
+    private boolean unionMightBeAnObject(ResolvedType resolvedType, HashSet<String> seenTypes)
+    {
+
+        seenTypes.add(resolvedType.getTypeName());
+        if (resolvedType instanceof UnionResolvedType)
+        {
+            UnionResolvedType urt = (UnionResolvedType) resolvedType;
+            for (ResolvedType type : urt.of())
+            {
+                if (!seenTypes.contains(type.getTypeName()))
+                {
+                    return unionMightBeAnObject(type, seenTypes);
+                }
+            }
+        }
+
+        return resolvedType instanceof ObjectResolvedType;
     }
 
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
@@ -198,7 +223,7 @@ public class ExampleValidationPhase implements Phase
         schema.write(xsd);
         try
         {
-            final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            final SchemaFactory factory = SchemaFactory.newInstance(XMLLocalConstants.XML_SCHEMA_VERSION);
             final Schema schema1 = factory.newSchema(new StreamSource(new StringReader(xsd.toString())));
             final Validator validator = schema1.newValidator();
 

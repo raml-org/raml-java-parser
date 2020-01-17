@@ -29,8 +29,22 @@ import java.util.List;
 
 public class BooleanTypeRule extends AbstractTypeRule
 {
+    public static final String STRICT_BOOLEANS = "org.raml.strict_booleans";
+
     private final static String TRUE = "true";
     private final static String FALSE = "false";
+
+    private final boolean strictBoolean;
+
+    public BooleanTypeRule()
+    {
+        this.strictBoolean = Boolean.parseBoolean(System.getProperty(STRICT_BOOLEANS, "false"));
+    }
+
+    BooleanTypeRule(boolean strictBoolean)
+    {
+        this.strictBoolean = strictBoolean;
+    }
 
     @Nonnull
     @Override
@@ -42,7 +56,7 @@ public class BooleanTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof StringNode)
+        if (!strictBoolean && (node instanceof StringNode))
         {
             String value = ((StringNode) node).getValue();
             return TRUE.equals(value) || FALSE.equals(value);

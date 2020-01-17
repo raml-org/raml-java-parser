@@ -17,6 +17,7 @@ package org.raml.v2.api;
 
 import org.junit.After;
 import org.junit.Test;
+import org.raml.yagi.framework.grammar.rule.BooleanTypeRule;
 import org.raml.yagi.framework.util.DateUtils;
 
 import java.io.File;
@@ -36,6 +37,7 @@ public class SystemPropertiesTestCase
     {
         clearFailOnWarning();
         DateUtils.FOUR_YEARS_VALIDATION = true;
+        System.clearProperty(BooleanTypeRule.STRICT_BOOLEANS);
         // DateUtils.setFormatters();
     }
 
@@ -56,14 +58,30 @@ public class SystemPropertiesTestCase
         assertThat(ramlModelResult.hasErrors(), is(false));
     }
 
+    @Test
+    public void failOnString() throws IOException
+    {
+        System.setProperty(BooleanTypeRule.STRICT_BOOLEANS, "true");
+        RamlModelResult ramlModelResult = getStringBoolean();
+        assertThat(ramlModelResult.hasErrors(), is(true));
+        assertThat(ramlModelResult.getValidationResults().size(), is(1));
+    }
+
+    @Test
+    public void doNotFailString() throws IOException
+    {
+        RamlModelResult ramlModelResult = getStringBoolean();
+        assertThat(ramlModelResult.hasErrors(), is(false));
+    }
+
     private RamlModelResult getJsonSchemaApi()
     {
         return getApi("src/test/resources/org/raml/v2/api/v10/system-properties/jsonschema-fail-on-warning.raml");
     }
 
-    private RamlModelResult getDateTimeApi()
+    private RamlModelResult getStringBoolean()
     {
-        return getApi("src/test/resources/org/raml/v2/api/v10/system-properties/date-only-validation.raml");
+        return getApi("src/test/resources/org/raml/v2/api/v10/system-properties/string-boolean.raml");
     }
 
     private RamlModelResult getApi(String pathname)

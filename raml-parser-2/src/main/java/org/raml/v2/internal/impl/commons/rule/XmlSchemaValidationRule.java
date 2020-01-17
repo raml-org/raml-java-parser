@@ -17,6 +17,7 @@ package org.raml.v2.internal.impl.commons.rule;
 
 import com.google.common.collect.Lists;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.internal.utils.xml.XMLLocalConstants;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.Node;
@@ -50,16 +51,6 @@ import java.util.List;
  */
 public class XmlSchemaValidationRule extends Rule
 {
-    public static final String EXTERNAL_ENTITIES_PROPERTY = "raml.xml.expandExternalEntities";
-    public static final String EXPAND_ENTITIES_PROPERTY = "raml.xml.expandInternalEntities";
-
-    public static final Boolean externalEntities =
-            Boolean.parseBoolean(System.getProperty(EXTERNAL_ENTITIES_PROPERTY, "false"));
-    public static final Boolean expandEntities =
-            Boolean.parseBoolean(System.getProperty(EXPAND_ENTITIES_PROPERTY, "false"));
-    public static final String EXTERNAL_GENERAL_ENTITIES_FEATURE = "http://xml.org/sax/features/external-general-entities";
-    public static final String EXTERNAL_PARAMETER_ENTITIES_FEATURE = "http://xml.org/sax/features/external-parameter-entities";
-    public static final String DISALLOW_DOCTYPE_DECL_FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
 
     private Schema schema;
     private String type;
@@ -141,15 +132,15 @@ public class XmlSchemaValidationRule extends Rule
         String feature = null;
 
         // If you can't completely disable DTDs, then at least do the following:
-        dbf.setFeature(EXTERNAL_GENERAL_ENTITIES_FEATURE, externalEntities);
+        dbf.setFeature(XMLLocalConstants.EXTERNAL_GENERAL_ENTITIES_FEATURE, XMLLocalConstants.externalEntities);
 
-        dbf.setFeature(EXTERNAL_PARAMETER_ENTITIES_FEATURE, externalEntities);
+        dbf.setFeature(XMLLocalConstants.EXTERNAL_PARAMETER_ENTITIES_FEATURE, XMLLocalConstants.externalEntities);
 
-        dbf.setFeature(DISALLOW_DOCTYPE_DECL_FEATURE, !expandEntities);
+        dbf.setFeature(XMLLocalConstants.DISALLOW_DOCTYPE_DECL_FEATURE, !XMLLocalConstants.expandEntities);
 
         // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks" (see reference below)
-        dbf.setXIncludeAware(expandEntities);
-        dbf.setExpandEntityReferences(expandEntities);
+        dbf.setXIncludeAware(XMLLocalConstants.expandEntities);
+        dbf.setExpandEntityReferences(XMLLocalConstants.expandEntities);
         dbf.setNamespaceAware(true);
     }
 
