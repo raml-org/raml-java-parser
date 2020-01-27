@@ -48,6 +48,7 @@ In order to provide more flexibility, users can set different system properties 
 Argument | Description | Default Value
 -------- | ----------- | -------------
 ```yagi.json_duplicate_keys_detection``` | Setting it to true will make the parser fail if any JSON example contains duplicated keys | ```true```
+```yagi.disable_anchors``` | Setting it to true will make the parser fail if any JSON example contains an anchor definition | ```false```
 ```raml.json_schema.fail_on_warning``` | Setting it to true will make the parser fail if any example validated against a particular Json Schema throws a warning message | ```false```
 
 ## Usage
