@@ -37,9 +37,11 @@ public class DateUtils
             DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION_ALTERNATE, "true")));
     public static boolean STRICT_DATES_VALIDATION_3339 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC3339, "true"));
     public static boolean STRICT_DATES_VALIDATION_2616 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC2616, "true"));
+    private final boolean strictDates3339;
 
     private DateUtils(boolean strictYear, boolean strictDates3339, boolean strictDates2616)
     {
+        this.strictDates3339 = strictDates3339;
         setFormatters(strictYear, strictDates3339, strictDates2616);
     }
 
@@ -179,8 +181,15 @@ public class DateUtils
                         }
                         catch (IllegalArgumentException e2)
                         {
-                            throw e2;
-                            // checkDatetimeOnly(date);
+
+                            if (!strictDates3339)
+                            {
+                                checkDatetimeOnly(date);
+                            }
+                            else
+                            {
+                                throw e2;
+                            }
                         }
                     }
                     break;
