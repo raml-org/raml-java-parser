@@ -21,6 +21,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.util.IllegalFormatException;
+
 import static org.joda.time.format.ISODateTimeFormat.*;
 
 public class DateUtils
@@ -153,16 +155,11 @@ public class DateUtils
                 timeOnlyFormatter.parseLocalTime(date);
                 break;
             case datetime_only:
-                try
-                {
-                    dateTimeOnlyFormatterNoMillis.parseLocalDateTime(date);
-                }
-                catch (Exception e)
-                {
-                    dateTimeOnlyFormatterMillis.parseLocalDateTime(date);
-                }
+                checkDatetimeOnly(date);
                 break;
             case datetime:
+                // Mon., 20 Jan. 2020 19:21:21 EST
+                // Mon, 20 Jan 2020 19:23:30 EST
                 if ("rfc2616".equals(rfc))
                 {
                     rfc2616Formatter.parseLocalDateTime(date);
@@ -174,9 +171,17 @@ public class DateUtils
                     {
                         rfc3339FormatterMillis.parseLocalDateTime(date);
                     }
-                    catch (Exception e)
+                    catch (IllegalArgumentException e)
                     {
-                        rfc3339FormatterNoMillis.parseLocalDateTime(date);
+                        try
+                        {
+                            rfc3339FormatterNoMillis.parseLocalDateTime(date);
+                        }
+                        catch (IllegalArgumentException e2)
+                        {
+                            throw e2;
+                            // checkDatetimeOnly(date);
+                        }
                     }
                     break;
                 }
@@ -188,6 +193,18 @@ public class DateUtils
         catch (Exception e)
         {
             return false;
+        }
+    }
+
+    private void checkDatetimeOnly(String date)
+    {
+        try
+        {
+            dateTimeOnlyFormatterNoMillis.parseLocalDateTime(date);
+        }
+        catch (IllegalArgumentException e)
+        {
+            dateTimeOnlyFormatterMillis.parseLocalDateTime(date);
         }
     }
 
