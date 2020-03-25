@@ -16,11 +16,7 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import com.google.common.collect.Range;
-import org.raml.yagi.framework.nodes.FloatingNode;
-import org.raml.yagi.framework.nodes.IntegerNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.jackson.JFloatingNode;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
@@ -57,6 +53,16 @@ public class IntegerTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if ( node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS ) {
+            String intString = ((StringNode) node).getValue();
+            try {
+                long longValue = Long.parseLong(intString);
+                return isInRange(longValue);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
         if (node instanceof IntegerNode)
         {
             return isInRange(((IntegerNode) node).getValue());
@@ -68,7 +74,6 @@ public class IntegerTypeRule extends AbstractTypeRule
                 long value = ((FloatingNode) node).getValue().longValue();
                 if (((FloatingNode) node).getValue().compareTo(new BigDecimal(value)) != 0)
                 {
-
                     return false;
                 }
 

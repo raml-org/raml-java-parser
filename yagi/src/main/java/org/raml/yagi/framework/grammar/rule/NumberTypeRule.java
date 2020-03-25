@@ -55,6 +55,15 @@ public class NumberTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if ( node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS ) {
+            String intString = ((StringNode) node).getValue();
+            try {
+                double doubleValue = Double.parseDouble(intString);
+                return range == null || range.contains(doubleValue);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
         if (node instanceof FloatingNode)
         {
             return range == null || range.contains(((FloatingNode) node).getValue().doubleValue());
