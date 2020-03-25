@@ -53,12 +53,16 @@ public class IntegerTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if ( node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS ) {
+        if (node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS)
+        {
             String intString = ((StringNode) node).getValue();
-            try {
+            try
+            {
                 long longValue = Long.parseLong(intString);
                 return isInRange(longValue);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 return false;
             }
         }

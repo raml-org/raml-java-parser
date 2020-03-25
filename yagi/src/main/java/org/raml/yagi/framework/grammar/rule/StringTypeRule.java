@@ -38,7 +38,7 @@ public class StringTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode || node instanceof NullNode;
+        return node instanceof StringNode;
     }
 
     @Override

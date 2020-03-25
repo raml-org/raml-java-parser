@@ -48,14 +48,19 @@ public class DivisorValueRule extends Rule
     {
         final BigDecimal divisor = new BigDecimal(divisorValue.toString());
         BigDecimal value = null;
-        if ( node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS ) {
+        if (node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS)
+        {
             String intString = ((StringNode) node).getValue();
-            try {
+            try
+            {
                 value = new BigDecimal(intString);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e)
+            {
                 return false;
             }
-        }        if (node instanceof IntegerNode)
+        }
+        if (node instanceof IntegerNode)
         {
             value = new BigDecimal(((IntegerNode) node).getValue());
         }
