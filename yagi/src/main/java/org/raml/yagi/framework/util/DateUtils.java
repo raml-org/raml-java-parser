@@ -19,11 +19,6 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
-import org.joda.time.format.ISODateTimeFormat;
-
-import java.util.IllegalFormatException;
-
-import static org.joda.time.format.ISODateTimeFormat.*;
 
 public class DateUtils
 {
@@ -33,31 +28,36 @@ public class DateUtils
     private static final String STRICT_DATES_RFC3339 = "org.raml.dates_rfc3339_validation";
     private static final String STRICT_DATES_RFC2616 = "org.raml.dates_rfc2616_validation";
 
+    private static final String FALLBACK_DATETIME = "org.raml.fallback_datetime_to_datetime-only";
+
     public static boolean FOUR_YEARS_VALIDATION = Boolean.parseBoolean(System.getProperty(
             DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION, System.getProperty(DATE_ONLY_FOUR_DIGITS_YEAR_LENGTH_VALIDATION_ALTERNATE, "true")));
     public static boolean STRICT_DATES_VALIDATION_3339 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC3339, "true"));
     public static boolean STRICT_DATES_VALIDATION_2616 = Boolean.parseBoolean(System.getProperty(STRICT_DATES_RFC2616, "true"));
-    private final boolean strictDates3339;
 
-    private DateUtils(boolean strictYear, boolean strictDates3339, boolean strictDates2616)
+    public static boolean FALLBACK_DATETIME_TO_DATETIME_ONLY = Boolean.parseBoolean(System.getProperty(FALLBACK_DATETIME, "false"));
+
+    private final boolean fallbackDatetime;
+
+    private DateUtils(boolean strictYear, boolean strictDates3339, boolean strictDates2616, boolean fallbackDatetime)
     {
-        this.strictDates3339 = strictDates3339;
+        this.fallbackDatetime = fallbackDatetime;
         setFormatters(strictYear, strictDates3339, strictDates2616);
     }
 
     public static DateUtils createStrictDateUtils()
     {
-        return new DateUtils(true, true, true);
+        return new DateUtils(true, true, true, false);
     }
 
     public static DateUtils createNonStrictDateUtils()
     {
-        return new DateUtils(false, false, false);
+        return new DateUtils(false, false, false, true);
     }
 
     public static DateUtils createFromProperties()
     {
-        return new DateUtils(FOUR_YEARS_VALIDATION, STRICT_DATES_VALIDATION_3339, STRICT_DATES_VALIDATION_2616);
+        return new DateUtils(FOUR_YEARS_VALIDATION, STRICT_DATES_VALIDATION_3339, STRICT_DATES_VALIDATION_2616, FALLBACK_DATETIME_TO_DATETIME_ONLY);
     }
 
     public void setFormatters(boolean strictYear, boolean strictDates3339, boolean strictDates2616)
@@ -182,7 +182,7 @@ public class DateUtils
                         catch (IllegalArgumentException e2)
                         {
 
-                            if (!strictDates3339)
+                            if (fallbackDatetime)
                             {
                                 checkDatetimeOnly(date);
                             }
