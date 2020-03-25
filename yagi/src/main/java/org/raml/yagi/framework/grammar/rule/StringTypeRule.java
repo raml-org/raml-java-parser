@@ -17,6 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -37,7 +38,7 @@ public class StringTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode;
+        return node instanceof StringNode || node instanceof NullNode;
     }
 
     @Override
