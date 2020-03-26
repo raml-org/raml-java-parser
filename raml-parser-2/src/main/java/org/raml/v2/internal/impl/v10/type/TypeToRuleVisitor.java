@@ -48,7 +48,7 @@ import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
 public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
 
-    private static final String CAST_STRINGS_AS_NUMBERS_PROP = "org.raml.cast_strings_as_number";
+    private static final String CAST_STRINGS_AS_NUMBERS_PROP = "org.raml.cast_strings_as_numbers";
     public static boolean CAST_STRINGS_AS_NUMBERS = Boolean.parseBoolean(System.getProperty(CAST_STRINGS_AS_NUMBERS_PROP, "false"));
     private static final String NILLABLE_STRINGS_PROP = "org.raml.nillable_strings";
     public static boolean NILLABLE_STRINGS = Boolean.parseBoolean(System.getProperty(NILLABLE_STRINGS_PROP, "false"));
