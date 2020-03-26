@@ -28,11 +28,20 @@ import java.util.List;
 
 public class MaxLengthRule extends Rule
 {
-    private int maxLength;
+    private final int maxLength;
+    private final boolean nillableStrings;
 
     public MaxLengthRule(int maxLength)
     {
         this.maxLength = maxLength;
+        this.nillableStrings = false;
+    }
+
+    public MaxLengthRule(int maxLength, boolean nillableStrings)
+    {
+
+        this.maxLength = maxLength;
+        this.nillableStrings = nillableStrings;
     }
 
     @Nonnull
@@ -45,8 +54,8 @@ public class MaxLengthRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS) {
-
+        if (node instanceof NullNode && nillableStrings)
+        {
             return true;
         }
 
@@ -60,10 +69,17 @@ public class MaxLengthRule extends Rule
     @Override
     public Node apply(@Nonnull Node node)
     {
+
         if (!matches(node))
         {
             return ErrorNodeFactory.createInvalidMaxLength(maxLength, node);
         }
+
+        if (node instanceof NullNode && nillableStrings)
+        {
+            return createNodeUsingFactory(node, "");
+        }
+
         return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }
 

@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 public class RegexValueRule extends Rule
 {
 
+    private final boolean nillableString;
     private Pattern value;
     private String description;
     private List<String> suggestions = new ArrayList<>();
@@ -43,6 +44,13 @@ public class RegexValueRule extends Rule
     public RegexValueRule(Pattern value)
     {
         this.value = value;
+        this.nillableString = false;
+    }
+
+    public RegexValueRule(Pattern value, boolean nillableString)
+    {
+        this.value = value;
+        this.nillableString = nillableString;
     }
 
     @Nonnull
@@ -73,7 +81,8 @@ public class RegexValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS ) {
+        if (node instanceof NullNode && nillableString)
+        {
 
             return fullMatch ? value.matcher("").matches() : value.matcher("").find();
         }
@@ -114,7 +123,8 @@ public class RegexValueRule extends Rule
     public Node apply(@Nonnull Node node)
     {
 
-        if (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS ) {
+        if (node instanceof NullNode && nillableString)
+        {
 
             return node;
         }

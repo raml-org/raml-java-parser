@@ -28,6 +28,18 @@ import java.util.List;
 
 public class StringTypeRule extends AbstractTypeRule
 {
+    private final boolean nillableStrings;
+
+    public StringTypeRule()
+    {
+        nillableStrings = false;
+    }
+
+    public StringTypeRule(boolean nillableStrings)
+    {
+        this.nillableStrings = nillableStrings;
+    }
+
     @Nonnull
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
@@ -38,7 +50,7 @@ public class StringTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode  || (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS);
+        return node instanceof StringNode || (node instanceof NullNode && nillableStrings);
     }
 
     @Override
