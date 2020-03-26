@@ -18,6 +18,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import org.apache.commons.lang.StringUtils;
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.suggester.DefaultSuggestion;
 import org.raml.yagi.framework.suggester.ParsingContext;
@@ -72,6 +73,11 @@ public class RegexValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS ) {
+
+            return fullMatch ? value.matcher("").matches() : value.matcher("").find();
+        }
+
         return node instanceof SimpleTypeNode && (fullMatch ? getMatcher((SimpleTypeNode) node).matches() : getMatcher((SimpleTypeNode) node).find());
     }
 
@@ -107,6 +113,12 @@ public class RegexValueRule extends Rule
     @Override
     public Node apply(@Nonnull Node node)
     {
+
+        if (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS ) {
+
+            return node;
+        }
+
         if (!matches(node))
         {
             return ErrorNodeFactory.createInvalidValue(node, String.valueOf(value));

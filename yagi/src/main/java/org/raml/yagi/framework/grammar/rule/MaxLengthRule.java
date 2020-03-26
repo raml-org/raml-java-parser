@@ -17,6 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -44,6 +45,11 @@ public class MaxLengthRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if (node instanceof NullNode && NilStringFallback.NILLABLE_STRINGS) {
+
+            return true;
+        }
+
         if (node instanceof SimpleTypeNode)
         {
             return ((SimpleTypeNode) node).getLiteralValue().length() <= maxLength;
