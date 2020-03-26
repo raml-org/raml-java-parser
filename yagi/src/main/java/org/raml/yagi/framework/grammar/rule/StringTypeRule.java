@@ -17,6 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.StringNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -27,6 +28,18 @@ import java.util.List;
 
 public class StringTypeRule extends AbstractTypeRule
 {
+    private final boolean nillableStrings;
+
+    public StringTypeRule()
+    {
+        nillableStrings = false;
+    }
+
+    public StringTypeRule(boolean nillableStrings)
+    {
+        this.nillableStrings = nillableStrings;
+    }
+
     @Nonnull
     @Override
     public List<Suggestion> getSuggestions(Node node, ParsingContext context)
@@ -37,7 +50,7 @@ public class StringTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        return node instanceof StringNode;
+        return node instanceof StringNode || (node instanceof NullNode && nillableStrings);
     }
 
     @Override

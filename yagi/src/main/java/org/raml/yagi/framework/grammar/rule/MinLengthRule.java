@@ -17,6 +17,7 @@ package org.raml.yagi.framework.grammar.rule;
 
 
 import org.raml.yagi.framework.nodes.Node;
+import org.raml.yagi.framework.nodes.NullNode;
 import org.raml.yagi.framework.nodes.SimpleTypeNode;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
@@ -27,11 +28,20 @@ import java.util.List;
 
 public class MinLengthRule extends Rule
 {
-    private int minLength;
+    private final int minLength;
+    private final boolean nillableStrings;
 
     public MinLengthRule(int minLength)
     {
         this.minLength = minLength;
+        this.nillableStrings = false;
+    }
+
+    public MinLengthRule(int minLength, boolean nillableStrings)
+    {
+
+        this.minLength = minLength;
+        this.nillableStrings = nillableStrings;
     }
 
     @Nonnull
@@ -44,6 +54,12 @@ public class MinLengthRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if (node instanceof NullNode && nillableStrings)
+        {
+
+            return minLength == 0;
+        }
+
         if (node instanceof SimpleTypeNode)
         {
             return ((SimpleTypeNode) node).getLiteralValue().length() >= minLength;
@@ -58,6 +74,12 @@ public class MinLengthRule extends Rule
         {
             return ErrorNodeFactory.createInvalidMinLength(minLength, node);
         }
+
+        if (node instanceof NullNode && nillableStrings)
+        {
+            return createNodeUsingFactory(node, "");
+        }
+
         return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }
 

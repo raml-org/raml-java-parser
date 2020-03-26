@@ -15,10 +15,7 @@
  */
 package org.raml.yagi.framework.grammar.rule;
 
-import org.raml.yagi.framework.nodes.FloatingNode;
-import org.raml.yagi.framework.nodes.IntegerNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.SimpleTypeNode;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
@@ -32,11 +29,20 @@ import static java.math.BigDecimal.ZERO;
 public class DivisorValueRule extends Rule
 {
 
+    private final boolean castStringsAsNumbers;
     private Number divisorValue;
 
     public DivisorValueRule(Number divisorValue)
     {
         this.divisorValue = divisorValue;
+        this.castStringsAsNumbers = false;
+    }
+
+    public DivisorValueRule(Number multiple, boolean castStringsAsNumbers)
+    {
+
+        this.divisorValue = multiple;
+        this.castStringsAsNumbers = castStringsAsNumbers;
     }
 
     @Nonnull
@@ -51,6 +57,18 @@ public class DivisorValueRule extends Rule
     {
         final BigDecimal divisor = new BigDecimal(divisorValue.toString());
         BigDecimal value = null;
+        if (node instanceof StringNode && castStringsAsNumbers)
+        {
+            String intString = ((StringNode) node).getValue();
+            try
+            {
+                value = new BigDecimal(intString);
+            }
+            catch (NumberFormatException e)
+            {
+                return false;
+            }
+        }
         if (node instanceof IntegerNode)
         {
             value = new BigDecimal(((IntegerNode) node).getValue());

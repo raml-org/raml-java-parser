@@ -31,17 +31,25 @@ import java.util.List;
 
 public class NumberTypeRule extends AbstractTypeRule
 {
+    private final boolean castStringsAsNumbers;
     @Nullable
     private Range<Double> range;
 
     public NumberTypeRule(@Nullable Range<Double> range)
     {
         this.range = range;
+        this.castStringsAsNumbers = false;
     }
 
     public NumberTypeRule()
     {
         this(null);
+    }
+
+    public NumberTypeRule(boolean castStringsAsNumbers)
+    {
+
+        this.castStringsAsNumbers = castStringsAsNumbers;
     }
 
     @Nonnull
@@ -55,6 +63,19 @@ public class NumberTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if (node instanceof StringNode && castStringsAsNumbers)
+        {
+            String intString = ((StringNode) node).getValue();
+            try
+            {
+                double doubleValue = Double.parseDouble(intString);
+                return range == null || range.contains(doubleValue);
+            }
+            catch (NumberFormatException e)
+            {
+                return false;
+            }
+        }
         if (node instanceof FloatingNode)
         {
             return range == null || range.contains(((FloatingNode) node).getValue().doubleValue());

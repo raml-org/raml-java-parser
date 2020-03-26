@@ -16,11 +16,7 @@
 package org.raml.yagi.framework.grammar.rule;
 
 import com.google.common.collect.Range;
-import org.raml.yagi.framework.nodes.FloatingNode;
-import org.raml.yagi.framework.nodes.IntegerNode;
-import org.raml.yagi.framework.nodes.Node;
-import org.raml.yagi.framework.nodes.NodeType;
-import org.raml.yagi.framework.nodes.jackson.JFloatingNode;
+import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.suggester.ParsingContext;
 import org.raml.yagi.framework.suggester.Suggestion;
 
@@ -33,17 +29,25 @@ import java.util.List;
 public class IntegerTypeRule extends AbstractTypeRule
 {
 
+    private final boolean castStringsAsNumbers;
     @Nullable
     private Range<Long> range;
 
     public IntegerTypeRule(@Nullable Range<Long> range)
     {
         this.range = range;
+        this.castStringsAsNumbers = false;
     }
 
     public IntegerTypeRule()
     {
         this(null);
+    }
+
+    public IntegerTypeRule(boolean castStringsAsNumbers)
+    {
+
+        this.castStringsAsNumbers = castStringsAsNumbers;
     }
 
     @Nonnull
@@ -57,6 +61,20 @@ public class IntegerTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
+        if (node instanceof StringNode && castStringsAsNumbers)
+        {
+            String intString = ((StringNode) node).getValue();
+            try
+            {
+                long longValue = Long.parseLong(intString);
+                return isInRange(longValue);
+            }
+            catch (NumberFormatException e)
+            {
+                return false;
+            }
+        }
+
         if (node instanceof IntegerNode)
         {
             return isInRange(((IntegerNode) node).getValue());
@@ -68,7 +86,6 @@ public class IntegerTypeRule extends AbstractTypeRule
                 long value = ((FloatingNode) node).getValue().longValue();
                 if (((FloatingNode) node).getValue().compareTo(new BigDecimal(value)) != 0)
                 {
-
                     return false;
                 }
 
