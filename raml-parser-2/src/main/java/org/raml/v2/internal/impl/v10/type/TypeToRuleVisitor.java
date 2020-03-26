@@ -48,7 +48,8 @@ import static org.raml.v2.internal.utils.ValueUtils.asBoolean;
 public class TypeToRuleVisitor implements TypeVisitor<Rule>
 {
 
-
+    private static final String CAST_STRINGS_AS_NUMBERS_PROP = "org.raml.cast_strings_as_number";
+    public static boolean CAST_STRINGS_AS_NUMBERS = Boolean.parseBoolean(System.getProperty(CAST_STRINGS_AS_NUMBERS_PROP, "false"));
     private static final String NILLABLE_STRINGS_PROP = "org.raml.nillable_strings";
     public static boolean NILLABLE_STRINGS = Boolean.parseBoolean(System.getProperty(NILLABLE_STRINGS_PROP, "false"));
 
@@ -311,13 +312,13 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     @Override
     public Rule visitInteger(IntegerResolvedType integerTypeDefinition)
     {
-        return visitNumber(integerTypeDefinition, new IntegerTypeRule());
+        return visitNumber(integerTypeDefinition, new IntegerTypeRule(CAST_STRINGS_AS_NUMBERS));
     }
 
     @Override
     public Rule visitNumber(NumberResolvedType numberTypeDefinition)
     {
-        return visitNumber(numberTypeDefinition, new NumberTypeRule());
+        return visitNumber(numberTypeDefinition, new NumberTypeRule(CAST_STRINGS_AS_NUMBERS));
     }
 
     private Rule visitNumber(NumberResolvedType numericTypeNode, Rule numericTypeRule)
@@ -347,7 +348,7 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         }
         if (numericTypeNode.getMultiple() != null)
         {
-            typeRule.and(new DivisorValueRule(numericTypeNode.getMultiple()));
+            typeRule.and(new DivisorValueRule(numericTypeNode.getMultiple(), CAST_STRINGS_AS_NUMBERS));
         }
         if (numericTypeNode.getFormat() != null)
         {

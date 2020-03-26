@@ -29,17 +29,25 @@ import java.util.List;
 public class IntegerTypeRule extends AbstractTypeRule
 {
 
+    private final boolean castStringsAsNumbers;
     @Nullable
     private Range<Long> range;
 
     public IntegerTypeRule(@Nullable Range<Long> range)
     {
         this.range = range;
+        this.castStringsAsNumbers = false;
     }
 
     public IntegerTypeRule()
     {
         this(null);
+    }
+
+    public IntegerTypeRule(boolean castStringsAsNumbers)
+    {
+
+        this.castStringsAsNumbers = castStringsAsNumbers;
     }
 
     @Nonnull
@@ -53,7 +61,7 @@ public class IntegerTypeRule extends AbstractTypeRule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS)
+        if (node instanceof StringNode && castStringsAsNumbers)
         {
             String intString = ((StringNode) node).getValue();
             try

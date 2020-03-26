@@ -29,11 +29,20 @@ import static java.math.BigDecimal.ZERO;
 public class DivisorValueRule extends Rule
 {
 
+    private final boolean castStringsAsNumbers;
     private Number divisorValue;
 
     public DivisorValueRule(Number divisorValue)
     {
         this.divisorValue = divisorValue;
+        this.castStringsAsNumbers = false;
+    }
+
+    public DivisorValueRule(Number multiple, boolean castStringsAsNumbers)
+    {
+
+        this.divisorValue = multiple;
+        this.castStringsAsNumbers = castStringsAsNumbers;
     }
 
     @Nonnull
@@ -48,7 +57,7 @@ public class DivisorValueRule extends Rule
     {
         final BigDecimal divisor = new BigDecimal(divisorValue.toString());
         BigDecimal value = null;
-        if (node instanceof StringNode && NumberFallback.CAST_STRINGS_AS_NUMBERS)
+        if (node instanceof StringNode && castStringsAsNumbers)
         {
             String intString = ((StringNode) node).getValue();
             try
