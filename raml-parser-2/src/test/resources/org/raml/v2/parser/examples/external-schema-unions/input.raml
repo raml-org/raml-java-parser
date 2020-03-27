@@ -1,0 +1,74 @@
+#%RAML 1.0
+title: Test API
+types:
+  Foo:
+    type: array
+    items:
+      properties:
+        foo:
+  Bar:
+    properties:
+      bar:
+  StringFoo:
+    type: string[]
+
+/Test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Foo | Bar
+            examples:
+              FooExampleExpressedInJSON: |
+                [
+                  {
+                    "foo": "foo"
+                  }
+                ]
+              BarExampleExpressedInJSON: |
+                {
+                  "bar": "bar"
+                }
+      201:
+        body:
+          application/json:
+            type: StringFoo | Bar
+            examples:
+              StringFooExampleExpressedInJSON: |
+                [
+                  "a", "b"
+                ]
+              BarExampleExpressedInJSON: |
+                {
+                  "bar": "bar"
+                }
+      400:
+        body:
+          application/json:
+            type: Foo | Bar
+            examples:
+              FooExampleExpressedInJSON: |
+                [
+                  {
+                    "foo2": "foo"
+                  }
+                ]
+              BarExampleExpressedInJSON: |
+                {
+                  "bar": "bar"
+                }
+      401:
+        body:
+          application/json:
+            type: StringFoo | Bar
+            examples:
+              StringFooExampleExpressedInJSON: |
+                [
+                  1, 2
+                ]
+              BarExampleExpressedInJSON: |
+                {
+                  "bar": "bar"
+                }
+
