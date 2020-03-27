@@ -166,7 +166,10 @@ public class ExampleValidationPhase implements Phase
             }
         }
 
-        return resolvedType instanceof ObjectResolvedType;
+        // return resolvedType instanceof ObjectResolvedType || (resolvedType instanceof ArrayResolvedType && unionMightBeAnObject(((ArrayResolvedType) resolvedType).getItems(), new
+        // HashSet<String>()));
+
+        return resolvedType instanceof ObjectResolvedType || (resolvedType instanceof ArrayResolvedType);
     }
 
     protected Node validateJson(Node exampleValue, ResolvedType resolvedType, String value)
