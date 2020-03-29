@@ -34,7 +34,6 @@ import java.util.regex.Pattern;
 public class RegexValueRule extends Rule
 {
 
-    private final boolean nillableString;
     private Pattern value;
     private String description;
     private List<String> suggestions = new ArrayList<>();
@@ -44,13 +43,6 @@ public class RegexValueRule extends Rule
     public RegexValueRule(Pattern value)
     {
         this.value = value;
-        this.nillableString = false;
-    }
-
-    public RegexValueRule(Pattern value, boolean nillableString)
-    {
-        this.value = value;
-        this.nillableString = nillableString;
     }
 
     @Nonnull
@@ -81,12 +73,6 @@ public class RegexValueRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof NullNode && nillableString)
-        {
-
-            return fullMatch ? value.matcher("").matches() : value.matcher("").find();
-        }
-
         return node instanceof SimpleTypeNode && (fullMatch ? getMatcher((SimpleTypeNode) node).matches() : getMatcher((SimpleTypeNode) node).find());
     }
 
@@ -122,13 +108,6 @@ public class RegexValueRule extends Rule
     @Override
     public Node apply(@Nonnull Node node)
     {
-
-        if (node instanceof NullNode && nillableString)
-        {
-
-            return node;
-        }
-
         if (!matches(node))
         {
             return ErrorNodeFactory.createInvalidValue(node, String.valueOf(value));
@@ -152,7 +131,7 @@ public class RegexValueRule extends Rule
             final String group = matcher.group(j);
             groups.add(group);
         }
-        return createNodeUsingFactory(node, (String[]) groups.toArray(new String[groups.size()]));
+        return createNodeUsingFactory(node, groups.toArray(new String[groups.size()]));
     }
 
     @Override

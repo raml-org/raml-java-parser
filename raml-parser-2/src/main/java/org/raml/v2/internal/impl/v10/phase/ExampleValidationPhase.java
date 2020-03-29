@@ -25,7 +25,9 @@ import org.raml.v2.internal.impl.commons.type.ResolvedType;
 import org.raml.v2.internal.impl.commons.type.XmlSchemaExternalType;
 import org.raml.v2.internal.impl.v10.type.*;
 import org.raml.v2.internal.utils.xml.XMLLocalConstants;
+import org.raml.yagi.framework.grammar.rule.AnyOfRule;
 import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
+import org.raml.yagi.framework.grammar.rule.NullValueRule;
 import org.raml.yagi.framework.grammar.rule.Rule;
 import org.raml.yagi.framework.nodes.*;
 import org.raml.yagi.framework.nodes.jackson.JNodeParser;
@@ -39,7 +41,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import javax.annotation.Nullable;
-import javax.xml.XMLConstants;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -63,6 +64,10 @@ public class ExampleValidationPhase implements Phase
     private ResourceLoader resourceLoader;
     private static final String ERROR_MESSAGE_MAX_LENGTH = "raml.error_message_max_length";
     public static int errorMessageMaxLength = Integer.parseInt(System.getProperty(ERROR_MESSAGE_MAX_LENGTH, "10000"));
+
+    private static final String NILLABLE_TYPES_PROP = "org.raml.nillable_types";
+    public static boolean NILLABLE_TYPES = Boolean.parseBoolean(System.getProperty(NILLABLE_TYPES_PROP, "false"));
+
 
     public ExampleValidationPhase(ResourceLoader resourceLoader)
     {
@@ -134,10 +139,19 @@ public class ExampleValidationPhase implements Phase
         }
         if (exampleValue != null)
         {
-            final Rule rule = resolvedType.visit(new TypeToRuleVisitor(resourceLoader, false));
+            final Rule rule = visitAppropriately(resolvedType);
             return rule != null ? rule.apply(exampleValue) : null;
         }
         return null;
+    }
+
+    private Rule visitAppropriately(ResolvedType resolvedType) {
+        if (NILLABLE_TYPES) {
+            return new AnyOfRule(resolvedType.visit(new TypeToRuleVisitor(resourceLoader, false)), new NullValueRule());
+        } else {
+
+            return resolvedType.visit(new TypeToRuleVisitor(resourceLoader, false));
+        }
     }
 
     private boolean mightBeAnObjectType(ResolvedType resolvedType)
