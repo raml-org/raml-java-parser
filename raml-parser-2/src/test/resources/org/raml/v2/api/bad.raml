@@ -1,0 +1,52 @@
+#%RAML 1.0
+title: Test API
+types:
+  goo:
+    properties:
+      name: string
+  floo:
+    type: foo|goo
+  foo:
+    properties:
+      somestring:
+        type: string
+        maxLength: 12
+        minLength: 0
+        pattern: .*
+        example:
+      someenum:
+        type: string
+        enum: [one, two]
+        example:
+      somefloat:
+        type: number
+        minimum: 0
+        maximum: 18
+        example:
+      someinteger:
+        type: integer
+        minimum: 0
+        maximum: 18
+        multipleOf: 3
+        format: int8
+        example:
+      somefloatmin:
+        type: number
+        minimum: 0
+        example:
+      someintegermax:
+        type: integer
+        maximum: 18
+        multipleOf: 3
+        format: int8
+        example:
+      somedate:
+        type: date-only
+        example:
+      somegoo:
+        type: goo
+        example:
+      someflou:
+        type: floo
+        example:
+
