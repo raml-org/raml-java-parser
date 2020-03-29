@@ -1,0 +1,29 @@
+#%RAML 1.0
+title: Test API
+types:
+  foo:
+    properties:
+      someint:
+        type: integer
+        minimum: 14
+        maximum: 3300
+        multipleOf: 3
+        format: int8
+        example: "15"
+      somenum:
+        type: number
+        minimum: 12
+        maximum: 18
+        example: "17.5"
+      somenummax:
+        type: number
+        maximum: 18
+        example: "17.5"
+      somenummin:
+        type: number
+        minimum: 12
+        example: "17.5"
+      somenumenum:
+        type: number
+        enum: [1,2,3]
+        example: "1"

@@ -28,20 +28,11 @@ import java.util.List;
 
 public class MinLengthRule extends Rule
 {
-    private final int minLength;
-    private final boolean nillableStrings;
+    private int minLength;
 
     public MinLengthRule(int minLength)
     {
         this.minLength = minLength;
-        this.nillableStrings = false;
-    }
-
-    public MinLengthRule(int minLength, boolean nillableStrings)
-    {
-
-        this.minLength = minLength;
-        this.nillableStrings = nillableStrings;
     }
 
     @Nonnull
@@ -54,12 +45,6 @@ public class MinLengthRule extends Rule
     @Override
     public boolean matches(@Nonnull Node node)
     {
-        if (node instanceof NullNode && nillableStrings)
-        {
-
-            return minLength == 0;
-        }
-
         if (node instanceof SimpleTypeNode)
         {
             return ((SimpleTypeNode) node).getLiteralValue().length() >= minLength;
@@ -74,12 +59,6 @@ public class MinLengthRule extends Rule
         {
             return ErrorNodeFactory.createInvalidMinLength(minLength, node);
         }
-
-        if (node instanceof NullNode && nillableStrings)
-        {
-            return createNodeUsingFactory(node, "");
-        }
-
         return createNodeUsingFactory(node, ((SimpleTypeNode) node).getLiteralValue());
     }
 

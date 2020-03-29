@@ -50,8 +50,6 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
 
     private static final String CAST_STRINGS_AS_NUMBERS_PROP = "org.raml.cast_strings_as_numbers";
     public static boolean CAST_STRINGS_AS_NUMBERS = Boolean.parseBoolean(System.getProperty(CAST_STRINGS_AS_NUMBERS_PROP, "false"));
-    private static final String NILLABLE_STRINGS_PROP = "org.raml.nillable_strings";
-    public static boolean NILLABLE_STRINGS = Boolean.parseBoolean(System.getProperty(NILLABLE_STRINGS_PROP, "false"));
 
     private ResourceLoader resourceLoader;
     private final boolean useDiscriminatorsToCalculateTypes;
@@ -89,11 +87,11 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
     @Override
     public Rule visitString(StringResolvedType stringTypeNode)
     {
-        final AllOfRule typeRule = new AllOfRule(new StringTypeRule(NILLABLE_STRINGS));
+        final AllOfRule typeRule = new AllOfRule(new StringTypeRule());
         registerRule(stringTypeNode, typeRule);
         if (isNotEmpty(stringTypeNode.getPattern()))
         {
-            typeRule.and(new RegexValueRule(Pattern.compile(stringTypeNode.getPattern()), NILLABLE_STRINGS));
+            typeRule.and(new RegexValueRule(Pattern.compile(stringTypeNode.getPattern())));
         }
 
         if (stringTypeNode.getEnums() != null && !stringTypeNode.getEnums().isEmpty())
@@ -104,13 +102,13 @@ public class TypeToRuleVisitor implements TypeVisitor<Rule>
         if (stringTypeNode.getMaxLength() != null)
         {
             Integer maxLength = stringTypeNode.getMaxLength();
-            typeRule.and(new MaxLengthRule(maxLength, NILLABLE_STRINGS));
+            typeRule.and(new MaxLengthRule(maxLength));
         }
 
         if (stringTypeNode.getMinLength() != null)
         {
             Integer maxLength = stringTypeNode.getMinLength();
-            typeRule.and(new MinLengthRule(maxLength, NILLABLE_STRINGS));
+            typeRule.and(new MinLengthRule(maxLength));
         }
         return typeRule;
     }
