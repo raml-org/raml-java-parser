@@ -49,7 +49,20 @@ Argument | Description | Default Value
 -------- | ----------- | -------------
 ```yagi.json_duplicate_keys_detection``` | Setting it to true will make the parser fail if any JSON example contains duplicated keys | ```true```
 ```raml.json_schema.fail_on_warning``` | Setting it to true will make the parser fail if any example validated against a particular Json Schema throws a warning message | ```false```
+```yagi.date_only_four_digits_year_length_validation```|	If TRUE, years of more than 4 digits are considered invalid | ```true```
+```org.raml.date_only_four_digits_year_length_validation```|	Same as "yagi.date_only_four_digits_year_length_validation" (kept for backwards compatibility)| ```true```
+```org.raml.dates_rfc3339_validation```|	if TRUE, enables RFC3339 validation for "datetime" type| ```true```
+```org.raml.dates_rfc2616_validation```|	if TRUE, enables RFC2616 validation for "datetime" type| ```true```
+```raml.xml.expandExternalEntities```|	Controls Java's EXTERNAL_GENERAL_ENTITIES_FEATURE and EXTERNAL_PARAMETER_ENTITIES_FEATURE| ```false```
+```raml.xml.expandInternalEntities```|	Controls Java's DISALLOW_DOCTYPE_DECL_FEATURE| ```false```
+```org.raml.strict_booleans```|	If FALSE, the strings "true" and "false" are valid for boolean type	| ```false```
+```org.raml.fallback_datetime_to_datetime-only```|	if TRUE, value passed to a datetime type will fallback on the datetime-only type and validate accordingly| ```false```
+```org.raml.cast_strings_as_numbers```|	if TRUE, will attempt to cast strings as numbers and validate| ```false```
+```org.raml.nillable_types```|	if TRUE, makes all types equivalent to type: <code>type: type&#124; nil;</code> | ```false```
+```raml.parser.encoding```|	Defines the charset being used by the parser| ```UTF-8```
 
+The RAML parser's XML parsing components also respect Java XML entity properties.
+ 
 ## Usage
 
 ```java
