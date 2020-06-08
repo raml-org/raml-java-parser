@@ -1,0 +1,3 @@
+headers:
+    basic:
+        type: string

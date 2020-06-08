@@ -47,6 +47,7 @@ public class NodeVisitor
     private TagResolver[] tagResolvers;
     private Deque<String> loopDetector = new ArrayDeque<String>();
     private ContextPath contextPath = new ContextPath();
+    private final RamlParsingLimitsController controller = new RamlParsingLimitsController();
 
     public NodeVisitor(NodeHandler nodeHandler, ResourceLoader resourceLoader, TagResolver... tagResolvers)
     {
@@ -82,7 +83,7 @@ public class NodeVisitor
         }
     }
 
-    private void visitMappingNode(MappingNode mappingNode, TupleType tupleType)
+    private void visitMappingNode(MappingNode mappingNode, TupleType tupleType, int depth)
     {
         if (checkLoop(mappingNode))
         {
@@ -92,7 +93,7 @@ public class NodeVisitor
         boolean keepOnVisiting = nodeHandler.onMappingNodeStart(mappingNode, tupleType);
         if (tupleType == VALUE && keepOnVisiting)
         {
-            doVisitMappingNode(mappingNode);
+            doVisitMappingNode(mappingNode, depth);
         }
         nodeHandler.onMappingNodeEnd(mappingNode, tupleType);
         if (mappingNode.getStartMark() != null)
@@ -130,7 +131,7 @@ public class NodeVisitor
         }
     }
 
-    private void doVisitMappingNode(MappingNode mappingNode)
+    private void doVisitMappingNode(MappingNode mappingNode, int depth)
     {
         if (mappingNode.isMerged())
         {
@@ -156,8 +157,8 @@ public class NodeVisitor
             {
                 continue;
             }
-            visit(keyNode, KEY);
-            visitResolvedNode(originalValueNode, resolvedNode, currentTagResolver);
+            visit(keyNode, KEY, depth);
+            visitResolvedNode(originalValueNode, resolvedNode, currentTagResolver, depth);
             nodeHandler.onTupleEnd(nodeTuple);
 
         }
@@ -177,7 +178,7 @@ public class NodeVisitor
         return valueNode;
     }
 
-    private void visitResolvedNode(Node originalValueNode, Node resolvedNode, TagResolver tagResolver)
+    private void visitResolvedNode(Node originalValueNode, Node resolvedNode, TagResolver tagResolver, int depth)
     {
         Tag tag = originalValueNode.getTag();
         boolean tagResolved = tagResolver != null;
@@ -186,7 +187,7 @@ public class NodeVisitor
             tagResolver.beforeProcessingResolvedNode(tag, originalValueNode, resolvedNode);
             nodeHandler.onCustomTagStart(tag, originalValueNode, resolvedNode);
         }
-        visit(resolvedNode, VALUE);
+        visit(resolvedNode, VALUE, depth);
         if (tagResolved)
         {
             nodeHandler.onCustomTagEnd(tag, originalValueNode, resolvedNode);
@@ -215,16 +216,19 @@ public class NodeVisitor
             {
                 contextPath.pushRoot("");
             }
-            doVisitMappingNode(node);
+            doVisitMappingNode(node, 0);
         }
         nodeHandler.onDocumentEnd(node);
     }
 
-    private void visit(Node node, TupleType tupleType)
+    private void visit(Node node, TupleType tupleType, int depth)
     {
+
+        controller.verifyNode(node, 0);
+
         if (node.getNodeId() == NodeId.mapping)
         {
-            visitMappingNode((MappingNode) node, tupleType);
+            visitMappingNode((MappingNode) node, tupleType, depth + 1);
         }
         else if (node.getNodeId() == NodeId.scalar)
         {
@@ -232,11 +236,11 @@ public class NodeVisitor
         }
         else if (node.getNodeId() == NodeId.sequence)
         {
-            visitSequence((SequenceNode) node, tupleType);
+            visitSequence((SequenceNode) node, tupleType, depth + 1);
         }
     }
 
-    private void visitSequence(SequenceNode node, TupleType tupleType)
+    private void visitSequence(SequenceNode node, TupleType tupleType, int depth)
     {
         boolean keepVisitingElements = nodeHandler.onSequenceStart(node, tupleType);
         if (tupleType == VALUE && keepVisitingElements)
@@ -253,7 +257,7 @@ public class NodeVisitor
                     node.getValue().add(i, resolvedNode);
                 }
                 nodeHandler.onSequenceElementStart(resolvedNode);
-                visitResolvedNode(originalNode, resolvedNode, currentTagResolver);
+                visitResolvedNode(originalNode, resolvedNode, currentTagResolver, depth);
                 nodeHandler.onSequenceElementEnd(resolvedNode);
             }
         }

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser</artifactId>
-    <version>0.8.38-SNAPSHOT</version>
+    <version>0.8.40-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Raml parser</name>
     <description>Java implementation of the raml parser</description>
@@ -326,14 +326,14 @@
 
     <distributionManagement>
         <repository>
-            <id>mulesoft-releases</id>
+            <id>mule-ee-releases</id>
             <name>MuleSoft Releases Repository</name>
-            <url>https://repository-master.mulesoft.org/releases/</url>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>mulesoft-snapshots</id>
+            <id>mule-ee-snapshots</id>
             <name>MuleSoft Snapshots Repository</name>
-            <url>https://repository-master.mulesoft.org/snapshots/</url>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
