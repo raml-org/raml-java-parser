@@ -16,14 +16,12 @@
 package org.raml.v2.api.loader;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,25 +41,22 @@ public class RootRamlFileResourceLoader implements ResourceLoaderExtended
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
-        FileInputStream inputStream = null;
-        File includedFile = new File(parentPath, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
+        final File includedFile = new File(parentPath, resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
         logger.debug("Looking for resource: {} on directory: {}...", resourceName, parentPath);
         try
         {
-            inputStream = new FileInputStream(includedFile);
-
             if (callback != null)
             {
                 callbackParam = includedFile.toURI();
                 callback.onResourceFound(callbackParam);
             }
-        }
-        catch (FileNotFoundException e)
-        {
-            // ignore
-        }
 
-        return inputStream;
+            return new FileInputStream(includedFile);
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
     }
 
     @Nullable

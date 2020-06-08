@@ -1,0 +1,3 @@
+ErrorNode: "reference count exceeded: 10000, with node at  in 'reader', line 6, column 10:
+          a: &a ["lol","lol","lol","lol","lol ... 
+             ^" (Start: -1 , End: -1)

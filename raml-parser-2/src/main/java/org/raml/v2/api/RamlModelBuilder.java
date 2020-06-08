@@ -22,16 +22,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import org.apache.commons.io.IOUtils;
-import org.raml.v2.api.loader.CompositeResourceLoader;
-import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.FileResourceLoader;
-import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.loader.*;
+import org.raml.v2.api.model.PermissiveURI;
 import org.raml.v2.api.model.common.ValidationResult;
 import org.raml.v2.api.model.v08.parameters.Parameter;
 import org.raml.v2.api.model.v10.RamlFragment;
@@ -69,17 +70,18 @@ public class RamlModelBuilder
 {
 
     public static final String MODEL_PACKAGE = "org.raml.v2.internal.impl.commons.model";
-    private ResourceLoader resourceLoader;
+    private final ResourceLoaderFactory resourceLoaderFactory;
     private RamlBuilder builder = new RamlBuilder();
 
     public RamlModelBuilder()
     {
-        this(new DefaultResourceLoader());
+        resourceLoaderFactory = ResourceLoaderFactories.defaultResourceLoaderFactory(); // new DefaultResourceLoader(RootDirectoryFileAccessGuard.fromRootDir(Sets.newHashSet("file", "http", "https"),
+                                                                                        // ".")));
     }
 
-    public RamlModelBuilder(ResourceLoader resourceLoader)
+    public RamlModelBuilder(ResourceLoader resourceLoaderFactory)
     {
-        this.resourceLoader = resourceLoader;
+        this.resourceLoaderFactory = ResourceLoaderFactories.identityFactory(resourceLoaderFactory);
     }
 
     @Nonnull
@@ -122,8 +124,24 @@ public class RamlModelBuilder
         {
             return buildApi(ramlLocation);
         }
-        Node ramlNode = builder.build(content, resourceLoader, ramlLocation);
-        return generateRamlApiResult(ramlNode, getFragment(content));
+
+        if (ramlLocation.matches("^[a-z]+:.*"))
+        {
+
+            String actualName = PermissiveURI.create(ramlLocation).toString();
+            if (ramlLocation.startsWith("file:"))
+            {
+                actualName = new File(PermissiveURI.create(ramlLocation).getPath()).getParent();
+            }
+            Node ramlNode = builder.build(content, resourceLoaderFactory.createResourceLoader(actualName), ramlLocation);
+            return generateRamlApiResult(ramlNode, getFragment(content));
+        }
+        else
+        {
+
+            Node ramlNode = builder.build(content, resourceLoaderFactory.createResourceLoader(Paths.get(ramlLocation).toAbsolutePath().getParent().toString()), ramlLocation);
+            return generateRamlApiResult(ramlNode, getFragment(content));
+        }
     }
 
     private RamlFragment getFragment(String content)
@@ -249,7 +267,8 @@ public class RamlModelBuilder
         {
             return null;
         }
-        ResourceLoader fileLoader = new CompositeResourceLoader(resourceLoader, new FileResourceLoader(ramlFile.getParent()));
+
+        ResourceLoader fileLoader = resourceLoaderFactory.createResourceLoader(ramlFile.getAbsoluteFile().getParent());
         return getRamlContent(ramlFile.getName(), fileLoader);
     }
 
@@ -275,7 +294,23 @@ public class RamlModelBuilder
 
     private String getRamlContent(String ramlLocation)
     {
-        return getRamlContent(ramlLocation, resourceLoader);
+
+        if (ramlLocation == null)
+        {
+
+            return null;
+        }
+
+        if (ramlLocation.startsWith("file:"))
+        {
+            Path p = Paths.get(URI.create(ramlLocation)).toAbsolutePath().getParent();
+            return getRamlContent(ramlLocation, resourceLoaderFactory.createResourceLoader(p.toString()));
+        }
+        else
+        {
+            Path p = Paths.get(ramlLocation).toAbsolutePath().getParent();
+            return getRamlContent(ramlLocation, resourceLoaderFactory.createResourceLoader(p.toString()));
+        }
     }
 
     private String getRamlContent(String ramlLocation, ResourceLoader loader)
@@ -291,5 +326,4 @@ public class RamlModelBuilder
         }
         return null;
     }
-
 }

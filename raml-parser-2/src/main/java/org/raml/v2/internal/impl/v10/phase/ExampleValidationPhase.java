@@ -137,6 +137,12 @@ public class ExampleValidationPhase implements Phase
                 return validateJson(exampleValue, resolvedType, value);
             }
         }
+
+        if (exampleValue instanceof ErrorNode)
+        {
+            return exampleValue;
+        }
+
         if (exampleValue != null)
         {
             final Rule rule = visitAppropriately(resolvedType);
@@ -145,10 +151,14 @@ public class ExampleValidationPhase implements Phase
         return null;
     }
 
-    private Rule visitAppropriately(ResolvedType resolvedType) {
-        if (NILLABLE_TYPES) {
+    private Rule visitAppropriately(ResolvedType resolvedType)
+    {
+        if (NILLABLE_TYPES)
+        {
             return new AnyOfRule(resolvedType.visit(new TypeToRuleVisitor(resourceLoader, false)), new NullValueRule());
-        } else {
+        }
+        else
+        {
 
             return resolvedType.visit(new TypeToRuleVisitor(resourceLoader, false));
         }

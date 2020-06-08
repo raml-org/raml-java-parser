@@ -18,11 +18,13 @@ package org.raml.v2.api.loader;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
-import org.apache.commons.lang.StringUtils;
 
 public class ClassPathResourceLoader implements ResourceLoaderExtended
 {
@@ -55,31 +57,44 @@ public class ClassPathResourceLoader implements ResourceLoaderExtended
         }
     }
 
+    private URL getResource(String uselessRootPackage, String resourceName)
+    {
+        String fixedResourceName = uselessRootPackage + (resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
+        URL url = getClass().getClassLoader().getResource(fixedResourceName);
+        if (url == null)
+        {
+            return Thread.currentThread().getContextClassLoader().getResource(fixedResourceName);
+        }
+
+        return url;
+    }
+
     @Nullable
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
-        resourceName = rootRamlPackage + (resourceName.startsWith("/") ? resourceName.substring(1) : resourceName);
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
-        if (inputStream == null)
-        {
-            inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
-        }
 
-        if (callback != null && inputStream != null)
+        try
         {
-            try
+            final URL url = getResource(rootRamlPackage, resourceName);
+            if (url != null)
             {
-                this.callbackParam = Thread.currentThread().getContextClassLoader().getResource(resourceName).toURI();
-                callback.onResourceFound(callbackParam);
-            }
-            catch (URISyntaxException e)
-            {
-                // Ignore
-            }
-        }
 
-        return inputStream;
+                this.callbackParam = url.toURI();
+                if (callback != null)
+                {
+                    callback.onResourceFound(callbackParam);
+                }
+
+                return url.openStream();
+            }
+            return null;
+        }
+        catch (IOException | URISyntaxException e)
+        {
+
+            return null;
+        }
     }
 
     @Override

@@ -30,6 +30,11 @@ public class CompositeResourceLoader implements ResourceLoaderExtended
         this.resourceLoaders = resourceLoaders;
     }
 
+    public static CompositeResourceLoader compose(ResourceLoader... resourceLoaders)
+    {
+        return new CompositeResourceLoader(resourceLoaders);
+    }
+
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {

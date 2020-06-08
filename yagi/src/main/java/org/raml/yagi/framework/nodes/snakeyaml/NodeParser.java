@@ -15,8 +15,10 @@
  */
 package org.raml.yagi.framework.nodes.snakeyaml;
 
-import org.raml.v2.api.loader.DefaultResourceLoader;
+import org.apache.commons.io.IOUtils;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.loader.ResourceLoaderFactories;
+import org.raml.yagi.framework.grammar.rule.ErrorNodeFactory;
 import org.raml.yagi.framework.nodes.DefaultPosition;
 import org.raml.yagi.framework.nodes.ErrorNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -52,12 +54,20 @@ public class NodeParser
             }
             else
             {
-                return new SYModelWrapper(resourceLoader, resourcePath).wrap(composedNode);
+                try
+                {
+                    return new SYModelWrapper(resourceLoader, resourcePath).wrap(composedNode, 0);
+                }
+                catch (LimitsException e)
+                {
+
+                    return ErrorNodeFactory.limitsExceptionThrown(e);
+                }
             }
         }
         catch (final MarkedYAMLException e)
         {
-            return buildYamlErrorNode(e, resourcePath);
+            return buildYamlErrorNode(e, resourcePath, resourceLoader);
         }
         catch (ReaderException e)
         {
@@ -66,12 +76,12 @@ public class NodeParser
         }
     }
 
-    private static Node buildYamlErrorNode(MarkedYAMLException e, String resourcePath)
+    private static Node buildYamlErrorNode(MarkedYAMLException e, String resourcePath, ResourceLoader resourceLoader)
     {
         final ErrorNode errorNode = new ErrorNode("Underlying error while parsing YAML syntax: '" + e.getMessage() + "'");
         final Mark problemMark = e.getProblemMark();
-        errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, resourcePath, new DefaultResourceLoader()));
-        errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), resourcePath, new DefaultResourceLoader()));
+        errorNode.setStartPosition(new DefaultPosition(problemMark.getIndex(), problemMark.getLine(), 0, resourcePath, ResourceLoaderFactories.identityFactory(resourceLoader)));
+        errorNode.setEndPosition(new DefaultPosition(problemMark.getIndex() + 1, problemMark.getLine(), problemMark.getColumn(), resourcePath, ResourceLoaderFactories.identityFactory(resourceLoader)));
         return errorNode;
     }
 

@@ -225,7 +225,7 @@ public class TckEmitter
         if (node instanceof NullNode)
         {
             node = new SYObjectNode(new MappingNode(Tag.MAP, new ArrayList<NodeTuple>(), DumperOptions.FlowStyle.AUTO),
-                    node.getStartPosition().getResourceLoader(),
+                    node.getStartPosition().createResourceLoader(),
                     node.getStartPosition().getPath());
         }
         else

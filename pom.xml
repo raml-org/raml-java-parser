@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.raml</groupId>
     <artifactId>raml-parser-parent</artifactId>
-    <version>1.0.48-SNAPSHOT</version>
+    <version>1.0.51-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Raml Java Parser 2nd generation parent</name>
     <description>Raml parser implemented in java</description>
@@ -226,14 +226,14 @@
 
     <distributionManagement>
         <repository>
-            <id>mulesoft-releases</id>
+            <id>mule-ee-releases</id>
             <name>MuleSoft Releases Repository</name>
-            <url>https://repository-master.mulesoft.org/releases/</url>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>mulesoft-snapshots</id>
+            <id>mule-ee-snapshots</id>
             <name>MuleSoft Snapshots Repository</name>
-            <url>https://repository-master.mulesoft.org/snapshots/</url>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 

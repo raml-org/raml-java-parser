@@ -66,7 +66,7 @@ public class RamlBuilderTestCase extends TestDataProvider
     }
 
     @Test
-    public void crossValidatioTest()
+    public void crossValidationTest()
     {
         Node raml = new RamlBuilder().build(input);
 

@@ -24,27 +24,26 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RamlUrlResourceLoader implements ResourceLoaderExtended
+class RamlUrlResourceLoader implements ResourceLoaderExtended
 {
     public static final String APPLICATION_RAML = "application/raml+yaml";
     private URI callbackParam;
 
+
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
-        InputStream inputStream = null;
         try
         {
             URL url = new URL(resourceName);
             URLConnection connection = url.openConnection();
             connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
-            inputStream = new BufferedInputStream(connection.getInputStream());
-
             if (callback != null)
             {
                 callbackParam = url.toURI();
                 callback.onResourceFound(callbackParam);
             }
+            return new BufferedInputStream(connection.getInputStream());
         }
         catch (IOException e)
         {
@@ -54,8 +53,7 @@ public class RamlUrlResourceLoader implements ResourceLoaderExtended
         {
             // Ignore
         }
-        return inputStream;
-
+        return null;
     }
 
     @Nullable

@@ -17,8 +17,9 @@ package org.raml.yagi.framework.nodes;
 
 import javax.annotation.Nonnull;
 
-import org.raml.v2.api.loader.DefaultResourceLoader;
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.loader.ResourceLoaderFactories;
+import org.raml.v2.api.loader.ResourceLoaderFactory;
 
 public class DefaultPosition extends AbstractPosition
 {
@@ -28,16 +29,17 @@ public class DefaultPosition extends AbstractPosition
     private final int line;
     private final int column;
     private final String resource;
-    private final ResourceLoader resourceLoader;
+    private final ResourceLoaderFactory resourceLoader;
     private String includedResourceUri;
 
-    public DefaultPosition(int index, int line, int column, String resource, ResourceLoader resourceLoader)
+    public DefaultPosition(int index, int line, int column, String resource, ResourceLoaderFactory resourceLoaderFactory)
     {
+        super(resourceLoaderFactory);
         this.index = index;
         this.line = line;
         this.column = column;
         this.resource = resource;
-        this.resourceLoader = resourceLoader;
+        this.resourceLoader = resourceLoaderFactory;
     }
 
     @Override
@@ -78,14 +80,14 @@ public class DefaultPosition extends AbstractPosition
 
     @Nonnull
     @Override
-    public ResourceLoader getResourceLoader()
+    public ResourceLoader createResourceLoader()
     {
-        return resourceLoader;
+        return resourceLoader.createResourceLoader(null);
     }
 
     public static DefaultPosition emptyPosition()
     {
-        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, ARTIFICIAL_NODE, new DefaultResourceLoader());
+        return new DefaultPosition(UNKNOWN, UNKNOWN, UNKNOWN, ARTIFICIAL_NODE, ResourceLoaderFactories.nullFactory());
     }
 
     public static boolean isDefaultNode(Node node)

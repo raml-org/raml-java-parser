@@ -23,36 +23,28 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-public class UrlResourceLoader implements ResourceLoaderExtended
+class UrlResourceLoader implements ResourceLoaderExtended
 {
     private URI callbackParam;
 
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
-        InputStream inputStream = null;
         try
         {
             URL url = new URL(resourceName);
-            inputStream = new BufferedInputStream(url.openStream());
-
             if (callback != null)
             {
                 callbackParam = url.toURI();
                 callback.onResourceFound(url.toURI());
             }
-        }
-        catch (IOException e)
-        {
-            // ignore on resource not found
-        }
-        catch (URISyntaxException e)
-        {
-            // Ignore
-        }
 
-        return inputStream;
-
+            return new BufferedInputStream(url.openStream());
+        }
+        catch (URISyntaxException | IOException e)
+        {
+            return null;
+        }
     }
 
     @Nullable

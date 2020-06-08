@@ -72,5 +72,5 @@ public interface Position
     Position leftShift(int offset);
 
     @Nonnull
-    ResourceLoader getResourceLoader();
+    ResourceLoader createResourceLoader();
 }

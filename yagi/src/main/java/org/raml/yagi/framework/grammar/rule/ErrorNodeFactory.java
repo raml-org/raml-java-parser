@@ -23,6 +23,7 @@ import org.raml.yagi.framework.nodes.Node;
 import org.raml.yagi.framework.nodes.NodeType;
 import org.raml.yagi.framework.nodes.ReferenceNode;
 import org.raml.yagi.framework.nodes.StringNode;
+import org.raml.yagi.framework.nodes.snakeyaml.LimitsException;
 import org.raml.yagi.framework.util.NodeSelector;
 
 import java.io.IOException;
@@ -275,4 +276,9 @@ public class ErrorNodeFactory
         return new ErrorNode(firstRule + " and " + secondRule + " are mutually exclusive.");
     }
 
+    public static ErrorNode limitsExceptionThrown(LimitsException e)
+    {
+
+        return new ErrorNode(e.getMessage() + ", with node at " + e.getStartMark());
+    }
 }

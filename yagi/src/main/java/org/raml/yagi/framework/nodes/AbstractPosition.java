@@ -15,23 +15,32 @@
  */
 package org.raml.yagi.framework.nodes;
 
+import org.raml.v2.api.loader.ResourceLoaderFactory;
+
 import javax.annotation.Nonnull;
 
 public abstract class AbstractPosition implements Position
 {
 
+    private final ResourceLoaderFactory resourceLoaderFactory;
+
+    public AbstractPosition(ResourceLoaderFactory resourceLoaderFactory)
+    {
+        this.resourceLoaderFactory = resourceLoaderFactory;
+    }
+
     @Nonnull
     @Override
     public Position rightShift(int offset)
     {
-        return new DefaultPosition(getIndex() + offset, getLine(), getColumn() + offset, getPath(), getResourceLoader());
+        return new DefaultPosition(getIndex() + offset, getLine(), getColumn() + offset, getPath(), resourceLoaderFactory);
     }
 
     @Nonnull
     @Override
     public Position leftShift(int offset)
     {
-        return new DefaultPosition(getIndex() - offset, getLine(), getColumn() - offset, getPath(), getResourceLoader());
+        return new DefaultPosition(getIndex() - offset, getLine(), getColumn() - offset, getPath(), resourceLoaderFactory);
     }
 
     @Override

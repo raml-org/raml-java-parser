@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.raml.v2.api.loader.ResourceLoader;
+import org.raml.v2.api.loader.ResourceLoaderFactories;
 import org.raml.yagi.framework.nodes.BaseNode;
 import org.raml.yagi.framework.nodes.Position;
 import org.yaml.snakeyaml.nodes.Node;
@@ -61,14 +62,14 @@ public abstract class SYBaseRamlNode extends BaseNode
     @Override
     public Position getStartPosition()
     {
-        return new SYPosition(yamlNode.getStartMark(), resourceLoader, resourcePath);
+        return new SYPosition(yamlNode.getStartMark(), ResourceLoaderFactories.identityFactory(resourceLoader), resourcePath);
     }
 
     @Nonnull
     @Override
     public Position getEndPosition()
     {
-        return new SYPosition(yamlNode.getEndMark(), resourceLoader, resourcePath);
+        return new SYPosition(yamlNode.getEndMark(), ResourceLoaderFactories.identityFactory(resourceLoader), resourcePath);
     }
 
     @Nullable

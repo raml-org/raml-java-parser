@@ -26,13 +26,9 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.io.IOUtils;
-import org.raml.v2.api.loader.CacheResourceLoader;
-import org.raml.v2.api.loader.CompositeResourceLoader;
-import org.raml.v2.api.loader.DefaultResourceLoader;
-import org.raml.v2.api.loader.ResourceLoader;
-import org.raml.v2.api.loader.RootRamlFileResourceLoader;
-import org.raml.v2.api.loader.RootRamlUrlResourceLoader;
+import org.raml.v2.api.loader.*;
 import org.raml.v2.internal.impl.commons.RamlHeader;
 import org.raml.v2.internal.impl.v08.Raml08Builder;
 import org.raml.v2.internal.impl.v10.Raml10Builder;
@@ -60,8 +56,6 @@ public class RamlBuilder
 
     private int maxPhaseNumber;
 
-    private ResourceLoader resourceLoader = null;
-
     private String actualPath = null;
 
     public RamlBuilder()
@@ -76,7 +70,7 @@ public class RamlBuilder
 
     public Node build(File ramlFile)
     {
-        return build(ramlFile, new DefaultResourceLoader());
+        return build(ramlFile, ResourceLoaderFactories.defaultResourceLoaderFactory().createResourceLoader(ramlFile.getAbsoluteFile().getParent()));
     }
 
 
@@ -160,22 +154,24 @@ public class RamlBuilder
     private ResourceLoader addRootRamlResourceLoaders(ResourceLoader resourceLoader, String resourceLocation)
     {
 
-        File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
-        if (parentFile != null)
-        {
-            resourceLoader = new CompositeResourceLoader(new RootRamlFileResourceLoader(parentFile), resourceLoader);
-        }
-        String rootRamlPath = getRootPath(resourceLocation);
-        if (!Strings.isNullOrEmpty(rootRamlPath))
-        {
-            resourceLoader = new CompositeResourceLoader(new RootRamlUrlResourceLoader(rootRamlPath), resourceLoader);
-        }
+        return resourceLoader;
 
-        this.resourceLoader = new CacheResourceLoader(resourceLoader);
-        return this.resourceLoader;
+        // File parentFile = new File(actualPath != null ? actualPath : resourceLocation).getParentFile();
+        // if (parentFile != null) {
+        // resourceLoader = CompositeResourceLoader.compose(new RootRamlFileResourceLoader(parentFile), resourceLoader);
+        // }
+        // String rootRamlPath = getRootPath(resourceLocation);
+        // if (!Strings.isNullOrEmpty(rootRamlPath)) {
+        // resourceLoader =
+        // CompositeResourceLoader.compose(new RootRamlUrlResourceLoader(rootRamlPath), resourceLoader);
+        // }
+        //
+        // this.resourceLoader = new CacheResourceLoader(resourceLoader);
+        // return this.resourceLoader;
+
     }
 
-    private String getRootPath(String rootRamlFileUrl)
+    private static String getRootPath(String rootRamlFileUrl)
     {
         final List<String> urlSegments = Splitter.on("/").splitToList(rootRamlFileUrl);
         if (urlSegments.isEmpty())
@@ -190,15 +186,15 @@ public class RamlBuilder
         return resourceLocation.replace("\\", "/");
     }
 
-    public ResourceLoader getResourceLoader()
-    {
-        return this.resourceLoader;
-    }
-
     public String getActualPath()
     {
         return actualPath;
     }
 
+    public static void main(String[] args)
+    {
+
+        System.err.println(getRootPath("file:/fun/goo/a"));
+    }
 
 }

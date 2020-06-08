@@ -50,7 +50,7 @@ public class CustomFacetDefinitionNode extends PropertyNode
 
     public KeyValueRule getFacetRule()
     {
-        final TypeToRuleVisitor typeToRuleVisitor = new TypeToRuleVisitor(new DefaultResourceLoader());
+        final TypeToRuleVisitor typeToRuleVisitor = new TypeToRuleVisitor(getStartPosition().createResourceLoader());
         final Rule value = getFacetType().getResolvedType().visit(typeToRuleVisitor);
         return new KeyValueRule(new StringValueRule(getFacetName()), value);
     }

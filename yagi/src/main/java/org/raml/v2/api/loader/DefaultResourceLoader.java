@@ -26,7 +26,7 @@ public class DefaultResourceLoader implements ResourceLoaderExtended
 
     public DefaultResourceLoader()
     {
-        resourceLoader = new CompositeResourceLoader(
+        resourceLoader = CompositeResourceLoader.compose(
                 new UrlResourceLoader(),
                 new RamlUrlResourceLoader(),
                 new ClassPathResourceLoader(),

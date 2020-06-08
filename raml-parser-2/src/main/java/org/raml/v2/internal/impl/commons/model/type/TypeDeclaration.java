@@ -195,7 +195,7 @@ public abstract class TypeDeclaration<T extends ResolvedType> extends Annotable<
             typeDeclarationNode.addChild(new KeyValueNodeImpl(new StringNodeImpl("type"), getResolvedType().getTypeExpressionNode()));
         }
 
-        final ResourceLoader resourceLoader = typeDeclarationNode.getStartPosition().getResourceLoader();
+        final ResourceLoader resourceLoader = typeDeclarationNode.getStartPosition().createResourceLoader();
         final ExampleValidationPhase exampleValidationPhase = new ExampleValidationPhase(resourceLoader);
         final Node validate = exampleValidationPhase.validate(typeDeclarationNode, payload);
         if (NodeUtils.isErrorResult(validate))

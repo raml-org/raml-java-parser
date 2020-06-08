@@ -39,30 +39,24 @@ public class RootRamlUrlResourceLoader implements ResourceLoaderExtended
     @Override
     public InputStream fetchResource(String resourceName, ResourceUriCallback callback)
     {
-        InputStream inputStream = null;
         try
         {
             URL url = new URL(resourceName.startsWith(rootRamlUrl) ? resourceName : rootRamlUrl + resourceName);
-            URLConnection connection = url.openConnection();
+            final URLConnection connection = url.openConnection();
             connection.setRequestProperty("Accept", APPLICATION_RAML + ", */*");
-            inputStream = new BufferedInputStream(connection.getInputStream());
 
             if (callback != null)
             {
                 callbackParam = url.toURI();
                 callback.onResourceFound(callbackParam);
             }
-        }
-        catch (IOException e)
-        {
-            // ignore on resource not found
-        }
-        catch (URISyntaxException e)
-        {
-            // Ignore
-        }
-        return inputStream;
 
+            return new BufferedInputStream(connection.getInputStream());
+        }
+        catch (IOException | URISyntaxException e)
+        {
+            return null;
+        }
     }
 
     @Nullable

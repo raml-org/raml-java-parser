@@ -15,10 +15,7 @@
  */
 package org.raml.v2.api.loader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 
 import org.slf4j.Logger;
@@ -56,22 +53,21 @@ public class FileResourceLoader implements ResourceLoaderExtended
         {
             logger.debug("Looking for absolute file: {}...", resourceName);
         }
-        FileInputStream inputStream = null;
         try
         {
-            inputStream = new FileInputStream(includedFile);
-
             if (callback != null)
             {
                 callbackParam = includedFile.toURI();
                 callback.onResourceFound(callbackParam);
             }
+
+            return new FileInputStream(includedFile);
+
         }
-        catch (FileNotFoundException e)
+        catch (IOException e)
         {
-            // ignore
+            return null;
         }
-        return inputStream;
     }
 
     @Nullable

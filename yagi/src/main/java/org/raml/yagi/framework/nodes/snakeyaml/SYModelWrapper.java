@@ -34,6 +34,7 @@ public class SYModelWrapper
 
     private ResourceLoader resourceLoader;
     private String resourcePath;
+    private RamlParsingLimitsController controller = new RamlParsingLimitsController();
 
     public SYModelWrapper(ResourceLoader resourceLoader, String resourcePath)
     {
@@ -51,15 +52,17 @@ public class SYModelWrapper
 
     public static final Tag INCLUDE_TAG = new Tag("!include");
 
-    public Node wrap(org.yaml.snakeyaml.nodes.Node node)
+    public Node wrap(org.yaml.snakeyaml.nodes.Node node, int depth)
     {
+        controller.verifyNode(node, depth);
+
         if (node.getNodeId() == mapping)
         {
-            return wrap((MappingNode) node);
+            return wrap((MappingNode) node, depth);
         }
         if (node.getNodeId() == sequence)
         {
-            return wrap((SequenceNode) node);
+            return wrap((SequenceNode) node, depth);
         }
         if (node.getNodeId() == scalar)
         {
@@ -72,7 +75,7 @@ public class SYModelWrapper
     }
 
 
-    private SYObjectNode wrap(MappingNode mappingNode)
+    private SYObjectNode wrap(MappingNode mappingNode, int depth)
     {
         if (mappingNode.isMerged())
         {
@@ -81,8 +84,8 @@ public class SYModelWrapper
         SYObjectNode mapping = new SYObjectNode(mappingNode, resourceLoader, resourcePath);
         for (NodeTuple nodeTuple : mappingNode.getValue())
         {
-            Node key = wrap(nodeTuple.getKeyNode());
-            Node value = wrap(nodeTuple.getValueNode());
+            Node key = wrap(nodeTuple.getKeyNode(), depth + 1);
+            Node value = wrap(nodeTuple.getValueNode(), depth + 1);
             KeyValueNodeImpl keyValue = new KeyValueNodeImpl(key, value);
             mapping.addChild(keyValue);
         }
@@ -134,12 +137,12 @@ public class SYModelWrapper
         }
     }
 
-    private SYArrayNode wrap(SequenceNode sequenceNode)
+    private SYArrayNode wrap(SequenceNode sequenceNode, int depth)
     {
         SYArrayNode sequence = new SYArrayNode(sequenceNode, resourcePath, resourceLoader);
         for (org.yaml.snakeyaml.nodes.Node node : sequenceNode.getValue())
         {
-            sequence.addChild(wrap(node));
+            sequence.addChild(wrap(node, depth + 1));
         }
         return sequence;
     }
