@@ -30,6 +30,8 @@ Argument | Description | Default Value
 ```raml.maxDepth```|Limit depth of YAML references | `2000`
 ```raml.maxReferences```|Limit number of YAML references in expansions|`10000`
 
+The RAML parser's XML parsing components also respect Java XML entity properties.
+
 ## Usage
 
 ### Validation
