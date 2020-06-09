@@ -19,6 +19,17 @@ The version of this parser supporting RAML 1.0 is in the [master branch](https:/
 
 ```java -jar raml-parser-{version}.jar raml-file ...```
 
+## System properties
+In order to provide more flexibility, users can set different system properties when parsing different RAML files. Here we list all the system properties you can use right now:
+
+Argument | Description | Default Value
+-------- | ----------- | -------------
+```raml.parser.encoding```|	Defines the charset being used by the parser| ```UTF-8```
+```raml.verifyRaml```|Verify the RAML file for YAML reference abuses | `true`
+```raml.verifyReferenceCycle```|Specifically verify YAML reference cycles| `true`
+```raml.maxDepth```|Limit depth of YAML references | `2000`
+```raml.maxReferences```|Limit number of YAML references in expansions|`10000`
+
 ## Usage
 
 ### Validation
