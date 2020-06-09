@@ -59,6 +59,10 @@ Argument | Description | Default Value
 ```org.raml.fallback_datetime_to_datetime-only```|	if TRUE, value passed to a datetime type will fallback on the datetime-only type and validate accordingly| ```false```
 ```org.raml.cast_strings_as_numbers```|	if TRUE, will attempt to cast strings as numbers and validate| ```false```
 ```org.raml.nillable_types```|	if TRUE, makes all types equivalent to type: <code>type: type&#124; nil;</code> | ```false```
+```raml.verifyRaml```|Verify the RAML file for YAML reference abuses | `true`
+```raml.verifyReferenceCycle```|Specifically verify YAML reference cycles| `true`
+```raml.maxDepth```|Limit depth of YAML references | `2000`
+```raml.maxReferences```|Limit number of YAML references in expansions|`10000`
 ```raml.parser.encoding```|	Defines the charset being used by the parser| ```UTF-8```
 
 The RAML parser's XML parsing components also respect Java XML entity properties.
