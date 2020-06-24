@@ -22,7 +22,10 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -43,10 +46,48 @@ public class ModelProxyBuilder
                 new SimpleProxy(delegateNode, bindingConfiguration));
     }
 
+    private static class MethodCacheKey
+    {
+        Method method;
+        Class<?> delegateClass;
+
+        public MethodCacheKey(Method method, Class<?> delegateClass)
+        {
+            this.method = method;
+            this.delegateClass = delegateClass;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(delegateClass, method);
+        }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj instanceof MethodCacheKey))
+            {
+                return false;
+            }
+            MethodCacheKey other = (MethodCacheKey) obj;
+            return Objects.equals(delegateClass, other.delegateClass) && Objects.equals(method, other.method);
+        }
+    }
+
     private static class SimpleProxy implements InvocationHandler
     {
         private NodeModel delegate;
         private ModelBindingConfiguration bindingConfiguration;
+        private static Map<MethodCacheKey, Object> methodCache = new HashMap<>();
 
         public SimpleProxy(NodeModel delegate, ModelBindingConfiguration bindingConfiguration)
         {
@@ -207,12 +248,26 @@ public class ModelProxyBuilder
         @Nullable
         private Method findMatchingMethod(Method method)
         {
+            MethodCacheKey cacheKey = new MethodCacheKey(method, delegate.getClass());
+            Object cachedMethod = methodCache.get(cacheKey);
+            if (cachedMethod instanceof Method)
+            {
+                return (Method) cachedMethod;
+            }
+            else if (cachedMethod instanceof String)
+            {
+                return null;
+            }
+
             try
             {
-                return delegate.getClass().getMethod(method.getName(), method.getParameterTypes());
+                cachedMethod = delegate.getClass().getMethod(method.getName(), method.getParameterTypes());
+                methodCache.put(cacheKey, cachedMethod);
+                return (Method) cachedMethod;
             }
             catch (NoSuchMethodException e)
             {
+                methodCache.put(cacheKey, "no such method");
                 return null;
             }
         }

@@ -15,14 +15,17 @@
  */
 package org.raml.yagi.framework.nodes;
 
-import org.raml.yagi.framework.util.NodeSelector;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.raml.yagi.framework.util.NodeSelector;
 
 public abstract class BaseNode implements Node
 {
@@ -33,6 +36,8 @@ public abstract class BaseNode implements Node
     protected List<Node> children = new ArrayList<>();
 
     private List<NodeAnnotation> annotations = new ArrayList<>();
+
+    private Map<Class<?>, List<?>> descendantsCache = new HashMap<>();
 
     public BaseNode()
     {
@@ -79,12 +84,14 @@ public abstract class BaseNode implements Node
     {
         node.setParent(this);
         children.add(node);
+        clearCache();
     }
 
     @Override
     public void removeChild(Node node)
     {
         children.remove(node);
+        clearCache();
     }
 
     @Override
@@ -102,21 +109,46 @@ public abstract class BaseNode implements Node
         return contextNode;
     }
 
+    @SuppressWarnings("unchecked")
     @Nonnull
     @Override
     public <T extends Node> List<T> findDescendantsWith(Class<T> nodeType)
     {
+        if (children.isEmpty())
+        {
+            return Collections.emptyList();
+        }
+
+        List<?> descendants = descendantsCache.get(nodeType);
+        if (descendants != null)
+        {
+            return (List<T>) descendants;
+        }
         final List<T> result = new ArrayList<>();
-        final List<Node> children = getChildren();
-        for (Node child : children)
+        collectDescendantsWithType(this, nodeType, result);
+        descendantsCache.put(nodeType, result);
+        return result;
+    }
+
+    private void clearCache()
+    {
+        descendantsCache.clear();
+        if (parent != null)
+        {
+            ((BaseNode) parent).clearCache();
+        }
+    }
+
+    private static <T extends Node> void collectDescendantsWithType(Node node, Class<T> nodeType, List<T> descendants)
+    {
+        for (Node child : node.getChildren())
         {
             if (nodeType.isAssignableFrom(child.getClass()))
             {
-                result.add(nodeType.cast(child));
+                descendants.add(nodeType.cast(child));
             }
-            result.addAll(child.findDescendantsWith(nodeType));
+            collectDescendantsWithType(child, nodeType, descendants);
         }
-        return result;
     }
 
     @Nullable
@@ -145,6 +177,7 @@ public abstract class BaseNode implements Node
             {
                 newNode.addChild(child);
             }
+            clearCache();
         }
     }
 
@@ -165,6 +198,7 @@ public abstract class BaseNode implements Node
                 }
                 getParent().setChild(idx, newSubTree);
             }
+            clearCache();
         }
     }
 
@@ -176,6 +210,7 @@ public abstract class BaseNode implements Node
             child.setParent(null);
         }
         children.clear();
+        clearCache();
     }
 
     @Override
@@ -183,6 +218,7 @@ public abstract class BaseNode implements Node
     {
         children.set(idx, newNode);
         newNode.setParent(this);
+        clearCache();
     }
 
     @Override
@@ -190,6 +226,7 @@ public abstract class BaseNode implements Node
     {
         children.add(idx, newNode);
         newNode.setParent(this);
+        clearCache();
     }
 
     @Override
@@ -200,12 +237,14 @@ public abstract class BaseNode implements Node
             this.parent.removeChild(this);
         }
         this.parent = parent;
+        clearCache();
     }
 
     @Override
     public void setSource(Node source)
     {
         this.source = source;
+        clearCache();
     }
 
     @Override
