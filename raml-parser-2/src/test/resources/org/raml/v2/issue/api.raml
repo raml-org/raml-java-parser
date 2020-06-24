@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: test-date-spec
+version: v1
+baseUri: http://localhost:8081
+
+resourceTypes:
+  read:
+    get:
+    
+traits:
+  sercheable:
+    usage: Apply this trait to resources which supports datetime range searching
+    queryParameters:
+      dateFrom:
+        type: date-only
+        example: "2017-10-02"
+        required: false
+      dateTo:
+        type: date-only
+        example: "2018-10-02"
+        required: false
+
+/testuri:
+  is: [sercheable]
+  type: read
