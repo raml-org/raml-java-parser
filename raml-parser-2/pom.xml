@@ -30,7 +30,8 @@
                                     <finalName>${project.artifactId}-${project.version}-full</finalName>
                                     <transformers>
                                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <mainClass>org.raml.v2.internal.impl.RamlValidator</mainClass>
+                                          <mainClass>org.raml.v2.internal.impl.RamlValidator</mainClass>
+                                          <Automatic-Module-Name>org.raml.parser</Automatic-Module-Name>
                                         </transformer>
                                     </transformers>
                                 </configuration>
@@ -146,4 +147,19 @@
         </dependency>
     </dependencies>
 
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                  <Automatic-Module-Name>org.raml.parser</Automatic-Module-Name>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
 </project>
