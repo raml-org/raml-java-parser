@@ -179,4 +179,9 @@ public interface Node
     void setContextNode(Node node);
 
     Node getContextNode();
+
+    /**
+     * Get the path within the raml document.
+     */
+    String getPath();
 }

@@ -17,11 +17,14 @@ package org.raml.v2.api;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 import org.junit.Test;
@@ -39,11 +42,16 @@ import org.raml.v2.api.model.v08.resources.ResourceType;
 public class SpecInterfacesV08TestCase
 {
 
+    private URI externalSchemaUri;
+
     @Test
     public void full() throws IOException
     {
         File input = new File("src/test/resources/org/raml/v2/api/v08/full/input.raml");
         assertTrue(input.isFile());
+        File externalSchema = new File(input.getParentFile(), "external.schema.json");
+        assertTrue(externalSchema.isFile());
+        externalSchemaUri = externalSchema.toURI().normalize();
         RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
         assertFalse(ramlModelResult.hasErrors());
         Api api = ramlModelResult.getApiV08();
@@ -60,10 +68,14 @@ public class SpecInterfacesV08TestCase
         assertThat(api.protocols().get(0), is("HTTP"));
         assertThat(api.protocols().get(1), is("HTTPS"));
 
-        assertThat(api.schemas().size(), is(2));
+        assertThat(api.schemas().size(), is(3));
         assertThat(api.schemas().get(0).key(), is("UserJson"));
+        assertThat(api.schemas().get(0).path(), is("schemas/UserJson"));
         assertThat(api.schemas().get(0).value().value(), containsString("\"firstname\":  { \"type\": \"string\" }"));
         assertThat(api.schemas().get(1).key(), is("UserXml"));
+        assertThat(api.schemas().get(1).path(), is("schemas/UserXml"));
+        assertThat(api.schemas().get(2).key(), is("External"));
+        assertThat(URI.create(api.schemas().get(2).path()).normalize(), equalTo(externalSchemaUri));
 
         assertDocumentation(api.documentation());
         assertTraits(api.traits());
@@ -123,6 +135,7 @@ public class SpecInterfacesV08TestCase
         assertThat(childrenBody.name(), is("application/json"));
         assertThat(childrenBody.schemaContent(), containsString("\"firstname\":  { \"type\": \"string\" }"));
         assertThat(childrenBody.schema().value(), is("UserJson"));
+        assertThat(childrenBody.schemaPath(), is("schemas/UserJson"));
 
         Resource childId = child.resources().get(0);
         assertThat(childId.uriParameters(), hasSize(1));
@@ -190,18 +203,20 @@ public class SpecInterfacesV08TestCase
 
     private void assertBody(List<BodyLike> body)
     {
-        assertThat(body.size(), is(4));
+        assertThat(body.size(), is(5));
 
         BodyLike appJson = body.get(0);
         assertThat(appJson.name(), is("application/json"));
         assertThat(appJson.example().value(), containsString("\"firstname\": \"tato\""));
         assertThat(appJson.schema().value(), is("UserJson"));
         assertThat(appJson.schemaContent(), containsString("\"firstname\":  { \"type\": \"string\" }"));
+        assertThat(appJson.schemaPath(), is("schemas/UserJson"));
 
         BodyLike xml = body.get(1);
         assertThat(xml.name(), is("application/xml"));
         assertThat(xml.schema().value(), is("UserXml"));
         assertThat(xml.schemaContent(), containsString("<xs:element type=\"xs:string\" name=\"input\"/>"));
+        assertThat(xml.schemaPath(), is("schemas/UserXml"));
 
         BodyLike multipart = body.get(2);
         assertThat(multipart.formParameters().size(), is(2));
@@ -211,5 +226,14 @@ public class SpecInterfacesV08TestCase
         assertThat(vndJson.name(), is("application/vnd.inline+json"));
         assertThat(vndJson.schema().value(), containsString("\"input\": {"));
         assertThat(vndJson.schemaContent(), containsString("\"input\": {"));
+        assertThat(vndJson.schemaPath(), anyOf(
+                is("\\/top/post/body/application\\/vnd.inline+json/schema"), // for the direct body in the request
+                is("\\/top/post/responses/200/body/application\\/vnd.inline+json/schema"))); // the anchor body in the response
+
+        BodyLike vndExternalJson = body.get(4);
+        assertThat(vndExternalJson.name(), is("application/vnd.external+json"));
+        assertThat(vndExternalJson.schema().value(), is("External"));
+        assertThat(vndExternalJson.schemaContent(), containsString("\"stringProperty\": {"));
+        assertThat(URI.create(vndExternalJson.schemaPath()).normalize(), equalTo(externalSchemaUri));
     }
 }

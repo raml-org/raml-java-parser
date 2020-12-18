@@ -32,4 +32,8 @@ public interface GlobalSchema
      **/
     SchemaString value();
 
+    /**
+     * The path of the schema. If the schema is inlined returns the path inside the raml document. If the schema is included returns the complete path of the included schema.
+     */
+    String path();
 }

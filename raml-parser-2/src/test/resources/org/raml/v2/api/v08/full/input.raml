@@ -46,6 +46,8 @@ schemas:
            </xs:complexType>
          </xs:element>
        </xs:schema>
+       
+    - External: !include external.schema.json
 traits:
     one:
         description: method description from trait one
@@ -107,6 +109,8 @@ resourceTypes:
                     "required": false,
                     "type": "object"
                 }
+            application/vnd.external+json:
+              schema: External
         responses:
             200:
                 body: *bodyPost

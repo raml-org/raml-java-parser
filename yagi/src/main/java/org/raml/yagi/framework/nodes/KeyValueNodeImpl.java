@@ -144,4 +144,15 @@ public class KeyValueNodeImpl extends BaseNode implements KeyValueNode
     {
         return NodeType.KeyValue;
     }
+
+    @Override
+    public String getPath()
+    {
+        final String delimiter;
+        if (getRootNode() == getParent())
+            delimiter = "";
+        else
+            delimiter = "/";
+        return super.getPath() + delimiter + String.valueOf(getKey()).replace("/", "\\/");
+    }
 }

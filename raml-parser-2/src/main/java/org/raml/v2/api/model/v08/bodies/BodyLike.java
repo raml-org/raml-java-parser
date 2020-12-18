@@ -54,4 +54,9 @@ public interface BodyLike extends RAMLLanguageElement
      **/
     String schemaContent();
 
+    /**
+     * Returns the path to the schema returned by {@link #schemaContent()}. If the schema is inlined, the path inside the RAML document is returned. If the schema is included, the original path of the schema is returned. If the schema is a reference, the path of the referenced schema is returned.
+     */
+    String schemaPath();
+
 }

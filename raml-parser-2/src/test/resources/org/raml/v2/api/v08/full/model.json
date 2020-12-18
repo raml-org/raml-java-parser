@@ -191,6 +191,16 @@
         "value": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
        },
        "schemaContent": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+      },
+      {
+       "description": null,
+       "example": null,
+       "formParameters": [],
+       "name": "application/vnd.external+json",
+       "schema": {
+        "value": "External"
+       },
+       "schemaContent": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema\",\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"stringProperty\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t},\n\t\"required\": [\n\t\t\"stringProperty\"\n\t]\n}"
       }
      ],
      "description": {
@@ -268,6 +278,16 @@
           "value": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
          },
          "schemaContent": "{\n    \"$schema\": \"http://json-schema.org/draft-03/schema\",\n    \"properties\": {\n        \"input\": {\n            \"required\": false,\n            \"type\": \"string\"\n        }\n    },\n    \"required\": false,\n    \"type\": \"object\"\n}\n"
+        },
+        {
+         "description": null,
+         "example": null,
+         "formParameters": [],
+         "name": "application/vnd.external+json",
+         "schema": {
+          "value": "External"
+         },
+         "schemaContent": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema\",\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"stringProperty\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t},\n\t\"required\": [\n\t\t\"stringProperty\"\n\t]\n}"
         }
        ],
        "code": {
@@ -398,6 +418,12 @@
    "key": "UserXml",
    "value": {
     "value": "<xs:schema attributeFormDefault=\"unqualified\"\n           elementFormDefault=\"qualified\"\n           xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n  <xs:element name=\"api-request\">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element type=\"xs:string\" name=\"input\"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>\n"
+   }
+  },
+  {
+   "key": "External",
+   "value": {
+    "value": "{\n\t\"$schema\": \"http://json-schema.org/draft-04/schema\",\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"stringProperty\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t},\n\t\"required\": [\n\t\t\"stringProperty\"\n\t]\n}"
    }
   }
  ],

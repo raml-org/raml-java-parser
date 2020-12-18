@@ -226,4 +226,13 @@ public abstract class BaseNode implements Node
     {
         this.contextNode = node;
     }
+
+    @Override
+    public String getPath()
+    {
+        final Node parent = getParent();
+        if (parent == null)
+            return "";
+        return parent.getPath();
+    }
 }
