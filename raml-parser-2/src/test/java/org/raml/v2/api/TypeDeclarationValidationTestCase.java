@@ -59,4 +59,27 @@ public class TypeDeclarationValidationTestCase
         assertFalse(validationResults.isEmpty());
         assertEquals(validationResults.get(0).getMessage(), "Invalid type String, expected Float");
     }
+
+    @Test
+    public void discriminatorValidation()
+    {
+        File input = new File("src/test/resources/org/raml/v2/api/v10/validation/discriminator-validation.raml");
+        assertTrue(input.isFile());
+        RamlModelResult ramlModelResult = new RamlModelBuilder().buildApi(input);
+
+        subTypeValidation(ramlModelResult);
+    }
+
+    private void subTypeValidation(RamlModelResult ramlModelResult)
+    {
+        List<TypeDeclaration> typeDeclarations = ramlModelResult.getApiV10().resources().get(0).methods().get(0).body();
+
+        // valid
+        assertTrue(typeDeclarations.get(0).validate("{\"eventType\":\"foo\", \"bar\":\"\"}").isEmpty());
+        // invalid
+        assertFalse(typeDeclarations.get(0).validate("{\"eventType\":\"foo\"}").isEmpty());
+        // invalid
+        assertFalse(typeDeclarations.get(0).validate("{}").isEmpty());
+    }
+
 }
