@@ -16,7 +16,6 @@
 package org.raml.v2.api.loader;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -62,23 +61,33 @@ public class CacheResourceLoader implements ResourceLoaderExtended
                 return toInputStreamOrNull(resourceByteArray);
             }
 
-            InputStream resource;
-            URI uriCallback = null;
-            if (resourceLoader instanceof ResourceLoaderExtended)
+            InputStream resource = null;
+            try
             {
-                resource = ((ResourceLoaderExtended) resourceLoader).fetchResource(resourceName, callback);
-                uriCallback = ((ResourceLoaderExtended) resourceLoader).getUriCallBackParam();
+                URI uriCallback = null;
+                if (resourceLoader instanceof ResourceLoaderExtended)
+                {
+                    resource = ((ResourceLoaderExtended) resourceLoader).fetchResource(resourceName, callback);
+                    uriCallback = ((ResourceLoaderExtended) resourceLoader).getUriCallBackParam();
+                }
+                else
+                {
+                    resource = resourceLoader.fetchResource(resourceName);
+                }
+
+                // we want to cache results even if they are null
+                final byte[] resourceByteArray = resource == null ? null : IOUtils.toByteArray(resource);
+                resources.put(resourceName, Pair.of(resourceByteArray, uriCallback));
+
+                return toInputStreamOrNull(resourceByteArray);
             }
-            else
+            finally
             {
-                resource = resourceLoader.fetchResource(resourceName);
+                if (resource != null)
+                {
+                    resource.close();
+                }
             }
-
-            // we want to cache results even if they are null
-            final byte[] resourceByteArray = resource == null ? null : IOUtils.toByteArray(resource);
-            resources.put(resourceName, Pair.of(resourceByteArray, uriCallback));
-
-            return toInputStreamOrNull(resourceByteArray);
 
         }
         catch (final IOException e)
