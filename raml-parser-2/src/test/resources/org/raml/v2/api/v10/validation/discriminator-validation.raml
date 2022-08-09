@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: test validate
+
+types:
+  event:
+    type: object
+    discriminator: eventType
+    properties:
+      eventType: string
+
+  fooEvent:
+    type: event
+    discriminatorValue: foo
+    properties:
+      bar: string
+
+/resource:
+   post:
+     body:
+       application/json:
+         type: fooEvent
