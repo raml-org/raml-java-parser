@@ -51,7 +51,7 @@ public class ExternalSchemaTypeExpressionNode extends AbstractStringNode impleme
         {
             return this.getStartPosition().getIncludedResourceUri();
         }
-        return this.getStartPosition().getPath();
+        return this.getPath();
     }
 
     @Nullable

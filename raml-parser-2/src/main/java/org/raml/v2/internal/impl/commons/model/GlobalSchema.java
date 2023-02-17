@@ -15,6 +15,7 @@
  */
 package org.raml.v2.internal.impl.commons.model;
 
+import org.raml.v2.internal.impl.commons.nodes.ExternalSchemaTypeExpressionNode;
 import org.raml.yagi.framework.model.AbstractNodeModel;
 import org.raml.yagi.framework.nodes.KeyValueNode;
 import org.raml.yagi.framework.nodes.Node;
@@ -42,5 +43,12 @@ public class GlobalSchema extends AbstractNodeModel<KeyValueNode>
     public StringType value()
     {
         return new StringType((SimpleTypeNode) node.getValue());
+    }
+
+    public String path()
+    {
+        if (node.getValue() instanceof ExternalSchemaTypeExpressionNode)
+            return ((ExternalSchemaTypeExpressionNode) node.getValue()).getSchemaPath();
+        return node.getPath();
     }
 }
